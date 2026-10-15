@@ -179,18 +179,24 @@ def parse_front_matter_fallback(text: str) -> dict:
 def split_front_matter(text: str):
     """返回 (front-matter 行数, 去 front-matter 后的正文行数, front-matter 文本)。
 
+    行数与 ``wc_l``（`wc -l`）同口径：**末尾换行不算额外一行**，因此
+    「front-matter 行数 + 正文行数」= 该文件的行数；没有 front-matter 时
+    正文行数 = 文件行数（曾经这里用 ``text.split("\\n")`` 的元素个数，文件末尾
+    有换行时每份文件会多计 1 行，与 `wc -l` 不一致——已修正）。
+
     无闭合围栏时视为没有 front-matter（行数 0，正文即全文）。
     """
     lines = text.split("\n")
     if not lines or lines[0].strip() != "---":
-        return 0, len(lines), ""
+        return 0, wc_l(text), ""
 
-    body = []
+    fm_body = []
     for i, line in enumerate(lines[1:], start=1):
         if line.strip() == "---":
-            return i + 1, len(lines) - (i + 1), "\n".join(body)
-        body.append(line)
-    return 0, len(lines), ""
+            rest = "\n".join(lines[i + 1:])
+            return i + 1, wc_l(rest), "\n".join(fm_body)
+        fm_body.append(line)
+    return 0, wc_l(text), ""
 
 
 def parse_front_matter(text: str) -> dict:

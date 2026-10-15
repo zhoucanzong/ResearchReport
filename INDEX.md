@@ -15,7 +15,7 @@
 | --- | --- |
 | **条目数**（`report.md`） | **43** |
 | 条目子文档数 | 22 |
-| 条目正文行数（剔除 front-matter） | 28,253 |
+| 条目正文行数（剔除 front-matter） | 28,210 |
 | 条目字节 | 1,580,003 B |
 | 带 front-matter 的条目 | 0 |
 | 带合法 `date` 的条目 | 0 |
@@ -30,10 +30,10 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| AIGC-Research | 17 | 18 | 12,920 | 625,871 B | [#AIGC-Research](#aigc-research) |
-| LLM-Research | 25 | 42 | 15,126 | 940,949 B | [#LLM-Research](#llm-research) |
-| Repo-Research | 1 | 8 | 207 | 13,183 B | [#Repo-Research](#repo-research) |
-| **合计** | **43** | **74** | **28,253** | **1,580,003 B** | — |
+| AIGC-Research | 17 | 18 | 12,903 | 625,871 B | [#AIGC-Research](#aigc-research) |
+| LLM-Research | 25 | 42 | 15,101 | 940,949 B | [#LLM-Research](#llm-research) |
+| Repo-Research | 1 | 8 | 206 | 13,183 B | [#Repo-Research](#repo-research) |
+| **合计** | **43** | **74** | **28,210** | **1,580,003 B** | — |
 
 ## 分面索引
 
@@ -55,10 +55,10 @@
 <summary><b>模型系列 ModelSeries（8 条目 / 0 子文档）</b></summary>
 
   <details>
-  <summary><b>Alibaba-Gen-research</b> · <code>AIGC-Research/ModelSeries/Alibaba-Gen-research/report.md</code> · 804 行 · —</summary>
+  <summary><b>Alibaba-Gen-research</b> · <code>AIGC-Research/ModelSeries/Alibaba-Gen-research/report.md</code> · 803 行 · —</summary>
   
 
-    * **条目**：[AIGC-Research/ModelSeries/Alibaba-Gen-research/report.md](<AIGC-Research/ModelSeries/Alibaba-Gen-research/report.md>)（804 行 / 36,092 B）
+    * **条目**：[AIGC-Research/ModelSeries/Alibaba-Gen-research/report.md](<AIGC-Research/ModelSeries/Alibaba-Gen-research/report.md>)（803 行 / 36,092 B）
     * **专题目录**：`AIGC-Research/ModelSeries/Alibaba-Gen-research`
     * **元数据**：type=`—` · domain=`AIGC-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（0）**
@@ -67,10 +67,10 @@
   </details>
 
   <details>
-  <summary><b>ByteDance-Gen-research</b> · <code>AIGC-Research/ModelSeries/ByteDance-Gen-research/report.md</code> · 712 行 · —</summary>
+  <summary><b>ByteDance-Gen-research</b> · <code>AIGC-Research/ModelSeries/ByteDance-Gen-research/report.md</code> · 711 行 · —</summary>
   
 
-    * **条目**：[AIGC-Research/ModelSeries/ByteDance-Gen-research/report.md](<AIGC-Research/ModelSeries/ByteDance-Gen-research/report.md>)（712 行 / 41,175 B）
+    * **条目**：[AIGC-Research/ModelSeries/ByteDance-Gen-research/report.md](<AIGC-Research/ModelSeries/ByteDance-Gen-research/report.md>)（711 行 / 41,175 B）
     * **专题目录**：`AIGC-Research/ModelSeries/ByteDance-Gen-research`
     * **元数据**：type=`—` · domain=`AIGC-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（0）**
@@ -79,10 +79,10 @@
   </details>
 
   <details>
-  <summary><b>Google-Gen-research</b> · <code>AIGC-Research/ModelSeries/Google-Gen-research/report.md</code> · 827 行 · —</summary>
+  <summary><b>Google-Gen-research</b> · <code>AIGC-Research/ModelSeries/Google-Gen-research/report.md</code> · 826 行 · —</summary>
   
 
-    * **条目**：[AIGC-Research/ModelSeries/Google-Gen-research/report.md](<AIGC-Research/ModelSeries/Google-Gen-research/report.md>)（827 行 / 33,598 B）
+    * **条目**：[AIGC-Research/ModelSeries/Google-Gen-research/report.md](<AIGC-Research/ModelSeries/Google-Gen-research/report.md>)（826 行 / 33,598 B）
     * **专题目录**：`AIGC-Research/ModelSeries/Google-Gen-research`
     * **元数据**：type=`—` · domain=`AIGC-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（0）**
@@ -91,10 +91,10 @@
   </details>
 
   <details>
-  <summary><b>Kling-research</b> · <code>AIGC-Research/ModelSeries/Kling-research/report.md</code> · 538 行 · —</summary>
+  <summary><b>Kling-research</b> · <code>AIGC-Research/ModelSeries/Kling-research/report.md</code> · 537 行 · —</summary>
   
 
-    * **条目**：[AIGC-Research/ModelSeries/Kling-research/report.md](<AIGC-Research/ModelSeries/Kling-research/report.md>)（538 行 / 28,134 B）
+    * **条目**：[AIGC-Research/ModelSeries/Kling-research/report.md](<AIGC-Research/ModelSeries/Kling-research/report.md>)（537 行 / 28,134 B）
     * **专题目录**：`AIGC-Research/ModelSeries/Kling-research`
     * **元数据**：type=`—` · domain=`AIGC-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（0）**
@@ -103,10 +103,10 @@
   </details>
 
   <details>
-  <summary><b>Midjourney-research</b> · <code>AIGC-Research/ModelSeries/Midjourney-research/report.md</code> · 588 行 · —</summary>
+  <summary><b>Midjourney-research</b> · <code>AIGC-Research/ModelSeries/Midjourney-research/report.md</code> · 587 行 · —</summary>
   
 
-    * **条目**：[AIGC-Research/ModelSeries/Midjourney-research/report.md](<AIGC-Research/ModelSeries/Midjourney-research/report.md>)（588 行 / 35,037 B）
+    * **条目**：[AIGC-Research/ModelSeries/Midjourney-research/report.md](<AIGC-Research/ModelSeries/Midjourney-research/report.md>)（587 行 / 35,037 B）
     * **专题目录**：`AIGC-Research/ModelSeries/Midjourney-research`
     * **元数据**：type=`—` · domain=`AIGC-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（0）**
@@ -115,10 +115,10 @@
   </details>
 
   <details>
-  <summary><b>OpenAI-Gen-research</b> · <code>AIGC-Research/ModelSeries/OpenAI-Gen-research/report.md</code> · 860 行 · —</summary>
+  <summary><b>OpenAI-Gen-research</b> · <code>AIGC-Research/ModelSeries/OpenAI-Gen-research/report.md</code> · 859 行 · —</summary>
   
 
-    * **条目**：[AIGC-Research/ModelSeries/OpenAI-Gen-research/report.md](<AIGC-Research/ModelSeries/OpenAI-Gen-research/report.md>)（860 行 / 36,915 B）
+    * **条目**：[AIGC-Research/ModelSeries/OpenAI-Gen-research/report.md](<AIGC-Research/ModelSeries/OpenAI-Gen-research/report.md>)（859 行 / 36,915 B）
     * **专题目录**：`AIGC-Research/ModelSeries/OpenAI-Gen-research`
     * **元数据**：type=`—` · domain=`AIGC-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（0）**
@@ -127,10 +127,10 @@
   </details>
 
   <details>
-  <summary><b>Runway-research</b> · <code>AIGC-Research/ModelSeries/Runway-research/report.md</code> · 733 行 · —</summary>
+  <summary><b>Runway-research</b> · <code>AIGC-Research/ModelSeries/Runway-research/report.md</code> · 732 行 · —</summary>
   
 
-    * **条目**：[AIGC-Research/ModelSeries/Runway-research/report.md](<AIGC-Research/ModelSeries/Runway-research/report.md>)（733 行 / 33,709 B）
+    * **条目**：[AIGC-Research/ModelSeries/Runway-research/report.md](<AIGC-Research/ModelSeries/Runway-research/report.md>)（732 行 / 33,709 B）
     * **专题目录**：`AIGC-Research/ModelSeries/Runway-research`
     * **元数据**：type=`—` · domain=`AIGC-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（0）**
@@ -139,10 +139,10 @@
   </details>
 
   <details>
-  <summary><b>StabilityAI-research</b> · <code>AIGC-Research/ModelSeries/StabilityAI-research/report.md</code> · 874 行 · —</summary>
+  <summary><b>StabilityAI-research</b> · <code>AIGC-Research/ModelSeries/StabilityAI-research/report.md</code> · 873 行 · —</summary>
   
 
-    * **条目**：[AIGC-Research/ModelSeries/StabilityAI-research/report.md](<AIGC-Research/ModelSeries/StabilityAI-research/report.md>)（874 行 / 48,275 B）
+    * **条目**：[AIGC-Research/ModelSeries/StabilityAI-research/report.md](<AIGC-Research/ModelSeries/StabilityAI-research/report.md>)（873 行 / 48,275 B）
     * **专题目录**：`AIGC-Research/ModelSeries/StabilityAI-research`
     * **元数据**：type=`—` · domain=`AIGC-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（0）**
@@ -156,10 +156,10 @@
 <summary><b>技术专题 TechnicalTopics（9 条目 / 0 子文档）</b></summary>
 
   <details>
-  <summary><b>3DGen-research</b> · <code>AIGC-Research/TechnicalTopics/3DGen-research/report.md</code> · 899 行 · —</summary>
+  <summary><b>3DGen-research</b> · <code>AIGC-Research/TechnicalTopics/3DGen-research/report.md</code> · 898 行 · —</summary>
   
 
-    * **条目**：[AIGC-Research/TechnicalTopics/3DGen-research/report.md](<AIGC-Research/TechnicalTopics/3DGen-research/report.md>)（899 行 / 46,655 B）
+    * **条目**：[AIGC-Research/TechnicalTopics/3DGen-research/report.md](<AIGC-Research/TechnicalTopics/3DGen-research/report.md>)（898 行 / 46,655 B）
     * **专题目录**：`AIGC-Research/TechnicalTopics/3DGen-research`
     * **元数据**：type=`—` · domain=`AIGC-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（0）**
@@ -168,10 +168,10 @@
   </details>
 
   <details>
-  <summary><b>AudioGen-research</b> · <code>AIGC-Research/TechnicalTopics/AudioGen-research/report.md</code> · 914 行 · —</summary>
+  <summary><b>AudioGen-research</b> · <code>AIGC-Research/TechnicalTopics/AudioGen-research/report.md</code> · 913 行 · —</summary>
   
 
-    * **条目**：[AIGC-Research/TechnicalTopics/AudioGen-research/report.md](<AIGC-Research/TechnicalTopics/AudioGen-research/report.md>)（914 行 / 41,460 B）
+    * **条目**：[AIGC-Research/TechnicalTopics/AudioGen-research/report.md](<AIGC-Research/TechnicalTopics/AudioGen-research/report.md>)（913 行 / 41,460 B）
     * **专题目录**：`AIGC-Research/TechnicalTopics/AudioGen-research`
     * **元数据**：type=`—` · domain=`AIGC-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（0）**
@@ -180,10 +180,10 @@
   </details>
 
   <details>
-  <summary><b>AvatarGen-research</b> · <code>AIGC-Research/TechnicalTopics/AvatarGen-research/report.md</code> · 593 行 · —</summary>
+  <summary><b>AvatarGen-research</b> · <code>AIGC-Research/TechnicalTopics/AvatarGen-research/report.md</code> · 592 行 · —</summary>
   
 
-    * **条目**：[AIGC-Research/TechnicalTopics/AvatarGen-research/report.md](<AIGC-Research/TechnicalTopics/AvatarGen-research/report.md>)（593 行 / 27,383 B）
+    * **条目**：[AIGC-Research/TechnicalTopics/AvatarGen-research/report.md](<AIGC-Research/TechnicalTopics/AvatarGen-research/report.md>)（592 行 / 27,383 B）
     * **专题目录**：`AIGC-Research/TechnicalTopics/AvatarGen-research`
     * **元数据**：type=`—` · domain=`AIGC-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（0）**
@@ -192,10 +192,10 @@
   </details>
 
   <details>
-  <summary><b>ControllableGen-research</b> · <code>AIGC-Research/TechnicalTopics/ControllableGen-research/report.md</code> · 924 行 · —</summary>
+  <summary><b>ControllableGen-research</b> · <code>AIGC-Research/TechnicalTopics/ControllableGen-research/report.md</code> · 923 行 · —</summary>
   
 
-    * **条目**：[AIGC-Research/TechnicalTopics/ControllableGen-research/report.md](<AIGC-Research/TechnicalTopics/ControllableGen-research/report.md>)（924 行 / 43,040 B）
+    * **条目**：[AIGC-Research/TechnicalTopics/ControllableGen-research/report.md](<AIGC-Research/TechnicalTopics/ControllableGen-research/report.md>)（923 行 / 43,040 B）
     * **专题目录**：`AIGC-Research/TechnicalTopics/ControllableGen-research`
     * **元数据**：type=`—` · domain=`AIGC-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（0）**
@@ -204,10 +204,10 @@
   </details>
 
   <details>
-  <summary><b>DiT-research</b> · <code>AIGC-Research/TechnicalTopics/DiT-research/report.md</code> · 893 行 · —</summary>
+  <summary><b>DiT-research</b> · <code>AIGC-Research/TechnicalTopics/DiT-research/report.md</code> · 892 行 · —</summary>
   
 
-    * **条目**：[AIGC-Research/TechnicalTopics/DiT-research/report.md](<AIGC-Research/TechnicalTopics/DiT-research/report.md>)（893 行 / 45,829 B）
+    * **条目**：[AIGC-Research/TechnicalTopics/DiT-research/report.md](<AIGC-Research/TechnicalTopics/DiT-research/report.md>)（892 行 / 45,829 B）
     * **专题目录**：`AIGC-Research/TechnicalTopics/DiT-research`
     * **元数据**：type=`—` · domain=`AIGC-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（0）**
@@ -216,10 +216,10 @@
   </details>
 
   <details>
-  <summary><b>DiffusionModels-research</b> · <code>AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md</code> · 856 行 · —</summary>
+  <summary><b>DiffusionModels-research</b> · <code>AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md</code> · 855 行 · —</summary>
   
 
-    * **条目**：[AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md](<AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md>)（856 行 / 36,106 B）
+    * **条目**：[AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md](<AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md>)（855 行 / 36,106 B）
     * **专题目录**：`AIGC-Research/TechnicalTopics/DiffusionModels-research`
     * **元数据**：type=`—` · domain=`AIGC-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（0）**
@@ -228,10 +228,10 @@
   </details>
 
   <details>
-  <summary><b>ImageEditing-research</b> · <code>AIGC-Research/TechnicalTopics/ImageEditing-research/report.md</code> · 835 行 · —</summary>
+  <summary><b>ImageEditing-research</b> · <code>AIGC-Research/TechnicalTopics/ImageEditing-research/report.md</code> · 834 行 · —</summary>
   
 
-    * **条目**：[AIGC-Research/TechnicalTopics/ImageEditing-research/report.md](<AIGC-Research/TechnicalTopics/ImageEditing-research/report.md>)（835 行 / 42,897 B）
+    * **条目**：[AIGC-Research/TechnicalTopics/ImageEditing-research/report.md](<AIGC-Research/TechnicalTopics/ImageEditing-research/report.md>)（834 行 / 42,897 B）
     * **专题目录**：`AIGC-Research/TechnicalTopics/ImageEditing-research`
     * **元数据**：type=`—` · domain=`AIGC-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（0）**
@@ -240,10 +240,10 @@
   </details>
 
   <details>
-  <summary><b>VideoGen-research</b> · <code>AIGC-Research/TechnicalTopics/VideoGen-research/report.md</code> · 899 行 · —</summary>
+  <summary><b>VideoGen-research</b> · <code>AIGC-Research/TechnicalTopics/VideoGen-research/report.md</code> · 898 行 · —</summary>
   
 
-    * **条目**：[AIGC-Research/TechnicalTopics/VideoGen-research/report.md](<AIGC-Research/TechnicalTopics/VideoGen-research/report.md>)（899 行 / 34,716 B）
+    * **条目**：[AIGC-Research/TechnicalTopics/VideoGen-research/report.md](<AIGC-Research/TechnicalTopics/VideoGen-research/report.md>)（898 行 / 34,716 B）
     * **专题目录**：`AIGC-Research/TechnicalTopics/VideoGen-research`
     * **元数据**：type=`—` · domain=`AIGC-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（0）**
@@ -252,10 +252,10 @@
   </details>
 
   <details>
-  <summary><b>WorldModels-research</b> · <code>AIGC-Research/TechnicalTopics/WorldModels-research/report.md</code> · 171 行 · —</summary>
+  <summary><b>WorldModels-research</b> · <code>AIGC-Research/TechnicalTopics/WorldModels-research/report.md</code> · 170 行 · —</summary>
   
 
-    * **条目**：[AIGC-Research/TechnicalTopics/WorldModels-research/report.md](<AIGC-Research/TechnicalTopics/WorldModels-research/report.md>)（171 行 / 14,850 B）
+    * **条目**：[AIGC-Research/TechnicalTopics/WorldModels-research/report.md](<AIGC-Research/TechnicalTopics/WorldModels-research/report.md>)（170 行 / 14,850 B）
     * **专题目录**：`AIGC-Research/TechnicalTopics/WorldModels-research`
     * **元数据**：type=`—` · domain=`AIGC-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（0）**
@@ -271,10 +271,10 @@
 <summary><b>模型系列 ModelSeries（15 条目 / 5 子文档）</b></summary>
 
   <details>
-  <summary><b>Claude-research</b> · <code>LLM-Research/ModelSeries/Claude-research/report.md</code> · 612 行 · —</summary>
+  <summary><b>Claude-research</b> · <code>LLM-Research/ModelSeries/Claude-research/report.md</code> · 611 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/ModelSeries/Claude-research/report.md](<LLM-Research/ModelSeries/Claude-research/report.md>)（612 行 / 47,565 B）
+    * **条目**：[LLM-Research/ModelSeries/Claude-research/report.md](<LLM-Research/ModelSeries/Claude-research/report.md>)（611 行 / 47,565 B）
     * **专题目录**：`LLM-Research/ModelSeries/Claude-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（0）**
@@ -283,23 +283,23 @@
   </details>
 
   <details>
-  <summary><b>DeepSeek-research</b> · <code>LLM-Research/ModelSeries/DeepSeek-research/report.md</code> · 752 行 · —</summary>
+  <summary><b>DeepSeek-research</b> · <code>LLM-Research/ModelSeries/DeepSeek-research/report.md</code> · 751 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/ModelSeries/DeepSeek-research/report.md](<LLM-Research/ModelSeries/DeepSeek-research/report.md>)（752 行 / 58,844 B）
+    * **条目**：[LLM-Research/ModelSeries/DeepSeek-research/report.md](<LLM-Research/ModelSeries/DeepSeek-research/report.md>)（751 行 / 58,844 B）
     * **专题目录**：`LLM-Research/ModelSeries/DeepSeek-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（2）**
-        * [deepseek-multimodal-and-specialized.md](<LLM-Research/ModelSeries/DeepSeek-research/deepseek-multimodal-and-specialized.md>) — 368 行 / 24,706 B
-        * [deepseek-text-models.md](<LLM-Research/ModelSeries/DeepSeek-research/deepseek-text-models.md>) — 408 行 / 33,119 B
+        * [deepseek-multimodal-and-specialized.md](<LLM-Research/ModelSeries/DeepSeek-research/deepseek-multimodal-and-specialized.md>) — 367 行 / 24,706 B
+        * [deepseek-text-models.md](<LLM-Research/ModelSeries/DeepSeek-research/deepseek-text-models.md>) — 407 行 / 33,119 B
 
   </details>
 
   <details>
-  <summary><b>Doubao-Seed-research</b> · <code>LLM-Research/ModelSeries/Doubao-Seed-research/report.md</code> · 644 行 · —</summary>
+  <summary><b>Doubao-Seed-research</b> · <code>LLM-Research/ModelSeries/Doubao-Seed-research/report.md</code> · 643 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/ModelSeries/Doubao-Seed-research/report.md](<LLM-Research/ModelSeries/Doubao-Seed-research/report.md>)（644 行 / 27,470 B）
+    * **条目**：[LLM-Research/ModelSeries/Doubao-Seed-research/report.md](<LLM-Research/ModelSeries/Doubao-Seed-research/report.md>)（643 行 / 27,470 B）
     * **专题目录**：`LLM-Research/ModelSeries/Doubao-Seed-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（0）**
@@ -308,10 +308,10 @@
   </details>
 
   <details>
-  <summary><b>GLM-research</b> · <code>LLM-Research/ModelSeries/GLM-research/report.md</code> · 524 行 · —</summary>
+  <summary><b>GLM-research</b> · <code>LLM-Research/ModelSeries/GLM-research/report.md</code> · 523 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/ModelSeries/GLM-research/report.md](<LLM-Research/ModelSeries/GLM-research/report.md>)（524 行 / 39,747 B）
+    * **条目**：[LLM-Research/ModelSeries/GLM-research/report.md](<LLM-Research/ModelSeries/GLM-research/report.md>)（523 行 / 39,747 B）
     * **专题目录**：`LLM-Research/ModelSeries/GLM-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（0）**
@@ -320,10 +320,10 @@
   </details>
 
   <details>
-  <summary><b>GPT-research</b> · <code>LLM-Research/ModelSeries/GPT-research/report.md</code> · 760 行 · —</summary>
+  <summary><b>GPT-research</b> · <code>LLM-Research/ModelSeries/GPT-research/report.md</code> · 759 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/ModelSeries/GPT-research/report.md](<LLM-Research/ModelSeries/GPT-research/report.md>)（760 行 / 57,261 B）
+    * **条目**：[LLM-Research/ModelSeries/GPT-research/report.md](<LLM-Research/ModelSeries/GPT-research/report.md>)（759 行 / 57,261 B）
     * **专题目录**：`LLM-Research/ModelSeries/GPT-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（0）**
@@ -332,10 +332,10 @@
   </details>
 
   <details>
-  <summary><b>Gemini-research</b> · <code>LLM-Research/ModelSeries/Gemini-research/report.md</code> · 789 行 · —</summary>
+  <summary><b>Gemini-research</b> · <code>LLM-Research/ModelSeries/Gemini-research/report.md</code> · 788 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/ModelSeries/Gemini-research/report.md](<LLM-Research/ModelSeries/Gemini-research/report.md>)（789 行 / 34,614 B）
+    * **条目**：[LLM-Research/ModelSeries/Gemini-research/report.md](<LLM-Research/ModelSeries/Gemini-research/report.md>)（788 行 / 34,614 B）
     * **专题目录**：`LLM-Research/ModelSeries/Gemini-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（0）**
@@ -344,10 +344,10 @@
   </details>
 
   <details>
-  <summary><b>Grok-research</b> · <code>LLM-Research/ModelSeries/Grok-research/report.md</code> · 470 行 · —</summary>
+  <summary><b>Grok-research</b> · <code>LLM-Research/ModelSeries/Grok-research/report.md</code> · 469 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/ModelSeries/Grok-research/report.md](<LLM-Research/ModelSeries/Grok-research/report.md>)（470 行 / 32,612 B）
+    * **条目**：[LLM-Research/ModelSeries/Grok-research/report.md](<LLM-Research/ModelSeries/Grok-research/report.md>)（469 行 / 32,612 B）
     * **专题目录**：`LLM-Research/ModelSeries/Grok-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（0）**
@@ -356,10 +356,10 @@
   </details>
 
   <details>
-  <summary><b>Hunyuan-research</b> · <code>LLM-Research/ModelSeries/Hunyuan-research/report.md</code> · 526 行 · —</summary>
+  <summary><b>Hunyuan-research</b> · <code>LLM-Research/ModelSeries/Hunyuan-research/report.md</code> · 525 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/ModelSeries/Hunyuan-research/report.md](<LLM-Research/ModelSeries/Hunyuan-research/report.md>)（526 行 / 36,518 B）
+    * **条目**：[LLM-Research/ModelSeries/Hunyuan-research/report.md](<LLM-Research/ModelSeries/Hunyuan-research/report.md>)（525 行 / 36,518 B）
     * **专题目录**：`LLM-Research/ModelSeries/Hunyuan-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（0）**
@@ -368,10 +368,10 @@
   </details>
 
   <details>
-  <summary><b>Kimi-research</b> · <code>LLM-Research/ModelSeries/Kimi-research/report.md</code> · 432 行 · —</summary>
+  <summary><b>Kimi-research</b> · <code>LLM-Research/ModelSeries/Kimi-research/report.md</code> · 431 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/ModelSeries/Kimi-research/report.md](<LLM-Research/ModelSeries/Kimi-research/report.md>)（432 行 / 33,338 B）
+    * **条目**：[LLM-Research/ModelSeries/Kimi-research/report.md](<LLM-Research/ModelSeries/Kimi-research/report.md>)（431 行 / 33,338 B）
     * **专题目录**：`LLM-Research/ModelSeries/Kimi-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（0）**
@@ -380,10 +380,10 @@
   </details>
 
   <details>
-  <summary><b>LLaMA-research</b> · <code>LLM-Research/ModelSeries/LLaMA-research/report.md</code> · 484 行 · —</summary>
+  <summary><b>LLaMA-research</b> · <code>LLM-Research/ModelSeries/LLaMA-research/report.md</code> · 483 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/ModelSeries/LLaMA-research/report.md](<LLM-Research/ModelSeries/LLaMA-research/report.md>)（484 行 / 42,535 B）
+    * **条目**：[LLM-Research/ModelSeries/LLaMA-research/report.md](<LLM-Research/ModelSeries/LLaMA-research/report.md>)（483 行 / 42,535 B）
     * **专题目录**：`LLM-Research/ModelSeries/LLaMA-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（0）**
@@ -392,10 +392,10 @@
   </details>
 
   <details>
-  <summary><b>MiMo-research</b> · <code>LLM-Research/ModelSeries/MiMo-research/report.md</code> · 511 行 · —</summary>
+  <summary><b>MiMo-research</b> · <code>LLM-Research/ModelSeries/MiMo-research/report.md</code> · 510 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/ModelSeries/MiMo-research/report.md](<LLM-Research/ModelSeries/MiMo-research/report.md>)（511 行 / 34,754 B）
+    * **条目**：[LLM-Research/ModelSeries/MiMo-research/report.md](<LLM-Research/ModelSeries/MiMo-research/report.md>)（510 行 / 34,754 B）
     * **专题目录**：`LLM-Research/ModelSeries/MiMo-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（0）**
@@ -404,10 +404,10 @@
   </details>
 
   <details>
-  <summary><b>MiniMax-research</b> · <code>LLM-Research/ModelSeries/MiniMax-research/report.md</code> · 518 行 · —</summary>
+  <summary><b>MiniMax-research</b> · <code>LLM-Research/ModelSeries/MiniMax-research/report.md</code> · 517 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/ModelSeries/MiniMax-research/report.md](<LLM-Research/ModelSeries/MiniMax-research/report.md>)（518 行 / 41,290 B）
+    * **条目**：[LLM-Research/ModelSeries/MiniMax-research/report.md](<LLM-Research/ModelSeries/MiniMax-research/report.md>)（517 行 / 41,290 B）
     * **专题目录**：`LLM-Research/ModelSeries/MiniMax-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（0）**
@@ -416,10 +416,10 @@
   </details>
 
   <details>
-  <summary><b>Mistral-research</b> · <code>LLM-Research/ModelSeries/Mistral-research/report.md</code> · 496 行 · —</summary>
+  <summary><b>Mistral-research</b> · <code>LLM-Research/ModelSeries/Mistral-research/report.md</code> · 495 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/ModelSeries/Mistral-research/report.md](<LLM-Research/ModelSeries/Mistral-research/report.md>)（496 行 / 29,259 B）
+    * **条目**：[LLM-Research/ModelSeries/Mistral-research/report.md](<LLM-Research/ModelSeries/Mistral-research/report.md>)（495 行 / 29,259 B）
     * **专题目录**：`LLM-Research/ModelSeries/Mistral-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（0）**
@@ -428,10 +428,10 @@
   </details>
 
   <details>
-  <summary><b>Nemotron-research</b> · <code>LLM-Research/ModelSeries/Nemotron-research/report.md</code> · 466 行 · —</summary>
+  <summary><b>Nemotron-research</b> · <code>LLM-Research/ModelSeries/Nemotron-research/report.md</code> · 465 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/ModelSeries/Nemotron-research/report.md](<LLM-Research/ModelSeries/Nemotron-research/report.md>)（466 行 / 32,700 B）
+    * **条目**：[LLM-Research/ModelSeries/Nemotron-research/report.md](<LLM-Research/ModelSeries/Nemotron-research/report.md>)（465 行 / 32,700 B）
     * **专题目录**：`LLM-Research/ModelSeries/Nemotron-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（0）**
@@ -440,16 +440,16 @@
   </details>
 
   <details>
-  <summary><b>Qwen-research</b> · <code>LLM-Research/ModelSeries/Qwen-research/report.md</code> · 919 行 · —</summary>
+  <summary><b>Qwen-research</b> · <code>LLM-Research/ModelSeries/Qwen-research/report.md</code> · 918 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/ModelSeries/Qwen-research/report.md](<LLM-Research/ModelSeries/Qwen-research/report.md>)（919 行 / 59,278 B）
+    * **条目**：[LLM-Research/ModelSeries/Qwen-research/report.md](<LLM-Research/ModelSeries/Qwen-research/report.md>)（918 行 / 59,278 B）
     * **专题目录**：`LLM-Research/ModelSeries/Qwen-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（3）**
-        * [qwen-omni-and-ecosystem.md](<LLM-Research/ModelSeries/Qwen-research/qwen-omni-and-ecosystem.md>) — 564 行 / 22,446 B
-        * [qwen-text-models.md](<LLM-Research/ModelSeries/Qwen-research/qwen-text-models.md>) — 490 行 / 20,718 B
-        * [qwen-vl-models.md](<LLM-Research/ModelSeries/Qwen-research/qwen-vl-models.md>) — 544 行 / 21,664 B
+        * [qwen-omni-and-ecosystem.md](<LLM-Research/ModelSeries/Qwen-research/qwen-omni-and-ecosystem.md>) — 563 行 / 22,446 B
+        * [qwen-text-models.md](<LLM-Research/ModelSeries/Qwen-research/qwen-text-models.md>) — 489 行 / 20,718 B
+        * [qwen-vl-models.md](<LLM-Research/ModelSeries/Qwen-research/qwen-vl-models.md>) — 543 行 / 21,664 B
 
   </details>
 
@@ -459,10 +459,10 @@
 <summary><b>技术专题 TechnicalTopics（10 条目 / 11 子文档）</b></summary>
 
   <details>
-  <summary><b>Agent-research</b> · <code>LLM-Research/TechnicalTopics/Agent-research/report.md</code> · 699 行 · —</summary>
+  <summary><b>Agent-research</b> · <code>LLM-Research/TechnicalTopics/Agent-research/report.md</code> · 698 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/TechnicalTopics/Agent-research/report.md](<LLM-Research/TechnicalTopics/Agent-research/report.md>)（699 行 / 31,433 B）
+    * **条目**：[LLM-Research/TechnicalTopics/Agent-research/report.md](<LLM-Research/TechnicalTopics/Agent-research/report.md>)（698 行 / 31,433 B）
     * **专题目录**：`LLM-Research/TechnicalTopics/Agent-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（0）**
@@ -471,10 +471,10 @@
   </details>
 
   <details>
-  <summary><b>Alignment-research</b> · <code>LLM-Research/TechnicalTopics/Alignment-research/report.md</code> · 589 行 · —</summary>
+  <summary><b>Alignment-research</b> · <code>LLM-Research/TechnicalTopics/Alignment-research/report.md</code> · 588 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/TechnicalTopics/Alignment-research/report.md](<LLM-Research/TechnicalTopics/Alignment-research/report.md>)（589 行 / 35,712 B）
+    * **条目**：[LLM-Research/TechnicalTopics/Alignment-research/report.md](<LLM-Research/TechnicalTopics/Alignment-research/report.md>)（588 行 / 35,712 B）
     * **专题目录**：`LLM-Research/TechnicalTopics/Alignment-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（0）**
@@ -483,10 +483,10 @@
   </details>
 
   <details>
-  <summary><b>LongContext-research</b> · <code>LLM-Research/TechnicalTopics/LongContext-research/report.md</code> · 609 行 · —</summary>
+  <summary><b>LongContext-research</b> · <code>LLM-Research/TechnicalTopics/LongContext-research/report.md</code> · 608 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/TechnicalTopics/LongContext-research/report.md](<LLM-Research/TechnicalTopics/LongContext-research/report.md>)（609 行 / 30,373 B）
+    * **条目**：[LLM-Research/TechnicalTopics/LongContext-research/report.md](<LLM-Research/TechnicalTopics/LongContext-research/report.md>)（608 行 / 30,373 B）
     * **专题目录**：`LLM-Research/TechnicalTopics/LongContext-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（0）**
@@ -495,10 +495,10 @@
   </details>
 
   <details>
-  <summary><b>MoE-research</b> · <code>LLM-Research/TechnicalTopics/MoE-research/report.md</code> · 406 行 · —</summary>
+  <summary><b>MoE-research</b> · <code>LLM-Research/TechnicalTopics/MoE-research/report.md</code> · 405 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/TechnicalTopics/MoE-research/report.md](<LLM-Research/TechnicalTopics/MoE-research/report.md>)（406 行 / 27,806 B）
+    * **条目**：[LLM-Research/TechnicalTopics/MoE-research/report.md](<LLM-Research/TechnicalTopics/MoE-research/report.md>)（405 行 / 27,806 B）
     * **专题目录**：`LLM-Research/TechnicalTopics/MoE-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（0）**
@@ -507,10 +507,10 @@
   </details>
 
   <details>
-  <summary><b>QuantizationEdge-research</b> · <code>LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md</code> · 778 行 · —</summary>
+  <summary><b>QuantizationEdge-research</b> · <code>LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md</code> · 777 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md](<LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md>)（778 行 / 34,205 B）
+    * **条目**：[LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md](<LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md>)（777 行 / 34,205 B）
     * **专题目录**：`LLM-Research/TechnicalTopics/QuantizationEdge-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（0）**
@@ -519,10 +519,10 @@
   </details>
 
   <details>
-  <summary><b>RAG-research</b> · <code>LLM-Research/TechnicalTopics/RAG-research/report.md</code> · 852 行 · —</summary>
+  <summary><b>RAG-research</b> · <code>LLM-Research/TechnicalTopics/RAG-research/report.md</code> · 851 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/TechnicalTopics/RAG-research/report.md](<LLM-Research/TechnicalTopics/RAG-research/report.md>)（852 行 / 44,423 B）
+    * **条目**：[LLM-Research/TechnicalTopics/RAG-research/report.md](<LLM-Research/TechnicalTopics/RAG-research/report.md>)（851 行 / 44,423 B）
     * **专题目录**：`LLM-Research/TechnicalTopics/RAG-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（0）**
@@ -531,10 +531,10 @@
   </details>
 
   <details>
-  <summary><b>ReasoningModels-research</b> · <code>LLM-Research/TechnicalTopics/ReasoningModels-research/report.md</code> · 682 行 · —</summary>
+  <summary><b>ReasoningModels-research</b> · <code>LLM-Research/TechnicalTopics/ReasoningModels-research/report.md</code> · 681 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/TechnicalTopics/ReasoningModels-research/report.md](<LLM-Research/TechnicalTopics/ReasoningModels-research/report.md>)（682 行 / 34,752 B）
+    * **条目**：[LLM-Research/TechnicalTopics/ReasoningModels-research/report.md](<LLM-Research/TechnicalTopics/ReasoningModels-research/report.md>)（681 行 / 34,752 B）
     * **专题目录**：`LLM-Research/TechnicalTopics/ReasoningModels-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（0）**
@@ -543,32 +543,32 @@
   </details>
 
   <details>
-  <summary><b>SpeculativeDecoding-research</b> · <code>LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md</code> · 369 行 · —</summary>
+  <summary><b>SpeculativeDecoding-research</b> · <code>LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md</code> · 368 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md>)（369 行 / 33,695 B）
+    * **条目**：[LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md>)（368 行 / 33,695 B）
     * **专题目录**：`LLM-Research/TechnicalTopics/SpeculativeDecoding-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（11）**
-        * [speculative-block-diffusion.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-block-diffusion.md>) — 230 行 / 18,265 B
-        * [speculative-cascade-heterogeneous.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-cascade-heterogeneous.md>) — 141 行 / 11,588 B
-        * [speculative-classical-and-self.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-classical-and-self.md>) — 157 行 / 11,839 B
-        * [speculative-domain-language.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-domain-language.md>) — 182 行 / 14,309 B
-        * [speculative-draft-training-2026.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-draft-training-2026.md>) — 199 行 / 15,294 B
-        * [speculative-eagle-series.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-eagle-series.md>) — 112 行 / 11,497 B
-        * [speculative-edge-cloud-hardware.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-edge-cloud-hardware.md>) — 182 行 / 17,902 B
-        * [speculative-multimodal.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-multimodal.md>) — 131 行 / 10,512 B
-        * [speculative-stochastic-verification.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-stochastic-verification.md>) — 233 行 / 24,835 B
-        * [speculative-systems-and-frameworks.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-systems-and-frameworks.md>) — 195 行 / 16,560 B
-        * [speculative-training-optimization.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-training-optimization.md>) — 116 行 / 11,340 B
+        * [speculative-block-diffusion.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-block-diffusion.md>) — 229 行 / 18,265 B
+        * [speculative-cascade-heterogeneous.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-cascade-heterogeneous.md>) — 140 行 / 11,588 B
+        * [speculative-classical-and-self.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-classical-and-self.md>) — 156 行 / 11,839 B
+        * [speculative-domain-language.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-domain-language.md>) — 181 行 / 14,309 B
+        * [speculative-draft-training-2026.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-draft-training-2026.md>) — 198 行 / 15,294 B
+        * [speculative-eagle-series.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-eagle-series.md>) — 111 行 / 11,497 B
+        * [speculative-edge-cloud-hardware.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-edge-cloud-hardware.md>) — 181 行 / 17,902 B
+        * [speculative-multimodal.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-multimodal.md>) — 130 行 / 10,512 B
+        * [speculative-stochastic-verification.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-stochastic-verification.md>) — 232 行 / 24,835 B
+        * [speculative-systems-and-frameworks.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-systems-and-frameworks.md>) — 194 行 / 16,560 B
+        * [speculative-training-optimization.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-training-optimization.md>) — 115 行 / 11,340 B
 
   </details>
 
   <details>
-  <summary><b>TrainingInfra-research</b> · <code>LLM-Research/TechnicalTopics/TrainingInfra-research/report.md</code> · 721 行 · —</summary>
+  <summary><b>TrainingInfra-research</b> · <code>LLM-Research/TechnicalTopics/TrainingInfra-research/report.md</code> · 720 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/TechnicalTopics/TrainingInfra-research/report.md](<LLM-Research/TechnicalTopics/TrainingInfra-research/report.md>)（721 行 / 31,849 B）
+    * **条目**：[LLM-Research/TechnicalTopics/TrainingInfra-research/report.md](<LLM-Research/TechnicalTopics/TrainingInfra-research/report.md>)（720 行 / 31,849 B）
     * **专题目录**：`LLM-Research/TechnicalTopics/TrainingInfra-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（0）**
@@ -577,10 +577,10 @@
   </details>
 
   <details>
-  <summary><b>VLM-research</b> · <code>LLM-Research/TechnicalTopics/VLM-research/report.md</code> · 518 行 · —</summary>
+  <summary><b>VLM-research</b> · <code>LLM-Research/TechnicalTopics/VLM-research/report.md</code> · 517 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/TechnicalTopics/VLM-research/report.md](<LLM-Research/TechnicalTopics/VLM-research/report.md>)（518 行 / 28,916 B）
+    * **条目**：[LLM-Research/TechnicalTopics/VLM-research/report.md](<LLM-Research/TechnicalTopics/VLM-research/report.md>)（517 行 / 28,916 B）
     * **专题目录**：`LLM-Research/TechnicalTopics/VLM-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（0）**
@@ -596,19 +596,19 @@
 <summary><b>其它 Other（1 条目 / 6 子文档）</b></summary>
 
   <details>
-  <summary><b>nemotron-tri-mode-diffusion</b> · <code>Repo-Research/nemotron-tri-mode-diffusion/report.md</code> · 207 行 · —</summary>
+  <summary><b>nemotron-tri-mode-diffusion</b> · <code>Repo-Research/nemotron-tri-mode-diffusion/report.md</code> · 206 行 · —</summary>
   
 
-    * **条目**：[Repo-Research/nemotron-tri-mode-diffusion/report.md](<Repo-Research/nemotron-tri-mode-diffusion/report.md>)（207 行 / 13,183 B）
+    * **条目**：[Repo-Research/nemotron-tri-mode-diffusion/report.md](<Repo-Research/nemotron-tri-mode-diffusion/report.md>)（206 行 / 13,183 B）
     * **专题目录**：`Repo-Research/nemotron-tri-mode-diffusion`
     * **元数据**：type=`—` · domain=`Repo-Research` · subject=`nemotron-tri-mode-diffusion` · date=`—` · status=`—`
     * **子文档（6）**
-        * [knowledge-graph.md](<Repo-Research/nemotron-tri-mode-diffusion/knowledge-graph.md>) — 137 行 / 10,088 B
-        * [notes/structured-reading.md](<Repo-Research/nemotron-tri-mode-diffusion/notes/structured-reading.md>) — 170 行 / 10,416 B
-        * [plan.md](<Repo-Research/nemotron-tri-mode-diffusion/plan.md>) — 29 行 / 2,561 B
-        * [raw-extracts/nemotron-tri-mode-fulltext.md](<Repo-Research/nemotron-tri-mode-diffusion/raw-extracts/nemotron-tri-mode-fulltext.md>) — 2431 行 / 98,525 B
-        * [raw-extracts/pdf-fu_等__nemotronlabsdiffusion_a_trimode_language_model_unifying_autoregressive_dif.md](<Repo-Research/nemotron-tri-mode-diffusion/raw-extracts/pdf-fu_等__nemotronlabsdiffusion_a_trimode_language_model_unifying_autoregressive_dif.md>) — 29 行 / 1,141 B
-        * [sources-index.md](<Repo-Research/nemotron-tri-mode-diffusion/sources-index.md>) — 42 行 / 2,363 B
+        * [knowledge-graph.md](<Repo-Research/nemotron-tri-mode-diffusion/knowledge-graph.md>) — 136 行 / 10,088 B
+        * [notes/structured-reading.md](<Repo-Research/nemotron-tri-mode-diffusion/notes/structured-reading.md>) — 169 行 / 10,416 B
+        * [plan.md](<Repo-Research/nemotron-tri-mode-diffusion/plan.md>) — 28 行 / 2,561 B
+        * [raw-extracts/nemotron-tri-mode-fulltext.md](<Repo-Research/nemotron-tri-mode-diffusion/raw-extracts/nemotron-tri-mode-fulltext.md>) — 2430 行 / 98,525 B
+        * [raw-extracts/pdf-fu_等__nemotronlabsdiffusion_a_trimode_language_model_unifying_autoregressive_dif.md](<Repo-Research/nemotron-tri-mode-diffusion/raw-extracts/pdf-fu_等__nemotronlabsdiffusion_a_trimode_language_model_unifying_autoregressive_dif.md>) — 28 行 / 1,141 B
+        * [sources-index.md](<Repo-Research/nemotron-tri-mode-diffusion/sources-index.md>) — 41 行 / 2,363 B
 
   </details>
 
@@ -620,9 +620,9 @@
 
 | 文档 | 所属库 | 行数 | 字节 |
 | --- | --- | --: | --: |
-| [AIGC-Research/README.md](<AIGC-Research/README.md>) | AIGC-Research | 128 | 7,375 B |
-| [LLM-Research/README.md](<LLM-Research/README.md>) | LLM-Research | 173 | 12,502 B |
-| [Repo-Research/mini-swe-agent-research/mini-swe-agent-deep-report.md](<Repo-Research/mini-swe-agent-research/mini-swe-agent-deep-report.md>) | Repo-Research | 736 | 34,490 B |
+| [AIGC-Research/README.md](<AIGC-Research/README.md>) | AIGC-Research | 129 | 7,754 B |
+| [LLM-Research/README.md](<LLM-Research/README.md>) | LLM-Research | 172 | 12,502 B |
+| [Repo-Research/mini-swe-agent-research/mini-swe-agent-deep-report.md](<Repo-Research/mini-swe-agent-research/mini-swe-agent-deep-report.md>) | Repo-Research | 735 | 34,490 B |
 
 
 ## 说明

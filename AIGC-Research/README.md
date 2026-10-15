@@ -6,11 +6,11 @@
 
 > ⚠️ **重要声明**：本知识库所有报告均由 AI Agent 自动调研生成，信息来源于公开网络搜索、第三方评测站点、社交媒体及行业媒体报道。由于厂商官方披露程度不一，部分日期、参数、benchmark 数据可能存在错误、过时或未经证实的情况。**所有内容仅供参考，不构成权威结论，建议读者直接查阅各厂商官方渠道获取最新准确信息。**
 
-覆盖 **8 个模型 / 系列 + 8 个技术专题** · 重点关注 **模型结构演进**
+覆盖 **8 个模型 / 系列 + 9 个技术专题** · 重点关注 **模型结构演进**
 
 [![Monorepo](https://img.shields.io/badge/monorepo-ResearchReport-6f42c1?style=flat-square)](https://github.com/zhoucanzong/ResearchReport)
-[![Reports](https://img.shields.io/badge/Reports-16-blue?style=flat-square)](.)
-[![Files](https://img.shields.io/badge/Files-16-green?style=flat-square)](.)
+[![Reports](https://img.shields.io/badge/Reports-17-blue?style=flat-square)](.)
+[![Files](https://img.shields.io/badge/Files-17-green?style=flat-square)](.)
 
 </div>
 
@@ -56,8 +56,9 @@
 | 6  | 🔬 | [**AudioGen**](./TechnicalTopics/AudioGen-research/) | 音频/音乐生成 | 1 | AudioLDM→MusicLM→Suno/Udio，扩散+自回归+流匹配音频架构 |
 | 7  | 🔬 | [**AvatarGen**](./TechnicalTopics/AvatarGen-research/) | 数字人/Avatar 生成 | 1 | Wav2Lip→SadTalker→OmniHuman-1，CNN→3DMM→DiT 统一生成 |
 | 8  | 🔬 | [**ImageEditing**](./TechnicalTopics/ImageEditing-research/) | 图像编辑与修复 | 1 | GAN→InstructPix2Pix→DiT Joint Attention→Agentic 编辑架构演进 |
+| 9  | 🔬 | [**WorldModels**](./TechnicalTopics/WorldModels-research/) | 世界模型 | 1 | action 条件化视频/3D 生成、潜空间预测（JEPA/Dreamer）、world foundation model 平台；判据 = action 条件化 + 系统可调用 + 动力学自数据学得 |
 
-> **🔬 技术专题 8 个** &nbsp;|&nbsp; 共 **16 份** Markdown 报告
+> **🔬 技术专题 9 个** &nbsp;|&nbsp; 共 **17 份** Markdown 报告
 
 ---
 
@@ -75,7 +76,7 @@ AIGC-research/
 │   ├── ByteDance-Gen-research/   #   Seedance 1.0→2.0 多模态 cinematic
 │   └── Alibaba-Gen-research/     #   通义万相 Wan 2.1/2.2/2.6 开源 DiT
 │
-└── TechnicalTopics/                # 技术专题报告（8 个）
+└── TechnicalTopics/                # 技术专题报告（9 个）
     ├── DiffusionModels-research/   #   扩散模型基础框架与采样加速
     ├── DiT-research/               #   U-Net→DiT 架构革命与 Scaling Law
     ├── VideoGen-research/          #   视频生成时序建模与 3D DiT
@@ -83,7 +84,8 @@ AIGC-research/
     ├── 3DGen-research/             #   3D 生成 NeRF→Gaussian Splatting
     ├── AudioGen-research/          #   音频生成扩散+自回归+流匹配
     ├── AvatarGen-research/         #   数字人/Avatar 生成 CNN→3DMM→DiT
-    └── ImageEditing-research/      #   图像编辑与修复 GAN→DiT→Agentic
+    ├── ImageEditing-research/      #   图像编辑与修复 GAN→DiT→Agentic
+    └── WorldModels-research/       #   世界模型 action 条件化生成/潜空间预测/WFM 平台
 ```
 
 ---
