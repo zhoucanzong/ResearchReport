@@ -26,7 +26,7 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research
 ```
 
 > **关于结构**：两个报告库在本仓库中是**普通子目录，已移除各自的嵌套 `.git`**，因此仓库内**不存在 gitlink（mode 160000）或 submodule**，`git add -A` 会把所有报告作为普通文件提交。
-> 各自的独立仓库（`AIGC-Research`、`LLM-Research`）仍作为**上游存档**保留，完整提交历史保存在那里；本仓库是二者的**内容快照 + 统一索引**。
+> 各自的独立仓库（`AIGC-Research`、`LLM-Research`）作为**上游存档**仅保留在 GitHub（完整提交历史在那里）；本地副本 `~/Documents/AIGC-Research`、`~/Documents/LLM-Research` 已按仓主要求于 **2026-10-16 移除**（见 §6.1）。本仓库是二者的**内容快照 + 统一索引**，此后统一在本仓库维护。
 
 **统计口径**：下表的计数与体积是**两个报告库目录本身**的合计（含各自库内 `README.md`，**不含**根目录的 `README.md`、`.gitignore` 与 `.git`）。
 
@@ -55,7 +55,7 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research
 | **技术专题数** | 8 个（DiffusionModels、DiT、VideoGen、ControllableGen、3DGen、AudioGen、AvatarGen、ImageEditing） | 10 个（SpeculativeDecoding、LongContext、MoE、ReasoningModels、VLM、Agent、Alignment、TrainingInfra、QuantizationEdge、RAG） |
 | **报告粒度** | 每系列 **1 份** 汇总报告（16 份） | 多数系列 1 份；DeepSeek / Qwen / SpeculativeDecoding **分册展开**（36 份） |
 | **报告风格** | 架构时间线 → 模型结构详解 → 竞品对比 | 模型列表 → 关键能力 → 生态 → 竞品对比；专题偏论文方法梳理 |
-| **上游独立仓库（存档）** | `git@github.com:zhoucanzong/AIGC-Research.git`（1 次 commit · `main`） | `git@github.com:zhoucanzong/LLM-Research.git`（7 次 commit · `main`） |
+| **上游独立仓库（存档，仅 GitHub）** | `git@github.com:zhoucanzong/AIGC-Research.git`（1 次 commit · `main`） | `git@github.com:zhoucanzong/LLM-Research.git`（7 次 commit · `main`） |
 | **在本仓库中的形态** | 普通子目录 `AIGC-Research/`（**无嵌套 `.git`**，不产生 gitlink） | 普通子目录 `LLM-Research/`（同上） |
 
 ### 1.2 差异速览
@@ -69,7 +69,7 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research
 | 目录内容字节（不含 `.git`） | 618,206 B ≈ 603.7 KB | 1,084,828 B ≈ 1,059.4 KB |
 | 磁盘占用（`du -sk`） | 640 KB | 1,136 KB |
 | 上游提交数 | 1 | 7 |
-| 上游仓库 `.git`（**不在本仓库内**） | 280,333 B ≈ 273.8 KB | 870,445 B ≈ 850.0 KB |
+| 上游仓库 `.git`（**不在本仓库内**；本地副本已移除） | 280,333 B ≈ 273.8 KB | 870,445 B ≈ 850.0 KB |
 | 目录命名约定 | `ModelSeries/<Name>-research/report.md`、`TechnicalTopics/<Topic>-research/report.md` | 同左，另允许 `Topic-research/<topic-sub>.md` 分册 |
 | 附加文件 | — | `.gitignore`（另有 `.claude/settings.local.json`，被全局 gitignore 忽略、未纳入版本控制） |
 
@@ -315,17 +315,20 @@ ResearchReport/                              ← 本仓库根目录（Git 仓库
 
 ## 6. 校验结果
 
-### 6.1 上游原始仓库状态（只读、全程未改动）
+### 6.1 上游原始仓库最终状态（本地副本已于 2026-10-16 移除）
+
+复制与校验阶段（见 §6.2）两库**只读、全程未改动**，其最终状态如下。仓主随后指示「以后统一维护新仓库」，两个本地原始目录已于 **2026-10-16** 由本 Bot 移入废纸篓（`~/.Trash/AIGC-Research`、`~/.Trash/LLM-Research`），可从废纸篓恢复，直至清空废纸篓。
 
 | 校验项 | AIGC-Research | LLM-Research |
 | :-- | :-- | :-- |
-| 路径 | `/Users/zhoucanzong/Documents/AIGC-Research` | `/Users/zhoucanzong/Documents/LLM-Research` |
+| 原路径 | `/Users/zhoucanzong/Documents/AIGC-Research`（已移除） | `/Users/zhoucanzong/Documents/LLM-Research`（已移除） |
 | `rev-parse HEAD` | `101ae640ea043572f2c6dc64742eb520394c1d3e` | `7deacb5b841c0b0925e1ac024323255b1b7eaf58` |
 | `log -1` | `初步调研AIGC` · zhoucanzong \<zhoucanzong@gmail.com\> · 2026-06-07 23:19:52 +0800 | `修正readme` · zhoucanzong \<zhoucanzong@gmail.com\> · 2026-06-07 01:18:47 +0800 |
 | `status --short` | `?? .DS_Store`（未跟踪，来源既有状态） | （空 → 干净） |
 | `remote -v` | `origin  git@github.com:zhoucanzong/AIGC-Research.git`（fetch/push） | `origin  git@github.com:zhoucanzong/LLM-Research.git`（fetch/push） |
 | 提交数 / 分支 | 1 · `main` | 7 · `main` |
-| 本次操作后复核 | ✅ HEAD / status / remote 与操作前**完全一致** | ✅ 同上 |
+| 本地目录处置 | 🗑️ 2026-10-16 移入废纸篓 | 🗑️ 2026-10-16 移入废纸篓 |
+| 历史留存位置 | GitHub 存档仓库，删除前核对 `refs/heads/main` = `101ae64…` ✅ | GitHub 存档仓库，删除前核对 `refs/heads/main` = `7deacb5…` ✅ |
 
 ### 6.2 复制阶段校验（扁平化前，历史留证）
 
@@ -419,18 +422,20 @@ git push origin main
 3. 报告内容**中文为主、关键术语保留英文**，并附来源索引以便追溯。
 4. 沿用统一模板，便于跨库检索与对比。
 
-### 7.3 与上游独立仓库同步（可选）
+### 7.3 与上游独立仓库同步（可选，历史只存在 GitHub）
 
-两个子目录是**内容快照**，不带 Git 历史。若上游独立仓库有新增提交，可手工同步：
+两个子目录是**内容快照**，不带 Git 历史；本地已无上游仓库副本（2026-10-16 移除，见 §6.1）。如需从上游导入提交，先把存档仓库克隆到本仓库之外，再复制变化：
 
 ```bash
-# 上游仓库（任选其一）拉取后，把变化复制到本仓库对应目录
-git -C /Users/zhoucanzong/Documents/AIGC-Research pull --ff-only
+# 例：从 GitHub 取上游 AIGC-Research 存档
+git clone https://github.com/zhoucanzong/AIGC-Research.git /tmp/AIGC-Research
 rsync -a --delete --exclude '.git' --exclude '.DS_Store' \
-  /Users/zhoucanzong/Documents/AIGC-Research/ ResearchReport/AIGC-Research/
+  /tmp/AIGC-Research/ ResearchReport/AIGC-Research/
 
 cd ResearchReport && git add -A && git commit -m "同步上游 AIGC-Research"
 ```
+
+> 上游存档仓库（`AIGC-Research`、`LLM-Research`）是否继续保留由仓主决定；此后 **ResearchReport 是唯一在维护的仓库**。
 
 > ⚠️ `rsync --delete` 会删除目标端多余文件，执行前请先 `--dry-run` 预览。
 
@@ -463,12 +468,13 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research
 1. **上游 README 的自报计数与实际不一致**（本次只修引用、未改动其统计数字，在此备注）：
    - `LLM-Research/README.md` 正文写「覆盖 16 个主流模型 / 系列」、徽章写 `Reports-32`，但实际为 **15 个模型系列目录** 与 **36 份报告**（表格行数也只有 15 行）。本索引以**实际文件系统内容**为准。
    - `AIGC-Research/README.md` 的「仓库结构」代码块注释写「技术专题报告（6 个）」，但实际列出并存在 **8 个**专题目录。
-2. **`.DS_Store` 已清理**：本仓库内所有 `.DS_Store` 已删除，并由根目录 `.gitignore` 覆盖（macOS 之后重新生成也不会进入提交）。上游独立仓库 `AIGC-Research` 中仍有未跟踪的 `.DS_Store`（属其既有状态，未去改动）。
+2. **`.DS_Store` 已清理**：本仓库内所有 `.DS_Store` 已删除，并由根目录 `.gitignore` 覆盖（macOS 之后重新生成也不会进入提交）。已移入废纸篓的本地上游副本 AIGC-Research 中仍带着未跟踪的 `.DS_Store`（属其既有状态，未去改动）。
 3. **License 徽章死链已修复**：`LLM-Research/README.md` 原 `./LICENSE` 链接不存在，现已改为**无链接文本徽章**。注意：本仓库与两个上游仓库**均无 `LICENSE` 文件**，若要以 MIT 等许可公开发布，建议补上许可证文件。
 4. **本仓库不含两个子库的 Git 提交历史**：为支持扁平推送，嵌套 `.git` 已移除（见 §6.3）。需要逐次提交历史 / blame 时，请使用上游独立仓库 `AIGC-Research`、`LLM-Research`。
 5. 两库内容均为 **AI Agent 生成、未经官方确认**，引用具体参数 / 日期 / benchmark 前请回溯原始来源；两库 README 顶部均有对应免责声明。
 6. `LLM-Research/.claude/settings.local.json` 被**全局** gitignore 规则（`~/.config/git/ignore`：`**/.claude/settings.local.json`）忽略，因此不在版本控制内；如需强制纳入，使用 `git add -f`。
+7. **两个本地原始仓库已于 2026-10-16 移除**：按仓主要求「以后统一维护新的」，`~/Documents/AIGC-Research` 与 `~/Documents/LLM-Research` 已移入废纸篓（`~/.Trash/`，可恢复直至清空）。移除前已确认：其内容 100% 收录于本仓库（§6.2 逐文件 SHA-256 一致），且两个 GitHub 存档仓库的 `refs/heads/main` 与本地 HEAD 完全一致（`101ae64…` / `7deacb5…`），因此**未丢失任何报告内容或提交历史**。此后统一维护本仓库 ResearchReport。
 
 ---
 
-*索引更新时间：2026-10-16 · 仓库：ResearchReport · 数据来源：本仓库实际文件系统内容*
+*索引更新时间：2026-10-16 · 仓库：ResearchReport（已接手统一维护，两个本地上游副本同日移除）· 数据来源：本仓库实际文件系统内容*

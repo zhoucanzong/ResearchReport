@@ -22,7 +22,7 @@
 > cd ResearchReport/AIGC-Research
 > ```
 >
-> 独立仓库 **AIGC-Research**（`git@github.com:zhoucanzong/AIGC-Research.git`）仍作为**上游存档**保留，本目录内容与其一致；后续更新请以统一仓库 ResearchReport 为准。
+> 独立仓库 **AIGC-Research** 作为**上游存档仅保留在 GitHub**（`git@github.com:zhoucanzong/AIGC-Research.git`），本地副本已于 2026-10-16 移除；本目录内容与其一致，后续更新请以统一仓库 ResearchReport 为准。
 
 ---
 
