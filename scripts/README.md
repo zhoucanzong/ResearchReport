@@ -69,24 +69,28 @@ python3 scripts/library_index.py --repo-root . --out-root . --check-links
 
 ### 只读基线实测数字
 
-在提交 `scripts/library_index.py` 时，对本仓库跑
-`python3 scripts/library_index.py --repo-root . --dry-run` 的实测结果：
+对本仓库跑 `python3 scripts/library_index.py --repo-root . --dry-run` 的实测结果
+（下表为**当前工作区的可复现值**，与下节「设计约束」中的 `**/*.md` 扫描口径一致）：
 
 | 指标 | 实测值 |
 | --- | --- |
-| 扫描到的 `.md` 总数 | **71** |
+| 扫描到的 `.md` 总数 | **72** |
 | 带 front-matter 的条目数 | **0** |
-| 无 front-matter（`unfiled`） | 71 |
+| 无 front-matter（`unfiled`） | 72 |
 | 文件名 `report.md` 的份数 | **42** |
-| 文件名 `README.md` 的份数 | **3** |
-| `report.md` + `README.md` 合计 | **45** |
+| 文件名 `README.md` 的份数 | **4** |
+| `report.md` + `README.md` 合计 | **46** |
 | 带合法 `date` 的条目数 | 0 |
 | 判定为陈旧 / 超期 | 0 |
 
-即：仓库现有 71 份 Markdown，**全部没有 front-matter**；其中 45 份是
+即：仓库现有 72 份 Markdown，**全部没有 front-matter**；其中 46 份是
 `report.md` / `README.md` 这类泛化文件名。这正是「图书馆化」要解决的两件事——
 补齐元数据、把泛化文件名改写成可检索的条目名。在元数据补齐之前，分面索引会
 把它们全部归入 `unfiled`，`recent` / `stale` 分面则为空。
+
+> **计数口径**：上表由 `**/*.md` 递归扫描得出，因此**包含本目录的 `scripts/README.md` 自身**。
+> 它是本文档而非图书馆条目，但会照常被计入条目总数与 `unfiled`。修改脚本或其文档后，
+> 该数字会随之变化，请以 `--dry-run` 的实时输出为准，不要手写死数字。
 
 ### 设计约束
 
