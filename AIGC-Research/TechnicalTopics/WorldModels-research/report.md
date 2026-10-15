@@ -69,13 +69,13 @@
 
 **本章要回答**：每个系统在三条判据上如何落位？其可交互性宣称（分钟级一致性、实时帧率等）出自何种一手材料、可否复核？
 
-**计划证据来源**：参考文献 20–23（Genie 3 官方博客与模型页、GameNGen 项目页、Dreamer 4 项目页、V-JEPA 2 官方仓库），并交叉 9、10、13、16。
+**计划证据来源**：参考文献 20–24（Genie 3 官方博客与模型页、GameNGen 项目页、Dreamer 4 项目页、V-JEPA 2 官方仓库），并交叉 9、10、13、16。
 
 ## 5. 评测与基准
 
 **本章要回答**：现有 benchmark 覆盖哪些维度（视觉质量、物理合理性、世界一致性、交互可控性）？哪些可迁移为 WorldModels 的统一评测？缺什么？
 
-**计划证据来源**：参考文献 24–28（VBench、VBench-2.0、WorldScore、Physics-IQ、Awesome-Interactive-World-Model 索引）。
+**计划证据来源**：参考文献 25–29（VBench、VBench-2.0、WorldScore、Physics-IQ、Awesome-Interactive-World-Model 索引）。
 
 ## 6. 应用域
 
