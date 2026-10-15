@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+
+# Editors / OS junk
+.AppleDouble
+.LSOverride
+*~._*
+
+# Python
+__pycache__/
+*.pyc
