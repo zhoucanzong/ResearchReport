@@ -173,6 +173,18 @@ vLLM 官方 *Per-Request Acceptance Metrics* 文档给出的定义即口径基�
 
 ## 5. 尚未确证 / 待跟踪
 
+### 5.1 本轮明确待办（三项，均**未核验**，不得写成结论）
+
+> 以下三项是复核指出的缺口，本轮**没有做**，列为待办。**本报告全文没有、也不得把这三项中的任何说法写成已成立结论。**
+
+| # | 待办 | 状态 | 为什么不写结论 / 下一步怎么做 |
+|---|---|---|---|
+| **①** | **读 EAGLE 官方代码（`SafeAILab/EAGLE`）确认 top-$K$ 路径下 draft 概率的实际处理方式** | **本轮未核验** | §2.1/§3.1 关于"按 $q$ 排序建树导致塌缩"的链条目前建立在 **EAGLE-3 论文正文描述**与 **SGLang issue #10308 的现象陈述**之上，**不是建立在代码审阅之上**。代码里究竟是"把 top-1 概率置 1、其余置 0"、还是"保留原始概率但用 top-$K$ 建树"，直接影响塌缩的机理与修补位置。**在完成代码核验前，本报告不声明 EAGLE 具体实现细节。** 下一步：审阅 EAGLE 官方仓库中 draft 前向与 top-$K$ 后处理代码路径，逐行确认概率是否被重写。 |
+| **②** | **SGLang issue #10308 及其后续 PR 是否已合入，以及对 T>0 下动态树行为的影响** | **issue 已确认真实存在；后续 PR 与合入状态未确证** | 核验情况：<https://github.com/sgl-project/sglang/issues/10308> **真实存在**，标题为 *[Feature] Speculative sampling supports passing the predicted probability of the draft model and sample token for verification when **topk=1***，开于 2025-11-03，指派给 `hnyls2002`，于 **2026-01-03 被 github-actions 以"inactive"自动关闭**（"This issue has been automatically closed due to inactivity"），**未观察到任何 linked PR / merged PR**。该 issue 正文与本章结论同源：它指出 EAGLE 使用的 tree attention **默认按 top-$K$ 选择 token 并把该 token 概率置 1、其余置 0**，并给出一个算例——**接受概率从标准投机采样的 0.9 降到 tree attention 下的 0.6**。核验边界：**本报告的上述引用仅限该 issue 的页面陈述本身**；**"是否已有修复 PR 合入、以及合入后对 T>0 行为的影响"本轮未确证**，故不作为本报告的结论；检索中出现的若干 topk=1/EAGLE 相关 PR 编号**未能确证其与 #10308 的对应关系**，本报告**不引用任何具体 PR 编号**。下一步：核实该 issue 的后续关联 PR 与当前主线代码行为。 |
+| **③** | **RheoSampling 是否放出代码 / 补充材料** | **未确证（目前仅有论文与摘要）** | 本轮只核验到 arXiv 摘要页与全文 HTML；**未发现公开代码仓库、未确认是否有补充材料（Appendix B/C 的算法与证明）之外的 artifact**。因此本报告对 RheoSampling 的所有数字均为**论文自报值**，**未做独立复现**。下一步：检索其 GitHub/HF 是否有官方实现与模型权重。 |
+
+### 5.2 其他未验证项
+
 | 项 | 状态 | 说明 |
 |---|---|---|
 | RheoSampling 在 greedy（T=0）下的表现 | **未验证** | 论文聚焦 T>0；T=0 下该机制是否退化为 Top-$K$ 等价需读附录 |
@@ -196,8 +208,9 @@ vLLM 官方 *Per-Request Acceptance Metrics* 文档给出的定义即口径基�
 | 6 | EAGLE-2（背景） | https://ar5iv.labs.arxiv.org/html/2406.16858v1 | ✅ HTTP 200 |
 | 7 | vLLM *Per-Request Acceptance Metrics* | https://docs.vllm.ai/en/latest/features/speculative_decoding/acceptance_metrics/ | ✅ HTTP 200，§2.2 口径定义据此 |
 | 8 | 指标口径（任务书原引 Morph） | https://www.morphllm.com/speculative-decoding | ⚠️ **被 Vercel Security Checkpoint 拦截（HTTP 429）**，无法核验内容 → 已从正文剔除，改用来源 #7 |
+| 9 | SGLang issue #10308（topk=1 下 draft 概率传递；§5.1 待办 ② 的核验对象） | https://github.com/sgl-project/sglang/issues/10308 | ✅ HTTP 200，**issue 真实存在**：标题、开立日期 2025-11-03、指派 `hnyls2002`、2026-01-03 因 inactive 被自动关闭均已核实；**未观察到 linked/merged PR** → 后续 PR 与修复状态**未确证** |
 
-> **任务书失效/存疑链接处置**：第 8 项（Morph）在核验时不可达，本报告不引用其任何具体说法，改以 vLLM 官方文档作为"指标必须成对报告"的依据。ARC-Decode 目前**只有会议页可核验**，无 arXiv 版本，故其全部结论均标为 [摘要级]。
+> **任务书失效/存疑链接处置**：第 8 项（Morph）在核验时不可达，本报告不引用其任何具体说法，改以 vLLM 官方文档作为"指标必须成对报告"的依据。ARC-Decode 目前**只有会议页可核验**，无 arXiv 版本，故其全部结论均标为 [摘要级]。第 9 项（SGLang issue #10308）为**本轮新增核验项**，用于支撑 §5.1 待办 ② 的事实基础——仅确证 issue 存在与状态，**不据此推断修复情况**。
 
 ---
 

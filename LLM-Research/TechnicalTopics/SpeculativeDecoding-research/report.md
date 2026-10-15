@@ -104,6 +104,8 @@ Leviathan/Chen         Medusa / Hydra / Lookahead    EAGLE-1/2/3 (工业标准)
 
 ## 三、方法级技术演进时间线（v1 保留）
 
+> 本节为 v1 的细粒度方法级时间线；2023 → 2026H2 的概览脉络见 §二，两者互补。
+
 | 阶段 | 代表方法 | 年份 | 核心机制 | 训练需求 | 典型加速比 | 信息可靠性 |
 |------|---------|------|---------|---------|-----------|-----------|
 | **经典独立模型** | Leviathan et al. / Chen et al. | 2023 | 独立小模型 draft + target 验证 | 无需联合训练 | 2-3× | 高（ICML/NeurIPS 论文） |
@@ -112,15 +114,15 @@ Leviathan/Chen         Medusa / Hydra / Lookahead    EAGLE-1/2/3 (工业标准)
 | **自投机：免训练** | Lookahead | 2024 | Jacobi 迭代 + n-gram 池 | 免训练 | 1.5-2.5× | 高（NeurIPS 2024） |
 | **自投机：层跳过** | SWIFT / CLaSp | 2025 | 在线自适应跳过中间层作 draft | 免训练 | 1.3-1.7× | 高（ICLR/ACL 2025） |
 | **特征级：单层** | EAGLE-1 | 2024 | 特征自回归，单层 Transformer | 需训练 | 3-4× | 高（ICLR 2024） |
-| **特征级：动态树** | EAGLE-2 | 2024 | 动态草案树，上下文感知分支 | 需训练 | 3.5-4.5×（**T=0**） | 高（EMNLP 2024） |
-| **特征级：多层融合** | EAGLE-3 | 2025 | 多层特征融合 + TTT，工业标准 | 需训练 | 4-5×（**T=0**） | 高（NeurIPS 2025） |
+| **特征级：动态树** | EAGLE-2 | 2024 | 动态草案树，上下文感知分支 | 需训练 | 3.5-4.5×（**T=0**）；摘要称 EAGLE-3 相对其约 **1.4×** 提升 | 高（EMNLP 2024） |
+| **特征级：多层融合** | EAGLE-3 | 2025 | 多层特征融合 + TTT，工业标准 | 需训练 | 摘要 **up to 6.5×**；特定设定 **4.79×**；SGLang batch=64 吞吐 **1.38×**（**T=0**） | 高（NeurIPS 2025） |
 | **块扩散** | DFlash / DSpark / BASTION | 2026 | 块 / 树状块扩散并行 draft | 需训练 | DFlash **>6×**；BASTION 最高 6.61× | 中（ICML 2026 / arXiv 预印本） |
 | **块扩散（TPU）** | DFlash on TPU v5p | 2026 | 双缓存 + 流水线重映射 | 需训练 | **3.13×**（峰值近 6×） | 中（官方工程博客） |
 | **检索式** | REST / PLD | 2023-24 | 基于检索的候选生成 | 零训练成本 | 1.5-2.5× | 高（NAACL/独立工作） |
 | **字典式（低资源语种）** | DictSpec | 2026 | 静态 n-gram 查找表，与 prompt-local 混合 | **零训练** | 验证步最多 1.65×；混合真实服务最高 1.76× | 中（ACL 2026） |
 
 > **加速比说明（本轮重要修订）**：
-> 1. 上表典型加速比为**论文报告值**，实际部署受模型规模（7B vs 70B）、硬件（A100 vs H100 vs GB200 vs TPU v5p）、任务类型（代码/数学/开放对话）、**batch / 并发度**影响显著。例如 EAGLE-3 在 LLaMA-3.3-70B 上报告 4.79×，但在小模型或高熵任务上可能降至 2-3×。
+> 1. 上表典型加速比为**论文报告值**，实际部署受模型规模（7B vs 70B）、硬件（A100 vs H100 vs GB200 vs TPU v5p）、任务类型（代码/数学/开放对话）、**batch / 并发度**影响显著。例如 EAGLE-3 在 LLaMA-3.3-70B 上报告的 4.79× 是**该设定下的表值**；其**摘要口径为 up to 6.5×**（chat + reasoning 模型、五任务的上限），另有 **SGLang batch=64 下 1.38× 吞吐提升**——**6.5× = 摘要上限，4.79× = 特定设定值，两者不矛盾**；在小模型或高熵任务上还可能降至 2-3×。三个数字口径不同（上限 / 特定模型设定 / 特定框架与 batch 吞吐），**不可混用**。
 > 2. **EAGLE-2/EAGLE-3 的数字是 greedy（T=0）设定下的报告值**。在 T>0 随机采样下，动态树会塌缩为 one-hot、接受率显著下降——详见 [speculative-stochastic-verification.md](speculative-stochastic-verification.md) 与 [speculative-eagle-series.md](speculative-eagle-series.md) §3.3.5。
 > 3. **块扩散方法的收益强依赖 batch**：batch=1（memory-bound）时 draft token 接近免费，高并发（compute-bound）时与真实 token 争夺算力，**结论相反**。详见 [speculative-systems-and-frameworks.md](speculative-systems-and-frameworks.md) §①。
 > 4. **不同硬件上的同一算法不可直接比较**：DFlash 在 GPU 与 TPU 上的数字来自不同优化路径（见 [speculative-edge-cloud-hardware.md](speculative-edge-cloud-hardware.md) §5）。
