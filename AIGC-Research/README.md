@@ -8,6 +8,7 @@
 
 覆盖 **8 个模型 / 系列 + 8 个技术专题** · 重点关注 **模型结构演进**
 
+[![Monorepo](https://img.shields.io/badge/monorepo-ResearchReport-6f42c1?style=flat-square)](https://github.com/zhoucanzong/ResearchReport)
 [![Reports](https://img.shields.io/badge/Reports-16-blue?style=flat-square)](.)
 [![Files](https://img.shields.io/badge/Files-16-green?style=flat-square)](.)
 
@@ -74,7 +75,7 @@ AIGC-research/
 │   ├── ByteDance-Gen-research/   #   Seedance 1.0→2.0 多模态 cinematic
 │   └── Alibaba-Gen-research/     #   通义万相 Wan 2.1/2.2/2.6 开源 DiT
 │
-└── TechnicalTopics/                # 技术专题报告（6 个）
+└── TechnicalTopics/                # 技术专题报告（8 个）
     ├── DiffusionModels-research/   #   扩散模型基础框架与采样加速
     ├── DiT-research/               #   U-Net→DiT 架构革命与 Scaling Law
     ├── VideoGen-research/          #   视频生成时序建模与 3D DiT

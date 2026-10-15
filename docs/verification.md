@@ -1,0 +1,126 @@
+# 🔍 校验记录 · Verification Log
+
+本文件保存 **ResearchReport** 仓库的全部校验留证：上游仓库最终状态、复制阶段校验、扁平化校验、Repo-Research 复制与移除留证。
+
+仓库首页 [README](../README.md) 只保留摘要；体积与数量的完整统计见 [statistics.md](statistics.md)；维护流程见 [maintenance.md](maintenance.md)。
+
+**目录**
+
+1. [上游原始仓库最终状态](#1-上游原始仓库最终状态本地副本已于-2026-10-16-移除)
+2. [复制阶段校验（扁平化前）](#2-复制阶段校验扁平化前历史留证)
+3. [扁平化与新仓库校验](#3-扁平化与新仓库校验)
+4. [Repo-Research 复制与移除校验](#4-repo-research-复制与移除校验2026-10-16)
+
+---
+
+## 1. 上游原始仓库最终状态（本地副本已于 2026-10-16 移除）
+
+`AIGC-Research`、`LLM-Research` 在复制与校验阶段**只读、全程未改动**（见本文 §2），其最终状态如下。后续决定「统一维护 ResearchReport」，两个本地原始目录已于 **2026-10-16** 移入废纸篓（`~/.Trash/AIGC-Research`、`~/.Trash/LLM-Research`），可从废纸篓恢复，直至清空废纸篓。
+
+| 校验项 | AIGC-Research | LLM-Research |
+| :-- | :-- | :-- |
+| 原路径 | `/Users/zhoucanzong/Documents/AIGC-Research`（已移除） | `/Users/zhoucanzong/Documents/LLM-Research`（已移除） |
+| `rev-parse HEAD` | `101ae640ea043572f2c6dc64742eb520394c1d3e` | `7deacb5b841c0b0925e1ac024323255b1b7eaf58` |
+| `log -1` | `初步调研AIGC` · zhoucanzong \<zhoucanzong@gmail.com\> · 2026-06-07 23:19:52 +0800 | `修正readme` · zhoucanzong \<zhoucanzong@gmail.com\> · 2026-06-07 01:18:47 +0800 |
+| `status --short` | `?? .DS_Store`（未跟踪，来源既有状态） | （空 → 干净） |
+| `remote -v` | `origin  git@github.com:zhoucanzong/AIGC-Research.git`（fetch/push） | `origin  git@github.com:zhoucanzong/LLM-Research.git`（fetch/push） |
+| 提交数 / 分支 | 1 · `main` | 7 · `main` |
+| 本地目录处置 | 🗑️ 2026-10-16 移入废纸篓 | 🗑️ 2026-10-16 移入废纸篓 |
+| 历史留存位置 | GitHub 存档仓库，删除前核对 `refs/heads/main` = `101ae64…` ✅ | GitHub 存档仓库，删除前核对 `refs/heads/main` = `7deacb5…` ✅ |
+
+> 上述两个 GitHub 存档仓库（`git@github.com:zhoucanzong/AIGC-Research.git`、`git@github.com:zhoucanzong/LLM-Research.git`）是否继续保留由维护者决定；此后 **ResearchReport 是唯一在维护的仓库**。
+
+---
+
+## 2. 复制阶段校验（扁平化前，历史留证）
+
+复制方式：`cp -a <源> Research/<名称>`（保留权限、时间戳与 `.git`）。当时两个副本各含完整 `.git`，校验结论如下 —— 该 `.git` 现已按计划删除（见本文 §3）。
+
+| 校验项 | AIGC-Research | LLM-Research |
+| :-- | :-- | :-- |
+| 工作区 `.md` 数量（源 → 副本） | 17 → **17** | 37 → **37** |
+| `report.md` 数量（源 → 副本） | 16 → **16** | 25 → **25** |
+| 全部普通文件数（源 → 副本） | 80 → **80** | 206 → **206** |
+| 工作区文件 SHA-256 逐文件比对 | ✅ 全部一致（18 个非 `.git` 文件） | ✅ 全部一致（42 个非 `.git` 文件） |
+| `.git` 内文件 SHA-256 比对 | ⚠️ 仅 `.git/index` 不同（stat cache） | ⚠️ 仅 `.git/index` 不同（stat cache） |
+| HEAD tree（源 = 副本） | ✅ `ca974128baf589ecbaf2ed4d9af2bee1b18f2852` | ✅ `fd6ccaf955341f9b7e28de5443862cb578f4eff9` |
+| `git fsck --full --strict` | ✅ exit 0，无输出 | ✅ exit 0，无输出 |
+
+---
+
+## 3. 扁平化与新仓库校验
+
+### 3.1 嵌套 `.git` 已删除（依据：内容完全由上游保留，删除不丢失任何历史）
+
+删除前逐项留证，证明两个嵌套 `.git` 与上游仓库**逐字节等价**（仅 `index` 这个 stat cache 文件不同），且**副本中的每一个对象都能在上游仓库中按同一 SHA 找到**：
+
+| 证据 | AIGC-Research | LLM-Research |
+| :-- | :-- | :-- |
+| `rev-parse HEAD`（副本 = 上游） | `101ae64…` = `101ae64…` ✅ | `7deacb5…` = `7deacb5…` ✅ |
+| `show-ref` 校验和（副本 = 上游） | `0ed5835…` ✅ | `4b14806…` ✅ |
+| `count-objects`（副本 = 上游） | 37 objects ✅ | 136 objects ✅ |
+| 副本对象是否存在于上游 | ✅ 37/37 命中，无缺失 | ✅ 113/113 可达对象命中，无缺失 |
+| 全量 `.git` 文件 SHA-256 比对 | 62 个文件，仅 `index` 不同 | 164 个文件，仅 `index` 不同 |
+| `git fsck --full --strict`（删除前） | exit 0，无输出 | exit 0，无输出 |
+| 已删除路径（绝对路径已实时校验） | `/Users/zhoucanzong/Documents/Research/AIGC-Research/.git` | `/Users/zhoucanzong/Documents/Research/LLM-Research/.git` |
+
+> 结论：这两个 `.git` 只是上游仓库的同构副本，**没有任何仅存于副本的提交、分支、tag 或对象**；其历史仍完整保存在上游独立仓库（`AIGC-Research` 1 次 commit、`LLM-Research` 7 次 commit，均可 `git log` 追溯）。因此删除它们是安全的，也是让本仓库能扁平推送的**必要步骤** —— 保留嵌套 `.git` 会使 `git add` 只记录一个 gitlink（mode 160000），推送后目录内容为空。
+> `Repo-Research` 无需此步骤：它**本来就不是 Git 仓库**，直接以普通文件纳入。
+
+### 3.2 仓库结构校验
+
+| 检查项 | 结果 |
+| :-- | :-- |
+| 根目录是否为 Git 仓库 | ✅ 是（`.git` 仅存在于 `/Users/zhoucanzong/Documents/Research/.git`） |
+| 是否存在嵌套 `.git` | ✅ 不存在（三个子目录均为普通目录） |
+| 缺失模式检查 `git ls-files -s \| awk '{print $1}' \| sort \| uniq -c` | ✅ **仅 `66 100644`**，gitlink（`160000`）计数 **0** |
+| 是否存在 submodule | ✅ 无 `.gitmodules` |
+| `git ls-files \| wc -l` | ✅ **66** |
+| `git ls-files '*.md' \| wc -l` | ✅ **63**（52 份报告 + 8 份 Repo 深读 + 3 个 README） |
+| AIGC / LLM 报告是否全部被跟踪 | ✅ AIGC 16/16 + LLM 36/36 = **52/52** |
+| Repo-Research 文件是否全部被跟踪 | ✅ **9/9**（8 个 `.md` + 1 个 `.json`） |
+| `git status --short`（提交后） | ✅ **空**（干净；`.claude/settings.local.json` 被全局 gitignore 忽略，不产生噪声） |
+| 提交者身份 | `zhoucanzong <zhoucanzong@gmail.com>`（来自全局 `~/.gitconfig`，未设置任何 BotHarness 身份） |
+| GPG 签名 | 未启用（`commit.gpgsign` 未设置） |
+| 提交 SHA / 分支 / remote | 见 `git log -1`、`git branch --show-current`、`git remote -v` |
+
+> ⏱ **统计时点**：上表的跟踪文件数为**该次校验时**的值（66 个跟踪文件 / 63 个 `.md`）。随着 `docs/` 等内容的加入，当前计数会增加；**最新值以 [statistics.md](statistics.md) 为准**。
+
+---
+
+## 4. Repo-Research 复制与移除校验（2026-10-16）
+
+来源 `/Users/zhoucanzong/Documents/Repo-Research`（**非 Git 仓库**，无 `.git`）→ 目标 `Research/Repo-Research/`。流程为**先复制、校验通过后才移除原位**。
+
+| 校验项 | 结果 |
+| :-- | :-- |
+| 复制方式 | `cp -a`（目标不存在时执行；执行前已确认目标不存在） |
+| 源 / 副本文件数（排除 `.DS_Store`） | 9 → **9** ✅ |
+| 源 / 副本总字节（排除 `.DS_Store`） | 189,061 B → **189,061 B** ✅ |
+| **逐文件 SHA-256 比对** | ✅ **9/9 完全一致**，无差异、无缺失 |
+| 副本内 `.DS_Store` | 🗑️ 已删除（源含 1 个 `.DS_Store`，按维护要求不复制、不提交） |
+| 副本 `du -sk` | 204 KB（源 212 KB；差额来自已删除的 `.DS_Store`） |
+| 移除前 `realpath` 确认 | ✅ `/Users/zhoucanzong/Documents/Repo-Research`（与目标路径完全一致） |
+| 移除前废纸篓冲突检查 | ✅ `~/.Trash/Repo-Research` 当时不存在，无需改用带时间戳的名字 |
+| 原位处置方式 | `mv`（**不是 `rm -rf`**）→ `~/.Trash/Repo-Research` |
+| 移除后确认 | ✅ `~/Documents/Repo-Research` 已不存在；`~/.Trash/Repo-Research` 存在，`du -sk` = **212 KB**、10 个文件（含 `.DS_Store`），与源一致 |
+| 取证方式说明 | macOS TCC 禁止 `ls ~/.Trash/`（Operation not permitted），故改用**直接路径** `stat` / `du` / `find` 取证 |
+| 备份状况 | ⚠️ Repo-Research **没有上游 Git 存档**，仓库内副本是主副本，废纸篓副本是**唯一**可恢复的旧位置（清空废纸篓后不可恢复） |
+
+逐文件 SHA-256（源 = 副本，9/9 一致）：
+
+```
+e2e60cc59547de1209aa773abea8e8a39ee78ba8181c42e040a771073d51d0a3  mini-swe-agent-research/mini-swe-agent-deep-report.md
+d6ed2728b89cd3c0df175589442b0bee5dccb867558b54612fb5fe9d82289b4a  nemotron-tri-mode-diffusion/report.md
+84132eaf20f60a97cb884739565c5ddcd628634faff7ae684c1a8ac64a64d58d  nemotron-tri-mode-diffusion/plan.md
+433f81d51cc7376c032bc134dc220f0cef639607d95a02c81cdaeffd711aa354  nemotron-tri-mode-diffusion/knowledge-graph.md
+160cf5b3218345e2fa4d492c5c51807044cea1e5a1eb0e5d8391fb767c109d5b  nemotron-tri-mode-diffusion/sources-index.md
+91700645a85dc9b1b3183fb7948552a11a6667f225506478d98397f078a24f76  nemotron-tri-mode-diffusion/notes/structured-reading.md
+add59912f210a242d8cd988d54303dac8cabefc78ce94d55008c5b26e8e5d710  nemotron-tri-mode-diffusion/raw-extracts/nemotron-tri-mode-fulltext.md
+82c0c591022421004c40ed26239206da1369d3172dad2332f11d90d784f626bb  nemotron-tri-mode-diffusion/raw-extracts/pdf-fu_等__…dif.md
+1faa4df3e1123a026e085d91f02ddf7f5ce290d8291b8c0fb4e819e9e199f985  nemotron-tri-mode-diffusion/papers/nemotron-labs-diffusion.json
+```
+
+---
+
+*记录时间：2026-10-16 · 数据来源：本仓库实际文件系统与 Git 状态*

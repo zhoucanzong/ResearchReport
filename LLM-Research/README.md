@@ -6,10 +6,11 @@
 
 > ⚠️ **重要声明**：本知识库所有报告均由 AI Agent 自动调研生成，信息来源于公开网络搜索、第三方评测站点、社交媒体及行业媒体报道。由于大模型厂商官方披露程度不一，部分日期、参数、benchmark 数据可能存在错误、过时或未经证实的情况。**所有内容仅供参考，不构成权威结论，建议读者直接查阅各厂商官方渠道获取最新准确信息。**
 
-覆盖 **16 个主流模型 / 系列 + 10 个技术专题** · 持续更新中
+覆盖 **15 个主流模型 / 系列 + 10 个技术专题** · 持续更新中
 
-[![Reports](https://img.shields.io/badge/Reports-32-blue?style=flat-square)](.)
-[![Files](https://img.shields.io/badge/Files-32-green?style=flat-square)](.)
+[![Monorepo](https://img.shields.io/badge/monorepo-ResearchReport-6f42c1?style=flat-square)](https://github.com/zhoucanzong/ResearchReport)
+[![Reports](https://img.shields.io/badge/Reports-36-blue?style=flat-square)](.)
+[![Files](https://img.shields.io/badge/Files-36-green?style=flat-square)](.)
 ![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)
 
 </div>
@@ -47,7 +48,7 @@
 | 14 | 🇺🇸 | [**Nemotron**](./ModelSeries/Nemotron-research/)       | NVIDIA    |   1   | 混合Mamba架构、合成数据、Agentic高效推理 |
 | 15 | 🇨🇳 | [**Qwen**](./ModelSeries/Qwen-research/)               | 阿里      |   4   | 文本 + VL + Omni + 生态，覆盖面最广      |
 
-> **🇨🇳 国内 8 家** &nbsp;|&nbsp; **🇺🇸 海外 5 家** &nbsp;|&nbsp; **🇫🇷 欧洲 1 家** &nbsp;|&nbsp; 共 **16 个** 模型系列
+> **🇨🇳 国内 8 家** &nbsp;|&nbsp; **🇺🇸 海外 6 家** &nbsp;|&nbsp; **🇫🇷 欧洲 1 家** &nbsp;|&nbsp; 共 **15 个** 模型系列
 
 ### 技术专题
 
@@ -64,7 +65,7 @@
 | 9  | 🔬 | [**QuantizationEdge**](./TechnicalTopics/QuantizationEdge-research/) | 量化与边缘部署 |   1   | AWQ/GPTQ/GGUF/FP8，vLLM/Ollama，Jetson边缘 |
 | 10 | 🔬 | [**RAG**](./TechnicalTopics/RAG-research/)                 | 检索增强生成 |   1   | RAG 0.0→4.0，GraphRAG，Agentic RAG，混合检索 |
 
-> **🔬 技术专题 10 个** &nbsp;|&nbsp; 共 **32 份** Markdown 报告
+> **🔬 技术专题 10 个** &nbsp;|&nbsp; 共 **36 份** Markdown 报告
 
 ---
 
@@ -72,7 +73,7 @@
 
 ```
 LLM-research/
-├── ModelSeries/                    # 模型系列报告（16 个主流模型 / 系列）
+├── ModelSeries/                    # 模型系列报告（15 个主流模型 / 系列）
 │   ├── Claude-research/            #   Anthropic Claude 系列
 │   │   └── report.md
 │   ├── DeepSeek-research/          #   深度求索 DeepSeek 系列
