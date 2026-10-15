@@ -1,0 +1,57 @@
+# 按条目（report.md）平铺
+
+> 本文件由 scripts/library_index.py 自动生成，请勿手改。
+> 生成命令：`python3 scripts/library_index.py --repo-root . --out-root .`
+> 输出根目录：`.`
+> 条目口径：条目 = `report.md`
+
+---
+
+共 **43** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter。
+
+| 条目 | 所属库 | 路径 | 子报告数 | 行数 | 日期 |
+| --- | --- | --- | --: | --: | --- |
+| Alibaba-Gen-research | AIGC-Research | [AIGC-Research/ModelSeries/Alibaba-Gen-research/report.md](<../AIGC-Research/ModelSeries/Alibaba-Gen-research/report.md>) | 0 | 804 | — |
+| ByteDance-Gen-research | AIGC-Research | [AIGC-Research/ModelSeries/ByteDance-Gen-research/report.md](<../AIGC-Research/ModelSeries/ByteDance-Gen-research/report.md>) | 0 | 712 | — |
+| Google-Gen-research | AIGC-Research | [AIGC-Research/ModelSeries/Google-Gen-research/report.md](<../AIGC-Research/ModelSeries/Google-Gen-research/report.md>) | 0 | 827 | — |
+| Kling-research | AIGC-Research | [AIGC-Research/ModelSeries/Kling-research/report.md](<../AIGC-Research/ModelSeries/Kling-research/report.md>) | 0 | 538 | — |
+| Midjourney-research | AIGC-Research | [AIGC-Research/ModelSeries/Midjourney-research/report.md](<../AIGC-Research/ModelSeries/Midjourney-research/report.md>) | 0 | 588 | — |
+| OpenAI-Gen-research | AIGC-Research | [AIGC-Research/ModelSeries/OpenAI-Gen-research/report.md](<../AIGC-Research/ModelSeries/OpenAI-Gen-research/report.md>) | 0 | 860 | — |
+| Runway-research | AIGC-Research | [AIGC-Research/ModelSeries/Runway-research/report.md](<../AIGC-Research/ModelSeries/Runway-research/report.md>) | 0 | 733 | — |
+| StabilityAI-research | AIGC-Research | [AIGC-Research/ModelSeries/StabilityAI-research/report.md](<../AIGC-Research/ModelSeries/StabilityAI-research/report.md>) | 0 | 874 | — |
+| 3DGen-research | AIGC-Research | [AIGC-Research/TechnicalTopics/3DGen-research/report.md](<../AIGC-Research/TechnicalTopics/3DGen-research/report.md>) | 0 | 899 | — |
+| AudioGen-research | AIGC-Research | [AIGC-Research/TechnicalTopics/AudioGen-research/report.md](<../AIGC-Research/TechnicalTopics/AudioGen-research/report.md>) | 0 | 914 | — |
+| AvatarGen-research | AIGC-Research | [AIGC-Research/TechnicalTopics/AvatarGen-research/report.md](<../AIGC-Research/TechnicalTopics/AvatarGen-research/report.md>) | 0 | 593 | — |
+| ControllableGen-research | AIGC-Research | [AIGC-Research/TechnicalTopics/ControllableGen-research/report.md](<../AIGC-Research/TechnicalTopics/ControllableGen-research/report.md>) | 0 | 924 | — |
+| DiT-research | AIGC-Research | [AIGC-Research/TechnicalTopics/DiT-research/report.md](<../AIGC-Research/TechnicalTopics/DiT-research/report.md>) | 0 | 893 | — |
+| DiffusionModels-research | AIGC-Research | [AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md](<../AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md>) | 0 | 856 | — |
+| ImageEditing-research | AIGC-Research | [AIGC-Research/TechnicalTopics/ImageEditing-research/report.md](<../AIGC-Research/TechnicalTopics/ImageEditing-research/report.md>) | 0 | 835 | — |
+| VideoGen-research | AIGC-Research | [AIGC-Research/TechnicalTopics/VideoGen-research/report.md](<../AIGC-Research/TechnicalTopics/VideoGen-research/report.md>) | 0 | 899 | — |
+| WorldModels-research | AIGC-Research | [AIGC-Research/TechnicalTopics/WorldModels-research/report.md](<../AIGC-Research/TechnicalTopics/WorldModels-research/report.md>) | 0 | 171 | — |
+| Claude-research | LLM-Research | [LLM-Research/ModelSeries/Claude-research/report.md](<../LLM-Research/ModelSeries/Claude-research/report.md>) | 0 | 612 | — |
+| DeepSeek-research | LLM-Research | [LLM-Research/ModelSeries/DeepSeek-research/report.md](<../LLM-Research/ModelSeries/DeepSeek-research/report.md>) | 2 | 752 | — |
+| Doubao-Seed-research | LLM-Research | [LLM-Research/ModelSeries/Doubao-Seed-research/report.md](<../LLM-Research/ModelSeries/Doubao-Seed-research/report.md>) | 0 | 644 | — |
+| GLM-research | LLM-Research | [LLM-Research/ModelSeries/GLM-research/report.md](<../LLM-Research/ModelSeries/GLM-research/report.md>) | 0 | 524 | — |
+| GPT-research | LLM-Research | [LLM-Research/ModelSeries/GPT-research/report.md](<../LLM-Research/ModelSeries/GPT-research/report.md>) | 0 | 760 | — |
+| Gemini-research | LLM-Research | [LLM-Research/ModelSeries/Gemini-research/report.md](<../LLM-Research/ModelSeries/Gemini-research/report.md>) | 0 | 789 | — |
+| Grok-research | LLM-Research | [LLM-Research/ModelSeries/Grok-research/report.md](<../LLM-Research/ModelSeries/Grok-research/report.md>) | 0 | 470 | — |
+| Hunyuan-research | LLM-Research | [LLM-Research/ModelSeries/Hunyuan-research/report.md](<../LLM-Research/ModelSeries/Hunyuan-research/report.md>) | 0 | 526 | — |
+| Kimi-research | LLM-Research | [LLM-Research/ModelSeries/Kimi-research/report.md](<../LLM-Research/ModelSeries/Kimi-research/report.md>) | 0 | 432 | — |
+| LLaMA-research | LLM-Research | [LLM-Research/ModelSeries/LLaMA-research/report.md](<../LLM-Research/ModelSeries/LLaMA-research/report.md>) | 0 | 484 | — |
+| MiMo-research | LLM-Research | [LLM-Research/ModelSeries/MiMo-research/report.md](<../LLM-Research/ModelSeries/MiMo-research/report.md>) | 0 | 511 | — |
+| MiniMax-research | LLM-Research | [LLM-Research/ModelSeries/MiniMax-research/report.md](<../LLM-Research/ModelSeries/MiniMax-research/report.md>) | 0 | 518 | — |
+| Mistral-research | LLM-Research | [LLM-Research/ModelSeries/Mistral-research/report.md](<../LLM-Research/ModelSeries/Mistral-research/report.md>) | 0 | 496 | — |
+| Nemotron-research | LLM-Research | [LLM-Research/ModelSeries/Nemotron-research/report.md](<../LLM-Research/ModelSeries/Nemotron-research/report.md>) | 0 | 466 | — |
+| Qwen-research | LLM-Research | [LLM-Research/ModelSeries/Qwen-research/report.md](<../LLM-Research/ModelSeries/Qwen-research/report.md>) | 3 | 919 | — |
+| Agent-research | LLM-Research | [LLM-Research/TechnicalTopics/Agent-research/report.md](<../LLM-Research/TechnicalTopics/Agent-research/report.md>) | 0 | 699 | — |
+| Alignment-research | LLM-Research | [LLM-Research/TechnicalTopics/Alignment-research/report.md](<../LLM-Research/TechnicalTopics/Alignment-research/report.md>) | 0 | 589 | — |
+| LongContext-research | LLM-Research | [LLM-Research/TechnicalTopics/LongContext-research/report.md](<../LLM-Research/TechnicalTopics/LongContext-research/report.md>) | 0 | 609 | — |
+| MoE-research | LLM-Research | [LLM-Research/TechnicalTopics/MoE-research/report.md](<../LLM-Research/TechnicalTopics/MoE-research/report.md>) | 0 | 406 | — |
+| QuantizationEdge-research | LLM-Research | [LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md](<../LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md>) | 0 | 778 | — |
+| RAG-research | LLM-Research | [LLM-Research/TechnicalTopics/RAG-research/report.md](<../LLM-Research/TechnicalTopics/RAG-research/report.md>) | 0 | 852 | — |
+| ReasoningModels-research | LLM-Research | [LLM-Research/TechnicalTopics/ReasoningModels-research/report.md](<../LLM-Research/TechnicalTopics/ReasoningModels-research/report.md>) | 0 | 682 | — |
+| SpeculativeDecoding-research | LLM-Research | [LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md](<../LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md>) | 11 | 369 | — |
+| TrainingInfra-research | LLM-Research | [LLM-Research/TechnicalTopics/TrainingInfra-research/report.md](<../LLM-Research/TechnicalTopics/TrainingInfra-research/report.md>) | 0 | 721 | — |
+| VLM-research | LLM-Research | [LLM-Research/TechnicalTopics/VLM-research/report.md](<../LLM-Research/TechnicalTopics/VLM-research/report.md>) | 0 | 518 | — |
+| nemotron-tri-mode-diffusion | Repo-Research | [Repo-Research/nemotron-tri-mode-diffusion/report.md](<../Repo-Research/nemotron-tri-mode-diffusion/report.md>) | 6 | 207 | — |
+| **合计** | — | **43 条目** | **22** | **28,253** | — |

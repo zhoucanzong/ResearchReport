@@ -5,9 +5,9 @@
 **一个仓库收敛 AIGC / LLM / 论文深读全部研究产出**
 
 ![Collections](https://img.shields.io/badge/Collections-3-blue?style=flat-square)
-![Reports](https://img.shields.io/badge/Reports-57-green?style=flat-square)
-![Topic](https://img.shields.io/badge/Topic-18-orange?style=flat-square)
-![Markdown](https://img.shields.io/badge/Markdown-71-lightgrey?style=flat-square)
+![Reports](https://img.shields.io/badge/Reports-43-green?style=flat-square)
+![Topic](https://img.shields.io/badge/Topic-19-orange?style=flat-square)
+![Markdown](https://img.shields.io/badge/Markdown-74-lightgrey?style=flat-square)
 ![Updated](https://img.shields.io/badge/Updated-2026--10--16-informational?style=flat-square)
 
 </div>
@@ -28,7 +28,7 @@
 
 <br><br>
 
-<b>16</b> 份报告<br>8 个模型系列 + 8 个技术专题
+<b>17</b> 份报告<br>8 个模型系列 + 9 个技术专题
 
 <br><br>
 
@@ -45,7 +45,7 @@
 
 <br><br>
 
-<b>41</b> 份报告<br>15 个模型系列 + 10 个技术专题
+<b>25</b> 份报告<br>15 个模型系列 + 10 个技术专题
 
 <br><br>
 
@@ -99,15 +99,17 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 
 ## 📊 统计摘要
 
-| 资料库 | 内容 | 报告 / 文件 | `.md` | 内容字节 | `du -sk` |
-| :-- | :-- | --: | --: | --: | --: |
-| 🎨 [AIGC-Research](AIGC-Research/) | 8 系列 + 8 专题 | 16 份报告 | 17 | 618,256 B | 640 KB |
-| 🤖 [LLM-Research](LLM-Research/) | 15 系列 + 10 专题 | 41 份报告 | 42 | 1,240,488 B | 1,304 KB |
-| 📑 [Repo-Research](Repo-Research/) | 2 个深读项目 | 9 个文件 | 8 | 189,061 B | 204 KB |
-| **合计** | **3 个资料库** | **57 份报告 + 9 个文件** | **527** | **2,047,945 B ≈ 1.95 MiB** | **2,148 KB** |
+| 资料库 | 内容 | 条目（`report.md`） | 子文档 `.md` | 条目字节 | 目录内容字节 | `du -sk` |
+| :-- | :-- | --: | --: | --: | --: | --: |
+| 🎨 [AIGC-Research](AIGC-Research/) | 8 系列 + 9 专题 | 17 | 0 | 625,871 B | 633,246 B | 656 KB |
+| 🤖 [LLM-Research](LLM-Research/) | 15 系列 + 10 专题 | 25 | 16 | 940,949 B | 1,240,337 B | 1,304 KB |
+| 📑 [Repo-Research](Repo-Research/) | 2 个深读项目 | 1 | 7 | 13,183 B | 189,061 B | 204 KB |
+| **合计** | **3 个资料库** | **43** | **23** | **1,580,003 B ≈ 1.51 MiB** | **2,062,644 B ≈ 1.97 MiB** | **2,164 KB** |
 
-> 「报告 / 文件」不含各库的 `README.md`；「内容字节」不含 `.git`。**「`.md`」列为各库 `.md` 的合计行数**（与 `docs/statistics.md` 表 3/4/5 的行数口径一致）。
-> 加上根目录 `README.md` 与 `docs/` 的 3 个文件，全仓库共 **71** 个 `.md`、**74** 个跟踪文件。
+> 本表数字由 [`scripts/library_index.py`](scripts/library_index.py) 产出，机器可读版见 [`index/stats.json`](index/stats.json)；**条目 = 文件名字面为 `report.md` 的主文档**，同目录其它 `.md`（分册 / `plan.md` / `notes/` / `raw-extracts/` 等）是它的**子文档**。
+> 各库 `README.md` 与 `docs/*.md` 既不是条目也不是子文档，不计入本表；「目录内容字节」不含 `.git` 且按脚本口径跳过隐藏目录；`du -sk` 含文件系统块开销，故大于字节数之和。
+> 加上根目录 [`README.md`](README.md)、[`docs/`](docs/) 4 个文件与 [`scripts/`](scripts/) 2 个文件，全仓库共 **74** 份 Markdown 文档；`git ls-files` 跟踪 **87** 个文件（含 [`INDEX.md`](INDEX.md) 与 [`index/`](index/) 共 9 个生成物）。
+> **索引入口**：[`INDEX.md`](INDEX.md)（总目录）· [`docs/team.md`](docs/team.md)（团队约定）。
 > **逐目录明细**（每个报告的行数 / 字节、统计方法与口径说明）见 **[docs/statistics.md](docs/statistics.md)**。
 
 ---
@@ -115,7 +117,7 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 ## 📖 完整索引
 
 <details>
-<summary><b>🎨 AIGC-Research</b> — 16 份报告（8 模型系列 + 8 技术专题）</summary>
+<summary><b>🎨 AIGC-Research</b> — 17 份条目（8 模型系列 + 9 技术专题）</summary>
 
 <br>
 
@@ -132,7 +134,7 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 | 7 | **ByteDance-Gen** | 字节跳动 | Seedance 1.0→2.0，即梦 AI，多模态 cinematic 生成 | [目录](AIGC-Research/ModelSeries/ByteDance-Gen-research/) · [报告](AIGC-Research/ModelSeries/ByteDance-Gen-research/report.md) |
 | 8 | **Alibaba-Gen** | 阿里巴巴 | 通义万相 Wan 2.1/2.2/2.6，开源视频生成的 DiT 架构 | [目录](AIGC-Research/ModelSeries/Alibaba-Gen-research/) · [报告](AIGC-Research/ModelSeries/Alibaba-Gen-research/report.md) |
 
-**技术专题（8 个）**
+**技术专题（9 个）**
 
 | # | 专题 | 覆盖范围 | 亮点 | 报告 |
 | :--: | :-- | :-- | :-- | :-- |
@@ -144,17 +146,18 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 | 6 | **AudioGen** | 音频 / 音乐生成 | AudioLDM→MusicLM→Suno/Udio，扩散 + 自回归 + 流匹配 | [目录](AIGC-Research/TechnicalTopics/AudioGen-research/) · [报告](AIGC-Research/TechnicalTopics/AudioGen-research/report.md) |
 | 7 | **AvatarGen** | 数字人 / Avatar 生成 | Wav2Lip→SadTalker→OmniHuman-1，CNN→3DMM→DiT 统一生成 | [目录](AIGC-Research/TechnicalTopics/AvatarGen-research/) · [报告](AIGC-Research/TechnicalTopics/AvatarGen-research/report.md) |
 | 8 | **ImageEditing** | 图像编辑与修复 | GAN→InstructPix2Pix→DiT Joint Attention→Agentic 编辑 | [目录](AIGC-Research/TechnicalTopics/ImageEditing-research/) · [报告](AIGC-Research/TechnicalTopics/ImageEditing-research/report.md) |
+| 9 | **WorldModels** | 世界模型 | action 条件化的视频 / 3D 生成、潜空间预测（JEPA / Dreamer）、world foundation model 平台；判据 = action 条件化 + 系统可调用 + 动力学自数据学得 | [目录](AIGC-Research/TechnicalTopics/WorldModels-research/) · [报告](AIGC-Research/TechnicalTopics/WorldModels-research/report.md) |
 
 库内索引：[AIGC-Research/README.md](AIGC-Research/README.md) ｜ 目录：[AIGC-Research/](AIGC-Research/)
 
 </details>
 
 <details>
-<summary><b>🤖 LLM-Research</b> — 41 份报告（15 模型系列 + 10 技术专题）</summary>
+<summary><b>🤖 LLM-Research</b> — 25 份条目 + 16 份分册（15 模型系列 + 10 技术专题）</summary>
 
 <br>
 
-**模型系列（15 个系列 / 20 份报告；分册已标注份数）**
+**模型系列（15 个系列 / 15 份条目 + 5 份分册；分册已标注份数）**
 
 | # | 系列 | 所属公司 | 亮点 | 报告 |
 | :--: | :-- | :-- | :-- | :-- |
@@ -176,7 +179,7 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 
 > 国内 8 家 · 海外 6 家 · 欧洲 1 家 · 共 15 个系列
 
-**技术专题（10 个 / 21 份报告；分册已标注份数）**
+**技术专题（10 个 / 10 份条目 + 11 份分册；分册已标注份数）**
 
 | # | 专题 | 覆盖范围 | 亮点 | 报告 |
 | :--: | :-- | :-- | :-- | :-- |
@@ -245,6 +248,7 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 | [docs/statistics.md](docs/statistics.md) | 逐目录 / 逐文件的完整体积与数量统计、统计方法与口径 |
 | [docs/verification.md](docs/verification.md) | 全部校验留证：上游仓库最终状态、复制校验、扁平化校验、Repo-Research 复制与移除留证 |
 | [docs/maintenance.md](docs/maintenance.md) | 维护流程、提交前检查清单、已知问题与限制 |
+| [docs/team.md](docs/team.md) | 团队约定：成员与范围、协作规则、条目定义与统计口径 |
 
 ---
 
