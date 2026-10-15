@@ -2,8 +2,9 @@
 
 > ⚠️ **信息来源声明**：本报告由 AI Agent 基于公开论文、技术博客、开源项目和第三方分析整理生成。部分 2025-2026 年信息可能未经同行评审，建议读者直接查阅原始论文验证。arXiv 预印本论文中的加速比数据受测试条件（模型规模、硬件、任务类型）影响较大，跨论文直接对比需谨慎。
 >
-> **调研日期**：2026 年 6 月
-> **本文定位**：本文是《投机解码技术深度调研报告》的子报告之一，聚焦 2025-2026 年快速涌现的多模态投机解码方向。主报告见 [report.md](report.md)。
+> **调研日期**：2026 年 10 月（本轮小幅更新；v1 为 2026 年 6 月）
+> **本次改动**：新增 §4.5「与端侧/边缘章节的交叉引用」；参考文献表中 v1 遗留的占位符链接已按验收要求**显式标注为未确证**。
+> **本文定位**：本文是《投机解码技术深度调研报告》的子报告之一，聚焦 2025-2026 年快速涌现的多模态投机解码方向。主报告见 [report.md](report.md)；端侧与硬件约束见 [speculative-edge-cloud-hardware.md](speculative-edge-cloud-hardware.md)。
 
 ---
 
@@ -80,26 +81,50 @@
 
 ---
 
-## 参考文献
+## 4.5 与端侧/边缘章节的交叉引用（本轮新增）
 
-| # | 论文 | 年份 | 链接 | 可靠性 |
-|---|------|------|------|--------|
-| 1 | SpecVLM, *SpecVLM: Elastic Visual Compression + Online Logit Distillation* | 2025 | https://arxiv.org/abs/2505.XXXXX | 高 |
-| 2 | MASSV, *MASSV: Multimodal Adapter + Self-Distillation*, EMNLP 2025 | 2025 | https://arxiv.org/abs/2509.XXXXX | 高 |
-| 3 | MSD, *MSD: Decoupled Text/Visual Token Drafting* | 2025 | https://arxiv.org/abs/2506.XXXXX | 高 |
-| 4 | Spec-LLaVA, *Dynamic Tree Speculative Decoding for VLMs*, ICML 2025 Workshop | 2025 | https://arxiv.org/abs/2506.XXXXX | 中 |
-| 5 | TwigVLM, *TwigVLM: Lightweight Twig Module + Self-Speculation* | 2025 | https://arxiv.org/abs/2507.XXXXX | 高 |
-| 6 | HSD, *Hierarchical Speculative Decoding for Document VLM* | 2026-02 | https://arxiv.org/abs/2502.XXXXX | 中（预印本） |
-| 7 | SAGE, *SAGE: Entropy-Guided Adaptive Speculative Decoding* | 2026-02 | https://arxiv.org/abs/2502.XXXXX | 中（预印本） |
-| 8 | TABED, *TABED: Test-Time Adaptive Bundle Ensemble Drafting*, EACL 2026 | 2026 | https://arxiv.org/abs/2503.XXXXX | 高 |
-| 9 | Spec-VLA, *Speculative Decoding for VLA with Relaxed Acceptance* | 2025-07 | https://arxiv.org/abs/2507.XXXXX | 高 |
-| 10 | SpecPrune-VLA, *Action-Aware Self-Speculative Pruning for VLA* | 2025-09 | https://arxiv.org/abs/2509.XXXXX | 高 |
-| 11 | KERV, *Kinematic Error Rectified Speculative Decoding* | 2026-03 | https://arxiv.org/abs/2503.XXXXX | 中（预印本） |
-| 12 | Speech Speculative Decoding, *Speech Speculative Decoding*, INTERSPEECH 2025 | 2025 | https://arxiv.org/abs/2505.XXXXX | 高 |
-| 13 | SpecASR, *SpecASR: Speculative Decoding for LLM-based ASR* | 2025-07 | https://arxiv.org/abs/2507.XXXXX | 高 |
+多模态投机解码与端侧部署高度重叠——**视觉 token 的数量级膨胀，使端侧的内存带宽约束比纯文本场景更早成为瓶颈**。相关结论请直接参阅端侧章节：
+
+| 交叉点 | 端侧章节中的对应内容 | 对多模态的含义 |
+|---|---|---|
+| **内存带宽优先于草稿质量** | [speculative-edge-cloud-hardware.md](speculative-edge-cloud-hardware.md) §1 结论 1：端侧第一约束是内存带宽与权重搬运，而非草稿质量 | 视觉 token 使 KV cache 与激活规模进一步膨胀，端侧应先按内存预算筛掉不可行的视觉压缩 / 草稿方案 |
+| **"额外模型"代价不可接受** | 同章 §3：SS-MoE 用**已有权重的子集**作 draft，端侧不增加任何权重的内存占用 | 多模态 drafter（ViSpec、TwigVLM 等轻量适配器）在端侧必须评估其**额外权重与激活的内存占用**，不能只报加速比 |
+| **端云分工的通信瓶颈** | 同章 §2：FlexSpec 指出紧耦合导致同步通信吃掉加速收益 | 多模态场景需要传输的视觉特征/中间结果更大，端云同步成本更敏感（对照本表 **EdgeSD** 的"视觉-解码解耦"） |
+| **硬件映射决定收益上限** | 同章 §5：Google TPU 上 DFlash 的 3.13× 来自双缓存与流水线重映射，而非算法本身 | 多模态投机的收益同样取决于视觉编码器与 drafter 能否映射到同一硬件路径 |
+
+> **证据等级**：本节为跨章节的**结构性关联**，不引入新的实证结论。上表右列判断属于本报告基于两章论据的**推断**，未见任何论文做过"多模态投机解码 × 端侧内存约束"的联合实验。
 
 ---
 
-> **报告说明**：本报告所有技术细节均来自公开发表的论文、arXiv 预印本、官方技术博客及开源项目文档。2023-2025 年方法的信息可靠性普遍较高（经同行评审）；2026 年方法（KERV、HeiSD、HSD、SAGE 等）多为 arXiv 预印本，尚未经过完整同行评审，建议读者直接查阅原始论文验证。加速比数据受测试条件影响显著，跨论文对比需谨慎。
+## 参考文献
+
+> **⚠️ 核验声明（2026-10-16）**：v1 中本表所有 arXiv 链接均为 `XXXXX` 形式的**占位符**，本轮实测确认该类 ID 返回 **HTTP 404**，**无法核验**。本轮**未能确证这些文献的一手来源**，故统一标注为「未确证」，不做猜测性替换、不据此展开结论。引用前请自行确证一手来源。
+
+| # | 论文 | 年份 | 链接 | 可靠性 |
+|---|------|------|------|--------|
+| 1 | SpecVLM, *SpecVLM: Elastic Visual Compression + Online Logit Distillation* | 2025 | ⚠️ **未确证**（v1 占位符） | 未确证 |
+| 2 | MASSV, *MASSV: Multimodal Adapter + Self-Distillation*, EMNLP 2025 | 2025 | ⚠️ **未确证**（v1 占位符） | 未确证 |
+| 3 | MSD, *MSD: Decoupled Text/Visual Token Drafting* | 2025 | ⚠️ **未确证**（v1 占位符） | 未确证 |
+| 4 | Spec-LLaVA, *Dynamic Tree Speculative Decoding for VLMs*, ICML 2025 Workshop | 2025 | ⚠️ **未确证**（v1 占位符） | 未确证 |
+| 5 | TwigVLM, *TwigVLM: Lightweight Twig Module + Self-Speculation* | 2025 | ⚠️ **未确证**（v1 占位符） | 未确证 |
+| 6 | HSD, *Hierarchical Speculative Decoding for Document VLM* | 2026-02 | ⚠️ **未确证**（v1 占位符） | 未确证 |
+| 7 | SAGE, *SAGE: Entropy-Guided Adaptive Speculative Decoding* | 2026-02 | ⚠️ **未确证**（v1 占位符） | 未确证 |
+| 8 | TABED, *TABED: Test-Time Adaptive Bundle Ensemble Drafting*, EACL 2026 | 2026 | ⚠️ **未确证**（v1 占位符） | 未确证 |
+| 9 | Spec-VLA, *Speculative Decoding for VLA with Relaxed Acceptance* | 2025-07 | ⚠️ **未确证**（v1 占位符） | 未确证 |
+| 10 | SpecPrune-VLA, *Action-Aware Self-Speculative Pruning for VLA* | 2025-09 | ⚠️ **未确证**（v1 占位符） | 未确证 |
+| 11 | KERV, *Kinematic Error Rectified Speculative Decoding* | 2026-03 | ⚠️ **未确证**（v1 占位符） | 未确证 |
+| 12 | Speech Speculative Decoding, INTERSPEECH 2025 | 2025 | ⚠️ **未确证**（v1 占位符） | 未确证 |
+| 13 | SpecASR, *SpecASR: Speculative Decoding for LLM-based ASR* | 2025-07 | ⚠️ **未确证**（v1 占位符） | 未确证 |
+
+**本轮新增可核验引用（交叉参考）**：
+
+| # | 来源 | 链接 | 证据等级 |
+|---|------|------|---------|
+| 14 | Google TPU 扩散式投机（端侧/硬件章节） | https://developers.googleblog.com/supercharging-llm-inference-on-google-tpus-achieving-3x-speedups-with-diffusion-style-speculative-decoding/ | 精读原文 |
+| 15 | vLLM, *Per-Request Acceptance Metrics*（多模态场景指标口径） | https://docs.vllm.ai/en/latest/features/speculative_decoding/acceptance_metrics/ | 精读原文 |
+
+---
+
+> **报告说明**：本报告所有技术细节均来自公开发表的论文、arXiv 预印本、官方技术博客及开源项目文档。**重要提醒：本报告参考文献表中 13 条 v1 条目的链接均为占位符（实测 HTTP 404），本轮未能确证一手来源，已在表中逐条标注为「未确证」。** 表格中的加速比与"信息可靠性"评分为 v1 结论，本轮未重新核验，引用时请以一手来源为准。加速比数据受测试条件影响显著，跨论文对比需谨慎。
 >
-> *数据截至 2026-06-06。*
+> *数据截至 2026-10-16（v1：2026-06-06）。*

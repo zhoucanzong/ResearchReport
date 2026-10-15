@@ -9,8 +9,8 @@
 覆盖 **15 个主流模型 / 系列 + 10 个技术专题** · 持续更新中
 
 [![Monorepo](https://img.shields.io/badge/monorepo-ResearchReport-6f42c1?style=flat-square)](https://github.com/zhoucanzong/ResearchReport)
-[![Reports](https://img.shields.io/badge/Reports-36-blue?style=flat-square)](.)
-[![Files](https://img.shields.io/badge/Files-36-green?style=flat-square)](.)
+[![Reports](https://img.shields.io/badge/Reports-41-blue?style=flat-square)](.)
+[![Files](https://img.shields.io/badge/Files-41-green?style=flat-square)](.)
 ![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)
 
 </div>
@@ -54,7 +54,7 @@
 
 | #  | 图标 | 专题                                          | 覆盖范围  | 报告数 | 亮点                                     |
 | -- | :--: | --------------------------------------------- | --------- | :----: | ---------------------------------------- |
-| 1  | 🔬 | [**SpeculativeDecoding**](./TechnicalTopics/SpeculativeDecoding-research/) | 投机解码 |   7   | EAGLE/DFlash/多模态投机，经典方法到系统框架 |
+| 1  | 🔬 | [**SpeculativeDecoding**](./TechnicalTopics/SpeculativeDecoding-research/) | 投机解码 |   **12**   | EAGLE/DFlash/**随机采样正确性**/**级联异构**/**草稿训练**/**端侧硬件**，经典方法到系统框架 |
 | 2  | 🔬 | [**LongContext**](./TechnicalTopics/LongContext-research/) | 长上下文技术 |   1   | FlashAttention、Ring Attention、线性注意力、百万Token窗口 |
 | 3  | 🔬 | [**MoE**](./TechnicalTopics/MoE-research/)                 | 混合专家架构 |   1   | Switch→DeepSeekMoE→Routing-Free，负载均衡与推理优化 |
 | 4  | 🔬 | [**ReasoningModels**](./TechnicalTopics/ReasoningModels-research/) | 推理模型 |   1   | o1/R1/k1.5，Test-Time Scaling，GRPO/DAPO训练方法 |
@@ -65,7 +65,7 @@
 | 9  | 🔬 | [**QuantizationEdge**](./TechnicalTopics/QuantizationEdge-research/) | 量化与边缘部署 |   1   | AWQ/GPTQ/GGUF/FP8，vLLM/Ollama，Jetson边缘 |
 | 10 | 🔬 | [**RAG**](./TechnicalTopics/RAG-research/)                 | 检索增强生成 |   1   | RAG 0.0→4.0，GraphRAG，Agentic RAG，混合检索 |
 
-> **🔬 技术专题 10 个** &nbsp;|&nbsp; 共 **36 份** Markdown 报告
+> **🔬 技术专题 10 个** &nbsp;|&nbsp; 共 **41 份** Markdown 报告
 
 ---
 
@@ -99,14 +99,19 @@ LLM-research/
 │       └── qwen-omni-and-ecosystem.md  #     Omni 模型与生态
 │
 └── TechnicalTopics/                # 技术专题报告（10 个核心技术方向）
-    ├── SpeculativeDecoding-research/   # 投机解码技术专题
-    │   ├── report.md                       #   主报告：概述、时间线、瓶颈、框架、QwenAccel-Train
-    │   ├── speculative-classical-and-self.md   #   经典方法与自投机（Medusa/Hydra/Lookahead）
-    │   ├── speculative-eagle-series.md         #   EAGLE系列（EAGLE-1/2/3/SpecForge）
-    │   ├── speculative-block-diffusion.md        #   块扩散与检索式方法（DFlash/REST/PLD）
-    │   ├── speculative-training-optimization.md #   训练目标优化（LK Losses/PPOW/ConFu）
+    ├── SpeculativeDecoding-research/   # 投机解码技术专题（12 份）
+    │   ├── report.md                       #   主报告：技术脉络、指标口径、四条瓶颈、框架、QwenAccel-Train
+    │   ├── speculative-classical-and-self.md   #   经典方法与自投机（Medusa/Hydra/Lookahead/SWIFT/CLaSp）
+    │   ├── speculative-eagle-series.md         #   EAGLE 系列（含 T>0 下动态树塌缩的限定）
+    │   ├── speculative-stochastic-verification.md #  随机采样与验证正确性（RheoSampling/Traversal Verification/ARC-Decode）
+    │   ├── speculative-block-diffusion.md        #   块扩散与检索式（DFlash/DSpark/BASTION/CAST/REST/PLD）
+    │   ├── speculative-cascade-heterogeneous.md #   级联与异构草稿（HCSpec/HeteroSpec）
+    │   ├── speculative-draft-training-2026.md   #   草稿模型训练新法（AdaSPEC/Attention Drift/TLT）
+    │   ├── speculative-training-optimization.md #   训练目标优化（部分链接为未确证占位符）
+    │   ├── speculative-edge-cloud-hardware.md   #   端侧·边缘·硬件（FlexSpec/SS-MoE/SMoLPU/TPU）
+    │   ├── speculative-domain-language.md       #   领域与语种特化（DictSpec/CDSL）
     │   ├── speculative-multimodal.md           #   多模态投机解码（VLM/视频/VLA/语音）
-    │   └── speculative-systems-and-frameworks.md #   系统级优化与框架生态（vLLM/SGLang/TensorRT-LLM）
+    │   └── speculative-systems-and-frameworks.md #   系统级优化与框架生态（vLLM/SGLang/llama.cpp）
     ├── LongContext-research/             # 长上下文技术专题
     │   └── report.md                     #   FlashAttention、Ring Attention、线性注意力、百万Token窗口
     ├── MoE-research/                     # 混合专家架构专题

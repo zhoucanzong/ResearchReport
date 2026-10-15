@@ -5,9 +5,9 @@
 **一个仓库收敛 AIGC / LLM / 论文深读全部研究产出**
 
 ![Collections](https://img.shields.io/badge/Collections-3-blue?style=flat-square)
-![Reports](https://img.shields.io/badge/Reports-52-green?style=flat-square)
+![Reports](https://img.shields.io/badge/Reports-57-green?style=flat-square)
 ![Topic](https://img.shields.io/badge/Topic-18-orange?style=flat-square)
-![Markdown](https://img.shields.io/badge/Markdown-66-lightgrey?style=flat-square)
+![Markdown](https://img.shields.io/badge/Markdown-71-lightgrey?style=flat-square)
 ![Updated](https://img.shields.io/badge/Updated-2026--10--16-informational?style=flat-square)
 
 </div>
@@ -45,7 +45,7 @@
 
 <br><br>
 
-<b>36</b> 份报告<br>15 个模型系列 + 10 个技术专题
+<b>41</b> 份报告<br>15 个模型系列 + 10 个技术专题
 
 <br><br>
 
@@ -102,12 +102,12 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 | 资料库 | 内容 | 报告 / 文件 | `.md` | 内容字节 | `du -sk` |
 | :-- | :-- | --: | --: | --: | --: |
 | 🎨 [AIGC-Research](AIGC-Research/) | 8 系列 + 8 专题 | 16 份报告 | 17 | 618,256 B | 640 KB |
-| 🤖 [LLM-Research](LLM-Research/) | 15 系列 + 10 专题 | 36 份报告 | 37 | 1,084,878 B | 1,136 KB |
+| 🤖 [LLM-Research](LLM-Research/) | 15 系列 + 10 专题 | 41 份报告 | 42 | 1,234,370 B | 1,296 KB |
 | 📑 [Repo-Research](Repo-Research/) | 2 个深读项目 | 9 个文件 | 8 | 189,061 B | 204 KB |
-| **合计** | **3 个资料库** | **52 份报告 + 9 个文件** | **62** | **1,892,195 B ≈ 1.80 MiB** | **1,980 KB** |
+| **合计** | **3 个资料库** | **57 份报告 + 9 个文件** | **65** | **2,041,827 B ≈ 1.95 MiB** | **2,140 KB** |
 
 > 「报告 / 文件」不含各库的 `README.md`；「内容字节」不含 `.git`。
-> 加上根目录 `README.md` 与 `docs/` 的 3 个文件，全仓库共 **66** 个 `.md`、**69** 个跟踪文件。
+> 加上根目录 `README.md` 与 `docs/` 的 3 个文件，全仓库共 **71** 个 `.md`、**74** 个跟踪文件。
 > **逐目录明细**（每个报告的行数 / 字节、统计方法与口径说明）见 **[docs/statistics.md](docs/statistics.md)**。
 
 ---
@@ -150,7 +150,7 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 </details>
 
 <details>
-<summary><b>🤖 LLM-Research</b> — 36 份报告（15 模型系列 + 10 技术专题）</summary>
+<summary><b>🤖 LLM-Research</b> — 41 份报告（15 模型系列 + 10 技术专题）</summary>
 
 <br>
 
@@ -176,11 +176,11 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 
 > 国内 8 家 · 海外 6 家 · 欧洲 1 家 · 共 15 个系列
 
-**技术专题（10 个 / 16 份报告；分册已标注份数）**
+**技术专题（10 个 / 21 份报告；分册已标注份数）**
 
 | # | 专题 | 覆盖范围 | 亮点 | 报告 |
 | :--: | :-- | :-- | :-- | :-- |
-| 1 | **SpeculativeDecoding**（7 份） | 投机解码 | EAGLE / DFlash / 多模态投机，经典方法到系统框架 | [目录](LLM-Research/TechnicalTopics/SpeculativeDecoding-research/) · [主报告](LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md) · [经典与自投机](LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-classical-and-self.md) · [EAGLE 系列](LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-eagle-series.md) · [块扩散与检索式](LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-block-diffusion.md) · [训练目标优化](LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-training-optimization.md) · [多模态投机](LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-multimodal.md) · [系统与框架](LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-systems-and-frameworks.md) |
+| 1 | **SpeculativeDecoding**（12 份） | 投机解码 | EAGLE / DFlash / **随机采样正确性** / **级联异构** / **草稿训练** / **端侧硬件**，经典方法到系统框架 | [目录](LLM-Research/TechnicalTopics/SpeculativeDecoding-research/) · [主报告](LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md) · [经典与自投机](LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-classical-and-self.md) · [EAGLE 系列](LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-eagle-series.md) · [**随机采样与验证正确性**](LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-stochastic-verification.md) · [块扩散与检索式](LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-block-diffusion.md) · [**级联与异构草稿**](LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-cascade-heterogeneous.md) · [**草稿模型训练新法**](LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-draft-training-2026.md) · [训练目标优化](LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-training-optimization.md) · [**端侧·边缘·硬件**](LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-edge-cloud-hardware.md) · [**领域与语种特化**](LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-domain-language.md) · [多模态投机](LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-multimodal.md) · [系统与框架](LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-systems-and-frameworks.md) |
 | 2 | **LongContext** | 长上下文技术 | FlashAttention、Ring Attention、线性注意力、百万 Token 窗口 | [目录](LLM-Research/TechnicalTopics/LongContext-research/) · [报告](LLM-Research/TechnicalTopics/LongContext-research/report.md) |
 | 3 | **MoE** | 混合专家架构 | Switch→DeepSeekMoE→Routing-Free，负载均衡与推理优化 | [目录](LLM-Research/TechnicalTopics/MoE-research/) · [报告](LLM-Research/TechnicalTopics/MoE-research/report.md) |
 | 4 | **ReasoningModels** | 推理模型 | o1/R1/k1.5，Test-Time Scaling，GRPO/DAPO 训练方法 | [目录](LLM-Research/TechnicalTopics/ReasoningModels-research/) · [报告](LLM-Research/TechnicalTopics/ReasoningModels-research/report.md) |
