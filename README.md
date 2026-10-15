@@ -102,11 +102,11 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 | 资料库 | 内容 | 报告 / 文件 | `.md` | 内容字节 | `du -sk` |
 | :-- | :-- | --: | --: | --: | --: |
 | 🎨 [AIGC-Research](AIGC-Research/) | 8 系列 + 8 专题 | 16 份报告 | 17 | 618,256 B | 640 KB |
-| 🤖 [LLM-Research](LLM-Research/) | 15 系列 + 10 专题 | 41 份报告 | 42 | 1,234,370 B | 1,296 KB |
+| 🤖 [LLM-Research](LLM-Research/) | 15 系列 + 10 专题 | 41 份报告 | 42 | 1,240,488 B | 1,304 KB |
 | 📑 [Repo-Research](Repo-Research/) | 2 个深读项目 | 9 个文件 | 8 | 189,061 B | 204 KB |
-| **合计** | **3 个资料库** | **57 份报告 + 9 个文件** | **65** | **2,041,827 B ≈ 1.95 MiB** | **2,140 KB** |
+| **合计** | **3 个资料库** | **57 份报告 + 9 个文件** | **527** | **2,047,945 B ≈ 1.95 MiB** | **2,148 KB** |
 
-> 「报告 / 文件」不含各库的 `README.md`；「内容字节」不含 `.git`。
+> 「报告 / 文件」不含各库的 `README.md`；「内容字节」不含 `.git`。**「`.md`」列为各库 `.md` 的合计行数**（与 `docs/statistics.md` 表 3/4/5 的行数口径一致）。
 > 加上根目录 `README.md` 与 `docs/` 的 3 个文件，全仓库共 **71** 个 `.md`、**74** 个跟踪文件。
 > **逐目录明细**（每个报告的行数 / 字节、统计方法与口径说明）见 **[docs/statistics.md](docs/statistics.md)**。
 
