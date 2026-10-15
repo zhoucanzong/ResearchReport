@@ -5,6 +5,7 @@
 > **调研日期**：2026 年 10 月（本轮新增）
 > **本文定位**：本文是《投机解码技术深度调研报告》的子报告之一，聚焦**多级草稿级联**与**异构草稿策略**这两条 2026 年的新方向。它与 [speculative-eagle-series.md](speculative-eagle-series.md) 的动态树、[speculative-systems-and-frameworks.md](speculative-systems-and-frameworks.md) 的系统成本问题直接相关。
 > **证据等级约定**：**[精读原文]**（已获取正文/官方文档并逐节阅读）、**[摘要级]**（仅核验会议页或摘要）、**[二手]**（第三方解读页）。
+> **等级规则**：每条结论只取**一个主等级**（精读原文 / 摘要级 / 二手 / 受限核验）；**混合来源取最弱等级**并在正文注明来源类型（如 `[精读原文（vLLM 官方文档）]`）；不使用 `A + B`、`A（摘要层）` 这类复合标签。
 
 ---
 
@@ -15,7 +16,7 @@
 3. **"验证负载不均"是第二个被显式命名的偏差**。HeteroSpec 称其为 **verification heterogeneity**：少数高置信度候选贡献了绝大多数成功验证，而既有方法对所有候选一视同仁，造成冗余计算。它按候选不确定性**按比例分配验证算力**，在 5 benchmark × 4 LLM 上平均 **4.24× 加速**（对比 EAGLE-3 等 SOTA），并**保持精确输出分布**、**无需重训**。 **[精读原文]**
 4. **与 EAGLE 动态树的区别要说清楚**：EAGLE 的动态树调的是**树的形状**（分支/深度），依据是上下文熵；HCSpec 调的是**草稿模块的架构分配**（哪个位置用哪一级模块）；HeteroSpec 调的是**验证算力的分配**（把多少验证预算给哪个候选）。三者可叠加，但优化目标不同。 **[精读原文]**
 5. **级联的收益/开销边界**：级联增加的是**级间调度与额外模块调用**的开销，减少的是单级同构架构的过设计。HCSpec 之所以能净赚，是因为第二级刻意"用精度换效率"（单层 Transformer，主动接受边际精度损失）。这条边界提示：级联层数不是越多越好，**每一级都要有明确的角色分工**。 **[精读原文]**
-6. **与 CAST 的成本感知结论互补**：CAST（ICLR 2026）指出 batch 场景下"草稿 token 越多越慢"，HeteroSpec/HCSpec 提供的正是"按边际收益分配算力/模块"的机制化答案。 **[摘要级 + 二手]**
+6. **与 CAST 的成本感知结论互补**：CAST（ICLR 2026）指出 batch 场景下"草稿 token 越多越慢"，HeteroSpec/HCSpec 提供的正是"按边际收益分配算力/模块"的机制化答案。 **[二手]**
 
 ---
 
@@ -128,8 +129,8 @@ HeteroSpec 是一个**异构性自适应的投机解码框架**，按候选不�
 
 | # | 论文 | 年份 / 出处 | 链接 | 证据等级 |
 |---|---|---|---|---|
-| 1 | HCSpec, *Two-Tier Horizontal Cascade Speculative Decoding for High-Efficiency Large Language Model Inference* | ACL 2026 Long | https://aclanthology.org/2026.acl-long.353/ | 精读原文（摘要层） |
-| 2 | HeteroSpec, *Leveraging Contextual Heterogeneity for Efficient Speculative Decoding* | ACL 2026 Long | https://aclanthology.org/2026.acl-long.589/ | 精读原文（摘要层） |
+| 1 | HCSpec, *Two-Tier Horizontal Cascade Speculative Decoding for High-Efficiency Large Language Model Inference* | ACL 2026 Long | https://aclanthology.org/2026.acl-long.353/ | 摘要级 |
+| 2 | HeteroSpec, *Leveraging Contextual Heterogeneity for Efficient Speculative Decoding* | ACL 2026 Long | https://aclanthology.org/2026.acl-long.589/ | 摘要级 |
 | 3 | CAST, *Inference-Cost-Aware Dynamic Tree Construction for Efficient Inference in LLMs* | ICLR 2026 | https://papernotes.org/ICLR2026/llm_efficiency/inference-cost-aware_dynamic_tree_construction_for_efficient_inference_in_large_/ | 二手（第三方解读页） |
 | 4 | EAGLE-3（对比基线） | NeurIPS 2025 | https://arxiv.org/abs/2503.01840 | 精读原文（背景） |
 

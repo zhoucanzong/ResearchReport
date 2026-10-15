@@ -5,15 +5,16 @@
 > **调研日期**：2026 年 10 月（本轮新增）
 > **本文定位**：本文是《投机解码技术深度调研报告》的子报告之一，聚焦**端侧内存带宽约束、端云分工、以及硬件加速路线与算法路线的耦合**。它与 [speculative-systems-and-frameworks.md](speculative-systems-and-frameworks.md)（服务端框架生态）、[speculative-multimodal.md](speculative-multimodal.md)（多模态端侧场景）交叉。
 > **证据等级约定**：**[精读原文]**、**[摘要级]**、**[二手]**，另加一档 **⚠️[受限核验]**（一手页面被反爬拦截，改由多个二手/元数据来源交叉确证）。
+> **等级规则**：每条结论只取**一个主等级**（精读原文 / 摘要级 / 二手 / 受限核验）；**混合来源取最弱等级**并在正文注明来源类型（如 `[精读原文（vLLM 官方文档）]`）；不使用 `A + B`、`A（摘要层）` 这类复合标签。
 
 ---
 
 ## 1. 本章结论
 
 1. **端侧投机解码的第一约束不是"草稿质量"，而是"内存带宽与专家权重搬运"**。这与服务端（算力/显存、batch 吞吐）的优化目标根本不同——服务端关心吞吐，端侧关心**每次前向的外部内存访问（EMA）与 IO 开销**。 **[精读原文]**
-2. **端侧 MoE 与投机解码存在结构性不兼容**：投机解码用"少调用几次 target 换速度"，但**验证被拒 token 时仍然要加载专家**；批量验证又会激活**专家并集**，把稀疏计算重新推回密集内存访问。SS-MoE 与 EdgeXpert 都把这个不兼容点作为核心问题。 **[精读原文 + 二手]**
+2. **端侧 MoE 与投机解码存在结构性不兼容**：投机解码用"少调用几次 target 换速度"，但**验证被拒 token 时仍然要加载专家**；批量验证又会激活**专家并集**，把稀疏计算重新推回密集内存访问。SS-MoE 与 EdgeXpert 都把这个不兼容点作为核心问题。 **[二手]**
 3. **"端云协同"的真实瓶颈是通信，不是算力**。FlexSpec 指出既有框架的根本问题是 draft 与 target **紧耦合**：target 频繁演进 → 反复同步 → 通信开销吃掉加速收益。它的解法是**共享骨干（shared-backbone）**架构，让**单个静态边缘 draft 模型兼容一大族演进的云端 target**，从而免去端侧重训与反复下载，并叠加**信道感知的自适应投机长度**。 **[精读原文]**
-4. **硬件侧的"投机解码专用单元"已经出现，并且指标口径与算法论文完全不同**。SMoLPU（ISSCC 2026）是 MoE 投机解码专用 LLM 处理器（NPU-CIM 核心），报的是 **µJ/token、能效倍数、每参数能量下降**，而不是 tokens/s 或接受率。 **[摘要级 / ⚠️受限核验]**
+4. **硬件侧的"投机解码专用单元"已经出现，并且指标口径与算法论文完全不同**。SMoLPU（ISSCC 2026）是 MoE 投机解码专用 LLM 处理器（NPU-CIM 核心），报的是 **µJ/token、能效倍数、每参数能量下降**，而不是 tokens/s 或接受率。 **[摘要级（⚠️ 受限核验）]**
 5. **硬件路线与算法路线正在耦合**：Google TPU 上的扩散式投机（DFlash）之所以能拿到 **3.13×（峰值近 6×）token/s 提升**，关键不只是算法，而是把 proposer 与验证流水线重新映射到 TPU 的 MXU 上（**双缓存架构**解决 DFlash 非因果块扩散与 paged attention/Pallas 内核的不兼容）。 **[精读原文]**
 6. **给工程判断的一句话**：端侧选草稿策略时，应先按**内存带宽 / IO 预算**筛掉不可行的方案，再谈接受率；端云分工时，应先算**同步通信量**，再谈草稿模型多强。
 
@@ -46,7 +47,7 @@
 
 ---
 
-## 3. 端侧 MoE 自投机：SS-MoE（ACM Web 2026） **[精读原文（摘要层）]**
+## 3. 端侧 MoE 自投机：SS-MoE（ACM Web 2026） **[摘要级]**
 
 **基本信息**：*Self-Speculative Decoding for On-device MoE Acceleration*；ACM Web Conference (WWW) 2026；DOI `10.1145/3774904.3792218`。**核验说明**：ACM DL 页面在本环境被 Cloudflare 拦截（HTTP 403），本报告改用 **OpenAlex 元数据**（DOI/会议/年份与 ACM 一致）获取摘要全文。
 
@@ -68,7 +69,7 @@
 
 ---
 
-## 4. SMoLPU：MoE 投机解码专用硬件（ISSCC 2026） **[摘要级 / ⚠️受限核验]**
+## 4. SMoLPU：MoE 投机解码专用硬件（ISSCC 2026） **[摘要级（⚠️ 受限核验）]**
 
 **基本信息**：Sangwoo Ha, Jingu Lee, Youngjin Moon, Sunjoo Whang, Wooyoung Jo, Gwangtae Park, Sangjin Kim, Soyeon Um, Junha Ryu, Yurim Jo, Hoi-Jun Yoo（KAIST SSL + MIT，资深作者 Hoi-Jun Yoo）；*SMoLPU: 122.1 µJ/Token Sparse MoE-Based Speculative Decoding Language Processing Unit with Adaptive-Offload NPU-CIM Core*；**ISSCC 2026**，Digest of Technical Papers vol. 69, pp. 312–314；DOI `10.1109/ISSCC49663.2026.11409285`。
 
@@ -125,7 +126,7 @@
 | 工作 | 场景 | 关键机制 | 论文自报指标 | 口径 | 证据等级 |
 |---|---|---|---|---|---|
 | **FlexSpec** | 端云协同（移动/边缘） | 共享骨干（静态边缘 draft 兼容演进云端 target）+ 信道感知自适应草稿长度 | 定性优于常规 SD | 推理效率 | 精读原文 |
-| **SS-MoE** | 端侧 MoE（内存受限 GPU） | 路由专家子集作 draft + 内存作专家缓存 + 置信度自适应接受 | 未在本报告取得量化值 | — | 精读原文（摘要层） |
+| **SS-MoE** | 端侧 MoE（内存受限 GPU） | 路由专家子集作 draft + 内存作专家缓存 + 置信度自适应接受 | 未在本报告取得量化值 | — | 摘要级 |
 | **SMoLPU** | MoE 投机解码专用芯片 | token 自适应专家精炼 / adaptive-offload NPU-CIM / DRAM LUT-CIM | 2.3×/4.2× 能效、3.3× 延迟、43.5% 每参数能量 | **µJ/token、能效** | ⚠️受限核验 |
 | **TPU + DFlash** | 云端加速器（TPU v5p） | 块扩散 draft + 双缓存 + 流水线重映射 | 3.13× 平均、近 6× 峰值、2.29× vs EAGLE-3 1.30× | **token/s、端到端服务** | 精读原文 |
 
@@ -168,7 +169,7 @@
 | # | 论文 / 来源 | 年份 / 出处 | 链接 | 证据等级 |
 |---|---|---|---|---|
 | 1 | FlexSpec, *Frozen Drafts Meet Evolving Targets in Edge-Cloud Collaborative LLM Speculative Decoding* | arXiv 2601.00644（2026-01-02）；IEEE TMC | https://arxiv.org/abs/2601.00644 | 精读原文 |
-| 2 | SS-MoE, *Self-Speculative Decoding for On-device MoE Acceleration* | ACM Web Conference 2026 | https://dl.acm.org/doi/abs/10.1145/3774904.3792218 | 精读原文（摘要层） |
+| 2 | SS-MoE, *Self-Speculative Decoding for On-device MoE Acceleration* | ACM Web Conference 2026 | https://dl.acm.org/doi/abs/10.1145/3774904.3792218 | 摘要级 |
 | 3 | SMoLPU, *122.1 µJ/Token Sparse MoE-Based Speculative Decoding Language Processing Unit with Adaptive-Offload NPU-CIM Core* | ISSCC 2026, pp. 312–314 | https://pure.kaist.ac.kr/en/publications/smolpu-1221%CE%BCjtoken-sparse-moe-based-speculative-decoding-language/ | ⚠️受限核验（二手交叉确证） |
 | 4 | Google Developers Blog, *Achieving 3X speedups with diffusion-style speculative decoding* | 2026-05-04 | https://developers.googleblog.com/supercharging-llm-inference-on-google-tpus-achieving-3x-speedups-with-diffusion-style-speculative-decoding/ | 精读原文 |
 | 5 | DFlash（TPU 条目的算法基础） | ICML 2026, arXiv 2602.06036 | https://arxiv.org/abs/2602.06036 | 精读原文 |
