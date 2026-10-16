@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "55bb845bf547c62baab9654ca59c892c8e9eb5f4a4003bd6dd58bf5524af0660",
+  "content_fingerprint": "c8f0d7fb1ffe2de65eafc2b05a0bc0a820b18ef76063429671f71202ed48c4f1",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -19,16 +19,16 @@
     "with_date": 3,
     "lines": 30510,
     "bytes": 1841888,
-    "children": 54
+    "children": 44
   },
   "documents": {
-    "md_total": 126,
-    "md_libraries": 109,
+    "md_total": 105,
+    "md_libraries": 99,
     "with_front_matter": 16,
     "named_report_md": 48,
     "named_readme_md": 8,
-    "lines": 47232,
-    "bytes": 3172295
+    "lines": 44024,
+    "bytes": 2882904
   },
   "libraries": {
     "Models": {
@@ -114,12 +114,12 @@
     },
     "WorldModel": {
       "entries": 2,
-      "documents_md": 13,
+      "documents_md": 3,
       "md_by_category": {
         "Models": 0,
         "LLM": 0,
         "VisualGen": 0,
-        "WorldModel": 13,
+        "WorldModel": 3,
         "Infra": 0,
         "OpenSource": 0
       },
@@ -134,10 +134,10 @@
       "lines": 750,
       "bytes": 77166,
       "lines_raw": 750,
-      "dir_files": 14,
-      "dir_md": 13,
-      "dir_bytes": 143622,
-      "du_sk": 176
+      "dir_files": 3,
+      "dir_md": 3,
+      "dir_bytes": 78075,
+      "du_sk": 84
     },
     "Infra": {
       "entries": 3,
@@ -197,10 +197,10 @@
   "totals": {
     "libraries": 6,
     "library_entries": 48,
-    "library_documents_md": 109,
-    "library_dir_files": 111,
-    "library_dir_bytes": 2903897,
-    "library_du_sk": 3052,
+    "library_documents_md": 99,
+    "library_dir_files": 100,
+    "library_dir_bytes": 2838350,
+    "library_du_sk": 2960,
     "library_entry_lines": 30510,
     "library_entry_bytes": 1841888
   },
@@ -435,16 +435,16 @@
           }
         },
         "other_md": {
-          "files": 11,
-          "lines": 1087,
-          "lines_raw": 1087,
-          "bytes": 66450
+          "files": 1,
+          "lines": 25,
+          "lines_raw": 25,
+          "bytes": 909
         },
         "dir_md": {
-          "files": 13,
-          "lines": 1837,
-          "lines_raw": 1837,
-          "bytes": 143616
+          "files": 3,
+          "lines": 775,
+          "lines_raw": 775,
+          "bytes": 78075
         }
       },
       "Infra": {
@@ -565,16 +565,16 @@
       }
     },
     "repo_md": {
-      "files": 126,
-      "lines": 47232,
-      "lines_raw": 47399,
-      "bytes": 3172295
+      "files": 105,
+      "lines": 44024,
+      "lines_raw": 44191,
+      "bytes": 2882904
     },
     "library_md": {
-      "files": 109,
-      "lines": 44234,
-      "lines_raw": 44401,
-      "bytes": 2887597
+      "files": 99,
+      "lines": 43172,
+      "lines_raw": 43339,
+      "bytes": 2822056
     },
     "root_readme": {
       "files": 1,
@@ -584,9 +584,9 @@
     },
     "docs_md": {
       "files": 4,
-      "lines": 636,
-      "lines_raw": 636,
-      "bytes": 47377
+      "lines": 648,
+      "lines_raw": 648,
+      "bytes": 48397
     },
     "scripts_md": {
       "files": 1,
@@ -600,6 +600,6 @@
     ]
   },
   "du": {
-    "worktree_excluding_git": 177792
+    "worktree_excluding_git": 6664
   }
 }
