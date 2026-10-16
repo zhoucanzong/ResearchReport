@@ -14,7 +14,7 @@
 
 1. **调度器没有 prefill/decode 两相**，它统一成"让 `num_computed_tokens` 追上 `num_tokens_with_spec`"（`[scheduler.py:623-641](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py>)`，`:623-632` 为 NOTE 注释段、实体代码自 `:634` 起、预算赋值在 `:641`）。chunked prefill 在 V1 里不是"一种模式"，而是**默认形态**：`:1216` 只在 `enable_chunked_prefill=False` 时才走"要么整段要么不排"。**[精读原文]**
 2. **抢占 = 全量重算**：`num_computed_tokens = 0` + 回 waiting 队列（`[scheduler.py:1671](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py>)`、`:1692`）。V1 **没有 swap-out 路径**（本报告在 `vllm/v1/core/` 下未找到 CPU/磁盘换出实现；措辞按"未找到证据"处理）。**[精读原文 + 范围声明]**
-3. **默认草稿是 one-hot**，且这一取舍**写在配置的 docstring 里、由 kernel 内的 `draft_prob = 1` 落地**（`[speculative.py:604](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/config/speculative.py>)`、`[rejection_sampler.py:870](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/sample/rejection_sampler.py>)`）。**[精读原文]**
+3. **默认草稿是 one-hot**，且这一取舍**写在配置的 docstring 里、由 kernel 内的 `draft_prob = 1` 落地**（`[speculative.py:604](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/config/speculative.py>)`、`[rejection_sampler.py:871-872](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/sample/rejection_sampler.py>)`（`:871` `if NO_DRAFT_PROBS:` → `:872` `draft_prob = 1`））。**[精读原文]**
 4. **开启 structured output 时，验证判据作用在"掩码后未重归一化"的目标分布上**，因此不是严格意义上对"实际被采样的那个分布"的无偏拒绝采样。**[精读原文 + 研究推断]**
 
 ---

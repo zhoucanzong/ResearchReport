@@ -673,9 +673,9 @@
     * **专题目录**：`Repo-Research/vllm-research`
     * **元数据**：type=`repo-research` · domain=`Repo-Research` · subject=`vllm` · date=`2026-10-16` · status=`completed`
     * **子文档（3）**
-        * [claim-audit.md](<Repo-Research/vllm-research/claim-audit.md>) — 365 行 / 44,391 B
+        * [claim-audit.md](<Repo-Research/vllm-research/claim-audit.md>) — 422 行 / 52,515 B
         * [kv-cache-and-prefix-reuse.md](<Repo-Research/vllm-research/kv-cache-and-prefix-reuse.md>) — 206 行 / 19,069 B
-        * [scheduling-and-spec-decode.md](<Repo-Research/vllm-research/scheduling-and-spec-decode.md>) — 244 行 / 24,076 B
+        * [scheduling-and-spec-decode.md](<Repo-Research/vllm-research/scheduling-and-spec-decode.md>) — 244 行 / 24,141 B
 
   </details>
 
