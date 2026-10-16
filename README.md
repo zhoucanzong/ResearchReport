@@ -46,6 +46,8 @@
 | [sglang](<OpenSource/sglang/report.md>) | OpenSource | 2026-10-16 | front-matter date |
 | [this-that-model](<OpenSource/this-that-model/report.md>) | OpenSource | 2026-10-16 | front-matter date |
 | [vllm](<OpenSource/vllm/report.md>) | OpenSource | 2026-10-16 | front-matter date |
+| [QuantizationEdge](<Infra/QuantizationEdge/report.md>) | Infra | 2026-10-16 | 最近提交日 |
+| [SpeculativeDecoding](<Infra/SpeculativeDecoding/report.md>) | Infra | 2026-10-16 | 最近提交日 |
 <!-- SCRIPT:recent END -->
 
 </details>

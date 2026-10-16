@@ -869,24 +869,23 @@ def render_index(docs: list, orphans: list, stats: dict, out_root: str, dry_run:
 def render_by_report(entries: list, out_root: str, dry_run: bool, mapping: dict) -> str:
     """全部条目的平铺索引 —— README 的「完整索引」只链接到这里，不再复制第二份。
 
-    前 3 列是核心视图（条目 | 板块 | 路径），其余列（板块 / 子报告数 / 行数 / 日期）
-    保留在后面；「板块」列由 ``scripts/panels.json`` 驱动。
+    前 3 列是核心视图（条目 | 板块 | 路径），其余列（子报告数 / 行数 / 日期）
+    保留在后面；「板块」列由 ``scripts/panels.json`` 驱动，**只出现一次**（条目之后）。
     """
     lines = header(FACET_TITLES["by-report"], out_root, dry_run)
     lines += [
         f"共 **{len(entries)}** 个条目（`{ENTRY_BASENAME}`）。「行数」为正文行数，已剔除 front-matter；"
         f"「板块」列由 [`{PANELS_FILE}`](<../{PANELS_FILE}>) 驱动。",
         "",
-        "| 条目 | 板块 | 路径 | 板块 | 子报告数 | 行数 | 日期 |",
-        "| --- | --- | --- | --- | --: | --: | --- |",
+        "| 条目 | 板块 | 路径 | 子报告数 | 行数 | 日期 |",
+        "| --- | --- | --- | --: | --: | --- |",
     ]
     for doc in sorted(entries, key=lambda d: d["path"]):
         panel = mapping.get(doc["path"])
         lines.append(
-            "| {label} | {panel} | {path} | {lib} | {kids} | {lines} | {date} |".format(
+            "| {label} | {panel} | {path} | {kids} | {lines} | {date} |".format(
                 label=entry_label(doc),
                 panel=panel["title"] if panel else "—",
-                lib=doc["top"] or ROOT_GROUP,
                 path=link(doc["path"], "../"),
                 kids=len(doc["children"]),
                 lines=f"{doc['lines']:,}",
@@ -896,7 +895,7 @@ def render_by_report(entries: list, out_root: str, dry_run: bool, mapping: dict)
     total_children = sum(len(d["children"]) for d in entries)
     total_lines = sum(d["lines"] for d in entries)
     lines += [
-        f"| **合计** | — | — | — | **{total_children}** | **{total_lines:,}** | — |",
+        f"| **合计** | — | — | **{total_children}** | **{total_lines:,}** | — |",
         "",
     ]
     return "\n".join(lines)
