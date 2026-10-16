@@ -725,7 +725,7 @@
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 25 | 909 B |
 | [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 10,798 B |
 | [docs/statistics.md](<docs/statistics.md>) | docs | 212 | 16,019 B |
-| [docs/team.md](<docs/team.md>) | docs | 93 | 8,953 B |
+| [docs/team.md](<docs/team.md>) | docs | 95 | 9,137 B |
 | [docs/verification.md](<docs/verification.md>) | docs | 156 | 12,627 B |
 | [scripts/README.md](<scripts/README.md>) | scripts | 99 | 4,589 B |
 

@@ -1,14 +1,15 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "c8f0d7fb1ffe2de65eafc2b05a0bc0a820b18ef76063429671f71202ed48c4f1",
+  "content_fingerprint": "183f2bea8660b1619995b1d03a9980cb42ceb5d5c2102c42ae9386d52faa6437",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
     "document": "文档 = 除 INDEX.md / index/* 生成物以外的所有 .md（含各 README.md、docs/*.md）",
     "lines": "正文行数，剔除 front-matter 围栏块（含首尾 --- 行）；lines_raw 为文件原始行数",
     "du_sk": "磁盘块占用（du -sk），含文件系统块开销，故大于字节数之和；不可用时为 null",
-    "du_worktree": "工作树 du -sk **扣除 `.git`**（与 docs/statistics.md §2 同口径）；含块开销，随文件系统分配浮动",
+    "du_worktree": "**已移除**（原为工作树 du -sk 扣 `.git`）：它含构建产物与他人未提交草稿，任何干净 clone 都不可复现。取代字段见 `storage.tracked_bytes`",
+    "tracked_bytes": "纳入版本控制的文件字节合计（git ls-files 逐个 getsize 求和）；与提交树同源，任意 clone 重跑一致，不受构建产物/未提交草稿/块开销影响",
     "version_control": "版本控制计数取自 git ls-files，**含生成物本身**；条目 / 文档计数则排除生成物",
     "repo_root": "相对运行目录的仓库根（按 `--repo-root .` 运行时为 `.`）：不写机器相关绝对路径，保证同一内容在不同目录下产出逐字节一致"
   },
@@ -27,8 +28,8 @@
     "with_front_matter": 16,
     "named_report_md": 48,
     "named_readme_md": 8,
-    "lines": 44024,
-    "bytes": 2882904
+    "lines": 44026,
+    "bytes": 2883088
   },
   "libraries": {
     "Models": {
@@ -566,9 +567,9 @@
     },
     "repo_md": {
       "files": 105,
-      "lines": 44024,
-      "lines_raw": 44191,
-      "bytes": 2882904
+      "lines": 44026,
+      "lines_raw": 44193,
+      "bytes": 2883088
     },
     "library_md": {
       "files": 99,
@@ -584,9 +585,9 @@
     },
     "docs_md": {
       "files": 4,
-      "lines": 648,
-      "lines_raw": 648,
-      "bytes": 48397
+      "lines": 650,
+      "lines_raw": 650,
+      "bytes": 48581
     },
     "scripts_md": {
       "files": 1,
@@ -599,7 +600,8 @@
       "mkdocs.yml"
     ]
   },
-  "du": {
-    "worktree_excluding_git": 6664
+  "storage": {
+    "tracked_bytes": 3110234,
+    "definition": "纳入版本控制的文件字节合计（`git ls-files` 跟踪路径逐个 getsize 求和）；刻意**不**用 du 量工作树——工作树含 site/site-docs/构建产物、别人的未提交草稿、虚拟环境等「车间地面」，会让数字每个 clone 一个样、生成物不可复现。本字段与提交树同源，任意 clone 重跑一致。"
   }
 }
