@@ -532,18 +532,25 @@ def du_sk(path: str):
         return None
 
 
-def du_sk_worktree(repo_root: str):
-    """工作树 `du -sk`（**扣除 `.git`**）—— 与 `docs/statistics.md` §2 口径一致。
+def tracked_bytes(repo_root: str) -> int:
+    """**纳入版本控制的文件字节合计**（`git ls-files` 跟踪路径，逐个 `os.path.getsize` 求和）。
 
-    不直接量 `du -sk .`：那会把 `.git` 算进去，于是「每提交一次、数字就变一次」，
-    生成物无法在提交后复现（`--write-stats` 重跑必然产生 diff）。`.git` 的大小
-    与工作树内容无关，减掉它之后该值只随仓库内容变化。
+    为什么不用 `du -sk` 量工作树：工作树里除了入库内容，还会有构建产物（`site/`、
+    `site-docs/`）、别人的未提交草稿、`.venv-mkdocs/` 等**车间地面**——它们**不属于
+    入库内容**，却让这个数字「每个 clone 一个样」，生成物永远无法复现。
+    改成只统计 `git ls-files` 跟踪文件之后：
+      * 任意 clone / 任意工作树，只要提交树一致，这个值**就一致**（可复现优先）；
+      * 不受 `du` 块开销影响，值是精确字节数；
+      * 不受并发未提交工作影响。
+    与 `version_control` 口径同源（同为 `git ls-files`）。
     """
-    total = du_sk(repo_root)
-    if total is None:
-        return None
-    git = du_sk(os.path.join(repo_root, ".git"))
-    return total - (git or 0)
+    total = 0
+    for rel in git_tracked(repo_root):
+        try:
+            total += os.path.getsize(os.path.join(repo_root, rel))
+        except OSError:
+            continue
+    return total
 
 
 def content_fingerprint(docs: list) -> str:
@@ -601,7 +608,8 @@ def build_stats(repo_root: str, docs: list) -> dict:
             "document": "文档 = 除 INDEX.md / index/* 生成物以外的所有 .md（含各 README.md、docs/*.md）",
             "lines": "正文行数，剔除 front-matter 围栏块（含首尾 --- 行）；lines_raw 为文件原始行数",
             "du_sk": "磁盘块占用（du -sk），含文件系统块开销，故大于字节数之和；不可用时为 null",
-        "du_worktree": "工作树 du -sk **扣除 `.git`**（与 docs/statistics.md §2 同口径）；含块开销，随文件系统分配浮动",
+        "du_worktree": "**已移除**（原为工作树 du -sk 扣 `.git`）：它含构建产物与他人未提交草稿，任何干净 clone 都不可复现。取代字段见 `storage.tracked_bytes`",
+        "tracked_bytes": "纳入版本控制的文件字节合计（git ls-files 逐个 getsize 求和）；与提交树同源，任意 clone 重跑一致，不受构建产物/未提交草稿/块开销影响",
         "version_control": "版本控制计数取自 git ls-files，**含生成物本身**；条目 / 文档计数则排除生成物",
         "repo_root": "相对运行目录的仓库根（按 `--repo-root .` 运行时为 `.`）：不写机器相关绝对路径，保证同一内容在不同目录下产出逐字节一致",
         },
@@ -644,8 +652,14 @@ def build_stats(repo_root: str, docs: list) -> dict:
             "tracked_scripts": sum(1 for p in tracked if p.startswith("scripts/")),
         },
         "doc_stats": _doc_stats(repo_root, docs, entries, tracked),
-        "du": {
-            "worktree_excluding_git": du_sk_worktree(repo_root),
+        "storage": {
+            "tracked_bytes": tracked_bytes(repo_root),
+            "definition": (
+                "纳入版本控制的文件字节合计（`git ls-files` 跟踪路径逐个 getsize 求和）；"
+                "刻意**不**用 du 量工作树——工作树含 site/site-docs/构建产物、别人的未提交草稿、"
+                "虚拟环境等「车间地面」，会让数字每个 clone 一个样、生成物不可复现。"
+                "本字段与提交树同源，任意 clone 重跑一致。"
+            ),
         },
     }
     return stats

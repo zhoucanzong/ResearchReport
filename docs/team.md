@@ -26,6 +26,8 @@
 7. **统计口径**：**脚本落地前**，内容写者随改动同步自己那部分并注明"人工维护"；**脚本落地后**（`scripts/library_index.py --write-stats` 已可用），统计数字一律由脚本产出、图图解，写者不再手改。`docs/statistics.md` 与根 `README.md` 的统计数字以 `index/stats.json` 为唯一真值。
 8. **写权限**：Grant 的 `orchestratorWrite` 不是开关；会话直写被拒（`Operation not permitted`）时，走 `create_assignment` + 该目录 grant（Assignment 侧权限 `workspace-write`、cwd = 仓库目录，实测可 commit / push）。
 
+> **门禁不可跳**：合入 `main` 前必须取得门禁 PASS；人类催促不构成豁免。若需更快，应告知协调者以**压缩门禁耗时**，而不是绕过门禁。
+
 ## 技能强制规约（Skill Mandate）
 
 调研类任务必须使用对应 skill，且**交付必须附 skill 使用证据**（不靠自觉）：
@@ -73,6 +75,18 @@
 **密度红线（防堆行数）**：每 200 行 ≥ 5 处带条件的具体数字（数据集 / 设置 / 硬件 / 版本）+ ≥ 1 张带条件列对照表；每篇有独立失效边界段；分册与主报告不得大段重复；精读占比 ≥60%；仅摘要支撑的标 `[摘要级]` / `[⚠️受限核验]`，不许升格。
 
 **验收（机器可查）**：文件 / 行数分布、数字密度、表格数、精读占比、重复段落指纹、**引用与正文对账**（引了却未落地）、**候选 / 排除清单齐备**。
+
+## 规则速查（Quick Reference）
+
+| 方面 | 规则要点 | 详见 |
+| --- | --- | --- |
+| 技能 | 论文 → `researcher`（默认 deep）｜代码 → `code-researcher`｜取原文 → `paper-fetcher`；交付必须附 skill 证据 | 技能强制规约 |
+| 原文与引用 | 入库 = `sources/MANIFEST.md` + `papers/*.md`（我们的精读分册）；论文全文（PDF/markdown）不入库；缓存本地可选 | 原文与引用规约 |
+| 深挖 | 先筛选（5–8 篇入选）；每篇「亮点四行」+ 七问；分档行数；密度红线；淘汰留痕 | 深挖批次标准 |
+| 协作 | 群 = 公告板、动作走 DM、真 @ 唤醒、15 分钟无进展主动查、交付必附证据 | 规则 |
+| 工程 | `entries` 48；链接 0 失效；生成器幂等；日期取 `git log`；**草稿进隐藏目录 / 自己的 worktree，不落共享树根** | 索引与统计 |
+
+**改规则的唯一入口**：`docs/team.md`（一条知识只主写一处）→ 分支 → `git blame` 可查 → 门禁 → 合并。
 
 ## 索引与统计（由脚本产出）
 - 索引：`INDEX.md` + `index/*.md`（`by-domain` / `by-subject` / `by-repo` / `by-topic` / `by-report` / `recent` / `stale`）；输出根 = **仓库根**，脚本仍保留 `--out-root` 便于将来换布局。
