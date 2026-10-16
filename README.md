@@ -7,7 +7,7 @@
 ![Collections](https://img.shields.io/badge/Collections-3-blue?style=flat-square)
 ![Reports](https://img.shields.io/badge/Reports-46-green?style=flat-square)
 ![Topic](https://img.shields.io/badge/Topic-21-orange?style=flat-square)
-![Markdown](https://img.shields.io/badge/Markdown-80-lightgrey?style=flat-square)
+![Markdown](https://img.shields.io/badge/Markdown-83-lightgrey?style=flat-square)
 ![Updated](https://img.shields.io/badge/Updated-2026--10--16-informational?style=flat-square)
 
 </div>
@@ -99,16 +99,16 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 
 ## 📊 统计摘要
 
-| 资料库 | 内容 | 条目（`report.md`） | 子文档 `.md` | 条目字节 | 目录内容字节 | `du -sk` |
+| 资料库 | 内容 | 条目（`report.md`） | 子文档 `.md` | 正文字节 | 目录内容字节 | `du -sk` |
 | :-- | :-- | --: | --: | --: | --: | --: |
 | 🎨 [AIGC-Research](AIGC-Research/) | 8 系列 + 10 专题 | 18 | 0 | 671,827 B | 679,964 B | 704 KB |
-| 🤖 [LLM-Research](LLM-Research/) | 15 系列 + 11 专题 | 26 | 16 | 1,007,068 B | 1,322,454 B | 1376 KB |
-| 📑 [Repo-Research](Repo-Research/) | 3 个深读项目 | 2 | 9 | 45,409 B | 279,065 B | 300 KB |
-| **合计** | **3 个资料库** | **46** | **25** | **1,724,304 B ≈ 1.64 MiB** | **2,281,483 B ≈ 2.18 MiB** | **2,380 KB** |
+| 🤖 [LLM-Research](LLM-Research/) | 15 系列 + 11 专题 | 26 | 19 | 1,395,130 B | 1,409,161 B | 1468 KB |
+| 📑 [Repo-Research](Repo-Research/) | 3 个深读项目 | 2 | 10 | 262,771 B | 279,065 B | 300 KB |
+| **合计** | **3 个资料库** | **46** | **28** | **1,731,880 B ≈ 1.65 MiB** | **2,368,190 B ≈ 2.26 MiB** | **2,472 KB** |
 
 > 本表数字由 [`scripts/library_index.py`](scripts/library_index.py) 产出，机器可读版见 [`index/stats.json`](index/stats.json)；**条目 = 文件名字面为 `report.md` 的主文档**，同目录其它 `.md`（分册 / `plan.md` / `notes/` / `raw-extracts/` 等）是它的**子文档**。
 > 各库 `README.md` 与 `docs/*.md` 既不是条目也不是子文档，不计入本表；「目录内容字节」不含 `.git` 且按脚本口径跳过隐藏目录；`du -sk` 含文件系统块开销，故大于字节数之和。
-> 全仓库 Markdown 共 **88** 份（`git ls-files '*.md'` 实测；含生成物 8 份，故非生成物 80 份）。各口径的换算关系见 [`docs/statistics.md`](docs/statistics.md) §2。
+> 全仓库 Markdown 共 **91** 份（`git ls-files '*.md'` 实测；含生成物 8 份，故非生成物 83 份）。各口径的换算关系见 [`docs/statistics.md`](docs/statistics.md) §2。
 > **索引入口**：[`INDEX.md`](INDEX.md)（总目录）· [`docs/team.md`](docs/team.md)（团队约定）。
 > **逐目录明细**（每个报告的行数 / 字节、统计方法与口径说明）见 **[docs/statistics.md](docs/statistics.md)**。
 

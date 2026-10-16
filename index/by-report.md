@@ -46,7 +46,7 @@
 | Qwen-research | LLM-Research | [LLM-Research/ModelSeries/Qwen-research/report.md](<../LLM-Research/ModelSeries/Qwen-research/report.md>) | 3 | 918 | — |
 | Agent-research | LLM-Research | [LLM-Research/TechnicalTopics/Agent-research/report.md](<../LLM-Research/TechnicalTopics/Agent-research/report.md>) | 0 | 698 | — |
 | Alignment-research | LLM-Research | [LLM-Research/TechnicalTopics/Alignment-research/report.md](<../LLM-Research/TechnicalTopics/Alignment-research/report.md>) | 0 | 588 | — |
-| DecisionModels-research | LLM-Research | [LLM-Research/TechnicalTopics/DecisionModels-research/report.md](<../LLM-Research/TechnicalTopics/DecisionModels-research/report.md>) | 0 | 608 | — |
+| DecisionModels-research | LLM-Research | [LLM-Research/TechnicalTopics/DecisionModels-research/report.md](<../LLM-Research/TechnicalTopics/DecisionModels-research/report.md>) | 3 | 681 | — |
 | LongContext-research | LLM-Research | [LLM-Research/TechnicalTopics/LongContext-research/report.md](<../LLM-Research/TechnicalTopics/LongContext-research/report.md>) | 0 | 608 | — |
 | MoE-research | LLM-Research | [LLM-Research/TechnicalTopics/MoE-research/report.md](<../LLM-Research/TechnicalTopics/MoE-research/report.md>) | 0 | 405 | — |
 | QuantizationEdge-research | LLM-Research | [LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md](<../LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md>) | 0 | 777 | — |
@@ -57,4 +57,4 @@
 | VLM-research | LLM-Research | [LLM-Research/TechnicalTopics/VLM-research/report.md](<../LLM-Research/TechnicalTopics/VLM-research/report.md>) | 0 | 517 | — |
 | nemotron-tri-mode-diffusion | Repo-Research | [Repo-Research/nemotron-tri-mode-diffusion/report.md](<../Repo-Research/nemotron-tri-mode-diffusion/report.md>) | 6 | 206 | — |
 | sglang-research | Repo-Research | [Repo-Research/sglang-research/report.md](<../Repo-Research/sglang-research/report.md>) | 3 | 310 | 2026-10-16 |
-| **合计** | — | **46 条目** | **25** | **29,562** | — |
+| **合计** | — | **46 条目** | **28** | **29,635** | — |

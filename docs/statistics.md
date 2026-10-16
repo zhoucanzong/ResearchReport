@@ -2,12 +2,12 @@
 
 本文件是 **ResearchReport** 的完整体积与数量统计。仓库首页 [README](../README.md) 只保留一张紧凑摘要表；校验留证见 [verification.md](verification.md)。
 
-**统计时点**：2026-10-16（含 [SGLang 仓库代码分析报告](../Repo-Research/sglang-research/report.md)、[EmbodiedVLA 技术专题调研](../AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md) 与 [Decision Models 技术专题](../LLM-Research/TechnicalTopics/DecisionModels-research/report.md) 三个新条目）· **统计方法**见文末 §6。**§1、§2 的数字由 [`scripts/library_index.py`](../scripts/library_index.py) 产出**（机器可读版 [`index/stats.json`](../index/stats.json)，重建命令 `python3 scripts/library_index.py --repo-root . --out-root . --write-stats`）；§3–§5 的逐目录明细由 `find` / `stat` / `wc` 实测，未沿用任何估算。
+**统计时点**：2026-10-16（含 [SGLang 仓库代码分析报告](../Repo-Research/sglang-research/report.md)、[EmbodiedVLA 技术专题调研](../AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md) 与 [Decision Models 技术专题](../LLM-Research/TechnicalTopics/DecisionModels-research/report.md) 三个新条目；**Decision Models 条目已升格为领域研究第一批**，新增 [taxonomy.md](../LLM-Research/TechnicalTopics/DecisionModels-research/taxonomy.md) / [calibration.md](../LLM-Research/TechnicalTopics/DecisionModels-research/calibration.md) / [experiments.md](../LLM-Research/TechnicalTopics/DecisionModels-research/experiments.md) 三份子文档）· **统计方法**见文末 §6。**§1、§2 的数字由 [`scripts/library_index.py`](../scripts/library_index.py) 产出**（机器可读版 [`index/stats.json`](../index/stats.json)，重建命令 `python3 scripts/library_index.py --repo-root . --out-root . --write-stats`）；§3–§5 的逐目录明细由 `find` / `stat` / `wc` 实测，未沿用任何估算。
 
 **术语**
 
 - **条目**：文件名字面为 `report.md` 的主文档，全仓库 46 份（每个 `<topic>-research/` 目录一份）；同目录其它 `.md`（分册 / `plan.md` / `notes/` / `raw-extracts/` 等）是它的**子文档**，`README.md` 与 `docs/*.md` 两者都不是。
-- **报告正文**：`AIGC-Research/`、`LLM-Research/` 中的 60 份报告文件（含分册 / 辅文档），**不含**这两个库的 `README.md`。
+- **报告正文**：`AIGC-Research/`、`LLM-Research/` 中的 63 份报告文件（含分册 / 辅文档 / 子文档），**不含**这两个库的 `README.md`。
 - **深读文档**：`Repo-Research/` 中的 12 个 `.md`（该库无 `README.md`）。
 - **front-matter**：仅 `Repo-Research/sglang-research/report.md` 一份带 front-matter（9 行 = 7 个字段 + 首尾围栏，符合 [`team.md`](team.md) 的 `type` / `domain` / `subject` / `upstream` / `date` / `evidence` / `status` 契约）；其余条目仍无元数据。
 - **库内 `.md`**：含库内 `README.md`；**全仓库 `.md`** 另含根目录 `README.md`、`docs/*.md`、`scripts/README.md` 与生成物 `INDEX.md` / `index/*.md`。
@@ -22,39 +22,40 @@
 | 模型系列目录数 | 8 | 15 | — | 23 |
 | 技术专题目录数 | 10 | 11 | — | 21 |
 | 项目目录数 | — | — | 3 | 3 |
-| 报告数 / 文档数（不含 README） | 18 份报告 | 42 份报告 | 12 个 `.md` + 1 个 `.json` | **60 份报告 + 12 份深读文档** |
+| 报告数 / 文档数（不含 README） | 18 份报告 | 45 份报告 | 12 个 `.md` + 1 个 `.json` | **63 份报告 + 12 份深读文档** |
 | ├ 文件名字面为 `report.md`（条目） | 18 | 26 | 2 | 46 |
-| └ 其他 `.md`（分册 / 辅文档 / 深度报告） | 0 | 16 | 10 | 26 |
-| 报告 / 深读正文**字节** | 671,827 | 1,007,068 | 262,346 | **1,941,241** |
-| 报告 / 深读正文**行数** | 13,336 | 15,710 | 4,645 | **33,691** |
-| `.md` 文件数（含库内 README） | 19 | 43 | 12 | **74** |
-| 目录内文件数（全部类型） | 19 | 44 | 13 | **76** |
-| 目录内容字节（不含 `.git`） | 679,964 | 1,322,454 | 279,065 | **2,281,483** |
-| 磁盘占用 `du -sk` | 704 KB | 1,376 KB | 300 KB | **2,380 KB** |
-| 纳入版本控制的文件 | 19 | 44 | 13 | **76** |
+| └ 其他 `.md`（分册 / 辅文档 / 子文档 / 深度报告） | 0 | 19 | 10 | 29 |
+| 报告 / 深读正文**字节** | 671,827 | 1,395,130 | 262,771 | **2,329,728** |
+| 报告 / 深读正文**行数** | 13,336 | 20,940 | 4,645 | **38,921** |
+| `.md` 文件数（含库内 README） | 19 | 46 | 12 | **77** |
+| 目录内文件数（全部类型） | 19 | 47 | 13 | **79** |
+| 目录内容字节（不含 `.git`） | 679,964 | 1,409,161 | 279,065 | **2,368,190** |
+| 磁盘占用 `du -sk` | 704 KB | 1468 KB | 300 KB | **2,472 KB** |
+| 纳入版本控制的文件 | 19 | 47 | 13 | **79** |
 
-> **口径**：条目（`report.md`）数、文档数、目录内文件数 / 字节 / `du -sk` 由 [`scripts/library_index.py`](../scripts/library_index.py) 产出；「报告 / 深读正文」= 除库内 `README.md` 外的全部 `.md`（含子文档），沿用 §3–§5 的 `stat` / `wc` 口径，故其合计（60 份 / 1,941,241 B / 33,691 行）与「条目」口径（46 份 / 1,724,304 B / 29,562 行）不同。
-> 脚本口径**跳过隐藏目录**（如 `LLM-Research/.claude/`）；若按 `find` 计入隐藏目录，LLM-Research 目录内为 45 个文件、三库合计 77 个；其中 `.claude/settings.local.json` 被全局 gitignore 规则忽略，故三库纳入版本控制的是 76 个。
+> **口径**：条目（`report.md`）数、文档数、目录内文件数 / 字节 / `du -sk` 由 [`scripts/library_index.py`](../scripts/library_index.py) 产出；「报告 / 深读正文」= 除库内 `README.md` 外的全部 `.md`（含子文档），沿用 §3–§5 的 `stat` / `wc` 口径，故其合计（75 份 / 2,329,728 B / 38,921 行）与「条目」口径（46 份 / 1,731,880 B / 29,635 行）不同。
+> 脚本口径**跳过隐藏目录**（如 `LLM-Research/.claude/`）；若按 `find` 计入隐藏目录，LLM-Research 目录内为 48 个文件、三库合计 80 个；其中 `.claude/settings.local.json` 被全局 gitignore 规则忽略，故三库纳入版本控制的是 79 个。
 > 「目录内容字节」不含 `.git`；`du -sk` 含文件系统块开销，故大于字节数之和。
+> ⚠️ **本次校出的既有不一致（未擅改，留待确认）**：本表上一版在 LLM-Research「技术专题」小计中写 `22 份报告 / 8,745 行 / 575,272 B`（`DecisionModels-research` 记为 `1 / 608 / 66,189`），但工作树实测该专题为 **25 份 / 9,664 行 / 661,863 B**——差异恰为**三份子文档**（1,526−674 = 852 行、149,183−71,860 = 77,323 B）加 332 B 的 DeepSeek `report.md` 字节差（工作树 58,512 B，按旧小计反推为 58,844 B）。本轮按**实测值**重算 LLM-Research 全部数字；DeepSeek 那 332 B 属**修表前就已存在的口径漂移**，不在本批改动范围内，已记入 [DecisionModels report.md §11](../LLM-Research/TechnicalTopics/DecisionModels-research/report.md)。
 
 ## 2. 全仓库口径
 
 | 项目 | 数值 |
 | :-- | --: |
 | 资料库目录 | 3 个（`AIGC-Research/`、`LLM-Research/`、`Repo-Research/`） |
-| 三库目录文件数 | 76 |
-| 三库目录字节 | 2,281,483 B ≈ 2.18 MiB |
-| 三库目录 `du -sk` | 2,380 KB |
-| 全仓库跟踪文件数 | **93**（三库 76 + 根 `README.md`、`.gitignore`、`INDEX.md` + `docs/` 4 个文件 + `scripts/` 2 个文件 + `index/` 8 个文件） |
-| 全仓库 `.md` 数 | **88**（80 份文档 + 生成物 `INDEX.md`(1) 与 `index/*.md`(7) 共 8 个） |
-| 全仓库工作树 `du -sk`（不含 `.git` 与生成物） | 约 2,339 KB |
-| 全仓库工作树字节（不含 `.git` 与生成物） | 约 2.40 MB（≈ 2.28 MiB） |
-| 首页 `README.md` 体量 | 23,384 B / 265 行 |
-| `docs/` 体量 | 38,928 B / 578 行（4 个文件，含本文自身） |
+| 三库目录文件数 | 79 |
+| 三库目录字节 | 2,368,190 B ≈ 2.26 MiB |
+| 三库目录 `du -sk` | 2,472 KB |
+| 全仓库跟踪文件数 | **96**（三库 79 + 根 `README.md`、`.gitignore`、`INDEX.md` + `docs/` 4 个文件 + `scripts/` 2 个文件 + `index/` 8 个文件） |
+| 全仓库 `.md` 数 | **91**（83 份文档 + 生成物 `INDEX.md`(1) 与 `index/*.md`(7) 共 8 个） |
+| 全仓库工作树 `du -sk`（不含 `.git` 与生成物） | 约 2,464 KB |
+| 全仓库工作树字节（不含 `.git` 与生成物） | 约 2.50 MB（≈ 2.38 MiB） |
+| 首页 `README.md` 体量 | 23,464 B / 265 行 |
+| `docs/` 体量 | 见文末 §6 的实时实测（本文自身写入后即变） |
 
 > 全仓库与 `docs/` 的合计为**约值**：`statistics.md` 是本文自身，每次更新都会轻微改变这两个数字。
 > `du -sk` 依赖文件系统块分配（macOS/APFS），换文件系统或换机器**无法保证逐字节复现**，故此处按上述口径标注。
-> 「全仓库跟踪文件数 / `.md` 数」由 `git ls-files` / `git ls-files '*.md'` 实测，**含生成物**；去掉 8 个生成物即 85 个跟踪文件、80 份文档。
+> 「全仓库跟踪文件数 / `.md` 数」由 `git ls-files` / `git ls-files '*.md'` 实测，**含生成物**；去掉 8 个生成物即 88 个跟踪文件、83 份文档。
 
 **`docs/` 明细**
 
@@ -63,7 +64,10 @@
 | [maintenance.md](maintenance.md) | 187 | 10,444 |
 | [verification.md](verification.md) | 148 | 12,134 |
 | [team.md](team.md) | 33 | 3,414 |
-| statistics.md（本文自身） | 210 | 12,936 |
+| statistics.md（本文自身） | 216 | 15,084 |
+| **合计** | **584** | **41,076** |
+
+> `docs/` 合计 = 四个文件之和（含本文自身）；本文每次更新都会改变这两行，故按写入后的实测值填写。
 
 ---
 
@@ -100,6 +104,7 @@
 | **小计** | **10** | **7,408** | **378,892** |
 
 > 两个小计相加：18 份报告 · 13,336 行 · 671,827 B；加上库内 `README.md`（8,137 B）即目录内容 679,964 B。
+> **ModelSeries 小计已按实测校正**：上一版写 `730,438 B`，但工作树实测 20 份 `.md` 合计 **730,106 B**（差 332 B，来源为 DeepSeek `report.md` 的字节漂移，非本批改动）。本表按实测值填写，漂移原因见 §4 注与 [DecisionModels report.md §11](../LLM-Research/TechnicalTopics/DecisionModels-research/report.md)。
 
 ---
 
@@ -124,9 +129,9 @@
 | Grok-research | 1 | 469 | 32,612 |
 | Nemotron-research | 1 | 465 | 32,700 |
 | Kimi-research | 1 | 431 | 33,338 |
-| **小计** | **20** | **11,257** | **730,438** |
+| **小计** | **20** | **11,257** | **730,106** |
 
-**技术专题（11 个 / 22 份报告）**
+**技术专题（11 个 / 25 份报告）**
 
 | 目录 | 报告数 | 行数 | 字节 |
 | :-- | --: | --: | --: |
@@ -135,15 +140,16 @@
 | TrainingInfra-research | 1 | 720 | 31,849 |
 | Agent-research | 1 | 698 | 31,433 |
 | ReasoningModels-research | 1 | 681 | 34,752 |
-| SpeculativeDecoding-research | **12** | **2,292** | **209,946** |
+| SpeculativeDecoding-research | **12** | **2,293** | **213,211** |
 | LongContext-research | 1 | 608 | 30,373 |
 | Alignment-research | 1 | 588 | 35,712 |
-| **DecisionModels-research** | **1** | **608** | **66,189** |
+| **DecisionModels-research** | **4** | **1,545** | **152,344** |
 | VLM-research | 1 | 517 | 28,916 |
 | MoE-research | 1 | 405 | 27,806 |
-| **小计** | **22** | **8,745** | **575,272** |
+| **小计** | **25** | **9,683** | **665,024** |
 
-> 两个小计相加：42 份报告 · 15,710 行 · 1,007,068 B；加上库内 `README.md`（12,502 B）与 `.gitignore`（292 B）即目录内容 1,322,454 B（脚本口径跳过 `.claude/`；该目录内 `.claude/settings.local.json` 的 151 B 不计入，故含隐藏项时为 1,322,605 B）。
+> `DecisionModels-research` 的 4 份 = 条目 `report.md`（681 行 / 73,765 B）+ 三份子文档 [taxonomy.md](../LLM-Research/TechnicalTopics/DecisionModels-research/taxonomy.md)（254 行 / 24,958 B）、[calibration.md](../LLM-Research/TechnicalTopics/DecisionModels-research/calibration.md)（261 行 / 28,421 B）、[experiments.md](../LLM-Research/TechnicalTopics/DecisionModels-research/experiments.md)（349 行 / 25,200 B）；条目本批由 608 行增至 **681 行**（+73）
+> 两个小计相加：45 份报告 · 20,940 行 · 1,395,130 B；加上库内 `README.md`（13,739 B）与 `.gitignore`（292 B）即目录内容 1,409,161 B（脚本口径跳过 `.claude/`；该目录内 `.claude/settings.local.json` 的 151 B 不计入）。
 
 ---
 

@@ -14,15 +14,15 @@
 | 指标 | 数量 |
 | --- | --- |
 | **条目数**（`report.md`） | **46** |
-| 条目子文档数 | 25 |
-| 条目正文行数（剔除 front-matter） | 29,562 |
-| 条目字节 | 1,724,304 B |
+| 条目子文档数 | 28 |
+| 条目正文行数（剔除 front-matter） | 29,635 |
+| 条目字节 | 1,731,880 B |
 | 带 front-matter 的条目 | 1 |
 | 带合法 `date` 的条目 | 1 |
-| 文档（除生成物外的全部 `.md`） | 80 |
+| 文档（除生成物外的全部 `.md`） | 83 |
 | 其中文件名 `README.md` | 4 |
-| 纳入版本控制的文件 | 93 |
-| 纳入版本控制的 `.md` | 88 |
+| 纳入版本控制的文件 | 96 |
+| 纳入版本控制的 `.md` | 91 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 
@@ -31,9 +31,9 @@
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
 | AIGC-Research | 18 | 19 | 13,336 | 671,827 B | [#AIGC-Research](#aigc-research) |
-| LLM-Research | 26 | 43 | 15,710 | 1,007,068 B | [#LLM-Research](#llm-research) |
+| LLM-Research | 26 | 46 | 15,783 | 1,014,644 B | [#LLM-Research](#llm-research) |
 | Repo-Research | 2 | 12 | 516 | 45,409 B | [#Repo-Research](#repo-research) |
-| **合计** | **46** | **80** | **29,562** | **1,724,304 B** | — |
+| **合计** | **46** | **83** | **29,635** | **1,731,880 B** | — |
 
 ## 分面索引
 
@@ -277,7 +277,7 @@
 
 </details>
 
-### LLM-Research（26 条目 / 43 文档）
+### LLM-Research（26 条目 / 46 文档）
 
 <details>
 <summary><b>模型系列 ModelSeries（15 条目 / 5 子文档）</b></summary>
@@ -468,7 +468,7 @@
 </details>
 
 <details>
-<summary><b>技术专题 TechnicalTopics（11 条目 / 11 子文档）</b></summary>
+<summary><b>技术专题 TechnicalTopics（11 条目 / 14 子文档）</b></summary>
 
   <details>
   <summary><b>Agent-research</b> · <code>LLM-Research/TechnicalTopics/Agent-research/report.md</code> · 698 行 · —</summary>
@@ -495,14 +495,16 @@
   </details>
 
   <details>
-  <summary><b>DecisionModels-research</b> · <code>LLM-Research/TechnicalTopics/DecisionModels-research/report.md</code> · 608 行 · —</summary>
+  <summary><b>DecisionModels-research</b> · <code>LLM-Research/TechnicalTopics/DecisionModels-research/report.md</code> · 681 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/TechnicalTopics/DecisionModels-research/report.md](<LLM-Research/TechnicalTopics/DecisionModels-research/report.md>)（608 行 / 66,189 B）
+    * **条目**：[LLM-Research/TechnicalTopics/DecisionModels-research/report.md](<LLM-Research/TechnicalTopics/DecisionModels-research/report.md>)（681 行 / 73,765 B）
     * **专题目录**：`LLM-Research/TechnicalTopics/DecisionModels-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
-    * **子文档（0）**
-        * _该条目暂无子文档_
+    * **子文档（3）**
+        * [calibration.md](<LLM-Research/TechnicalTopics/DecisionModels-research/calibration.md>) — 261 行 / 28,421 B
+        * [experiments.md](<LLM-Research/TechnicalTopics/DecisionModels-research/experiments.md>) — 349 行 / 25,200 B
+        * [taxonomy.md](<LLM-Research/TechnicalTopics/DecisionModels-research/taxonomy.md>) — 254 行 / 24,958 B
 
   </details>
 
@@ -659,7 +661,7 @@
 | 文档 | 所属库 | 行数 | 字节 |
 | --- | --- | --: | --: |
 | [AIGC-Research/README.md](<AIGC-Research/README.md>) | AIGC-Research | 131 | 8,137 B |
-| [LLM-Research/README.md](<LLM-Research/README.md>) | LLM-Research | 175 | 13,187 B |
+| [LLM-Research/README.md](<LLM-Research/README.md>) | LLM-Research | 177 | 13,739 B |
 | [Repo-Research/mini-swe-agent-research/mini-swe-agent-deep-report.md](<Repo-Research/mini-swe-agent-research/mini-swe-agent-deep-report.md>) | Repo-Research | 735 | 34,490 B |
 
 
