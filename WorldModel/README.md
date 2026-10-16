@@ -16,7 +16,7 @@
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
 | **EmbodiedVLA** | [EmbodiedVLA 技术专题调研](<EmbodiedVLA/report.md>) | 433 行 |
-| **WorldModels** | [WorldModels 技术专题调研](<WorldModels/report.md>) | 595 行 |
+| **WorldModels** | [WorldModels 技术专题调研](<WorldModels/report.md>) | 598 行 |
 
 ## 📎 子文档
 

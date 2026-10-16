@@ -16,8 +16,8 @@
 | **条目数**（`report.md`） | **48** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 4 |
 | 条目子文档数 | 59 |
-| 条目正文行数（剔除 front-matter） | 30,788 |
-| 条目字节 | 1,869,725 B |
+| 条目正文行数（剔除 front-matter） | 30,791 |
+| 条目字节 | 1,870,735 B |
 | 带 front-matter 的条目 | 4 |
 | 带合法 `date` 的条目 | 4 |
 | 文档（除生成物外的全部 `.md`） | 120 |
@@ -35,10 +35,10 @@
 | Models | 23 | 29 | 14,816 | 900,388 B | [板块页 →](<Models/README.md>) |
 | LLM | 8 | 25 | 5,217 | 340,987 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,805 | 318,086 B | [板块页 →](<VisualGen/README.md>) |
-| WorldModel | 2 | 18 | 1,028 | 105,003 B | [板块页 →](<WorldModel/README.md>) |
+| WorldModel | 2 | 18 | 1,031 | 106,013 B | [板块页 →](<WorldModel/README.md>) |
 | Infra | 3 | 15 | 1,866 | 100,011 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 4 | 18 | 1,056 | 105,250 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **48** | **120** | **30,788** | **1,869,725 B** | — |
+| **合计** | **48** | **120** | **30,791** | **1,870,735 B** | — |
 
 ## 分面索引
 
@@ -579,10 +579,10 @@
   </details>
 
   <details>
-  <summary><b>WorldModels</b> · <code>WorldModel/WorldModels/report.md</code> · 595 行 · 2026-10-17</summary>
+  <summary><b>WorldModels</b> · <code>WorldModel/WorldModels/report.md</code> · 598 行 · 2026-10-17</summary>
   
 
-    * **条目**：[WorldModel/WorldModels/report.md](<WorldModel/WorldModels/report.md>)（595 行 / 59,287 B）
+    * **条目**：[WorldModel/WorldModels/report.md](<WorldModel/WorldModels/report.md>)（598 行 / 60,297 B）
     * **专题目录**：`WorldModel/WorldModels`
     * **元数据**：type=`topic-research` · domain=`WorldModel` · subject=`WorldModels` · date=`2026-10-17` · status=`completed`
     * **子文档（15）**
