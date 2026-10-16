@@ -78,10 +78,10 @@ ResearchReport/    48 条目 · 21 专题 · 6 板块
 | 条目 | 板块 | 日期 | 来源 |
 | :-- | :-- | :-- | :-- |
 | [WorldModels](<WorldModel/WorldModels/report.md>) | WorldModel | 2026-10-17 | front-matter date |
+| [EmbodiedVLA](<WorldModel/EmbodiedVLA/report.md>) | WorldModel | 2026-10-17 | 最近提交日 |
 | [sglang](<OpenSource/sglang/report.md>) | OpenSource | 2026-10-16 | front-matter date |
 | [this-that-model](<OpenSource/this-that-model/report.md>) | OpenSource | 2026-10-16 | front-matter date |
 | [vllm](<OpenSource/vllm/report.md>) | OpenSource | 2026-10-16 | front-matter date |
-| [QuantizationEdge](<Infra/QuantizationEdge/report.md>) | Infra | 2026-10-16 | 最近提交日 |
 <!-- SCRIPT:recent END -->
 
 ## 📖 怎么用这个图书馆
