@@ -221,7 +221,7 @@ vLLM 的 adaptive verification 机制：每个 **(request, position)** 草稿槽
 | 10 | I-DLM, *Introspective Diffusion Language Model*（从 Qwen3-8B 转换，ISD 单趟生成+验证） | 2026-04 | https://arxiv.org/abs/2604.11035 | 中（预印本 + HF 模型卡） |
 | 11 | NLD, *Nemotron-Labs-Diffusion: A Tri-Mode Language Model Unifying Autoregressive, Diffusion, and Self-Speculation Decoding* | 2026-07-07 | https://arxiv.org/abs/2607.05722 | 中（预印本，NVIDIA 等） |
 
-> **v1 链接修复记录**：v1 报告中 I-DLM 与 NLD 的链接为占位符（`2505.XXXXX`），本轮已替换为可核验的 arXiv 编号（2604.11035 / 2607.05722）。DFlash 的 arXiv 编号（2602.06036）也已由 ICML 2026 poster 与 arXiv 页面双向确证。
+> **v1 链接修复记录**：v1 报告中 I-DLM 与 NLD 的链接为占位符（编号形如 `2505.xxxxx`，实测不可达），本轮已替换为可核验的 arXiv 编号（2604.11035 / 2607.05722）。DFlash 的 arXiv 编号（2602.06036）也已由 ICML 2026 poster 与 arXiv 页面双向确证。
 
 ---
 

@@ -100,23 +100,43 @@
 
 ## 参考文献
 
-> **⚠️ 核验声明（2026-10-16）**：v1 中本表所有 arXiv 链接均为 `XXXXX` 形式的**占位符**，本轮实测确认该类 ID 返回 **HTTP 404**，**无法核验**。本轮**未能确证这些文献的一手来源**，故统一标注为「未确证」，不做猜测性替换、不据此展开结论。引用前请自行确证一手来源。
+> **⚠️ 核验声明（2026-10-16 清理轮）**：v1 中本表 13 条 arXiv 链接均为**占位符**（编号含 `xxxxx`，实测 HTTP 404）。本轮逐条重新核验一手来源：**12 条已确证并替换**，**1 条无法确证一手来源、已剔除**（Spec-VLA）。逐条处置见下文「v1 遗留占位文献清理·链接核验清单」。**本轮仅修复引用，未改动任何结论、数字或推断。**
 
 | # | 论文 | 年份 | 链接 | 可靠性 |
 |---|------|------|------|--------|
-| 1 | SpecVLM, *SpecVLM: Elastic Visual Compression + Online Logit Distillation* | 2025 | ⚠️ **未确证**（v1 占位符） | 未确证 |
-| 2 | MASSV, *MASSV: Multimodal Adapter + Self-Distillation*, EMNLP 2025 | 2025 | ⚠️ **未确证**（v1 占位符） | 未确证 |
-| 3 | MSD, *MSD: Decoupled Text/Visual Token Drafting* | 2025 | ⚠️ **未确证**（v1 占位符） | 未确证 |
-| 4 | Spec-LLaVA, *Dynamic Tree Speculative Decoding for VLMs*, ICML 2025 Workshop | 2025 | ⚠️ **未确证**（v1 占位符） | 未确证 |
-| 5 | TwigVLM, *TwigVLM: Lightweight Twig Module + Self-Speculation* | 2025 | ⚠️ **未确证**（v1 占位符） | 未确证 |
-| 6 | HSD, *Hierarchical Speculative Decoding for Document VLM* | 2026-02 | ⚠️ **未确证**（v1 占位符） | 未确证 |
-| 7 | SAGE, *SAGE: Entropy-Guided Adaptive Speculative Decoding* | 2026-02 | ⚠️ **未确证**（v1 占位符） | 未确证 |
-| 8 | TABED, *TABED: Test-Time Adaptive Bundle Ensemble Drafting*, EACL 2026 | 2026 | ⚠️ **未确证**（v1 占位符） | 未确证 |
-| 9 | Spec-VLA, *Speculative Decoding for VLA with Relaxed Acceptance* | 2025-07 | ⚠️ **未确证**（v1 占位符） | 未确证 |
-| 10 | SpecPrune-VLA, *Action-Aware Self-Speculative Pruning for VLA* | 2025-09 | ⚠️ **未确证**（v1 占位符） | 未确证 |
-| 11 | KERV, *Kinematic Error Rectified Speculative Decoding* | 2026-03 | ⚠️ **未确证**（v1 占位符） | 未确证 |
-| 12 | Speech Speculative Decoding, INTERSPEECH 2025 | 2025 | ⚠️ **未确证**（v1 占位符） | 未确证 |
-| 13 | SpecASR, *SpecASR: Speculative Decoding for LLM-based ASR* | 2025-07 | ⚠️ **未确证**（v1 占位符） | 未确证 |
+| 1 | SpecVLM, *SpecVLM: Fast Speculative Decoding in Vision-Language Models*（v1 标题为简写，已更正） | 2025 | https://arxiv.org/abs/2509.11815 | 高（**已核验**，本轮确证） |
+| 2 | MASSV, *MASSV: Multimodal Adaptation and Self-Data Distillation for Speculative Decoding of VLM* | 2025 | https://arxiv.org/abs/2505.10526 | 高（**已核验**，本轮确证） |
+| 3 | MSD, *Speculative Decoding Reimagined for Multimodal Large Language Models*（v1 标题为简写，已更正） | 2025 | https://arxiv.org/abs/2505.14260 | 高（**已核验**，本轮确证） |
+| 4 | Spec-LLaVA, *Spec-LLaVA: Accelerating Vision-Language Models with Dynamic Tree-Based Speculative Decoding*（v1 标题为简写，已更正） | 2025 | https://arxiv.org/abs/2509.11961 | 高（**已核验**，本轮确证） |
+| 5 | TwigVLM, *Growing a Multi-head Twig via Distillation and Reinforcement Learning to Accelerate VLMs*（v1 标题为简写，已更正） | 2025 | https://arxiv.org/abs/2503.14075 | 高（**已核验**，本轮确证） |
+| 6 | HSD, *HSD: Training-Free Acceleration for Document Parsing Vision-Language Models with Hierarchical Speculative Decoding* | 2026-02-13 | https://arxiv.org/abs/2602.12957 | 高（**已核验**，本轮确证） |
+| 7 | SAGE, *SAGE: Accelerating Vision-Language Models via Entropy-Guided Adaptive Speculative Decoding* | 2026-01-31 | https://arxiv.org/abs/2602.00523 | 高（**已核验**，本轮确证） |
+| 8 | TABED, *TABED: Test-Time Adaptive Ensemble Drafting for Robust Speculative Decoding in LVLMs*（v1 标题为简写，已更正） | 2026-01-28 | https://arxiv.org/abs/2601.20357 | 高（**已核验**，本轮确证） |
+| 9 | SpecPrune-VLA, *SpecPrune-VLA: Accelerating Vision-Language-Action Models via Action-Aware Self-Speculative Pruning*（v1 标题为简写，已更正） | 2025-09-06 | https://arxiv.org/abs/2509.05614 | 高（**已核验**，本轮确证） |
+| 10 | KERV, *KERV: Kinematic-Rectified Speculative Decoding for Embodied VLA Models*（v1 标题为简写，已更正） | 2026-03-02 | https://arxiv.org/abs/2603.01581 | 高（**已核验**，本轮确证） |
+| 11 | Speech Speculative Decoding, *Accelerating Autoregressive Speech Synthesis Inference With Speech Speculative Decoding*（v1 描述为简写，已补全名） | 2025-05-21 | https://arxiv.org/abs/2505.15380 | 高（**已核验**，本轮确证） |
+| 12 | SpecASR, *SpecASR: Accelerating LLM-based Automatic Speech Recognition via Speculative Decoding*（v1 标题为简写，已更正） | 2025-07-24 | https://arxiv.org/abs/2507.18181 | 高（**已核验**，本轮确证） |
+
+**v1 遗留占位文献清理·链接核验清单（本轮实测，2026-10-16）**
+
+| 原链接 | 处置 | 新来源 |
+|---|---|---|
+| `https://arxiv.org/abs/2505.XXXXX`（SpecVLM） | **替换** | https://arxiv.org/abs/2509.11815（*SpecVLM: Fast Speculative Decoding in Vision-Language Models*，2025-09-15） |
+| `https://arxiv.org/abs/2509.XXXXX`（MASSV） | **替换** | https://arxiv.org/abs/2505.10526（*MASSV: Multimodal Adaptation and Self-Data Distillation for Speculative Decoding of VLM*，2025-05-15） |
+| `https://arxiv.org/abs/2506.XXXXX`（MSD） | **替换** | https://arxiv.org/abs/2505.14260（*Speculative Decoding Reimagined for Multimodal Large Language Models*，2025-05-20） |
+| `https://arxiv.org/abs/2506.XXXXX`（Spec-LLaVA，与上一条同数不同文，v1 两条重复编号） | **替换** | https://arxiv.org/abs/2509.11961（*Spec-LLaVA: Accelerating Vision-Language Models with Dynamic Tree-Based Speculative Decoding*，2025-09-15） |
+| `https://arxiv.org/abs/2507.XXXXX`（TwigVLM） | **替换** | https://arxiv.org/abs/2503.14075（*Growing a Multi-head Twig via Distillation and Reinforcement Learning to Accelerate VLMs*，2025-03-18） |
+| `https://arxiv.org/abs/2502.XXXXX`（HSD，与 SAGE 同数，v1 两条重复编号） | **替换** | https://arxiv.org/abs/2602.12957（*HSD: Training-Free Acceleration for Document Parsing Vision-Language Models with Hierarchical Speculative Decoding*，2026-02-13） |
+| `https://arxiv.org/abs/2502.XXXXX`（SAGE，同上） | **替换** | https://arxiv.org/abs/2602.00523（*SAGE: Accelerating Vision-Language Models via Entropy-Guided Adaptive Speculative Decoding*，2026-01-31） |
+| `https://arxiv.org/abs/2503.XXXXX`（TABED） | **替换** | https://arxiv.org/abs/2601.20357（*TABED: Test-Time Adaptive Ensemble Drafting for Robust Speculative Decoding in LVLMs*，2026-01-28） |
+| `https://arxiv.org/abs/2507.XXXXX`（Spec-VLA） | **剔除** | **无法确证一手来源**——arXiv 检索（`speculative decoding vision-language-action`、`Spec-VLA relaxed acceptance`）无匹配记录，亦未取得任何一手会议页面，故从参考文献表剔除该条（**未做猜测性编号替换**）。**命名冲突提示**：同表另有一条已核验的 `SpecPrune-VLA`（arXiv 2509.05614），两者是不同工作，请勿混同 |
+| `https://arxiv.org/abs/2509.XXXXX`（SpecPrune-VLA） | **替换** | https://arxiv.org/abs/2509.05614（*SpecPrune-VLA: Accelerating Vision-Language-Action Models via Action-Aware Self-Speculative Pruning*，2025-09-06） |
+| `https://arxiv.org/abs/2503.XXXXX`（KERV） | **替换** | https://arxiv.org/abs/2603.01581（*KERV: Kinematic-Rectified Speculative Decoding for Embodied VLA Models*，2026-03-02） |
+| `https://arxiv.org/abs/2505.XXXXX`（Speech Speculative Decoding） | **替换** | https://arxiv.org/abs/2505.15380（*Accelerating Autoregressive Speech Synthesis Inference With Speech Speculative Decoding*，2025-05-21） |
+| `https://arxiv.org/abs/2507.XXXXX`（SpecASR） | **替换** | https://arxiv.org/abs/2507.18181（*SpecASR: Accelerating LLM-based Automatic Speech Recognition via Speculative Decoding*，2025-07-24） |
+| v1 表中无链接：ViSpec / FLASH / HiViS / FastVLM / DREAM / AASD / EdgeSD / HeiSD 与「Simultaneous Masked/Unmasked Decoding」等 | **登记待补（本轮不处理）** | 这些条目在 v1 正文表中即为**无参考文献链接**的条目（非占位符），本轮范围限定为"占位符与坏链接"，故按原样保留、**未做任何改动或猜测性补链** |
+
+> **统计**：共处理 **13 条占位符** = **替换 12 条 + 剔除 1 条**（Spec-VLA）；另登记 v1 无链接条目为待补，不在本轮范围。**本轮仅修复引用，未改动任何结论、数字或推断。**
 
 **本轮新增可核验引用（交叉参考）**：
 
@@ -127,6 +147,6 @@
 
 ---
 
-> **报告说明**：本报告所有技术细节均来自公开发表的论文、arXiv 预印本、官方技术博客及开源项目文档。**重要提醒：本报告参考文献表中 13 条 v1 条目的链接均为占位符（实测 HTTP 404），本轮未能确证一手来源，已在表中逐条标注为「未确证」。** 表格中的加速比与"信息可靠性"评分为 v1 结论，本轮未重新核验，引用时请以一手来源为准。加速比数据受测试条件影响显著，跨论文对比需谨慎。
+> **报告说明**：本报告所有技术细节均来自公开发表的论文、arXiv 预印本、官方技术博客及开源项目文档。**2026-10-16 清理轮：参考文献表中 13 条 v1 占位符链接已逐条重新核验——12 条替换为可核验一手来源，1 条（Spec-VLA）因无法确证一手来源已剔除**，逐条处置见上文核验清单。表格中的加速比与"信息可靠性"为 v1 结论，本轮仅修复引用、未重新核验数字。加速比数据受测试条件影响显著，跨论文对比需谨慎。
 >
 > *数据截至 2026-10-16（v1：2026-06-06）。*

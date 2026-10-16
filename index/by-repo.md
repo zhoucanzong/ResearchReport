@@ -51,7 +51,7 @@
 * [LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md](<../LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md>) — 777 行
 * [LLM-Research/TechnicalTopics/RAG-research/report.md](<../LLM-Research/TechnicalTopics/RAG-research/report.md>) — 851 行
 * [LLM-Research/TechnicalTopics/ReasoningModels-research/report.md](<../LLM-Research/TechnicalTopics/ReasoningModels-research/report.md>) — 681 行
-* [LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md](<../LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md>) — 368 行
+* [LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md](<../LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md>) — 369 行
 * [LLM-Research/TechnicalTopics/TrainingInfra-research/report.md](<../LLM-Research/TechnicalTopics/TrainingInfra-research/report.md>) — 720 行
 * [LLM-Research/TechnicalTopics/VLM-research/report.md](<../LLM-Research/TechnicalTopics/VLM-research/report.md>) — 517 行
 

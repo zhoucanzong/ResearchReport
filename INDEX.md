@@ -15,8 +15,8 @@
 | --- | --- |
 | **条目数**（`report.md`） | **43** |
 | 条目子文档数 | 22 |
-| 条目正文行数（剔除 front-matter） | 28,210 |
-| 条目字节 | 1,580,003 B |
+| 条目正文行数（剔除 front-matter） | 28,211 |
+| 条目字节 | 1,579,933 B |
 | 带 front-matter 的条目 | 0 |
 | 带合法 `date` 的条目 | 0 |
 | 文档（除生成物外的全部 `.md`） | 74 |
@@ -31,9 +31,9 @@
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
 | AIGC-Research | 17 | 18 | 12,903 | 625,871 B | [#AIGC-Research](#aigc-research) |
-| LLM-Research | 25 | 42 | 15,101 | 940,949 B | [#LLM-Research](#llm-research) |
+| LLM-Research | 25 | 42 | 15,102 | 940,879 B | [#LLM-Research](#llm-research) |
 | Repo-Research | 1 | 8 | 206 | 13,183 B | [#Repo-Research](#repo-research) |
-| **合计** | **43** | **74** | **28,210** | **1,580,003 B** | — |
+| **合计** | **43** | **74** | **28,211** | **1,579,933 B** | — |
 
 ## 分面索引
 
@@ -286,7 +286,7 @@
   <summary><b>DeepSeek-research</b> · <code>LLM-Research/ModelSeries/DeepSeek-research/report.md</code> · 751 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/ModelSeries/DeepSeek-research/report.md](<LLM-Research/ModelSeries/DeepSeek-research/report.md>)（751 行 / 58,844 B）
+    * **条目**：[LLM-Research/ModelSeries/DeepSeek-research/report.md](<LLM-Research/ModelSeries/DeepSeek-research/report.md>)（751 行 / 58,512 B）
     * **专题目录**：`LLM-Research/ModelSeries/DeepSeek-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`ModelSeries` · date=`—` · status=`—`
     * **子文档（2）**
@@ -543,24 +543,24 @@
   </details>
 
   <details>
-  <summary><b>SpeculativeDecoding-research</b> · <code>LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md</code> · 368 行 · —</summary>
+  <summary><b>SpeculativeDecoding-research</b> · <code>LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md</code> · 369 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md>)（368 行 / 33,695 B）
+    * **条目**：[LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md>)（369 行 / 33,957 B）
     * **专题目录**：`LLM-Research/TechnicalTopics/SpeculativeDecoding-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（11）**
-        * [speculative-block-diffusion.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-block-diffusion.md>) — 229 行 / 18,265 B
-        * [speculative-cascade-heterogeneous.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-cascade-heterogeneous.md>) — 140 行 / 11,588 B
-        * [speculative-classical-and-self.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-classical-and-self.md>) — 156 行 / 11,839 B
-        * [speculative-domain-language.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-domain-language.md>) — 181 行 / 14,309 B
-        * [speculative-draft-training-2026.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-draft-training-2026.md>) — 198 行 / 15,294 B
-        * [speculative-eagle-series.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-eagle-series.md>) — 111 行 / 11,497 B
-        * [speculative-edge-cloud-hardware.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-edge-cloud-hardware.md>) — 181 行 / 17,902 B
-        * [speculative-multimodal.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-multimodal.md>) — 130 行 / 10,512 B
-        * [speculative-stochastic-verification.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-stochastic-verification.md>) — 232 行 / 24,835 B
-        * [speculative-systems-and-frameworks.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-systems-and-frameworks.md>) — 194 行 / 16,560 B
-        * [speculative-training-optimization.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-training-optimization.md>) — 115 行 / 11,340 B
+        * [speculative-block-diffusion.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-block-diffusion.md>) — 230 行 / 18,585 B
+        * [speculative-cascade-heterogeneous.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-cascade-heterogeneous.md>) — 141 行 / 11,829 B
+        * [speculative-classical-and-self.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-classical-and-self.md>) — 157 行 / 12,110 B
+        * [speculative-domain-language.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-domain-language.md>) — 182 行 / 14,598 B
+        * [speculative-draft-training-2026.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-draft-training-2026.md>) — 199 行 / 15,583 B
+        * [speculative-eagle-series.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-eagle-series.md>) — 113 行 / 11,902 B
+        * [speculative-edge-cloud-hardware.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-edge-cloud-hardware.md>) — 182 行 / 18,130 B
+        * [speculative-multimodal.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-multimodal.md>) — 152 行 / 15,663 B
+        * [speculative-stochastic-verification.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-stochastic-verification.md>) — 233 行 / 25,109 B
+        * [speculative-systems-and-frameworks.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-systems-and-frameworks.md>) — 206 行 / 18,394 B
+        * [speculative-training-optimization.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-training-optimization.md>) — 128 行 / 14,086 B
 
   </details>
 

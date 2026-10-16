@@ -54,7 +54,7 @@
 - **SpecBundle**：发布生产级草案模型集合，覆盖主流开源模型（LLaMA、Qwen、Mistral 等）
 - **意义**：解决了 EAGLE-3 最大的工程痛点——draft 模型训练成本过高
 
-> **来源补正（本轮）**：v1 报告中 SpecForge 的 arXiv 编号为占位符（`2503.XXXXX`）。本轮已找到并核验**一手来源**：*SpecForge: A Flexible and Efficient Open-Source Training Framework for Speculative Decoding*，**arXiv 2603.18567**（2026-03-19），ICML 2026 poster <https://icml.cc/virtual/2026/poster/65558>。论文明确：为 EAGLE-3 提供完整支持，通过 target-draft 解耦、混合并行、优化训练内核与生产级推理引擎集成，在 **Qwen3-235B-A22B 上实现最高 9.9× 的 EAGLE-3 训练加速**，并发布 **SpecBundle** 生产级草案模型集合。 **[精读原文]**
+> **来源补正（本轮）**：v1 报告中 SpecForge 的 arXiv 编号为占位符（编号形如 `2503.xxxxx`，实测不可达）。本轮已找到并核验**一手来源**：*SpecForge: A Flexible and Efficient Open-Source Training Framework for Speculative Decoding*，**arXiv 2603.18567**（2026-03-19），ICML 2026 poster <https://icml.cc/virtual/2026/poster/65558>。论文明确：为 EAGLE-3 提供完整支持，通过 target-draft 解耦、混合并行、优化训练内核与生产级推理引擎集成，在 **Qwen3-235B-A22B 上实现最高 9.9× 的 EAGLE-3 训练加速**，并发布 **SpecBundle** 生产级草案模型集合。 **[精读原文]**
 
 ### 3.3.5 限定条件：T>0 下动态草稿树的塌缩（2026 H2 新增）
 
@@ -104,7 +104,7 @@
 | 7 | ARC-Decode, *Accelerated Decoding with Risk-Bounded Acceptance*, ICML 2026 | 2026 | https://icml.cc/virtual/2026/poster/66788 | 中（仅会议页，摘要级） |
 | 8 | CAST, *Inference-Cost-Aware Dynamic Tree Construction for Efficient Inference in LLMs*, ICLR 2026 | 2026 | https://papernotes.org/ICLR2026/llm_efficiency/inference-cost-aware_dynamic_tree_construction_for_efficient_inference_in_large_/ | 中（二手解读页） |
 
-> **注**：第 4 项 SpecForge 在 v1 中为占位链接（`2503.XXXXX`），本轮已替换为**已核验**的 arXiv 2603.18567，并据摘要补充了 target-draft 解耦、混合并行与 9.9× 训练加速等要点（**精读原文**）。
+> **注**：第 4 项 SpecForge 在 v1 中为占位链接（编号形如 `2503.xxxxx`，实测不可达），本轮已替换为**已核验**的 arXiv 2603.18567，并据摘要补充了 target-draft 解耦、混合并行与 9.9× 训练加速等要点（**精读原文**）。
 
 ---
 

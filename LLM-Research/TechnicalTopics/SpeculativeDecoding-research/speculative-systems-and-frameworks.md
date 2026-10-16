@@ -166,11 +166,11 @@ vLLM *Per-Request Acceptance Metrics* 文档给出的精确定义：
 |---|------|------|------|--------|
 | 1 | SpecInfer, *Accelerating Generative LLM Serving with Speculative Inference and Token Tree Verification* | 2023 | https://arxiv.org/abs/2305.09781 | 高 |
 | 2 | Sequoia, *Sequoia: Scalable, Robust, and Hardware-aware Speculative Decoding* | 2024 | https://arxiv.org/abs/2402.12374 | 高 |
-| 3 | Mirror-SD, *Heterogeneous Device Parallel Speculative Decoding* | 2024-2025 | ⚠️ **未确证**（v1 占位符 `2405.XXXXX`） | 未确证 |
-| 4 | TriForce, *Hierarchical KV Cache for Long-Context Speculative Decoding* | 2025 | ⚠️ **未确证**（v1 占位符 `2502.XXXXX`） | 未确证 |
-| 5 | Speculative Decoding Scaling Laws, *Scaling Laws for Draft Model Design* | 2025 | ⚠️ **未确证**（v1 占位符 `2503.XXXXX`） | 未确证 |
-| 6 | QSpec, *Quantized Speculative Decoding* | 2025 | ⚠️ **未确证**（v1 占位符 `2504.XXXXX`） | 未确证 |
-| 7 | HierSpec, *Hierarchical Speculative Decoding* | 2025 | ⚠️ **未确证**（v1 占位符 `2505.XXXXX`） | 未确证 |
+| 3 | Mirror-SD, *Mirror Speculative Decoding: Breaking the Serial Barrier in LLM Inference*（v1 标题有误，已更正为论文原名） | 2025-10-15 | https://arxiv.org/abs/2510.13161 | 高（**已核验**，本轮确证） |
+| 4 | TriForce, *TriForce: Lossless Acceleration of Long Sequence Generation with Hierarchical Speculative Decoding*（v1 标题有误，已更正为论文原名） | 2024-04-18 | https://arxiv.org/abs/2404.11912 | 高（**已核验**，本轮确证） |
+| 5 | Speculative Decoding Scaling Laws, *Scaling Laws for Speculative Decoding*（v1 标题有误，已更正为论文原名） | 2025-05-08 | https://arxiv.org/abs/2505.07858 | 高（**已核验**，本轮确证） |
+| 6 | QSpec, *QSpec: Speculative Decoding with Complementary Quantization Schemes* | 2024-10-15 | https://arxiv.org/abs/2410.11305 | 高（**已核验**，本轮确证） |
+| 7 | HierSpec, *HiSpec: Hierarchical Speculative Decoding for LLMs*（v1 简写 `HierSpec`，论文原名 `HiSpec`） | 2025-10-01 | https://arxiv.org/abs/2510.01336 | 高（**已核验**，本轮确证） |
 | 8 | CAST, *Inference-Cost-Aware Dynamic Tree Construction for Efficient Inference in LLMs*, ICLR 2026 | 2026 | https://papernotes.org/ICLR2026/llm_efficiency/inference-cost-aware_dynamic_tree_construction_for_efficient_inference_in_large_/ | 中（**二手解读页**） |
 | 9 | BASTION, *Budget-Aware Speculative Decoding with Tree-structured Block Diffusion Drafting* | 2026-05-28 | https://arxiv.org/abs/2605.29727 | 中（预印本） |
 
@@ -186,7 +186,18 @@ vLLM *Per-Request Acceptance Metrics* 文档给出的精确定义：
 | 15 | llama.cpp PR #25173, *spec: add DSpark speculative decoding* | 2026 | https://github.com/ggml-org/llama.cpp/pull/25173 | 二手（标题级核验） |
 | 16 | RunAnywhere Inference Radar 2026-W20（MTP 进 llama.cpp 主线 / Ollama DFlash） | 2026-05-14~20 | https://www.runanywhere.ai/newsletter/2026-W20 | 二手（周报） |
 
-> **v1 链接修复记录（诚实说明）**：v1 中 Mirror-SD / TriForce / Scaling Laws / QSpec / HierSpec 的 arXiv 链接均为 `XXXXX` 形式的**占位符**，本轮实测该类 ID 返回 **HTTP 404**，**无法核验** → 已在表中统一标注「未确证」，**不做猜测性替换、不据此展开结论**。Sequoia 的链接由 v1 的 `2404.14311` 更正为**已核验的 `2402.12374`**（标题：*Sequoia: Scalable, Robust, and Hardware-aware Speculative Decoding*）。
+### v1 遗留占位文献清理·链接核验清单（本轮实测，2026-10-16）
+
+| 原链接 | 处置 | 新来源 |
+|---|---|---|
+| `https://arxiv.org/abs/2405.XXXXX`（Mirror-SD 占位符） | **替换** | https://arxiv.org/abs/2510.13161（*Mirror Speculative Decoding: Breaking the Serial Barrier in LLM Inference*，2025-10-15） |
+| `https://arxiv.org/abs/2502.XXXXX`（TriForce 占位符） | **替换** | https://arxiv.org/abs/2404.11912（*TriForce: Lossless Acceleration of Long Sequence Generation with Hierarchical Speculative Decoding*，2024-04-18） |
+| `https://arxiv.org/abs/2503.XXXXX`（Scaling Laws 占位符） | **替换** | https://arxiv.org/abs/2505.07858（*Scaling Laws for Speculative Decoding*，2025-05-08） |
+| `https://arxiv.org/abs/2504.XXXXX`（QSpec 占位符） | **替换** | https://arxiv.org/abs/2410.11305（*QSpec: Speculative Decoding with Complementary Quantization Schemes*，2024-10-15） |
+| `https://arxiv.org/abs/2505.XXXXX`（HierSpec 占位符） | **替换** | https://arxiv.org/abs/2510.01336（*HiSpec: Hierarchical Speculative Decoding for LLMs*，2025-10-01） |
+| `https://arxiv.org/abs/2404.14311`（Sequoia，v1 错误编号） | **替换**（前轮已完成） | https://arxiv.org/abs/2402.12374（*Sequoia: Scalable, Robust, and Hardware-aware Speculative Decoding*） |
+
+> **说明**：上表 5 条 v1 占位符均已确证一手来源并替换，**本文件无剔除项**。**本轮未改动任何结论、数字与推断**，仅修复引用；三处论文标题按 arXiv 一手页面更正（Mirror-SD / TriForce / Scaling Laws），一处按论文原名更正（HierSpec → HiSpec）。
 
 ---
 

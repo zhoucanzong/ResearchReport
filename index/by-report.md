@@ -50,8 +50,8 @@
 | QuantizationEdge-research | LLM-Research | [LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md](<../LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md>) | 0 | 777 | — |
 | RAG-research | LLM-Research | [LLM-Research/TechnicalTopics/RAG-research/report.md](<../LLM-Research/TechnicalTopics/RAG-research/report.md>) | 0 | 851 | — |
 | ReasoningModels-research | LLM-Research | [LLM-Research/TechnicalTopics/ReasoningModels-research/report.md](<../LLM-Research/TechnicalTopics/ReasoningModels-research/report.md>) | 0 | 681 | — |
-| SpeculativeDecoding-research | LLM-Research | [LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md](<../LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md>) | 11 | 368 | — |
+| SpeculativeDecoding-research | LLM-Research | [LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md](<../LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md>) | 11 | 369 | — |
 | TrainingInfra-research | LLM-Research | [LLM-Research/TechnicalTopics/TrainingInfra-research/report.md](<../LLM-Research/TechnicalTopics/TrainingInfra-research/report.md>) | 0 | 720 | — |
 | VLM-research | LLM-Research | [LLM-Research/TechnicalTopics/VLM-research/report.md](<../LLM-Research/TechnicalTopics/VLM-research/report.md>) | 0 | 517 | — |
 | nemotron-tri-mode-diffusion | Repo-Research | [Repo-Research/nemotron-tri-mode-diffusion/report.md](<../Repo-Research/nemotron-tri-mode-diffusion/report.md>) | 6 | 206 | — |
-| **合计** | — | **43 条目** | **22** | **28,210** | — |
+| **合计** | — | **43 条目** | **22** | **28,211** | — |

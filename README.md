@@ -102,9 +102,9 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 | 资料库 | 内容 | 条目（`report.md`） | 子文档 `.md` | 条目字节 | 目录内容字节 | `du -sk` |
 | :-- | :-- | --: | --: | --: | --: | --: |
 | 🎨 [AIGC-Research](AIGC-Research/) | 8 系列 + 9 专题 | 17 | 0 | 625,871 B | 633,246 B | 656 KB |
-| 🤖 [LLM-Research](LLM-Research/) | 15 系列 + 10 专题 | 25 | 16 | 940,949 B | 1,240,337 B | 1,304 KB |
+| 🤖 [LLM-Research](LLM-Research/) | 15 系列 + 10 专题 | 25 | 16 | 940,879 B | 1,252,315 B | 1308 KB |
 | 📑 [Repo-Research](Repo-Research/) | 2 个深读项目 | 1 | 7 | 13,183 B | 189,061 B | 204 KB |
-| **合计** | **3 个资料库** | **43** | **23** | **1,580,003 B ≈ 1.51 MiB** | **2,062,644 B ≈ 1.97 MiB** | **2,164 KB** |
+| **合计** | **3 个资料库** | **43** | **23** | **1,579,933 B ≈ 1.51 MiB** | **2,075,001 B ≈ 1.98 MiB** | **2,168 KB** |
 
 > 本表数字由 [`scripts/library_index.py`](scripts/library_index.py) 产出，机器可读版见 [`index/stats.json`](index/stats.json)；**条目 = 文件名字面为 `report.md` 的主文档**，同目录其它 `.md`（分册 / `plan.md` / `notes/` / `raw-extracts/` 等）是它的**子文档**。
 > 各库 `README.md` 与 `docs/*.md` 既不是条目也不是子文档，不计入本表；「目录内容字节」不含 `.git` 且按脚本口径跳过隐藏目录；`du -sk` 含文件系统块开销，故大于字节数之和。
