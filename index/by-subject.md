@@ -73,11 +73,11 @@
 | --- | --- | --- | --- | --- |
 | [Repo-Research/sglang-research/report.md](<../Repo-Research/sglang-research/report.md>) | SGLang 仓库代码分析报告 | repo-research | 2026-10-16 | completed |
 
-## this-that-model-research (1)
+## this-that-model (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Repo-Research/this-that-model-research/report.md](<../Repo-Research/this-that-model-research/report.md>) | this-that-model 仓库深读 | — | — | — |
+| [Repo-Research/this-that-model-research/report.md](<../Repo-Research/this-that-model-research/report.md>) | this-that-model 仓库深读 | repo-research | 2026-10-16 | completed |
 
 ## vllm (1)
 

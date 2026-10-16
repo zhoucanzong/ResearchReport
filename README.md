@@ -44,10 +44,10 @@
 | 条目 | 板块 | 日期 | 来源 |
 | :-- | :-- | :-- | :-- |
 | [sglang](<Repo-Research/sglang-research/report.md>) | Infra | 2026-10-16 | front-matter date |
+| [this-that-model](<Repo-Research/this-that-model-research/report.md>) | Infra | 2026-10-16 | front-matter date |
 | [vllm](<Repo-Research/vllm-research/report.md>) | Infra | 2026-10-16 | front-matter date |
 | [Alibaba-Gen](<AIGC-Research/ModelSeries/Alibaba-Gen-research/report.md>) | Models | 2026-10-16 | 最近提交日 |
 | [ByteDance-Gen](<AIGC-Research/ModelSeries/ByteDance-Gen-research/report.md>) | Models | 2026-10-16 | 最近提交日 |
-| [Google-Gen](<AIGC-Research/ModelSeries/Google-Gen-research/report.md>) | Models | 2026-10-16 | 最近提交日 |
 <!-- SCRIPT:recent END -->
 
 <details>

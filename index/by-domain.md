@@ -67,5 +67,5 @@
 | --- | --- | --- | --- | --- |
 | [Repo-Research/nemotron-tri-mode-diffusion/report.md](<../Repo-Research/nemotron-tri-mode-diffusion/report.md>) | Nemotron-Labs-Diffusion 阅读报告 | — | — | — |
 | [Repo-Research/sglang-research/report.md](<../Repo-Research/sglang-research/report.md>) | SGLang 仓库代码分析报告 | repo-research | 2026-10-16 | completed |
-| [Repo-Research/this-that-model-research/report.md](<../Repo-Research/this-that-model-research/report.md>) | this-that-model 仓库深读 | — | — | — |
+| [Repo-Research/this-that-model-research/report.md](<../Repo-Research/this-that-model-research/report.md>) | this-that-model 仓库深读 | repo-research | 2026-10-16 | completed |
 | [Repo-Research/vllm-research/report.md](<../Repo-Research/vllm-research/report.md>) | vLLM 仓库代码分析报告 | repo-research | 2026-10-16 | completed |

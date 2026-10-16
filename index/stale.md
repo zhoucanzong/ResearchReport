@@ -9,14 +9,15 @@
 
 判定口径：`status` 不是 active/current/ok/stable/published，或 `date` 早于 180 天。
 
-## 已标记（2）
+## 已标记（3）
 
 | 条目 | 原因 |
 | --- | --- |
 | [Repo-Research/sglang-research/report.md](<../Repo-Research/sglang-research/report.md>) | status=completed |
+| [Repo-Research/this-that-model-research/report.md](<../Repo-Research/this-that-model-research/report.md>) | status=completed |
 | [Repo-Research/vllm-research/report.md](<../Repo-Research/vllm-research/report.md>) | status=completed |
 
-## 无 date 且无 status（无法判定，46）
+## 无 date 且无 status（无法判定，45）
 
 以下条目既没有 `date` 也没有 `status`，陈旧度无法评估（不算作已标记）：
 
@@ -65,4 +66,3 @@
 * [LLM-Research/TechnicalTopics/TrainingInfra-research/report.md](<../LLM-Research/TechnicalTopics/TrainingInfra-research/report.md>)
 * [LLM-Research/TechnicalTopics/VLM-research/report.md](<../LLM-Research/TechnicalTopics/VLM-research/report.md>)
 * [Repo-Research/nemotron-tri-mode-diffusion/report.md](<../Repo-Research/nemotron-tri-mode-diffusion/report.md>)
-* [Repo-Research/this-that-model-research/report.md](<../Repo-Research/this-that-model-research/report.md>)

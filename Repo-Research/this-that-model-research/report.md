@@ -1,3 +1,13 @@
+---
+type: repo-research
+domain: Repo-Research
+subject: this-that-model
+upstream: https://github.com/FLock-io/this-that-model@6af11c63c8bb260aa4bed2b7717f33f25decd16e
+date: 2026-10-16
+evidence: 精读原文
+status: completed
+---
+
 # this-that-model 仓库深读
 
 > **声明**：本报告由 AI Agent 自动调研生成，未经官方确认；代码结论均以钉住 commit 逐行核验，引用前请回溯上游。

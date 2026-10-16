@@ -57,10 +57,13 @@
 * [LLM-Research/TechnicalTopics/TrainingInfra-research/report.md](<../LLM-Research/TechnicalTopics/TrainingInfra-research/report.md>) — 720 行
 * [LLM-Research/TechnicalTopics/VLM-research/report.md](<../LLM-Research/TechnicalTopics/VLM-research/report.md>) — 517 行
 
-## Repo-Research (2)
+## Repo-Research (1)
 
 * [Repo-Research/nemotron-tri-mode-diffusion/report.md](<../Repo-Research/nemotron-tri-mode-diffusion/report.md>) — 206 行
-* [Repo-Research/this-that-model-research/report.md](<../Repo-Research/this-that-model-research/report.md>) — 245 行
+
+## https://github.com/FLock-io/this-that-model@6af11c63c8bb260aa4bed2b7717f33f25decd16e (1)
+
+* [Repo-Research/this-that-model-research/report.md](<../Repo-Research/this-that-model-research/report.md>) — 246 行
 
 ## https://github.com/sgl-project/sglang@2a08e261ecd4cdfb04ec354f9005f18b88108b7d (1)
 
