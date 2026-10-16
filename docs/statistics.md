@@ -2,14 +2,14 @@
 
 本文件是 **ResearchReport** 的完整体积与数量统计。仓库首页 [README](../README.md) 只保留一张紧凑摘要表；校验留证见 [verification.md](verification.md)。
 
-**统计时点**：2026-10-16（**本批（vLLM 条目）**新增 [vLLM 仓库代码分析报告](../OpenSource/vllm/report.md) 与其三份子文档 [kv-cache-and-prefix-reuse.md](../OpenSource/vllm/kv-cache-and-prefix-reuse.md) / [scheduling-and-spec-decode.md](../OpenSource/vllm/scheduling-and-spec-decode.md) / [claim-audit.md](../OpenSource/vllm/claim-audit.md)；此前同批含 [SGLang 仓库代码分析报告](../OpenSource/sglang/report.md)、[EmbodiedVLA 技术专题调研](../WorldModel/EmbodiedVLA/report.md) 与 [Decision Models 技术专题](../LLM/DecisionModels/report.md)；**Decision Models 条目已升格为领域研究第一批**，新增 [taxonomy.md](../LLM/DecisionModels/taxonomy.md) / [calibration.md](../LLM/DecisionModels/calibration.md) / [experiments.md](../LLM/DecisionModels/experiments.md) 三份子文档；**第二批·证据层**又新增 [`papers/`](../LLM/DecisionModels/papers) 12 篇与 [open-implementations.md](../LLM/DecisionModels/open-implementations.md)，**本批（结论行修正）**再将 `report.md` 推至 846 行）· **统计方法**见文末 §6。**§1、§2 的数字由 [`scripts/library_index.py`](../scripts/library_index.py) 产出**（机器可读版 [`index/stats.json`](../index/stats.json)，重建命令 `python3 scripts/library_index.py --repo-root . --out-root . --write-stats`）；§3–§5 的逐目录明细由 `find` / `stat` / `wc` 实测，未沿用任何估算。
+**统计时点**：2026-10-17（**本批（EmbodiedVLA 第二轮深度精读升级）**将 [EmbodiedVLA 技术专题调研](../WorldModel/EmbodiedVLA/report.md) 从 433 行骨架升级为 **609 行**，新增 **8 篇精读分册**（[`papers/`](../WorldModel/EmbodiedVLA/papers)，全部 `[精读原文]`）、**3 篇横切专题**（[`topics/`](../WorldModel/EmbodiedVLA/topics)）与**选文 / 原文清单**（[CANDIDATES.md](../WorldModel/EmbodiedVLA/sources/CANDIDATES.md) + [MANIFEST.md](../WorldModel/EmbodiedVLA/sources/MANIFEST.md)）；同批此前含 [vLLM 仓库代码分析报告](../OpenSource/vllm/report.md) 与其三份子文档 [kv-cache-and-prefix-reuse.md](../OpenSource/vllm/kv-cache-and-prefix-reuse.md) / [scheduling-and-spec-decode.md](../OpenSource/vllm/scheduling-and-spec-decode.md) / [claim-audit.md](../OpenSource/vllm/claim-audit.md)、[SGLang 仓库代码分析报告](../OpenSource/sglang/report.md) 与 [Decision Models 技术专题](../LLM/DecisionModels/report.md)（后者已升格为领域研究第一批，子文档见 [taxonomy.md](../LLM/DecisionModels/taxonomy.md) / [calibration.md](../LLM/DecisionModels/calibration.md) / [experiments.md](../LLM/DecisionModels/experiments.md)，`papers/` 12 篇与 [open-implementations.md](../LLM/DecisionModels/open-implementations.md)；其 `report.md` 846 行）· **统计方法**见文末 §6。**§1、§2 的数字由 [`scripts/library_index.py`](../scripts/library_index.py) 产出**（机器可读版 [`index/stats.json`](../index/stats.json)，重建命令 `python3 scripts/library_index.py --repo-root . --out-root . --write-stats`）；§3–§5 的逐目录明细由 `find` / `stat` / `wc` 实测，未沿用任何估算。
 
 **术语**
 
 - **条目**：文件名字面为 `report.md` 的主文档，重排后全仓库 **48 份**（每个板块条目目录一份，目录名已去 `-research` 后缀）；同目录其它 `.md`（分册 / `plan.md` / `notes/` / `raw-extracts/` 等）是它的**子文档**，`README.md` 与 `docs/*.md` 两者都不是。`OpenSource/mini-swe-agent/` 无 `report.md`，不计条目。
 - **报告正文**（历史口径）：重排前 `AIGC-Research/`、`LLM-Research/` 中的 63 份报告文件。
 - **深读文档**（历史口径）：重排前 `Repo-Research/` 中的 16 个 `.md`。
-- **front-matter**：仅 `OpenSource/sglang/report.md` 一份带 front-matter（9 行 = 7 个字段 + 首尾围栏，符合 [`team.md`](team.md) 的 `type` / `domain` / `subject` / `upstream` / `date` / `evidence` / `status` 契约）；其余条目仍无元数据。
+- **front-matter**：**4 份条目带 front-matter**（`index/stats.json` 的 `entries.with_front_matter = 4`，`with_date = 4`），其中 `OpenSource/sglang/report.md` 的 9 行 = 7 个字段 + 首尾围栏，符合 [`team.md`](team.md) 的 `type` / `domain` / `subject` / `upstream` / `date` / `evidence` / `status` 契约；其余 **44 份条目无元数据**，索引按 §0 口径优雅退化。
 - **库内 `.md`**：含库内 `README.md`；**全仓库 `.md`** 另含根目录 `README.md`、`docs/*.md`、`scripts/README.md` 与生成物 `INDEX.md` / `index/*.md`。
 - 所有字节数均为文件实际字节（`stat -f '%z'`），磁盘占用为 `du -sk`（含文件系统块开销，故大于字节数之和）。**生成物（`INDEX.md`、`index/*`）不计入条目 / 文档统计。**
 
@@ -20,12 +20,12 @@
 | 指标 | Models | LLM | VisualGen | WorldModel | Infra | OpenSource | 合计 |
 | :-- | --: | --: | --: | --: | --: | --: | --: |
 | 条目数（`report.md`） | 23 | 8 | 8 | 2 | 3 | 4 | **48** |
-| 板块内 `.md` 文档数 | 28 | 24 | 8 | 2 | 14 | 17 | **93** |
-| 条目正文行数（去 front-matter） | 14,816 | 5,217 | 6,805 | 750 | 1,866 | 1,056 | **30,510** |
-| 条目字节 | 900,388 | 341,216 | 318,086 | 77,496 | 100,011 | 105,316 | **1,842,513** |
-| 目录内文件数（全部类型） | 28 | 24 | 8 | 2 | 14 | 18 | **94** |
-| 目录内容字节（不含 `.git`） | 1,023,041 | 692,095 | 318,086 | 77,496 | 279,265 | 434,625 | **2,824,608** |
-| 磁盘占用 `du -sk` | 1,060 KB | 720 KB | 328 KB | 80 KB | 292 KB | 456 KB | **2,936 KB** |
+| 板块内 `.md` 文档数 | 29 | 25 | 9 | 31 | 15 | 18 | **127** |
+| 条目正文行数（去 front-matter） | 14,816 | 5,217 | 6,805 | 1,207 | 1,866 | 1,056 | **30,967** |
+| 条目字节 | 900,388 | 340,987 | 318,086 | 129,030 | 100,011 | 105,250 | **1,893,752** |
+| 目录内文件数（全部类型） | 29 | 25 | 9 | 31 | 15 | 19 | **128** |
+| 目录内容字节（不含 `.git`） | 1,026,625 | 695,246 | 319,702 | 598,642 | 281,752 | 436,950 | **3,358,917** |
+| 磁盘占用 `du -sk` | 1,064 KB | 724 KB | 332 KB | 644 KB | 296 KB | 460 KB | **3,520 KB** |
 
 > **口径**：本表数字全部由 [`scripts/library_index.py`](../scripts/library_index.py) `--write-stats` 产出（机器可读版 [`index/stats.json`](../index/stats.json)）；条目 = `report.md`，目录名已去 `-research` 后缀。`OpenSource/` 含 1 个非条目目录 `mini-swe-agent/`（`mini-swe-agent-deep-report.md` 计入「其他 `.md`」，不计条目）。
 
@@ -34,17 +34,17 @@
 | 项目 | 数值 |
 | :-- | --: |
 | 板块目录 | 6 个（`Models/`、`LLM/`、`VisualGen/`、`WorldModel/`、`Infra/`、`OpenSource/`） |
-| 板块树内文件数 | 94 |
-| 板块树内容字节 | 2,824,608 B ≈ 2.69 MiB |
-| 板块树 `du -sk` | 2,936 KB |
-| 全仓库跟踪文件数 | **112**（`git ls-files` 实测，含生成物） |
-| 全仓库 `.md` 数 | **107**（99 份文档 + 生成物 `INDEX.md`(1) 与 `index/*.md`(7) 共 8 个） |
+| 板块树内文件数 | 128 |
+| 板块树内容字节 | 3,358,917 B ≈ 3.20 MiB |
+| 板块树 `du -sk` | 3,520 KB |
+| 全仓库跟踪文件数 | **147**（`git ls-files` 实测，含生成物） |
+| 全仓库 `.md` 数 | **138**（130 份文档 + 生成物 `INDEX.md`(1) 与 `index/*.md`(7) 共 8 个） |
 | 全仓库工作树 `du -sk`（不含 `.git`） | 3,288 KB（脚本 `du.worktree_excluding_git`） |
 | 首页 `README.md` 体量 | 见 [`index/stats.json`](../index/stats.json) `doc_stats.root_readme`（自指量） |
 
 > 全仓库与 `docs/` 的合计为**约值**：`statistics.md` 是本文自身，每次更新都会轻微改变这两个数字。
 > `du -sk` 依赖文件系统块分配（macOS/APFS），换文件系统或换机器**无法保证逐字节复现**，故此处按上述口径标注。
-> 「全仓库跟踪文件数 / `.md` 数」由 `git ls-files` / `git ls-files '*.md'` 实测，**含生成物**；去掉 8 个生成物即 **105** 个跟踪文件、**100** 份文档。
+> 「全仓库跟踪文件数 / `.md` 数」由 `git ls-files` / `git ls-files '*.md'` 实测，**含生成物**；去掉 8 个生成物即 **139** 个跟踪文件、**130** 份文档。
 
 **`docs/` 明细**
 

@@ -165,7 +165,21 @@ nav:
     - "VideoGen": "VisualGen/VideoGen/report.md"
   - "🌍 WorldModel · 2":
     - "WorldModel/README.md"
-    - "EmbodiedVLA": "WorldModel/EmbodiedVLA/report.md"
+    - "EmbodiedVLA":
+        - "总报告": "WorldModel/EmbodiedVLA/report.md"
+        - "2303.04137-diffusion-policy": "WorldModel/EmbodiedVLA/papers/2303.04137-diffusion-policy.md"
+        - "2307.15818-rt2": "WorldModel/EmbodiedVLA/papers/2307.15818-rt2.md"
+        - "2310.08864-open-x-embodiment": "WorldModel/EmbodiedVLA/papers/2310.08864-open-x-embodiment.md"
+        - "2403.12945-droid": "WorldModel/EmbodiedVLA/papers/2403.12945-droid.md"
+        - "2405.05941-simpler": "WorldModel/EmbodiedVLA/papers/2405.05941-simpler.md"
+        - "2406.09246-openvla": "WorldModel/EmbodiedVLA/papers/2406.09246-openvla.md"
+        - "2410.24164-pi0": "WorldModel/EmbodiedVLA/papers/2410.24164-pi0.md"
+        - "2501.09747-fast": "WorldModel/EmbodiedVLA/papers/2501.09747-fast.md"
+        - "CANDIDATES": "WorldModel/EmbodiedVLA/sources/CANDIDATES.md"
+        - "MANIFEST": "WorldModel/EmbodiedVLA/sources/MANIFEST.md"
+        - "action-representation": "WorldModel/EmbodiedVLA/topics/action-representation.md"
+        - "deployment-boundaries": "WorldModel/EmbodiedVLA/topics/deployment-boundaries.md"
+        - "evaluation-and-datasets": "WorldModel/EmbodiedVLA/topics/evaluation-and-datasets.md"
     - "WorldModels":
         - "总报告": "WorldModel/WorldModels/report.md"
         - "1803.10122-world-models": "WorldModel/WorldModels/papers/1803.10122-world-models.md"

@@ -57,6 +57,6 @@
 | DiffusionModels | VisualGen | [VisualGen/DiffusionModels/report.md](<../VisualGen/DiffusionModels/report.md>) | 0 | 855 | — |
 | ImageEditing | VisualGen | [VisualGen/ImageEditing/report.md](<../VisualGen/ImageEditing/report.md>) | 0 | 834 | — |
 | VideoGen | VisualGen | [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) | 0 | 898 | — |
-| EmbodiedVLA | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 0 | 433 | — |
+| EmbodiedVLA | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 13 | 609 | — |
 | WorldModels | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 598 | 2026-10-17 |
-| **合计** | — | — | **59** | **30,791** | — |
+| **合计** | — | — | **72** | **30,967** | — |
