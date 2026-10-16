@@ -174,13 +174,13 @@ vLLM 官方 *Per-Request Acceptance Metrics* 文档给出的定义即口径基�
 
 ## 5. 尚未确证 / 待跟踪
 
-### 5.1 本轮明确待办（三项，均**未核验**，不得写成结论）
+### 5.1 待办与已核实项（① 已核实；②③ 仍未确证）
 
-> 以下三项是复核指出的缺口，本轮**没有做**，列为待办。**本报告全文没有、也不得把这三项中的任何说法写成已成立结论。**
+> ① 已于 2026-10-16 完成官方代码核验（方式与结论见下表），**可以**作为结论引用；**②③ 仍未确证**，不得写成已成立结论。
 
 | # | 待办 | 状态 | 为什么不写结论 / 下一步怎么做 |
 |---|---|---|---|
-| **①** | **读 EAGLE 官方代码（`SafeAILab/EAGLE`）确认 top-$K$ 路径下 draft 概率的实际处理方式** | **本轮未核验** | §2.1/§3.1 关于"按 $q$ 排序建树导致塌缩"的链条目前建立在 **EAGLE-3 论文正文描述**与 **SGLang issue #10308 的现象陈述**之上，**不是建立在代码审阅之上**。代码里究竟是"把 top-1 概率置 1、其余置 0"、还是"保留原始概率但用 top-$K$ 建树"，直接影响塌缩的机理与修补位置。**在完成代码核验前，本报告不声明 EAGLE 具体实现细节。** 下一步：审阅 EAGLE 官方仓库中 draft 前向与 top-$K$ 后处理代码路径，逐行确认概率是否被重写。 |
+| **①** | **读 EAGLE 官方代码（`SafeAILab/EAGLE`）确认 top-$K$ 路径下 draft 概率的实际处理方式** | ✅ **已核实（2026-10-16，仓库 @ commit）** | **核验方式**：将 `SafeAILab/EAGLE` clone 到仓库外的临时目录（`/tmp/…`，读完即删；**未进入 `Research` 仓库、未提交任何代码文件**），只读审阅，不修改、不构建。<br>**版本**：`SafeAILab/EAGLE` @ **`cb7e0841fe0c206c6ed74a197ad5e2a1f13f5a2b`**（2026-02-19）。<br>**结论（确实置 1）**：官方参考实现的 **tree / EA 评估路径**把草稿概率按 **1.0** 处理——`eagle/model/utils.py:398` 为 `qx = 1.0`，第 399 行接受判据 `acp = px / qx`，即接受概率退化为目标概率 $p(x)$，草稿分布被当作 one-hot（delta）提议。该函数 `evaluate_posterior` 的调用点：`eagle/model/ea_model.py:270`、`eagle/model/ea_model.py:452`、`eagle/evaluation/gen_ea_alpha_llama2chat.py:87`、`eagle/evaluation/gen_ea_alpha_vicuna.py:93`。<br>**边界（不夸大）**：同一仓库另有 HF 风格实现 `eagle/modeling_eagle.py`——其自带的 `evaluate_posterior` 定义于第 1352 行、调用处第 1698 行，其中第 1427 行使用 `qx = cart_candidates_prob[batch, j, i]`，即**保留真实草稿概率**。因此"草稿概率置 1"是**官方 tree/EA 评估路径**的事实，**不是仓库内所有路径**的共性；这与 SGLang issue #10308 描述的现象（集成侧 tree attention 路径）方向一致。<br>**影响**：§2.1/§3.1 关于"按 $q$ 建树 + 以 $q$ 验证导致 T>0 接受率下降"的链条，在**该实现路径**上成立——接受率由 $p(x)$ 而非 $\min(1,p(x)/q(x))$ 决定，故随机采样下"草稿分布塌缩"的代价有实现层依据；修补位置即该接受判据与提议分布的传递方式（与 ② 的 SGLang 修复方向一致）。 |
 | **②** | **SGLang issue #10308 及其后续 PR 是否已合入，以及对 T>0 下动态树行为的影响** | **issue 已确认真实存在；后续 PR 与合入状态未确证** | 核验情况：<https://github.com/sgl-project/sglang/issues/10308> **真实存在**，标题为 *[Feature] Speculative sampling supports passing the predicted probability of the draft model and sample token for verification when **topk=1***，开于 2025-11-03，指派给 `hnyls2002`，于 **2026-01-03 被 github-actions 以"inactive"自动关闭**（"This issue has been automatically closed due to inactivity"），**未观察到任何 linked PR / merged PR**。该 issue 正文与本章结论同源：它指出 EAGLE 使用的 tree attention **默认按 top-$K$ 选择 token 并把该 token 概率置 1、其余置 0**，并给出一个算例——**接受概率从标准投机采样的 0.9 降到 tree attention 下的 0.6**。核验边界：**本报告的上述引用仅限该 issue 的页面陈述本身**；**"是否已有修复 PR 合入、以及合入后对 T>0 行为的影响"本轮未确证**，故不作为本报告的结论；检索中出现的若干 topk=1/EAGLE 相关 PR 编号**未能确证其与 #10308 的对应关系**，本报告**不引用任何具体 PR 编号**。下一步：核实该 issue 的后续关联 PR 与当前主线代码行为。**二次核验（2026-10-16）**：直读 issue 页面 <https://github.com/sgl-project/sglang/issues/10308> 确认仍为 inactive 关闭、**无 linked PR**；另检索到与 `topk` 相关的 SGLang PR **#5318**（Eagle3 topk>1）、**#24054**（adaptive speculative decoding 支持 topk>1）、**#26397**（Reland: *Skip full-vocab softmax in EAGLE draft when topk == 1*），但**没有任何一条与 #10308 建立 linked 关系**；其中 #26397 改的是"topk==1 时跳过全词表 softmax"，与 #10308 请求的"**把 draft 预测概率传给验证阶段**"**不是同一变更** → **结论不变：后续修复/合入状态未确证**，本报告不引用这些 PR 编号作为"已修复"证据。 |
 | **③** | **RheoSampling 是否放出代码 / 补充材料** | **未确证（目前仅有论文与摘要）** | 本轮只核验到 arXiv 摘要页与全文 HTML；**未发现公开代码仓库、未确认是否有补充材料（Appendix B/C 的算法与证明）之外的 artifact**。因此本报告对 RheoSampling 的所有数字均为**论文自报值**，**未做独立复现**。下一步：检索其 GitHub/HF 是否有官方实现与模型权重。**二次核验（2026-10-16）**：HF Papers 页（`huggingface.co/papers/2609.21827`）返回 **404**（该论文未在 HF 建立页面）；GitHub / HF / Semantic Scholar 检索**未发现官方代码仓库、模型权重或补充材料 artifact**，仅见第三方论文笔记页（`liuzhao09.github.io/papers/rheosampling.html`）→ **结论不变：未放出代码/资料**，所有数字仍为论文自报值、未独立复现。 |
 
@@ -210,8 +210,9 @@ vLLM 官方 *Per-Request Acceptance Metrics* 文档给出的定义即口径基�
 | 7 | vLLM *Per-Request Acceptance Metrics* | https://docs.vllm.ai/en/latest/features/speculative_decoding/acceptance_metrics/ | ✅ HTTP 200，§2.2 口径定义据此 |
 | 8 | 指标口径（任务书原引 Morph） | https://www.morphllm.com/speculative-decoding | ⚠️ **被 Vercel Security Checkpoint 拦截（HTTP 429）**，无法核验内容 → 已从正文剔除，改用来源 #7 |
 | 9 | SGLang issue #10308（topk=1 下 draft 概率传递；§5.1 待办 ② 的核验对象） | https://github.com/sgl-project/sglang/issues/10308 | ✅ HTTP 200，**issue 真实存在**：标题、开立日期 2025-11-03、指派 `hnyls2002`、2026-01-03 因 inactive 被自动关闭均已核实；**未观察到 linked/merged PR** → 后续 PR 与修复状态**未确证** |
+| 10 | EAGLE 官方仓库（§5.1 ① 的代码核验对象） | https://github.com/SafeAILab/EAGLE | ✅ 只读审阅 @ `cb7e0841fe0c206c6ed74a197ad5e2a1f13f5a2b`（2026-02-19）：`eagle/model/utils.py:398–399`（`qx = 1.0` → `acp = px / qx`），调用点 `eagle/model/ea_model.py:270,452`、`eagle/evaluation/gen_ea_alpha_llama2chat.py:87`、`gen_ea_alpha_vicuna.py:93`；同仓库 `eagle/modeling_eagle.py:1427` 保留真实 `qx`（边界见 §5.1 ①） |
 
-> **任务书失效/存疑链接处置**：第 8 项（Morph）在核验时不可达，本报告不引用其任何具体说法，改以 vLLM 官方文档作为"指标必须成对报告"的依据。ARC-Decode 目前**只有会议页可核验**，无 arXiv 版本，故其全部结论均标为 [摘要级]。第 9 项（SGLang issue #10308）为**本轮新增核验项**，用于支撑 §5.1 待办 ② 的事实基础——仅确证 issue 存在与状态，**不据此推断修复情况**。
+> **任务书失效/存疑链接处置**：第 8 项（Morph）在核验时不可达，本报告不引用其任何具体说法，改以 vLLM 官方文档作为"指标必须成对报告"的依据。ARC-Decode 目前**只有会议页可核验**，无 arXiv 版本，故其全部结论均标为 [摘要级]。第 9 项（SGLang issue #10308）为**本轮新增核验项**，用于支撑 §5.1 待办 ② 的事实基础——仅确证 issue 存在与状态，**不据此推断修复情况**。第 10 项为 **2026-10-16 代码核验**新增：仓库 clone 到 `/tmp`（仓库外）只读审阅、读完即删，`Research` 仓库与提交中**不含任何代码文件**；结论只引用「仓库 @ commit + 文件:行」，不贴大段源码。
 
 ---
 
@@ -228,6 +229,6 @@ vLLM 官方 *Per-Request Acceptance Metrics* 文档给出的定义即口径基�
 
 ---
 
-> **报告说明**：本报告结论分三级标注（精读原文 / 摘要级 / 二手）。RheoSampling 与 Traversal Verification 的关键结论已基于正文逐节核对；ARC-Decode 仅有 ICML 会议页可核验，全部标为摘要级，**未读正文**。加速比与接受长度数字均为论文自报值，跨论文、跨设定不可直接比较。
+> **报告说明**：本报告按**单一主等级**标注证据（精读原文 / 摘要级 / 二手 / 受限核验；混合来源取最弱等级，来源类型写在括号里）。RheoSampling 与 Traversal Verification 的关键结论已基于正文逐节核对；ARC-Decode 仅有 ICML 会议页可核验，全部标为摘要级，**未读正文**。§5.1 第 ① 项已于 2026-10-16 完成官方代码核验（`SafeAILab/EAGLE` @ `cb7e0841…`，`eagle/model/utils.py:398–399`），结论与边界见该表。加速比与接受长度数字均为论文自报值，跨论文、跨设定不可直接比较。
 >
 > *数据截至 2026-10-16。*
