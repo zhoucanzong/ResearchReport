@@ -5,9 +5,9 @@
 **一个仓库收敛 AIGC / LLM / 论文深读全部研究产出**
 
 ![Collections](https://img.shields.io/badge/Collections-3-blue?style=flat-square)
-![Reports](https://img.shields.io/badge/Reports-46-green?style=flat-square)
+![Reports](https://img.shields.io/badge/Reports-47-green?style=flat-square)
 ![Topic](https://img.shields.io/badge/Topic-21-orange?style=flat-square)
-![Markdown](https://img.shields.io/badge/Markdown-83-lightgrey?style=flat-square)
+![Markdown](https://img.shields.io/badge/Markdown-87-lightgrey?style=flat-square)
 ![Updated](https://img.shields.io/badge/Updated-2026--10--16-informational?style=flat-square)
 
 </div>
@@ -74,7 +74,7 @@
 
 > **AIGC-Research** 关注「生成」：图像 / 视频 / 3D / 音频 / 数字人。
 > **LLM-Research** 关注「理解与推理」：模型能力、Benchmark、训练与部署全栈，其中 DeepSeek、Qwen、SpeculativeDecoding 为多分册展开。
-> **Repo-Research** 关注「单个系统」：`mini-swe-agent` 源码级架构报告 + Nemotron-Labs-Diffusion 论文精读（计划、笔记、概念卡、原始提取、结构化 JSON）+ SGLang 推理引擎源码分析（调度器 / 前缀缓存 / 投机解码）。
+> **Repo-Research** 关注「单个系统」：`mini-swe-agent` 源码级架构报告 + Nemotron-Labs-Diffusion 论文精读（计划、笔记、概念卡、原始提取、结构化 JSON）+ SGLang 推理引擎源码分析（调度器 / 前缀缓存 / 投机解码）+ vLLM 推理引擎源码分析（块池 / 前缀复用 / 连续批处理 / 投机解码与语法约束交互）。
 
 ---
 
@@ -102,14 +102,14 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 | 资料库 | 内容 | 条目（`report.md`） | 子文档 `.md` | 正文字节 | 目录内容字节 | `du -sk` |
 | :-- | :-- | --: | --: | --: | --: | --: |
 | 🎨 [AIGC-Research](AIGC-Research/) | 8 系列 + 10 专题 | 18 | 1 | 671,827 B | 679,964 B | 704 KB |
-| 🤖 [LLM-Research](LLM-Research/) | 15 系列 + 11 专题 | 26 | 33 | 1,695,700 B | 1,710,402 B | 1780 KB |
-| 📑 [Repo-Research](Repo-Research/) | 3 个深读项目 | 2 | 10 | 262,771 B | 279,065 B | 300 KB |
-| **合计** | **3 个资料库** | **46** | **44** | **2,630,298 B ≈ 2.51 MiB** | **2,669,431 B ≈ 2.55 MiB** | **2,784 KB** |
+| 🤖 [LLM-Research](LLM-Research/) | 15 系列 + 11 专题 | 26 | 33 | 1,695,700 B | 1,716,176 B | 1788 KB |
+| 📑 [Repo-Research](Repo-Research/) | 4 个深读项目 | 3 | 13 | 349,623 B | 365,917 B | 392 KB |
+| **合计** | **3 个资料库** | **47** | **47** | **2,717,150 B ≈ 2.59 MiB** | **2,762,057 B ≈ 2.63 MiB** | **2,884 KB** |
 
 > 本表数字由 [`scripts/library_index.py`](scripts/library_index.py) 产出，机器可读版见 [`index/stats.json`](index/stats.json)；**条目 = 文件名字面为 `report.md` 的主文档**，同目录其它 `.md`（分册 / `plan.md` / `notes/` / `raw-extracts/` 等）是它的**子文档**。
-> **口径细化（2026-10-16 复测）**：本表中「条目数 / 子文档数」取自 `index/stats.json`；「正文字节 / 目录内容字节 / `du -sk`」为**逐库实测**——「正文字节」= 该库内**除 `README.md` 外的全部 `.md`** 的字节和（LLM-Research = 58 份 / 1,695,700 B），「目录内容字节」= 该库目录下全部文件（跳过隐藏目录），`du -sk` 含文件系统块开销。上一版 LLM-Research 的「正文字节」列（1,764,826 B）与同表其它列**不同源**（约多计 6.9 万 B），本次已按上述可复现口径统一重测。
+> **口径细化（2026-10-16 复测）**：本表中「条目数 / 子文档数」取自 `index/stats.json`；「正文字节 / 目录内容字节 / `du -sk`」为**逐库实测**——「正文字节」= 该库内**除 `README.md` 外的全部 `.md`** 的字节和（LLM-Research = 58 份 / 1,695,700 B；Repo-Research = 16 个 `.md` / 349,623 B），「目录内容字节」= 该库目录下全部文件（跳过隐藏目录），`du -sk` 含文件系统块开销。上一版 LLM-Research 的「正文字节」列（1,764,826 B）与同表其它列**不同源**（约多计 6.9 万 B），本次已按上述可复现口径统一重测。
 > 各库 `README.md` 与 `docs/*.md` 既不是条目也不是子文档，不计入本表；「目录内容字节」不含 `.git` 且按脚本口径跳过隐藏目录；`du -sk` 含文件系统块开销，故大于字节数之和。
-> 全仓库 Markdown 共 **104** 份（`git ls-files '*.md'` 实测；含生成物 8 份，故非生成物 96 份）。各口径的换算关系见 [`docs/statistics.md`](docs/statistics.md) §2。
+> 全仓库 Markdown 共 **108** 份（`git ls-files '*.md'` 实测；含生成物 8 份，故非生成物 100 份）。各口径的换算关系见 [`docs/statistics.md`](docs/statistics.md) §2。
 > **索引入口**：[`INDEX.md`](INDEX.md)（总目录）· [`docs/team.md`](docs/team.md)（团队约定）。
 > **逐目录明细**（每个报告的行数 / 字节、统计方法与口径说明）见 **[docs/statistics.md](docs/statistics.md)**。
 
@@ -202,7 +202,7 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 </details>
 
 <details>
-<summary><b>📑 Repo-Research</b> — 9 个文件（2 个深度阅读项目）</summary>
+<summary><b>📑 Repo-Research</b> — 17 个文件（4 个深度阅读项目）</summary>
 
 <br>
 
@@ -228,6 +228,30 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 | [raw-extracts/nemotron-tri-mode-fulltext.md](Repo-Research/nemotron-tri-mode-diffusion/raw-extracts/nemotron-tri-mode-fulltext.md) | 98,525 B / 2,430 行 | **论文 PDF 全文提取**（21 页，逐页文本，约 96K 字符）—— 本库体积最大的文件，供全文检索与原文核对 |
 | [raw-extracts/pdf-fu_等__…dif.md](Repo-Research/nemotron-tri-mode-diffusion/raw-extracts/pdf-fu_%E7%AD%89__nemotronlabsdiffusion_a_trimode_language_model_unifying_autoregressive_dif.md) | 1,141 B / 28 行 | **PDF 提取占位/模板**（脚本自动生成，正文未填入）—— 实际全文见上一条，保留它是为记录提取流程，**勿当作论文全文** |
 | [papers/nemotron-labs-diffusion.json](Repo-Research/nemotron-tri-mode-diffusion/papers/nemotron-labs-diffusion.json) | 16,294 B / 47 行 | **结构化阅读 JSON**：基本信息 / 内容摘要 / 研究背景 / 核心方法 / 实验与结果 / 分析与讨论 / 个人评价，含 `relevance: 10`、`quality: 9` 等评分字段，便于检索或二次加工 |
+
+**③ [sglang-research/](Repo-Research/sglang-research/) — 推理引擎源码分析（调度 / KV 复用 / 投机解码）**
+
+上游：`sgl-project/sglang` @ `2a08e261ecd4cdfb04ec354f9005f18b88108b7d`
+
+| 文件 | 大小 / 行数 | 说明 |
+| :-- | --: | :-- |
+| [report.md](Repo-Research/sglang-research/report.md) | 32,226 B / 319 行（正文 310 + front-matter 9） | **主文档**：执行摘要 / 问题定位 / Codebase Map / 分层架构 / 一个 decode 步的运行故事 / 设计取舍 / 维护者笔记 / 证据索引 |
+| [scheduler-and-prefix-cache.md](Repo-Research/sglang-research/scheduler-and-prefix-cache.md) | 20,863 B / 174 行 | **子文档**：radix 树两代实现、`match_prefix` 会改树、引用计数与叶优先淘汰、overlap 调度 |
+| [speculative-decoding-path.md](Repo-Research/sglang-research/speculative-decoding-path.md) | 25,276 B / 230 行 | **子文档**：草稿概率的产生、三种验证判据、与 `SafeAILab/EAGLE` 的逐项对照 |
+| [claim-audit.md](Repo-Research/sglang-research/claim-audit.md) | 11,639 B / 149 行 | **子文档**：方法学记录、canonical `claim_audit.py` 结果、阅读覆盖与自检 |
+
+**④ [vllm-research/](Repo-Research/vllm-research/) — vLLM 仓库代码分析（块池 / 前缀复用 / 连续批处理 / 投机解码 × 语法约束）**
+
+上游：`vllm-project/vllm` @ `fa75d3456d60a5ffe923818c4b495295675b38e1`
+
+| 文件 | 大小 / 行数 | 说明 |
+| :-- | --: | :-- |
+| [report.md](Repo-Research/vllm-research/report.md) | 35,224 B / 303 行（正文 294 + front-matter 9） | **主文档**：执行摘要 / 三个判断 / Codebase Map / 架构分层图 / 运行故事（抢占 + 投机）/ 模块摘要 / **带条件列的 SGLang 对照表** / 设计取舍 / 证据索引 |
+| [kv-cache-and-prefix-reuse.md](Repo-Research/vllm-research/kv-cache-and-prefix-reuse.md) | 18,691 B / 206 行 | **子文档**：链式块哈希、`FreeKVCacheBlockQueue` 的 LIFO/FIFO 双序淘汰、append-only 块表、`allocate_slots` 五段布局、抢占重算与前缀缓存的交互（含未确证项） |
+| [scheduling-and-spec-decode.md](Repo-Research/vllm-research/scheduling-and-spec-decode.md) | 22,669 B / 244 行 | **子文档**：无 prefill/decode 两相的调度、两档预算、抢占点；投机解码三段与判据数学形式；**与 structured output 的五步交互链** |
+| [claim-audit.md](Repo-Research/vllm-research/claim-audit.md) | 10,273 B / 131 行 | **子文档**：方法学记录、canonical `claim_audit.py` 四文档结果、阅读覆盖、自检九项与未确证清单 |
+
+> ③ ④ 两条互引：vLLM 主文档 §7 与 SGLang `scheduler-and-prefix-cache.md` / `speculative-decoding-path.md` 之间有带条件列的机制对照表。
 
 </details>
 

@@ -13,16 +13,16 @@
 
 | 指标 | 数量 |
 | --- | --- |
-| **条目数**（`report.md`） | **46** |
-| 条目子文档数 | 41 |
-| 条目正文行数（剔除 front-matter） | 29,823 |
-| 条目字节 | 1,765,924 B |
-| 带 front-matter 的条目 | 1 |
-| 带合法 `date` 的条目 | 1 |
-| 文档（除生成物外的全部 `.md`） | 96 |
+| **条目数**（`report.md`） | **47** |
+| 条目子文档数 | 44 |
+| 条目正文行数（剔除 front-matter） | 30,117 |
+| 条目字节 | 1,801,148 B |
+| 带 front-matter 的条目 | 2 |
+| 带合法 `date` 的条目 | 2 |
+| 文档（除生成物外的全部 `.md`） | 100 |
 | 其中文件名 `README.md` | 4 |
-| 纳入版本控制的文件 | 109 |
-| 纳入版本控制的 `.md` | 104 |
+| 纳入版本控制的文件 | 113 |
+| 纳入版本控制的 `.md` | 108 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 
@@ -32,8 +32,8 @@
 | --- | --: | --: | --: | --: | --- |
 | AIGC-Research | 18 | 19 | 13,336 | 671,827 B | [#AIGC-Research](#aigc-research) |
 | LLM-Research | 26 | 59 | 15,971 | 1,048,688 B | [#LLM-Research](#llm-research) |
-| Repo-Research | 2 | 12 | 516 | 45,409 B | [#Repo-Research](#repo-research) |
-| **合计** | **46** | **96** | **29,823** | **1,765,924 B** | — |
+| Repo-Research | 3 | 16 | 810 | 80,633 B | [#Repo-Research](#repo-research) |
+| **合计** | **47** | **100** | **30,117** | **1,801,148 B** | — |
 
 ## 分面索引
 
@@ -629,10 +629,10 @@
 
 </details>
 
-### Repo-Research（2 条目 / 12 文档）
+### Repo-Research（3 条目 / 16 文档）
 
 <details>
-<summary><b>其它 Other（2 条目 / 9 子文档）</b></summary>
+<summary><b>其它 Other（3 条目 / 12 子文档）</b></summary>
 
   <details>
   <summary><b>nemotron-tri-mode-diffusion</b> · <code>Repo-Research/nemotron-tri-mode-diffusion/report.md</code> · 206 行 · —</summary>
@@ -662,6 +662,20 @@
         * [claim-audit.md](<Repo-Research/sglang-research/claim-audit.md>) — 149 行 / 11,639 B
         * [scheduler-and-prefix-cache.md](<Repo-Research/sglang-research/scheduler-and-prefix-cache.md>) — 174 行 / 20,863 B
         * [speculative-decoding-path.md](<Repo-Research/sglang-research/speculative-decoding-path.md>) — 230 行 / 25,276 B
+
+  </details>
+
+  <details>
+  <summary><b>vllm-research</b> · <code>Repo-Research/vllm-research/report.md</code> · 294 行 · 2026-10-16</summary>
+  
+
+    * **条目**：[Repo-Research/vllm-research/report.md](<Repo-Research/vllm-research/report.md>)（294 行 / 35,224 B）
+    * **专题目录**：`Repo-Research/vllm-research`
+    * **元数据**：type=`repo-research` · domain=`Repo-Research` · subject=`vllm` · date=`2026-10-16` · status=`completed`
+    * **子文档（3）**
+        * [claim-audit.md](<Repo-Research/vllm-research/claim-audit.md>) — 131 行 / 10,268 B
+        * [kv-cache-and-prefix-reuse.md](<Repo-Research/vllm-research/kv-cache-and-prefix-reuse.md>) — 206 行 / 18,691 B
+        * [scheduling-and-spec-decode.md](<Repo-Research/vllm-research/scheduling-and-spec-decode.md>) — 244 行 / 22,669 B
 
   </details>
 

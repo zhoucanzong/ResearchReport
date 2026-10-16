@@ -44,7 +44,7 @@
 | [report.md](report.md) | 32 | **0** | 首轮 32/2，在 §6.4 与 §7 标题行补锚点后归零 |
 | [kv-cache-and-prefix-reuse.md](kv-cache-and-prefix-reuse.md) | 28 | **0** | 首轮 28/5，在 Phase 2 / 全命中代价 / 抢占推断 / §5 标题与表头补锚点后归零 |
 | [scheduling-and-spec-decode.md](scheduling-and-spec-decode.md) | 16 | **0** | 首轮 16/3，在 §2.4/§2.5/§4.3 补锚点后归零 |
-| 本文（claim-audit.md） | 10 | **0** | 审计范围含本表的"风险 / 边界"措辞；0 缺证 |
+| 本文（claim-audit.md） | 11 | **0** | 审计范围含本表的"风险 / 边界"措辞；0 缺证 |
 
 **说明**：审计器只检查"相邻一行内有无路径"，**不判断路径是否真的支撑结论**。后者靠 §3 的阅读覆盖与 §5 的等级纪律人工兜底。
 
@@ -93,9 +93,9 @@
 | 阶段 | 相对链接总数 | 失效 |
 | :-- | --: | --: |
 | 基线（`main` @ `5c3225e`，文档未落盘时实测） | 1,656 | **0** |
-| 本批（`research/vllm-research-yanyan`，含 4 份新文档） | 1,710 | **0** |
+| 本批（`research/vllm-research-yanyan`，含 4 份新文档 + 生成物 + `README.md`/`statistics.md` 更新） | 1,735 | **0** |
 
-**新增 54 条**（1,656 → 1,710），**新增失效 0**。生成物（`INDEX.md`、`index/*.md`）在落盘后还会再增加链接，届时以重跑值为准。
+**新增 79 条**（1,656 → 1,735），**新增失效 0**。其中新条目文档本身贡献 54 条，其余来自 `INDEX.md` / `index/*` 生成物与 `README.md`、`docs/statistics.md` 的索引补齐。
 
 **基线绝对值说明**：`docs/statistics.md` 末次留痕记的 1,650 是 Decision Models 批次当时的实测值；本次在同一脚本（同一顺序、同一跳过规则：跳过 `.git`、跳过围栏内文本、跳过行内反引号）下测得 **1,656**。差异 6 条来自**生成物与既有文档的后续变化**，不是本批引入——本批文档若进入基线计数，只会增加。本报告按"同一脚本同期实测"口径记录 1,656，不沿用旧值。
 
@@ -103,7 +103,7 @@
 
 ## 6. 统计一致性
 
-- `scripts/library_index.py --repo-root . --out-root . --write-stats --check-links` 在提交前重跑；先 `--dry-run` 核对再落盘。
+- `scripts/library_index.py --repo-root . --out-root . --write-stats --check-links`：先 `--dry-run` 核对（条目 47 / 子文档 44），落盘后 `--check-links` 报「生成文件内的相对链接全部可解析」。**注意脚本的 `tracked_*` 取自 `git ls-files`，因此追加提交后必须重跑一次**，否则版本控制口径会停在旧值。
 - `entries.total`：**46 → 47**（新增 `Repo-Research/vllm-research/report.md`）。
 - `entries.children`：**41 → 44**（新增三份子文档：`kv-cache-and-prefix-reuse.md`、`scheduling-and-spec-decode.md`、`claim-audit.md`）。
 - `entries.lines`：由脚本重算，**不手改**。
@@ -114,11 +114,11 @@
 ## 7. 交付留痕
 
 - **分支**：`research/vllm-research-yanyan`（自 `main` @ `5c3225e` 切出）。
-- **本批新增**：`Repo-Research/vllm-research/` 下 4 个文件。
+- **本批新增**：`Repo-Research/vllm-research/` 下 4 个文件；另同步 `README.md`（含补齐 ③ SGLang / ④ vLLM 两条索引）、`docs/statistics.md`、`INDEX.md`、`index/*`。
   - [report.md](report.md)：303 行（正文 294 + front-matter 9）/ 35,224 B
-  - [kv-cache-and-prefix-reuse.md](kv-cache-and-prefix-reuse.md)：206 行 / 18,691 B（落盘时值，补锚点后略有增加）
-  - [scheduling-and-spec-decode.md](scheduling-and-spec-decode.md)：244 行 / 22,669 B（同上）
-  - 本文 `claim-audit.md`
+  - [kv-cache-and-prefix-reuse.md](kv-cache-and-prefix-reuse.md)：206 行（正文 206）/ 18,691 B
+  - [scheduling-and-spec-decode.md](scheduling-and-spec-decode.md)：244 行 / 22,669 B
+  - 本文 [claim-audit.md](claim-audit.md)：131 行 / 10,273 B
 - **未确证 / 待跟踪**（不入正文结论）：
   1. 抢占后 `get_computed_blocks` 是否真退化为零命中——§4.2 的推断需要构造实验确证（打印 `num_preemptions` 与命中数）。
   2. structured output 下验证判据的参照分布语义：是"近似"还是"仓库定义的正确答案"——仓库内**未找到明文定义**，检索 `docs/` 无结论。

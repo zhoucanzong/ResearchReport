@@ -282,3 +282,9 @@
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [Repo-Research/sglang-research/report.md](<../Repo-Research/sglang-research/report.md>) | SGLang 仓库代码分析报告 | repo-research | 2026-10-16 | completed |
+
+## vllm (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Repo-Research/vllm-research/report.md](<../Repo-Research/vllm-research/report.md>) | vLLM 仓库代码分析报告 | repo-research | 2026-10-16 | completed |

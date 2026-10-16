@@ -64,3 +64,7 @@
 ## https://github.com/sgl-project/sglang@2a08e261ecd4cdfb04ec354f9005f18b88108b7d (1)
 
 * [Repo-Research/sglang-research/report.md](<../Repo-Research/sglang-research/report.md>) — 310 行
+
+## https://github.com/vllm-project/vllm@fa75d3456d60a5ffe923818c4b495295675b38e1 (1)
+
+* [Repo-Research/vllm-research/report.md](<../Repo-Research/vllm-research/report.md>) — 294 行

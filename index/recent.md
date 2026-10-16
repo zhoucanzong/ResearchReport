@@ -11,6 +11,7 @@
 
 | 条目 | date | 所属库 | 专题 |
 | --- | --- | --- | --- |
+| [Repo-Research/vllm-research/report.md](<../Repo-Research/vllm-research/report.md>) | 2026-10-16 | Repo-Research | vllm |
 | [Repo-Research/sglang-research/report.md](<../Repo-Research/sglang-research/report.md>) | 2026-10-16 | Repo-Research | sglang |
 
 ## 无 date 元数据（45）
