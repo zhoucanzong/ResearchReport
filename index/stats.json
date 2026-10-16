@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "d10c105073b5c8c655120d482795acd35c14d016075362194df607ebcb626fb7",
+  "content_fingerprint": "b599fc72bdd538e9478137524a707bdf246636732800c5cbb14b6509939d1f5e",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -16,8 +16,8 @@
     "with_front_matter": 1,
     "without_front_matter": 45,
     "with_date": 1,
-    "lines": 29558,
-    "bytes": 1723874,
+    "lines": 29562,
+    "bytes": 1724304,
     "children": 25
   },
   "documents": {
@@ -26,8 +26,8 @@
     "with_front_matter": 1,
     "named_report_md": 46,
     "named_readme_md": 4,
-    "lines": 39219,
-    "bytes": 2331053
+    "lines": 39223,
+    "bytes": 2331798
   },
   "libraries": {
     "AIGC-Research": {
@@ -64,12 +64,12 @@
         "TechnicalTopics": 11,
         "Other": 0
       },
-      "lines": 15706,
-      "bytes": 1006638,
-      "lines_raw": 15706,
+      "lines": 15710,
+      "bytes": 1007068,
+      "lines_raw": 15710,
       "dir_files": 44,
       "dir_md": 43,
-      "dir_bytes": 1321877,
+      "dir_bytes": 1322454,
       "du_sk": 1376
     },
     "Repo-Research": {
@@ -99,10 +99,10 @@
     "library_entries": 46,
     "library_documents_md": 74,
     "library_dir_files": 76,
-    "library_dir_bytes": 2280906,
+    "library_dir_bytes": 2281483,
     "library_du_sk": 2380,
-    "library_entry_lines": 29558,
-    "library_entry_bytes": 1723874
+    "library_entry_lines": 29562,
+    "library_entry_bytes": 1724304
   },
   "version_control": {
     "tracked_total": 93,
@@ -158,9 +158,9 @@
       "LLM-Research": {
         "report_md": {
           "files": 26,
-          "lines": 15706,
-          "lines_raw": 15706,
-          "bytes": 1006638
+          "lines": 15710,
+          "lines_raw": 15710,
+          "bytes": 1007068
         },
         "report_md_by_category": {
           "ModelSeries": {
@@ -171,9 +171,9 @@
           },
           "TechnicalTopics": {
             "files": 11,
-            "lines": 6818,
-            "lines_raw": 6818,
-            "bytes": 399185
+            "lines": 6822,
+            "lines_raw": 6822,
+            "bytes": 399615
           },
           "Other": {
             "files": 0,
@@ -186,13 +186,13 @@
           "files": 17,
           "lines": 4468,
           "lines_raw": 4468,
-          "bytes": 314947
+          "bytes": 315094
         },
         "dir_md": {
           "files": 43,
-          "lines": 20174,
-          "lines_raw": 20174,
-          "bytes": 1321585
+          "lines": 20178,
+          "lines_raw": 20178,
+          "bytes": 1322162
         }
       },
       "Repo-Research": {
@@ -238,27 +238,27 @@
     },
     "repo_md": {
       "files": 80,
-      "lines": 39219,
-      "lines_raw": 39228,
-      "bytes": 2331053
+      "lines": 39223,
+      "lines_raw": 39232,
+      "bytes": 2331798
     },
     "library_md": {
       "files": 74,
-      "lines": 38277,
-      "lines_raw": 38286,
-      "bytes": 2264320
+      "lines": 38281,
+      "lines_raw": 38290,
+      "bytes": 2264897
     },
     "root_readme": {
       "files": 1,
       "lines": 265,
       "lines_raw": 265,
-      "bytes": 23238
+      "bytes": 23384
     },
     "docs_md": {
       "files": 4,
       "lines": 578,
       "lines_raw": 578,
-      "bytes": 38906
+      "bytes": 38928
     },
     "scripts_md": {
       "files": 1,

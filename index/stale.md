@@ -54,7 +54,7 @@
 * [LLM-Research/ModelSeries/Qwen-research/report.md](<../LLM-Research/ModelSeries/Qwen-research/report.md>)
 * [LLM-Research/TechnicalTopics/Agent-research/report.md](<../LLM-Research/TechnicalTopics/Agent-research/report.md>)
 * [LLM-Research/TechnicalTopics/Alignment-research/report.md](<../LLM-Research/TechnicalTopics/Alignment-research/report.md>)
-* [LLM-Research/TechnicalTopics/JEV-research/report.md](<../LLM-Research/TechnicalTopics/JEV-research/report.md>)
+* [LLM-Research/TechnicalTopics/DecisionModels-research/report.md](<../LLM-Research/TechnicalTopics/DecisionModels-research/report.md>)
 * [LLM-Research/TechnicalTopics/LongContext-research/report.md](<../LLM-Research/TechnicalTopics/LongContext-research/report.md>)
 * [LLM-Research/TechnicalTopics/MoE-research/report.md](<../LLM-Research/TechnicalTopics/MoE-research/report.md>)
 * [LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md](<../LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md>)

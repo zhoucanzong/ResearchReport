@@ -102,9 +102,9 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 | 资料库 | 内容 | 条目（`report.md`） | 子文档 `.md` | 条目字节 | 目录内容字节 | `du -sk` |
 | :-- | :-- | --: | --: | --: | --: | --: |
 | 🎨 [AIGC-Research](AIGC-Research/) | 8 系列 + 10 专题 | 18 | 0 | 671,827 B | 679,964 B | 704 KB |
-| 🤖 [LLM-Research](LLM-Research/) | 15 系列 + 11 专题 | 26 | 16 | 1,006,638 B | 1,321,877 B | 1376 KB |
+| 🤖 [LLM-Research](LLM-Research/) | 15 系列 + 11 专题 | 26 | 16 | 1,007,068 B | 1,322,454 B | 1376 KB |
 | 📑 [Repo-Research](Repo-Research/) | 3 个深读项目 | 2 | 9 | 45,409 B | 279,065 B | 300 KB |
-| **合计** | **3 个资料库** | **46** | **25** | **1,723,874 B ≈ 1.64 MiB** | **2,280,906 B ≈ 2.18 MiB** | **2,380 KB** |
+| **合计** | **3 个资料库** | **46** | **25** | **1,724,304 B ≈ 1.64 MiB** | **2,281,483 B ≈ 2.18 MiB** | **2,380 KB** |
 
 > 本表数字由 [`scripts/library_index.py`](scripts/library_index.py) 产出，机器可读版见 [`index/stats.json`](index/stats.json)；**条目 = 文件名字面为 `report.md` 的主文档**，同目录其它 `.md`（分册 / `plan.md` / `notes/` / `raw-extracts/` 等）是它的**子文档**。
 > 各库 `README.md` 与 `docs/*.md` 既不是条目也不是子文档，不计入本表；「目录内容字节」不含 `.git` 且按脚本口径跳过隐藏目录；`du -sk` 含文件系统块开销，故大于字节数之和。
@@ -194,7 +194,7 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 | 8 | **TrainingInfra** | 训练基础设施 | DeepSpeed/FSDP/Megatron，3D 并行，万卡集群 | [目录](LLM-Research/TechnicalTopics/TrainingInfra-research/) · [报告](LLM-Research/TechnicalTopics/TrainingInfra-research/report.md) |
 | 9 | **QuantizationEdge** | 量化与边缘部署 | AWQ/GPTQ/GGUF/FP8，vLLM/Ollama，Jetson 边缘 | [目录](LLM-Research/TechnicalTopics/QuantizationEdge-research/) · [报告](LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md) |
 | 10 | **RAG** | 检索增强生成 | RAG 0.0→4.0，GraphRAG，Agentic RAG，混合检索 | [目录](LLM-Research/TechnicalTopics/RAG-research/) · [报告](LLM-Research/TechnicalTopics/RAG-research/report.md) |
-| 11 | **JEV** | System One 决策模型 | 类型化输出（Choice/Score/Noul）、隐藏状态直读、零输出 token、`confidence` 语义；**RLCD 同名消歧**（≠ 2023 Contrastive Distillation）；官方九类 jaggedness；第三方研究地图含**失效与攻击** | [目录](LLM-Research/TechnicalTopics/JEV-research/) · [报告](LLM-Research/TechnicalTopics/JEV-research/report.md) |
+| 11 | **DecisionModels** | 决策模型（System One / Typed Decision Model） | 类型化输出（Choice/Score/Noul）、隐藏状态直读、零输出 token、`confidence` 语义；**RLCD 同名消歧**（≠ 2023 Contrastive Distillation）；官方九类 jaggedness；第三方研究地图含**失效与攻击**；**JEV 为主线案例**，同类含 `this-that-model` / `Laya` / `Kev` / `JevLite` | [目录](LLM-Research/TechnicalTopics/DecisionModels-research/) · [报告](LLM-Research/TechnicalTopics/DecisionModels-research/report.md) |
 
 库内索引：[LLM-Research/README.md](LLM-Research/README.md) ｜ 目录：[LLM-Research/](LLM-Research/)
 

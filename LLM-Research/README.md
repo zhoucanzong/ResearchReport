@@ -64,7 +64,7 @@
 | 8  | 🔬 | [**TrainingInfra**](./TechnicalTopics/TrainingInfra-research/) | 训练基础设施 |   1   | DeepSpeed/FSDP/Megatron，3D并行，万卡集群 |
 | 9  | 🔬 | [**QuantizationEdge**](./TechnicalTopics/QuantizationEdge-research/) | 量化与边缘部署 |   1   | AWQ/GPTQ/GGUF/FP8，vLLM/Ollama，Jetson边缘 |
 | 10 | 🔬 | [**RAG**](./TechnicalTopics/RAG-research/)                 | 检索增强生成 |   1   | RAG 0.0→4.0，GraphRAG，Agentic RAG，混合检索 |
-| 11 | 🔬 | [**JEV**](./TechnicalTopics/JEV-research/)                 | System One 决策模型 |   1   | Choice/Score/Noul 类型化输出、隐藏状态直读、零输出 token、`confidence` 语义；**RLCD 同名消歧**（≠ 2023 Contrastive Distillation）；官方九类 jaggedness；第三方研究地图含**失效与攻击** |
+| 11 | 🔬 | [**DecisionModels**](./TechnicalTopics/DecisionModels-research/) | 决策模型（System One / Typed Decision Model） |   1   | Choice/Score/Noul 类型化输出、隐藏状态直读、零输出 token、`confidence` 语义；**RLCD 同名消歧**（≠ 2023 Contrastive Distillation）；官方九类 jaggedness；第三方研究地图含**失效与攻击**；**JEV 为主线案例**，同类含 `this-that-model` / `Laya` / `Kev` / `JevLite` |
 
 > **🔬 技术专题 11 个** &nbsp;|&nbsp; 共 **43 份** Markdown 报告
 
@@ -131,7 +131,7 @@ LLM-research/
     │   └── report.md                     #   AWQ/GPTQ/GGUF/FP8，vLLM/Ollama，Jetson边缘
     └── RAG-research/                     # 检索增强生成专题
         └── report.md                     #   RAG 0.0→4.0，GraphRAG，Agentic RAG，混合检索
-    └── JEV-research/                     # System One 决策模型专题
+    └── DecisionModels-research/          # 决策模型（System One）专题 · JEV 为主线案例
         └── report.md                     #   类型化输出/零输出token/RLCD 消歧/失效与攻击地图
 ```
 

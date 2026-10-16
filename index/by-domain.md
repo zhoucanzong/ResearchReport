@@ -51,7 +51,7 @@
 | [LLM-Research/ModelSeries/Qwen-research/report.md](<../LLM-Research/ModelSeries/Qwen-research/report.md>) | Qwen系列模型深度调研报告 | — | — | — |
 | [LLM-Research/TechnicalTopics/Agent-research/report.md](<../LLM-Research/TechnicalTopics/Agent-research/report.md>) | LLM Agent 架构与工具使用研究报告 | — | — | — |
 | [LLM-Research/TechnicalTopics/Alignment-research/report.md](<../LLM-Research/TechnicalTopics/Alignment-research/report.md>) | 模型对齐（Alignment）与后训练（Post-Training）研究报告 | — | — | — |
-| [LLM-Research/TechnicalTopics/JEV-research/report.md](<../LLM-Research/TechnicalTopics/JEV-research/report.md>) | JEV 决策模型（System One / Typed Decision Model）技术专题调研 | — | — | — |
+| [LLM-Research/TechnicalTopics/DecisionModels-research/report.md](<../LLM-Research/TechnicalTopics/DecisionModels-research/report.md>) | Decision Models（System One / Typed Decision Model）技术专题调研 | — | — | — |
 | [LLM-Research/TechnicalTopics/LongContext-research/report.md](<../LLM-Research/TechnicalTopics/LongContext-research/report.md>) | 长上下文（Long Context）技术研究报告 | — | — | — |
 | [LLM-Research/TechnicalTopics/MoE-research/report.md](<../LLM-Research/TechnicalTopics/MoE-research/report.md>) | 混合专家模型（Mixture of Experts, MoE）架构演进研究报告 | — | — | — |
 | [LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md](<../LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md>) | 模型量化与边缘部署研究报告 | — | — | — |

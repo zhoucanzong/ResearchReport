@@ -1,11 +1,13 @@
-# JEV 决策模型（System One / Typed Decision Model）技术专题调研
+# Decision Models（System One / Typed Decision Model）技术专题调研
 
+> **JEV（TypeSafe）为本条目的主线案例**，其官方文档、第三方研究与失效证据构成主要材料；条目同时覆盖同类的开源决策模型实现。
+>
 > ⚠️ **信息来源声明**：本报告由 AI Agent 基于公开论文、官方文档与第三方分析整理生成。**TypeSafe 未发布正式技术论文**，官方材料属"一手但自述"；arXiv 条目均为 2026-09 至 2026-10 的预印本，未经同行评审。厂商自测的加速/降本倍率不得当作通用结论。所有引用均于 2026-10-16 实测可达。
 >
 > **调研日期**：2026-10-16
 > **覆盖范围**：2026-09-15 Jev 发布至 2026-10-16（含 jev-1.14 发布、arXiv 2609/2610 第三方研究）的公开材料
-> **调研口径**：时间不限、详细度=详细；**不做教学讲解、不做知识图谱**；本条目为技术专题（`subject: jev`）
-> **条目路径**：`LLM-Research/TechnicalTopics/JEV-research/report.md`（非 skill 默认输出目录）
+> **调研口径**：时间不限、详细度=详细；**不做教学讲解、不做知识图谱**；本条目为技术专题（`subject: decision-models`），同类已纳入 `this-that-model` / `Laya` / `Kev` / `JevLite` 等开源决策模型
+> **条目路径**：`LLM-Research/TechnicalTopics/DecisionModels-research/report.md`（非 skill 默认输出目录）
 
 ---
 
@@ -24,6 +26,8 @@
 ## 一、范围与证据规则
 
 ### 1.1 本报告覆盖什么
+
+本条目研究对象是**决策模型（decision models）这一模型类别**，TypeSafe JEV 是其中主线且材料最完整的案例。
 
 | 维度 | 覆盖内容 | 不覆盖 |
 |---|---|---|

@@ -61,6 +61,12 @@
 | --- | --- | --- | --- | --- |
 | [AIGC-Research/TechnicalTopics/ControllableGen-research/report.md](<../AIGC-Research/TechnicalTopics/ControllableGen-research/report.md>) | 可控生成（Controllable Generation）技术研究报告 | — | — | — |
 
+## DecisionModels-research (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM-Research/TechnicalTopics/DecisionModels-research/report.md](<../LLM-Research/TechnicalTopics/DecisionModels-research/report.md>) | Decision Models（System One / Typed Decision Model）技术专题调研 | — | — | — |
+
 ## DeepSeek-research (1)
 
 | 条目 | 标题 | type | date | status |
@@ -132,12 +138,6 @@
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [AIGC-Research/TechnicalTopics/ImageEditing-research/report.md](<../AIGC-Research/TechnicalTopics/ImageEditing-research/report.md>) | 图像编辑与修复技术研究报告 | — | — | — |
-
-## JEV-research (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [LLM-Research/TechnicalTopics/JEV-research/report.md](<../LLM-Research/TechnicalTopics/JEV-research/report.md>) | JEV 决策模型（System One / Typed Decision Model）技术专题调研 | — | — | — |
 
 ## Kimi-research (1)
 
