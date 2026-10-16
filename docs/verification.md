@@ -15,9 +15,9 @@
 
 ## 1. 上游原始仓库最终状态（本地副本已于 2026-10-16 移除）
 
-`AIGC-Research`、`LLM-Research` 在复制与校验阶段**只读、全程未改动**（见本文 §2），其最终状态如下。后续决定「统一维护 ResearchReport」，两个本地原始目录已于 **2026-10-16** 移入废纸篓（`~/.Trash/AIGC-Research`、`~/.Trash/LLM-Research`），可从废纸篓恢复，直至清空废纸篓。
+（**历史记录**）`AIGC-Research`、`LLM-Research` 在复制与校验阶段**只读、全程未改动**（见本文 §2），其最终状态如下。后续决定「统一维护 ResearchReport」，两个本地原始目录已于 **2026-10-16** 移入废纸篓（`~/.Trash/AIGC-Research`、`~/.Trash/LLM-Research`），可从废纸篓恢复，直至清空废纸篓。
 
-| 校验项 | AIGC-Research | LLM-Research |
+| 校验项 | AIGC-Research | LLM-Research |  <!-- 历史记录：重排前旧库路径 -->
 | :-- | :-- | :-- |
 | 原路径 | `/Users/zhoucanzong/Documents/AIGC-Research`（已移除） | `/Users/zhoucanzong/Documents/LLM-Research`（已移除） |
 | `rev-parse HEAD` | `101ae640ea043572f2c6dc64742eb520394c1d3e` | `7deacb5b841c0b0925e1ac024323255b1b7eaf58` |
@@ -36,7 +36,7 @@
 
 复制方式：`cp -a <源> Research/<名称>`（保留权限、时间戳与 `.git`）。当时两个副本各含完整 `.git`，校验结论如下 —— 该 `.git` 现已按计划删除（见本文 §3）。
 
-| 校验项 | AIGC-Research | LLM-Research |
+| 校验项 | AIGC-Research | LLM-Research |  <!-- 历史记录：重排前旧库路径 -->
 | :-- | :-- | :-- |
 | 工作区 `.md` 数量（源 → 副本） | 17 → **17** | 37 → **37** |
 | `report.md` 数量（源 → 副本） | 16 → **16** | 25 → **25** |
@@ -90,7 +90,7 @@
 
 ## 4. Repo-Research 复制与移除校验（2026-10-16）
 
-来源 `/Users/zhoucanzong/Documents/Repo-Research`（**非 Git 仓库**，无 `.git`）→ 目标 `Research/Repo-Research/`。流程为**先复制、校验通过后才移除原位**。
+（**历史记录**）来源 `/Users/zhoucanzong/Documents/Repo-Research`（**非 Git 仓库**，无 `.git`）→ 目标 `Research/Repo-Research/`。流程为**先复制、校验通过后才移除原位**。
 
 | 校验项 | 结果 |
 | :-- | :-- |
@@ -125,7 +125,7 @@ add59912f210a242d8cd988d54303dac8cabefc78ce94d55008c5b26e8e5d710  nemotron-tri-m
 
 ## 5. SGLang 条目新增校验（2026-10-16）
 
-新增条目 `Repo-Research/sglang-research/`（1 条目 + 3 子文档）。分析对象为外部开源仓库，**源码不入口**：clone 只放 `/tmp`，读完即删，仓库内只保留报告文本与 `文件:行` 短引用。
+新增条目 `OpenSource/sglang/`（1 条目 + 3 子文档）。分析对象为外部开源仓库，**源码不入口**：clone 只放 `/tmp`，读完即删，仓库内只保留报告文本与 `文件:行` 短引用。
 
 | 校验项 | 结果 |
 | :-- | :-- |
@@ -133,10 +133,10 @@ add59912f210a242d8cd988d54303dac8cabefc78ce94d55008c5b26e8e5d710  nemotron-tri-m
 | clone 位置 | `/tmp/sglang-clone`（`--filter=blob:none` 部分克隆，**只读**，未构建、未修改），校验后删除 |
 | 仓库内是否含源码 / 克隆残留 | ✅ 无：`git status --porcelain` 只有新增的 4 个 `.md`；无 `.py` / `.rs` / `.cuh` 等源文件 |
 | 报告内单处引用长度 | ✅ 全部 ≤ 15 行（实际最长 4 行，均为 `文件:行` 标注的短引用） |
-| 结论审计（`claim_audit.py --lang zh`） | ✅ 4 份文档全部 **0 处缺少邻近源码证据**（高影响结论数：report 9 / spec-path 3 / scheduler-prefix 5 / claim-audit 12；口径见 [claim-audit.md §2](../Repo-Research/sglang-research/claim-audit.md)） |
+| 结论审计（`claim_audit.py --lang zh`） | ✅ 4 份文档全部 **0 处缺少邻近源码证据**（高影响结论数：report 9 / spec-path 3 / scheduler-prefix 5 / claim-audit 12；口径见 [claim-audit.md §2](../OpenSource/sglang/claim-audit.md)） |
 | GitHub 链接钉 SHA | ✅ 124 处「默认分支路径」链接（`blob` + 分支名）全部改为 `blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d`；全仓 `grep -ro` 该默认分支路径 = 0（命中数 92 行 / 124 处） |
 | 行号更正 | ✅ 原先误标的 999 行引用在本条目内**全仓归零**（8 处全部改为 `eagle_utils.py:1000–1003`），并在首次出现处补 999 / 1003 行归属说明 |
-| deep 模式 Mermaid 图 | ✅ 3 张（架构总览、decode 运行时序、spec 三段流程；见 [report.md](../Repo-Research/sglang-research/report.md) 与 [speculative-decoding-path.md](../Repo-Research/sglang-research/speculative-decoding-path.md)） |
+| deep 模式 Mermaid 图 | ✅ 3 张（架构总览、decode 运行时序、spec 三段流程；见 [report.md](../OpenSource/sglang/report.md) 与 [speculative-decoding-path.md](../OpenSource/sglang/speculative-decoding-path.md)） |
 | 相对链接回测（全仓，剥 `<>` 角括号口径） | 旧基线 **693 解析 / 0 失效** → 新状态 **722 解析 / 0 失效**（**0 新增失效**，含剥 `<>` 角括号后的口径） |
 | 生成物重跑 | ✅ `scripts/library_index.py --write-stats --check-links`（先 `--dry-run`）；新增条目 4 份 `.md` 的 3 个文件已重跑一致性通过 |
 | `docs/statistics.md` | ✅ 按 §1–§5 的同一口径重算并更新（未沿用旧估算） |

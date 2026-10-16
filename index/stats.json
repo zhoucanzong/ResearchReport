@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "9f9b93104d5756b2e8ae9db38bbc6e299cd6c5074c2f64ea539969734e779d9a",
+  "content_fingerprint": "cebf3095ddf20eb7fc50978b8a208da95992da0f836879f96a5deccd41581364",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -18,125 +18,300 @@
     "without_front_matter": 45,
     "with_date": 3,
     "lines": 30510,
-    "bytes": 1842849,
+    "bytes": 1841888,
     "children": 44
   },
   "documents": {
-    "md_total": 101,
-    "md_libraries": 95,
+    "md_total": 99,
+    "md_libraries": 93,
     "with_front_matter": 16,
     "named_report_md": 48,
-    "named_readme_md": 4,
-    "lines": 43967,
-    "bytes": 2885857
+    "named_readme_md": 2,
+    "lines": 43635,
+    "bytes": 2857636
   },
   "libraries": {
-    "AIGC-Research": {
-      "entries": 18,
-      "documents_md": 19,
+    "Models": {
+      "entries": 23,
+      "documents_md": 28,
       "md_by_category": {
-        "ModelSeries": 8,
-        "TechnicalTopics": 10,
-        "Other": 1
+        "Models": 28,
+        "LLM": 0,
+        "VisualGen": 0,
+        "WorldModel": 0,
+        "Infra": 0,
+        "OpenSource": 0
       },
       "dirs_by_category": {
-        "ModelSeries": 8,
-        "TechnicalTopics": 10,
-        "Other": 0
+        "Models": 23,
+        "LLM": 0,
+        "VisualGen": 0,
+        "WorldModel": 0,
+        "Infra": 0,
+        "OpenSource": 0
       },
-      "lines": 13483,
-      "bytes": 688526,
-      "lines_raw": 13483,
-      "dir_files": 19,
-      "dir_md": 19,
-      "dir_bytes": 696808,
-      "du_sk": 724
+      "lines": 14816,
+      "bytes": 900388,
+      "lines_raw": 14816,
+      "dir_files": 28,
+      "dir_md": 28,
+      "dir_bytes": 1023041,
+      "du_sk": 1060
     },
-    "LLM-Research": {
-      "entries": 26,
-      "documents_md": 59,
+    "LLM": {
+      "entries": 8,
+      "documents_md": 24,
       "md_by_category": {
-        "ModelSeries": 20,
-        "TechnicalTopics": 38,
-        "Other": 1
+        "Models": 0,
+        "LLM": 24,
+        "VisualGen": 0,
+        "WorldModel": 0,
+        "Infra": 0,
+        "OpenSource": 0
       },
       "dirs_by_category": {
-        "ModelSeries": 15,
-        "TechnicalTopics": 11,
-        "Other": 0
+        "Models": 0,
+        "LLM": 8,
+        "VisualGen": 0,
+        "WorldModel": 0,
+        "Infra": 0,
+        "OpenSource": 0
       },
-      "lines": 15971,
-      "bytes": 1048688,
-      "lines_raw": 15971,
-      "dir_files": 60,
-      "dir_md": 59,
-      "dir_bytes": 1716311,
-      "du_sk": 1792
+      "lines": 5217,
+      "bytes": 340987,
+      "lines_raw": 5217,
+      "dir_files": 24,
+      "dir_md": 24,
+      "dir_bytes": 691662,
+      "du_sk": 720
     },
-    "Repo-Research": {
+    "VisualGen": {
+      "entries": 8,
+      "documents_md": 8,
+      "md_by_category": {
+        "Models": 0,
+        "LLM": 0,
+        "VisualGen": 8,
+        "WorldModel": 0,
+        "Infra": 0,
+        "OpenSource": 0
+      },
+      "dirs_by_category": {
+        "Models": 0,
+        "LLM": 0,
+        "VisualGen": 8,
+        "WorldModel": 0,
+        "Infra": 0,
+        "OpenSource": 0
+      },
+      "lines": 6805,
+      "bytes": 318086,
+      "lines_raw": 6805,
+      "dir_files": 8,
+      "dir_md": 8,
+      "dir_bytes": 318086,
+      "du_sk": 328
+    },
+    "WorldModel": {
+      "entries": 2,
+      "documents_md": 2,
+      "md_by_category": {
+        "Models": 0,
+        "LLM": 0,
+        "VisualGen": 0,
+        "WorldModel": 2,
+        "Infra": 0,
+        "OpenSource": 0
+      },
+      "dirs_by_category": {
+        "Models": 0,
+        "LLM": 0,
+        "VisualGen": 0,
+        "WorldModel": 2,
+        "Infra": 0,
+        "OpenSource": 0
+      },
+      "lines": 750,
+      "bytes": 77166,
+      "lines_raw": 750,
+      "dir_files": 2,
+      "dir_md": 2,
+      "dir_bytes": 77166,
+      "du_sk": 80
+    },
+    "Infra": {
+      "entries": 3,
+      "documents_md": 14,
+      "md_by_category": {
+        "Models": 0,
+        "LLM": 0,
+        "VisualGen": 0,
+        "WorldModel": 0,
+        "Infra": 14,
+        "OpenSource": 0
+      },
+      "dirs_by_category": {
+        "Models": 0,
+        "LLM": 0,
+        "VisualGen": 0,
+        "WorldModel": 0,
+        "Infra": 3,
+        "OpenSource": 0
+      },
+      "lines": 1866,
+      "bytes": 100011,
+      "lines_raw": 1866,
+      "dir_files": 14,
+      "dir_md": 14,
+      "dir_bytes": 279265,
+      "du_sk": 292
+    },
+    "OpenSource": {
       "entries": 4,
       "documents_md": 17,
       "md_by_category": {
-        "ModelSeries": 0,
-        "TechnicalTopics": 0,
-        "Other": 17
+        "Models": 0,
+        "LLM": 0,
+        "VisualGen": 0,
+        "WorldModel": 0,
+        "Infra": 0,
+        "OpenSource": 17
       },
       "dirs_by_category": {
-        "ModelSeries": 0,
-        "TechnicalTopics": 0,
-        "Other": 4
+        "Models": 0,
+        "LLM": 0,
+        "VisualGen": 0,
+        "WorldModel": 0,
+        "Infra": 0,
+        "OpenSource": 4
       },
       "lines": 1056,
-      "bytes": 105635,
+      "bytes": 105250,
       "lines_raw": 1083,
       "dir_files": 18,
       "dir_md": 17,
-      "dir_bytes": 435016,
+      "dir_bytes": 434479,
       "du_sk": 456
     }
   },
   "totals": {
-    "libraries": 3,
+    "libraries": 6,
     "library_entries": 48,
-    "library_documents_md": 95,
-    "library_dir_files": 97,
-    "library_dir_bytes": 2848135,
-    "library_du_sk": 2972,
+    "library_documents_md": 93,
+    "library_dir_files": 94,
+    "library_dir_bytes": 2823699,
+    "library_du_sk": 2936,
     "library_entry_lines": 30510,
-    "library_entry_bytes": 1842849
+    "library_entry_bytes": 1841888
   },
   "version_control": {
-    "tracked_total": 115,
-    "tracked_md": 109,
+    "tracked_total": 112,
+    "tracked_md": 107,
     "tracked_report_md": 48,
-    "tracked_libraries": 97,
+    "tracked_libraries": 94,
     "tracked_repo_root": 3,
     "tracked_docs": 4,
     "tracked_scripts": 3
   },
   "doc_stats": {
     "libraries": {
-      "AIGC-Research": {
+      "Models": {
         "report_md": {
-          "files": 18,
-          "lines": 13483,
-          "lines_raw": 13483,
-          "bytes": 688526
+          "files": 23,
+          "lines": 14816,
+          "lines_raw": 14816,
+          "bytes": 900388
         },
         "report_md_by_category": {
-          "ModelSeries": {
+          "Models": {
+            "files": 23,
+            "lines": 14816,
+            "lines_raw": 14816,
+            "bytes": 900388
+          },
+          "LLM": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "VisualGen": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "WorldModel": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "Infra": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "OpenSource": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          }
+        },
+        "other_md": {
+          "files": 5,
+          "lines": 2369,
+          "lines_raw": 2369,
+          "bytes": 122653
+        },
+        "dir_md": {
+          "files": 28,
+          "lines": 17185,
+          "lines_raw": 17185,
+          "bytes": 1023041
+        }
+      },
+      "LLM": {
+        "report_md": {
+          "files": 8,
+          "lines": 5217,
+          "lines_raw": 5217,
+          "bytes": 340987
+        },
+        "report_md_by_category": {
+          "Models": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "LLM": {
             "files": 8,
-            "lines": 5928,
-            "lines_raw": 5928,
-            "bytes": 292935
+            "lines": 5217,
+            "lines_raw": 5217,
+            "bytes": 340987
           },
-          "TechnicalTopics": {
-            "files": 10,
-            "lines": 7555,
-            "lines_raw": 7555,
-            "bytes": 395591
+          "VisualGen": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
           },
-          "Other": {
+          "WorldModel": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "Infra": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "OpenSource": {
             "files": 0,
             "lines": 0,
             "lines_raw": 0,
@@ -144,39 +319,57 @@
           }
         },
         "other_md": {
-          "files": 1,
-          "lines": 133,
-          "lines_raw": 133,
-          "bytes": 8282
+          "files": 16,
+          "lines": 3097,
+          "lines_raw": 3237,
+          "bytes": 350675
         },
         "dir_md": {
-          "files": 19,
-          "lines": 13616,
-          "lines_raw": 13616,
-          "bytes": 696808
+          "files": 24,
+          "lines": 8314,
+          "lines_raw": 8454,
+          "bytes": 691662
         }
       },
-      "LLM-Research": {
+      "VisualGen": {
         "report_md": {
-          "files": 26,
-          "lines": 15971,
-          "lines_raw": 15971,
-          "bytes": 1048688
+          "files": 8,
+          "lines": 6805,
+          "lines_raw": 6805,
+          "bytes": 318086
         },
         "report_md_by_category": {
-          "ModelSeries": {
-            "files": 15,
-            "lines": 8888,
-            "lines_raw": 8888,
-            "bytes": 607453
+          "Models": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
           },
-          "TechnicalTopics": {
-            "files": 11,
-            "lines": 7083,
-            "lines_raw": 7083,
-            "bytes": 441235
+          "LLM": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
           },
-          "Other": {
+          "VisualGen": {
+            "files": 8,
+            "lines": 6805,
+            "lines_raw": 6805,
+            "bytes": 318086
+          },
+          "WorldModel": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "Infra": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "OpenSource": {
             "files": 0,
             "lines": 0,
             "lines_raw": 0,
@@ -184,82 +377,216 @@
           }
         },
         "other_md": {
-          "files": 33,
-          "lines": 7571,
-          "lines_raw": 7711,
-          "bytes": 667331
+          "files": 0,
+          "lines": 0,
+          "lines_raw": 0,
+          "bytes": 0
         },
         "dir_md": {
-          "files": 59,
-          "lines": 23542,
-          "lines_raw": 23682,
-          "bytes": 1716019
+          "files": 8,
+          "lines": 6805,
+          "lines_raw": 6805,
+          "bytes": 318086
         }
       },
-      "Repo-Research": {
+      "WorldModel": {
+        "report_md": {
+          "files": 2,
+          "lines": 750,
+          "lines_raw": 750,
+          "bytes": 77166
+        },
+        "report_md_by_category": {
+          "Models": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "LLM": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "VisualGen": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "WorldModel": {
+            "files": 2,
+            "lines": 750,
+            "lines_raw": 750,
+            "bytes": 77166
+          },
+          "Infra": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "OpenSource": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          }
+        },
+        "other_md": {
+          "files": 0,
+          "lines": 0,
+          "lines_raw": 0,
+          "bytes": 0
+        },
+        "dir_md": {
+          "files": 2,
+          "lines": 750,
+          "lines_raw": 750,
+          "bytes": 77166
+        }
+      },
+      "Infra": {
+        "report_md": {
+          "files": 3,
+          "lines": 1866,
+          "lines_raw": 1866,
+          "bytes": 100011
+        },
+        "report_md_by_category": {
+          "Models": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "LLM": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "VisualGen": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "WorldModel": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "Infra": {
+            "files": 3,
+            "lines": 1866,
+            "lines_raw": 1866,
+            "bytes": 100011
+          },
+          "OpenSource": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          }
+        },
+        "other_md": {
+          "files": 11,
+          "lines": 1924,
+          "lines_raw": 1924,
+          "bytes": 179254
+        },
+        "dir_md": {
+          "files": 14,
+          "lines": 3790,
+          "lines_raw": 3790,
+          "bytes": 279265
+        }
+      },
+      "OpenSource": {
         "report_md": {
           "files": 4,
           "lines": 1056,
           "lines_raw": 1083,
-          "bytes": 105635
+          "bytes": 105250
         },
         "report_md_by_category": {
-          "ModelSeries": {
+          "Models": {
             "files": 0,
             "lines": 0,
             "lines_raw": 0,
             "bytes": 0
           },
-          "TechnicalTopics": {
+          "LLM": {
             "files": 0,
             "lines": 0,
             "lines_raw": 0,
             "bytes": 0
           },
-          "Other": {
+          "VisualGen": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "WorldModel": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "Infra": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "OpenSource": {
             "files": 4,
             "lines": 1056,
             "lines_raw": 1083,
-            "bytes": 105635
+            "bytes": 105250
           }
         },
         "other_md": {
           "files": 13,
           "lines": 4992,
           "lines_raw": 4992,
-          "bytes": 313087
+          "bytes": 312935
         },
         "dir_md": {
           "files": 17,
           "lines": 6048,
           "lines_raw": 6075,
-          "bytes": 418722
+          "bytes": 418185
         }
       }
     },
     "repo_md": {
-      "files": 101,
-      "lines": 43967,
-      "lines_raw": 44134,
-      "bytes": 2885857
+      "files": 99,
+      "lines": 43635,
+      "lines_raw": 43802,
+      "bytes": 2857636
     },
     "library_md": {
-      "files": 95,
-      "lines": 43206,
-      "lines_raw": 43373,
-      "bytes": 2831549
+      "files": 93,
+      "lines": 42892,
+      "lines_raw": 43059,
+      "bytes": 2807405
     },
     "root_readme": {
       "files": 1,
-      "lines": 73,
-      "lines_raw": 73,
-      "bytes": 5316
+      "lines": 64,
+      "lines_raw": 64,
+      "bytes": 3187
     },
     "docs_md": {
       "files": 4,
-      "lines": 589,
-      "lines_raw": 589,
-      "bytes": 44403
+      "lines": 580,
+      "lines_raw": 580,
+      "bytes": 42455
     },
     "scripts_md": {
       "files": 1,
@@ -272,6 +599,6 @@
     ]
   },
   "du": {
-    "worktree_excluding_git": 3312
+    "worktree_excluding_git": 3280
   }
 }

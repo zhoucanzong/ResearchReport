@@ -7,290 +7,290 @@
 
 ---
 
-## 3DGen-research (1)
+## 3DGen (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [AIGC-Research/TechnicalTopics/3DGen-research/report.md](<../AIGC-Research/TechnicalTopics/3DGen-research/report.md>) | 3D 生成技术研究报告：从 DreamFusion SDS 蒸馏到 Tripo3D DiT 原生 3D 生成 | — | — | — |
+| [VisualGen/3DGen/report.md](<../VisualGen/3DGen/report.md>) | 3D 生成技术研究报告：从 DreamFusion SDS 蒸馏到 Tripo3D DiT 原生 3D 生成 | — | — | — |
 
-## Agent-research (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [LLM-Research/TechnicalTopics/Agent-research/report.md](<../LLM-Research/TechnicalTopics/Agent-research/report.md>) | LLM Agent 架构与工具使用研究报告 | — | — | — |
-
-## Alibaba-Gen-research (1)
+## Agent (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [AIGC-Research/ModelSeries/Alibaba-Gen-research/report.md](<../AIGC-Research/ModelSeries/Alibaba-Gen-research/report.md>) | 阿里巴巴通义万相（Wan）视频/图像生成模型系列研究报告 | — | — | — |
+| [LLM/Agent/report.md](<../LLM/Agent/report.md>) | LLM Agent 架构与工具使用研究报告 | — | — | — |
 
-## Alignment-research (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [LLM-Research/TechnicalTopics/Alignment-research/report.md](<../LLM-Research/TechnicalTopics/Alignment-research/report.md>) | 模型对齐（Alignment）与后训练（Post-Training）研究报告 | — | — | — |
-
-## AudioGen-research (1)
+## Alibaba-Gen (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [AIGC-Research/TechnicalTopics/AudioGen-research/report.md](<../AIGC-Research/TechnicalTopics/AudioGen-research/report.md>) | 音频/音乐生成技术研究报告 | — | — | — |
+| [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) | 阿里巴巴通义万相（Wan）视频/图像生成模型系列研究报告 | — | — | — |
 
-## AvatarGen-research (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [AIGC-Research/TechnicalTopics/AvatarGen-research/report.md](<../AIGC-Research/TechnicalTopics/AvatarGen-research/report.md>) | 数字人与 Avatar 生成技术研究报告 | — | — | — |
-
-## ByteDance-Gen-research (1)
+## Alignment (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [AIGC-Research/ModelSeries/ByteDance-Gen-research/report.md](<../AIGC-Research/ModelSeries/ByteDance-Gen-research/report.md>) | 字节跳动生成模型系列研究报告 | — | — | — |
+| [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) | 模型对齐（Alignment）与后训练（Post-Training）研究报告 | — | — | — |
 
-## Claude-research (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [LLM-Research/ModelSeries/Claude-research/report.md](<../LLM-Research/ModelSeries/Claude-research/report.md>) | Anthropic Claude 系列模型深度调研报告 | — | — | — |
-
-## ControllableGen-research (1)
+## AudioGen (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [AIGC-Research/TechnicalTopics/ControllableGen-research/report.md](<../AIGC-Research/TechnicalTopics/ControllableGen-research/report.md>) | 可控生成（Controllable Generation）技术研究报告 | — | — | — |
+| [VisualGen/AudioGen/report.md](<../VisualGen/AudioGen/report.md>) | 音频/音乐生成技术研究报告 | — | — | — |
 
-## DecisionModels-research (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [LLM-Research/TechnicalTopics/DecisionModels-research/report.md](<../LLM-Research/TechnicalTopics/DecisionModels-research/report.md>) | Decision Models（System One / Typed Decision Model）技术专题调研 | — | — | — |
-
-## DeepSeek-research (1)
+## AvatarGen (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [LLM-Research/ModelSeries/DeepSeek-research/report.md](<../LLM-Research/ModelSeries/DeepSeek-research/report.md>) | DeepSeek 系列模型深度调研报告 | — | — | — |
+| [VisualGen/AvatarGen/report.md](<../VisualGen/AvatarGen/report.md>) | 数字人与 Avatar 生成技术研究报告 | — | — | — |
 
-## DiT-research (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [AIGC-Research/TechnicalTopics/DiT-research/report.md](<../AIGC-Research/TechnicalTopics/DiT-research/report.md>) | Diffusion Transformer (DiT) 架构演进研究报告 | — | — | — |
-
-## DiffusionModels-research (1)
+## ByteDance-Gen (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md](<../AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md>) | 扩散模型（Diffusion Models）基础框架与架构演进研究报告 | — | — | — |
+| [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) | 字节跳动生成模型系列研究报告 | — | — | — |
 
-## Doubao-Seed-research (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [LLM-Research/ModelSeries/Doubao-Seed-research/report.md](<../LLM-Research/ModelSeries/Doubao-Seed-research/report.md>) | Doubao/Seed系列模型深度调研报告 | — | — | — |
-
-## EmbodiedVLA-research (1)
+## Claude (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md](<../AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md>) | EmbodiedVLA 技术专题调研 | — | — | — |
+| [Models/Claude/report.md](<../Models/Claude/report.md>) | Anthropic Claude 系列模型深度调研报告 | — | — | — |
 
-## GLM-research (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [LLM-Research/ModelSeries/GLM-research/report.md](<../LLM-Research/ModelSeries/GLM-research/report.md>) | GLM 系列模型深度调研报告 | — | — | — |
-
-## GPT-research (1)
+## ControllableGen (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [LLM-Research/ModelSeries/GPT-research/report.md](<../LLM-Research/ModelSeries/GPT-research/report.md>) | OpenAI GPT 系列模型深度调研报告 | — | — | — |
+| [VisualGen/ControllableGen/report.md](<../VisualGen/ControllableGen/report.md>) | 可控生成（Controllable Generation）技术研究报告 | — | — | — |
 
-## Gemini-research (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [LLM-Research/ModelSeries/Gemini-research/report.md](<../LLM-Research/ModelSeries/Gemini-research/report.md>) | Google Gemini系列模型深度调研报告 | — | — | — |
-
-## Google-Gen-research (1)
+## DecisionModels (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [AIGC-Research/ModelSeries/Google-Gen-research/report.md](<../AIGC-Research/ModelSeries/Google-Gen-research/report.md>) | Google / DeepMind 生成模型系列研究报告 | — | — | — |
+| [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | Decision Models（System One / Typed Decision Model）技术专题调研 | — | — | — |
 
-## Grok-research (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [LLM-Research/ModelSeries/Grok-research/report.md](<../LLM-Research/ModelSeries/Grok-research/report.md>) | xAI Grok 系列模型深度调研报告 | — | — | — |
-
-## Hunyuan-research (1)
+## DeepSeek (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [LLM-Research/ModelSeries/Hunyuan-research/report.md](<../LLM-Research/ModelSeries/Hunyuan-research/report.md>) | Hunyuan系列模型深度调研报告 | — | — | — |
+| [Models/DeepSeek/report.md](<../Models/DeepSeek/report.md>) | DeepSeek 系列模型深度调研报告 | — | — | — |
 
-## ImageEditing-research (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [AIGC-Research/TechnicalTopics/ImageEditing-research/report.md](<../AIGC-Research/TechnicalTopics/ImageEditing-research/report.md>) | 图像编辑与修复技术研究报告 | — | — | — |
-
-## Kimi-research (1)
+## DiT (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [LLM-Research/ModelSeries/Kimi-research/report.md](<../LLM-Research/ModelSeries/Kimi-research/report.md>) | Kimi 系列模型深度调研报告 | — | — | — |
+| [VisualGen/DiT/report.md](<../VisualGen/DiT/report.md>) | Diffusion Transformer (DiT) 架构演进研究报告 | — | — | — |
 
-## Kling-research (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [AIGC-Research/ModelSeries/Kling-research/report.md](<../AIGC-Research/ModelSeries/Kling-research/report.md>) | 快手可灵（Kling）视频生成模型系列研究报告 | — | — | — |
-
-## LLaMA-research (1)
+## DiffusionModels (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [LLM-Research/ModelSeries/LLaMA-research/report.md](<../LLM-Research/ModelSeries/LLaMA-research/report.md>) | Meta LLaMA 系列大模型完整研究报告 | — | — | — |
+| [VisualGen/DiffusionModels/report.md](<../VisualGen/DiffusionModels/report.md>) | 扩散模型（Diffusion Models）基础框架与架构演进研究报告 | — | — | — |
 
-## LongContext-research (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [LLM-Research/TechnicalTopics/LongContext-research/report.md](<../LLM-Research/TechnicalTopics/LongContext-research/report.md>) | 长上下文（Long Context）技术研究报告 | — | — | — |
-
-## MiMo-research (1)
+## Doubao-Seed (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [LLM-Research/ModelSeries/MiMo-research/report.md](<../LLM-Research/ModelSeries/MiMo-research/report.md>) | 小米 MiMo 系列模型深度调研报告 | — | — | — |
+| [Models/Doubao-Seed/report.md](<../Models/Doubao-Seed/report.md>) | Doubao/Seed系列模型深度调研报告 | — | — | — |
 
-## Midjourney-research (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [AIGC-Research/ModelSeries/Midjourney-research/report.md](<../AIGC-Research/ModelSeries/Midjourney-research/report.md>) | Midjourney 图像生成模型系列研究报告 | — | — | — |
-
-## MiniMax-research (1)
+## EmbodiedVLA (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [LLM-Research/ModelSeries/MiniMax-research/report.md](<../LLM-Research/ModelSeries/MiniMax-research/report.md>) | MiniMax 系列模型研究报告：以 Lightning Attention 重写 Transformer 的扩展曲线 | — | — | — |
+| [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | EmbodiedVLA 技术专题调研 | — | — | — |
 
-## Mistral-research (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [LLM-Research/ModelSeries/Mistral-research/report.md](<../LLM-Research/ModelSeries/Mistral-research/report.md>) | Mistral AI 系列模型深度调研报告 | — | — | — |
-
-## MoE-research (1)
+## GLM (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [LLM-Research/TechnicalTopics/MoE-research/report.md](<../LLM-Research/TechnicalTopics/MoE-research/report.md>) | 混合专家模型（Mixture of Experts, MoE）架构演进研究报告 | — | — | — |
+| [Models/GLM/report.md](<../Models/GLM/report.md>) | GLM 系列模型深度调研报告 | — | — | — |
 
-## Nemotron-research (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [LLM-Research/ModelSeries/Nemotron-research/report.md](<../LLM-Research/ModelSeries/Nemotron-research/report.md>) | NVIDIA Nemotron 系列研究脉络 | — | — | — |
-
-## OpenAI-Gen-research (1)
+## GPT (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [AIGC-Research/ModelSeries/OpenAI-Gen-research/report.md](<../AIGC-Research/ModelSeries/OpenAI-Gen-research/report.md>) | OpenAI 生成模型系列研究报告 | — | — | — |
+| [Models/GPT/report.md](<../Models/GPT/report.md>) | OpenAI GPT 系列模型深度调研报告 | — | — | — |
 
-## QuantizationEdge-research (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md](<../LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md>) | 模型量化与边缘部署研究报告 | — | — | — |
-
-## Qwen-research (1)
+## Gemini (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [LLM-Research/ModelSeries/Qwen-research/report.md](<../LLM-Research/ModelSeries/Qwen-research/report.md>) | Qwen系列模型深度调研报告 | — | — | — |
+| [Models/Gemini/report.md](<../Models/Gemini/report.md>) | Google Gemini系列模型深度调研报告 | — | — | — |
 
-## RAG-research (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [LLM-Research/TechnicalTopics/RAG-research/report.md](<../LLM-Research/TechnicalTopics/RAG-research/report.md>) | 检索增强生成（Retrieval-Augmented Generation, RAG）技术研究报告 | — | — | — |
-
-## ReasoningModels-research (1)
+## Google-Gen (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [LLM-Research/TechnicalTopics/ReasoningModels-research/report.md](<../LLM-Research/TechnicalTopics/ReasoningModels-research/report.md>) | 推理模型（Reasoning Models）与 Test-Time Compute 研究报告 | — | — | — |
+| [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>) | Google / DeepMind 生成模型系列研究报告 | — | — | — |
 
-## Runway-research (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [AIGC-Research/ModelSeries/Runway-research/report.md](<../AIGC-Research/ModelSeries/Runway-research/report.md>) | Runway 视频生成与编辑模型系列研究报告 | — | — | — |
-
-## SpeculativeDecoding-research (1)
+## Grok (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md](<../LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md>) | 投机解码（Speculative Decoding）技术深度调研报告 | — | — | — |
+| [Models/Grok/report.md](<../Models/Grok/report.md>) | xAI Grok 系列模型深度调研报告 | — | — | — |
 
-## StabilityAI-research (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [AIGC-Research/ModelSeries/StabilityAI-research/report.md](<../AIGC-Research/ModelSeries/StabilityAI-research/report.md>) | Stability AI / Black Forest Labs 图像生成模型系列研究报告 | — | — | — |
-
-## TrainingInfra-research (1)
+## Hunyuan (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [LLM-Research/TechnicalTopics/TrainingInfra-research/report.md](<../LLM-Research/TechnicalTopics/TrainingInfra-research/report.md>) | 大模型训练基础设施与分布式训练研究报告 | — | — | — |
+| [Models/Hunyuan/report.md](<../Models/Hunyuan/report.md>) | Hunyuan系列模型深度调研报告 | — | — | — |
 
-## VLM-research (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [LLM-Research/TechnicalTopics/VLM-research/report.md](<../LLM-Research/TechnicalTopics/VLM-research/report.md>) | 多模态大模型（Vision-Language Models, VLM）研究报告 | — | — | — |
-
-## VideoGen-research (1)
+## ImageEditing (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [AIGC-Research/TechnicalTopics/VideoGen-research/report.md](<../AIGC-Research/TechnicalTopics/VideoGen-research/report.md>) | 视频生成技术研究报告 | — | — | — |
+| [VisualGen/ImageEditing/report.md](<../VisualGen/ImageEditing/report.md>) | 图像编辑与修复技术研究报告 | — | — | — |
 
-## WorldModels-research (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [AIGC-Research/TechnicalTopics/WorldModels-research/report.md](<../AIGC-Research/TechnicalTopics/WorldModels-research/report.md>) | WorldModels 技术专题调研 | — | — | — |
-
-## nemotron-tri-mode-diffusion (1)
+## Kimi (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Repo-Research/nemotron-tri-mode-diffusion/report.md](<../Repo-Research/nemotron-tri-mode-diffusion/report.md>) | Nemotron-Labs-Diffusion 阅读报告 | — | — | — |
+| [Models/Kimi/report.md](<../Models/Kimi/report.md>) | Kimi 系列模型深度调研报告 | — | — | — |
+
+## Kling (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Models/Kling/report.md](<../Models/Kling/report.md>) | 快手可灵（Kling）视频生成模型系列研究报告 | — | — | — |
+
+## LLaMA (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Models/LLaMA/report.md](<../Models/LLaMA/report.md>) | Meta LLaMA 系列大模型完整研究报告 | — | — | — |
+
+## LongContext (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 长上下文（Long Context）技术研究报告 | — | — | — |
+
+## MiMo (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Models/MiMo/report.md](<../Models/MiMo/report.md>) | 小米 MiMo 系列模型深度调研报告 | — | — | — |
+
+## Midjourney (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Models/Midjourney/report.md](<../Models/Midjourney/report.md>) | Midjourney 图像生成模型系列研究报告 | — | — | — |
+
+## MiniMax (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Models/MiniMax/report.md](<../Models/MiniMax/report.md>) | MiniMax 系列模型研究报告：以 Lightning Attention 重写 Transformer 的扩展曲线 | — | — | — |
+
+## Mistral (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Models/Mistral/report.md](<../Models/Mistral/report.md>) | Mistral AI 系列模型深度调研报告 | — | — | — |
+
+## MoE (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM/MoE/report.md](<../LLM/MoE/report.md>) | 混合专家模型（Mixture of Experts, MoE）架构演进研究报告 | — | — | — |
+
+## Nemotron (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Models/Nemotron/report.md](<../Models/Nemotron/report.md>) | NVIDIA Nemotron 系列研究脉络 | — | — | — |
+
+## OpenAI-Gen (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Models/OpenAI-Gen/report.md](<../Models/OpenAI-Gen/report.md>) | OpenAI 生成模型系列研究报告 | — | — | — |
+
+## QuantizationEdge (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 模型量化与边缘部署研究报告 | — | — | — |
+
+## Qwen (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Models/Qwen/report.md](<../Models/Qwen/report.md>) | Qwen系列模型深度调研报告 | — | — | — |
+
+## RAG (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM/RAG/report.md](<../LLM/RAG/report.md>) | 检索增强生成（Retrieval-Augmented Generation, RAG）技术研究报告 | — | — | — |
+
+## ReasoningModels (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) | 推理模型（Reasoning Models）与 Test-Time Compute 研究报告 | — | — | — |
+
+## Runway (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Models/Runway/report.md](<../Models/Runway/report.md>) | Runway 视频生成与编辑模型系列研究报告 | — | — | — |
+
+## SpeculativeDecoding (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术深度调研报告 | — | — | — |
+
+## StabilityAI (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>) | Stability AI / Black Forest Labs 图像生成模型系列研究报告 | — | — | — |
+
+## TrainingInfra (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 大模型训练基础设施与分布式训练研究报告 | — | — | — |
+
+## VLM (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM/VLM/report.md](<../LLM/VLM/report.md>) | 多模态大模型（Vision-Language Models, VLM）研究报告 | — | — | — |
+
+## VideoGen (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) | 视频生成技术研究报告 | — | — | — |
+
+## WorldModels (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | WorldModels 技术专题调研 | — | — | — |
+
+## nemotron (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | Nemotron-Labs-Diffusion 阅读报告 | — | — | — |
 
 ## sglang (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Repo-Research/sglang-research/report.md](<../Repo-Research/sglang-research/report.md>) | SGLang 仓库代码分析报告 | repo-research | 2026-10-16 | completed |
+| [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | SGLang 仓库代码分析报告 | repo-research | 2026-10-16 | completed |
 
 ## this-that-model (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Repo-Research/this-that-model-research/report.md](<../Repo-Research/this-that-model-research/report.md>) | this-that-model 仓库深读 | repo-research | 2026-10-16 | completed |
+| [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | this-that-model 仓库深读 | repo-research | 2026-10-16 | completed |
 
 ## vllm (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Repo-Research/vllm-research/report.md](<../Repo-Research/vllm-research/report.md>) | vLLM 仓库代码分析报告 | repo-research | 2026-10-16 | completed |
+| [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | vLLM 仓库代码分析报告 | repo-research | 2026-10-16 | completed |

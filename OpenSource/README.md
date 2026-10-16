@@ -1,0 +1,76 @@
+<div align="center">
+
+🔧
+
+# OpenSource
+
+**4 条** · 开源仓库代码深读，源码不入口、只留报告与证据引用。
+
+[← 返回首页](<../README.md>)
+
+</div>
+
+<!-- SCRIPT:panel-readme START · 由 scripts/library_index.py 生成，勿手改 -->
+
+![Entries](https://img.shields.io/badge/Entries-4-green?style=flat-square)
+![Panel](https://img.shields.io/badge/Panel-OpenSource-blue?style=flat-square)
+
+### nemotron
+
+Nemotron-Labs-Diffusion 阅读报告
+
+[report.md](<nemotron/report.md>) · 206 行 · 13,183 B
+
+<details>
+<summary><b>子文档（6）</b></summary>
+
+* [knowledge-graph.md](<nemotron/knowledge-graph.md>) — 136 行 / 10,088 B
+* [notes/structured-reading.md](<nemotron/notes/structured-reading.md>) — 169 行 / 10,416 B
+* [plan.md](<nemotron/plan.md>) — 28 行 / 2,561 B
+* [raw-extracts/nemotron-tri-mode-fulltext.md](<nemotron/raw-extracts/nemotron-tri-mode-fulltext.md>) — 2,430 行 / 98,525 B
+* [raw-extracts/pdf-fu_等__nemotronlabsdiffusion_a_trimode_language_model_unifying_autoregressive_dif.md](<nemotron/raw-extracts/pdf-fu_等__nemotronlabsdiffusion_a_trimode_language_model_unifying_autoregressive_dif.md>) — 28 行 / 1,141 B
+* [sources-index.md](<nemotron/sources-index.md>) — 41 行 / 2,363 B
+
+</details>
+
+### sglang
+
+SGLang 仓库代码分析报告
+
+[report.md](<sglang/report.md>) · 310 行 · 32,226 B
+
+<details>
+<summary><b>子文档（3）</b></summary>
+
+* [claim-audit.md](<sglang/claim-audit.md>) — 149 行 / 11,627 B
+* [scheduler-and-prefix-cache.md](<sglang/scheduler-and-prefix-cache.md>) — 174 行 / 20,863 B
+* [speculative-decoding-path.md](<sglang/speculative-decoding-path.md>) — 230 行 / 25,244 B
+
+</details>
+
+### this-that-model
+
+this-that-model 仓库深读
+
+[report.md](<this-that-model/report.md>) · 246 行 · 24,264 B
+
+### vllm
+
+vLLM 仓库代码分析报告
+
+[report.md](<vllm/report.md>) · 294 行 · 35,577 B
+
+<details>
+<summary><b>子文档（3）</b></summary>
+
+* [claim-audit.md](<vllm/claim-audit.md>) — 422 行 / 52,479 B
+* [kv-cache-and-prefix-reuse.md](<vllm/kv-cache-and-prefix-reuse.md>) — 206 行 / 19,051 B
+* [scheduling-and-spec-decode.md](<vllm/scheduling-and-spec-decode.md>) — 244 行 / 24,087 B
+
+</details>
+
+<!-- SCRIPT:panel-readme END -->
+
+---
+
+<sub>本 README 由 `scripts/library_index.py` 自动生成（`scripts/panels.json` 驱动）；完整索引见 [INDEX.md](<../INDEX.md>) 与 [index/](<../index/>)。</sub>

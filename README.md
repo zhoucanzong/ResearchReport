@@ -7,67 +7,58 @@
 <!-- SCRIPT:badges START -->
 ![Entries](https://img.shields.io/badge/Entries-48-green?style=flat-square)
 ![Topics](https://img.shields.io/badge/Topics-21-orange?style=flat-square)
-![Markdown](https://img.shields.io/badge/Markdown-109-lightgrey?style=flat-square)
+![Panels](https://img.shields.io/badge/Panels-6-blue?style=flat-square)
 ![Updated](https://img.shields.io/badge/Updated-2026--10--16-informational?style=flat-square)
 <!-- SCRIPT:badges END -->
 
 </div>
 
----
-
-## 🗂 一眼看懂
-
-> 5 个板块 = **逻辑视图**（按主题归类，跨物理目录）；物理目录仍是 `AIGC-Research/`、`LLM-Research/`、`Repo-Research/` 三个库（见文末）。
-
-<!-- SCRIPT:panels START · 来源 scripts/panels.json -->
-| 板块 | 条目 | 里面有什么 | 代表条目 |
-| :-- | --: | :-- | :-- |
-| 🧠 **Models** | 23 | 厂商模型/系列逐个精读：Alibaba-Gen、ByteDance-Gen、Google-Gen、Kling、Midjourney、OpenAI-Gen、Runway、StabilityAI、Claude、DeepSeek、Doubao-Seed、GLM… | [GPT](<LLM-Research/ModelSeries/GPT-research/report.md>) · [Qwen](<LLM-Research/ModelSeries/Qwen-research/report.md>) · [Gemini](<LLM-Research/ModelSeries/Gemini-research/report.md>) |
-| 💬 **LLM** | 8 | 语言模型能力与技术专题：Agent、Alignment、DecisionModels、LongContext、MoE、RAG、ReasoningModels、VLM | [ReasoningModels](<LLM-Research/TechnicalTopics/ReasoningModels-research/report.md>) · [LongContext](<LLM-Research/TechnicalTopics/LongContext-research/report.md>) · [MoE](<LLM-Research/TechnicalTopics/MoE-research/report.md>) |
-| 🎨 **VisualGen** | 8 | 视觉与多模态生成：3DGen、AudioGen、AvatarGen、ControllableGen、DiT、DiffusionModels、ImageEditing、VideoGen | [VideoGen](<AIGC-Research/TechnicalTopics/VideoGen-research/report.md>) · [DiT](<AIGC-Research/TechnicalTopics/DiT-research/report.md>) · [DiffusionModels](<AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md>) |
-| 🌍 **WorldModel** | 2 | 世界模型与具身 VLA：EmbodiedVLA、WorldModels | [WorldModels](<AIGC-Research/TechnicalTopics/WorldModels-research/report.md>) · [EmbodiedVLA](<AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md>) |
-| ⚙️ **Infra** | 7 | 推理/训练基础设施与开源仓库深读：QuantizationEdge、SpeculativeDecoding、TrainingInfra、nemotron-tri-mode-diffusion、sglang、this-that-model、vllm | [SpeculativeDecoding](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md>) · [vllm](<Repo-Research/vllm-research/report.md>) · [sglang](<Repo-Research/sglang-research/report.md>) |
+<!-- SCRIPT:panels START · 来源 scripts/panels.json（配置驱动，勿手改） -->
+<table>
+<tr>
+<td align="center" width="33%"><br>🧠<br><b>Models</b><br><b>23</b> 条<br>厂商模型 / 系列逐个精读<br><a href="Models/">进入 →</a><br><br></td>
+<td align="center" width="33%"><br>💬<br><b>LLM</b><br><b>8</b> 条<br>语言模型能力与技术专题<br><a href="LLM/">进入 →</a><br><br></td>
+<td align="center" width="33%"><br>🎨<br><b>VisualGen</b><br><b>8</b> 条<br>视觉与多模态生成<br><a href="VisualGen/">进入 →</a><br><br></td>
+</tr>
+<tr>
+<td align="center" width="33%"><br>🌍<br><b>WorldModel</b><br><b>2</b> 条<br>世界模型与具身 VLA<br><a href="WorldModel/">进入 →</a><br><br></td>
+<td align="center" width="33%"><br>⚙️<br><b>Infra</b><br><b>3</b> 条<br>推理 / 训练基础设施<br><a href="Infra/">进入 →</a><br><br></td>
+<td align="center" width="33%"><br>🔧<br><b>OpenSource</b><br><b>4</b> 条<br>开源仓库代码深读<br><a href="OpenSource/">进入 →</a><br><br></td>
+</tr>
+</table>
 <!-- SCRIPT:panels END -->
 
 <details>
 <summary>🏷 <b>21 个技术专题标签</b>（点击展开）</summary>
 
-<!-- SCRIPT:topics START · 从条目目录生成 -->
-`3DGen` · `AudioGen` · `AvatarGen` · `ControllableGen` · `DiT` · `DiffusionModels` · `ImageEditing` · `VideoGen` · `EmbodiedVLA` · `WorldModels` · `Agent` · `Alignment` · `DecisionModels` · `LongContext` · `MoE` · `RAG` · `ReasoningModels` · `VLM` · `QuantizationEdge` · `SpeculativeDecoding` · `TrainingInfra`
+<!-- SCRIPT:topics START -->
+`Agent` · `Alignment` · `DecisionModels` · `LongContext` · `MoE` · `RAG` · `ReasoningModels` · `VLM` · `3DGen` · `AudioGen` · `AvatarGen` · `ControllableGen` · `DiT` · `DiffusionModels` · `ImageEditing` · `VideoGen` · `EmbodiedVLA` · `WorldModels` · `QuantizationEdge` · `SpeculativeDecoding` · `TrainingInfra`
 <!-- SCRIPT:topics END -->
 
 </details>
 
-## 🕒 最近更新
+<details>
+<summary>🕒 <b>最近更新</b>（点击展开）</summary>
 
-<!-- SCRIPT:recent START · front-matter date，缺失时回退 git 最近提交日 -->
+<!-- SCRIPT:recent START -->
 | 条目 | 板块 | 日期 | 来源 |
 | :-- | :-- | :-- | :-- |
-| [sglang](<Repo-Research/sglang-research/report.md>) | Infra | 2026-10-16 | front-matter date |
-| [this-that-model](<Repo-Research/this-that-model-research/report.md>) | Infra | 2026-10-16 | front-matter date |
-| [vllm](<Repo-Research/vllm-research/report.md>) | Infra | 2026-10-16 | front-matter date |
-| [Alibaba-Gen](<AIGC-Research/ModelSeries/Alibaba-Gen-research/report.md>) | Models | 2026-10-16 | 最近提交日 |
-| [ByteDance-Gen](<AIGC-Research/ModelSeries/ByteDance-Gen-research/report.md>) | Models | 2026-10-16 | 最近提交日 |
+| [sglang](<OpenSource/sglang/report.md>) | OpenSource | 2026-10-16 | front-matter date |
+| [this-that-model](<OpenSource/this-that-model/report.md>) | OpenSource | 2026-10-16 | front-matter date |
+| [vllm](<OpenSource/vllm/report.md>) | OpenSource | 2026-10-16 | front-matter date |
 <!-- SCRIPT:recent END -->
 
-<details>
-<summary>📖 <b>完整索引</b>（47 条，点击展开）</summary>
+</details>
 
-<!-- SCRIPT:index START · 摘要 + 链接（47 行单一真值在 index/by-report.md） -->
-共 **48** 条，分属 5 个板块：**Models** 23 · **LLM** 8 · **VisualGen** 8 · **WorldModel** 2 · **Infra** 7。
-完整 48 行（条目 | 板块 | 路径）见 **[index/by-report.md](<index/by-report.md>)**（单一真值，由 `scripts/panels.json` 驱动）；按库 / 专题 / 领域的分面见 [index/](<index/>)，总目录见 [INDEX.md](<INDEX.md>)。
+<details>
+<summary>📖 <b>完整索引</b>（48 条，点击展开）</summary>
+
+<!-- SCRIPT:index START -->
+共 **48** 条，分属 **6** 个板块：Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 4。
+完整 48 行（条目 | 板块 | 路径）见 **[index/by-report.md](<index/by-report.md>)**；按域 / 主题 / 来源分面见 [index/](<index/>)，总目录见 [INDEX.md](<INDEX.md>)。
 <!-- SCRIPT:index END -->
 
 </details>
 
----
-
-## 📚 三个研究库（物理目录，库内索引保持原结构）
-
-<!-- STATIC: 静态文案；计数与板块名由脚本校准 -->
-- **[AIGC-Research](AIGC-Research/README.md)** — 生成式 AI 多模态：18 个条目（8 模型系列 + 10 技术专题）
-- **[LLM-Research](LLM-Research/README.md)** — 大语言模型全景：26 个条目（15 模型系列 + 11 技术专题）
-- **[Repo-Research](Repo-Research/)** — 开源仓库深读：3 个条目（vLLM / SGLang / Nemotron）+ 1 份无主文档的深读（mini-swe-agent，无 `report.md`）
-
 <!-- STATIC -->
-<sub>索引与统计由 `scripts/library_index.py` 生成；总目录 [`INDEX.md`](INDEX.md)，分面索引 [`index/`](index/)，校验与统计 [`docs/`](docs/)，板块配置 [`scripts/panels.json`](scripts/panels.json)。</sub>
+<sub>索引与统计由 `scripts/library_index.py` 生成（`scripts/panels.json` 驱动板块）；校验与统计见 [docs/](<docs/>)。</sub>

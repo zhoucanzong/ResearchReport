@@ -97,16 +97,16 @@ ROOT_GROUP = "repository-root"
 ACTIVE_STATUSES = ("active", "current", "ok", "stable", "published")
 
 #: 资料库（含 `report.md` 条目的顶层目录）。顺序即展示顺序。
-LIBRARIES = ("AIGC-Research", "LLM-Research", "Repo-Research")
+#: 6 板块重排后：顶层目录即板块目录（Models / LLM / VisualGen / WorldModel / Infra / OpenSource）。
+PANEL_TOPS = ("Models", "LLM", "VisualGen", "WorldModel", "Infra", "OpenSource")
+#: 兼容旧名字（历史文案里仍叫「库」）。
+LIBRARIES = PANEL_TOPS
 
 
 def category_of(rel_path: str) -> str:
-    """条目分类：ModelSeries / TechnicalTopics / 其它（按目录名原样）。"""
+    """条目分类：按板块顶层目录（Models / LLM / … / OpenSource）。"""
     parts = [p for p in rel_path.replace(os.sep, "/").split("/") if p]
-    for i, part in enumerate(parts):
-        if part in ("ModelSeries", "TechnicalTopics"):
-            return part
-    return "Other"
+    return parts[0] if parts else "Other"
 
 
 # --------------------------------------------------------------------------
@@ -425,7 +425,7 @@ def attach_children(docs: list) -> list:
         )
 
     orphans = [d for d in docs
-               if not d["is_entry"] and d["top"] in LIBRARIES and not d.get("parent_dir")]
+               if not d["is_entry"] and not d["is_generated"] and not d.get("parent_dir")]
     return docs, orphans
 
 
@@ -515,11 +515,11 @@ def build_stats(repo_root: str, docs: list) -> dict:
             "documents_md": sum(1 for d in docs if d["top"] == lib),
             "md_by_category": {
                 cat: sum(1 for d in library_docs if d["top"] == lib and d["category"] == cat)
-                for cat in ("ModelSeries", "TechnicalTopics", "Other")
+                for cat in PANEL_TOPS
             },
             "dirs_by_category": {
                 cat: len({entry_dir(e["path"]) for e in this_entries if e["category"] == cat})
-                for cat in ("ModelSeries", "TechnicalTopics", "Other")
+                for cat in PANEL_TOPS
             },
             "lines": sum(e["lines"] for e in this_entries),
             "bytes": sum(e["bytes"] for e in this_entries),
@@ -531,7 +531,7 @@ def build_stats(repo_root: str, docs: list) -> dict:
         }
 
     tracked = git_tracked(repo_root)
-    tracked_libraries = [p for p in tracked if p.split("/")[0] in LIBRARIES]
+    tracked_libraries = [p for p in tracked if p.split("/")[0] in PANEL_TOPS]
 
     stats = {
         "schema_version": SCHEMA_VERSION,
@@ -622,7 +622,7 @@ def _doc_stats(repo_root: str, docs: list, entries: list, tracked: list) -> dict
                 "report_md_by_category": {
                     cat: _md_metrics(repo_root, [d["path"] for d in entries
                                                  if d["top"] == lib and d["category"] == cat])
-                    for cat in ("ModelSeries", "TechnicalTopics", "Other")
+                    for cat in PANEL_TOPS
                 },
                 "other_md": _md_metrics(repo_root, [d["path"] for d in docs
                                                     if d["top"] == lib and not d["is_entry"]]),
@@ -779,7 +779,7 @@ def render_index(docs: list, orphans: list, stats: dict, out_root: str, dry_run:
         f"[`{PANELS_FILE}`](<{PANELS_FILE}>)；每个条目恰好归入一个板块，"
         "未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。",
         "",
-        "## 按库入口",
+        "## 按板块入口",
         "",
         "| 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |",
         "| --- | --: | --: | --: | --: | --- |",
@@ -805,20 +805,21 @@ def render_index(docs: list, orphans: list, stats: dict, out_root: str, dry_run:
     lines.append("")
 
     # ---- 按库折叠：条目 + 子报告直达 ----
-    lines += ["## 条目索引（按库折叠，可直达条目与子报告）", ""]
-    for lib in LIBRARIES:
+    lines += ["## 条目索引（按板块目录折叠，可直达条目与子报告）", ""]
+    for lib in PANEL_TOPS:
         lib_entries = sorted([d for d in entries if d["top"] == lib], key=lambda d: d["path"])
         lib_stats = stats["libraries"][lib]
         lines += [
             f"### {lib}（{len(lib_entries)} 条目 / {lib_stats['documents_md']} 文档）",
             "",
         ]
-        for cat in ("ModelSeries", "TechnicalTopics", "Other"):
+        for cat in PANEL_TOPS:
             cat_entries = [d for d in lib_entries if d["category"] == cat]
             if not cat_entries:
                 continue
             child_total = sum(len(d["children"]) for d in cat_entries)
-            cat_cn = {"ModelSeries": "模型系列", "TechnicalTopics": "技术专题", "Other": "其它"}[cat]
+            cat_cn = {"Models": "模型系列", "LLM": "语言模型", "VisualGen": "视觉生成",
+                      "WorldModel": "世界模型", "Infra": "基础设施", "OpenSource": "开源仓库"}.get(cat, cat)
             lines += [
                 f"<details>",
                 f"<summary><b>{cat_cn} {cat}（{len(cat_entries)} 条目 / {child_total} 子文档）</b></summary>",
@@ -835,7 +836,7 @@ def render_index(docs: list, orphans: list, stats: dict, out_root: str, dry_run:
             "",
             "以下文档位于资料库内，但没有对应的 `report.md` 条目目录，索引在此单独列出以保证可达：",
             "",
-            "| 文档 | 所属库 | 行数 | 字节 |",
+            "| 文档 | 板块 | 行数 | 字节 |",
             "| --- | --- | --: | --: |",
         ]
         for doc in sorted(orphans, key=lambda d: d["path"]):
@@ -845,7 +846,7 @@ def render_index(docs: list, orphans: list, stats: dict, out_root: str, dry_run:
         lines.append("")
 
     # 非资料库条目（根目录等）
-    other_entries = [d for d in entries if d["top"] not in LIBRARIES]
+    other_entries = [d for d in entries if d["top"] not in PANEL_TOPS]
     if other_entries:
         lines += ["### 其它位置条目", ""]
         for doc in other_entries:
@@ -868,7 +869,7 @@ def render_index(docs: list, orphans: list, stats: dict, out_root: str, dry_run:
 def render_by_report(entries: list, out_root: str, dry_run: bool, mapping: dict) -> str:
     """全部条目的平铺索引 —— README 的「完整索引」只链接到这里，不再复制第二份。
 
-    前 3 列是核心视图（条目 | 板块 | 路径），其余列（所属库 / 子报告数 / 行数 / 日期）
+    前 3 列是核心视图（条目 | 板块 | 路径），其余列（板块 / 子报告数 / 行数 / 日期）
     保留在后面；「板块」列由 ``scripts/panels.json`` 驱动。
     """
     lines = header(FACET_TITLES["by-report"], out_root, dry_run)
@@ -876,7 +877,7 @@ def render_by_report(entries: list, out_root: str, dry_run: bool, mapping: dict)
         f"共 **{len(entries)}** 个条目（`{ENTRY_BASENAME}`）。「行数」为正文行数，已剔除 front-matter；"
         f"「板块」列由 [`{PANELS_FILE}`](<../{PANELS_FILE}>) 驱动。",
         "",
-        "| 条目 | 板块 | 路径 | 所属库 | 子报告数 | 行数 | 日期 |",
+        "| 条目 | 板块 | 路径 | 板块 | 子报告数 | 行数 | 日期 |",
         "| --- | --- | --- | --- | --: | --: | --- |",
     ]
     for doc in sorted(entries, key=lambda d: d["path"]):
@@ -926,7 +927,7 @@ def render_recent(entries: list, out_root: str, dry_run: bool, limit: int) -> st
 
     lines += [f"## 最近 {limit} 条（按 date 降序）", ""]
     if dated:
-        lines += ["| 条目 | date | 所属库 | 专题 |", "| --- | --- | --- | --- |"]
+        lines += ["| 条目 | date | 板块 | 专题 |", "| --- | --- | --- | --- |"]
         for entry in dated[:limit]:
             lines.append(f"| {link(entry['path'], '../')} | {entry['date_iso']} | "
                          f"{entry['top']} | {entry['subject']} |")
@@ -1171,53 +1172,58 @@ def generated_md_count(out_root: str = "") -> int:
     return 1 + len(FACET_TITLES)
 
 
-def render_badges(stats: dict, topics: int, today: _dt.date) -> str:
-    md = stats["documents"]["md_total"] + generated_md_count()
+def render_badges(stats: dict, topics: int, today: _dt.date, panels: int = 6) -> str:
     updated = today.isoformat().replace("-", "--")
     return "\n".join([
         f"![Entries](https://img.shields.io/badge/Entries-{stats['entries']['total']}-green?style=flat-square)",
         f"![Topics](https://img.shields.io/badge/Topics-{topics}-orange?style=flat-square)",
-        f"![Markdown](https://img.shields.io/badge/Markdown-{md}-lightgrey?style=flat-square)",
+        f"![Panels](https://img.shields.io/badge/Panels-{panels}-blue?style=flat-square)",
         f"![Updated](https://img.shields.io/badge/Updated-{updated}-informational?style=flat-square)",
     ])
 
 
 def render_panels_block(cfg: dict, mapping: dict, entries: list, label_limit: int = 12) -> str:
+    """卡片版首页板块区块：HTML table 3×2，每卡五要素（emoji / 标题 / 条目数 / tagline / 进入链接）。"""
     by_panel = {}
     for doc in entries:
         panel = mapping.get(doc["path"])
         if panel is not None:
             by_panel.setdefault(panel["id"], []).append(doc)
 
-    lines = ["| 板块 | 条目 | 里面有什么 | 代表条目 |", "| :-- | --: | :-- | :-- |"]
+    cards = []
     for panel in cfg["panels"]:
-        members = sorted(by_panel.get(panel["id"], []), key=lambda d: d["path"])
-        names = [entry_short_name(d) for d in members]
-        shown = "、".join(names[:label_limit]) + ("…" if len(names) > label_limit else "")
-        reps = []
-        for rep in panel["representatives"]:
-            reps.append(f"[{os.path.basename(rep)[: -len(ENTRY_MARK)]}]"
-                        f"(<{rep}/{ENTRY_BASENAME}>)")
-        lines.append(
-            f"| {panel['emoji']} **{panel['title']}** | {len(members)} | "
-            f"{panel['tagline']}：{shown} | {' · '.join(reps)} |"
+        members = by_panel.get(panel["id"], [])
+        # 「进入 →」指向板块顶层目录（GitHub 目录页）
+        cards.append(
+            f'<td align="center" width="33%"><br>{panel["emoji"]}<br>'
+            f'<b>{panel["title"]}</b><br><b>{len(members)}</b> 条<br>'
+            f'{panel["tagline"]}<br>'
+            f'<a href="{panel["id"] and panel["title"]}/">进入 →</a><br><br></td>'
         )
+    lines = ["<table>"]
+    for i in range(0, len(cards), 3):
+        row = cards[i:i + 3]
+        while len(row) < 3:
+            row.append("<td></td>")
+        lines.append("<tr>")
+        lines.extend(row)
+        lines.append("</tr>")
+    lines.append("</table>")
     return "\n".join(lines)
 
 
 def render_topics_block(entries: list, mapping: dict, panels: list) -> str:
-    """技术专题标签：按「库 → 面板配置顺序 → 路径」排序，保证可复现。"""
-    topics = [d for d in entries if d["category"] == TOPIC_CATEGORY]
+    """技术专题标签：`TechnicalTopics/` 来源的条目（重排后为 LLM / VisualGen / WorldModel / Infra
+    四个专题板块），按「面板配置顺序 → 路径」排序，保证可复现。"""
+    entries = [d for d in entries if d["top"] in ("LLM", "VisualGen", "WorldModel", "Infra")]
     order = {p["id"]: i for i, p in enumerate(panels)}
-    lib_order = {lib: i for i, lib in enumerate(LIBRARIES)}
 
     def sort_key(doc):
         panel = mapping.get(doc["path"])
-        return (lib_order.get(doc["top"], len(LIBRARIES)),
-                order.get(panel["id"], len(order)) if panel else len(order),
+        return (order.get(panel["id"], len(order)) if panel else len(order),
                 doc["path"])
 
-    return " · ".join(f"`{entry_short_name(d)}`" for d in sorted(topics, key=sort_key))
+    return " · ".join(f"`{entry_short_name(d)}`" for d in sorted(entries, key=sort_key))
 
 
 def render_recent_block(rows: list, mapping: dict) -> str:
@@ -1233,27 +1239,27 @@ def render_recent_block(rows: list, mapping: dict) -> str:
 
 
 def render_index_block(entries: list, mapping: dict, panels: list) -> str:
-    """README 的「完整索引」区块：**只放摘要 + 链接**，不逐行复制 47 条。
+    """README 的「完整索引」区块：**只放摘要 + 链接**，不逐行复制条目。
 
-    47 行的单一真值在 `index/by-report.md`（含「条目 | 板块 | 路径」三列核心视图），
+    单一真值在 `index/by-report.md`（含「条目 | 板块 | 路径」三列核心视图），
     README 里再抄一份只会带来两处不一致。
     """
     counts = {p["id"]: sum(1 for v in mapping.values() if v["id"] == p["id"]) for p in panels}
-    summary = " · ".join(f"**{p['title']}** {counts[p['id']]}" for p in panels)
+    summary = " · ".join(f"{p['title']} {counts[p['id']]}" for p in panels)
     return "\n".join([
-        f"共 **{len(entries)}** 条，分属 {len(panels)} 个板块：{summary}。",
+        f"共 **{len(entries)}** 条，分属 **{len(panels)}** 个板块：{summary}。",
         f"完整 {len(entries)} 行（条目 | 板块 | 路径）见 "
-        f"**[index/by-report.md](<{GENERATED_DIR}/by-report.md>)**"
-        f"（单一真值，由 `{PANELS_FILE}` 驱动）；按库 / 专题 / 领域的分面见 "
-        f"[index/](<{GENERATED_DIR}/>)，总目录见 [INDEX.md](<{GENERATED_TOP}>)。",
+        f"**[index/by-report.md](<{GENERATED_DIR}/by-report.md>)**；"
+        f"按域 / 主题 / 来源分面见 [index/](<{GENERATED_DIR}/>)，总目录见 [INDEX.md](<{GENERATED_TOP}>)。",
     ])
 
 
 def render_readme_blocks(cfg: dict, entries: list, stats: dict, mapping: dict,
                          repo_root: str, today: _dt.date) -> dict:
-    topics = sum(1 for d in entries if d["category"] == TOPIC_CATEGORY)
+    topics = sum(1 for d in entries
+                 if d["top"] in ("LLM", "VisualGen", "WorldModel", "Infra"))
     return {
-        "badges": render_badges(stats, topics, today),
+        "badges": render_badges(stats, topics, today, len(cfg["panels"])),
         "panels": render_panels_block(cfg, mapping, entries),
         "topics": render_topics_block(entries, mapping, cfg["panels"]),
         "recent": render_recent_block(recent_rows(repo_root, entries, cfg), mapping),
@@ -1293,6 +1299,100 @@ def update_readme(repo_root: str, blocks: dict) -> tuple:
     with open(path, "w", encoding="utf-8", newline="\n") as fh:
         fh.write(text)
     return path, True, []
+
+
+# --------------------------------------------------------------------------
+# 板块 README（每个板块目录一份，模板在脚本里，配置由 panels.json 驱动）
+# --------------------------------------------------------------------------
+
+PANEL_README_NAME = "README.md"
+PANEL_README_BLOCK = "panel-readme"
+PANEL_ONE_LINERS = {
+    "Models": "厂商模型 / 系列逐个精读，按公司与模型家族归档。",
+    "LLM": "语言模型能力与技术专题，覆盖推理、对齐、Agent、RAG 等方向。",
+    "VisualGen": "视觉与多模态生成，含视频 / 图像 / 3D / 音频 / 数字人与扩散基础。",
+    "WorldModel": "世界模型与具身 VLA，关注环境动力学与可部署动作策略。",
+    "Infra": "推理 / 训练基础设施，覆盖投机解码、量化边缘与训练基建。",
+    "OpenSource": "开源仓库代码深读，源码不入口、只留报告与证据引用。",
+}
+
+
+def render_panel_readme(panel: dict, members: list, repo_root: str) -> str:
+    """单个板块 README：统一卡头 + 条目清单 + 子文档折叠。"""
+    top = panel["title"]
+    names = sorted(members, key=lambda d: d["path"])
+    one_liner = PANEL_ONE_LINERS.get(top, panel["tagline"])
+    lines = [
+        '<div align="center">',
+        '',
+        panel["emoji"],
+        '',
+        f'# {top}',
+        '',
+        f'**{len(names)} 条** · {one_liner}',
+        '',
+        f'[← 返回首页](<../README.md>)',
+        '',
+        '</div>',
+        '',
+        '<!-- SCRIPT:panel-readme START · 由 scripts/library_index.py 生成，勿手改 -->',
+        '',
+    ]
+    # shields 徽章（中性色、无外链大图）
+    lines += [
+        f'![Entries](https://img.shields.io/badge/Entries-{len(names)}-green?style=flat-square)',
+        f'![Panel](https://img.shields.io/badge/Panel-{top}-blue?style=flat-square)',
+        '',
+    ]
+    for doc in names:
+        label = entry_short_name(doc)
+        title = doc["title"] or label
+        rel = os.path.relpath(doc["path"], top).replace(os.sep, "/")
+        lines.append(f'### {label}')
+        lines.append('')
+        lines.append(f'{title}')
+        lines.append('')
+        lines.append(f'[report.md](<{rel}>) · {doc["lines"]:,} 行 · {doc["bytes"]:,} B')
+        lines.append('')
+        if doc.get("children"):
+            lines.append('<details>')
+            lines.append(f'<summary><b>子文档（{len(doc["children"])}）</b></summary>')
+            lines.append('')
+            for child in doc["children"]:
+                crel = os.path.relpath(child["path"], top).replace(os.sep, "/")
+                clabel = os.path.relpath(child["path"], entry_dir(doc["path"])).replace(os.sep, "/")
+                lines.append(f'* [{clabel}](<{crel}>) — {child["lines"]:,} 行 / {child["bytes"]:,} B')
+            lines.append('')
+            lines.append('</details>')
+            lines.append('')
+    lines += [
+        '<!-- SCRIPT:panel-readme END -->',
+        '',
+        '---',
+        '',
+        '<sub>本 README 由 `scripts/library_index.py` 自动生成（`scripts/panels.json` 驱动）；'
+        '完整索引见 [INDEX.md](<../INDEX.md>) 与 [index/](<../index/>)。</sub>',
+        '',
+    ]
+    return '\n'.join(lines)
+
+
+def write_panel_readmes(repo_root: str, cfg: dict, mapping: dict, docs: list) -> list:
+    """为每个板块目录生成/更新 README.md；返回写入路径列表。"""
+    entries = [d for d in docs if d["is_entry"]]
+    written = []
+    for panel in cfg["panels"]:
+        top = panel["title"]
+        members = [d for d in entries if mapping.get(d["path"], {}).get("id") == panel["id"]]
+        text = render_panel_readme(panel, members, repo_root)
+        path = os.path.join(repo_root, top, PANEL_README_NAME)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        old = open(path, encoding="utf-8").read() if os.path.isfile(path) else None
+        if old != text:
+            with open(path, "w", encoding="utf-8", newline="\n") as fh:
+                fh.write(text if text.endswith("\n") else text + "\n")
+        written.append(path)
+    return written
 
 
 # --------------------------------------------------------------------------
@@ -1466,6 +1566,9 @@ def main(argv=None) -> int:
     for path in written:
         print(f"     {os.path.relpath(path, repo_root)}")
 
+    panel_readme_paths = write_panel_readmes(repo_root, cfg, mapping, docs)
+    print(f"[ok] 板块 README：{len(panel_readme_paths)} 份（{', '.join(os.path.relpath(q, repo_root) for q in panel_readme_paths)}）")
+
     path, changed, missing = update_readme(repo_root, readme_blocks)
     if missing:
         print(f"[skip] {README_FILE} 未更新（缺少 SCRIPT 标记：{', '.join(missing)}）")
@@ -1477,6 +1580,7 @@ def main(argv=None) -> int:
         targets = list(written)
         if os.path.isfile(readme_path):
             targets.append(readme_path)
+        targets.extend(q for q in panel_readme_paths if os.path.isfile(q))
         offenders = verify_links(targets)
         if offenders:
             print("[FAIL] 存在悬挂的相对链接：", file=sys.stderr)

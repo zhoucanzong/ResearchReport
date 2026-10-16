@@ -7,68 +7,77 @@
 
 ---
 
-## AIGC-Research (18)
+## Infra (3)
 
-* [AIGC-Research/ModelSeries/Alibaba-Gen-research/report.md](<../AIGC-Research/ModelSeries/Alibaba-Gen-research/report.md>) — 803 行
-* [AIGC-Research/ModelSeries/ByteDance-Gen-research/report.md](<../AIGC-Research/ModelSeries/ByteDance-Gen-research/report.md>) — 711 行
-* [AIGC-Research/ModelSeries/Google-Gen-research/report.md](<../AIGC-Research/ModelSeries/Google-Gen-research/report.md>) — 826 行
-* [AIGC-Research/ModelSeries/Kling-research/report.md](<../AIGC-Research/ModelSeries/Kling-research/report.md>) — 537 行
-* [AIGC-Research/ModelSeries/Midjourney-research/report.md](<../AIGC-Research/ModelSeries/Midjourney-research/report.md>) — 587 行
-* [AIGC-Research/ModelSeries/OpenAI-Gen-research/report.md](<../AIGC-Research/ModelSeries/OpenAI-Gen-research/report.md>) — 859 行
-* [AIGC-Research/ModelSeries/Runway-research/report.md](<../AIGC-Research/ModelSeries/Runway-research/report.md>) — 732 行
-* [AIGC-Research/ModelSeries/StabilityAI-research/report.md](<../AIGC-Research/ModelSeries/StabilityAI-research/report.md>) — 873 行
-* [AIGC-Research/TechnicalTopics/3DGen-research/report.md](<../AIGC-Research/TechnicalTopics/3DGen-research/report.md>) — 898 行
-* [AIGC-Research/TechnicalTopics/AudioGen-research/report.md](<../AIGC-Research/TechnicalTopics/AudioGen-research/report.md>) — 913 行
-* [AIGC-Research/TechnicalTopics/AvatarGen-research/report.md](<../AIGC-Research/TechnicalTopics/AvatarGen-research/report.md>) — 592 行
-* [AIGC-Research/TechnicalTopics/ControllableGen-research/report.md](<../AIGC-Research/TechnicalTopics/ControllableGen-research/report.md>) — 923 行
-* [AIGC-Research/TechnicalTopics/DiT-research/report.md](<../AIGC-Research/TechnicalTopics/DiT-research/report.md>) — 892 行
-* [AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md](<../AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md>) — 855 行
-* [AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md](<../AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md>) — 433 行
-* [AIGC-Research/TechnicalTopics/ImageEditing-research/report.md](<../AIGC-Research/TechnicalTopics/ImageEditing-research/report.md>) — 834 行
-* [AIGC-Research/TechnicalTopics/VideoGen-research/report.md](<../AIGC-Research/TechnicalTopics/VideoGen-research/report.md>) — 898 行
-* [AIGC-Research/TechnicalTopics/WorldModels-research/report.md](<../AIGC-Research/TechnicalTopics/WorldModels-research/report.md>) — 317 行
+* [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) — 777 行
+* [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) — 369 行
+* [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) — 720 行
 
-## LLM-Research (26)
+## LLM (8)
 
-* [LLM-Research/ModelSeries/Claude-research/report.md](<../LLM-Research/ModelSeries/Claude-research/report.md>) — 611 行
-* [LLM-Research/ModelSeries/DeepSeek-research/report.md](<../LLM-Research/ModelSeries/DeepSeek-research/report.md>) — 751 行
-* [LLM-Research/ModelSeries/Doubao-Seed-research/report.md](<../LLM-Research/ModelSeries/Doubao-Seed-research/report.md>) — 643 行
-* [LLM-Research/ModelSeries/GLM-research/report.md](<../LLM-Research/ModelSeries/GLM-research/report.md>) — 523 行
-* [LLM-Research/ModelSeries/GPT-research/report.md](<../LLM-Research/ModelSeries/GPT-research/report.md>) — 759 行
-* [LLM-Research/ModelSeries/Gemini-research/report.md](<../LLM-Research/ModelSeries/Gemini-research/report.md>) — 788 行
-* [LLM-Research/ModelSeries/Grok-research/report.md](<../LLM-Research/ModelSeries/Grok-research/report.md>) — 469 行
-* [LLM-Research/ModelSeries/Hunyuan-research/report.md](<../LLM-Research/ModelSeries/Hunyuan-research/report.md>) — 525 行
-* [LLM-Research/ModelSeries/Kimi-research/report.md](<../LLM-Research/ModelSeries/Kimi-research/report.md>) — 431 行
-* [LLM-Research/ModelSeries/LLaMA-research/report.md](<../LLM-Research/ModelSeries/LLaMA-research/report.md>) — 483 行
-* [LLM-Research/ModelSeries/MiMo-research/report.md](<../LLM-Research/ModelSeries/MiMo-research/report.md>) — 510 行
-* [LLM-Research/ModelSeries/MiniMax-research/report.md](<../LLM-Research/ModelSeries/MiniMax-research/report.md>) — 517 行
-* [LLM-Research/ModelSeries/Mistral-research/report.md](<../LLM-Research/ModelSeries/Mistral-research/report.md>) — 495 行
-* [LLM-Research/ModelSeries/Nemotron-research/report.md](<../LLM-Research/ModelSeries/Nemotron-research/report.md>) — 465 行
-* [LLM-Research/ModelSeries/Qwen-research/report.md](<../LLM-Research/ModelSeries/Qwen-research/report.md>) — 918 行
-* [LLM-Research/TechnicalTopics/Agent-research/report.md](<../LLM-Research/TechnicalTopics/Agent-research/report.md>) — 698 行
-* [LLM-Research/TechnicalTopics/Alignment-research/report.md](<../LLM-Research/TechnicalTopics/Alignment-research/report.md>) — 588 行
-* [LLM-Research/TechnicalTopics/DecisionModels-research/report.md](<../LLM-Research/TechnicalTopics/DecisionModels-research/report.md>) — 869 行
-* [LLM-Research/TechnicalTopics/LongContext-research/report.md](<../LLM-Research/TechnicalTopics/LongContext-research/report.md>) — 608 行
-* [LLM-Research/TechnicalTopics/MoE-research/report.md](<../LLM-Research/TechnicalTopics/MoE-research/report.md>) — 405 行
-* [LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md](<../LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md>) — 777 行
-* [LLM-Research/TechnicalTopics/RAG-research/report.md](<../LLM-Research/TechnicalTopics/RAG-research/report.md>) — 851 行
-* [LLM-Research/TechnicalTopics/ReasoningModels-research/report.md](<../LLM-Research/TechnicalTopics/ReasoningModels-research/report.md>) — 681 行
-* [LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md](<../LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md>) — 369 行
-* [LLM-Research/TechnicalTopics/TrainingInfra-research/report.md](<../LLM-Research/TechnicalTopics/TrainingInfra-research/report.md>) — 720 行
-* [LLM-Research/TechnicalTopics/VLM-research/report.md](<../LLM-Research/TechnicalTopics/VLM-research/report.md>) — 517 行
+* [LLM/Agent/report.md](<../LLM/Agent/report.md>) — 698 行
+* [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) — 588 行
+* [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) — 869 行
+* [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) — 608 行
+* [LLM/MoE/report.md](<../LLM/MoE/report.md>) — 405 行
+* [LLM/RAG/report.md](<../LLM/RAG/report.md>) — 851 行
+* [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) — 681 行
+* [LLM/VLM/report.md](<../LLM/VLM/report.md>) — 517 行
 
-## Repo-Research (1)
+## Models (23)
 
-* [Repo-Research/nemotron-tri-mode-diffusion/report.md](<../Repo-Research/nemotron-tri-mode-diffusion/report.md>) — 206 行
+* [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) — 803 行
+* [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) — 711 行
+* [Models/Claude/report.md](<../Models/Claude/report.md>) — 611 行
+* [Models/DeepSeek/report.md](<../Models/DeepSeek/report.md>) — 751 行
+* [Models/Doubao-Seed/report.md](<../Models/Doubao-Seed/report.md>) — 643 行
+* [Models/GLM/report.md](<../Models/GLM/report.md>) — 523 行
+* [Models/GPT/report.md](<../Models/GPT/report.md>) — 759 行
+* [Models/Gemini/report.md](<../Models/Gemini/report.md>) — 788 行
+* [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>) — 826 行
+* [Models/Grok/report.md](<../Models/Grok/report.md>) — 469 行
+* [Models/Hunyuan/report.md](<../Models/Hunyuan/report.md>) — 525 行
+* [Models/Kimi/report.md](<../Models/Kimi/report.md>) — 431 行
+* [Models/Kling/report.md](<../Models/Kling/report.md>) — 537 行
+* [Models/LLaMA/report.md](<../Models/LLaMA/report.md>) — 483 行
+* [Models/MiMo/report.md](<../Models/MiMo/report.md>) — 510 行
+* [Models/Midjourney/report.md](<../Models/Midjourney/report.md>) — 587 行
+* [Models/MiniMax/report.md](<../Models/MiniMax/report.md>) — 517 行
+* [Models/Mistral/report.md](<../Models/Mistral/report.md>) — 495 行
+* [Models/Nemotron/report.md](<../Models/Nemotron/report.md>) — 465 行
+* [Models/OpenAI-Gen/report.md](<../Models/OpenAI-Gen/report.md>) — 859 行
+* [Models/Qwen/report.md](<../Models/Qwen/report.md>) — 918 行
+* [Models/Runway/report.md](<../Models/Runway/report.md>) — 732 行
+* [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>) — 873 行
+
+## OpenSource (1)
+
+* [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) — 206 行
+
+## VisualGen (8)
+
+* [VisualGen/3DGen/report.md](<../VisualGen/3DGen/report.md>) — 898 行
+* [VisualGen/AudioGen/report.md](<../VisualGen/AudioGen/report.md>) — 913 行
+* [VisualGen/AvatarGen/report.md](<../VisualGen/AvatarGen/report.md>) — 592 行
+* [VisualGen/ControllableGen/report.md](<../VisualGen/ControllableGen/report.md>) — 923 行
+* [VisualGen/DiT/report.md](<../VisualGen/DiT/report.md>) — 892 行
+* [VisualGen/DiffusionModels/report.md](<../VisualGen/DiffusionModels/report.md>) — 855 行
+* [VisualGen/ImageEditing/report.md](<../VisualGen/ImageEditing/report.md>) — 834 行
+* [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) — 898 行
+
+## WorldModel (2)
+
+* [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) — 433 行
+* [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) — 317 行
 
 ## https://github.com/FLock-io/this-that-model@6af11c63c8bb260aa4bed2b7717f33f25decd16e (1)
 
-* [Repo-Research/this-that-model-research/report.md](<../Repo-Research/this-that-model-research/report.md>) — 246 行
+* [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) — 246 行
 
 ## https://github.com/sgl-project/sglang@2a08e261ecd4cdfb04ec354f9005f18b88108b7d (1)
 
-* [Repo-Research/sglang-research/report.md](<../Repo-Research/sglang-research/report.md>) — 310 行
+* [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) — 310 行
 
 ## https://github.com/vllm-project/vllm@fa75d3456d60a5ffe923818c4b495295675b38e1 (1)
 
-* [Repo-Research/vllm-research/report.md](<../Repo-Research/vllm-research/report.md>) — 294 行
+* [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) — 294 行
