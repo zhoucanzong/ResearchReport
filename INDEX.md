@@ -15,8 +15,8 @@
 | --- | --- |
 | **条目数**（`report.md`） | **46** |
 | 条目子文档数 | 41 |
-| 条目正文行数（剔除 front-matter） | 29,765 |
-| 条目字节 | 1,749,073 B |
+| 条目正文行数（剔除 front-matter） | 29,823 |
+| 条目字节 | 1,765,924 B |
 | 带 front-matter 的条目 | 1 |
 | 带合法 `date` 的条目 | 1 |
 | 文档（除生成物外的全部 `.md`） | 96 |
@@ -31,9 +31,9 @@
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
 | AIGC-Research | 18 | 19 | 13,336 | 671,827 B | [#AIGC-Research](#aigc-research) |
-| LLM-Research | 26 | 59 | 15,913 | 1,031,837 B | [#LLM-Research](#llm-research) |
+| LLM-Research | 26 | 59 | 15,971 | 1,048,688 B | [#LLM-Research](#llm-research) |
 | Repo-Research | 2 | 12 | 516 | 45,409 B | [#Repo-Research](#repo-research) |
-| **合计** | **46** | **96** | **29,765** | **1,749,073 B** | — |
+| **合计** | **46** | **96** | **29,823** | **1,765,924 B** | — |
 
 ## 分面索引
 
@@ -495,10 +495,10 @@
   </details>
 
   <details>
-  <summary><b>DecisionModels-research</b> · <code>LLM-Research/TechnicalTopics/DecisionModels-research/report.md</code> · 811 行 · —</summary>
+  <summary><b>DecisionModels-research</b> · <code>LLM-Research/TechnicalTopics/DecisionModels-research/report.md</code> · 869 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/TechnicalTopics/DecisionModels-research/report.md](<LLM-Research/TechnicalTopics/DecisionModels-research/report.md>)（811 行 / 90,958 B）
+    * **条目**：[LLM-Research/TechnicalTopics/DecisionModels-research/report.md](<LLM-Research/TechnicalTopics/DecisionModels-research/report.md>)（869 行 / 107,809 B）
     * **专题目录**：`LLM-Research/TechnicalTopics/DecisionModels-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（16）**
