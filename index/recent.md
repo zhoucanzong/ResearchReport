@@ -13,7 +13,7 @@
 | --- | --- | --- | --- |
 | [Repo-Research/sglang-research/report.md](<../Repo-Research/sglang-research/report.md>) | 2026-10-16 | Repo-Research | sglang |
 
-## 无 date 元数据（43）
+## 无 date 元数据（44）
 
 以下条目缺少可解析的 `date`，无法参与「最近更新」排序：
 
@@ -31,6 +31,7 @@
 * [AIGC-Research/TechnicalTopics/ControllableGen-research/report.md](<../AIGC-Research/TechnicalTopics/ControllableGen-research/report.md>)
 * [AIGC-Research/TechnicalTopics/DiT-research/report.md](<../AIGC-Research/TechnicalTopics/DiT-research/report.md>)
 * [AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md](<../AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md>)
+* [AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md](<../AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md>)
 * [AIGC-Research/TechnicalTopics/ImageEditing-research/report.md](<../AIGC-Research/TechnicalTopics/ImageEditing-research/report.md>)
 * [AIGC-Research/TechnicalTopics/VideoGen-research/report.md](<../AIGC-Research/TechnicalTopics/VideoGen-research/report.md>)
 * [AIGC-Research/TechnicalTopics/WorldModels-research/report.md](<../AIGC-Research/TechnicalTopics/WorldModels-research/report.md>)

@@ -13,16 +13,16 @@
 
 | 指标 | 数量 |
 | --- | --- |
-| **条目数**（`report.md`） | **44** |
+| **条目数**（`report.md`） | **45** |
 | 条目子文档数 | 25 |
-| 条目正文行数（剔除 front-matter） | 28,521 |
-| 条目字节 | 1,612,159 B |
+| 条目正文行数（剔除 front-matter） | 28,954 |
+| 条目字节 | 1,658,115 B |
 | 带 front-matter 的条目 | 1 |
 | 带合法 `date` 的条目 | 1 |
-| 文档（除生成物外的全部 `.md`） | 78 |
+| 文档（除生成物外的全部 `.md`） | 79 |
 | 其中文件名 `README.md` | 4 |
-| 纳入版本控制的文件 | 91 |
-| 纳入版本控制的 `.md` | 86 |
+| 纳入版本控制的文件 | 92 |
+| 纳入版本控制的 `.md` | 87 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 
@@ -30,10 +30,10 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| AIGC-Research | 17 | 18 | 12,903 | 625,871 B | [#AIGC-Research](#aigc-research) |
+| AIGC-Research | 18 | 19 | 13,336 | 671,827 B | [#AIGC-Research](#aigc-research) |
 | LLM-Research | 25 | 42 | 15,102 | 940,879 B | [#LLM-Research](#llm-research) |
 | Repo-Research | 2 | 12 | 516 | 45,409 B | [#Repo-Research](#repo-research) |
-| **合计** | **44** | **78** | **28,521** | **1,612,159 B** | — |
+| **合计** | **45** | **79** | **28,954** | **1,658,115 B** | — |
 
 ## 分面索引
 
@@ -49,7 +49,7 @@
 
 ## 条目索引（按库折叠，可直达条目与子报告）
 
-### AIGC-Research（17 条目 / 18 文档）
+### AIGC-Research（18 条目 / 19 文档）
 
 <details>
 <summary><b>模型系列 ModelSeries（8 条目 / 0 子文档）</b></summary>
@@ -153,7 +153,7 @@
 </details>
 
 <details>
-<summary><b>技术专题 TechnicalTopics（9 条目 / 0 子文档）</b></summary>
+<summary><b>技术专题 TechnicalTopics（10 条目 / 0 子文档）</b></summary>
 
   <details>
   <summary><b>3DGen-research</b> · <code>AIGC-Research/TechnicalTopics/3DGen-research/report.md</code> · 898 行 · —</summary>
@@ -221,6 +221,18 @@
 
     * **条目**：[AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md](<AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md>)（855 行 / 36,106 B）
     * **专题目录**：`AIGC-Research/TechnicalTopics/DiffusionModels-research`
+    * **元数据**：type=`—` · domain=`AIGC-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
+    * **子文档（0）**
+        * _该条目暂无子文档_
+
+  </details>
+
+  <details>
+  <summary><b>EmbodiedVLA-research</b> · <code>AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md</code> · 433 行 · —</summary>
+  
+
+    * **条目**：[AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md](<AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md>)（433 行 / 45,956 B）
+    * **专题目录**：`AIGC-Research/TechnicalTopics/EmbodiedVLA-research`
     * **元数据**：type=`—` · domain=`AIGC-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（0）**
         * _该条目暂无子文档_
@@ -634,7 +646,7 @@
 
 | 文档 | 所属库 | 行数 | 字节 |
 | --- | --- | --: | --: |
-| [AIGC-Research/README.md](<AIGC-Research/README.md>) | AIGC-Research | 129 | 7,754 B |
+| [AIGC-Research/README.md](<AIGC-Research/README.md>) | AIGC-Research | 131 | 8,137 B |
 | [LLM-Research/README.md](<LLM-Research/README.md>) | LLM-Research | 172 | 12,502 B |
 | [Repo-Research/mini-swe-agent-research/mini-swe-agent-deep-report.md](<Repo-Research/mini-swe-agent-research/mini-swe-agent-deep-report.md>) | Repo-Research | 735 | 34,490 B |
 

@@ -15,7 +15,7 @@
 | --- | --- |
 | [Repo-Research/sglang-research/report.md](<../Repo-Research/sglang-research/report.md>) | status=completed |
 
-## 无 date 且无 status（无法判定，43）
+## 无 date 且无 status（无法判定，44）
 
 以下条目既没有 `date` 也没有 `status`，陈旧度无法评估（不算作已标记）：
 
@@ -33,6 +33,7 @@
 * [AIGC-Research/TechnicalTopics/ControllableGen-research/report.md](<../AIGC-Research/TechnicalTopics/ControllableGen-research/report.md>)
 * [AIGC-Research/TechnicalTopics/DiT-research/report.md](<../AIGC-Research/TechnicalTopics/DiT-research/report.md>)
 * [AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md](<../AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md>)
+* [AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md](<../AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md>)
 * [AIGC-Research/TechnicalTopics/ImageEditing-research/report.md](<../AIGC-Research/TechnicalTopics/ImageEditing-research/report.md>)
 * [AIGC-Research/TechnicalTopics/VideoGen-research/report.md](<../AIGC-Research/TechnicalTopics/VideoGen-research/report.md>)
 * [AIGC-Research/TechnicalTopics/WorldModels-research/report.md](<../AIGC-Research/TechnicalTopics/WorldModels-research/report.md>)

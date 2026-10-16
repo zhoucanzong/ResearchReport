@@ -7,7 +7,7 @@
 
 ---
 
-共 **44** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter。
+共 **45** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter。
 
 | 条目 | 所属库 | 路径 | 子报告数 | 行数 | 日期 |
 | --- | --- | --- | --: | --: | --- |
@@ -25,6 +25,7 @@
 | ControllableGen-research | AIGC-Research | [AIGC-Research/TechnicalTopics/ControllableGen-research/report.md](<../AIGC-Research/TechnicalTopics/ControllableGen-research/report.md>) | 0 | 923 | — |
 | DiT-research | AIGC-Research | [AIGC-Research/TechnicalTopics/DiT-research/report.md](<../AIGC-Research/TechnicalTopics/DiT-research/report.md>) | 0 | 892 | — |
 | DiffusionModels-research | AIGC-Research | [AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md](<../AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md>) | 0 | 855 | — |
+| EmbodiedVLA-research | AIGC-Research | [AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md](<../AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md>) | 0 | 433 | — |
 | ImageEditing-research | AIGC-Research | [AIGC-Research/TechnicalTopics/ImageEditing-research/report.md](<../AIGC-Research/TechnicalTopics/ImageEditing-research/report.md>) | 0 | 834 | — |
 | VideoGen-research | AIGC-Research | [AIGC-Research/TechnicalTopics/VideoGen-research/report.md](<../AIGC-Research/TechnicalTopics/VideoGen-research/report.md>) | 0 | 898 | — |
 | WorldModels-research | AIGC-Research | [AIGC-Research/TechnicalTopics/WorldModels-research/report.md](<../AIGC-Research/TechnicalTopics/WorldModels-research/report.md>) | 0 | 170 | — |
@@ -55,4 +56,4 @@
 | VLM-research | LLM-Research | [LLM-Research/TechnicalTopics/VLM-research/report.md](<../LLM-Research/TechnicalTopics/VLM-research/report.md>) | 0 | 517 | — |
 | nemotron-tri-mode-diffusion | Repo-Research | [Repo-Research/nemotron-tri-mode-diffusion/report.md](<../Repo-Research/nemotron-tri-mode-diffusion/report.md>) | 6 | 206 | — |
 | sglang-research | Repo-Research | [Repo-Research/sglang-research/report.md](<../Repo-Research/sglang-research/report.md>) | 3 | 310 | 2026-10-16 |
-| **合计** | — | **44 条目** | **25** | **28,521** | — |
+| **合计** | — | **45 条目** | **25** | **28,954** | — |

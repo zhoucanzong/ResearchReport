@@ -7,7 +7,7 @@
 
 ---
 
-## AIGC-Research (17)
+## AIGC-Research (18)
 
 * [AIGC-Research/ModelSeries/Alibaba-Gen-research/report.md](<../AIGC-Research/ModelSeries/Alibaba-Gen-research/report.md>) — 803 行
 * [AIGC-Research/ModelSeries/ByteDance-Gen-research/report.md](<../AIGC-Research/ModelSeries/ByteDance-Gen-research/report.md>) — 711 行
@@ -23,6 +23,7 @@
 * [AIGC-Research/TechnicalTopics/ControllableGen-research/report.md](<../AIGC-Research/TechnicalTopics/ControllableGen-research/report.md>) — 923 行
 * [AIGC-Research/TechnicalTopics/DiT-research/report.md](<../AIGC-Research/TechnicalTopics/DiT-research/report.md>) — 892 行
 * [AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md](<../AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md>) — 855 行
+* [AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md](<../AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md>) — 433 行
 * [AIGC-Research/TechnicalTopics/ImageEditing-research/report.md](<../AIGC-Research/TechnicalTopics/ImageEditing-research/report.md>) — 834 行
 * [AIGC-Research/TechnicalTopics/VideoGen-research/report.md](<../AIGC-Research/TechnicalTopics/VideoGen-research/report.md>) — 898 行
 * [AIGC-Research/TechnicalTopics/WorldModels-research/report.md](<../AIGC-Research/TechnicalTopics/WorldModels-research/report.md>) — 170 行

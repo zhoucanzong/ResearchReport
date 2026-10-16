@@ -85,6 +85,12 @@
 | --- | --- | --- | --- | --- |
 | [LLM-Research/ModelSeries/Doubao-Seed-research/report.md](<../LLM-Research/ModelSeries/Doubao-Seed-research/report.md>) | Doubao/Seed系列模型深度调研报告 | — | — | — |
 
+## EmbodiedVLA-research (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md](<../AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md>) | EmbodiedVLA 技术专题调研 | — | — | — |
+
 ## GLM-research (1)
 
 | 条目 | 标题 | type | date | status |

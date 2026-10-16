@@ -7,7 +7,7 @@
 
 ---
 
-## AIGC-Research (17)
+## AIGC-Research (18)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
@@ -25,6 +25,7 @@
 | [AIGC-Research/TechnicalTopics/ControllableGen-research/report.md](<../AIGC-Research/TechnicalTopics/ControllableGen-research/report.md>) | 可控生成（Controllable Generation）技术研究报告 | — | — | — |
 | [AIGC-Research/TechnicalTopics/DiT-research/report.md](<../AIGC-Research/TechnicalTopics/DiT-research/report.md>) | Diffusion Transformer (DiT) 架构演进研究报告 | — | — | — |
 | [AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md](<../AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md>) | 扩散模型（Diffusion Models）基础框架与架构演进研究报告 | — | — | — |
+| [AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md](<../AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md>) | EmbodiedVLA 技术专题调研 | — | — | — |
 | [AIGC-Research/TechnicalTopics/ImageEditing-research/report.md](<../AIGC-Research/TechnicalTopics/ImageEditing-research/report.md>) | 图像编辑与修复技术研究报告 | — | — | — |
 | [AIGC-Research/TechnicalTopics/VideoGen-research/report.md](<../AIGC-Research/TechnicalTopics/VideoGen-research/report.md>) | 视频生成技术研究报告 | — | — | — |
 | [AIGC-Research/TechnicalTopics/WorldModels-research/report.md](<../AIGC-Research/TechnicalTopics/WorldModels-research/report.md>) | WorldModels 技术专题调研 | — | — | — |
