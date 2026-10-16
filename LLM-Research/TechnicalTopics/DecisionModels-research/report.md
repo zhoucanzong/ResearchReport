@@ -774,7 +774,7 @@ TypeSafe 把 Jev 定位为 **System One 模型**（"first System One model"）�
 | 全仓库跟踪文件数 | 96 | **109** | **+13**（本批 13 份子文档提交后实测；`git ls-files` 含生成物） |
 
 > **口径提醒**：`lines` = **各条目 `report.md` 合计 − front-matter 行数**（本仓库仅 1 份条目带 front-matter，8 行；另有 1 份文件无结尾换行，故 `wc -l` 合计 29,772 − 8 = **29,764**），**不含**子文档。派生数字（根 `README.md`、`LLM-Research/README.md`、`docs/statistics.md`）均由脚本产出，不手改。
-> **自指量说明**：`条目字节`（含本条 `report.md` 自身）与 `report.md 行数` 都是**自指量**——本节的任何编辑都会轻微改变它们。故此处字节数标约值，**权威值以仓库生成物 [`index/stats.json`](../index/stats.json) 为准**。
+> **自指量说明**：`条目字节`（含本条 `report.md` 自身）与 `report.md 行数` 都是**自指量**——本节的任何编辑都会轻微改变它们。故此处字节数标约值，**权威值以仓库生成物 [`index/stats.json`](../../../index/stats.json) 为准**。
 
 ### 12.4 链接与卫生自检
 
