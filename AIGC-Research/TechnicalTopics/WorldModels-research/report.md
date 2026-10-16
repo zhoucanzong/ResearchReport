@@ -75,8 +75,8 @@
 
 ### 4.1 本章结论
 
-1. **公开指标集中在「分辨率 × 帧率 × 一致性时长」三角，三者不可同时拉满**：Genie 3 官方称 720p / 24 FPS / 维持数分钟；GameNGen 在 DOOM 上以 320×240、20 FPS 达成数分钟稳定（PSNR 29.43），分辨率与场景复杂度显著更低。`[摘要级]`（Genie 3 官方博客）+ `[精读原文]`（GameNGen 正文）
-2. **潜空间路线不追像素级实时渲染，而追「想象中训练」的可扩展性**：Dreamer 4 以 shortcut forcing 实现**单 GPU 实时交互推理**，并首次做到纯离线数据在 Minecraft 取得钻石。`[精读原文]`
+1. **公开指标集中在「分辨率 × 帧率 × 一致性时长」三角，三者不可同时拉满**：Genie 3 官方称 720p / 24 FPS / 维持数分钟（[Genie 3 官方博客](https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/)）；GameNGen 在 DOOM 上以 320×240、20 FPS 达成数分钟稳定（PSNR 29.43，[arXiv:2408.14837](https://arxiv.org/abs/2408.14837)），分辨率与场景复杂度显著更低。`[摘要级]`（Genie 3 官方博客）+ `[精读原文]`（GameNGen 正文）
+2. **潜空间路线不追像素级实时渲染，而追「想象中训练」的可扩展性**：Dreamer 4 以 shortcut forcing 实现**单 GPU 实时交互推理**，并首次做到纯离线数据在 Minecraft 取得钻石（[arXiv:2509.24527](https://arxiv.org/abs/2509.24527)）。`[精读原文]`
 3. **机器人侧世界模型以「少量真机数据 + 零样本部署」为标志**：V-JEPA 2-AC 仅用 **<62 小时**无标注 Droid 数据 post-train，零样本在 Franka 上做图像目标规划抓放。`[精读原文]`
 4. **平台化路线把世界模型做成可被下游 fine-tune 的基础设施**：Cosmos 开源因果视频 tokenizer 与 Predict1 多规格模型（7B / 12B / 13B / 14B）。`[精读原文]`
 5. **可复核的公开数字多为作者自述、评测条件互不统一**，跨系统横向比较必须先回到各自 benchmark 定义（见章 5）。`[精读原文]`
@@ -85,17 +85,17 @@
 
 | 系统 | 关键实测数字 | 出处 | 主等级 |
 | :-- | :-- | :-- | :-- |
-| **Genie 3**（Google DeepMind） | 实时导航 **24 FPS**、分辨率 **720p**、一致性维持**数分钟** | 官方博客（2025-08-05） | `[摘要级]` |
-| **GameNGen** | DOOM，320×240；**单 TPU 20 FPS**；**PSNR 29.43 / LPIPS 0.249**（5 关卡 2048 条轨迹）；连续游玩 **5–10 分钟**后人类判别仍接近随机 | arXiv:2408.14837 正文 | `[精读原文]` |
-| **Dreamer 4** | **单 GPU 实时交互推理**（shortcut forcing + 高效 transformer）；纯离线数据在 Minecraft **首次取得钻石** | arXiv:2509.24527 正文 | `[精读原文]` |
-| **V-JEPA 2 / V-JEPA 2-AC** | 预训练 **>1M 小时**互联网视频；2-AC 用 **<62h** Droid 无标注视频 post-train；**零样本** Franka 抓放 | arXiv:2506.09985 正文 | `[精读原文]` |
-| **Cosmos WFM**（NVIDIA） | 平台化：视频 curation 流水线 + **因果视频 tokenizer** + **Cosmos-Predict1 7B/12B/13B/14B** + 开放权重 | arXiv:2501.03575 正文 | `[精读原文]` |
-| **Matrix-Game** | **17B 参数**；Matrix-Game-MC 数据集 **>2,700 小时** Minecraft；配套 **GameWorld Score** | arXiv:2506.18701 正文 | `[精读原文]` |
-| **Hunyuan-GameCraft** | 推理**加速 20×**，达 **6.6 FPS** | arXiv:2506.17201 正文 | `[精读原文]` |
-| **CausVid** | 当前实现约 **10 FPS**（作者称可经编译/量化/并行进一步优化） | arXiv:2412.07772 正文 | `[精读原文]` |
-| **Self Forcing** | **17.0 FPS**、**亚秒级延迟** | arXiv:2506.08009 正文 | `[精读原文]` |
-| **Genie（2024）** | **11B 参数**；无标注互联网视频无监督训练；潜动作模型（latent action model） | arXiv:2402.15391 摘要 | `[摘要级]` |
-| **DIAMOND** | 图像空间扩散世界模型，可作环境 **drop-in 替代**；**3 NFE/帧**（对比 IRIS 的 16 NFE/帧） | arXiv:2405.12399 正文 | `[精读原文]` |
+| **Genie 3**（Google DeepMind） | 实时导航 **24 FPS**、分辨率 **720p**、一致性维持**数分钟** | [官方博客 2025-08-05](https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/) | `[摘要级]` |
+| **GameNGen** | DOOM，320×240；**单 TPU 20 FPS**；**PSNR 29.43 / LPIPS 0.249**（5 关卡 2048 条轨迹）；连续游玩 **5–10 分钟**后人类判别仍接近随机 | [arXiv:2408.14837](https://arxiv.org/abs/2408.14837) 正文 | `[精读原文]` |
+| **Dreamer 4** | **单 GPU 实时交互推理**（shortcut forcing + 高效 transformer）；纯离线数据在 Minecraft **首次取得钻石** | [arXiv:2509.24527](https://arxiv.org/abs/2509.24527) 正文 | `[精读原文]` |
+| **V-JEPA 2 / V-JEPA 2-AC** | 预训练 **>1M 小时**互联网视频；2-AC 用 **<62h** Droid 无标注视频 post-train；**零样本** Franka 抓放 | [arXiv:2506.09985](https://arxiv.org/abs/2506.09985) 正文 | `[精读原文]` |
+| **Cosmos WFM**（NVIDIA） | 平台化：视频 curation 流水线 + **因果视频 tokenizer** + **Cosmos-Predict1 7B/12B/13B/14B** + 开放权重 | [arXiv:2501.03575](https://arxiv.org/abs/2501.03575) 正文 | `[精读原文]` |
+| **Matrix-Game** | **17B 参数**；Matrix-Game-MC 数据集 **>2,700 小时** Minecraft；配套 **GameWorld Score** | [arXiv:2506.18701](https://arxiv.org/abs/2506.18701) 正文 | `[精读原文]` |
+| **Hunyuan-GameCraft** | 推理**加速 20×**，达 **6.6 FPS** | [arXiv:2506.17201](https://arxiv.org/abs/2506.17201) 正文 | `[精读原文]` |
+| **CausVid** | 当前实现约 **10 FPS**（作者称可经编译/量化/并行进一步优化） | [arXiv:2412.07772](https://arxiv.org/abs/2412.07772) 正文 | `[精读原文]` |
+| **Self Forcing** | **17.0 FPS**、**亚秒级延迟** | [arXiv:2506.08009](https://arxiv.org/abs/2506.08009) 正文 | `[精读原文]` |
+| **Genie（2024）** | **11B 参数**；无标注互联网视频无监督训练；潜动作模型（latent action model） | [arXiv:2402.15391](https://arxiv.org/abs/2402.15391) 摘要 | `[摘要级]` |
+| **DIAMOND** | 图像空间扩散世界模型，可作环境 **drop-in 替代**；**3 NFE/帧**（对比 IRIS 的 16 NFE/帧） | [arXiv:2405.12399](https://arxiv.org/abs/2405.12399) 正文 | `[精读原文]` |
 
 **本轮新发现（归属本专题，供章 2/3 第三轮使用）**：帧率数字的**评测口径差异极大**——20 FPS（GameNGen，320×240，单 TPU）与 24 FPS（Genie 3，720p，官方博客）不可直接比较；Self Forcing 的 17.0 FPS 与 Hunyuan-GameCraft 的 6.6 FPS 属不同分辨率/任务设定，横向对比须同时给出分辨率与硬件。`[精读原文]`
 
@@ -118,12 +118,12 @@
 
 | benchmark | 维度 / 指标 | 面向对象 | 主等级 | 来源 |
 | :-- | :-- | :-- | :-- | :-- |
-| **VBench** | **16 个**层级化、解耦维度（各配 prompt 与评测方法） | 通用视频生成质量 | `[摘要级]` | arXiv:2311.17982 摘要 |
-| **VBench-2.0** | **5 个**维度：Human Fidelity / Controllability / Creativity / Physics / Commonsense（细分为 **18 维**，针对 intrinsic faithfulness） | 视频生成的「内在真实性」 | `[精读原文]` | arXiv:2503.21755 正文 |
-| **WorldScore** | **3 个**方面：controllability / quality / dynamics；含统一 world specification + 数据集 + 多面指标；评测 **19 个**代表模型 | 世界生成（世界模型统一评测的最接近形态） | `[精读原文]` | arXiv:2504.00983 正文 |
-| **Physics-IQ** | **5 类物理**：Solid Mechanics / Fluid Dynamics / Optics / Thermodynamics / Magnetism；预测后续 **5 秒**；含 Sora / Runway / Pika / Lumiere / SVD / VideoPoet 对照 | 物理理解 | `[精读原文]` | arXiv:2501.09038 正文 |
-| **GameWorld Score** | 游戏世界交互质量（随 Matrix-Game 发布） | 游戏域交互式世界模型 | `[精读原文]` | arXiv:2506.18701 正文 |
-| **EWMBench** | 视觉保真 / 物理一致性 / 指令-动作对齐 | 机器人操作世界模型 | `[精读原文]` | arXiv:2508.05635 正文 |
+| **VBench** | **16 个**层级化、解耦维度（各配 prompt 与评测方法） | 通用视频生成质量 | `[摘要级]` | [arXiv:2311.17982](https://arxiv.org/abs/2311.17982) 摘要 |
+| **VBench-2.0** | **5 个**维度：Human Fidelity / Controllability / Creativity / Physics / Commonsense（细分为 **18 维**，针对 intrinsic faithfulness） | 视频生成的「内在真实性」 | `[精读原文]` | [arXiv:2503.21755](https://arxiv.org/abs/2503.21755) 正文 |
+| **WorldScore** | **3 个**方面：controllability / quality / dynamics；含统一 world specification + 数据集 + 多面指标；评测 **19 个**代表模型 | 世界生成（世界模型统一评测的最接近形态） | `[精读原文]` | [arXiv:2504.00983](https://arxiv.org/abs/2504.00983) 正文 |
+| **Physics-IQ** | **5 类物理**：Solid Mechanics / Fluid Dynamics / Optics / Thermodynamics / Magnetism；预测后续 **5 秒**；含 Sora / Runway / Pika / Lumiere / SVD / VideoPoet 对照 | 物理理解 | `[精读原文]` | [arXiv:2501.09038](https://arxiv.org/abs/2501.09038) 正文 |
+| **GameWorld Score** | 游戏世界交互质量（随 Matrix-Game 发布） | 游戏域交互式世界模型 | `[精读原文]` | [arXiv:2506.18701](https://arxiv.org/abs/2506.18701) 正文 |
+| **EWMBench** | 视觉保真 / 物理一致性 / 指令-动作对齐 | 机器人操作世界模型 | `[精读原文]` | [arXiv:2508.05635](https://arxiv.org/abs/2508.05635) 正文 |
 | 系统自报指标 | FPS / 一致性时长 / PSNR / LPIPS | 各交互式系统 | `[精读原文]` | 见章 4.2 |
 
 **缺口清单（本轮结论）**：① 跨域统一口径缺失（视频 / 游戏 / 机器人各说各话）；② **交互性**（action-following 延迟、可交互时长）无第三方基准；③ 长时程记忆无可比指标；④ sim-to-real 对齐度指标缺位（与 EmbodiedVLA 条目章 5 的「仿真分数不足以替代真机结论」互为佐证）。`[精读原文]`
@@ -148,11 +148,11 @@
 
 | 对象 | 作为环境的角色 | 关键事实 | 主等级 |
 | :-- | :-- | :-- | :-- |
-| **Dreamer 4** | ①想象中训练 | 在可扩展世界模型内部做 RL；纯离线数据在 Minecraft 取得钻石；作者将「离线想象训练」对齐机器人场景（真机交互不安全、缓慢） | `[精读原文]` |
-| **UniSim** | ①+②通用模拟器 | 以生成式建模学习真实世界交互的通用模拟器，目标包含「机器人在模拟经验中学习后直接部署真机」 | `[精读原文]` |
-| **Genie Envisioner** | ②+③平台 | GE-Base（指令条件视频扩散世界模型）+ GE-Sim（action-conditioned 神经模拟器，闭环 rollout）+ EWMBench（评测） | `[精读原文]` |
-| **Cosmos WFM** | ①工业化形态 | Physical AI 的「世界数字孪生」；覆盖 curation / 预训练 / post-train / tokenizer 全链路并开放权重 | `[精读原文]` |
-| **V-JEPA 2-AC** | ②规划环境 | 62h Droid 数据 post-train 后零样本规划抓放（少量真机数据范式） | `[精读原文]` |
+| **[Dreamer 4](https://arxiv.org/abs/2509.24527)** | ①想象中训练 | 在可扩展世界模型内部做 RL；纯离线数据在 Minecraft 取得钻石；作者将「离线想象训练」对齐机器人场景（真机交互不安全、缓慢） | `[精读原文]` |
+| **[UniSim](https://arxiv.org/abs/2310.06114)** | ①+②通用模拟器 | 以生成式建模学习真实世界交互的通用模拟器，目标包含「机器人在模拟经验中学习后直接部署真机」 | `[精读原文]` |
+| **[Genie Envisioner](https://arxiv.org/abs/2508.05635)** | ②+③平台 | GE-Base（指令条件视频扩散世界模型）+ GE-Sim（action-conditioned 神经模拟器，闭环 rollout）+ EWMBench（评测） | `[精读原文]` |
+| **[Cosmos WFM](https://arxiv.org/abs/2501.03575)** | ①工业化形态 | Physical AI 的「世界数字孪生」；覆盖 curation / 预训练 / post-train / tokenizer 全链路并开放权重 | `[精读原文]` |
+| **[V-JEPA 2-AC](https://arxiv.org/abs/2506.09985)** | ②规划环境 | 62h Droid 数据 post-train 后零样本规划抓放（少量真机数据范式） | `[精读原文]` |
 
 **数据/评测接口清单（可直接复用，避免二次造轮子）**
 
