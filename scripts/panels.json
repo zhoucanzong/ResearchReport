@@ -91,6 +91,8 @@
     "Models/GPT",
     "LLM/ReasoningModels",
     "VisualGen/VideoGen",
+    "WorldModel/WorldModels",
+    "Infra/SpeculativeDecoding",
     "OpenSource/vllm"
   ]
 }

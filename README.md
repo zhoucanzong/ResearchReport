@@ -59,6 +59,8 @@ ResearchReport/    48 条目 · 21 专题 · 6 板块
 - 🧠 **[GPT](<Models/GPT/report.md>)** — OpenAI GPT 系列模型深度调研报告
 - 💬 **[ReasoningModels](<LLM/ReasoningModels/report.md>)** — 推理模型（Reasoning Models）与 Test-Time Compute 研究报告
 - 🎨 **[VideoGen](<VisualGen/VideoGen/report.md>)** — 视频生成技术研究报告
+- 🌍 **[WorldModels](<WorldModel/WorldModels/report.md>)** — WorldModels 技术专题调研
+- ⚙️ **[SpeculativeDecoding](<Infra/SpeculativeDecoding/report.md>)** — 投机解码（Speculative Decoding）技术深度调研报告
 - 🔧 **[vllm](<OpenSource/vllm/report.md>)** — vLLM 仓库代码分析报告
 <!-- SCRIPT:highlights END -->
 
