@@ -26,7 +26,7 @@
 * [AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md](<../AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md>) — 433 行
 * [AIGC-Research/TechnicalTopics/ImageEditing-research/report.md](<../AIGC-Research/TechnicalTopics/ImageEditing-research/report.md>) — 834 行
 * [AIGC-Research/TechnicalTopics/VideoGen-research/report.md](<../AIGC-Research/TechnicalTopics/VideoGen-research/report.md>) — 898 行
-* [AIGC-Research/TechnicalTopics/WorldModels-research/report.md](<../AIGC-Research/TechnicalTopics/WorldModels-research/report.md>) — 170 行
+* [AIGC-Research/TechnicalTopics/WorldModels-research/report.md](<../AIGC-Research/TechnicalTopics/WorldModels-research/report.md>) — 317 行
 
 ## LLM-Research (26)
 

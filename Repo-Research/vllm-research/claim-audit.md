@@ -44,7 +44,7 @@
 | [report.md](report.md) | 32 | **0** | 首轮 32/2，在 §6.4 与 §7 标题行补锚点后归零 |
 | [kv-cache-and-prefix-reuse.md](kv-cache-and-prefix-reuse.md) | 28 | **0** | 首轮 28/5，在 Phase 2 / 全命中代价 / 抢占推断 / §5 标题与表头补锚点后归零 |
 | [scheduling-and-spec-decode.md](scheduling-and-spec-decode.md) | 16 | **0** | 首轮 16/3，在 §2.4/§2.5/§4.3 补锚点后归零 |
-| 本文（claim-audit.md） | 11 | **0** | 审计范围含本表的"风险 / 边界"措辞；0 缺证（§3.5 锚点复检为独立门禁，不属 claim_audit 口径） |
+| 本文（claim-audit.md） | **24**（含 §3.5 与附录 A 的"不合格/风险/边界"措辞） | **0** | 0 缺证；§3.5 锚点复检为独立门禁，不属 claim_audit 口径 |
 
 **说明**：审计器只检查"相邻一行内有无路径"，**不判断路径是否真的支撑结论**。后者靠 §3 的阅读覆盖与 §5 的等级纪律人工兜底。
 
@@ -169,12 +169,12 @@ git show fa75d3456d60a5ffe923818c4b495295675b38e1:<path> | sed -n "<行>p"
 
 ## 7. 交付留痕
 
-- **分支**：`research/vllm-research-yanyan`（自 `main` @ `5c3225e` 切出）。
+- **分支**：`research/vllm-research-yanyan`（自 `main` @ `5c3225e` 切出；为适配 `origin/main` 推进到 **`acafc4e`**（WorldModels 第二轮 + 链接补齐）已 rebase 一次，rebase 后基线为 `acafc4e`）。
 - **本批新增**：`Repo-Research/vllm-research/` 下 4 个文件；另同步 `README.md`（含补齐 ③ SGLang / ④ vLLM 两条索引）、`docs/statistics.md`、`INDEX.md`、`index/*`。
-  - [report.md](report.md)：303 行（正文 294 + front-matter 9）/ 35,224 B
-  - [kv-cache-and-prefix-reuse.md](kv-cache-and-prefix-reuse.md)：206 行（正文 206）/ 18,691 B
-  - [scheduling-and-spec-decode.md](scheduling-and-spec-decode.md)：244 行 / 22,669 B
-  - 本文 [claim-audit.md](claim-audit.md)：131 行 / 10,273 B
+  - [report.md](report.md)：303 行（正文 294 + front-matter 9）/ 35,658 B
+  - [kv-cache-and-prefix-reuse.md](kv-cache-and-prefix-reuse.md)：206 行 / 19,069 B
+  - [scheduling-and-spec-decode.md](scheduling-and-spec-decode.md)：244 行 / 24,076 B
+  - 本文 [claim-audit.md](claim-audit.md)：365 行 / 44,029 B（含 §3.5 锚点复检与附录 A 锚点全表 162 行）
 - **未确证 / 待跟踪**（不入正文结论）：
   1. 抢占后 `get_computed_blocks` 是否真退化为零命中——§4.2 的推断需要构造实验确证（打印 `num_preemptions` 与命中数）。
   2. structured output 下验证判据的参照分布语义：是"近似"还是"仓库定义的正确答案"——仓库内**未找到明文定义**，检索 `docs/` 无结论。

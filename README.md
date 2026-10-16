@@ -7,7 +7,7 @@
 ![Collections](https://img.shields.io/badge/Collections-3-blue?style=flat-square)
 ![Reports](https://img.shields.io/badge/Reports-47-green?style=flat-square)
 ![Topic](https://img.shields.io/badge/Topic-21-orange?style=flat-square)
-![Markdown](https://img.shields.io/badge/Markdown-87-lightgrey?style=flat-square)
+![Markdown](https://img.shields.io/badge/Markdown-108-lightgrey?style=flat-square)
 ![Updated](https://img.shields.io/badge/Updated-2026--10--16-informational?style=flat-square)
 
 </div>
@@ -62,7 +62,7 @@
 
 <br><br>
 
-<b>13</b> 个文件<br>3 个深度阅读项目<br>（非 Git 仓库，无库内 README）
+<b>17</b> 个文件<br>4 个深度阅读项目<br>（非 Git 仓库，无库内 README）
 
 <br><br>
 
@@ -101,13 +101,13 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 
 | 资料库 | 内容 | 条目（`report.md`） | 子文档 `.md` | 正文字节 | 目录内容字节 | `du -sk` |
 | :-- | :-- | --: | --: | --: | --: | --: |
-| 🎨 [AIGC-Research](AIGC-Research/) | 8 系列 + 10 专题 | 18 | 1 | 671,827 B | 679,964 B | 704 KB |
-| 🤖 [LLM-Research](LLM-Research/) | 15 系列 + 11 专题 | 26 | 33 | 1,695,700 B | 1,716,176 B | 1788 KB |
-| 📑 [Repo-Research](Repo-Research/) | 4 个深读项目 | 3 | 13 | 349,623 B | 365,917 B | 392 KB |
-| **合计** | **3 个资料库** | **47** | **47** | **2,717,150 B ≈ 2.59 MiB** | **2,762,057 B ≈ 2.63 MiB** | **2,884 KB** |
+| 🎨 [AIGC-Research](AIGC-Research/) | 8 系列 + 10 专题 | 18 | 1 | 688,526 B | 696,663 B | 720 KB |
+| 🤖 [LLM-Research](LLM-Research/) | 15 系列 + 11 专题 | 26 | 33 | 1,701,474 B | 1,715,884 B | 1788 KB |
+| 📑 [Repo-Research](Repo-Research/) | 4 个深读项目 | 3 | 13 | 385,764 B | 402,058 B | 424 KB |
+| **合计** | **3 个资料库** | **47** | **47** | **2,775,764 B ≈ 2.65 MiB** | **2,814,897 B ≈ 2.68 MiB** | **2,932 KB** |
 
 > 本表数字由 [`scripts/library_index.py`](scripts/library_index.py) 产出，机器可读版见 [`index/stats.json`](index/stats.json)；**条目 = 文件名字面为 `report.md` 的主文档**，同目录其它 `.md`（分册 / `plan.md` / `notes/` / `raw-extracts/` 等）是它的**子文档**。
-> **口径细化（2026-10-16 复测）**：本表中「条目数 / 子文档数」取自 `index/stats.json`；「正文字节 / 目录内容字节 / `du -sk`」为**逐库实测**——「正文字节」= 该库内**除 `README.md` 外的全部 `.md`** 的字节和（LLM-Research = 58 份 / 1,695,700 B；Repo-Research = 16 个 `.md` / 349,623 B），「目录内容字节」= 该库目录下全部文件（跳过隐藏目录），`du -sk` 含文件系统块开销。上一版 LLM-Research 的「正文字节」列（1,764,826 B）与同表其它列**不同源**（约多计 6.9 万 B），本次已按上述可复现口径统一重测。
+> **口径细化（2026-10-16 复测）**：本表中「条目数 / 子文档数」取自 `index/stats.json`；「正文字节 / 目录内容字节 / `du -sk`」为**逐库实测**——「正文字节」= 该库内**除 `README.md` 外的全部 `.md`** 的字节和（LLM-Research = 58 份 / 1,701,474 B；Repo-Research = 16 个 `.md` / 385,764 B），「目录内容字节」= 该库目录下全部文件（跳过隐藏目录），`du -sk` 含文件系统块开销。上一版 LLM-Research 的「正文字节」列（1,764,826 B）与同表其它列**不同源**（约多计 6.9 万 B），本次已按上述可复现口径统一重测。
 > 各库 `README.md` 与 `docs/*.md` 既不是条目也不是子文档，不计入本表；「目录内容字节」不含 `.git` 且按脚本口径跳过隐藏目录；`du -sk` 含文件系统块开销，故大于字节数之和。
 > 全仓库 Markdown 共 **108** 份（`git ls-files '*.md'` 实测；含生成物 8 份，故非生成物 100 份）。各口径的换算关系见 [`docs/statistics.md`](docs/statistics.md) §2。
 > **索引入口**：[`INDEX.md`](INDEX.md)（总目录）· [`docs/team.md`](docs/team.md)（团队约定）。
@@ -246,10 +246,10 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 
 | 文件 | 大小 / 行数 | 说明 |
 | :-- | --: | :-- |
-| [report.md](Repo-Research/vllm-research/report.md) | 35,224 B / 303 行（正文 294 + front-matter 9） | **主文档**：执行摘要 / 三个判断 / Codebase Map / 架构分层图 / 运行故事（抢占 + 投机）/ 模块摘要 / **带条件列的 SGLang 对照表** / 设计取舍 / 证据索引 |
-| [kv-cache-and-prefix-reuse.md](Repo-Research/vllm-research/kv-cache-and-prefix-reuse.md) | 18,691 B / 206 行 | **子文档**：链式块哈希、`FreeKVCacheBlockQueue` 的 LIFO/FIFO 双序淘汰、append-only 块表、`allocate_slots` 五段布局、抢占重算与前缀缓存的交互（含未确证项） |
-| [scheduling-and-spec-decode.md](Repo-Research/vllm-research/scheduling-and-spec-decode.md) | 22,669 B / 244 行 | **子文档**：无 prefill/decode 两相的调度、两档预算、抢占点；投机解码三段与判据数学形式；**与 structured output 的五步交互链** |
-| [claim-audit.md](Repo-Research/vllm-research/claim-audit.md) | 10,273 B / 131 行 | **子文档**：方法学记录、canonical `claim_audit.py` 四文档结果、阅读覆盖、自检九项与未确证清单 |
+| [report.md](Repo-Research/vllm-research/report.md) | 35,658 B / 303 行（正文 294 + front-matter 9） | **主文档**：执行摘要 / 三个判断 / Codebase Map / 架构分层图 / 运行故事（抢占 + 投机）/ 模块摘要 / **带条件列的 SGLang 对照表** / 设计取舍 / 证据索引 |
+| [kv-cache-and-prefix-reuse.md](Repo-Research/vllm-research/kv-cache-and-prefix-reuse.md) | 19,069 B / 206 行 | **子文档**：链式块哈希、`FreeKVCacheBlockQueue` 的 LIFO/FIFO 双序淘汰、append-only 块表、`allocate_slots` 五段布局、抢占重算与前缀缓存的交互（含未确证项） |
+| [scheduling-and-spec-decode.md](Repo-Research/vllm-research/scheduling-and-spec-decode.md) | 24,076 B / 244 行 | **子文档**：无 prefill/decode 两相的调度、两档预算、抢占点；投机解码三段与判据数学形式；**与 structured output 的五步交互链** |
+| [claim-audit.md](Repo-Research/vllm-research/claim-audit.md) | 44,029 B / 365 行 | **子文档**：方法学记录、canonical `claim_audit.py` 四文档结果、阅读覆盖、自检九项、未确证清单，以及 **§3.5 锚点复检（162 处 `.py:行` 机械核验，未命中 0）与附录 A 锚点全表** |
 
 > ③ ④ 两条互引：vLLM 主文档 §7 与 SGLang `scheduler-and-prefix-cache.md` / `speculative-decoding-path.md` 之间有带条件列的机制对照表。
 

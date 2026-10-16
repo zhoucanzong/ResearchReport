@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "914df083f4cff39dc51cfab49137d4896c0eed2a10159f5bcbdda006359614c7",
+  "content_fingerprint": "97756c789a345e825a92bd900611deaa001b906de60f2a10fab61112ca05c8ec",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -16,8 +16,8 @@
     "with_front_matter": 2,
     "without_front_matter": 45,
     "with_date": 2,
-    "lines": 30117,
-    "bytes": 1801148,
+    "lines": 30264,
+    "bytes": 1818281,
     "children": 44
   },
   "documents": {
@@ -26,8 +26,8 @@
     "with_front_matter": 15,
     "named_report_md": 47,
     "named_readme_md": 4,
-    "lines": 43496,
-    "bytes": 2820606
+    "lines": 43877,
+    "bytes": 2874213
   },
   "libraries": {
     "AIGC-Research": {
@@ -43,13 +43,13 @@
         "TechnicalTopics": 10,
         "Other": 0
       },
-      "lines": 13336,
-      "bytes": 671827,
-      "lines_raw": 13336,
+      "lines": 13483,
+      "bytes": 688526,
+      "lines_raw": 13483,
       "dir_files": 19,
       "dir_md": 19,
-      "dir_bytes": 679964,
-      "du_sk": 704
+      "dir_bytes": 696663,
+      "du_sk": 720
     },
     "LLM-Research": {
       "entries": 26,
@@ -86,12 +86,12 @@
         "Other": 3
       },
       "lines": 810,
-      "bytes": 80633,
+      "bytes": 81067,
       "lines_raw": 828,
       "dir_files": 17,
       "dir_md": 16,
-      "dir_bytes": 365917,
-      "du_sk": 392
+      "dir_bytes": 402058,
+      "du_sk": 424
     }
   },
   "totals": {
@@ -99,10 +99,10 @@
     "library_entries": 47,
     "library_documents_md": 94,
     "library_dir_files": 96,
-    "library_dir_bytes": 2762057,
-    "library_du_sk": 2884,
-    "library_entry_lines": 30117,
-    "library_entry_bytes": 1801148
+    "library_dir_bytes": 2814897,
+    "library_du_sk": 2932,
+    "library_entry_lines": 30264,
+    "library_entry_bytes": 1818281
   },
   "version_control": {
     "tracked_total": 113,
@@ -118,9 +118,9 @@
       "AIGC-Research": {
         "report_md": {
           "files": 18,
-          "lines": 13336,
-          "lines_raw": 13336,
-          "bytes": 671827
+          "lines": 13483,
+          "lines_raw": 13483,
+          "bytes": 688526
         },
         "report_md_by_category": {
           "ModelSeries": {
@@ -131,9 +131,9 @@
           },
           "TechnicalTopics": {
             "files": 10,
-            "lines": 7408,
-            "lines_raw": 7408,
-            "bytes": 378892
+            "lines": 7555,
+            "lines_raw": 7555,
+            "bytes": 395591
           },
           "Other": {
             "files": 0,
@@ -150,9 +150,9 @@
         },
         "dir_md": {
           "files": 19,
-          "lines": 13467,
-          "lines_raw": 13467,
-          "bytes": 679964
+          "lines": 13614,
+          "lines_raw": 13614,
+          "bytes": 696663
         }
       },
       "LLM-Research": {
@@ -200,7 +200,7 @@
           "files": 3,
           "lines": 810,
           "lines_raw": 828,
-          "bytes": 80633
+          "bytes": 81067
         },
         "report_md_by_category": {
           "ModelSeries": {
@@ -219,46 +219,46 @@
             "files": 3,
             "lines": 810,
             "lines_raw": 828,
-            "bytes": 80633
+            "bytes": 81067
           }
         },
         "other_md": {
           "files": 13,
-          "lines": 4701,
-          "lines_raw": 4701,
-          "bytes": 268990
+          "lines": 4935,
+          "lines_raw": 4935,
+          "bytes": 304697
         },
         "dir_md": {
           "files": 16,
-          "lines": 5511,
-          "lines_raw": 5529,
-          "bytes": 349623
+          "lines": 5745,
+          "lines_raw": 5763,
+          "bytes": 385764
         }
       }
     },
     "repo_md": {
       "files": 100,
-      "lines": 43496,
-      "lines_raw": 43654,
-      "bytes": 2820606
+      "lines": 43877,
+      "lines_raw": 44035,
+      "bytes": 2874213
     },
     "library_md": {
       "files": 94,
-      "lines": 42518,
-      "lines_raw": 42676,
-      "bytes": 2745471
+      "lines": 42899,
+      "lines_raw": 43057,
+      "bytes": 2798311
     },
     "root_readme": {
       "files": 1,
       "lines": 290,
       "lines_raw": 290,
-      "bytes": 26886
+      "bytes": 26993
     },
     "docs_md": {
       "files": 4,
       "lines": 589,
       "lines_raw": 589,
-      "bytes": 43660
+      "bytes": 44320
     },
     "scripts_md": {
       "files": 1,
@@ -271,6 +271,6 @@
     ]
   },
   "du": {
-    "worktree_including_git": 3148
+    "worktree_including_git": 3196
   }
 }

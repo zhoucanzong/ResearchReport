@@ -28,7 +28,7 @@
 | EmbodiedVLA-research | AIGC-Research | [AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md](<../AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md>) | 0 | 433 | — |
 | ImageEditing-research | AIGC-Research | [AIGC-Research/TechnicalTopics/ImageEditing-research/report.md](<../AIGC-Research/TechnicalTopics/ImageEditing-research/report.md>) | 0 | 834 | — |
 | VideoGen-research | AIGC-Research | [AIGC-Research/TechnicalTopics/VideoGen-research/report.md](<../AIGC-Research/TechnicalTopics/VideoGen-research/report.md>) | 0 | 898 | — |
-| WorldModels-research | AIGC-Research | [AIGC-Research/TechnicalTopics/WorldModels-research/report.md](<../AIGC-Research/TechnicalTopics/WorldModels-research/report.md>) | 0 | 170 | — |
+| WorldModels-research | AIGC-Research | [AIGC-Research/TechnicalTopics/WorldModels-research/report.md](<../AIGC-Research/TechnicalTopics/WorldModels-research/report.md>) | 0 | 317 | — |
 | Claude-research | LLM-Research | [LLM-Research/ModelSeries/Claude-research/report.md](<../LLM-Research/ModelSeries/Claude-research/report.md>) | 0 | 611 | — |
 | DeepSeek-research | LLM-Research | [LLM-Research/ModelSeries/DeepSeek-research/report.md](<../LLM-Research/ModelSeries/DeepSeek-research/report.md>) | 2 | 751 | — |
 | Doubao-Seed-research | LLM-Research | [LLM-Research/ModelSeries/Doubao-Seed-research/report.md](<../LLM-Research/ModelSeries/Doubao-Seed-research/report.md>) | 0 | 643 | — |
@@ -58,4 +58,4 @@
 | nemotron-tri-mode-diffusion | Repo-Research | [Repo-Research/nemotron-tri-mode-diffusion/report.md](<../Repo-Research/nemotron-tri-mode-diffusion/report.md>) | 6 | 206 | — |
 | sglang-research | Repo-Research | [Repo-Research/sglang-research/report.md](<../Repo-Research/sglang-research/report.md>) | 3 | 310 | 2026-10-16 |
 | vllm-research | Repo-Research | [Repo-Research/vllm-research/report.md](<../Repo-Research/vllm-research/report.md>) | 3 | 294 | 2026-10-16 |
-| **合计** | — | **47 条目** | **44** | **30,117** | — |
+| **合计** | — | **47 条目** | **44** | **30,264** | — |

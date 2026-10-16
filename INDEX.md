@@ -15,8 +15,8 @@
 | --- | --- |
 | **条目数**（`report.md`） | **47** |
 | 条目子文档数 | 44 |
-| 条目正文行数（剔除 front-matter） | 30,117 |
-| 条目字节 | 1,801,148 B |
+| 条目正文行数（剔除 front-matter） | 30,264 |
+| 条目字节 | 1,818,281 B |
 | 带 front-matter 的条目 | 2 |
 | 带合法 `date` 的条目 | 2 |
 | 文档（除生成物外的全部 `.md`） | 100 |
@@ -30,10 +30,10 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| AIGC-Research | 18 | 19 | 13,336 | 671,827 B | [#AIGC-Research](#aigc-research) |
+| AIGC-Research | 18 | 19 | 13,483 | 688,526 B | [#AIGC-Research](#aigc-research) |
 | LLM-Research | 26 | 59 | 15,971 | 1,048,688 B | [#LLM-Research](#llm-research) |
-| Repo-Research | 3 | 16 | 810 | 80,633 B | [#Repo-Research](#repo-research) |
-| **合计** | **47** | **100** | **30,117** | **1,801,148 B** | — |
+| Repo-Research | 3 | 16 | 810 | 81,067 B | [#Repo-Research](#repo-research) |
+| **合计** | **47** | **100** | **30,264** | **1,818,281 B** | — |
 
 ## 分面索引
 
@@ -264,10 +264,10 @@
   </details>
 
   <details>
-  <summary><b>WorldModels-research</b> · <code>AIGC-Research/TechnicalTopics/WorldModels-research/report.md</code> · 170 行 · —</summary>
+  <summary><b>WorldModels-research</b> · <code>AIGC-Research/TechnicalTopics/WorldModels-research/report.md</code> · 317 行 · —</summary>
   
 
-    * **条目**：[AIGC-Research/TechnicalTopics/WorldModels-research/report.md](<AIGC-Research/TechnicalTopics/WorldModels-research/report.md>)（170 行 / 14,850 B）
+    * **条目**：[AIGC-Research/TechnicalTopics/WorldModels-research/report.md](<AIGC-Research/TechnicalTopics/WorldModels-research/report.md>)（317 行 / 31,549 B）
     * **专题目录**：`AIGC-Research/TechnicalTopics/WorldModels-research`
     * **元数据**：type=`—` · domain=`AIGC-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（0）**
@@ -669,13 +669,13 @@
   <summary><b>vllm-research</b> · <code>Repo-Research/vllm-research/report.md</code> · 294 行 · 2026-10-16</summary>
   
 
-    * **条目**：[Repo-Research/vllm-research/report.md](<Repo-Research/vllm-research/report.md>)（294 行 / 35,224 B）
+    * **条目**：[Repo-Research/vllm-research/report.md](<Repo-Research/vllm-research/report.md>)（294 行 / 35,658 B）
     * **专题目录**：`Repo-Research/vllm-research`
     * **元数据**：type=`repo-research` · domain=`Repo-Research` · subject=`vllm` · date=`2026-10-16` · status=`completed`
     * **子文档（3）**
-        * [claim-audit.md](<Repo-Research/vllm-research/claim-audit.md>) — 131 行 / 10,268 B
-        * [kv-cache-and-prefix-reuse.md](<Repo-Research/vllm-research/kv-cache-and-prefix-reuse.md>) — 206 行 / 18,691 B
-        * [scheduling-and-spec-decode.md](<Repo-Research/vllm-research/scheduling-and-spec-decode.md>) — 244 行 / 22,669 B
+        * [claim-audit.md](<Repo-Research/vllm-research/claim-audit.md>) — 365 行 / 44,190 B
+        * [kv-cache-and-prefix-reuse.md](<Repo-Research/vllm-research/kv-cache-and-prefix-reuse.md>) — 206 行 / 19,069 B
+        * [scheduling-and-spec-decode.md](<Repo-Research/vllm-research/scheduling-and-spec-decode.md>) — 244 行 / 24,076 B
 
   </details>
 
