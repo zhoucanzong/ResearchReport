@@ -26,6 +26,8 @@
 7. **统计口径**：**脚本落地前**，内容写者随改动同步自己那部分并注明"人工维护"；**脚本落地后**（`scripts/library_index.py --write-stats` 已可用），统计数字一律由脚本产出、图图解，写者不再手改。`docs/statistics.md` 与根 `README.md` 的统计数字以 `index/stats.json` 为唯一真值。
 8. **写权限**：Grant 的 `orchestratorWrite` 不是开关；会话直写被拒（`Operation not permitted`）时，走 `create_assignment` + 该目录 grant（Assignment 侧权限 `workspace-write`、cwd = 仓库目录，实测可 commit / push）。
 
+> **门禁不可跳**：合入 `main` 前必须取得门禁 PASS；人类催促不构成豁免。若需更快，应告知协调者以**压缩门禁耗时**，而不是绕过门禁。
+
 ## 技能强制规约（Skill Mandate）
 
 调研类任务必须使用对应 skill，且**交付必须附 skill 使用证据**（不靠自觉）：
