@@ -57,6 +57,6 @@
 | VLM-research | LLM | [LLM-Research/TechnicalTopics/VLM-research/report.md](<../LLM-Research/TechnicalTopics/VLM-research/report.md>) | LLM-Research | 0 | 517 | — |
 | nemotron-tri-mode-diffusion | Infra | [Repo-Research/nemotron-tri-mode-diffusion/report.md](<../Repo-Research/nemotron-tri-mode-diffusion/report.md>) | Repo-Research | 6 | 206 | — |
 | sglang-research | Infra | [Repo-Research/sglang-research/report.md](<../Repo-Research/sglang-research/report.md>) | Repo-Research | 3 | 310 | 2026-10-16 |
-| this-that-model-research | Infra | [Repo-Research/this-that-model-research/report.md](<../Repo-Research/this-that-model-research/report.md>) | Repo-Research | 0 | 240 | — |
+| this-that-model-research | Infra | [Repo-Research/this-that-model-research/report.md](<../Repo-Research/this-that-model-research/report.md>) | Repo-Research | 0 | 245 | — |
 | vllm-research | Infra | [Repo-Research/vllm-research/report.md](<../Repo-Research/vllm-research/report.md>) | Repo-Research | 3 | 294 | 2026-10-16 |
-| **合计** | — | — | — | **44** | **30,504** | — |
+| **合计** | — | — | — | **44** | **30,509** | — |

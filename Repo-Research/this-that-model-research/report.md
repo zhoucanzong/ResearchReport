@@ -3,7 +3,7 @@
 > **声明**：本报告由 AI Agent 自动调研生成，未经官方确认；代码结论均以钉住 commit 逐行核验，引用前请回溯上游。
 > **上游**：`FLock-io/this-that-model`，默认分支 `main`，**钉住 commit `6af11c63c8bb260aa4bed2b7717f33f25decd16e`**（2026-10-16 clone 于 `/tmp`，`--filter=blob:none`，阅后删除；**本仓库不含该克隆的任何源码文件**）。
 > **配套上游**：权重/配置 `flock-io/this-that-model-1.0`（HF 模型卡 + `config.json`）；预印本 [arXiv:2609.23886](https://arxiv.org/abs/2609.23886)。
-> **口径（一条知识只主写一处）**：**代码事实写在本条目**；模型卡/预印本口径只在章 4 对账，不复制；决策模型横向对比归 [`DecisionModels-research`](../../../LLM-Research/TechnicalTopics/DecisionModels-research/report.md)。
+> **口径（一条知识只主写一处）**：**代码事实写在本条目**；模型卡/预印本口径只在章 4 对账，不复制；决策模型横向对比归 [`DecisionModels-research`](../../LLM-Research/TechnicalTopics/DecisionModels-research/report.md)。
 > **证据等级（每条只取一个主等级）**：`[精读原文]` 读取钉住 SHA 的源码 / 仓库文档 / 上游 `config.json` 并逐行核对（下文区分「代码事实」与「文档自述」）；`[摘要级]` 仅外部页面自述、未在代码中确证；`[二手]` 第三方转述；`[受限核验]` 需下载权重或私有资源才能确证。
 
 ---
@@ -50,7 +50,7 @@
 | 生成式解码 + 解析选项字母 | ❌ **无** | `thisthat/model.py` 无 decode loop；选项之外「不可表示」 | **排除** |
 | 逐选项 `[MASK]` 占位打分（Laya 式） | ❌ **无** | `thisthat/prompt.py` 无 mask 占位符 | **排除** |
 
-**结论**：本仓库是「**隐藏状态直读 + tied LM head 标签行内积 + 受限 softmax**」。它既不是微调分类头，也**不是**「独立于 LM head 的专用打分头」——这一点是对 `DecisionModels-research` 说法的主要修正（章 4）。
+**结论**：本仓库是「**隐藏状态直读 + tied LM head 标签行内积 + 受限 softmax**」（`thisthat/backends/torch_backend.py:85`、`thisthat/backends/mlx_backend.py:112`）。它既不是微调分类头，也**不是**「独立于 LM head 的专用打分头」——这一点是对 `DecisionModels-research` 说法的主要修正（章 4）。
 
 ### 2.2 读数矩阵来自哪里
 
@@ -112,22 +112,22 @@ thisthat/server.py:103                    "confidence": d.confidence, "latency_m
 
 ## 4. 与 `DecisionModels-research` 条目的对账
 
-> 对账对象（均为 `[二手]`/`[摘要级]` 的模型卡口径）：[taxonomy.md](../../../LLM-Research/TechnicalTopics/DecisionModels-research/taxonomy.md)、[open-implementations.md](../../../LLM-Research/TechnicalTopics/DecisionModels-research/open-implementations.md)、[report.md](../../../LLM-Research/TechnicalTopics/DecisionModels-research/report.md)。
+> 对账对象（均为 `[二手]`/`[摘要级]` 的模型卡口径）：[taxonomy.md](../../LLM-Research/TechnicalTopics/DecisionModels-research/taxonomy.md)、[open-implementations.md](../../LLM-Research/TechnicalTopics/DecisionModels-research/open-implementations.md)、[report.md](../../LLM-Research/TechnicalTopics/DecisionModels-research/report.md)。
 
 | # | DecisionModels 说法（出处） | 代码事实（本条目锚点） | 判定 |
 | :-- | :-- | :-- | :-- |
 | R1 | 「隐藏状态直读 + 声明标签 token 打分」（`open-implementations.md:26`） | `torch_backend.py:83`、`:85`、`:86` | **一致** |
 | R2 | 「**不是**在全词表 LM head 上取字母 token 概率」+ 归入「**专用打分头**」（`open-implementations.md:32`、`:49`） | 读数矩阵**就是** LM head 的标签行（`torch_backend.py:85`；tied 见 `mlx_backend.py:112` + `config.json` `tie_word_embeddings=True`） | **需修正**：应写「复用 tied LM head 的标签行做受限打分；**无独立分类头**」 |
 | R3 | 「选项上限 255，≤10 用 (A)…(J)」（`taxonomy.md:99`、`open-implementations.md:51`） | `types.py:7`、`prompt.py:35` | **一致** |
-| R4 | 「支撑集 = 选项表，选项之外**不可表示**」（`taxonomy.md:99`、`report.md:152`） | `torch_backend.py:88`、`model.py:10-12`（文档自述与代码掩码相符） | **一致** |
-| R5 | 「同 state 多问题共享一次前向、条件独立」（`report.md:184`） | `model.py:132`（一次调用取全部 slot）、`prompt.py:3-5` | **一致** |
+| R4 | 「支撑集 = 选项表，选项之外**不可表示**」（`taxonomy.md:99`、`report.md:152`） | `torch_backend.py:88`（越界项置 `-inf`，代码事实与文档自述相符） | **一致** |
+| R5 | 「同 state 多问题共享一次前向、条件独立」（`report.md:184`） | `model.py:132`（一次调用取全部 slot） | **一致** |
 | R6 | 「31 ms / 30 ms（`open-implementations.md:79`：两份材料、条件未给出）」 | 仓库记录：`results_latency_mlx.json` `mean 25.24 / p90 30.50 ms`（n=100，68 题，mlx float16）；`results_latency_mps.json` `mean 113.34 ms`；**无 30.9** | **未确证 / 口径不可并表**：应记为「同一量级，条件不同」 |
 | R7 | 「`answer.confidence` 是 calibrated，阈值有意义」（`open-implementations.md:81`） | `types.py:52-53`（confidence = argmax 概率）；校准是事后测试（`test_published_results.py:49`） | **需修正口径**：非独立校准头 / 非损失项，属**自测主张** |
 | R8 | 「1.88B、24 层中 18 层 DeltaNet、MIT」（`report.md:416`） | `config.json`：24 层 = 18 `linear_attention` + 6 `full_attention`、`hidden_size=2048`；`LICENSE:1` MIT；`README.md:52` | **一致**（参数量 1.88B 由 README/权重规模自述，`[摘要级]`） |
 
 **拟提交给 `DecisionModels-research` 侧的一句话（不复制本文细节）**：
 
-> `this-that-model` 的读数**复用 tied LM head 的标签行**（无独立分类头），实现细节见 [this-that-model-research/report.md](../../this-that-model-research/report.md) 章 2–3。
+> `this-that-model` 的读数**复用 tied LM head 的标签行**（无独立分类头），实现细节见 [this-that-model-research/report.md](report.md) 章 2–3。
 
 > ⚠️ **写权协调**：`DecisionModels-research/` 由另一位同事在改（远端同时有 `research/decisionmodels-yanyan`、`research/decisionmodels-fix-yanyan`、`research/decisionmodels-papers-yanyan` 三条在途分支），**本轮未改动该条目任何文件**，R2/R6/R7 的修正交由该条目负责人落地，避免同路径并行写冲突。
 
@@ -180,8 +180,11 @@ thisthat/server.py:103                    "confidence": d.confidence, "latency_m
 | A20 | tied 投影取标签列（无独立 head 权重） | `thisthat/backends/mlx_backend.py:112` | `logits = backbone.embed_tokens.as_linear(h)[:, self._labels]` | 命中 |
 | A21 | 越界选项置 `-inf`（MLX） | `thisthat/backends/mlx_backend.py:117` | `return np.where(past, -np.inf, out)...` | 命中 |
 | A22 | 服务端按需暴露 confidence | `thisthat/server.py:103` | `"confidence": d.confidence, "latency_ms": ...` | 命中 |
+| A23 | `build(...)` 为每个 (state, questions) 生成 slots / n_options | `thisthat/model.py:110` | `built = [build(self.tokenizer, s, q, layout=layout, ...)]` | 命中 |
+| A24 | `Question` 构造校验（≥2、≤255、互斥） | `thisthat/types.py:22` | `def __post_init__(self):` | 命中 |
+| A25 | `confidence` 为属性而非独立头输出 | `thisthat/types.py:52` | `def confidence(self) -> float:` | 命中 |
 
-**未命中数 = 0**（22/22 命中；无一条落在注释行、文档串或空行）。
+**未命中数 = 0**（25/25 命中；无一条落在注释行、文档串或空行）。
 
 ---
 
@@ -198,7 +201,7 @@ thisthat/server.py:103                    "confidence": d.confidence, "latency_m
 
 | 检查 | 结果 |
 | :-- | :-- |
-| `P △ T`（正文锚点集 vs 表内锚点集 对称差） | **0**（等式成立：正文出现的锚点 = 表内锚点 = 22 条） |
+| `P △ T`（正文锚点集 vs 表内锚点集 对称差） | **0**（等式成立：正文出现的锚点 = 表内锚点 = 25 条） |
 | 旧值残留（历史锚点仍在正文） | **0**（首次建立，无旧值） |
 | 锚点落点校验（注释 / 文档串 / 空行） | **未命中 0** |
 | 未命中数 | **0** |
@@ -218,12 +221,14 @@ thisthat/server.py:103                    "confidence": d.confidence, "latency_m
 | [flock-io/this-that-model-1.0](https://huggingface.co/flock-io/this-that-model-1.0) | 外链 | HTTP 状态码 | **200** |
 | [config.json](https://huggingface.co/flock-io/this-that-model-1.0/raw/main/config.json) | 外链 | HTTP 状态码 + 字段解析 | **200**（`tie_word_embeddings=True`、24 层、18 linear + 6 full 已解析） |
 | [arXiv:2609.23886](https://arxiv.org/abs/2609.23886) | 外链 | arXiv Atom API 编号↔题名核对 | **通过** |
-| [DecisionModels report.md](../../../LLM-Research/TechnicalTopics/DecisionModels-research/report.md) | 相对链接 | 仓库文件存在性 | **通过** |
-| [taxonomy.md](../../../LLM-Research/TechnicalTopics/DecisionModels-research/taxonomy.md) | 相对链接 | 仓库文件存在性 | **通过** |
-| [open-implementations.md](../../../LLM-Research/TechnicalTopics/DecisionModels-research/open-implementations.md) | 相对链接 | 仓库文件存在性 | **通过** |
-| [this-that-model-research/report.md](../../this-that-model-research/report.md)（章 4 交付语自指） | 相对链接 | 仓库文件存在性 | **通过** |
+| [DecisionModels report.md](../../LLM-Research/TechnicalTopics/DecisionModels-research/report.md) | 相对链接 | 仓库文件存在性 | **通过** |
+| [taxonomy.md](../../LLM-Research/TechnicalTopics/DecisionModels-research/taxonomy.md) | 相对链接 | 仓库文件存在性 | **通过** |
+| [open-implementations.md](../../LLM-Research/TechnicalTopics/DecisionModels-research/open-implementations.md) | 相对链接 | 仓库文件存在性 | **通过** |
+| [this-that-model-research/report.md](report.md)（章 4 交付语自指） | 相对链接 | 仓库文件存在性 | **通过** |
 
 **不可达 / 反爬条目及处置**：本轮无。权重本体（safetensors）**未下载**：涉及权重内部数值的断言本条目一律不下结论（标 `[受限核验]` 并列入章 9）。
+
+> **过程留痕**：初稿把相对链接误写成三层 `../`（正确为两层），按上表口径回测出 **9 处失效**，已全部修正为 **0 失效**；外链 6 条全部 200。
 
 ---
 

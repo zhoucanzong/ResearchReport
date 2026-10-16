@@ -16,8 +16,8 @@
 | **条目数**（`report.md`） | **48** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 7 |
 | 条目子文档数 | 44 |
-| 条目正文行数（剔除 front-matter） | 30,504 |
-| 条目字节 | 1,842,019 B |
+| 条目正文行数（剔除 front-matter） | 30,509 |
+| 条目字节 | 1,842,620 B |
 | 带 front-matter 的条目 | 2 |
 | 带合法 `date` 的条目 | 2 |
 | 文档（除生成物外的全部 `.md`） | 101 |
@@ -34,8 +34,8 @@
 | --- | --: | --: | --: | --: | --- |
 | AIGC-Research | 18 | 19 | 13,483 | 688,526 B | [#AIGC-Research](#aigc-research) |
 | LLM-Research | 26 | 59 | 15,971 | 1,048,688 B | [#LLM-Research](#llm-research) |
-| Repo-Research | 4 | 17 | 1,050 | 104,805 B | [#Repo-Research](#repo-research) |
-| **合计** | **48** | **101** | **30,504** | **1,842,019 B** | — |
+| Repo-Research | 4 | 17 | 1,055 | 105,406 B | [#Repo-Research](#repo-research) |
+| **合计** | **48** | **101** | **30,509** | **1,842,620 B** | — |
 
 ## 分面索引
 
@@ -668,10 +668,10 @@
   </details>
 
   <details>
-  <summary><b>this-that-model-research</b> · <code>Repo-Research/this-that-model-research/report.md</code> · 240 行 · —</summary>
+  <summary><b>this-that-model-research</b> · <code>Repo-Research/this-that-model-research/report.md</code> · 245 行 · —</summary>
   
 
-    * **条目**：[Repo-Research/this-that-model-research/report.md](<Repo-Research/this-that-model-research/report.md>)（240 行 / 23,738 B）
+    * **条目**：[Repo-Research/this-that-model-research/report.md](<Repo-Research/this-that-model-research/report.md>)（245 行 / 24,339 B）
     * **专题目录**：`Repo-Research/this-that-model-research`
     * **元数据**：type=`—` · domain=`Repo-Research` · subject=`this-that-model-research` · date=`—` · status=`—`
     * **子文档（0）**

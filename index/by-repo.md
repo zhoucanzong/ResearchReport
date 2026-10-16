@@ -60,7 +60,7 @@
 ## Repo-Research (2)
 
 * [Repo-Research/nemotron-tri-mode-diffusion/report.md](<../Repo-Research/nemotron-tri-mode-diffusion/report.md>) — 206 行
-* [Repo-Research/this-that-model-research/report.md](<../Repo-Research/this-that-model-research/report.md>) — 240 行
+* [Repo-Research/this-that-model-research/report.md](<../Repo-Research/this-that-model-research/report.md>) — 245 行
 
 ## https://github.com/sgl-project/sglang@2a08e261ecd4cdfb04ec354f9005f18b88108b7d (1)
 

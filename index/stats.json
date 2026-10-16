@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "02d2525f11a4296385572cf2e7329dac03a0185905ed13013338e6f58d660767",
+  "content_fingerprint": "6ace85a0d2731c09bfaddc8611dc8c90b9a64c77db11053993f7ec081cc3ef9d",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -17,8 +17,8 @@
     "with_front_matter": 2,
     "without_front_matter": 46,
     "with_date": 2,
-    "lines": 30504,
-    "bytes": 1842019,
+    "lines": 30509,
+    "bytes": 1842620,
     "children": 44
   },
   "documents": {
@@ -27,8 +27,8 @@
     "with_front_matter": 15,
     "named_report_md": 48,
     "named_readme_md": 4,
-    "lines": 43961,
-    "bytes": 2885027
+    "lines": 43966,
+    "bytes": 2885628
   },
   "libraries": {
     "AIGC-Research": {
@@ -86,12 +86,12 @@
         "TechnicalTopics": 0,
         "Other": 4
       },
-      "lines": 1050,
-      "bytes": 104805,
-      "lines_raw": 1068,
+      "lines": 1055,
+      "bytes": 105406,
+      "lines_raw": 1073,
       "dir_files": 18,
       "dir_md": 17,
-      "dir_bytes": 434186,
+      "dir_bytes": 434787,
       "du_sk": 456
     }
   },
@@ -100,10 +100,10 @@
     "library_entries": 48,
     "library_documents_md": 95,
     "library_dir_files": 97,
-    "library_dir_bytes": 2847305,
+    "library_dir_bytes": 2847906,
     "library_du_sk": 2972,
-    "library_entry_lines": 30504,
-    "library_entry_bytes": 1842019
+    "library_entry_lines": 30509,
+    "library_entry_bytes": 1842620
   },
   "version_control": {
     "tracked_total": 115,
@@ -199,9 +199,9 @@
       "Repo-Research": {
         "report_md": {
           "files": 4,
-          "lines": 1050,
-          "lines_raw": 1068,
-          "bytes": 104805
+          "lines": 1055,
+          "lines_raw": 1073,
+          "bytes": 105406
         },
         "report_md_by_category": {
           "ModelSeries": {
@@ -218,9 +218,9 @@
           },
           "Other": {
             "files": 4,
-            "lines": 1050,
-            "lines_raw": 1068,
-            "bytes": 104805
+            "lines": 1055,
+            "lines_raw": 1073,
+            "bytes": 105406
           }
         },
         "other_md": {
@@ -231,23 +231,23 @@
         },
         "dir_md": {
           "files": 17,
-          "lines": 6042,
-          "lines_raw": 6060,
-          "bytes": 417892
+          "lines": 6047,
+          "lines_raw": 6065,
+          "bytes": 418493
         }
       }
     },
     "repo_md": {
       "files": 101,
-      "lines": 43961,
-      "lines_raw": 44119,
-      "bytes": 2885027
+      "lines": 43966,
+      "lines_raw": 44124,
+      "bytes": 2885628
     },
     "library_md": {
       "files": 95,
-      "lines": 43200,
-      "lines_raw": 43358,
-      "bytes": 2830719
+      "lines": 43205,
+      "lines_raw": 43363,
+      "bytes": 2831320
     },
     "root_readme": {
       "files": 1,
