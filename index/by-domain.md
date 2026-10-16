@@ -59,8 +59,9 @@
 | [LLM-Research/TechnicalTopics/TrainingInfra-research/report.md](<../LLM-Research/TechnicalTopics/TrainingInfra-research/report.md>) | 大模型训练基础设施与分布式训练研究报告 | — | — | — |
 | [LLM-Research/TechnicalTopics/VLM-research/report.md](<../LLM-Research/TechnicalTopics/VLM-research/report.md>) | 多模态大模型（Vision-Language Models, VLM）研究报告 | — | — | — |
 
-## Repo-Research (1)
+## Repo-Research (2)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [Repo-Research/nemotron-tri-mode-diffusion/report.md](<../Repo-Research/nemotron-tri-mode-diffusion/report.md>) | Nemotron-Labs-Diffusion 阅读报告 | — | — | — |
+| [Repo-Research/sglang-research/report.md](<../Repo-Research/sglang-research/report.md>) | SGLang 仓库代码分析报告 | repo-research | 2026-10-16 | completed |

@@ -5,9 +5,9 @@
 **一个仓库收敛 AIGC / LLM / 论文深读全部研究产出**
 
 ![Collections](https://img.shields.io/badge/Collections-3-blue?style=flat-square)
-![Reports](https://img.shields.io/badge/Reports-43-green?style=flat-square)
+![Reports](https://img.shields.io/badge/Reports-44-green?style=flat-square)
 ![Topic](https://img.shields.io/badge/Topic-19-orange?style=flat-square)
-![Markdown](https://img.shields.io/badge/Markdown-74-lightgrey?style=flat-square)
+![Markdown](https://img.shields.io/badge/Markdown-78-lightgrey?style=flat-square)
 ![Updated](https://img.shields.io/badge/Updated-2026--10--16-informational?style=flat-square)
 
 </div>
@@ -62,7 +62,7 @@
 
 <br><br>
 
-<b>9</b> 个文件<br>2 个深度阅读项目<br>（非 Git 仓库，无库内 README）
+<b>13</b> 个文件<br>3 个深度阅读项目<br>（非 Git 仓库，无库内 README）
 
 <br><br>
 
@@ -74,7 +74,7 @@
 
 > **AIGC-Research** 关注「生成」：图像 / 视频 / 3D / 音频 / 数字人。
 > **LLM-Research** 关注「理解与推理」：模型能力、Benchmark、训练与部署全栈，其中 DeepSeek、Qwen、SpeculativeDecoding 为多分册展开。
-> **Repo-Research** 关注「单个系统」：`mini-swe-agent` 源码级架构报告 + Nemotron-Labs-Diffusion 论文精读（计划、笔记、概念卡、原始提取、结构化 JSON）。
+> **Repo-Research** 关注「单个系统」：`mini-swe-agent` 源码级架构报告 + Nemotron-Labs-Diffusion 论文精读（计划、笔记、概念卡、原始提取、结构化 JSON）+ SGLang 推理引擎源码分析（调度器 / 前缀缓存 / 投机解码）。
 
 ---
 
@@ -101,14 +101,14 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 
 | 资料库 | 内容 | 条目（`report.md`） | 子文档 `.md` | 条目字节 | 目录内容字节 | `du -sk` |
 | :-- | :-- | --: | --: | --: | --: | --: |
-| 🎨 [AIGC-Research](AIGC-Research/) | 8 系列 + 9 专题 | 17 | 0 | 625,871 B | 633,246 B | 656 KB |
+| 🎨 [AIGC-Research](AIGC-Research/) | 8 系列 + 9 专题 | 17 | 0 | 625,871 B | 633,625 B | 656 KB |
 | 🤖 [LLM-Research](LLM-Research/) | 15 系列 + 10 专题 | 25 | 16 | 940,879 B | 1,252,315 B | 1308 KB |
-| 📑 [Repo-Research](Repo-Research/) | 2 个深读项目 | 1 | 7 | 13,183 B | 189,061 B | 204 KB |
-| **合计** | **3 个资料库** | **43** | **23** | **1,579,933 B ≈ 1.51 MiB** | **2,075,001 B ≈ 1.98 MiB** | **2,168 KB** |
+| 📑 [Repo-Research](Repo-Research/) | 3 个深读项目 | 2 | 9 | 43,693 B | 273,539 B | 292 KB |
+| **合计** | **3 个资料库** | **44** | **25** | **1,610,443 B ≈ 1.54 MiB** | **2,162,744 B ≈ 2.06 MiB** | **2,256 KB** |
 
 > 本表数字由 [`scripts/library_index.py`](scripts/library_index.py) 产出，机器可读版见 [`index/stats.json`](index/stats.json)；**条目 = 文件名字面为 `report.md` 的主文档**，同目录其它 `.md`（分册 / `plan.md` / `notes/` / `raw-extracts/` 等）是它的**子文档**。
 > 各库 `README.md` 与 `docs/*.md` 既不是条目也不是子文档，不计入本表；「目录内容字节」不含 `.git` 且按脚本口径跳过隐藏目录；`du -sk` 含文件系统块开销，故大于字节数之和。
-> 加上根目录 [`README.md`](README.md)、[`docs/`](docs/) 4 个文件与 [`scripts/`](scripts/) 2 个文件，全仓库共 **74** 份 Markdown 文档；`git ls-files` 跟踪 **87** 个文件（含 [`INDEX.md`](INDEX.md) 与 [`index/`](index/) 共 9 个生成物）。
+> 加上根目录 [`README.md`](README.md)、[`docs/`](docs/) 4 个文件与 [`scripts/`](scripts/) 2 个文件，全仓库共 **78** 份 Markdown 文档；`git ls-files` 跟踪 **87** 个文件（含 [`INDEX.md`](INDEX.md) 与 [`index/`](index/) 共 9 个生成物）。
 > **索引入口**：[`INDEX.md`](INDEX.md)（总目录）· [`docs/team.md`](docs/team.md)（团队约定）。
 > **逐目录明细**（每个报告的行数 / 字节、统计方法与口径说明）见 **[docs/statistics.md](docs/statistics.md)**。
 

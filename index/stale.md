@@ -9,9 +9,11 @@
 
 判定口径：`status` 不是 active/current/ok/stable/published，或 `date` 早于 180 天。
 
-## 已标记（0）
+## 已标记（1）
 
-_无。_
+| 条目 | 原因 |
+| --- | --- |
+| [Repo-Research/sglang-research/report.md](<../Repo-Research/sglang-research/report.md>) | status=completed |
 
 ## 无 date 且无 status（无法判定，43）
 

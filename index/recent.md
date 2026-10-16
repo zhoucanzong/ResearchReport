@@ -9,7 +9,9 @@
 
 ## 最近 20 条（按 date 降序）
 
-_当前没有任何条目带合法 `date`（front-matter 共 0 份）。_
+| 条目 | date | 所属库 | 专题 |
+| --- | --- | --- | --- |
+| [Repo-Research/sglang-research/report.md](<../Repo-Research/sglang-research/report.md>) | 2026-10-16 | Repo-Research | sglang |
 
 ## 无 date 元数据（43）
 

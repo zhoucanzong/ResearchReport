@@ -7,7 +7,7 @@
 
 ---
 
-共 **43** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter。
+共 **44** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter。
 
 | 条目 | 所属库 | 路径 | 子报告数 | 行数 | 日期 |
 | --- | --- | --- | --: | --: | --- |
@@ -54,4 +54,5 @@
 | TrainingInfra-research | LLM-Research | [LLM-Research/TechnicalTopics/TrainingInfra-research/report.md](<../LLM-Research/TechnicalTopics/TrainingInfra-research/report.md>) | 0 | 720 | — |
 | VLM-research | LLM-Research | [LLM-Research/TechnicalTopics/VLM-research/report.md](<../LLM-Research/TechnicalTopics/VLM-research/report.md>) | 0 | 517 | — |
 | nemotron-tri-mode-diffusion | Repo-Research | [Repo-Research/nemotron-tri-mode-diffusion/report.md](<../Repo-Research/nemotron-tri-mode-diffusion/report.md>) | 6 | 206 | — |
-| **合计** | — | **43 条目** | **22** | **28,211** | — |
+| sglang-research | Repo-Research | [Repo-Research/sglang-research/report.md](<../Repo-Research/sglang-research/report.md>) | 3 | 310 | 2026-10-16 |
+| **合计** | — | **44 条目** | **25** | **28,521** | — |

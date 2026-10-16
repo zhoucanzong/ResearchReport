@@ -13,16 +13,16 @@
 
 | 指标 | 数量 |
 | --- | --- |
-| **条目数**（`report.md`） | **43** |
-| 条目子文档数 | 22 |
-| 条目正文行数（剔除 front-matter） | 28,211 |
-| 条目字节 | 1,579,933 B |
-| 带 front-matter 的条目 | 0 |
-| 带合法 `date` 的条目 | 0 |
-| 文档（除生成物外的全部 `.md`） | 74 |
+| **条目数**（`report.md`） | **44** |
+| 条目子文档数 | 25 |
+| 条目正文行数（剔除 front-matter） | 28,521 |
+| 条目字节 | 1,610,443 B |
+| 带 front-matter 的条目 | 1 |
+| 带合法 `date` 的条目 | 1 |
+| 文档（除生成物外的全部 `.md`） | 78 |
 | 其中文件名 `README.md` | 4 |
-| 纳入版本控制的文件 | 87 |
-| 纳入版本控制的 `.md` | 82 |
+| 纳入版本控制的文件 | 91 |
+| 纳入版本控制的 `.md` | 86 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 
@@ -32,8 +32,8 @@
 | --- | --: | --: | --: | --: | --- |
 | AIGC-Research | 17 | 18 | 12,903 | 625,871 B | [#AIGC-Research](#aigc-research) |
 | LLM-Research | 25 | 42 | 15,102 | 940,879 B | [#LLM-Research](#llm-research) |
-| Repo-Research | 1 | 8 | 206 | 13,183 B | [#Repo-Research](#repo-research) |
-| **合计** | **43** | **74** | **28,211** | **1,579,933 B** | — |
+| Repo-Research | 2 | 12 | 516 | 43,693 B | [#Repo-Research](#repo-research) |
+| **合计** | **44** | **78** | **28,521** | **1,610,443 B** | — |
 
 ## 分面索引
 
@@ -558,7 +558,7 @@
         * [speculative-eagle-series.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-eagle-series.md>) — 113 行 / 11,902 B
         * [speculative-edge-cloud-hardware.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-edge-cloud-hardware.md>) — 182 行 / 18,130 B
         * [speculative-multimodal.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-multimodal.md>) — 152 行 / 15,663 B
-        * [speculative-stochastic-verification.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-stochastic-verification.md>) — 233 行 / 25,109 B
+        * [speculative-stochastic-verification.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-stochastic-verification.md>) — 234 行 / 28,374 B
         * [speculative-systems-and-frameworks.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-systems-and-frameworks.md>) — 206 行 / 18,394 B
         * [speculative-training-optimization.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/speculative-training-optimization.md>) — 128 行 / 14,086 B
 
@@ -590,10 +590,10 @@
 
 </details>
 
-### Repo-Research（1 条目 / 8 文档）
+### Repo-Research（2 条目 / 12 文档）
 
 <details>
-<summary><b>其它 Other（1 条目 / 6 子文档）</b></summary>
+<summary><b>其它 Other（2 条目 / 9 子文档）</b></summary>
 
   <details>
   <summary><b>nemotron-tri-mode-diffusion</b> · <code>Repo-Research/nemotron-tri-mode-diffusion/report.md</code> · 206 行 · —</summary>
@@ -609,6 +609,20 @@
         * [raw-extracts/nemotron-tri-mode-fulltext.md](<Repo-Research/nemotron-tri-mode-diffusion/raw-extracts/nemotron-tri-mode-fulltext.md>) — 2430 行 / 98,525 B
         * [raw-extracts/pdf-fu_等__nemotronlabsdiffusion_a_trimode_language_model_unifying_autoregressive_dif.md](<Repo-Research/nemotron-tri-mode-diffusion/raw-extracts/pdf-fu_等__nemotronlabsdiffusion_a_trimode_language_model_unifying_autoregressive_dif.md>) — 28 行 / 1,141 B
         * [sources-index.md](<Repo-Research/nemotron-tri-mode-diffusion/sources-index.md>) — 41 行 / 2,363 B
+
+  </details>
+
+  <details>
+  <summary><b>sglang-research</b> · <code>Repo-Research/sglang-research/report.md</code> · 310 行 · 2026-10-16</summary>
+  
+
+    * **条目**：[Repo-Research/sglang-research/report.md](<Repo-Research/sglang-research/report.md>)（310 行 / 30,510 B）
+    * **专题目录**：`Repo-Research/sglang-research`
+    * **元数据**：type=`repo-research` · domain=`Repo-Research` · subject=`sglang` · date=`2026-10-16` · status=`completed`
+    * **子文档（3）**
+        * [claim-audit.md](<Repo-Research/sglang-research/claim-audit.md>) — 147 行 / 11,012 B
+        * [scheduler-and-prefix-cache.md](<Repo-Research/sglang-research/scheduler-and-prefix-cache.md>) — 174 行 / 19,351 B
+        * [speculative-decoding-path.md](<Repo-Research/sglang-research/speculative-decoding-path.md>) — 230 行 / 23,714 B
 
   </details>
 
