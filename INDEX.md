@@ -17,7 +17,7 @@
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 4 |
 | 条目子文档数 | 72 |
 | 条目正文行数（剔除 front-matter） | 30,967 |
-| 条目字节 | 1,893,752 B |
+| 条目字节 | 1,893,876 B |
 | 带 front-matter 的条目 | 4 |
 | 带合法 `date` 的条目 | 4 |
 | 文档（除生成物外的全部 `.md`） | 133 |
@@ -35,10 +35,10 @@
 | Models | 23 | 29 | 14,816 | 900,388 B | [板块页 →](<Models/README.md>) |
 | LLM | 8 | 25 | 5,217 | 340,987 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,805 | 318,086 B | [板块页 →](<VisualGen/README.md>) |
-| WorldModel | 2 | 31 | 1,207 | 129,030 B | [板块页 →](<WorldModel/README.md>) |
+| WorldModel | 2 | 31 | 1,207 | 129,154 B | [板块页 →](<WorldModel/README.md>) |
 | Infra | 3 | 15 | 1,866 | 100,011 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 4 | 18 | 1,056 | 105,250 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **48** | **133** | **30,967** | **1,893,752 B** | — |
+| **合计** | **48** | **133** | **30,967** | **1,893,876 B** | — |
 
 ## 分面索引
 
@@ -570,15 +570,15 @@
   <summary><b>EmbodiedVLA</b> · <code>WorldModel/EmbodiedVLA/report.md</code> · 609 行 · —</summary>
   
 
-    * **条目**：[WorldModel/EmbodiedVLA/report.md](<WorldModel/EmbodiedVLA/report.md>)（609 行 / 68,733 B）
+    * **条目**：[WorldModel/EmbodiedVLA/report.md](<WorldModel/EmbodiedVLA/report.md>)（609 行 / 68,857 B）
     * **专题目录**：`WorldModel/EmbodiedVLA`
     * **元数据**：type=`—` · domain=`WorldModel` · subject=`EmbodiedVLA` · date=`—` · status=`—`
     * **子文档（13）**
         * [papers/2303.04137-diffusion-policy.md](<WorldModel/EmbodiedVLA/papers/2303.04137-diffusion-policy.md>) — 246 行 / 38,524 B
         * [papers/2307.15818-rt2.md](<WorldModel/EmbodiedVLA/papers/2307.15818-rt2.md>) — 222 行 / 29,179 B
         * [papers/2310.08864-open-x-embodiment.md](<WorldModel/EmbodiedVLA/papers/2310.08864-open-x-embodiment.md>) — 241 行 / 26,488 B
-        * [papers/2403.12945-droid.md](<WorldModel/EmbodiedVLA/papers/2403.12945-droid.md>) — 223 行 / 21,288 B
-        * [papers/2405.05941-simpler.md](<WorldModel/EmbodiedVLA/papers/2405.05941-simpler.md>) — 289 行 / 37,202 B
+        * [papers/2403.12945-droid.md](<WorldModel/EmbodiedVLA/papers/2403.12945-droid.md>) — 225 行 / 22,396 B
+        * [papers/2405.05941-simpler.md](<WorldModel/EmbodiedVLA/papers/2405.05941-simpler.md>) — 289 行 / 37,844 B
         * [papers/2406.09246-openvla.md](<WorldModel/EmbodiedVLA/papers/2406.09246-openvla.md>) — 250 行 / 28,667 B
         * [papers/2410.24164-pi0.md](<WorldModel/EmbodiedVLA/papers/2410.24164-pi0.md>) — 239 行 / 24,171 B
         * [papers/2501.09747-fast.md](<WorldModel/EmbodiedVLA/papers/2501.09747-fast.md>) — 250 行 / 23,574 B

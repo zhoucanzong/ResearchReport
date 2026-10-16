@@ -26,8 +26,8 @@
 * [papers/2303.04137-diffusion-policy.md](<EmbodiedVLA/papers/2303.04137-diffusion-policy.md>) — 246 行 / 38,524 B
 * [papers/2307.15818-rt2.md](<EmbodiedVLA/papers/2307.15818-rt2.md>) — 222 行 / 29,179 B
 * [papers/2310.08864-open-x-embodiment.md](<EmbodiedVLA/papers/2310.08864-open-x-embodiment.md>) — 241 行 / 26,488 B
-* [papers/2403.12945-droid.md](<EmbodiedVLA/papers/2403.12945-droid.md>) — 223 行 / 21,288 B
-* [papers/2405.05941-simpler.md](<EmbodiedVLA/papers/2405.05941-simpler.md>) — 289 行 / 37,202 B
+* [papers/2403.12945-droid.md](<EmbodiedVLA/papers/2403.12945-droid.md>) — 225 行 / 22,396 B
+* [papers/2405.05941-simpler.md](<EmbodiedVLA/papers/2405.05941-simpler.md>) — 289 行 / 37,844 B
 * [papers/2406.09246-openvla.md](<EmbodiedVLA/papers/2406.09246-openvla.md>) — 250 行 / 28,667 B
 * [papers/2410.24164-pi0.md](<EmbodiedVLA/papers/2410.24164-pi0.md>) — 239 行 / 24,171 B
 * [papers/2501.09747-fast.md](<EmbodiedVLA/papers/2501.09747-fast.md>) — 250 行 / 23,574 B
