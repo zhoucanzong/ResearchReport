@@ -8,6 +8,8 @@
 
 覆盖 **8 个模型 / 系列 + 10 个技术专题** · 重点关注 **模型结构演进**
 
+> 🧩 板块归类见[根 README](../README.md)：**Models**（8 模型系列）+ **VisualGen**（8 专题）+ **WorldModel**（2 专题）。
+
 [![Monorepo](https://img.shields.io/badge/monorepo-ResearchReport-6f42c1?style=flat-square)](https://github.com/zhoucanzong/ResearchReport)
 [![Reports](https://img.shields.io/badge/Reports-18-blue?style=flat-square)](.)
 [![Files](https://img.shields.io/badge/Files-18-green?style=flat-square)](.)

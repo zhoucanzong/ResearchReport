@@ -8,6 +8,8 @@
 
 覆盖 **15 个主流模型 / 系列 + 11 个技术专题** · 持续更新中
 
+> 🧩 板块归类见[根 README](../README.md)：**Models**（15 模型系列）+ **LLM**（8 专题）+ **Infra**（3 专题）。
+
 [![Monorepo](https://img.shields.io/badge/monorepo-ResearchReport-6f42c1?style=flat-square)](https://github.com/zhoucanzong/ResearchReport)
 [![Reports](https://img.shields.io/badge/Reports-43-blue?style=flat-square)](.)
 [![Files](https://img.shields.io/badge/Files-43-green?style=flat-square)](.)

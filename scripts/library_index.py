@@ -14,15 +14,21 @@
   `scripts/`）、`docs/*.md` 都是文档，但**不是条目**。
 * **生成物**：`INDEX.md`、`index/*.md`、`index/stats.json` —— 由本脚本产出，
   **不计入**条目或文档统计（否则「跑一次脚本，数字就变一次」，无法复现）。
-* **front-matter**：当前 0 份。索引与统计必须在无元数据时优雅退化（显示 `—`）。
+* **front-matter**：目前仅 2 份条目带 `date`。索引与统计必须在无元数据时优雅退化
+  （显示 `—`）；「最近更新」可按配置回退到 `git log -1 --format=%cs`（最近提交日）。
 
 ## 设计原则
 
 1. **只加不改**：本脚本对条目文件是纯只读的，绝不删除、移动、重命名或改写它们。
-   唯一的写行为是把 `INDEX.md`、`index/*.md`、`index/stats.json` 写到 ``--out-root``。
+   写行为只有两处：把 `INDEX.md`、`index/*.md`、`index/stats.json` 写到
+   ``--out-root``；在根 `README.md` 里幂等替换 ``<!-- SCRIPT:* START/END -->``
+   标记之间的区块（``<!-- STATIC -->`` 文案与标记本身永不触碰）。
 2. **可复现**：给定相同的仓库状态，输出逐字节一致（`--today` 用于钉住日期）。
 3. **零第三方依赖**：有 PyYAML 就用它解析 front-matter，没有就退回内置逐行解析器。
-4. **行数口径**：`lines`（剔除 front-matter）与 `lines_raw`（文件原始行数）都产出。
+4. **口径可审计**：`lines`（剔除 front-matter）与 `lines_raw`（文件原始行数）都产出。
+5. **板块配置外置**：全部板块映射在 `scripts/panels.json`；脚本里不硬编码任何目录名。
+   每个条目必须**恰好**归入一个面板（未归类 / 重复归类 / 代表条目缺 `report.md`
+   都会在生成前失败并返回非零）。
 
 用法::
 
@@ -34,12 +40,14 @@ from __future__ import annotations
 
 import argparse
 import datetime as _dt
+import fnmatch
 import hashlib
 import json
 import os
 import re
 import subprocess
 import sys
+import urllib.parse
 
 # --------------------------------------------------------------------------
 # 常量 / 契约
@@ -466,6 +474,20 @@ def du_sk(path: str):
         return None
 
 
+def du_sk_worktree(repo_root: str):
+    """工作树 `du -sk`（**扣除 `.git`**）—— 与 `docs/statistics.md` §2 口径一致。
+
+    不直接量 `du -sk .`：那会把 `.git` 算进去，于是「每提交一次、数字就变一次」，
+    生成物无法在提交后复现（`--write-stats` 重跑必然产生 diff）。`.git` 的大小
+    与工作树内容无关，减掉它之后该值只随仓库内容变化。
+    """
+    total = du_sk(repo_root)
+    if total is None:
+        return None
+    git = du_sk(os.path.join(repo_root, ".git"))
+    return total - (git or 0)
+
+
 def content_fingerprint(docs: list) -> str:
     """条目 + 文档内容的确定性指纹（sha256）。
 
@@ -521,6 +543,7 @@ def build_stats(repo_root: str, docs: list) -> dict:
             "document": "文档 = 除 INDEX.md / index/* 生成物以外的所有 .md（含各 README.md、docs/*.md）",
             "lines": "正文行数，剔除 front-matter 围栏块（含首尾 --- 行）；lines_raw 为文件原始行数",
             "du_sk": "磁盘块占用（du -sk），含文件系统块开销，故大于字节数之和；不可用时为 null",
+        "du_worktree": "工作树 du -sk **扣除 `.git`**（与 docs/statistics.md §2 同口径）；含块开销，随文件系统分配浮动",
         "version_control": "版本控制计数取自 git ls-files，**含生成物本身**；条目 / 文档计数则排除生成物",
         "repo_root": "相对运行目录的仓库根（按 `--repo-root .` 运行时为 `.`）：不写机器相关绝对路径，保证同一内容在不同目录下产出逐字节一致",
         },
@@ -564,7 +587,7 @@ def build_stats(repo_root: str, docs: list) -> dict:
         },
         "doc_stats": _doc_stats(repo_root, docs, entries, tracked),
         "du": {
-            "worktree_including_git": du_sk(repo_root),
+            "worktree_excluding_git": du_sk_worktree(repo_root),
         },
     }
     return stats
@@ -967,6 +990,289 @@ def render_facets(entries: list, out_root: str, dry_run: bool, args) -> dict:
 
 
 # --------------------------------------------------------------------------
+# 板块（scripts/panels.json）
+# --------------------------------------------------------------------------
+
+#: 板块配置：**所有**板块映射都在这里，脚本里不硬编码任何目录名。
+PANELS_FILE = "scripts/panels.json"
+ENTRY_MARK = "-research"
+DATE_SOURCE_FRONT_MATTER = "front-matter date"
+DATE_SOURCE_GIT = "最近提交日"
+TOPIC_CATEGORY = "TechnicalTopics"
+
+
+class ConfigError(Exception):
+    """板块配置或 README 契约不满足 —— 属于「生成前就必须失败」的错误。"""
+
+
+def load_panels(repo_root: str) -> dict:
+    """读取并校验 ``scripts/panels.json``。"""
+    path = os.path.join(repo_root, PANELS_FILE)
+    try:
+        with open(path, "r", encoding="utf-8") as fh:
+            cfg = json.load(fh)
+    except OSError as exc:
+        raise ConfigError(f"无法读取板块配置 {PANELS_FILE}：{exc}")
+    except json.JSONDecodeError as exc:
+        raise ConfigError(f"板块配置 {PANELS_FILE} 不是合法 JSON：{exc}")
+
+    if not isinstance(cfg, dict):
+        raise ConfigError(f"{PANELS_FILE} 顶层必须是 JSON 对象")
+    panels = cfg.get("panels")
+    if not isinstance(panels, list) or not panels:
+        raise ConfigError(f"{PANELS_FILE} 缺少非空的 panels 列表")
+
+    seen = set()
+    for panel in panels:
+        if not isinstance(panel, dict):
+            raise ConfigError(f"panels 元素必须是对象：{panel!r}")
+        for key in ("id", "title", "emoji", "tagline", "match", "representatives"):
+            if key not in panel:
+                raise ConfigError(f"面板缺少字段 `{key}`：{panel.get('id', panel)}")
+        if panel["id"] in seen:
+            raise ConfigError(f"面板 id 重复：{panel['id']}")
+        seen.add(panel["id"])
+        for key in ("match", "representatives"):
+            if not isinstance(panel[key], list) or not panel[key]:
+                raise ConfigError(f"面板 {panel['id']} 的 `{key}` 必须是非空列表")
+
+    limit = cfg.get("recent_limit")
+    if not isinstance(limit, int) or isinstance(limit, bool) or limit < 1:
+        raise ConfigError(f"recent_limit 必须是正整数：{limit!r}")
+    fallback = cfg.get("date_fallback")
+    if fallback not in ("none", "git"):
+        raise ConfigError(f"date_fallback 只能是 `none` 或 `git`：{fallback!r}")
+    return cfg
+
+
+def match_panels(entries: list, cfg: dict) -> tuple:
+    """把每个条目目录映射到**唯一**面板。
+
+    返回 ``(mapping, unassigned, duplicated)``；``mapping`` 的键是条目
+    ``report.md`` 的仓库相对路径。函数本身只计算，不退出 —— 由调用方决定。
+    """
+    panels = cfg["panels"]
+    mapping, unassigned, duplicated = {}, [], []
+    for doc in sorted(entries, key=lambda d: d["path"]):
+        directory = entry_dir(doc["path"])
+        hits = [p for p in panels
+                if any(fnmatch.fnmatchcase(directory, pat) for pat in p["match"])]
+        if not hits:
+            unassigned.append((doc["path"], directory))
+        elif len(hits) > 1:
+            duplicated.append((doc["path"], [p["id"] for p in hits]))
+        else:
+            mapping[doc["path"]] = hits[0]
+    return mapping, unassigned, duplicated
+
+
+def panel_representatives(repo_root: str, cfg: dict) -> list:
+    """代表条目里必须存在真实 ``report.md``；返回缺失清单。"""
+    missing = []
+    for panel in cfg["panels"]:
+        for rep in panel["representatives"]:
+            if not os.path.isfile(os.path.join(repo_root, rep, ENTRY_BASENAME)):
+                missing.append((panel["id"], rep))
+    return missing
+
+
+def validate_panels(entries: list, cfg: dict, repo_root: str) -> tuple:
+    """生成前的板块校验：未归类 / 重复归类 / 代表条目缺 report.md 都必须为 0。"""
+    mapping, unassigned, duplicated = match_panels(entries, cfg)
+    missing = panel_representatives(repo_root, cfg)
+
+    print(f"板块校验：条目 {len(entries)} · 已归类 {len(mapping)} · "
+          f"未归类 {len(unassigned)} · 重复归类 {len(duplicated)} · "
+          f"代表条目缺失 {len(missing)}")
+    for path, directory in unassigned:
+        print(f"  [未归类]   {directory}  <- {path}")
+    for path, ids in duplicated:
+        print(f"  [重复归类] {path} -> {' + '.join(ids)}")
+    for pid, rep in missing:
+        print(f"  [代表条目无 {ENTRY_BASENAME}] 面板 {pid}: {rep}")
+
+    counts = {}
+    for panel in cfg["panels"]:
+        counts[panel["id"]] = sum(1 for p in mapping.values() if p["id"] == panel["id"])
+    print("  各面板条目数：" + " · ".join(
+        f"{p['title']}={counts[p['id']]}" for p in cfg["panels"]) + f"（合计 {sum(counts.values())}）")
+
+    return mapping, (unassigned, duplicated, missing)
+
+
+def git_last_commit_date(repo_root: str, rel_path: str) -> str:
+    """条目文件的「最近提交日」（``git log --follow -1 --format=%cs``）。"""
+    try:
+        res = subprocess.run(
+            ["git", "-C", repo_root, "log", "--follow", "-1", "--format=%cs", "--", rel_path],
+            capture_output=True, text=True, check=True,
+        )
+        return res.stdout.strip()
+    except Exception:
+        return ""
+
+
+def recent_rows(repo_root: str, entries: list, cfg: dict) -> list:
+    """「最近更新」行：优先 front-matter ``date``，缺失时按配置回退 git 最近提交日。"""
+    rows = []
+    for doc in entries:
+        if doc["date_valid"]:
+            rows.append({"doc": doc, "date": doc["date_iso"], "source": DATE_SOURCE_FRONT_MATTER})
+        elif cfg["date_fallback"] == "git":
+            date = git_last_commit_date(repo_root, doc["path"])
+            if date:
+                rows.append({"doc": doc, "date": date, "source": DATE_SOURCE_GIT})
+        # date_fallback=none 且无 front-matter date → 不进榜（避免用「—」占位）
+    rows.sort(key=lambda r: r["doc"]["path"])
+    # 稳定排序两级：日期降序；同日优先 front-matter 真值，再回退「最近提交日」。
+    rows.sort(key=lambda r: (r["date"], r["source"] == DATE_SOURCE_FRONT_MATTER), reverse=True)
+    return rows[:cfg["recent_limit"]]
+
+def entry_short_name(doc: dict) -> str:
+    """条目的短名：目录名去掉 `-research` 后缀（配置与索引都用它做展示名）。"""
+    name = os.path.basename(entry_dir(doc["path"])) or doc["filename"]
+    return name[: -len(ENTRY_MARK)] if name.endswith(ENTRY_MARK) else name
+
+
+# --------------------------------------------------------------------------
+# 根 README 的 SCRIPT 区块（幂等替换）
+# --------------------------------------------------------------------------
+
+README_FILE = "README.md"
+README_BLOCKS = ("badges", "panels", "topics", "recent", "index")
+
+
+def block_pattern(name: str):
+    return re.compile(
+        rf"(<!--\s*SCRIPT:{re.escape(name)} START[^>]*-->)(.*?)(<!--\s*SCRIPT:{re.escape(name)} END\s*-->)",
+        re.S,
+    )
+
+
+def generated_md_count(out_root: str = "") -> int:
+    """生成物里的 `.md` 个数：`INDEX.md` + `index/*.md`（stats.json 不算）。"""
+    return 1 + len(FACET_TITLES)
+
+
+def render_badges(stats: dict, topics: int, today: _dt.date) -> str:
+    md = stats["documents"]["md_total"] + generated_md_count()
+    updated = today.isoformat().replace("-", "--")
+    return "\n".join([
+        f"![Entries](https://img.shields.io/badge/Entries-{stats['entries']['total']}-green?style=flat-square)",
+        f"![Topics](https://img.shields.io/badge/Topics-{topics}-orange?style=flat-square)",
+        f"![Markdown](https://img.shields.io/badge/Markdown-{md}-lightgrey?style=flat-square)",
+        f"![Updated](https://img.shields.io/badge/Updated-{updated}-informational?style=flat-square)",
+    ])
+
+
+def render_panels_block(cfg: dict, mapping: dict, entries: list, label_limit: int = 12) -> str:
+    by_panel = {}
+    for doc in entries:
+        panel = mapping.get(doc["path"])
+        if panel is not None:
+            by_panel.setdefault(panel["id"], []).append(doc)
+
+    lines = ["| 板块 | 条目 | 里面有什么 | 代表条目 |", "| :-- | --: | :-- | :-- |"]
+    for panel in cfg["panels"]:
+        members = sorted(by_panel.get(panel["id"], []), key=lambda d: d["path"])
+        names = [entry_short_name(d) for d in members]
+        shown = "、".join(names[:label_limit]) + ("…" if len(names) > label_limit else "")
+        reps = []
+        for rep in panel["representatives"]:
+            reps.append(f"[{os.path.basename(rep)[: -len(ENTRY_MARK)]}]"
+                        f"(<{rep}/{ENTRY_BASENAME}>)")
+        lines.append(
+            f"| {panel['emoji']} **{panel['title']}** | {len(members)} | "
+            f"{panel['tagline']}：{shown} | {' · '.join(reps)} |"
+        )
+    return "\n".join(lines)
+
+
+def render_topics_block(entries: list, mapping: dict, panels: list) -> str:
+    """技术专题标签：按「库 → 面板配置顺序 → 路径」排序，保证可复现。"""
+    topics = [d for d in entries if d["category"] == TOPIC_CATEGORY]
+    order = {p["id"]: i for i, p in enumerate(panels)}
+    lib_order = {lib: i for i, lib in enumerate(LIBRARIES)}
+
+    def sort_key(doc):
+        panel = mapping.get(doc["path"])
+        return (lib_order.get(doc["top"], len(LIBRARIES)),
+                order.get(panel["id"], len(order)) if panel else len(order),
+                doc["path"])
+
+    return " · ".join(f"`{entry_short_name(d)}`" for d in sorted(topics, key=sort_key))
+
+
+def render_recent_block(rows: list, mapping: dict) -> str:
+    lines = ["| 条目 | 板块 | 日期 | 来源 |", "| :-- | :-- | :-- | :-- |"]
+    for row in rows:
+        doc = row["doc"]
+        panel = mapping.get(doc["path"])
+        lines.append(
+            f"| [{entry_short_name(doc)}](<{doc['path']}>) | "
+            f"{panel['title'] if panel else '—'} | {row['date']} | {row['source']} |"
+        )
+    return "\n".join(lines)
+
+
+def render_index_block(entries: list, mapping: dict) -> str:
+    lines = ["| 条目 | 板块 | 路径 |", "| :-- | :-- | :-- |"]
+    for doc in sorted(entries, key=lambda d: d["path"]):
+        panel = mapping.get(doc["path"])
+        lines.append(
+            f"| {entry_short_name(doc)} | {panel['title'] if panel else '—'} | "
+            f"[{doc['path']}](<{doc['path']}>) |"
+        )
+    return "\n".join(lines)
+
+
+def render_readme_blocks(cfg: dict, entries: list, stats: dict, mapping: dict,
+                         repo_root: str, today: _dt.date) -> dict:
+    topics = sum(1 for d in entries if d["category"] == TOPIC_CATEGORY)
+    return {
+        "badges": render_badges(stats, topics, today),
+        "panels": render_panels_block(cfg, mapping, entries),
+        "topics": render_topics_block(entries, mapping, cfg["panels"]),
+        "recent": render_recent_block(recent_rows(repo_root, entries, cfg), mapping),
+        "index": render_index_block(entries, mapping),
+    }
+
+
+def update_readme(repo_root: str, blocks: dict) -> tuple:
+    """在根 `README.md` 里幂等替换 SCRIPT 区块。
+
+    只动 ``<!-- SCRIPT:<name> START -->`` 与 ``<!-- SCRIPT:<name> END -->`` 之间的
+    内容；``<!-- STATIC -->`` 文案与标记本身逐字节保留。返回 (path, changed, missing)。
+    """
+    path = os.path.join(repo_root, README_FILE)
+    if not os.path.isfile(path):
+        return path, False, list(README_BLOCKS)
+
+    with open(path, "r", encoding="utf-8") as fh:
+        text = fh.read()
+
+    missing = [name for name in README_BLOCKS if not block_pattern(name).search(text)]
+    if missing:
+        return path, False, missing
+
+    original = text
+    for name in README_BLOCKS:
+        body = blocks[name]
+        pattern = block_pattern(name)
+
+        def _sub(match, body=body):
+            return f"{match.group(1)}\n{body}\n{match.group(3)}"
+
+        text = pattern.sub(_sub, text, count=1)
+
+    if text == original:
+        return path, False, []  # 已是最新：不写盘、不触碰 mtime
+    with open(path, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(text)
+    return path, True, []
+
+
+# --------------------------------------------------------------------------
 # 输出
 # --------------------------------------------------------------------------
 
@@ -1015,19 +1321,30 @@ def write_outputs(out_root: str, index_text: str, facets: dict, stats: dict | No
 
 
 def verify_links(written: list) -> list:
-    """自检：生成文件里的相对链接是否都指向真实存在的文件。"""
+    """自检：文件里的仓库内相对链接是否都指向真实存在的路径（文件或目录）。
+
+    同时识别 ``](<path>)`` 与 ``](path)`` 两种写法；``scheme://``（含
+    ``file://``）、``mailto:``、纯锚点一律跳过 —— 它们不是仓库内相对路径。
+    链接按 URL 解码后再判定，因此百分号编码（GitHub 可解析）不会被误报。
+    """
     offenders = []
-    pattern = re.compile(r"\]\(<([^>]+)>\)")
+    pattern = re.compile(r"\]\(<([^>]+)>\)|\]\(([^)\s]+)\)")
     for path in written:
         if not path.endswith(".md"):
             continue
         base = os.path.dirname(os.path.abspath(path))
         with open(path, "r", encoding="utf-8") as fh:
             for lineno, line in enumerate(fh, 1):
-                for target in pattern.findall(line):
-                    if "://" in target or target.startswith("#"):
+                for angle, plain in pattern.findall(line):
+                    target = (angle or plain).strip()
+                    if "://" in target or target.startswith("#") or target.startswith("mailto:"):
                         continue
-                    if not os.path.exists(os.path.normpath(os.path.join(base, target))):
+                    target = target.split("#")[0]
+                    if not target:
+                        continue
+                    resolved = os.path.normpath(
+                        os.path.join(base, urllib.parse.unquote(target)))
+                    if not os.path.exists(resolved):
                         offenders.append(f"{path}:{lineno} -> {target}")
     return offenders
 
@@ -1081,13 +1398,32 @@ def main(argv=None) -> int:
     entries = [d for d in docs if d["is_entry"]]
     stats = build_stats(repo_root, docs)
 
+    try:
+        cfg = load_panels(repo_root)
+    except ConfigError as exc:
+        print(f"[FAIL] {exc}", file=sys.stderr)
+        return 3
+
+    mapping, problems = validate_panels(entries, cfg, repo_root)
+    unassigned, duplicated, missing = problems
+    if unassigned or duplicated or missing:
+        print("[FAIL] 板块校验未通过（明细见上），未生成任何文件。", file=sys.stderr)
+        return 3
+
     facets = render_facets(entries, display_root(repo_root, out_root), args.dry_run, args)
     index_text = render_index(docs, orphans, stats, display_root(repo_root, out_root), args.dry_run)
+    readme_blocks = render_readme_blocks(cfg, entries, stats, mapping, repo_root, today)
+    readme_path = os.path.join(repo_root, README_FILE)
 
     print("library_index.py —— Research 仓库图书馆化索引")
     print("=" * 60)
     for line in baseline_lines(stats, out_root, args.dry_run):
         print(line)
+    print(f"板块（{PANELS_FILE}）        : "
+          + " · ".join(f"{p['title']}={sum(1 for v in mapping.values() if v['id'] == p['id'])}"
+                       for p in cfg["panels"]))
+    print(f"最近更新口径               : front-matter date → 缺失时回退 `{cfg['date_fallback']}`"
+          f"（取 {cfg['recent_limit']} 条）")
     print("=" * 60)
 
     if args.dry_run:
@@ -1096,6 +1432,8 @@ def main(argv=None) -> int:
             print(f"[dry-run] 将生成：{os.path.join(out_root, GENERATED_DIR, name + '.md')}")
         if args.write_stats:
             print(f"[dry-run] 将生成：{os.path.join(out_root, STATS_FILE)}")
+        print(f"[dry-run] 将更新：{os.path.relpath(readme_path, repo_root)}"
+              f"（区块：{', '.join(README_BLOCKS)}）")
         print("[dry-run] 未写入任何文件；未修改任何条目文件。")
         return 0
 
@@ -1104,14 +1442,24 @@ def main(argv=None) -> int:
     for path in written:
         print(f"     {os.path.relpath(path, repo_root)}")
 
+    path, changed, missing = update_readme(repo_root, readme_blocks)
+    if missing:
+        print(f"[skip] {README_FILE} 未更新（缺少 SCRIPT 标记：{', '.join(missing)}）")
+    else:
+        print(f"[ok] {'已更新' if changed else '已是最新'}：{os.path.relpath(path, repo_root)}"
+              f"（区块：{', '.join(README_BLOCKS)}）")
+
     if args.check_links:
-        offenders = verify_links(written)
+        targets = list(written)
+        if os.path.isfile(readme_path):
+            targets.append(readme_path)
+        offenders = verify_links(targets)
         if offenders:
-            print("[FAIL] 生成文件内存在悬挂相对链接：", file=sys.stderr)
+            print("[FAIL] 存在悬挂的相对链接：", file=sys.stderr)
             for item in offenders:
                 print(f"       {item}", file=sys.stderr)
             return 1
-        print("[ok] 生成文件内的相对链接全部可解析。")
+        print(f"[ok] {len(targets)} 个文件内的相对链接全部可解析。")
 
     return 0
 
