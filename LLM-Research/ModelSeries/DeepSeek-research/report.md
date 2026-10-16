@@ -2,7 +2,7 @@
 
 > 调研范围：DeepSeek 自 2023 年 11 月初代 DeepSeek-LLM 至 2026 年 4 月 DeepSeek-V4 的全部公开模型，覆盖通用基座（V 系列）、推理（R1 系列）、视觉语言（VL/OCR）、代码（Coder）、数学与形式化证明（Math/Prover）、多模态统一生成（Janus）六大主线。
 > 调研时点：2026-06。
-> 本报告基于两份子报告整合：[纯文本基座模型](file:///Users/zhoucanzong/Documents/codes/research-report/papers/DeepSeek-research/deepseek-text-models.md) 与 [多模态与专业模型](file:///Users/zhoucanzong/Documents/codes/research-report/papers/DeepSeek-research/deepseek-multimodal-and-specialized.md)，并提炼跨方向的整合性洞察。
+> 本报告基于两份子报告整合：[纯文本基座模型](deepseek-text-models.md) 与 [多模态与专业模型](deepseek-multimodal-and-specialized.md)，并提炼跨方向的整合性洞察。
 
 ---
 
@@ -748,4 +748,4 @@ DeepSeek 官方承诺 V3.2 API 至少维护至 2026-12-31，为现有用户提�
 
 ---
 
-> *本报告基于 [deepseek-text-models.md](file:///Users/zhoucanzong/Documents/codes/research-report/papers/DeepSeek-research/deepseek-text-models.md)（纯文本基座模型）与 [deepseek-multimodal-and-specialized.md](file:///Users/zhoucanzong/Documents/codes/research-report/papers/DeepSeek-research/deepseek-multimodal-and-specialized.md)（多模态与专业模型）两份子报告整合提炼。如需查看某一方向的更详细技术细节（如训练超参、消融实验、benchmark 完整数值），请回到子报告。*
+> *本报告基于 [deepseek-text-models.md](deepseek-text-models.md)（纯文本基座模型）与 [deepseek-multimodal-and-specialized.md](deepseek-multimodal-and-specialized.md)（多模态与专业模型）两份子报告整合提炼。如需查看某一方向的更详细技术细节（如训练超参、消融实验、benchmark 完整数值），请回到子报告。*

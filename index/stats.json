@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "e86ad207d51e2babce8138e533114014c987b9b6da6938d84d94f9d280f8b244",
+  "content_fingerprint": "af88c26498d96d041a5b8fc4e6d6445d42c171d0deb449c1daa33edad550226a",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -27,7 +27,7 @@
     "named_report_md": 43,
     "named_readme_md": 4,
     "lines": 37281,
-    "bytes": 2120121
+    "bytes": 2120120
   },
   "libraries": {
     "AIGC-Research": {
@@ -240,7 +240,7 @@
       "files": 74,
       "lines": 37281,
       "lines_raw": 37281,
-      "bytes": 2120121
+      "bytes": 2120120
     },
     "library_md": {
       "files": 68,
@@ -252,7 +252,7 @@
       "files": 1,
       "lines": 263,
       "lines_raw": 263,
-      "bytes": 22419
+      "bytes": 22418
     },
     "docs_md": {
       "files": 4,
