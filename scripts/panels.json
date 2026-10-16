@@ -85,7 +85,8 @@
         "LLM-Research/TechnicalTopics/TrainingInfra-research",
         "Repo-Research/vllm-research",
         "Repo-Research/sglang-research",
-        "Repo-Research/nemotron-tri-mode-diffusion"
+        "Repo-Research/nemotron-tri-mode-diffusion",
+        "Repo-Research/this-that-model-research"
       ],
       "representatives": [
         "LLM-Research/TechnicalTopics/SpeculativeDecoding-research",
