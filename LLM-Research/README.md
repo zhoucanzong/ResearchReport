@@ -6,11 +6,11 @@
 
 > ⚠️ **重要声明**：本知识库所有报告均由 AI Agent 自动调研生成，信息来源于公开网络搜索、第三方评测站点、社交媒体及行业媒体报道。由于大模型厂商官方披露程度不一，部分日期、参数、benchmark 数据可能存在错误、过时或未经证实的情况。**所有内容仅供参考，不构成权威结论，建议读者直接查阅各厂商官方渠道获取最新准确信息。**
 
-覆盖 **15 个主流模型 / 系列 + 10 个技术专题** · 持续更新中
+覆盖 **15 个主流模型 / 系列 + 11 个技术专题** · 持续更新中
 
 [![Monorepo](https://img.shields.io/badge/monorepo-ResearchReport-6f42c1?style=flat-square)](https://github.com/zhoucanzong/ResearchReport)
-[![Reports](https://img.shields.io/badge/Reports-41-blue?style=flat-square)](.)
-[![Files](https://img.shields.io/badge/Files-41-green?style=flat-square)](.)
+[![Reports](https://img.shields.io/badge/Reports-42-blue?style=flat-square)](.)
+[![Files](https://img.shields.io/badge/Files-42-green?style=flat-square)](.)
 ![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)
 
 </div>
@@ -64,8 +64,9 @@
 | 8  | 🔬 | [**TrainingInfra**](./TechnicalTopics/TrainingInfra-research/) | 训练基础设施 |   1   | DeepSpeed/FSDP/Megatron，3D并行，万卡集群 |
 | 9  | 🔬 | [**QuantizationEdge**](./TechnicalTopics/QuantizationEdge-research/) | 量化与边缘部署 |   1   | AWQ/GPTQ/GGUF/FP8，vLLM/Ollama，Jetson边缘 |
 | 10 | 🔬 | [**RAG**](./TechnicalTopics/RAG-research/)                 | 检索增强生成 |   1   | RAG 0.0→4.0，GraphRAG，Agentic RAG，混合检索 |
+| 11 | 🔬 | [**JEV**](./TechnicalTopics/JEV-research/)                 | System One 决策模型 |   1   | Choice/Score/Noul 类型化输出、隐藏状态直读、零输出 token、`confidence` 语义；**RLCD 同名消歧**（≠ 2023 Contrastive Distillation）；官方九类 jaggedness；第三方研究地图含**失效与攻击** |
 
-> **🔬 技术专题 10 个** &nbsp;|&nbsp; 共 **41 份** Markdown 报告
+> **🔬 技术专题 11 个** &nbsp;|&nbsp; 共 **42 份** Markdown 报告
 
 ---
 
@@ -98,7 +99,7 @@ LLM-research/
 │       ├── qwen-vl-models.md       #     视觉语言模型专题
 │       └── qwen-omni-and-ecosystem.md  #     Omni 模型与生态
 │
-└── TechnicalTopics/                # 技术专题报告（10 个核心技术方向）
+└── TechnicalTopics/                # 技术专题报告（11 个核心技术方向）
     ├── SpeculativeDecoding-research/   # 投机解码技术专题（12 份）
     │   ├── report.md                       #   主报告：技术脉络、指标口径、四条瓶颈、框架、QwenAccel-Train
     │   ├── speculative-classical-and-self.md   #   经典方法与自投机（Medusa/Hydra/Lookahead/SWIFT/CLaSp）
@@ -130,6 +131,8 @@ LLM-research/
     │   └── report.md                     #   AWQ/GPTQ/GGUF/FP8，vLLM/Ollama，Jetson边缘
     └── RAG-research/                     # 检索增强生成专题
         └── report.md                     #   RAG 0.0→4.0，GraphRAG，Agentic RAG，混合检索
+    └── JEV-research/                     # System One 决策模型专题
+        └── report.md                     #   类型化输出/零输出token/RLCD 消歧/失效与攻击地图
 ```
 
 ---
