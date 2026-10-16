@@ -14,6 +14,7 @@
 | 指标 | 数量 |
 | --- | --- |
 | **条目数**（`report.md`） | **47** |
+| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 6 |
 | 条目子文档数 | 44 |
 | 条目正文行数（剔除 front-matter） | 30,264 |
 | 条目字节 | 1,818,281 B |
@@ -25,6 +26,7 @@
 | 纳入版本控制的 `.md` | 108 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
+> **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
 
 ## 按库入口
 

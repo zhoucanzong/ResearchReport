@@ -739,10 +739,15 @@ def render_entry_block(doc: dict, prefix: str, indent: str = "") -> list:
     return lines
 
 
-def render_index(docs: list, orphans: list, stats: dict, out_root: str, dry_run: bool) -> str:
+def render_index(docs: list, orphans: list, stats: dict, out_root: str, dry_run: bool,
+                 cfg: dict, mapping: dict) -> str:
     entries = [d for d in docs if d["is_entry"]]
     counts = stats["entries"]
     dc = stats["documents"]
+    panel_counts = {p["id"]: sum(1 for v in mapping.values() if v["id"] == p["id"])
+                    for p in cfg["panels"]}
+    panel_summary = " · ".join(
+        f"{p['title']} {panel_counts[p['id']]}" for p in cfg["panels"])
 
     lines = header("Research 仓库图书馆索引", out_root, dry_run)
 
@@ -756,6 +761,7 @@ def render_index(docs: list, orphans: list, stats: dict, out_root: str, dry_run:
         "| 指标 | 数量 |",
         "| --- | --- |",
         f"| **条目数**（`{ENTRY_BASENAME}`） | **{counts['total']}** |",
+        f"| 板块（[`{PANELS_FILE}`](<{PANELS_FILE}>)） | {panel_summary} |",
         f"| 条目子文档数 | {counts['children']} |",
         f"| 条目正文行数（剔除 front-matter） | {counts['lines']:,} |",
         f"| 条目字节 | {counts['bytes']:,} B |",
@@ -769,6 +775,9 @@ def render_index(docs: list, orphans: list, stats: dict, out_root: str, dry_run:
         "> 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、"
         "`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` "
         "都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。",
+        "> **板块**是逻辑视图（跨物理目录），映射全部在 "
+        f"[`{PANELS_FILE}`](<{PANELS_FILE}>)；每个条目恰好归入一个板块，"
+        "未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。",
         "",
         "## 按库入口",
         "",
@@ -856,18 +865,26 @@ def render_index(docs: list, orphans: list, stats: dict, out_root: str, dry_run:
     return "\n".join(lines)
 
 
-def render_by_report(entries: list, out_root: str, dry_run: bool) -> str:
+def render_by_report(entries: list, out_root: str, dry_run: bool, mapping: dict) -> str:
+    """全部条目的平铺索引 —— README 的「完整索引」只链接到这里，不再复制第二份。
+
+    前 3 列是核心视图（条目 | 板块 | 路径），其余列（所属库 / 子报告数 / 行数 / 日期）
+    保留在后面；「板块」列由 ``scripts/panels.json`` 驱动。
+    """
     lines = header(FACET_TITLES["by-report"], out_root, dry_run)
     lines += [
-        f"共 **{len(entries)}** 个条目（`{ENTRY_BASENAME}`）。「行数」为正文行数，已剔除 front-matter。",
+        f"共 **{len(entries)}** 个条目（`{ENTRY_BASENAME}`）。「行数」为正文行数，已剔除 front-matter；"
+        f"「板块」列由 [`{PANELS_FILE}`](<../{PANELS_FILE}>) 驱动。",
         "",
-        "| 条目 | 所属库 | 路径 | 子报告数 | 行数 | 日期 |",
-        "| --- | --- | --- | --: | --: | --- |",
+        "| 条目 | 板块 | 路径 | 所属库 | 子报告数 | 行数 | 日期 |",
+        "| --- | --- | --- | --- | --: | --: | --- |",
     ]
     for doc in sorted(entries, key=lambda d: d["path"]):
+        panel = mapping.get(doc["path"])
         lines.append(
-            "| {label} | {lib} | {path} | {kids} | {lines} | {date} |".format(
+            "| {label} | {panel} | {path} | {lib} | {kids} | {lines} | {date} |".format(
                 label=entry_label(doc),
+                panel=panel["title"] if panel else "—",
                 lib=doc["top"] or ROOT_GROUP,
                 path=link(doc["path"], "../"),
                 kids=len(doc["children"]),
@@ -878,7 +895,7 @@ def render_by_report(entries: list, out_root: str, dry_run: bool) -> str:
     total_children = sum(len(d["children"]) for d in entries)
     total_lines = sum(d["lines"] for d in entries)
     lines += [
-        f"| **合计** | — | **{len(entries)} 条目** | **{total_children}** | **{total_lines:,}** | — |",
+        f"| **合计** | — | — | — | **{total_children}** | **{total_lines:,}** | — |",
         "",
     ]
     return "\n".join(lines)
@@ -974,7 +991,7 @@ def render_stale(entries: list, out_root: str, dry_run: bool, stale_days: int) -
     return "\n".join(lines)
 
 
-def render_facets(entries: list, out_root: str, dry_run: bool, args) -> dict:
+def render_facets(entries: list, out_root: str, dry_run: bool, args, mapping: dict) -> dict:
     return {
         "by-domain": "\n".join(header(FACET_TITLES["by-domain"], out_root, dry_run)
                                + group_table(entries, lambda e: e["domain"])),
@@ -983,7 +1000,7 @@ def render_facets(entries: list, out_root: str, dry_run: bool, args) -> dict:
         "by-repo": render_by_repo(entries, out_root, dry_run),
         "by-topic": "\n".join(header(FACET_TITLES["by-topic"], out_root, dry_run)
                               + group_table(entries, lambda e: e["topic"] or UNFILED)),
-        "by-report": render_by_report(entries, out_root, dry_run),
+        "by-report": render_by_report(entries, out_root, dry_run, mapping),
         "recent": render_recent(entries, out_root, dry_run, args.recent_limit),
         "stale": render_stale(entries, out_root, dry_run, args.stale_days),
     }
@@ -1215,15 +1232,21 @@ def render_recent_block(rows: list, mapping: dict) -> str:
     return "\n".join(lines)
 
 
-def render_index_block(entries: list, mapping: dict) -> str:
-    lines = ["| 条目 | 板块 | 路径 |", "| :-- | :-- | :-- |"]
-    for doc in sorted(entries, key=lambda d: d["path"]):
-        panel = mapping.get(doc["path"])
-        lines.append(
-            f"| {entry_short_name(doc)} | {panel['title'] if panel else '—'} | "
-            f"[{doc['path']}](<{doc['path']}>) |"
-        )
-    return "\n".join(lines)
+def render_index_block(entries: list, mapping: dict, panels: list) -> str:
+    """README 的「完整索引」区块：**只放摘要 + 链接**，不逐行复制 47 条。
+
+    47 行的单一真值在 `index/by-report.md`（含「条目 | 板块 | 路径」三列核心视图），
+    README 里再抄一份只会带来两处不一致。
+    """
+    counts = {p["id"]: sum(1 for v in mapping.values() if v["id"] == p["id"]) for p in panels}
+    summary = " · ".join(f"**{p['title']}** {counts[p['id']]}" for p in panels)
+    return "\n".join([
+        f"共 **{len(entries)}** 条，分属 {len(panels)} 个板块：{summary}。",
+        f"完整 {len(entries)} 行（条目 | 板块 | 路径）见 "
+        f"**[index/by-report.md](<{GENERATED_DIR}/by-report.md>)**"
+        f"（单一真值，由 `{PANELS_FILE}` 驱动）；按库 / 专题 / 领域的分面见 "
+        f"[index/](<{GENERATED_DIR}/>)，总目录见 [INDEX.md](<{GENERATED_TOP}>)。",
+    ])
 
 
 def render_readme_blocks(cfg: dict, entries: list, stats: dict, mapping: dict,
@@ -1234,7 +1257,7 @@ def render_readme_blocks(cfg: dict, entries: list, stats: dict, mapping: dict,
         "panels": render_panels_block(cfg, mapping, entries),
         "topics": render_topics_block(entries, mapping, cfg["panels"]),
         "recent": render_recent_block(recent_rows(repo_root, entries, cfg), mapping),
-        "index": render_index_block(entries, mapping),
+        "index": render_index_block(entries, mapping, cfg["panels"]),
     }
 
 
@@ -1410,8 +1433,9 @@ def main(argv=None) -> int:
         print("[FAIL] 板块校验未通过（明细见上），未生成任何文件。", file=sys.stderr)
         return 3
 
-    facets = render_facets(entries, display_root(repo_root, out_root), args.dry_run, args)
-    index_text = render_index(docs, orphans, stats, display_root(repo_root, out_root), args.dry_run)
+    facets = render_facets(entries, display_root(repo_root, out_root), args.dry_run, args, mapping)
+    index_text = render_index(docs, orphans, stats, display_root(repo_root, out_root),
+                              args.dry_run, cfg, mapping)
     readme_blocks = render_readme_blocks(cfg, entries, stats, mapping, repo_root, today)
     readme_path = os.path.join(repo_root, README_FILE)
 

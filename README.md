@@ -53,56 +53,9 @@
 <details>
 <summary>📖 <b>完整索引</b>（47 条，点击展开）</summary>
 
-<!-- SCRIPT:index START · 单一真值：条目 + 板块 + 路径 -->
-| 条目 | 板块 | 路径 |
-| :-- | :-- | :-- |
-| Alibaba-Gen | Models | [AIGC-Research/ModelSeries/Alibaba-Gen-research/report.md](<AIGC-Research/ModelSeries/Alibaba-Gen-research/report.md>) |
-| ByteDance-Gen | Models | [AIGC-Research/ModelSeries/ByteDance-Gen-research/report.md](<AIGC-Research/ModelSeries/ByteDance-Gen-research/report.md>) |
-| Google-Gen | Models | [AIGC-Research/ModelSeries/Google-Gen-research/report.md](<AIGC-Research/ModelSeries/Google-Gen-research/report.md>) |
-| Kling | Models | [AIGC-Research/ModelSeries/Kling-research/report.md](<AIGC-Research/ModelSeries/Kling-research/report.md>) |
-| Midjourney | Models | [AIGC-Research/ModelSeries/Midjourney-research/report.md](<AIGC-Research/ModelSeries/Midjourney-research/report.md>) |
-| OpenAI-Gen | Models | [AIGC-Research/ModelSeries/OpenAI-Gen-research/report.md](<AIGC-Research/ModelSeries/OpenAI-Gen-research/report.md>) |
-| Runway | Models | [AIGC-Research/ModelSeries/Runway-research/report.md](<AIGC-Research/ModelSeries/Runway-research/report.md>) |
-| StabilityAI | Models | [AIGC-Research/ModelSeries/StabilityAI-research/report.md](<AIGC-Research/ModelSeries/StabilityAI-research/report.md>) |
-| 3DGen | VisualGen | [AIGC-Research/TechnicalTopics/3DGen-research/report.md](<AIGC-Research/TechnicalTopics/3DGen-research/report.md>) |
-| AudioGen | VisualGen | [AIGC-Research/TechnicalTopics/AudioGen-research/report.md](<AIGC-Research/TechnicalTopics/AudioGen-research/report.md>) |
-| AvatarGen | VisualGen | [AIGC-Research/TechnicalTopics/AvatarGen-research/report.md](<AIGC-Research/TechnicalTopics/AvatarGen-research/report.md>) |
-| ControllableGen | VisualGen | [AIGC-Research/TechnicalTopics/ControllableGen-research/report.md](<AIGC-Research/TechnicalTopics/ControllableGen-research/report.md>) |
-| DiT | VisualGen | [AIGC-Research/TechnicalTopics/DiT-research/report.md](<AIGC-Research/TechnicalTopics/DiT-research/report.md>) |
-| DiffusionModels | VisualGen | [AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md](<AIGC-Research/TechnicalTopics/DiffusionModels-research/report.md>) |
-| EmbodiedVLA | WorldModel | [AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md](<AIGC-Research/TechnicalTopics/EmbodiedVLA-research/report.md>) |
-| ImageEditing | VisualGen | [AIGC-Research/TechnicalTopics/ImageEditing-research/report.md](<AIGC-Research/TechnicalTopics/ImageEditing-research/report.md>) |
-| VideoGen | VisualGen | [AIGC-Research/TechnicalTopics/VideoGen-research/report.md](<AIGC-Research/TechnicalTopics/VideoGen-research/report.md>) |
-| WorldModels | WorldModel | [AIGC-Research/TechnicalTopics/WorldModels-research/report.md](<AIGC-Research/TechnicalTopics/WorldModels-research/report.md>) |
-| Claude | Models | [LLM-Research/ModelSeries/Claude-research/report.md](<LLM-Research/ModelSeries/Claude-research/report.md>) |
-| DeepSeek | Models | [LLM-Research/ModelSeries/DeepSeek-research/report.md](<LLM-Research/ModelSeries/DeepSeek-research/report.md>) |
-| Doubao-Seed | Models | [LLM-Research/ModelSeries/Doubao-Seed-research/report.md](<LLM-Research/ModelSeries/Doubao-Seed-research/report.md>) |
-| GLM | Models | [LLM-Research/ModelSeries/GLM-research/report.md](<LLM-Research/ModelSeries/GLM-research/report.md>) |
-| GPT | Models | [LLM-Research/ModelSeries/GPT-research/report.md](<LLM-Research/ModelSeries/GPT-research/report.md>) |
-| Gemini | Models | [LLM-Research/ModelSeries/Gemini-research/report.md](<LLM-Research/ModelSeries/Gemini-research/report.md>) |
-| Grok | Models | [LLM-Research/ModelSeries/Grok-research/report.md](<LLM-Research/ModelSeries/Grok-research/report.md>) |
-| Hunyuan | Models | [LLM-Research/ModelSeries/Hunyuan-research/report.md](<LLM-Research/ModelSeries/Hunyuan-research/report.md>) |
-| Kimi | Models | [LLM-Research/ModelSeries/Kimi-research/report.md](<LLM-Research/ModelSeries/Kimi-research/report.md>) |
-| LLaMA | Models | [LLM-Research/ModelSeries/LLaMA-research/report.md](<LLM-Research/ModelSeries/LLaMA-research/report.md>) |
-| MiMo | Models | [LLM-Research/ModelSeries/MiMo-research/report.md](<LLM-Research/ModelSeries/MiMo-research/report.md>) |
-| MiniMax | Models | [LLM-Research/ModelSeries/MiniMax-research/report.md](<LLM-Research/ModelSeries/MiniMax-research/report.md>) |
-| Mistral | Models | [LLM-Research/ModelSeries/Mistral-research/report.md](<LLM-Research/ModelSeries/Mistral-research/report.md>) |
-| Nemotron | Models | [LLM-Research/ModelSeries/Nemotron-research/report.md](<LLM-Research/ModelSeries/Nemotron-research/report.md>) |
-| Qwen | Models | [LLM-Research/ModelSeries/Qwen-research/report.md](<LLM-Research/ModelSeries/Qwen-research/report.md>) |
-| Agent | LLM | [LLM-Research/TechnicalTopics/Agent-research/report.md](<LLM-Research/TechnicalTopics/Agent-research/report.md>) |
-| Alignment | LLM | [LLM-Research/TechnicalTopics/Alignment-research/report.md](<LLM-Research/TechnicalTopics/Alignment-research/report.md>) |
-| DecisionModels | LLM | [LLM-Research/TechnicalTopics/DecisionModels-research/report.md](<LLM-Research/TechnicalTopics/DecisionModels-research/report.md>) |
-| LongContext | LLM | [LLM-Research/TechnicalTopics/LongContext-research/report.md](<LLM-Research/TechnicalTopics/LongContext-research/report.md>) |
-| MoE | LLM | [LLM-Research/TechnicalTopics/MoE-research/report.md](<LLM-Research/TechnicalTopics/MoE-research/report.md>) |
-| QuantizationEdge | Infra | [LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md](<LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md>) |
-| RAG | LLM | [LLM-Research/TechnicalTopics/RAG-research/report.md](<LLM-Research/TechnicalTopics/RAG-research/report.md>) |
-| ReasoningModels | LLM | [LLM-Research/TechnicalTopics/ReasoningModels-research/report.md](<LLM-Research/TechnicalTopics/ReasoningModels-research/report.md>) |
-| SpeculativeDecoding | Infra | [LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md](<LLM-Research/TechnicalTopics/SpeculativeDecoding-research/report.md>) |
-| TrainingInfra | Infra | [LLM-Research/TechnicalTopics/TrainingInfra-research/report.md](<LLM-Research/TechnicalTopics/TrainingInfra-research/report.md>) |
-| VLM | LLM | [LLM-Research/TechnicalTopics/VLM-research/report.md](<LLM-Research/TechnicalTopics/VLM-research/report.md>) |
-| nemotron-tri-mode-diffusion | Infra | [Repo-Research/nemotron-tri-mode-diffusion/report.md](<Repo-Research/nemotron-tri-mode-diffusion/report.md>) |
-| sglang | Infra | [Repo-Research/sglang-research/report.md](<Repo-Research/sglang-research/report.md>) |
-| vllm | Infra | [Repo-Research/vllm-research/report.md](<Repo-Research/vllm-research/report.md>) |
+<!-- SCRIPT:index START · 摘要 + 链接（47 行单一真值在 index/by-report.md） -->
+共 **47** 条，分属 5 个板块：**Models** 23 · **LLM** 8 · **VisualGen** 8 · **WorldModel** 2 · **Infra** 6。
+完整 47 行（条目 | 板块 | 路径）见 **[index/by-report.md](<index/by-report.md>)**（单一真值，由 `scripts/panels.json` 驱动）；按库 / 专题 / 领域的分面见 [index/](<index/>)，总目录见 [INDEX.md](<INDEX.md>)。
 <!-- SCRIPT:index END -->
 
 </details>
