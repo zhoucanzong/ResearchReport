@@ -1,40 +1,33 @@
-<div align="center">
+<div align="center" markdown="1">
 
-💬
-
-# LLM
+# 💬 LLM
 
 **8 条** · 语言模型能力与技术专题，覆盖推理、对齐、Agent、RAG 等方向。
 
-[← 返回首页](<../README.md>)
+[← 返回首页](<../README.md>) · [完整索引](<../INDEX.md>)
 
 </div>
 
 <!-- SCRIPT:panel-readme START · 由 scripts/library_index.py 生成，勿手改 -->
 
-![Entries](https://img.shields.io/badge/Entries-8-green?style=flat-square)
-![Panel](https://img.shields.io/badge/Panel-LLM-blue?style=flat-square)
+![Entries](https://img.shields.io/badge/Entries-8-3f51b5?style=flat-square)
+![Panel](https://img.shields.io/badge/Panel-LLM-9e9e9e?style=flat-square)
 
-### Agent
+| 条目 | 报告 | 规模 |
+| :-- | :-- | --: |
+| **Agent** | [LLM Agent 架构与工具使用研究报告](<Agent/report.md>) | 698 行 |
+| **Alignment** | [模型对齐（Alignment）与后训练（Post-Training）研究报告](<Alignment/report.md>) | 588 行 |
+| **DecisionModels** | [Decision Models（System One / Typed Decision Model）技术专题调研](<DecisionModels/report.md>) | 869 行 |
+| **LongContext** | [长上下文（Long Context）技术研究报告](<LongContext/report.md>) | 608 行 |
+| **MoE** | [混合专家模型（Mixture of Experts, MoE）架构演进研究报告](<MoE/report.md>) | 405 行 |
+| **RAG** | [检索增强生成（Retrieval-Augmented Generation, RAG）技术研究报告](<RAG/report.md>) | 851 行 |
+| **ReasoningModels** | [推理模型（Reasoning Models）与 Test-Time Compute 研究报告](<ReasoningModels/report.md>) | 681 行 |
+| **VLM** | [多模态大模型（Vision-Language Models, VLM）研究报告](<VLM/report.md>) | 517 行 |
 
-LLM Agent 架构与工具使用研究报告
-
-[report.md](<Agent/report.md>) · 698 行 · 31,433 B
-
-### Alignment
-
-模型对齐（Alignment）与后训练（Post-Training）研究报告
-
-[report.md](<Alignment/report.md>) · 588 行 · 35,712 B
-
-### DecisionModels
-
-Decision Models（System One / Typed Decision Model）技术专题调研
-
-[report.md](<DecisionModels/report.md>) · 869 行 · 107,572 B
+## 📎 子文档
 
 <details>
-<summary><b>子文档（16）</b></summary>
+<summary><b>DecisionModels</b>（16 份）</summary>
 
 * [calibration.md](<DecisionModels/calibration.md>) — 261 行 / 28,387 B
 * [experiments.md](<DecisionModels/experiments.md>) — 349 行 / 25,166 B
@@ -54,36 +47,6 @@ Decision Models（System One / Typed Decision Model）技术专题调研
 * [taxonomy.md](<DecisionModels/taxonomy.md>) — 254 行 / 24,924 B
 
 </details>
-
-### LongContext
-
-长上下文（Long Context）技术研究报告
-
-[report.md](<LongContext/report.md>) · 608 行 · 30,373 B
-
-### MoE
-
-混合专家模型（Mixture of Experts, MoE）架构演进研究报告
-
-[report.md](<MoE/report.md>) · 405 行 · 27,806 B
-
-### RAG
-
-检索增强生成（Retrieval-Augmented Generation, RAG）技术研究报告
-
-[report.md](<RAG/report.md>) · 851 行 · 44,423 B
-
-### ReasoningModels
-
-推理模型（Reasoning Models）与 Test-Time Compute 研究报告
-
-[report.md](<ReasoningModels/report.md>) · 681 行 · 34,752 B
-
-### VLM
-
-多模态大模型（Vision-Language Models, VLM）研究报告
-
-[report.md](<VLM/report.md>) · 517 行 · 28,916 B
 
 <!-- SCRIPT:panel-readme END -->
 

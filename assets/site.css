@@ -1,0 +1,119 @@
+/* ==========================================================================
+   ResearchReport 站点定制样式（MkDocs Material）
+   维护说明：本文件手工维护（站点源文件），不是脚本生成物。
+   ========================================================================== */
+
+/* ---------- 字体：系统字体栈（mkdocs.yml 已设 font: false，不拉 Google Fonts） ---------- */
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  /* 中文长文阅读：稍大的行高与字间距 */
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+}
+
+code, pre, kbd, .md-code {
+  font-family:
+    ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* ---------- 配色微调：浅色保持清爽，深色调成护眼的墨蓝灰（非纯黑） ---------- */
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color: hsla(222, 18%, 11%, 1);
+  --md-default-bg-color--light: hsla(222, 18%, 14%, 1);
+  --md-code-bg-color: hsla(222, 16%, 16%, 1);
+}
+
+/* ---------- 首页门户卡片（grid cards） ---------- */
+.md-typeset .grid.cards > ul > li {
+  border-radius: 0.5rem;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.md-typeset .grid.cards > ul > li:hover {
+  transform: translateY(-0.15rem);
+  box-shadow: 0 0.4rem 1.2rem rgba(63, 81, 181, 0.18);
+}
+
+[data-md-color-scheme="slate"] .md-typeset .grid.cards > ul > li:hover {
+  box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.5);
+}
+
+/* 卡片内的统计数字：主色加粗 */
+.md-typeset .grid.cards .card-count {
+  color: var(--md-primary-fg-color);
+  font-weight: 700;
+}
+
+/* ---------- 首页统计徽章条 ---------- */
+.md-typeset .chip {
+  display: inline-block;
+  padding: 0.05rem 0.55rem;
+  margin: 0.1rem 0.15rem;
+  border-radius: 1rem;
+  background: rgba(63, 81, 181, 0.08);
+  border: 0.05rem solid var(--md-primary-fg-color);
+  color: var(--md-primary-fg-color);
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .chip {
+  background: rgba(92, 107, 192, 0.15);
+}
+
+/* ---------- 表格：斑马纹 + 圆角边框，长表不再一堵墙 ---------- */
+.md-typeset table:not([class]) {
+  border: 0.05rem solid var(--md-default-fg-color--lightest);
+  border-radius: 0.3rem;
+  font-size: 0.72rem;
+}
+
+.md-typeset table:not([class]) tbody tr:nth-child(odd) {
+  background: rgba(0, 0, 0, 0.022);
+}
+
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) tbody tr:nth-child(odd) {
+  background: hsla(222, 18%, 14%, 1);
+}
+
+/* ---------- 阅读页细节 ---------- */
+/* 引用块：左侧主色竖条更醒目 */
+.md-typeset blockquote {
+  border-left: 0.2rem solid var(--md-primary-fg-color);
+  padding-left: 0.8rem;
+  color: var(--md-default-fg-color--light);
+}
+
+/* 标题悬停锚点符号更明显 */
+.md-typeset .headerlink {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.md-typeset h1:hover .headerlink,
+.md-typeset h2:hover .headerlink,
+.md-typeset h3:hover .headerlink,
+.md-typeset h4:hover .headerlink {
+  opacity: 1;
+}
+
+/* 图片圆角（报告内截图更精致） */
+.md-typeset img {
+  border-radius: 0.3rem;
+}
+
+/* 主体内容最大宽度放宽，适配宽屏 */
+.md-main__inner {
+  max-width: 78rem;
+}
+
+/* 手机端：首页长标题缩字号防溢出 */
+@media screen and (max-width: 44.9375em) {
+  .md-typeset h1 {
+    font-size: 1.5rem;
+    word-break: break-word;
+  }
+}

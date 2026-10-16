@@ -45,6 +45,7 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import urllib.parse
@@ -311,15 +312,30 @@ def is_generated(rel_path: str) -> bool:
 # 扫描（只读）
 # --------------------------------------------------------------------------
 
+#: 站点渲染层的顶层目录（MkDocs staging 与构建产物）——扫描时必须跳过，
+#: 否则第二次运行会把 staging 镜像里的 .md 再数一遍（破坏可复现性）。
+#: 注意 ``scripts/`` 不在这里：它的 README.md 历来计入文档统计，口径保持不变；
+#: staging 器另有更宽的跳过清单（见 stage_site_docs）。
+SITE_DOCS_DIR = "site-docs"
+SITE_BUILD_DIR = "site"
+SITE_SKIP_TOPS = frozenset({SITE_DOCS_DIR, SITE_BUILD_DIR})
+
+
 def iter_markdown(repo_root: str, include_generated: bool = False):
     """只读遍历 ``**/*.md``，返回排序后的仓库相对路径。
 
-    跳过隐藏目录（`.git` 等）；默认排除本脚本的生成物，保证「跑一次脚本数字不变」。
+    跳过隐藏目录（`.git` 等）与站点渲染层目录（``site-docs/``、``site/``）；
+    默认排除本脚本的生成物，保证「跑一次脚本数字不变」。
     """
     root = os.path.abspath(repo_root)
     found = []
     for dirpath, dirnames, filenames in os.walk(root):
-        dirnames[:] = sorted(d for d in dirnames if not d.startswith("."))
+        dirnames[:] = sorted(
+            d for d in dirnames
+            if not d.startswith(".")
+            and os.path.relpath(os.path.join(dirpath, d), root).replace(os.sep, "/")
+                not in SITE_SKIP_TOPS
+        )
         for name in sorted(filenames):
             if not name.lower().endswith(".md"):
                 continue
@@ -1172,17 +1188,22 @@ def generated_md_count(out_root: str = "") -> int:
 
 
 def render_badges(stats: dict, topics: int, today: _dt.date, panels: int = 6) -> str:
+    """徽章行：统一 flat-square + 靛蓝色系（与站点主题色一致）。"""
     updated = today.isoformat().replace("-", "--")
     return "\n".join([
-        f"![Entries](https://img.shields.io/badge/Entries-{stats['entries']['total']}-green?style=flat-square)",
-        f"![Topics](https://img.shields.io/badge/Topics-{topics}-orange?style=flat-square)",
-        f"![Panels](https://img.shields.io/badge/Panels-{panels}-blue?style=flat-square)",
-        f"![Updated](https://img.shields.io/badge/Updated-{updated}-informational?style=flat-square)",
+        f"![Entries](https://img.shields.io/badge/Entries-{stats['entries']['total']}-3f51b5?style=flat-square)",
+        f"![Topics](https://img.shields.io/badge/Topics-{topics}-5c6bc0?style=flat-square)",
+        f"![Panels](https://img.shields.io/badge/Panels-{panels}-7986cb?style=flat-square)",
+        f"![Updated](https://img.shields.io/badge/Updated-{updated}-9e9e9e?style=flat-square)",
     ])
 
 
 def render_panels_block(cfg: dict, mapping: dict, entries: list, label_limit: int = 12) -> str:
-    """卡片版首页板块区块：HTML table 3×2，每卡五要素（emoji / 标题 / 条目数 / tagline / 进入链接）。"""
+    """卡片版首页板块区块：HTML table 3×2。
+
+    每卡六要素：emoji / 标题 / 条目数 / tagline / 代表条目直达 / 进入链接。
+    只用 GitHub 安全元素（b/sub/a/br），不用 style 属性（GitHub 会剥掉）。
+    """
     by_panel = {}
     for doc in entries:
         panel = mapping.get(doc["path"])
@@ -1192,12 +1213,19 @@ def render_panels_block(cfg: dict, mapping: dict, entries: list, label_limit: in
     cards = []
     for panel in cfg["panels"]:
         members = by_panel.get(panel["id"], [])
+        top = panel["title"]
+        reps = []
+        for rel in panel.get("representatives", []):
+            label = rel.rstrip("/").rsplit("/", 1)[-1]
+            reps.append(f'<a href="{rel}/report.md">{label}</a>')
+        reps_html = f"<sub>{' · '.join(reps)}</sub><br>" if reps else ""
         # 「进入 →」指向板块顶层目录（GitHub 目录页）
         cards.append(
             f'<td align="center" width="33%"><br>{panel["emoji"]}<br>'
-            f'<b>{panel["title"]}</b><br><b>{len(members)}</b> 条<br>'
-            f'{panel["tagline"]}<br>'
-            f'<a href="{panel["id"] and panel["title"]}/">进入 →</a><br><br></td>'
+            f'<b>{top}</b> · <b>{len(members)}</b> 条<br>'
+            f'<sub>{panel["tagline"]}</sub><br>'
+            f'{reps_html}'
+            f'<a href="{top}/"><b>进入 →</b></a><br><br></td>'
         )
     lines = ["<table>"]
     for i in range(0, len(cards), 3):
@@ -1317,45 +1345,49 @@ PANEL_ONE_LINERS = {
 
 
 def render_panel_readme(panel: dict, members: list, repo_root: str) -> str:
-    """单个板块 README：统一卡头 + 条目清单 + 子文档折叠。"""
+    """单个板块 README：统一卡头 + 徽章 + 条目表 + 子文档折叠。
+
+    卡头的 ``<div>`` 带 ``markdown="1"``：GitHub 与 MkDocs（md_in_html）都会
+    正确渲染其中的 Markdown（不带时 MkDocs 会把整块当原始 HTML）。
+    """
     top = panel["title"]
     names = sorted(members, key=lambda d: d["path"])
     one_liner = PANEL_ONE_LINERS.get(top, panel["tagline"])
     lines = [
-        '<div align="center">',
+        '<div align="center" markdown="1">',
         '',
-        panel["emoji"],
-        '',
-        f'# {top}',
+        f'# {panel["emoji"]} {top}',
         '',
         f'**{len(names)} 条** · {one_liner}',
         '',
-        f'[← 返回首页](<../README.md>)',
+        f'[← 返回首页](<../README.md>) · [完整索引](<../INDEX.md>)',
         '',
         '</div>',
         '',
         '<!-- SCRIPT:panel-readme START · 由 scripts/library_index.py 生成，勿手改 -->',
         '',
-    ]
-    # shields 徽章（中性色、无外链大图）
-    lines += [
-        f'![Entries](https://img.shields.io/badge/Entries-{len(names)}-green?style=flat-square)',
-        f'![Panel](https://img.shields.io/badge/Panel-{top}-blue?style=flat-square)',
+        f'![Entries](https://img.shields.io/badge/Entries-{len(names)}-3f51b5?style=flat-square)',
+        f'![Panel](https://img.shields.io/badge/Panel-{top}-9e9e9e?style=flat-square)',
         '',
+        '| 条目 | 报告 | 规模 |',
+        '| :-- | :-- | --: |',
     ]
     for doc in names:
         label = entry_short_name(doc)
-        title = doc["title"] or label
         rel = os.path.relpath(doc["path"], top).replace(os.sep, "/")
-        lines.append(f'### {label}')
+        lines.append(
+            f'| **{label}** | [{doc["title"] or label}](<{rel}>) '
+            f'| {doc["lines"]:,} 行 |'
+        )
+    lines.append('')
+    with_children = [d for d in names if d.get("children")]
+    if with_children:
+        lines.append('## 📎 子文档')
         lines.append('')
-        lines.append(f'{title}')
-        lines.append('')
-        lines.append(f'[report.md](<{rel}>) · {doc["lines"]:,} 行 · {doc["bytes"]:,} B')
-        lines.append('')
-        if doc.get("children"):
+        for doc in with_children:
+            label = entry_short_name(doc)
             lines.append('<details>')
-            lines.append(f'<summary><b>子文档（{len(doc["children"])}）</b></summary>')
+            lines.append(f'<summary><b>{label}</b>（{len(doc["children"])} 份）</summary>')
             lines.append('')
             for child in doc["children"]:
                 crel = os.path.relpath(child["path"], top).replace(os.sep, "/")
@@ -1472,8 +1504,372 @@ def verify_links(written: list) -> list:
 
 
 # --------------------------------------------------------------------------
+# 站点渲染层（MkDocs）：staging 镜像 + 门户首页 + nav 区块
+#
+# 站点是仓库 Markdown 的**只读渲染层**，不产生第二套内容源：
+# * ``site-docs/`` 是内容文件的逐字节镜像（生成物，不入库，CI 里重建）；
+# * 门户首页 ``site-docs/index.md`` 由本段生成（panels.json 驱动）；
+# * ``mkdocs.yml`` 的 nav 区块由本段幂等替换（``# SCRIPT:nav START/END``）。
+# --------------------------------------------------------------------------
+
+MKDOCS_FILE = "mkdocs.yml"
+SITE_NAV_BLOCK = "nav"
+SITE_HOME_NAME = "README.md"
+#: 门户首页占用 staging 根的 ``README.md`` 槽位：MkDocs 把 README.md 当目录
+#: index 页（正好落在 ``/``），且不与同样 index 化的 ``INDEX.md`` 撞车
+#: （实测：同目录 index.md 与 INDEX.md 会被当成同一个 index 而丢弃其一）。
+#: 仓库根 README.md 不镜像（见 SITE_STAGE_DROP），指向它的链接自然落到门户首页。
+
+#: staging 时跳过的顶层项（比扫描更宽：站点不渲染脚本与构建配置自身）。
+#: ``assets/`` 不跳过：站点样式表 ``assets/site.css`` 需要镜像进 staging
+#: （``extra_css`` 要求文件位于 docs_dir 内）；``scripts/`` 不跳过：
+#: 生成物与 docs/ 里有指向 ``scripts/library_index.py``、``panels.json`` 的
+#: 链接，镜像进去站点侧才能 0 失效（.py/.json 作为静态文件拷贝）。
+SITE_STAGE_SKIP_TOPS = frozenset(
+    {SITE_DOCS_DIR, SITE_BUILD_DIR, "__pycache__"}
+)
+
+#: staging 里额外跳过的文件名（操作系统 / 版本控制噪音）。
+SITE_STAGE_SKIP_FILES = frozenset({".DS_Store"})
+
+#: 根 README.md 不镜像：MkDocs 会把 README.md 当作目录 index 页，与站点门户
+#: 首页 index.md 争抢 ``/``。指向它的链接由 mkdocs_hooks 改写为 ``index.md``。
+SITE_STAGE_DROP = frozenset({"README.md"})
+
+#: 站点「索引」导航区收录的 index/ 分面（顺序即展示顺序）。
+SITE_INDEX_FACETS = (
+    ("by-report", "按条目平铺"),
+    ("by-topic", "按专题"),
+    ("by-domain", "按领域"),
+    ("by-subject", "按主题"),
+    ("by-repo", "按来源"),
+    ("recent", "最近更新"),
+    ("stale", "待复核"),
+)
+
+
+def _yaml_dq(text: str) -> str:
+    """YAML 双引号标量（JSON 字符串是 YAML 双引号标量的合法子集）。"""
+    return json.dumps(str(text), ensure_ascii=False)
+
+
+def _site_nav_entry_lines(entries: list, mapping: dict, panel: dict) -> list:
+    """单个板块的 nav 行：板块 README 作 section index，条目按路径排序，
+    带子文档的条目折叠为二级分组（总报告在前，子文档按路径排序）。"""
+    members = [d for d in entries
+               if mapping.get(d["path"], {}).get("id") == panel["id"]]
+    members.sort(key=lambda d: d["path"])
+    top = panel["title"]
+    lines = [f"    - {_yaml_dq(top + '/README.md')}"]
+    for doc in members:
+        label = entry_short_name(doc)
+        children = [c for c in doc.get("children", [])
+                    if c["filename"].lower() != PANEL_README_NAME.lower()]
+        if not children:
+            lines.append(f"    - {_yaml_dq(label)}: {_yaml_dq(doc['path'])}")
+            continue
+        lines.append(f"    - {_yaml_dq(label)}:")
+        lines.append(f"        - {_yaml_dq('总报告')}: {_yaml_dq(doc['path'])}")
+        for child in sorted(children, key=lambda c: c["path"]):
+            stem = os.path.splitext(os.path.basename(child["path"]))[0]
+            lines.append(f"        - {_yaml_dq(stem)}: {_yaml_dq(child['path'])}")
+    return lines
+
+
+def render_site_nav(cfg: dict, mapping: dict, docs: list, orphans: list) -> str:
+    """生成 ``mkdocs.yml`` nav 区块的内容（2 空格缩进起，供幂等替换）。"""
+    entries = [d for d in docs if d["is_entry"]]
+    lines = [f"  - {_yaml_dq('首页')}: {_yaml_dq(SITE_HOME_NAME)}"]
+    for panel in cfg["panels"]:
+        members = [d for d in entries
+                   if mapping.get(d["path"], {}).get("id") == panel["id"]]
+        title = f"{panel['emoji']} {panel['title']} · {len(members)}"
+        lines.append(f"  - {_yaml_dq(title)}:")
+        lines.extend(_site_nav_entry_lines(entries, mapping, panel))
+        lines.extend(_site_nav_orphan_lines(orphans, panel["title"]))
+
+    # 索引区（生成物，作为站点内容渲染）
+    lines.append(f"  - {_yaml_dq('📇 索引')}:")
+    lines.append(f"      - {_yaml_dq('完整索引')}: {_yaml_dq(GENERATED_TOP)}")
+    for name, title in SITE_INDEX_FACETS:
+        lines.append(f"      - {_yaml_dq(title)}: {_yaml_dq(GENERATED_DIR + '/' + name + '.md')}")
+
+    # 文档区（docs/*.md + scripts/*.md，按路径排序，标题取 front-matter/H1）
+    meta_docs = sorted((d for d in docs
+                        if d["top"] in ("docs", "scripts")
+                        and not d["is_generated"] and not d["is_entry"]),
+                       key=lambda d: d["path"])
+    if meta_docs:
+        lines.append(f"  - {_yaml_dq('📖 文档')}:")
+        for doc in meta_docs:
+            lines.append(f"      - {_yaml_dq(doc['title'])}: {_yaml_dq(doc['path'])}")
+    return "\n".join(lines)
+
+
+def _site_nav_orphan_lines(orphans: list, top: str) -> list:
+    """板块目录下游离文档（不属于任何条目，如进行中的 mini-swe-agent）的 nav 行。
+
+    按二级目录分组；组内 README.md 作 section index 置前，其余按路径排序。
+    """
+    groups = {}
+    for d in orphans:
+        if d["top"] != top:
+            continue
+        _top, second, _deeper, _fn = split_path(d["path"])
+        if not second:
+            continue  # 板块根的 README.md 已在条目行里作为 section index
+        groups.setdefault(second, []).append(d)
+    lines = []
+    for key in sorted(groups):
+        members = sorted(groups[key],
+                         key=lambda d: (d["filename"].lower() != PANEL_README_NAME.lower(),
+                                        d["path"]))
+        lines.append(f"    - {_yaml_dq(key)}:")
+        for d in members:
+            if d["filename"].lower() == PANEL_README_NAME.lower():
+                lines.append(f"        - {_yaml_dq(d['path'])}")
+            else:
+                stem = os.path.splitext(d["filename"])[0]
+                lines.append(f"        - {_yaml_dq(stem)}: {_yaml_dq(d['path'])}")
+    return lines
+
+
+def update_mkdocs_nav(repo_root: str, nav_body: str) -> tuple:
+    """幂等替换 ``mkdocs.yml`` 里 ``# SCRIPT:nav START/END`` 之间的 nav 区块。
+
+    与 update_readme 同口径：标记本身与标记外内容逐字节保留；
+    已是最新则不写盘。返回 (path, changed, ok)。
+    """
+    path = os.path.join(repo_root, MKDOCS_FILE)
+    if not os.path.isfile(path):
+        return path, False, False
+    with open(path, "r", encoding="utf-8") as fh:
+        text = fh.read()
+    pattern = re.compile(
+        r"(?ms)^([ \t]*#[ \t]*SCRIPT:" + SITE_NAV_BLOCK + r"[ \t]+START[^\n]*\n)"
+        r".*?"
+        r"^([ \t]*#[ \t]*SCRIPT:" + SITE_NAV_BLOCK + r"[ \t]+END[^\n]*)$"
+    )
+    if not pattern.search(text):
+        return path, False, False
+    new_text = pattern.sub(lambda m: f"{m.group(1)}{nav_body}\n{m.group(2)}",
+                           text, count=1)
+    if new_text == text:
+        return path, False, True
+    with open(path, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(new_text)
+    return path, True, True
+
+
+def render_site_home(cfg: dict, mapping: dict, entries: list,
+                     recent: list, stats: dict) -> str:
+    """门户首页（``site-docs/index.md``）：6 板块卡片 + 最近更新 + 专题标签。
+
+    全部数据来自 panels.json 与扫描结果，与同源的根 README 卡片版对齐。
+    """
+    by_panel = {}
+    for doc in entries:
+        panel = mapping.get(doc["path"])
+        if panel is not None:
+            by_panel.setdefault(panel["id"], []).append(doc)
+
+    total = len(entries)
+    topics_entries = [d for d in entries
+                      if d["top"] in ("LLM", "VisualGen", "WorldModel", "Infra")]
+    # 专题数口径与 by-topic 分面一致：按 topic 字段去重
+    topic_names = sorted({d["topic"] for d in topics_entries if d["topic"]})
+
+    lines = [
+        "---",
+        "hide:",
+        "  - toc",
+        "---",
+        "",
+        f"<!-- {GENERATED_NOTE}（站点门户首页，位于 site-docs/，不入库） -->",
+        "",
+        "# 📚 ResearchReport",
+        "",
+        "**研究图书馆** · AIGC / LLM / 论文深读",
+        "",
+        (f'<span class="chip">{total} 条目</span> '
+         f'<span class="chip">{len(topic_names)} 专题</span> '
+         f'<span class="chip">{len(cfg["panels"])} 板块</span>'),
+        "",
+        '<div class="grid cards" markdown>',
+        "",
+    ]
+    for panel in cfg["panels"]:
+        members = sorted(by_panel.get(panel["id"], []), key=lambda d: d["path"])
+        top = panel["title"]
+        reps = []
+        for rel in panel.get("representatives", []):
+            label = rel.rstrip("/").rsplit("/", 1)[-1]
+            reps.append(f"[{label}](<{rel}/report.md>)")
+        rep_text = " · ".join(reps)
+        lines += [
+            f"-   {panel['emoji']} **{top}** <span class=\"card-count\">{len(members)} 条</span>",
+            "",
+            "    ---",
+            "",
+            f"    {panel['tagline']}",
+            "",
+            f"    {rep_text}",
+            "",
+            f"    [**全部 {len(members)} 条 →**](<{top}/README.md>)",
+            "",
+        ]
+    lines += ["</div>", ""]
+
+    # 最近更新（口径与根 README 的 recent 区块一致）
+    if recent:
+        lines += ["## 🕒 最近更新", "",
+                  "| 条目 | 板块 | 日期 |", "| --- | --- | --- |"]
+        for row in recent:
+            doc = row["doc"]
+            panel = mapping.get(doc["path"])
+            lines.append(
+                f"| [{entry_short_name(doc)}](<{doc['path']}>) | "
+                f"{panel['title'] if panel else '—'} | {row['date']} |"
+            )
+        lines.append("")
+
+    # 专题标签云：链接到 by-topic 分面的对应锚点（GitHub 口径 slug，与站点一致）
+    if topic_names:
+        counts = {}
+        for d in topics_entries:
+            counts[d["topic"]] = counts.get(d["topic"], 0) + 1
+        chips = []
+        for name in topic_names:
+            anchor = re.sub(r"[^\w\- ]+", "", f"{name} ({counts[name]})".lower()) \
+                .replace(" ", "-")
+            chips.append(f"[`{name}`](<{GENERATED_DIR}/by-topic.md#{anchor}>)")
+        lines += ["## 🏷 技术专题", "", " · ".join(chips), ""]
+
+    lines += [
+        "## 🗂 浏览方式",
+        "",
+        (f"[完整索引](<{GENERATED_TOP}>) · "
+         f"[按条目平铺](<{GENERATED_DIR}/by-report.md>) · "
+         f"[按专题](<{GENERATED_DIR}/by-topic.md>) · "
+         f"[最近更新](<{GENERATED_DIR}/recent.md>) · "
+         f"[待复核](<{GENERATED_DIR}/stale.md>)"),
+        "",
+    ]
+    return "\n".join(lines)
+
+
+def _site_dir_link_targets(target: str) -> list:
+    """扫描 staging 内 `.md` 的相对**目录**链接（``](dir/)`` / ``](dir)``），
+    返回需要补 hub 索引页的目录（staging 相对路径，排序去重）。
+
+    判定口径与 verify_links 一致：``](<...>)`` 与 ``](...)`` 两种写法、URL 解码、
+    跳过 scheme/mailto/纯锚点。
+    """
+    pattern = re.compile(r"\]\(<([^>]+)>\)|\]\(([^)\s]+)\)")
+    needed = set()
+    for dirpath, dirnames, filenames in os.walk(target):
+        dirnames[:] = sorted(d for d in dirnames if not d.startswith("."))
+        for name in sorted(filenames):
+            if not name.lower().endswith(".md"):
+                continue
+            path = os.path.join(dirpath, name)
+            base = os.path.dirname(path)
+            with open(path, "r", encoding="utf-8", errors="replace") as fh:
+                for line in fh:
+                    for angle, plain in pattern.findall(line):
+                        t = (angle or plain).strip()
+                        if "://" in t or t.startswith("#") or t.startswith("mailto:"):
+                            continue
+                        t = urllib.parse.unquote(t.split("#")[0]).rstrip("/")
+                        if not t:
+                            continue
+                        resolved = os.path.normpath(os.path.join(base, t))
+                        if os.path.isdir(resolved):
+                            needed.add(
+                                os.path.relpath(resolved, target).replace(os.sep, "/"))
+    return sorted(needed)
+
+
+def render_dir_hub(rel_dir: str, docs_by_path: dict, target: str) -> str:
+    """目录 hub 索引页（staging 专属生成物）：列出该目录直接子 `.md`，
+    供「目录链接」在站点上落脚（GitHub 上目录链接打开目录页，站点上打开 hub）。"""
+    abs_dir = os.path.join(target, rel_dir)
+    label = rel_dir.rstrip("/").rsplit("/", 1)[-1] or rel_dir
+    lines = [
+        f"<!-- {GENERATED_NOTE}（站点目录 hub，位于 {SITE_DOCS_DIR}/，不入库） -->",
+        "",
+        f"# 🗂 {label}",
+        "",
+    ]
+    for name in sorted(os.listdir(abs_dir)):
+        if not name.lower().endswith(".md") \
+                or name in (SITE_HOME_NAME, "index.md"):
+            continue
+        rel = f"{rel_dir}/{name}" if rel_dir else name
+        doc = docs_by_path.get(rel)
+        title = (doc["title"] if doc else "") or os.path.splitext(name)[0]
+        lines.append(f"- [{title}](<{name}>)")
+    lines.append("")
+    return "\n".join(lines)
+
+
+def stage_site_docs(repo_root: str, cfg: dict, mapping: dict, docs: list,
+                    stats: dict, recent: list) -> list:
+    """把站点需要的内容镜像到 ``site-docs/`` 并写入门户首页。
+
+    全量重建（先删后写）：staging 是本脚本的自留地，逐字节可复现；
+    条目源文件只读。返回写入的文件数与 staging 目录路径。
+    """
+    target = os.path.join(repo_root, SITE_DOCS_DIR)
+    if os.path.isdir(target):
+        shutil.rmtree(target)
+    os.makedirs(target, exist_ok=True)
+
+    count = 0
+    for dirpath, dirnames, filenames in os.walk(repo_root):
+        dirnames[:] = sorted(
+            d for d in dirnames
+            if not d.startswith(".")
+            and os.path.relpath(os.path.join(dirpath, d), repo_root).replace(os.sep, "/")
+                not in SITE_STAGE_SKIP_TOPS
+        )
+        for name in sorted(filenames):
+            if name.startswith(".") or name in SITE_STAGE_SKIP_FILES \
+                    or name.endswith(".pyc"):
+                continue
+            src = os.path.join(dirpath, name)
+            rel = os.path.relpath(src, repo_root).replace(os.sep, "/")
+            if rel in SITE_STAGE_DROP:
+                continue
+            dst = os.path.join(target, rel)
+            os.makedirs(os.path.dirname(dst), exist_ok=True)
+            shutil.copyfile(src, dst)
+            count += 1
+
+    # 目录链接的落脚页：仓库里有 ](docs/)、](papers) 这类「目录链接」（GitHub 上
+    # 打开目录页）；站点侧为每个被链接的目录生成一个 hub 索引页，
+    # 构建钩子（mkdocs_hooks）再把目录链接改写到该 hub。
+    docs_by_path = {d["path"]: d for d in docs}
+    for rel_dir in _site_dir_link_targets(target):
+        hub = render_dir_hub(rel_dir, docs_by_path, target)
+        hub_path = os.path.join(target, rel_dir, "index.md")
+        with open(hub_path, "w", encoding="utf-8", newline="\n") as fh:
+            fh.write(hub if hub.endswith("\n") else hub + "\n")
+        count += 1
+
+    home = render_site_home(cfg, mapping, [d for d in docs if d["is_entry"]],
+                            recent, stats)
+    with open(os.path.join(target, SITE_HOME_NAME), "w", encoding="utf-8",
+              newline="\n") as fh:
+        fh.write(home if home.endswith("\n") else home + "\n")
+    count += 1
+    return count, target
+
+
+# --------------------------------------------------------------------------
 # CLI
 # --------------------------------------------------------------------------
+
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
@@ -1497,6 +1893,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--include-generated", action="store_true",
                         help="把生成物（INDEX.md、index/*）也纳入扫描（默认排除，保证可复现）")
     parser.add_argument("--check-links", action="store_true", help="写盘后校验生成文件内的相对链接")
+    parser.add_argument("--skip-site", action="store_true",
+                        help="跳过站点渲染层（site-docs/ staging + mkdocs.yml nav + 门户首页）")
     return parser
 
 
@@ -1557,6 +1955,9 @@ def main(argv=None) -> int:
             print(f"[dry-run] 将生成：{os.path.join(out_root, STATS_FILE)}")
         print(f"[dry-run] 将更新：{os.path.relpath(readme_path, repo_root)}"
               f"（区块：{', '.join(README_BLOCKS)}）")
+        if not args.skip_site:
+            print(f"[dry-run] 将重建：{SITE_DOCS_DIR}/（站点 staging + 门户首页）")
+            print(f"[dry-run] 将更新：{MKDOCS_FILE}（区块：{SITE_NAV_BLOCK}）")
         print("[dry-run] 未写入任何文件；未修改任何条目文件。")
         return 0
 
@@ -1574,6 +1975,19 @@ def main(argv=None) -> int:
     else:
         print(f"[ok] {'已更新' if changed else '已是最新'}：{os.path.relpath(path, repo_root)}"
               f"（区块：{', '.join(README_BLOCKS)}）")
+
+    if not args.skip_site:
+        staged, site_dir = stage_site_docs(
+            repo_root, cfg, mapping, docs, stats,
+            recent_rows(repo_root, entries, cfg))
+        print(f"[ok] 站点 staging：{os.path.relpath(site_dir, repo_root)}/"
+              f"（镜像 {staged} 个文件，含门户首页 {SITE_HOME_NAME}）")
+        nav_path, nav_changed, nav_ok = update_mkdocs_nav(
+            repo_root, render_site_nav(cfg, mapping, docs, orphans))
+        if not nav_ok:
+            print(f"[skip] {MKDOCS_FILE} 未更新（缺少 SCRIPT:{SITE_NAV_BLOCK} 标记）")
+        else:
+            print(f"[ok] {'已更新' if nav_changed else '已是最新'}：{MKDOCS_FILE} 的 nav 区块")
 
     if args.check_links:
         targets = list(written)

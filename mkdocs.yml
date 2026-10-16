@@ -1,0 +1,225 @@
+# ==========================================================================
+# ResearchReport 站点配置（MkDocs Material）
+#
+# 站点是仓库 Markdown 的「只读渲染层」：不产生第二套内容源。
+# nav 区块由 scripts/library_index.py 生成（见下方 SCRIPT:nav 标记），
+# 标记之间的内容请勿手改；其余配置项可手改。
+# 构建：pip install "mkdocs-material==9.7.7" && mkdocs build --strict
+# 预览：mkdocs serve
+# ==========================================================================
+
+site_name: ResearchReport 研究图书馆
+site_description: 一个仓库收敛 AIGC / LLM / 论文深读全部研究产出
+site_url: https://zhoucanzong.github.io/ResearchReport/
+repo_url: https://github.com/zhoucanzong/ResearchReport
+repo_name: zhoucanzong/ResearchReport
+edit_uri: "" # 条目是研究产出，站点不提供「编辑此页」
+
+# docs_dir 指向 staging 镜像（由 scripts/library_index.py 生成，逐字节镜像仓库内容）
+# —— MkDocs 不允许 docs_dir 与配置文件同目录，staging 同时让「渲染什么」完全可控。
+# 现有 docs/ 目录是内容（会被镜像进 staging），站点不动它。
+docs_dir: site-docs
+site_dir: site
+use_directory_urls: true
+
+hooks:
+  - scripts/mkdocs_hooks.py
+
+theme:
+  name: material
+  language: zh
+  font: false # 不拉 Google Fonts：系统字体栈（见 assets/site.css），国内访问更稳
+  icon:
+    logo: material/bookshelf
+    repo: fontawesome/brands/github
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: 切换到深色模式
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: 切换到浅色模式
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.indexes
+    - navigation.prune
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - search.highlight
+    - search.suggest
+
+plugins:
+  - search:
+      lang: en
+      # 中文搜索：把每个 CJK 字切成独立 token（零宽断言），查询「注意力」= 注+意+力 全命中
+      separator: '[\s\-\.,:;!?()\[\]{}/"''«»“”‘’、。，；：！？（）【】《》〈〉]+|(?=[一-鿿])'
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - admonition
+  - tables
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - toc:
+      permalink: ¶
+      toc_depth: 3
+
+# extra_css 会被 staging 镜像进 site-docs/assets/
+extra_css:
+  - assets/site.css
+
+validation:
+  # 未进 nav 的页面（子文档、根 README）仍然构建、可访问，仅记 info —— 让 --strict 聚焦真正的坏链
+  omitted_files: info
+
+nav:
+  # SCRIPT:nav START · 由 scripts/library_index.py 生成，勿手改
+  - "首页": "README.md"
+  - "🧠 Models · 23":
+    - "Models/README.md"
+    - "Alibaba-Gen": "Models/Alibaba-Gen/report.md"
+    - "ByteDance-Gen": "Models/ByteDance-Gen/report.md"
+    - "Claude": "Models/Claude/report.md"
+    - "DeepSeek":
+        - "总报告": "Models/DeepSeek/report.md"
+        - "deepseek-multimodal-and-specialized": "Models/DeepSeek/deepseek-multimodal-and-specialized.md"
+        - "deepseek-text-models": "Models/DeepSeek/deepseek-text-models.md"
+    - "Doubao-Seed": "Models/Doubao-Seed/report.md"
+    - "GLM": "Models/GLM/report.md"
+    - "GPT": "Models/GPT/report.md"
+    - "Gemini": "Models/Gemini/report.md"
+    - "Google-Gen": "Models/Google-Gen/report.md"
+    - "Grok": "Models/Grok/report.md"
+    - "Hunyuan": "Models/Hunyuan/report.md"
+    - "Kimi": "Models/Kimi/report.md"
+    - "Kling": "Models/Kling/report.md"
+    - "LLaMA": "Models/LLaMA/report.md"
+    - "MiMo": "Models/MiMo/report.md"
+    - "Midjourney": "Models/Midjourney/report.md"
+    - "MiniMax": "Models/MiniMax/report.md"
+    - "Mistral": "Models/Mistral/report.md"
+    - "Nemotron": "Models/Nemotron/report.md"
+    - "OpenAI-Gen": "Models/OpenAI-Gen/report.md"
+    - "Qwen":
+        - "总报告": "Models/Qwen/report.md"
+        - "qwen-omni-and-ecosystem": "Models/Qwen/qwen-omni-and-ecosystem.md"
+        - "qwen-text-models": "Models/Qwen/qwen-text-models.md"
+        - "qwen-vl-models": "Models/Qwen/qwen-vl-models.md"
+    - "Runway": "Models/Runway/report.md"
+    - "StabilityAI": "Models/StabilityAI/report.md"
+  - "💬 LLM · 8":
+    - "LLM/README.md"
+    - "Agent": "LLM/Agent/report.md"
+    - "Alignment": "LLM/Alignment/report.md"
+    - "DecisionModels":
+        - "总报告": "LLM/DecisionModels/report.md"
+        - "calibration": "LLM/DecisionModels/calibration.md"
+        - "experiments": "LLM/DecisionModels/experiments.md"
+        - "open-implementations": "LLM/DecisionModels/open-implementations.md"
+        - "2609.23886-this-that-model": "LLM/DecisionModels/papers/2609.23886-this-that-model.md"
+        - "2609.23986-jev-mem": "LLM/DecisionModels/papers/2609.23986-jev-mem.md"
+        - "2609.24052-crash-narrative-calibration": "LLM/DecisionModels/papers/2609.24052-crash-narrative-calibration.md"
+        - "2609.24574-css-text-annotation": "LLM/DecisionModels/papers/2609.24574-css-text-annotation.md"
+        - "2609.25845-visual-jev": "LLM/DecisionModels/papers/2609.25845-visual-jev.md"
+        - "2609.26532-reflex-selective-control": "LLM/DecisionModels/papers/2609.26532-reflex-selective-control.md"
+        - "2609.26550-jev-as-a-judge": "LLM/DecisionModels/papers/2609.26550-jev-as-a-judge.md"
+        - "2609.26758-option-name-vs-definition": "LLM/DecisionModels/papers/2609.26758-option-name-vs-definition.md"
+        - "2609.28613-decision-hijacking": "LLM/DecisionModels/papers/2609.28613-decision-hijacking.md"
+        - "2609.30243-jevout-natural-context-flip": "LLM/DecisionModels/papers/2609.30243-jevout-natural-context-flip.md"
+        - "2609.33209-probability-axioms-coherence": "LLM/DecisionModels/papers/2609.33209-probability-axioms-coherence.md"
+        - "2610.09683-system-switch": "LLM/DecisionModels/papers/2610.09683-system-switch.md"
+        - "taxonomy": "LLM/DecisionModels/taxonomy.md"
+    - "LongContext": "LLM/LongContext/report.md"
+    - "MoE": "LLM/MoE/report.md"
+    - "RAG": "LLM/RAG/report.md"
+    - "ReasoningModels": "LLM/ReasoningModels/report.md"
+    - "VLM": "LLM/VLM/report.md"
+  - "🎨 VisualGen · 8":
+    - "VisualGen/README.md"
+    - "3DGen": "VisualGen/3DGen/report.md"
+    - "AudioGen": "VisualGen/AudioGen/report.md"
+    - "AvatarGen": "VisualGen/AvatarGen/report.md"
+    - "ControllableGen": "VisualGen/ControllableGen/report.md"
+    - "DiT": "VisualGen/DiT/report.md"
+    - "DiffusionModels": "VisualGen/DiffusionModels/report.md"
+    - "ImageEditing": "VisualGen/ImageEditing/report.md"
+    - "VideoGen": "VisualGen/VideoGen/report.md"
+  - "🌍 WorldModel · 2":
+    - "WorldModel/README.md"
+    - "EmbodiedVLA": "WorldModel/EmbodiedVLA/report.md"
+    - "WorldModels": "WorldModel/WorldModels/report.md"
+  - "⚙️ Infra · 3":
+    - "Infra/README.md"
+    - "QuantizationEdge": "Infra/QuantizationEdge/report.md"
+    - "SpeculativeDecoding":
+        - "总报告": "Infra/SpeculativeDecoding/report.md"
+        - "speculative-block-diffusion": "Infra/SpeculativeDecoding/speculative-block-diffusion.md"
+        - "speculative-cascade-heterogeneous": "Infra/SpeculativeDecoding/speculative-cascade-heterogeneous.md"
+        - "speculative-classical-and-self": "Infra/SpeculativeDecoding/speculative-classical-and-self.md"
+        - "speculative-domain-language": "Infra/SpeculativeDecoding/speculative-domain-language.md"
+        - "speculative-draft-training-2026": "Infra/SpeculativeDecoding/speculative-draft-training-2026.md"
+        - "speculative-eagle-series": "Infra/SpeculativeDecoding/speculative-eagle-series.md"
+        - "speculative-edge-cloud-hardware": "Infra/SpeculativeDecoding/speculative-edge-cloud-hardware.md"
+        - "speculative-multimodal": "Infra/SpeculativeDecoding/speculative-multimodal.md"
+        - "speculative-stochastic-verification": "Infra/SpeculativeDecoding/speculative-stochastic-verification.md"
+        - "speculative-systems-and-frameworks": "Infra/SpeculativeDecoding/speculative-systems-and-frameworks.md"
+        - "speculative-training-optimization": "Infra/SpeculativeDecoding/speculative-training-optimization.md"
+    - "TrainingInfra": "Infra/TrainingInfra/report.md"
+  - "🔧 OpenSource · 4":
+    - "OpenSource/README.md"
+    - "nemotron":
+        - "总报告": "OpenSource/nemotron/report.md"
+        - "knowledge-graph": "OpenSource/nemotron/knowledge-graph.md"
+        - "structured-reading": "OpenSource/nemotron/notes/structured-reading.md"
+        - "plan": "OpenSource/nemotron/plan.md"
+        - "nemotron-tri-mode-fulltext": "OpenSource/nemotron/raw-extracts/nemotron-tri-mode-fulltext.md"
+        - "pdf-fu_等__nemotronlabsdiffusion_a_trimode_language_model_unifying_autoregressive_dif": "OpenSource/nemotron/raw-extracts/pdf-fu_等__nemotronlabsdiffusion_a_trimode_language_model_unifying_autoregressive_dif.md"
+        - "sources-index": "OpenSource/nemotron/sources-index.md"
+    - "sglang":
+        - "总报告": "OpenSource/sglang/report.md"
+        - "claim-audit": "OpenSource/sglang/claim-audit.md"
+        - "scheduler-and-prefix-cache": "OpenSource/sglang/scheduler-and-prefix-cache.md"
+        - "speculative-decoding-path": "OpenSource/sglang/speculative-decoding-path.md"
+    - "this-that-model": "OpenSource/this-that-model/report.md"
+    - "vllm":
+        - "总报告": "OpenSource/vllm/report.md"
+        - "claim-audit": "OpenSource/vllm/claim-audit.md"
+        - "kv-cache-and-prefix-reuse": "OpenSource/vllm/kv-cache-and-prefix-reuse.md"
+        - "scheduling-and-spec-decode": "OpenSource/vllm/scheduling-and-spec-decode.md"
+    - "mini-swe-agent":
+        - "mini-swe-agent-deep-report": "OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md"
+  - "📇 索引":
+      - "完整索引": "INDEX.md"
+      - "按条目平铺": "index/by-report.md"
+      - "按专题": "index/by-topic.md"
+      - "按领域": "index/by-domain.md"
+      - "按主题": "index/by-subject.md"
+      - "按来源": "index/by-repo.md"
+      - "最近更新": "index/recent.md"
+      - "待复核": "index/stale.md"
+  - "📖 文档":
+      - "🛠 维护指南 · Maintenance": "docs/maintenance.md"
+      - "📊 统计明细 · Statistics": "docs/statistics.md"
+      - "Team · 技术研究": "docs/team.md"
+      - "🔍 校验记录 · Verification Log": "docs/verification.md"
+      - "scripts/": "scripts/README.md"
+  # SCRIPT:nav END

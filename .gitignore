@@ -9,3 +9,9 @@
 # Python
 __pycache__/
 *.pyc
+
+# 站点渲染层（MkDocs）：staging 镜像与构建产物均由 scripts/library_index.py / mkdocs 生成
+site-docs/
+site/
+.venv-mkdocs/
+.preview/

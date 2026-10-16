@@ -1,0 +1,54 @@
+# ==========================================================================
+# GitHub Pages 自动部署：push main → 重建索引 → mkdocs build --strict → 发布
+#
+# 前提（一次性设置）：仓库 Settings → Pages → Build and deployment →
+# Source 选 **GitHub Actions**。
+#
+# 版本钉住：mkdocs-material 的次版本升级可能改样式，钉住保证可复现。
+# 本地复现：python3 scripts/library_index.py --repo-root . --out-root . \
+#            --write-stats --check-links && mkdocs build --strict
+# ==========================================================================
+name: deploy-site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # 「最近更新」回退 git 提交日，需要完整历史
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install MkDocs Material（钉版本）
+        run: pip install "mkdocs-material==9.7.7"
+      - name: 重建索引 + 站点 staging（幂等，panels.json 驱动）
+        run: python3 scripts/library_index.py --repo-root . --out-root . --write-stats --check-links
+      - name: 构建站点（严格模式，站内坏链即失败）
+        run: mkdocs build --strict
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

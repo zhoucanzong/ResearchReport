@@ -1,34 +1,28 @@
-<div align="center">
+<div align="center" markdown="1">
 
-⚙️
-
-# Infra
+# ⚙️ Infra
 
 **3 条** · 推理 / 训练基础设施，覆盖投机解码、量化边缘与训练基建。
 
-[← 返回首页](<../README.md>)
+[← 返回首页](<../README.md>) · [完整索引](<../INDEX.md>)
 
 </div>
 
 <!-- SCRIPT:panel-readme START · 由 scripts/library_index.py 生成，勿手改 -->
 
-![Entries](https://img.shields.io/badge/Entries-3-green?style=flat-square)
-![Panel](https://img.shields.io/badge/Panel-Infra-blue?style=flat-square)
+![Entries](https://img.shields.io/badge/Entries-3-3f51b5?style=flat-square)
+![Panel](https://img.shields.io/badge/Panel-Infra-9e9e9e?style=flat-square)
 
-### QuantizationEdge
+| 条目 | 报告 | 规模 |
+| :-- | :-- | --: |
+| **QuantizationEdge** | [模型量化与边缘部署研究报告](<QuantizationEdge/report.md>) | 777 行 |
+| **SpeculativeDecoding** | [投机解码（Speculative Decoding）技术深度调研报告](<SpeculativeDecoding/report.md>) | 369 行 |
+| **TrainingInfra** | [大模型训练基础设施与分布式训练研究报告](<TrainingInfra/report.md>) | 720 行 |
 
-模型量化与边缘部署研究报告
-
-[report.md](<QuantizationEdge/report.md>) · 777 行 · 34,205 B
-
-### SpeculativeDecoding
-
-投机解码（Speculative Decoding）技术深度调研报告
-
-[report.md](<SpeculativeDecoding/report.md>) · 369 行 · 33,957 B
+## 📎 子文档
 
 <details>
-<summary><b>子文档（11）</b></summary>
+<summary><b>SpeculativeDecoding</b>（11 份）</summary>
 
 * [speculative-block-diffusion.md](<SpeculativeDecoding/speculative-block-diffusion.md>) — 230 行 / 18,585 B
 * [speculative-cascade-heterogeneous.md](<SpeculativeDecoding/speculative-cascade-heterogeneous.md>) — 141 行 / 11,829 B
@@ -43,12 +37,6 @@
 * [speculative-training-optimization.md](<SpeculativeDecoding/speculative-training-optimization.md>) — 128 行 / 14,086 B
 
 </details>
-
-### TrainingInfra
-
-大模型训练基础设施与分布式训练研究报告
-
-[report.md](<TrainingInfra/report.md>) · 720 行 · 31,849 B
 
 <!-- SCRIPT:panel-readme END -->
 

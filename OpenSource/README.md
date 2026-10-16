@@ -1,28 +1,29 @@
-<div align="center">
+<div align="center" markdown="1">
 
-🔧
-
-# OpenSource
+# 🔧 OpenSource
 
 **4 条** · 开源仓库代码深读，源码不入口、只留报告与证据引用。
 
-[← 返回首页](<../README.md>)
+[← 返回首页](<../README.md>) · [完整索引](<../INDEX.md>)
 
 </div>
 
 <!-- SCRIPT:panel-readme START · 由 scripts/library_index.py 生成，勿手改 -->
 
-![Entries](https://img.shields.io/badge/Entries-4-green?style=flat-square)
-![Panel](https://img.shields.io/badge/Panel-OpenSource-blue?style=flat-square)
+![Entries](https://img.shields.io/badge/Entries-4-3f51b5?style=flat-square)
+![Panel](https://img.shields.io/badge/Panel-OpenSource-9e9e9e?style=flat-square)
 
-### nemotron
+| 条目 | 报告 | 规模 |
+| :-- | :-- | --: |
+| **nemotron** | [Nemotron-Labs-Diffusion 阅读报告](<nemotron/report.md>) | 206 行 |
+| **sglang** | [SGLang 仓库代码分析报告](<sglang/report.md>) | 310 行 |
+| **this-that-model** | [this-that-model 仓库深读](<this-that-model/report.md>) | 246 行 |
+| **vllm** | [vLLM 仓库代码分析报告](<vllm/report.md>) | 294 行 |
 
-Nemotron-Labs-Diffusion 阅读报告
-
-[report.md](<nemotron/report.md>) · 206 行 · 13,183 B
+## 📎 子文档
 
 <details>
-<summary><b>子文档（6）</b></summary>
+<summary><b>nemotron</b>（6 份）</summary>
 
 * [knowledge-graph.md](<nemotron/knowledge-graph.md>) — 136 行 / 10,088 B
 * [notes/structured-reading.md](<nemotron/notes/structured-reading.md>) — 169 行 / 10,416 B
@@ -33,14 +34,8 @@ Nemotron-Labs-Diffusion 阅读报告
 
 </details>
 
-### sglang
-
-SGLang 仓库代码分析报告
-
-[report.md](<sglang/report.md>) · 310 行 · 32,226 B
-
 <details>
-<summary><b>子文档（3）</b></summary>
+<summary><b>sglang</b>（3 份）</summary>
 
 * [claim-audit.md](<sglang/claim-audit.md>) — 149 行 / 11,627 B
 * [scheduler-and-prefix-cache.md](<sglang/scheduler-and-prefix-cache.md>) — 174 行 / 20,863 B
@@ -48,20 +43,8 @@ SGLang 仓库代码分析报告
 
 </details>
 
-### this-that-model
-
-this-that-model 仓库深读
-
-[report.md](<this-that-model/report.md>) · 246 行 · 24,264 B
-
-### vllm
-
-vLLM 仓库代码分析报告
-
-[report.md](<vllm/report.md>) · 294 行 · 35,577 B
-
 <details>
-<summary><b>子文档（3）</b></summary>
+<summary><b>vllm</b>（3 份）</summary>
 
 * [claim-audit.md](<vllm/claim-audit.md>) — 422 行 / 52,479 B
 * [kv-cache-and-prefix-reuse.md](<vllm/kv-cache-and-prefix-reuse.md>) — 206 行 / 19,051 B

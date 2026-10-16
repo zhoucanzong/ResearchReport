@@ -22,7 +22,7 @@
 | 带合法 `date` 的条目 | 3 |
 | 文档（除生成物外的全部 `.md`） | 105 |
 | 其中文件名 `README.md` | 8 |
-| 纳入版本控制的文件 | 118 |
+| 纳入版本控制的文件 | 122 |
 | 纳入版本控制的 `.md` | 113 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
@@ -715,14 +715,14 @@
 
 | 文档 | 板块 | 行数 | 字节 |
 | --- | --- | --: | --: |
-| [Infra/README.md](<Infra/README.md>) | Infra | 57 | 2,416 B |
-| [LLM/README.md](<LLM/README.md>) | LLM | 92 | 3,619 B |
-| [Models/README.md](<Models/README.md>) | Models | 177 | 3,925 B |
-| [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 76 | 2,431 B |
+| [Infra/README.md](<Infra/README.md>) | Infra | 45 | 2,487 B |
+| [LLM/README.md](<LLM/README.md>) | LLM | 55 | 3,584 B |
+| [Models/README.md](<Models/README.md>) | Models | 65 | 3,584 B |
+| [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 59 | 2,471 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 735 | 34,490 B |
-| [README.md](<README.md>) |  | 66 | 3,389 B |
-| [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 70 | 1,678 B |
-| [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 34 | 851 B |
+| [README.md](<README.md>) |  | 66 | 4,500 B |
+| [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,616 B |
+| [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 25 | 909 B |
 | [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 10,798 B |
 | [docs/statistics.md](<docs/statistics.md>) | docs | 212 | 16,019 B |
 | [docs/team.md](<docs/team.md>) | docs | 33 | 3,414 B |
