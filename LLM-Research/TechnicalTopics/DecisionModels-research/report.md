@@ -767,13 +767,13 @@ TypeSafe 把 Jev 定位为 **System One 模型**（"first System One model"）�
 | :-- | --: | --: | :-- |
 | `entries.total` | **46** | **46** | **不变**：`papers/` 与 `open-implementations.md` 都不是 `report.md`，**不新增条目** |
 | 条目子文档数（children） | 28 | **41** | **+13**（12 篇 `papers/` + `open-implementations.md`） |
-| 条目正文行数（`lines`，剔除 front-matter） | 29,663 | **29,764** | **+101**，全部来自 `report.md` 本批增补（子文档导航 + 本节 §12）；**子文档不计入** `lines` |
-| 条目字节 | 1,735,390 B | **≈1,748,694 B** | 约 **+13,300 B**（同上，仅条目口径；**自指量**——本节自身也在 `report.md` 内，故标约值，见下口径提醒） |
-| `report.md` 本文件行数（`wc -l`） | 709 | **810** | 与 `lines` 增量一致（本条目无 front-matter；810 − 101 = 709 与基线一致） |
+| 条目正文行数（`lines`，剔除 front-matter） | 29,663 | **29,765**（终态实测） | **+102**，全部来自 `report.md` 本批增补（子文档导航 + 本节 §12）；**子文档不计入** `lines` |
+| 条目字节 | 1,735,390 B | **≈1,748,700 B** | 约 **+13,300 B**（自指量，标约值；权威值见 `index/stats.json`） |
+| `report.md` 本文件行数（`wc -l`） | 709 | **811**（终态实测） | 与 `lines` 增量一致（本条目无 front-matter；811 − 102 = 709 与基线一致） |
 | 文档数（除生成物的 `.md`） | 83 | **96** | **+13** |
 | 全仓库跟踪文件数 | 96 | **109** | **+13**（本批 13 份子文档提交后实测；`git ls-files` 含生成物） |
 
-> **口径提醒**：`lines` = **各条目 `report.md` 合计 − front-matter 行数**（本仓库仅 1 份条目带 front-matter，8 行；另有 1 份文件无结尾换行，故 `wc -l` 合计 29,772 − 8 = **29,764**），**不含**子文档。派生数字（根 `README.md`、`LLM-Research/README.md`、`docs/statistics.md`）均由脚本产出，不手改。
+> **口径提醒**：`lines` = **各条目 `report.md` 合计 − front-matter 行数**（本仓库仅 1 份条目带 front-matter，8 行；`wc -l` 合计减 8 即得；终态实测为 **29,765**），**不含**子文档。派生数字（根 `README.md`、`LLM-Research/README.md`、`docs/statistics.md`）均由脚本产出，不手改。
 > **自指量说明**：`条目字节`（含本条 `report.md` 自身）与 `report.md 行数` 都是**自指量**——本节的任何编辑都会轻微改变它们。故此处字节数标约值，**权威值以仓库生成物 [`index/stats.json`](../../../index/stats.json) 为准**。
 
 ### 12.4 链接与卫生自检

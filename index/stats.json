@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "8da1ce8e5482479a701e6426b228cb582d0c4dc3405a399f9b50a2e621ada2c0",
+  "content_fingerprint": "13a84194cc6b923824b36d3be955a6b201a6c7f58955e515a9063775cc662ce7",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -17,7 +17,7 @@
     "without_front_matter": 45,
     "with_date": 1,
     "lines": 29765,
-    "bytes": 1749123,
+    "bytes": 1749073,
     "children": 41
   },
   "documents": {
@@ -27,7 +27,7 @@
     "named_report_md": 46,
     "named_readme_md": 4,
     "lines": 42533,
-    "bytes": 2711068
+    "bytes": 2711018
   },
   "libraries": {
     "AIGC-Research": {
@@ -65,11 +65,11 @@
         "Other": 0
       },
       "lines": 15913,
-      "bytes": 1031887,
+      "bytes": 1031837,
       "lines_raw": 15913,
       "dir_files": 60,
       "dir_md": 59,
-      "dir_bytes": 1699375,
+      "dir_bytes": 1699325,
       "du_sk": 1772
     },
     "Repo-Research": {
@@ -99,10 +99,10 @@
     "library_entries": 46,
     "library_documents_md": 90,
     "library_dir_files": 92,
-    "library_dir_bytes": 2658404,
+    "library_dir_bytes": 2658354,
     "library_du_sk": 2776,
     "library_entry_lines": 29765,
-    "library_entry_bytes": 1749123
+    "library_entry_bytes": 1749073
   },
   "version_control": {
     "tracked_total": 109,
@@ -160,7 +160,7 @@
           "files": 26,
           "lines": 15913,
           "lines_raw": 15913,
-          "bytes": 1031887
+          "bytes": 1031837
         },
         "report_md_by_category": {
           "ModelSeries": {
@@ -173,7 +173,7 @@
             "files": 11,
             "lines": 7025,
             "lines_raw": 7025,
-            "bytes": 424434
+            "bytes": 424384
           },
           "Other": {
             "files": 0,
@@ -192,7 +192,7 @@
           "files": 59,
           "lines": 23482,
           "lines_raw": 23622,
-          "bytes": 1699083
+          "bytes": 1699033
         }
       },
       "Repo-Research": {
@@ -240,13 +240,13 @@
       "files": 96,
       "lines": 42533,
       "lines_raw": 42682,
-      "bytes": 2711068
+      "bytes": 2711018
     },
     "library_md": {
       "files": 90,
       "lines": 41585,
       "lines_raw": 41734,
-      "bytes": 2641818
+      "bytes": 2641768
     },
     "root_readme": {
       "files": 1,
