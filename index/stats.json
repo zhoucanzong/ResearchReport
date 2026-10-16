@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "55bb845bf547c62baab9654ca59c892c8e9eb5f4a4003bd6dd58bf5524af0660",
+  "content_fingerprint": "7386c40f2edda9fe06757b1020e1a839dda0cc2c6806ecdf2d6ca56c1a2e4fc5",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -14,21 +14,21 @@
   },
   "entries": {
     "total": 48,
-    "with_front_matter": 3,
-    "without_front_matter": 45,
-    "with_date": 3,
-    "lines": 30510,
-    "bytes": 1841888,
-    "children": 54
+    "with_front_matter": 4,
+    "without_front_matter": 44,
+    "with_date": 4,
+    "lines": 30544,
+    "bytes": 1846096,
+    "children": 57
   },
   "documents": {
-    "md_total": 126,
-    "md_libraries": 109,
-    "with_front_matter": 16,
+    "md_total": 118,
+    "md_libraries": 112,
+    "with_front_matter": 17,
     "named_report_md": 48,
     "named_readme_md": 8,
-    "lines": 47232,
-    "bytes": 3172295
+    "lines": 46357,
+    "bytes": 3025564
   },
   "libraries": {
     "Models": {
@@ -114,12 +114,12 @@
     },
     "WorldModel": {
       "entries": 2,
-      "documents_md": 13,
+      "documents_md": 16,
       "md_by_category": {
         "Models": 0,
         "LLM": 0,
         "VisualGen": 0,
-        "WorldModel": 13,
+        "WorldModel": 16,
         "Infra": 0,
         "OpenSource": 0
       },
@@ -131,13 +131,13 @@
         "Infra": 0,
         "OpenSource": 0
       },
-      "lines": 750,
-      "bytes": 77166,
-      "lines_raw": 750,
-      "dir_files": 14,
-      "dir_md": 13,
-      "dir_bytes": 143622,
-      "du_sk": 176
+      "lines": 784,
+      "bytes": 81374,
+      "lines_raw": 792,
+      "dir_files": 16,
+      "dir_md": 16,
+      "dir_bytes": 221759,
+      "du_sk": 256
     },
     "Infra": {
       "entries": 3,
@@ -197,18 +197,18 @@
   "totals": {
     "libraries": 6,
     "library_entries": 48,
-    "library_documents_md": 109,
-    "library_dir_files": 111,
-    "library_dir_bytes": 2903897,
-    "library_du_sk": 3052,
-    "library_entry_lines": 30510,
-    "library_entry_bytes": 1841888
+    "library_documents_md": 112,
+    "library_dir_files": 113,
+    "library_dir_bytes": 2982034,
+    "library_du_sk": 3132,
+    "library_entry_lines": 30544,
+    "library_entry_bytes": 1846096
   },
   "version_control": {
-    "tracked_total": 122,
-    "tracked_md": 113,
+    "tracked_total": 135,
+    "tracked_md": 126,
     "tracked_report_md": 48,
-    "tracked_libraries": 100,
+    "tracked_libraries": 113,
     "tracked_repo_root": 4,
     "tracked_docs": 4,
     "tracked_scripts": 4
@@ -392,9 +392,9 @@
       "WorldModel": {
         "report_md": {
           "files": 2,
-          "lines": 750,
-          "lines_raw": 750,
-          "bytes": 77166
+          "lines": 784,
+          "lines_raw": 792,
+          "bytes": 81374
         },
         "report_md_by_category": {
           "Models": {
@@ -417,9 +417,9 @@
           },
           "WorldModel": {
             "files": 2,
-            "lines": 750,
-            "lines_raw": 750,
-            "bytes": 77166
+            "lines": 784,
+            "lines_raw": 792,
+            "bytes": 81374
           },
           "Infra": {
             "files": 0,
@@ -435,16 +435,16 @@
           }
         },
         "other_md": {
-          "files": 11,
-          "lines": 1087,
-          "lines_raw": 1087,
-          "bytes": 66450
+          "files": 14,
+          "lines": 2336,
+          "lines_raw": 2336,
+          "bytes": 140385
         },
         "dir_md": {
-          "files": 13,
-          "lines": 1837,
-          "lines_raw": 1837,
-          "bytes": 143616
+          "files": 16,
+          "lines": 3120,
+          "lines_raw": 3128,
+          "bytes": 221759
         }
       },
       "Infra": {
@@ -565,22 +565,22 @@
       }
     },
     "repo_md": {
-      "files": 126,
-      "lines": 47232,
-      "lines_raw": 47399,
-      "bytes": 3172295
+      "files": 118,
+      "lines": 46357,
+      "lines_raw": 46532,
+      "bytes": 3025564
     },
     "library_md": {
-      "files": 109,
-      "lines": 44234,
-      "lines_raw": 44401,
-      "bytes": 2887597
+      "files": 112,
+      "lines": 45517,
+      "lines_raw": 45692,
+      "bytes": 2965740
     },
     "root_readme": {
       "files": 1,
       "lines": 105,
       "lines_raw": 105,
-      "bytes": 7862
+      "bytes": 7858
     },
     "docs_md": {
       "files": 4,
@@ -600,6 +600,6 @@
     ]
   },
   "du": {
-    "worktree_excluding_git": 177792
+    "worktree_excluding_git": 27688
   }
 }

@@ -9,15 +9,16 @@
 
 判定口径：`status` 不是 active/current/ok/stable/published，或 `date` 早于 180 天。
 
-## 已标记（3）
+## 已标记（4）
 
 | 条目 | 原因 |
 | --- | --- |
 | [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | status=completed |
 | [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | status=completed |
 | [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | status=completed |
+| [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | status=completed |
 
-## 无 date 且无 status（无法判定，45）
+## 无 date 且无 status（无法判定，44）
 
 以下条目既没有 `date` 也没有 `status`，陈旧度无法评估（不算作已标记）：
 
@@ -65,4 +66,3 @@
 * [VisualGen/ImageEditing/report.md](<../VisualGen/ImageEditing/report.md>)
 * [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>)
 * [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>)
-* [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>)

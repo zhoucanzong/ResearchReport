@@ -178,6 +178,9 @@ nav:
         - "2408.14837-gamengen": "WorldModel/WorldModels/papers/2408.14837-gamengen.md"
         - "2501.09038-physics-iq": "WorldModel/WorldModels/papers/2501.09038-physics-iq.md"
         - "2503.21755-vbench-2": "WorldModel/WorldModels/papers/2503.21755-vbench-2.md"
+        - "dynamics-and-action-conditioning": "WorldModel/WorldModels/topics/dynamics-and-action-conditioning.md"
+        - "incomparability-checklist": "WorldModel/WorldModels/topics/incomparability-checklist.md"
+        - "world-model-as-env": "WorldModel/WorldModels/topics/world-model-as-env.md"
   - "⚙️ Infra · 3":
     - "Infra/README.md"
     - "QuantizationEdge": "Infra/QuantizationEdge/report.md"
