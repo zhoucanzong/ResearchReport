@@ -16,7 +16,7 @@
 | **条目数**（`report.md`） | **44** |
 | 条目子文档数 | 25 |
 | 条目正文行数（剔除 front-matter） | 28,521 |
-| 条目字节 | 1,610,443 B |
+| 条目字节 | 1,612,159 B |
 | 带 front-matter 的条目 | 1 |
 | 带合法 `date` 的条目 | 1 |
 | 文档（除生成物外的全部 `.md`） | 78 |
@@ -32,8 +32,8 @@
 | --- | --: | --: | --: | --: | --- |
 | AIGC-Research | 17 | 18 | 12,903 | 625,871 B | [#AIGC-Research](#aigc-research) |
 | LLM-Research | 25 | 42 | 15,102 | 940,879 B | [#LLM-Research](#llm-research) |
-| Repo-Research | 2 | 12 | 516 | 43,693 B | [#Repo-Research](#repo-research) |
-| **合计** | **44** | **78** | **28,521** | **1,610,443 B** | — |
+| Repo-Research | 2 | 12 | 516 | 45,409 B | [#Repo-Research](#repo-research) |
+| **合计** | **44** | **78** | **28,521** | **1,612,159 B** | — |
 
 ## 分面索引
 
@@ -616,13 +616,13 @@
   <summary><b>sglang-research</b> · <code>Repo-Research/sglang-research/report.md</code> · 310 行 · 2026-10-16</summary>
   
 
-    * **条目**：[Repo-Research/sglang-research/report.md](<Repo-Research/sglang-research/report.md>)（310 行 / 30,510 B）
+    * **条目**：[Repo-Research/sglang-research/report.md](<Repo-Research/sglang-research/report.md>)（310 行 / 32,226 B）
     * **专题目录**：`Repo-Research/sglang-research`
     * **元数据**：type=`repo-research` · domain=`Repo-Research` · subject=`sglang` · date=`2026-10-16` · status=`completed`
     * **子文档（3）**
-        * [claim-audit.md](<Repo-Research/sglang-research/claim-audit.md>) — 147 行 / 11,012 B
-        * [scheduler-and-prefix-cache.md](<Repo-Research/sglang-research/scheduler-and-prefix-cache.md>) — 174 行 / 19,351 B
-        * [speculative-decoding-path.md](<Repo-Research/sglang-research/speculative-decoding-path.md>) — 230 行 / 23,714 B
+        * [claim-audit.md](<Repo-Research/sglang-research/claim-audit.md>) — 149 行 / 11,639 B
+        * [scheduler-and-prefix-cache.md](<Repo-Research/sglang-research/scheduler-and-prefix-cache.md>) — 174 行 / 20,863 B
+        * [speculative-decoding-path.md](<Repo-Research/sglang-research/speculative-decoding-path.md>) — 230 行 / 25,276 B
 
   </details>
 

@@ -133,7 +133,9 @@ add59912f210a242d8cd988d54303dac8cabefc78ce94d55008c5b26e8e5d710  nemotron-tri-m
 | clone 位置 | `/tmp/sglang-clone`（`--filter=blob:none` 部分克隆，**只读**，未构建、未修改），校验后删除 |
 | 仓库内是否含源码 / 克隆残留 | ✅ 无：`git status --porcelain` 只有新增的 4 个 `.md`；无 `.py` / `.rs` / `.cuh` 等源文件 |
 | 报告内单处引用长度 | ✅ 全部 ≤ 15 行（实际最长 4 行，均为 `文件:行` 标注的短引用） |
-| 结论审计（`claim_audit.py --lang zh`） | ✅ 4 份文档全部 **0 处缺少邻近源码证据**（高影响结论数：report 36 / spec-path 30 / scheduler-prefix 32 / claim-audit 12） |
+| 结论审计（`claim_audit.py --lang zh`） | ✅ 4 份文档全部 **0 处缺少邻近源码证据**（高影响结论数：report 9 / spec-path 3 / scheduler-prefix 5 / claim-audit 12；口径见 [claim-audit.md §2](../Repo-Research/sglang-research/claim-audit.md)） |
+| GitHub 链接钉 SHA | ✅ 124 处「默认分支路径」链接（`blob` + 分支名）全部改为 `blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d`；全仓 `grep -ro` 该默认分支路径 = 0（命中数 92 行 / 124 处） |
+| 行号更正 | ✅ 原先误标的 999 行引用在本条目内**全仓归零**（8 处全部改为 `eagle_utils.py:1000–1003`），并在首次出现处补 999 / 1003 行归属说明 |
 | deep 模式 Mermaid 图 | ✅ 3 张（架构总览、decode 运行时序、spec 三段流程；见 [report.md](../Repo-Research/sglang-research/report.md) 与 [speculative-decoding-path.md](../Repo-Research/sglang-research/speculative-decoding-path.md)） |
 | 相对链接回测（全仓，剥 `<>` 角括号口径） | 旧基线 **693 解析 / 0 失效** → 新状态 **722 解析 / 0 失效**（**0 新增失效**，含剥 `<>` 角括号后的口径） |
 | 生成物重跑 | ✅ `scripts/library_index.py --write-stats --check-links`（先 `--dry-run`）；新增条目 4 份 `.md` 的 3 个文件已重跑一致性通过 |

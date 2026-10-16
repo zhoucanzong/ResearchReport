@@ -25,15 +25,15 @@
 | 报告数 / 文档数（不含 README） | 17 份报告 | 41 份报告 | 12 个 `.md` + 1 个 `.json` | **58 份报告 + 12 份深读文档** |
 | ├ 文件名字面为 `report.md`（条目） | 17 | 25 | 2 | 44 |
 | └ 其他 `.md`（分册 / 辅文档 / 深度报告） | 0 | 16 | 10 | 26 |
-| 报告 / 深读正文**字节** | 625,871 | 1,255,288 | 280,964 | **2,162,123** |
-| 报告 / 深读正文**行数** | 12,903 | 19,567 | 4,634 | **37,104** |
+| 报告 / 深读正文**字节** | 625,871 | 1,255,288 | 262,346 | **2,143,505** |
+| 报告 / 深读正文**行数** | 12,903 | 19,567 | 4,645 | **37,115** |
 | `.md` 文件数（含库内 README） | 18 | 42 | 12 | **72** |
 | 目录内文件数（全部类型） | 18 | 43 | 13 | **74** |
-| 目录内容字节（不含 `.git`） | 633,625 | 1,255,580 | 273,539 | **2,162,744** |
-| 磁盘占用 `du -sk` | 656 KB | 1,308 KB | 292 KB | **2,256 KB** |
+| 目录内容字节（不含 `.git`） | 633,625 | 1,255,580 | 279,065 | **2,168,270** |
+| 磁盘占用 `du -sk` | 656 KB | 1,308 KB | 300 KB | **2,264 KB** |
 | 纳入版本控制的文件 | 18 | 43 | 13 | **74** |
 
-> **口径**：条目（`report.md`）数、文档数、目录内文件数 / 字节 / `du -sk` 由 [`scripts/library_index.py`](../scripts/library_index.py) 产出；「报告 / 深读正文」= 除库内 `README.md` 外的全部 `.md`（含子文档），沿用 §3–§5 的 `stat` / `wc` 口径，故其合计（58 份 / 2,162,123 B / 37,104 行）与「条目」口径（44 份 / 1,610,443 B / 28,521 行）不同。
+> **口径**：条目（`report.md`）数、文档数、目录内文件数 / 字节 / `du -sk` 由 [`scripts/library_index.py`](../scripts/library_index.py) 产出；「报告 / 深读正文」= 除库内 `README.md` 外的全部 `.md`（含子文档），沿用 §3–§5 的 `stat` / `wc` 口径，故其合计（58 份 / 2,143,505 B / 37,115 行）与「条目」口径（44 份 / 1,612,159 B / 28,521 行）不同。
 > 脚本口径**跳过隐藏目录**（如 `LLM-Research/.claude/`）；若按 `find` 计入隐藏目录，LLM-Research 目录内为 44 个文件、三库合计 71 个；其中 `.claude/settings.local.json` 被全局 gitignore 规则忽略，故纳入版本控制的仍是 70 个。
 > 「目录内容字节」不含 `.git`；`du -sk` 含文件系统块开销，故大于字节数之和。
 
@@ -43,14 +43,14 @@
 | :-- | --: |
 | 资料库目录 | 3 个（`AIGC-Research/`、`LLM-Research/`、`Repo-Research/`） |
 | 三库目录文件数 | 74 |
-| 三库目录字节 | 2,162,744 B ≈ 2.06 MiB |
-| 三库目录 `du -sk` | 2,256 KB |
+| 三库目录字节 | 2,168,270 B ≈ 2.07 MiB |
+| 三库目录 `du -sk` | 2,264 KB |
 | 全仓库跟踪文件数 | **91**（三库 74 + 根 `README.md`、`.gitignore`、`INDEX.md` + `docs/` 4 个文件 + `scripts/` 2 个文件 + `index/` 8 个文件） |
 | 全仓库 `.md` 数 | **86**（78 份文档 + 生成物 `INDEX.md`(1) 与 `index/*.md`(7)） |
-| 全仓库工作树 `du -sk`（不含 `.git` 与生成物） | 约 2,376 KB |
-| 全仓库工作树字节（不含 `.git` 与生成物） | 约 2.26 MB（≈ 2.15 MiB） |
+| 全仓库工作树 `du -sk`（不含 `.git` 与生成物） | 约 2,384 KB |
+| 全仓库工作树字节（不含 `.git` 与生成物） | 约 2.46 MB（≈ 2.34 MiB） |
 | 首页 `README.md` 体量 | 22,497 B / 263 行 |
-| `docs/` 体量 | 38,018 B / 574 行（4 个文件） |
+| `docs/` 体量 | 38,516 B / 576 行（4 个文件） |
 
 > 全仓库与 `docs/` 的合计为**约值**：`statistics.md` 是本文自身，每次更新都会轻微改变这两个数字。
 > `du -sk` 依赖文件系统块分配（macOS/APFS），换文件系统或换机器**无法保证逐字节复现**，故此处按上述口径标注。
@@ -61,9 +61,9 @@
 | 文件 | 行数 | 字节 |
 | :-- | --: | --: |
 | [maintenance.md](maintenance.md) | 187 | 10,444 |
-| [verification.md](verification.md) | 146 | 11,634 |
+| [verification.md](verification.md) | 148 | 12,134 |
 | [team.md](team.md) | 33 | 3,414 |
-| statistics.md（本文自身） | 208 | 约 12 KB，随更新浮动 |
+| statistics.md（本文自身） | 210 | 约 12 KB，随更新浮动 |
 
 ---
 
@@ -158,15 +158,15 @@
 | nemotron-tri-mode-diffusion/raw-extracts/nemotron-tri-mode-fulltext.md | PDF 全文提取 | 2,430 | 98,525 |
 | nemotron-tri-mode-diffusion/raw-extracts/pdf-fu_等__…dif.md | PDF 提取占位（未完成） | 28 | 1,141 |
 | nemotron-tri-mode-diffusion/papers/nemotron-labs-diffusion.json | 结构化阅读 JSON | 47 | 16,294 |
-| **sglang-research/report.md** | **仓库代码分析报告（条目）** | **310**（正文，另有 8 行 front-matter） | **30,510** |
-| sglang-research/speculative-decoding-path.md | 子文档：投机解码路径与 EAGLE 对照 | 230 | 23,714 |
-| sglang-research/scheduler-and-prefix-cache.md | 子文档：调度器 / 前缀缓存 / 连续批处理 | 174 | 19,351 |
-| sglang-research/claim-audit.md | 子文档：结论审计与阅读覆盖 | 147 | 10,903 |
-| **合计** | **13 个文件** | **4,681** | **273,539** |
+| **sglang-research/report.md** | **仓库代码分析报告（条目）** | **310**（正文，另有 8 行 front-matter） | **32,226** |
+| sglang-research/speculative-decoding-path.md | 子文档：投机解码路径与 EAGLE 对照 | 230 | 25,276 |
+| sglang-research/scheduler-and-prefix-cache.md | 子文档：调度器 / 前缀缓存 / 连续批处理 | 174 | 20,863 |
+| sglang-research/claim-audit.md | 子文档：结论审计与阅读覆盖 | 147 | 11,639 |
+| **合计** | **13 个文件** | **4,692** | **279,065** |
 
-> 12 个 `.md` 合计 257,245 B / 4,634 行；加上 `papers/nemotron-labs-diffusion.json`（16,294 B）即 273,539 B。
+> 12 个 `.md` 合计 262,771 B / 4,645 行；加上 `papers/nemotron-labs-diffusion.json`（16,294 B）即 279,065 B。
 > 注：`.json` 的 47 "行"仅为文件行数，其价值在于结构化字段，不按文档篇幅计入正文行数。
-> SGLang 子文档的行数 / 字节以 `wc -l` / `stat -f '%z'` 实测为准：`report.md` 319 行（正文 310 + front-matter 8 + 围栏 1）/ 30,510 B、`speculative-decoding-path.md` 230 行 / 23,714 B、`scheduler-and-prefix-cache.md` 174 行 / 19,351 B、`claim-audit.md` 147 行 / 10,903 B。
+> SGLang 子文档的行数 / 字节以 `wc -l` / `stat -f '%z'` 实测为准：`report.md` 319 行（正文 310 + front-matter 8 + 围栏 1）/ 32,226 B、`speculative-decoding-path.md` 230 行 / 25,276 B、`scheduler-and-prefix-cache.md` 174 行 / 20,863 B、`claim-audit.md` 147 行 / 11,639 B。（这三份文档的行数未变；字节增加来自把 GitHub 链接从默认分支路径钉到本报告 commit SHA，以及 `eagle_utils.py` 行号更正与说明。）
 
 ---
 

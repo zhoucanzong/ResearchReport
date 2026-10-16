@@ -41,12 +41,14 @@
 
 | 文档 | 高影响结论数 | 缺少邻近证据 | 处置 |
 |---|---|---|---|
-| [report.md](report.md) | 36 | **0** | 首轮 4 处被标记（3 个标题 + 1 个表头），已改标题措辞/表头用词 |
-| [speculative-decoding-path.md](speculative-decoding-path.md) | 30 | **0** | 首轮 3 处被标记，已为每处补 `文件:行` 引用；其中 1 处据代码收紧断言 |
-| [scheduler-and-prefix-cache.md](scheduler-and-prefix-cache.md) | 32 | **0** | 首轮 2 处被标记（1 标题 + 1 段），已补引用/改措辞 |
-| [claim-audit.md](claim-audit.md)（本文） | 12 | **0** | 已改措辞 |
+| [report.md](report.md) | 9 | **0** | 首轮 4 处被标记（3 个标题 + 1 个表头），已改标题措辞/表头用词 |
+| [speculative-decoding-path.md](speculative-decoding-path.md) | 3 | **0** | 首轮 3 处被标记，已为每处补 `文件:行` 引用；其中 1 处据代码收紧断言 |
+| [scheduler-and-prefix-cache.md](scheduler-and-prefix-cache.md) | 5 | **0** | 首轮 2 处被标记（1 标题 + 1 段），已补引用/改措辞 |
+| [claim-audit.md](claim-audit.md)（本文） | 13 | **0** | 已改措辞 |
 
 **读取方式**：审计器只看相邻 1 行窗口，表格里「结论」列与「证据」列分开时会误报。据此把要紧的判断改成「判断句 + 紧随其后的源码引用行」的排版后重跑，把仍被标记的行逐条处置。
+
+> **计数口径说明（2026-10-16 修订，依据 `scripts/claim_audit.py` 的 `HIGH_IMPACT_RE`）**：上表的高影响结论数是**把 GitHub 链接钉到本报告 commit SHA 之后**重跑的读数。钉 SHA 之前，链接路径段是 `blob` + 默认分支名 `main`，其中的分支名恰好是审计器英文高影响词表里的一个词（`main` / `core` / `primary` …），因此被**误命中**，把三份文档的高影响结论数整体抬高（report 36 → 9、spec-path 30 → 3、scheduler-prefix 32 → 5）。本表采用钉 SHA 后的读数；「缺少邻近源码证据 = 0」在修订前后一致。
 
 ### 2.0 首轮被标记项的处置留痕
 
