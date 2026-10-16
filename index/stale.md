@@ -15,7 +15,7 @@
 | --- | --- |
 | [Repo-Research/sglang-research/report.md](<../Repo-Research/sglang-research/report.md>) | status=completed |
 
-## 无 date 且无 status（无法判定，44）
+## 无 date 且无 status（无法判定，45）
 
 以下条目既没有 `date` 也没有 `status`，陈旧度无法评估（不算作已标记）：
 
@@ -54,6 +54,7 @@
 * [LLM-Research/ModelSeries/Qwen-research/report.md](<../LLM-Research/ModelSeries/Qwen-research/report.md>)
 * [LLM-Research/TechnicalTopics/Agent-research/report.md](<../LLM-Research/TechnicalTopics/Agent-research/report.md>)
 * [LLM-Research/TechnicalTopics/Alignment-research/report.md](<../LLM-Research/TechnicalTopics/Alignment-research/report.md>)
+* [LLM-Research/TechnicalTopics/JEV-research/report.md](<../LLM-Research/TechnicalTopics/JEV-research/report.md>)
 * [LLM-Research/TechnicalTopics/LongContext-research/report.md](<../LLM-Research/TechnicalTopics/LongContext-research/report.md>)
 * [LLM-Research/TechnicalTopics/MoE-research/report.md](<../LLM-Research/TechnicalTopics/MoE-research/report.md>)
 * [LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md](<../LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md>)

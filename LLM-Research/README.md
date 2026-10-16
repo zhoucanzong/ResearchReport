@@ -9,8 +9,8 @@
 覆盖 **15 个主流模型 / 系列 + 11 个技术专题** · 持续更新中
 
 [![Monorepo](https://img.shields.io/badge/monorepo-ResearchReport-6f42c1?style=flat-square)](https://github.com/zhoucanzong/ResearchReport)
-[![Reports](https://img.shields.io/badge/Reports-42-blue?style=flat-square)](.)
-[![Files](https://img.shields.io/badge/Files-42-green?style=flat-square)](.)
+[![Reports](https://img.shields.io/badge/Reports-43-blue?style=flat-square)](.)
+[![Files](https://img.shields.io/badge/Files-43-green?style=flat-square)](.)
 ![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)
 
 </div>
@@ -66,7 +66,7 @@
 | 10 | 🔬 | [**RAG**](./TechnicalTopics/RAG-research/)                 | 检索增强生成 |   1   | RAG 0.0→4.0，GraphRAG，Agentic RAG，混合检索 |
 | 11 | 🔬 | [**JEV**](./TechnicalTopics/JEV-research/)                 | System One 决策模型 |   1   | Choice/Score/Noul 类型化输出、隐藏状态直读、零输出 token、`confidence` 语义；**RLCD 同名消歧**（≠ 2023 Contrastive Distillation）；官方九类 jaggedness；第三方研究地图含**失效与攻击** |
 
-> **🔬 技术专题 11 个** &nbsp;|&nbsp; 共 **42 份** Markdown 报告
+> **🔬 技术专题 11 个** &nbsp;|&nbsp; 共 **43 份** Markdown 报告
 
 ---
 

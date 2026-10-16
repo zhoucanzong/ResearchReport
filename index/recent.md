@@ -13,7 +13,7 @@
 | --- | --- | --- | --- |
 | [Repo-Research/sglang-research/report.md](<../Repo-Research/sglang-research/report.md>) | 2026-10-16 | Repo-Research | sglang |
 
-## 无 date 元数据（44）
+## 无 date 元数据（45）
 
 以下条目缺少可解析的 `date`，无法参与「最近更新」排序：
 
@@ -52,6 +52,7 @@
 * [LLM-Research/ModelSeries/Qwen-research/report.md](<../LLM-Research/ModelSeries/Qwen-research/report.md>)
 * [LLM-Research/TechnicalTopics/Agent-research/report.md](<../LLM-Research/TechnicalTopics/Agent-research/report.md>)
 * [LLM-Research/TechnicalTopics/Alignment-research/report.md](<../LLM-Research/TechnicalTopics/Alignment-research/report.md>)
+* [LLM-Research/TechnicalTopics/JEV-research/report.md](<../LLM-Research/TechnicalTopics/JEV-research/report.md>)
 * [LLM-Research/TechnicalTopics/LongContext-research/report.md](<../LLM-Research/TechnicalTopics/LongContext-research/report.md>)
 * [LLM-Research/TechnicalTopics/MoE-research/report.md](<../LLM-Research/TechnicalTopics/MoE-research/report.md>)
 * [LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md](<../LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md>)

@@ -35,12 +35,75 @@
 
 | 标签 | 含义 | 本报告中该等级典型来源 |
 |---|---|---|
-| **精读原文** | 已抓取并阅读正文（HTML/文档源），结论句可在原文定位 | TypeSafe 官方 `.md` 文档、arXiv HTML 正文 |
-| **摘要级** | 只读到摘要与关键结果段，未逐节复核 | 部分应用类论文 |
+| **精读原文** | 已抓取并阅读**正文**（HTML/文档源），结论句可在**正文**（非仅摘要）定位 | TypeSafe 官方 `.md` 文档、arXiv HTML 正文 |
+| **摘要级** | 只读到题录/摘要，未逐节复核正文 | 部分旁证论文（本报告仅 3 篇） |
 | **二手** | 他人对一手材料的转述/汇总，本人未核一手 | 技术分析文章、索引仓库、模型卡自述 |
 | **受限核验** | 目标不可达（403/DNS）或因规则不核验 | 被 403 拦截的 Zenodo 记录 |
 
 括号内注明**来源类型**（官方文档 / 预印本 / 模型卡 / 媒体分析 / 索引仓库）。每条引用均附实测可达链接。**无法确证的一律不进正文**，单列于 §9。
+
+#### 1.2.1 「精读原文」标签的对源抽查（2026-10-16 两轮复核，含一次方法学自纠）
+
+本报告共 35 处 `精读原文·预印本`，涉及 22 篇不同预印本。为排除"把摘要当正文"的标签虚高，对全部 22 篇做了**机械可复现的对源抽查**：抓取 `arxiv.org/html/<id>v1`，剥除摘要块，再在剩余正文中检索本报告所引用的关键数字/字符串；**关键串出现在剥摘要后的正文中才算 `精读原文`**。
+
+**第一轮（有缺陷，已废弃）**：按 `<blockquote class="abstract">` 剥摘要。**该方法对这些 arXiv HTML 是错的**——摘要实际位于 `<div id="abstract1" class="ltx_abstract">`，因此第一轮"命中正文"的结果里混入了摘要文字，等于没有真正剥离摘要，结论不可用。
+
+**第二轮（现行口径）**：改为剥除 `class="ltx_abstract"` 容器。抽验范围覆盖本报告引用的**全部关键数字与短句**（约 60 个串），逐串记录其出现在「摘要」还是「剥摘要后的正文」。
+
+| 第二轮结果 | 篇数 / 条目数 | 处理 |
+|---|---|---|
+| 所引关键串均在**正文**命中 | 20 篇 | 维持 `精读原文·预印本` |
+| 有关键串**仅**在摘要、正文查无 | 1 篇（2 处主张） | **按单一主等级降为 `摘要级`**，逐条列于下方降级表 |
+| 只引题录/摘要的旁证（本报告主动限定为摘要级） | 1 篇 | `2307.12950` 记为 `摘要级·题录/摘要` |
+
+> 20 + 1 + 1 = 22 篇。抽验中另发现 **3 处假阳性**（探针串写错导致的误判），已在 §1.2.2 末尾逐条撤销；**最终实际降级 2 处主张、涉及 1 篇论文**。
+
+**降级清单（宁降不升）**：
+
+| 原标注处 | 主张 | 第二轮核验 | 新标签 |
+|---|---|---|---|
+| §6.3 横评表、§7.2 效率表 | JEV-as-a-Judge 费用为最强 LLM 评判者的 **0.36%** | `0.36%` **仅出现在摘要**；剥摘要后的正文查无该串 | `摘要级·预印本（仅摘要）` |
+| §6.1 应用表、§7.2 效率表 | 科学决策研究取得"**最低观测中位时延**" | 该表述**仅出现在摘要**；正文查无 | `摘要级·预印本（仅摘要）` |
+| §3.2 消歧表 | 2023 年 RLCD 的**方法机制与结论** | 本报告只读题录+摘要（`Contrastive Distillation` 串在正文亦无） | `摘要级·题录/摘要` |
+
+**同篇其余主张不受影响**：例如 JEV-as-a-Judge 的"冻结级联保留 99% 准确率""RewardBench 94.0% vs 93.5%"经复核**确在正文**，故该论文仍保留 `精读原文·预印本`，仅**上述单条主张**降为 `摘要级`（单一主等级按**主张粒度**判定，不牵连同篇其它确证主张）。
+
+**一条标签改正（"宁降不升"的适用边界）**：§6.2 的 `2609.24395`（JEVQA）此前被保守标为 `摘要级`，但第二轮抽验确认其正文关键串 `0.824`、`1,936`、`0.797` 均**在剥摘要后的正文命中**，故按"对源"原则**改正为 `精读原文·预印本`**（§7.1 同步）。"宁降不升"用于**本 Agent 未读正文**的引用（如 `2609.24395` 旧标注、§6.2 的 Open-Jev 等旁证），**不用于**已实测命中正文的引用——把已对源的条目压在 `摘要级` 会造成反向失真、低估证据强度。
+
+#### 1.2.2 「只有正文才有」的留痕（外部门禁方抽验 + 本报告自证）
+
+以下短引**均来自剥除摘要后的正文**，用于证明 `精读原文` 标签不是虚标。每处 ≤15 行，标注来源与章节锚点。
+
+**(a) 外部门禁方抽验的两句——复核结论：站得住，且均可定位到正文**
+
+1. `arXiv:2609.24574`（CSS 18 任务横评），正文 §4.1 与结论段：
+
+   > Across the 15 evaluation tasks, Jev reaches a median accuracy of 0.610 and a median macro-F1 of 0.581, a median deficit of 11.6 macro-F1 points to the per-task best LLM, and the deficit is significant after correction on 12 of the 15 tasks.
+
+   > On accuracy, the decision model is not a substitute for a frontier LLM. It trails the per-task best baseline on 14 of 15 evaluation tasks, by a median of 11.6 macro-F1 points…
+
+   > For annotation pipelines, our results support a division of labor rather than a replacement. … on those tasks the measured savings are 35 and 44 times (Appendix B).
+
+   复核：`11.6 macro-F1`、`35 and 44 times`、`0.815`（>0.9 置信段中位准确率）、`0.157`（frontier 中位校准误差）**均在剥摘要后的正文命中**；摘要中反而不含 `35 and 44`。原文另可直接定位"共情任务上高置信度却接近随机"的机理（`the empathy failure is shared across model families`）。
+
+2. `arXiv:2609.23986`（Jev-Mem），正文 §5 结果与结论：
+
+   > Table 1 summarizes the performance of Jev-Mem and the baselines on LoCoMo. Jev-Mem achieves the highest overall LLM-as-a-Judge score of 0.777, compared with 0.700 for the strongest baseline, corresponding to an 11.0% relative improvement.
+
+   > Its total memory build time is only 158 seconds, compared with 1,044 seconds…
+
+   > Jev-Mem also achieves the lowest query latency, requiring only 0.93 seconds per query on average. This is 36.7% lower than the fastest memory-based baseline at 1.47 seconds…
+
+   复核：`0.777`、`158 seconds`、`0.93 seconds`、`36.7%`**均在正文命中**。说明：该文正文同时含"…0.777, an 11.0% relative improvement…"一句（与摘要措辞高度重合），故**仅凭该串无法区分摘要与正文**；本报告以正文独有的 `158 seconds` / `1,044 seconds` / `0.700` 作为判别依据。
+
+**(b) 本报告补充自证（同一抽验流程，正文独有数字）**
+
+- `arXiv:2609.24052`（事故叙述编码）：`5,018,080`、`195,857`、`$0.154 per thousand`、`factor of 3.3`、`not calibrated as delivered` 均在正文命中；后两句是"独立审计发现按交付状态未校准""重校准使校准误差降 3.3 倍"的直接出处。
+- `arXiv:2609.30243`（JevOut）：`61.4%`、`64.9`、`73.2`、`16.9`、`2.2` **均在正文命中**（`16.9`/`2.2` 反而**不在**摘要），支撑"另一系统目标翻转率 64.9%–73.2%""单次 target-aware 添加 16.9%、单次中性添加 2.2%"的对照。
+- `arXiv:2609.26758`（选项名 vs 定义）：正文原句可定位机理与边界——`Erasing the names' semantics entirely, with random character strings, leaves the decision exactly where neutral identifiers already leave it, at no cost in accuracy: polarity is what the swap exploits, not the name's content`，以及 `each option is named by a random 5-character string over letters and digits`。
+- `arXiv:2609.23136`（6G O-RAN）：`22.4`、`61.9`、`53.0`、`459`、`463`、`435`、`1,080` 均在正文命中。
+
+**假阳性剔除记录（避免把正确引用误降）**：第二轮抽验初期曾把三条**探测串写错**而误判为"仅摘要"，复核后**全部撤销降级**：① `2609.24395` 的 `0.824`——正文以**表体** `S4 | Combined | 0.824 | 0.840` 与叙述 `PLCC 0.824, SROCC 0.840` 双处呈现，探针误把 PLCC 与 SROCC 拼成一串；② `2609.26758` 的 `five-character`——正文写作 `random 5-character string`；③ `2609.26532` 的 `64.9`——该量值属 §6.4 的 JevOut（`2609.30243`，其正文已命中），不在 REFLEX 论文中，本就不应作为降级依据。**最终实际降级 2 处主张、1 篇论文**（§1.2.1 降级表）。
 
 ---
 
@@ -143,7 +206,7 @@ TypeSafe 把 Jev 定位为 **System One 模型**（"first System One model"）�
 | | **本报告讨论的 RLCD** | **同名但不同物的 RLCD** |
 |---|---|---|
 | 全称 | Reinforcement Learning for **Calibrated Decisions** | Reinforcement Learning from **Contrastive Distillation** |
-| 出处 | TypeSafe 官方 AI primer（2026）；Jev 产品文档 | [arXiv:2307.12950](https://arxiv.org/abs/2307.12950)，ICLR 2024 |
+| 出处 | TypeSafe 官方 AI primer（2026）；Jev 产品文档 | [arXiv:2307.12950](https://arxiv.org/abs/2307.12950)，ICLR 2024（本报告仅按摘要级引用，见 §1.2.1） |
 | 作者/年份 | TypeSafe（未具名论文） | Kevin Yang, Dan Klein, Asli Celikyilmaz, Nanyun Peng, Yuandong Tian；2023-07-24 投稿，2024-03-16 修订 |
 | 目标 | 让类型化概率**校准**、可用于门控 | 让语言模型**对齐自然语言表述的原则**（无害性、有用性、故事大纲生成） |
 | 机制 | 官方未公开算法细节 | **用正/负两种 prompt 设计制造对比输出 → 构造偏好对 → 训练偏好模型 → 再做 RL** 提升基础未对齐模型 |
@@ -264,7 +327,7 @@ TypeSafe 把 Jev 定位为 **System One 模型**（"first System One model"）�
 | Laya 模型卡（转引两个第三方基准仓库） | Jev p50 **236–276 ms** | 转引 AbdelStark / nibzard 的第三方基准 | 二手·模型卡 |
 | 边缘编排研究 | 决策时延中位降 **15.9–26.5%**；无缓存时端到端中位降 **11.1–25.3%**；每次**正确完成**的 API 费降 **69.0–70.6%** | 三个连续测量块，8 个条件，对照简洁结构化输出的 DeepSeek 部署 | 精读原文·预印本 |
 | 6G O-RAN 研究 | 决策时延中位降 **22.4%**（vs DeepSeek）、**61.9%**（vs Gemini）；另设 direct-attribute Qwen 对照仍保留 **53.0%** 降幅 | RIC 时间尺度，契约解释正确性配平 | 精读原文·预印本 |
-| 科学决策研究 | "在成功响应中取得**最低观测中位时延**"（与另外 5 种配置并列达到完全语义正确） | 结构化科学决策任务 | 精读原文·预印本 |
+| 科学决策研究 | "在成功响应中取得**最低观测中位时延**"（与另外 5 种配置并列达到完全语义正确） | 结构化科学决策任务 | 摘要级·预印本（仅摘要：该措辞在剥摘要后的正文查无，见 §1.2.1） |
 
 > 这些数字**互相不可比**：对照模型不同、任务不同、是否配平正确率不同、是否含缓存不同。本报告**不做跨论文排行榜**，只逐条保留其口径。
 
@@ -281,7 +344,7 @@ TypeSafe 把 Jev 定位为 **System One 模型**（"first System One model"）�
 | Replacing Large Language Models with Jev Decision Models for **Low-Latency Edge Service Orchestration** | [2609.22753](https://arxiv.org/abs/2609.22753) | 边缘服务编排 | 提取 4–8 个有界意图字段；决策时延中位降 15.9–26.5%；**提速集中在"首次解释"**，重复请求缓存会消掉大部分差距 | 精读原文·预印本 |
 | **Intent Interpretation at RIC Timescales**: Jev Decision Models versus LLMs in 6G Open RAN | [2609.23136](https://arxiv.org/abs/2609.23136) | 6G / O-RAN | 决策模型返回类型化策略字段、生成式模型逐 token 产出策略；配平解释正确率后时延降 22.4%/61.9%，建模场景完成率 +3.50/+8.35 个百分点 | 精读原文·预印本 |
 | **Calibrated Decisions at Scale**: Converting Police Crash Narratives into Probabilistic Crash Variables | [2609.24052](https://arxiv.org/abs/2609.24052) | 公共安全数据 | 筛 499,500 条德州叙述、按 27 问 schema 编码 195,857 条，实测 **$0.154/千条**，全 5,018,080 条外推 **$774**；**独立审计发现 typed model 按交付状态未校准**，重校准使校准误差降 **3.3 倍** | 精读原文·预印本 |
-| Jev for **Scientific Decisions**: Evaluating Semantic Choices and Their Consequences | [2609.24965](https://arxiv.org/abs/2609.24965) | 科研工作流 | 前提是"先选已知关系、再做确定性计算"；Jev 与另外 5 种配置并列达到完全语义正确、并取得最低中位时延；强调**错误的关系会被代码精确执行并产出错误的科学结果** | 精读原文·预印本 |
+| Jev for **Scientific Decisions**: Evaluating Semantic Choices and Their Consequences | [2609.24965](https://arxiv.org/abs/2609.24965) | 科研工作流 | 前提是"先选已知关系、再做确定性计算"；Jev 与另外 5 种配置并列达到完全语义正确（正文可证）；"取得最低中位时延"一说**仅在摘要**，正文查无（见 §1.2.1）；强调**错误的关系会被代码精确执行并产出错误的科学结果** | 精读原文·预印本（"最低中位时延"单条为摘要级） |
 
 **应用类共性**：这些研究都把 Jev 放在"有界语义判断"的位置，把算术/排序/传播留给代码——与官方 jaggedness 的第 1–3 条建议同向。它们的收益多在**延迟与费用**，而非任务正确率。
 
@@ -290,12 +353,20 @@ TypeSafe 把 Jev 定位为 **System One 模型**（"first System One model"）�
 | 论文 | 编号 | 做法 | 关键结论 | 证据 |
 |---|---|---|---|---|
 | **Jev-Mem**: System-One-Controlled Agentic Memory for Efficient AI Agents | [2609.23986](https://arxiv.org/abs/2609.23986) | 写入路径做记忆分型/冗余过滤/关系构建，读取路径做查询路由/预算分配/图遍历/候选打分/自适应停止 | LoCoMo 上 LLM-as-a-Judge **0.777**（相对最强基线 +11.0%），构建时间 **158 s（6.6× 提速）**，平均查询延迟 **0.93 s（−36.7%）** | 精读原文·预印本 |
-| **REFLEX** with Jev for Efficient Selective Control in LLM Agents | [2609.26532](https://arxiv.org/abs/2609.26532) | 高置信度动作直接执行，低置信度或需生成才上抛强模型 | τ 风格任务上相对"只用强模型"成本降 **3.7×**，成功率差异统计上未分辨；**外部基准上收益有限**；⚠️ 更大的动作集与"结构上近似合法"的备选会**降低授权边界处的准确率** | 精读原文·预印本 |
-| **JEV-as-a-Judge**: Accept When Confident, Escalate When Unsure | [2609.26550](https://arxiv.org/abs/2609.26550) | 决策模型只返回标签概率，用置信度决定接受或上抛推理型评判者 | 与 16 个生成式/reward 评判者对比、人工盲审：常规偏好与证据事实性上与最强 LLM 评判者**差距 ≤3 个百分点**，费用仅其 **0.36%**；**需检查推导过程**的任务差距拉大；"冻结级联"保留最强评判者 **99%** 准确率 | 精读原文·预印本 |
-| **JEVQA** — Video Quality from Metadata, Bitstream, and Pixel Features with a General-Purpose Decision Model | [2609.24395](https://arxiv.org/abs/2609.24395) | 用决策模型从零样本特征预测视频质量（1,936 个 PVS 对 VMAF） | 仅元数据/像素特征时零样本可用，加入 bitstream 后提升，pixel+bitstream 组合到 **0.824**；但**同特征监督训练的专用模型仍明显领先** | 摘要级·预印本 |
+| **REFLEX** with Jev for Efficient Selective Control in LLM Agents | [2609.26532](https://arxiv.org/abs/2609.26532) | 高置信度动作直接执行，低置信度或需生成才上抛强模型 | τ 风格任务上相对"只用强模型"成本降 **3.7×**（正文可证），成功率差异统计上未分辨；**外部基准上收益有限**；⚠️ 更大的动作集与"结构上近似合法"的备选会**降低授权边界处的准确率** | 精读原文·预印本 |
+| **JEV-as-a-Judge**: Accept When Confident, Escalate When Unsure | [2609.26550](https://arxiv.org/abs/2609.26550) | 决策模型只返回标签概率，用置信度决定接受或上抛推理型评判者 | 与 16 个生成式/reward 评判者对比、人工盲审：常规偏好与证据事实性上与最强 LLM 评判者**差距 ≤3 个百分点**（摘要表述；正文以具体基准给出），费用仅其 **0.36%（仅摘要，正文查无，见 §1.2.1）**；**需检查推导过程**的任务差距拉大；"冻结级联"保留最强评判者 **99%** 准确率（正文可证） | 精读原文·预印本（"0.36%"单条为摘要级） |
+| **JEVQA** — Video Quality from Metadata, Bitstream, and Pixel Features with a General-Purpose Decision Model | [2609.24395](https://arxiv.org/abs/2609.24395) | 用决策模型从零样本特征预测视频质量（1,936 个 PVS 对 VMAF） | 仅元数据/像素特征时不稳：**像素单独近乎无信息（PLCC 0.226）**，加 bitstream 后显著提升，**联合电平取得最高零样本相关性（PLCC 0.824 / SROCC 0.840）**；但**同特征监督训练模型仍领先**（如 P.1204.3 在此子集 PLCC 0.950 vs JEVQA 0.818；同特征 ExtraTrees 0.951） | 精读原文·预印本（原误标摘要级，第二轮核验命中正文 Table I 表体与 §IV-A 叙述后按"对源"原则改正） |
 | **Visual Jev**: Accurate and Efficient Decisions from Shared Visual Context | [2609.25845](https://arxiv.org/abs/2609.25845) | 图像与公共上下文编码一次，把各问句后缀作为批量执行，从 LM head 读候选概率 | 答案监督后训练把等权 macro 准确率从 **0.706 → 0.761**（增益集中在已见任务族）；**共享批执行在 N=32 时快 8.9×**，代价是更高峰值内存；匹配的 typed-head 对照无一致准确率优势 | 精读原文·预印本 |
 
 **Jev-Anything 的共性风险（本报告的综合判断，非单一论文结论）**：这一族的收益来源都是"把高频、有界、低风险的判断从生成循环里挪出去"。它们同时暴露同一个脆弱点——**级联的正确性完全依赖置信度阈值在分布外输入上的行为**，而 §7.3 列出的独立证据恰好指向"高置信度 + 近随机"的失败场景。
+
+**旁证（仅摘要级，未进正文结论）**：下列研究与本族同题，本报告只读题录/摘要，列出以备后续跟踪，不作为任何结论依据。
+
+| 论文 | 编号 | 为何相关 | 证据 |
+|---|---|---|---|
+| System Switch: When Should a Fast Decision Model Stop and Think? | [2610.09683](https://arxiv.org/abs/2610.09683) | 双过程 Agent：快速策略模型承担每一步决策，何时把控制权交给慢速深思模型；本报告 §6.2 的"级联/升级"议题与之直接重叠 | 摘要级·预印本 |
+| Beyond Calibration: Do a Typed-Decision Model's Probabilities Obey the Probability Axioms? | [2609.33209](https://arxiv.org/abs/2609.33209) | 检验同一 state 上逻辑相关问题之间的概率是否自洽（item-by-item 一致性）——官方 `confidence` 语义（§2.4）尚未覆盖这一层 | 摘要级·预印本 |
+| Just Ask Jev: RLCD as a Zero-Shot Detector of AI Alignment Failures | [2609.29429](https://arxiv.org/abs/2609.29429) | 把 typed 概率用于对齐失效检测，是对"决策模型作评测器"的另一条应用线 | 摘要级·预印本 |
 
 ### 6.3 横评：与生成式 LLM 的同题对照
 
@@ -349,10 +420,10 @@ TypeSafe 把 Jev 定位为 **System One 模型**（"first System One model"）�
 |---|---|---|---|
 | 输出被约束在声明选项内，类型错误在构造上不可能 | 官方契约 + 三种独立 readout 实现（§2.3） | **仅格式保证**：仍可在给定选项中选错 | 精读原文·官方文档 |
 | 适合"有知识的人一秒能做出的判断" | 官方原语设计指引 | 官方明确点名"分析并给出最佳行动方案"**不是**合适问题 | 精读原文·官方文档 |
-| 常规偏好与证据事实性评判接近最强 LLM 评判者 | JEV-as-a-Judge：差距 ≤3 个百分点、费用 0.36% | **需检查推导过程**的任务差距拉大 | 精读原文·预印本 |
+| 常规偏好与证据事实性评判接近最强 LLM 评判者 | JEV-as-a-Judge：差距 ≤3 个百分点（摘要表述；正文以具体基准给出）、费用 0.36%**（仅摘要，正文查无）** | **需检查推导过程**的任务差距拉大 | 精读原文·预印本（"0.36%"单条为摘要级） |
 | 分类/标注任务上可作**流水线第一步** | CSS 横评：低置信路由让成本降至 1/4–1/2 且效果持平或更好 | 15 任务中 14 个落后单任务最优 LLM，中位差 11.6 macro-F1 | 精读原文·预印本 |
 | 多问题共享 state、可并行 | 官方契约 + Visual Jev 8.9× 共享批、this-that-model 同前向 | state 被每题重复计入，双层上下文上限 | 精读原文 + 二手·模型卡 |
-| 零样本通用质量预测"有前景" | JEVQA：pixel+bitstream 组合 0.824 | **同特征监督训练的专用模型仍明显领先** | 摘要级·预印本 |
+| 零样本通用质量预测"有前景" | JEVQA：pixel+bitstream 组合 0.824 | **同特征监督训练的专用模型仍明显领先** | 精读原文·预印本 |
 | 不适合：数值精度、计数、日期排序、生成 | 官方 jaggedness 九条自陈 | — | 精读原文·官方文档 |
 
 ### 7.2 效率主张（延迟与成本——**必须连对照模型、缓存与工作负载假设一起给**）
@@ -363,7 +434,7 @@ TypeSafe 把 Jev 定位为 **System One 模型**（"first System One model"）�
 | 边缘编排 | 决策时延 −15.9～26.5%；端到端 −11.1～25.3%；**每次正确完成**的 API 费 −69.0～70.6% | 简洁结构化输出的 DeepSeek 部署 | **无缓存**；同缓存策略下差距被重复请求缓存消掉 | 8 个条件、3 个连续测量块 | 精读原文·预印本 |
 | 6G O-RAN | 决策时延 −22.4%（vs DeepSeek）、−61.9%（vs Gemini）；direct-attribute Qwen 对照仍 −53.0% | DeepSeek / Gemini / Qwen 三路 | 未述跨请求缓存 | RIC 时间尺度、契约解释正确性配平 | 精读原文·预印本 |
 | 大规模编码成本 | $0.154/千条叙述；全州 5,018,080 条外推 $774 | 未与 frontier LLM 同表比价 | 不适用 | 10 问筛查 + 27 问编码 | 精读原文·预印本 |
-| 评判替代 | 费用为最强 LLM 评判者的 0.36% | 16 个生成式/reward 评判者 | 冻结级联（高置信接受/低置信上抛） | 多基准 + 人工盲审 | 精读原文·预印本 |
+| 评判替代 | 费用为最强 LLM 评判者的 0.36%**（仅摘要，正文查无；正文可证的是 RewardBench 94.0% vs 93.5%、保留 99% 准确率）** | 16 个生成式/reward 评判者 | 冻结级联（高置信接受/低置信上抛） | 多基准 + 人工盲审 | 精读原文·预印本（"0.36%"单条为摘要级） |
 | Agent 控制 | 成本 −3.7× vs 只用强模型 | 强模型单臂 | 置信度门控 | τ 风格 300 回合 | 精读原文·预印本 |
 | 记忆系统 | 构建 6.6× 提速、查询延迟 −36.7% | 最快的竞争记忆系统 | 不适用 | LoCoMo | 精读原文·预印本 |
 | 第三方 p50 时延 | 236–276 ms | — | — | 单问 | 二手·模型卡转引 |
@@ -494,6 +565,8 @@ TypeSafe 把 Jev 定位为 **System One 模型**（"first System One model"）�
 - [Yang et al. — RLCD: Reinforcement Learning from Contrastive Distillation for Language Model Alignment (arXiv:2307.12950, ICLR 2024)](https://arxiv.org/abs/2307.12950)
 
 ### 第三方预印本
+
+> 下列 22 篇中，**3 篇为仅摘要级**（`2609.33209`、`2609.29429`、`2610.09683`；后两篇列于 §6.2 末尾旁证表），其余 19 篇按 §1.2.1 第二轮抽验在**正文**命中本报告所引关键串；其中 `2609.26550` 的"0.36%"与 `2609.24965` 的"最低观测中位时延"两条主张单独降为摘要级（见 §1.2.2）。
 
 - [2609.22753 — Low-Latency Edge Service Orchestration](https://arxiv.org/abs/2609.22753)
 - [2609.23136 — Intent Interpretation at RIC Timescales (6G Open RAN)](https://arxiv.org/abs/2609.23136)

@@ -5,9 +5,9 @@
 **一个仓库收敛 AIGC / LLM / 论文深读全部研究产出**
 
 ![Collections](https://img.shields.io/badge/Collections-3-blue?style=flat-square)
-![Reports](https://img.shields.io/badge/Reports-45-green?style=flat-square)
-![Topic](https://img.shields.io/badge/Topic-20-orange?style=flat-square)
-![Markdown](https://img.shields.io/badge/Markdown-79-lightgrey?style=flat-square)
+![Reports](https://img.shields.io/badge/Reports-46-green?style=flat-square)
+![Topic](https://img.shields.io/badge/Topic-21-orange?style=flat-square)
+![Markdown](https://img.shields.io/badge/Markdown-80-lightgrey?style=flat-square)
 ![Updated](https://img.shields.io/badge/Updated-2026--10--16-informational?style=flat-square)
 
 </div>
@@ -45,7 +45,7 @@
 
 <br><br>
 
-<b>25</b> 份报告<br>15 个模型系列 + 10 个技术专题
+<b>26</b> 份报告<br>15 个模型系列 + 11 个技术专题
 
 <br><br>
 
@@ -102,13 +102,13 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 | 资料库 | 内容 | 条目（`report.md`） | 子文档 `.md` | 条目字节 | 目录内容字节 | `du -sk` |
 | :-- | :-- | --: | --: | --: | --: | --: |
 | 🎨 [AIGC-Research](AIGC-Research/) | 8 系列 + 10 专题 | 18 | 0 | 671,827 B | 679,964 B | 704 KB |
-| 🤖 [LLM-Research](LLM-Research/) | 15 系列 + 10 专题 | 25 | 16 | 940,879 B | 1,252,315 B | 1308 KB |
+| 🤖 [LLM-Research](LLM-Research/) | 15 系列 + 11 专题 | 26 | 16 | 1,006,638 B | 1,321,877 B | 1376 KB |
 | 📑 [Repo-Research](Repo-Research/) | 3 个深读项目 | 2 | 9 | 45,409 B | 279,065 B | 300 KB |
-| **合计** | **3 个资料库** | **45** | **25** | **1,658,115 B ≈ 1.58 MiB** | **2,214,609 B ≈ 2.11 MiB** | **2,312 KB** |
+| **合计** | **3 个资料库** | **46** | **25** | **1,723,874 B ≈ 1.64 MiB** | **2,280,906 B ≈ 2.18 MiB** | **2,380 KB** |
 
 > 本表数字由 [`scripts/library_index.py`](scripts/library_index.py) 产出，机器可读版见 [`index/stats.json`](index/stats.json)；**条目 = 文件名字面为 `report.md` 的主文档**，同目录其它 `.md`（分册 / `plan.md` / `notes/` / `raw-extracts/` 等）是它的**子文档**。
 > 各库 `README.md` 与 `docs/*.md` 既不是条目也不是子文档，不计入本表；「目录内容字节」不含 `.git` 且按脚本口径跳过隐藏目录；`du -sk` 含文件系统块开销，故大于字节数之和。
-> 加上根目录 [`README.md`](README.md)、[`docs/`](docs/) 4 个文件与 [`scripts/`](scripts/) 2 个文件，全仓库共 **79** 份 Markdown 文档；`git ls-files` 跟踪 **92** 个文件（含 [`INDEX.md`](INDEX.md) 与 [`index/`](index/) 共 9 个生成物）。
+> 全仓库 Markdown 共 **88** 份（`git ls-files '*.md'` 实测；含生成物 8 份，故非生成物 80 份）。各口径的换算关系见 [`docs/statistics.md`](docs/statistics.md) §2。
 > **索引入口**：[`INDEX.md`](INDEX.md)（总目录）· [`docs/team.md`](docs/team.md)（团队约定）。
 > **逐目录明细**（每个报告的行数 / 字节、统计方法与口径说明）见 **[docs/statistics.md](docs/statistics.md)**。
 
@@ -154,7 +154,7 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 </details>
 
 <details>
-<summary><b>🤖 LLM-Research</b> — 25 份条目 + 16 份分册（15 模型系列 + 10 技术专题）</summary>
+<summary><b>🤖 LLM-Research</b> — 26 份条目 + 16 份分册（15 模型系列 + 11 技术专题）</summary>
 
 <br>
 
@@ -180,7 +180,7 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 
 > 国内 8 家 · 海外 6 家 · 欧洲 1 家 · 共 15 个系列
 
-**技术专题（10 个 / 10 份条目 + 11 份分册；分册已标注份数）**
+**技术专题（11 个 / 11 份条目 + 11 份分册；分册已标注份数）**
 
 | # | 专题 | 覆盖范围 | 亮点 | 报告 |
 | :--: | :-- | :-- | :-- | :-- |
@@ -194,6 +194,7 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 | 8 | **TrainingInfra** | 训练基础设施 | DeepSpeed/FSDP/Megatron，3D 并行，万卡集群 | [目录](LLM-Research/TechnicalTopics/TrainingInfra-research/) · [报告](LLM-Research/TechnicalTopics/TrainingInfra-research/report.md) |
 | 9 | **QuantizationEdge** | 量化与边缘部署 | AWQ/GPTQ/GGUF/FP8，vLLM/Ollama，Jetson 边缘 | [目录](LLM-Research/TechnicalTopics/QuantizationEdge-research/) · [报告](LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md) |
 | 10 | **RAG** | 检索增强生成 | RAG 0.0→4.0，GraphRAG，Agentic RAG，混合检索 | [目录](LLM-Research/TechnicalTopics/RAG-research/) · [报告](LLM-Research/TechnicalTopics/RAG-research/report.md) |
+| 11 | **JEV** | System One 决策模型 | 类型化输出（Choice/Score/Noul）、隐藏状态直读、零输出 token、`confidence` 语义；**RLCD 同名消歧**（≠ 2023 Contrastive Distillation）；官方九类 jaggedness；第三方研究地图含**失效与攻击** | [目录](LLM-Research/TechnicalTopics/JEV-research/) · [报告](LLM-Research/TechnicalTopics/JEV-research/report.md) |
 
 库内索引：[LLM-Research/README.md](LLM-Research/README.md) ｜ 目录：[LLM-Research/](LLM-Research/)
 

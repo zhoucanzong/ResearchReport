@@ -133,6 +133,12 @@
 | --- | --- | --- | --- | --- |
 | [AIGC-Research/TechnicalTopics/ImageEditing-research/report.md](<../AIGC-Research/TechnicalTopics/ImageEditing-research/report.md>) | 图像编辑与修复技术研究报告 | — | — | — |
 
+## JEV-research (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM-Research/TechnicalTopics/JEV-research/report.md](<../LLM-Research/TechnicalTopics/JEV-research/report.md>) | JEV 决策模型（System One / Typed Decision Model）技术专题调研 | — | — | — |
+
 ## Kimi-research (1)
 
 | 条目 | 标题 | type | date | status |

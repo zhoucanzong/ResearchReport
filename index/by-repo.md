@@ -28,7 +28,7 @@
 * [AIGC-Research/TechnicalTopics/VideoGen-research/report.md](<../AIGC-Research/TechnicalTopics/VideoGen-research/report.md>) — 898 行
 * [AIGC-Research/TechnicalTopics/WorldModels-research/report.md](<../AIGC-Research/TechnicalTopics/WorldModels-research/report.md>) — 170 行
 
-## LLM-Research (25)
+## LLM-Research (26)
 
 * [LLM-Research/ModelSeries/Claude-research/report.md](<../LLM-Research/ModelSeries/Claude-research/report.md>) — 611 行
 * [LLM-Research/ModelSeries/DeepSeek-research/report.md](<../LLM-Research/ModelSeries/DeepSeek-research/report.md>) — 751 行
@@ -47,6 +47,7 @@
 * [LLM-Research/ModelSeries/Qwen-research/report.md](<../LLM-Research/ModelSeries/Qwen-research/report.md>) — 918 行
 * [LLM-Research/TechnicalTopics/Agent-research/report.md](<../LLM-Research/TechnicalTopics/Agent-research/report.md>) — 698 行
 * [LLM-Research/TechnicalTopics/Alignment-research/report.md](<../LLM-Research/TechnicalTopics/Alignment-research/report.md>) — 588 行
+* [LLM-Research/TechnicalTopics/JEV-research/report.md](<../LLM-Research/TechnicalTopics/JEV-research/report.md>) — 604 行
 * [LLM-Research/TechnicalTopics/LongContext-research/report.md](<../LLM-Research/TechnicalTopics/LongContext-research/report.md>) — 608 行
 * [LLM-Research/TechnicalTopics/MoE-research/report.md](<../LLM-Research/TechnicalTopics/MoE-research/report.md>) — 405 行
 * [LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md](<../LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md>) — 777 行

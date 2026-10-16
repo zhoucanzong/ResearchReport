@@ -13,16 +13,16 @@
 
 | 指标 | 数量 |
 | --- | --- |
-| **条目数**（`report.md`） | **45** |
+| **条目数**（`report.md`） | **46** |
 | 条目子文档数 | 25 |
-| 条目正文行数（剔除 front-matter） | 28,954 |
-| 条目字节 | 1,658,115 B |
+| 条目正文行数（剔除 front-matter） | 29,558 |
+| 条目字节 | 1,723,874 B |
 | 带 front-matter 的条目 | 1 |
 | 带合法 `date` 的条目 | 1 |
-| 文档（除生成物外的全部 `.md`） | 79 |
+| 文档（除生成物外的全部 `.md`） | 80 |
 | 其中文件名 `README.md` | 4 |
-| 纳入版本控制的文件 | 92 |
-| 纳入版本控制的 `.md` | 87 |
+| 纳入版本控制的文件 | 93 |
+| 纳入版本控制的 `.md` | 88 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 
@@ -31,9 +31,9 @@
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
 | AIGC-Research | 18 | 19 | 13,336 | 671,827 B | [#AIGC-Research](#aigc-research) |
-| LLM-Research | 25 | 42 | 15,102 | 940,879 B | [#LLM-Research](#llm-research) |
+| LLM-Research | 26 | 43 | 15,706 | 1,006,638 B | [#LLM-Research](#llm-research) |
 | Repo-Research | 2 | 12 | 516 | 45,409 B | [#Repo-Research](#repo-research) |
-| **合计** | **45** | **79** | **28,954** | **1,658,115 B** | — |
+| **合计** | **46** | **80** | **29,558** | **1,723,874 B** | — |
 
 ## 分面索引
 
@@ -277,7 +277,7 @@
 
 </details>
 
-### LLM-Research（25 条目 / 42 文档）
+### LLM-Research（26 条目 / 43 文档）
 
 <details>
 <summary><b>模型系列 ModelSeries（15 条目 / 5 子文档）</b></summary>
@@ -468,7 +468,7 @@
 </details>
 
 <details>
-<summary><b>技术专题 TechnicalTopics（10 条目 / 11 子文档）</b></summary>
+<summary><b>技术专题 TechnicalTopics（11 条目 / 11 子文档）</b></summary>
 
   <details>
   <summary><b>Agent-research</b> · <code>LLM-Research/TechnicalTopics/Agent-research/report.md</code> · 698 行 · —</summary>
@@ -488,6 +488,18 @@
 
     * **条目**：[LLM-Research/TechnicalTopics/Alignment-research/report.md](<LLM-Research/TechnicalTopics/Alignment-research/report.md>)（588 行 / 35,712 B）
     * **专题目录**：`LLM-Research/TechnicalTopics/Alignment-research`
+    * **元数据**：type=`—` · domain=`LLM-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
+    * **子文档（0）**
+        * _该条目暂无子文档_
+
+  </details>
+
+  <details>
+  <summary><b>JEV-research</b> · <code>LLM-Research/TechnicalTopics/JEV-research/report.md</code> · 604 行 · —</summary>
+  
+
+    * **条目**：[LLM-Research/TechnicalTopics/JEV-research/report.md](<LLM-Research/TechnicalTopics/JEV-research/report.md>)（604 行 / 65,759 B）
+    * **专题目录**：`LLM-Research/TechnicalTopics/JEV-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
     * **子文档（0）**
         * _该条目暂无子文档_
@@ -647,7 +659,7 @@
 | 文档 | 所属库 | 行数 | 字节 |
 | --- | --- | --: | --: |
 | [AIGC-Research/README.md](<AIGC-Research/README.md>) | AIGC-Research | 131 | 8,137 B |
-| [LLM-Research/README.md](<LLM-Research/README.md>) | LLM-Research | 172 | 12,502 B |
+| [LLM-Research/README.md](<LLM-Research/README.md>) | LLM-Research | 175 | 13,040 B |
 | [Repo-Research/mini-swe-agent-research/mini-swe-agent-deep-report.md](<Repo-Research/mini-swe-agent-research/mini-swe-agent-deep-report.md>) | Repo-Research | 735 | 34,490 B |
 
 
