@@ -26,6 +26,20 @@
 7. **统计口径**：**脚本落地前**，内容写者随改动同步自己那部分并注明"人工维护"；**脚本落地后**（`scripts/library_index.py --write-stats` 已可用），统计数字一律由脚本产出、图图解，写者不再手改。`docs/statistics.md` 与根 `README.md` 的统计数字以 `index/stats.json` 为唯一真值。
 8. **写权限**：Grant 的 `orchestratorWrite` 不是开关；会话直写被拒（`Operation not permitted`）时，走 `create_assignment` + 该目录 grant（Assignment 侧权限 `workspace-write`、cwd = 仓库目录，实测可 commit / push）。
 
+## 技能强制规约（Skill Mandate）
+
+调研类任务必须使用对应 skill，且**交付必须附 skill 使用证据**（不靠自觉）：
+
+| 任务类型 | 必用 skill | 模式 |
+| --- | --- | --- |
+| 论文 / 领域调研 | `researcher` | 默认 **deep**（快速档需明确批准） |
+| 仓库 / 代码调研 | `code-researcher` | 按需 `map` / `trace` / `deep` / `compare` |
+| 取原文 / 做引用 | `paper-fetcher` | — |
+
+- **派单层**：派单必须声明所用 skill 与模式；
+- **验收层**：交付必须附 skill 使用证据——deep 产出特征（分册页首 `arXiv ID + 版本日期`、`claim_audit` 报数）、代码类必须有 `文件:行` 锚点；**无证据不入库**；
+- **深度优先**：不限单文件长度，写长了就拆——`report.md`（入口/结论/判据）+ `papers/*.md`（逐篇精读）+ `topics/*.md`（横切专题）；仅摘要支撑的内容标 `[摘要级]` / `[⚠️受限核验]`，**不许升格为 `[精读原文]`**。
+
 ## 索引与统计（由脚本产出）
 - 索引：`INDEX.md` + `index/*.md`（`by-domain` / `by-subject` / `by-repo` / `by-topic` / `by-report` / `recent` / `stale`）；输出根 = **仓库根**，脚本仍保留 `--out-root` 便于将来换布局。
 - 机器可读统计：`index/stats.json`。
