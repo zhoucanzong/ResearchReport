@@ -145,4 +145,12 @@ add59912f210a242d8cd988d54303dac8cabefc78ce94d55008c5b26e8e5d710  nemotron-tri-m
 
 ---
 
+## 6. 入库验收检查（Outbound Checklist）
+
+论文 / 领域调研类条目入库前逐条勾选（与 [team.md](team.md) 的「原文与引用规约」「深挖批次标准」配套）：
+
+- [ ] 论文类条目附 `sources/MANIFEST.md`（ID/版本/license/去向齐全）；正文引用无"引了未落地"（有缓存版原文时行号可核）；论文全文（PDF/markdown）未入库。
+
+---
+
 *记录时间：2026-10-16 · 数据来源：本仓库实际文件系统与 Git 状态*

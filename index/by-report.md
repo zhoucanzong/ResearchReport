@@ -58,5 +58,5 @@
 | ImageEditing | VisualGen | [VisualGen/ImageEditing/report.md](<../VisualGen/ImageEditing/report.md>) | 0 | 834 | — |
 | VideoGen | VisualGen | [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) | 0 | 898 | — |
 | EmbodiedVLA | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 0 | 433 | — |
-| WorldModels | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 0 | 317 | — |
-| **合计** | — | — | **44** | **30,510** | — |
+| WorldModels | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 10 | 317 | — |
+| **合计** | — | — | **54** | **30,510** | — |

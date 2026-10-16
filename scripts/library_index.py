@@ -320,22 +320,62 @@ SITE_DOCS_DIR = "site-docs"
 SITE_BUILD_DIR = "site"
 SITE_SKIP_TOPS = frozenset({SITE_DOCS_DIR, SITE_BUILD_DIR})
 
+#: 构建产物 / 车间目录：**任意层级**跳过，不编目。
+#: 隐藏目录（`.*`，如 `.vla-tmp/`、`.papers-cache/`、`.rehearsal/`、`.preview/`）
+#: 另有一律跳过的规则（见 ``_is_skipped_dir``）。这里是给「非隐藏」的构建目录兜底。
+BUILD_SKIP_DIRS = frozenset({"site", "site-docs", "node_modules", "__pycache__"})
 
-def iter_markdown(repo_root: str, include_generated: bool = False):
+
+def _is_skipped_dir(name: str) -> bool:
+    """临时 / 草稿 / 构建位置：**车间地面**，一律不编目。
+
+    - 隐藏目录（点开头）：`.git/`、`.vla-tmp/`、`.papers-cache/`、`.rehearsal/`、`.preview/` 等；
+    - 构建产物目录：`site/`、`site-docs/`、`node_modules/`、`__pycache__/`。
+
+    刻意**不**改成 `git ls-files`（tracked-only）——未跟踪的真内容（新写的
+    ``papers/foo.md``）仍须进索引，等会随条目一起提交。
+    """
+    return name.startswith(".") or name in BUILD_SKIP_DIRS or name in SITE_SKIP_TOPS
+
+
+def _collect_md_under(rel_dir: str, root: str) -> list:
+    """收集被跳过目录下的 `.md` 相对路径，仅用于 ``skipped:`` 可见性报告（只读）。"""
+    out = []
+    base = os.path.join(root, rel_dir) if rel_dir else root
+    for dirpath, dirnames, filenames in os.walk(base):
+        dirnames[:] = [d for d in dirnames if not d.startswith(".")]
+        for name in filenames:
+            if name.lower().endswith(".md"):
+                out.append(os.path.relpath(os.path.join(dirpath, name), root)
+                           .replace(os.sep, "/"))
+    return sorted(out)
+
+
+def iter_markdown(repo_root: str, include_generated: bool = False,
+                  skipped_out: list = None):
     """只读遍历 ``**/*.md``，返回排序后的仓库相对路径。
 
-    跳过隐藏目录（`.git` 等）与站点渲染层目录（``site-docs/``、``site/``）；
-    默认排除本脚本的生成物，保证「跑一次脚本数字不变」。
+    跳过隐藏目录（`.git`、`.vla-tmp/` 等）与构建产物目录（``site-docs/``、``site/``、
+    ``node_modules/``、``__pycache__/``）；默认排除本脚本的生成物，
+    保证「跑一次脚本数字不变」。
+
+    ``skipped_out``（可选）：传入一个 list，会被填入**被跳过的 `.md` 相对路径**，
+    供调用方打印 ``skipped: N (...)``——让跳过可审计，别静默失明。
     """
     root = os.path.abspath(repo_root)
     found = []
     for dirpath, dirnames, filenames in os.walk(root):
-        dirnames[:] = sorted(
-            d for d in dirnames
-            if not d.startswith(".")
-            and os.path.relpath(os.path.join(dirpath, d), root).replace(os.sep, "/")
-                not in SITE_SKIP_TOPS
-        )
+        kept = []
+        for d in sorted(dirnames):
+            if _is_skipped_dir(d):
+                if skipped_out is not None:
+                    skipped_out.extend(
+                        _collect_md_under(
+                            os.path.relpath(os.path.join(dirpath, d), root)
+                            .replace(os.sep, "/"), root))
+            else:
+                kept.append(d)
+        dirnames[:] = kept
         for name in sorted(filenames):
             if not name.lower().endswith(".md"):
                 continue
@@ -403,8 +443,10 @@ def build_doc(repo_root: str, rel_path: str, today: _dt.date) -> dict:
     }
 
 
-def scan(repo_root: str, today: _dt.date, include_generated: bool = False) -> list:
-    return [build_doc(repo_root, rel, today) for rel in iter_markdown(repo_root, include_generated)]
+def scan(repo_root: str, today: _dt.date, include_generated: bool = False,
+         skipped_out: list = None) -> list:
+    return [build_doc(repo_root, rel, today)
+            for rel in iter_markdown(repo_root, include_generated, skipped_out)]
 
 
 def attach_children(docs: list) -> list:
@@ -1194,8 +1236,32 @@ def generated_md_count(out_root: str = "") -> int:
     return 1 + len(FACET_TITLES)
 
 
+def last_commit_date(repo_root: str, fallback: _dt.date) -> _dt.date:
+    """「更新日期」徽章的口径：**最后一次提交日** `git log -1 --format=%cs`。
+
+    为什么不取当天 wall-clock：跨零点会漂，幂等只在同日成立；取最后一次提交日
+    之后，任意一天重跑生成物都**字节一致**。git 不可用（如导出的 tarball）时
+    回退给定日期，保证脚本不因缺 git 而崩。
+    """
+    try:
+        out = subprocess.run(
+            ["git", "-C", repo_root, "log", "-1", "--format=%cs"],
+            capture_output=True, text=True, timeout=15,
+        )
+        if out.returncode == 0:
+            s = out.stdout.strip()
+            if s:
+                return _dt.date.fromisoformat(s)
+    except Exception:
+        pass
+    return fallback
+
+
 def render_badges(stats: dict, topics: int, today: _dt.date, panels: int = 6) -> str:
-    """徽章行：统一 flat-square + 靛蓝色系（与站点主题色一致）；Site 徽章直达在线站点。"""
+    """徽章行：统一 flat-square + 靛蓝色系（与站点主题色一致）；Site 徽章直达在线站点。
+
+    ``today`` 传入的应是 **最后一次提交日**（见 ``last_commit_date``），不是当天日期。
+    """
     updated = today.isoformat().replace("-", "--")
     return "\n".join([
         f"[![Site](https://img.shields.io/badge/Site-在线阅读-3f51b5?style=flat-square)]({SITE_URL})",
@@ -1337,8 +1403,10 @@ def render_readme_blocks(cfg: dict, entries: list, stats: dict, mapping: dict,
                          repo_root: str, today: _dt.date) -> dict:
     topics = sum(1 for d in entries
                  if d["top"] in ("LLM", "VisualGen", "WorldModel", "Infra"))
+    # 「更新日期」徽章取最后一次提交日，而非当天 wall-clock：跨零点不漂，任意一天重跑字节一致。
+    badge_date = last_commit_date(repo_root, today)
     return {
-        "badges": render_badges(stats, topics, today, len(cfg["panels"])),
+        "badges": render_badges(stats, topics, badge_date, len(cfg["panels"])),
         "structure": render_structure_block(cfg, mapping, entries),
         "panels": render_panels_block(cfg, mapping, entries),
         "highlights": render_highlights_block(cfg, mapping, entries),
@@ -1972,7 +2040,9 @@ def main(argv=None) -> int:
         print(f"[ERROR] --today 需要 YYYY-MM-DD 格式: {args.today}", file=sys.stderr)
         return 2
 
-    docs, orphans = attach_children(scan(repo_root, today, args.include_generated))
+    skipped_paths = []
+    docs, orphans = attach_children(
+        scan(repo_root, today, args.include_generated, skipped_out=skipped_paths))
     entries = [d for d in docs if d["is_entry"]]
     stats = build_stats(repo_root, docs)
 
@@ -2003,6 +2073,13 @@ def main(argv=None) -> int:
                        for p in cfg["panels"]))
     print(f"最近更新口径               : front-matter date → 缺失时回退 `{cfg['date_fallback']}`"
           f"（取 {cfg['recent_limit']} 条）")
+    print(f"更新日期徽章               : 最后一次提交日 `git log -1 --format=%cs`"
+          f" = {last_commit_date(repo_root, today).isoformat()}（不取当天 wall-clock，跨零点不漂）")
+    # 跳过要可见：若将来真有该编目的目录被误跳，一眼可见，而不是「index 里莫名少条目」。
+    uniq_skipped = sorted(set(skipped_paths))
+    preview = "、".join(uniq_skipped[:5]) + ("…" if len(uniq_skipped) > 5 else "")
+    print(f"skipped                    : {len(uniq_skipped)}"
+          + (f"（{preview}）" if uniq_skipped else "（无）"))
     print("=" * 60)
 
     if args.dry_run:

@@ -166,7 +166,18 @@ nav:
   - "🌍 WorldModel · 2":
     - "WorldModel/README.md"
     - "EmbodiedVLA": "WorldModel/EmbodiedVLA/report.md"
-    - "WorldModels": "WorldModel/WorldModels/report.md"
+    - "WorldModels":
+        - "总报告": "WorldModel/WorldModels/report.md"
+        - "1803.10122-world-models": "WorldModel/WorldModels/papers/1803.10122-world-models.md"
+        - "1811.04551-planet": "WorldModel/WorldModels/papers/1811.04551-planet.md"
+        - "1911.08265-muzero": "WorldModel/WorldModels/papers/1911.08265-muzero.md"
+        - "1912.01603-dreamer": "WorldModel/WorldModels/papers/1912.01603-dreamer.md"
+        - "2301.04104-dreamerv3": "WorldModel/WorldModels/papers/2301.04104-dreamerv3.md"
+        - "2310.06114-unisim": "WorldModel/WorldModels/papers/2310.06114-unisim.md"
+        - "2404.08471-vjepa": "WorldModel/WorldModels/papers/2404.08471-vjepa.md"
+        - "2408.14837-gamengen": "WorldModel/WorldModels/papers/2408.14837-gamengen.md"
+        - "2501.09038-physics-iq": "WorldModel/WorldModels/papers/2501.09038-physics-iq.md"
+        - "2503.21755-vbench-2": "WorldModel/WorldModels/papers/2503.21755-vbench-2.md"
   - "⚙️ Infra · 3":
     - "Infra/README.md"
     - "QuantizationEdge": "Infra/QuantizationEdge/report.md"
