@@ -14,7 +14,7 @@
 | [Repo-Research/vllm-research/report.md](<../Repo-Research/vllm-research/report.md>) | 2026-10-16 | Repo-Research | vllm |
 | [Repo-Research/sglang-research/report.md](<../Repo-Research/sglang-research/report.md>) | 2026-10-16 | Repo-Research | sglang |
 
-## 无 date 元数据（45）
+## 无 date 元数据（46）
 
 以下条目缺少可解析的 `date`，无法参与「最近更新」排序：
 
@@ -63,3 +63,4 @@
 * [LLM-Research/TechnicalTopics/TrainingInfra-research/report.md](<../LLM-Research/TechnicalTopics/TrainingInfra-research/report.md>)
 * [LLM-Research/TechnicalTopics/VLM-research/report.md](<../LLM-Research/TechnicalTopics/VLM-research/report.md>)
 * [Repo-Research/nemotron-tri-mode-diffusion/report.md](<../Repo-Research/nemotron-tri-mode-diffusion/report.md>)
+* [Repo-Research/this-that-model-research/report.md](<../Repo-Research/this-that-model-research/report.md>)

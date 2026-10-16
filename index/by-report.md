@@ -7,7 +7,7 @@
 
 ---
 
-共 **47** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter；「板块」列由 [`scripts/panels.json`](<../scripts/panels.json>) 驱动。
+共 **48** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter；「板块」列由 [`scripts/panels.json`](<../scripts/panels.json>) 驱动。
 
 | 条目 | 板块 | 路径 | 所属库 | 子报告数 | 行数 | 日期 |
 | --- | --- | --- | --- | --: | --: | --- |
@@ -57,5 +57,6 @@
 | VLM-research | LLM | [LLM-Research/TechnicalTopics/VLM-research/report.md](<../LLM-Research/TechnicalTopics/VLM-research/report.md>) | LLM-Research | 0 | 517 | — |
 | nemotron-tri-mode-diffusion | Infra | [Repo-Research/nemotron-tri-mode-diffusion/report.md](<../Repo-Research/nemotron-tri-mode-diffusion/report.md>) | Repo-Research | 6 | 206 | — |
 | sglang-research | Infra | [Repo-Research/sglang-research/report.md](<../Repo-Research/sglang-research/report.md>) | Repo-Research | 3 | 310 | 2026-10-16 |
+| this-that-model-research | Infra | [Repo-Research/this-that-model-research/report.md](<../Repo-Research/this-that-model-research/report.md>) | Repo-Research | 0 | 240 | — |
 | vllm-research | Infra | [Repo-Research/vllm-research/report.md](<../Repo-Research/vllm-research/report.md>) | Repo-Research | 3 | 294 | 2026-10-16 |
-| **合计** | — | — | — | **44** | **30,264** | — |
+| **合计** | — | — | — | **44** | **30,504** | — |

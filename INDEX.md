@@ -13,17 +13,17 @@
 
 | 指标 | 数量 |
 | --- | --- |
-| **条目数**（`report.md`） | **47** |
-| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 6 |
+| **条目数**（`report.md`） | **48** |
+| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 7 |
 | 条目子文档数 | 44 |
-| 条目正文行数（剔除 front-matter） | 30,264 |
-| 条目字节 | 1,818,281 B |
+| 条目正文行数（剔除 front-matter） | 30,504 |
+| 条目字节 | 1,842,019 B |
 | 带 front-matter 的条目 | 2 |
 | 带合法 `date` 的条目 | 2 |
-| 文档（除生成物外的全部 `.md`） | 100 |
+| 文档（除生成物外的全部 `.md`） | 101 |
 | 其中文件名 `README.md` | 4 |
-| 纳入版本控制的文件 | 114 |
-| 纳入版本控制的 `.md` | 108 |
+| 纳入版本控制的文件 | 115 |
+| 纳入版本控制的 `.md` | 109 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -34,8 +34,8 @@
 | --- | --: | --: | --: | --: | --- |
 | AIGC-Research | 18 | 19 | 13,483 | 688,526 B | [#AIGC-Research](#aigc-research) |
 | LLM-Research | 26 | 59 | 15,971 | 1,048,688 B | [#LLM-Research](#llm-research) |
-| Repo-Research | 3 | 16 | 810 | 81,067 B | [#Repo-Research](#repo-research) |
-| **合计** | **47** | **100** | **30,264** | **1,818,281 B** | — |
+| Repo-Research | 4 | 17 | 1,050 | 104,805 B | [#Repo-Research](#repo-research) |
+| **合计** | **48** | **101** | **30,504** | **1,842,019 B** | — |
 
 ## 分面索引
 
@@ -631,10 +631,10 @@
 
 </details>
 
-### Repo-Research（3 条目 / 16 文档）
+### Repo-Research（4 条目 / 17 文档）
 
 <details>
-<summary><b>其它 Other（3 条目 / 12 子文档）</b></summary>
+<summary><b>其它 Other（4 条目 / 12 子文档）</b></summary>
 
   <details>
   <summary><b>nemotron-tri-mode-diffusion</b> · <code>Repo-Research/nemotron-tri-mode-diffusion/report.md</code> · 206 行 · —</summary>
@@ -664,6 +664,18 @@
         * [claim-audit.md](<Repo-Research/sglang-research/claim-audit.md>) — 149 行 / 11,639 B
         * [scheduler-and-prefix-cache.md](<Repo-Research/sglang-research/scheduler-and-prefix-cache.md>) — 174 行 / 20,863 B
         * [speculative-decoding-path.md](<Repo-Research/sglang-research/speculative-decoding-path.md>) — 230 行 / 25,276 B
+
+  </details>
+
+  <details>
+  <summary><b>this-that-model-research</b> · <code>Repo-Research/this-that-model-research/report.md</code> · 240 行 · —</summary>
+  
+
+    * **条目**：[Repo-Research/this-that-model-research/report.md](<Repo-Research/this-that-model-research/report.md>)（240 行 / 23,738 B）
+    * **专题目录**：`Repo-Research/this-that-model-research`
+    * **元数据**：type=`—` · domain=`Repo-Research` · subject=`this-that-model-research` · date=`—` · status=`—`
+    * **子文档（0）**
+        * _该条目暂无子文档_
 
   </details>
 
