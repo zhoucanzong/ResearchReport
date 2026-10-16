@@ -15,12 +15,12 @@
 | --- | --- |
 | **条目数**（`report.md`） | **48** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 4 |
-| 条目子文档数 | 57 |
-| 条目正文行数（剔除 front-matter） | 30,544 |
-| 条目字节 | 1,846,096 B |
+| 条目子文档数 | 59 |
+| 条目正文行数（剔除 front-matter） | 30,788 |
+| 条目字节 | 1,869,725 B |
 | 带 front-matter 的条目 | 4 |
 | 带合法 `date` 的条目 | 4 |
-| 文档（除生成物外的全部 `.md`） | 118 |
+| 文档（除生成物外的全部 `.md`） | 120 |
 | 其中文件名 `README.md` | 8 |
 | 纳入版本控制的文件 | 135 |
 | 纳入版本控制的 `.md` | 126 |
@@ -35,10 +35,10 @@
 | Models | 23 | 29 | 14,816 | 900,388 B | [板块页 →](<Models/README.md>) |
 | LLM | 8 | 25 | 5,217 | 340,987 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,805 | 318,086 B | [板块页 →](<VisualGen/README.md>) |
-| WorldModel | 2 | 16 | 784 | 81,374 B | [板块页 →](<WorldModel/README.md>) |
+| WorldModel | 2 | 18 | 1,028 | 105,003 B | [板块页 →](<WorldModel/README.md>) |
 | Infra | 3 | 15 | 1,866 | 100,011 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 4 | 18 | 1,056 | 105,250 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **48** | **118** | **30,544** | **1,846,096 B** | — |
+| **合计** | **48** | **120** | **30,788** | **1,869,725 B** | — |
 
 ## 分面索引
 
@@ -561,10 +561,10 @@
 
 </details>
 
-### WorldModel（2 条目 / 16 文档）
+### WorldModel（2 条目 / 18 文档）
 
 <details>
-<summary><b>世界模型 WorldModel（2 条目 / 13 子文档）</b></summary>
+<summary><b>世界模型 WorldModel（2 条目 / 15 子文档）</b></summary>
 
   <details>
   <summary><b>EmbodiedVLA</b> · <code>WorldModel/EmbodiedVLA/report.md</code> · 433 行 · —</summary>
@@ -579,26 +579,28 @@
   </details>
 
   <details>
-  <summary><b>WorldModels</b> · <code>WorldModel/WorldModels/report.md</code> · 351 行 · 2026-10-17</summary>
+  <summary><b>WorldModels</b> · <code>WorldModel/WorldModels/report.md</code> · 595 行 · 2026-10-17</summary>
   
 
-    * **条目**：[WorldModel/WorldModels/report.md](<WorldModel/WorldModels/report.md>)（351 行 / 35,658 B）
+    * **条目**：[WorldModel/WorldModels/report.md](<WorldModel/WorldModels/report.md>)（595 行 / 59,287 B）
     * **专题目录**：`WorldModel/WorldModels`
     * **元数据**：type=`topic-research` · domain=`WorldModel` · subject=`WorldModels` · date=`2026-10-17` · status=`completed`
-    * **子文档（13）**
-        * [papers/1803.10122-world-models.md](<WorldModel/WorldModels/papers/1803.10122-world-models.md>) — 201 行 / 14,216 B
-        * [papers/1811.04551-planet.md](<WorldModel/WorldModels/papers/1811.04551-planet.md>) — 201 行 / 13,094 B
-        * [papers/1911.08265-muzero.md](<WorldModel/WorldModels/papers/1911.08265-muzero.md>) — 202 行 / 12,701 B
-        * [papers/1912.01603-dreamer.md](<WorldModel/WorldModels/papers/1912.01603-dreamer.md>) — 205 行 / 12,107 B
-        * [papers/2301.04104-dreamerv3.md](<WorldModel/WorldModels/papers/2301.04104-dreamerv3.md>) — 209 行 / 12,318 B
-        * [papers/2310.06114-unisim.md](<WorldModel/WorldModels/papers/2310.06114-unisim.md>) — 203 行 / 12,589 B
-        * [papers/2404.08471-vjepa.md](<WorldModel/WorldModels/papers/2404.08471-vjepa.md>) — 203 行 / 10,843 B
-        * [papers/2408.14837-gamengen.md](<WorldModel/WorldModels/papers/2408.14837-gamengen.md>) — 201 行 / 11,299 B
-        * [papers/2501.09038-physics-iq.md](<WorldModel/WorldModels/papers/2501.09038-physics-iq.md>) — 203 行 / 12,423 B
-        * [papers/2503.21755-vbench-2.md](<WorldModel/WorldModels/papers/2503.21755-vbench-2.md>) — 203 行 / 11,098 B
-        * [topics/dynamics-and-action-conditioning.md](<WorldModel/WorldModels/topics/dynamics-and-action-conditioning.md>) — 91 行 / 5,812 B
-        * [topics/incomparability-checklist.md](<WorldModel/WorldModels/topics/incomparability-checklist.md>) — 92 行 / 4,673 B
-        * [topics/world-model-as-env.md](<WorldModel/WorldModels/topics/world-model-as-env.md>) — 76 行 / 4,860 B
+    * **子文档（15）**
+        * [papers/1803.10122-world-models.md](<WorldModel/WorldModels/papers/1803.10122-world-models.md>) — 204 行 / 14,821 B
+        * [papers/1811.04551-planet.md](<WorldModel/WorldModels/papers/1811.04551-planet.md>) — 204 行 / 13,762 B
+        * [papers/1911.08265-muzero.md](<WorldModel/WorldModels/papers/1911.08265-muzero.md>) — 205 行 / 13,351 B
+        * [papers/1912.01603-dreamer.md](<WorldModel/WorldModels/papers/1912.01603-dreamer.md>) — 208 行 / 12,686 B
+        * [papers/2301.04104-dreamerv3.md](<WorldModel/WorldModels/papers/2301.04104-dreamerv3.md>) — 212 行 / 12,864 B
+        * [papers/2310.06114-unisim.md](<WorldModel/WorldModels/papers/2310.06114-unisim.md>) — 206 行 / 13,348 B
+        * [papers/2404.08471-vjepa.md](<WorldModel/WorldModels/papers/2404.08471-vjepa.md>) — 206 行 / 11,471 B
+        * [papers/2408.14837-gamengen.md](<WorldModel/WorldModels/papers/2408.14837-gamengen.md>) — 204 行 / 11,946 B
+        * [papers/2501.09038-physics-iq.md](<WorldModel/WorldModels/papers/2501.09038-physics-iq.md>) — 206 行 / 12,991 B
+        * [papers/2503.21755-vbench-2.md](<WorldModel/WorldModels/papers/2503.21755-vbench-2.md>) — 206 行 / 11,671 B
+        * [sources/CANDIDATES.md](<WorldModel/WorldModels/sources/CANDIDATES.md>) — 63 行 / 6,676 B
+        * [sources/MANIFEST.md](<WorldModel/WorldModels/sources/MANIFEST.md>) — 24 行 / 3,898 B
+        * [topics/dynamics-and-action-conditioning.md](<WorldModel/WorldModels/topics/dynamics-and-action-conditioning.md>) — 175 行 / 13,882 B
+        * [topics/incomparability-checklist.md](<WorldModel/WorldModels/topics/incomparability-checklist.md>) — 174 行 / 13,137 B
+        * [topics/world-model-as-env.md](<WorldModel/WorldModels/topics/world-model-as-env.md>) — 152 行 / 12,825 B
 
   </details>
 

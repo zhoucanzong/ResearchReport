@@ -68,7 +68,7 @@
 ## WorldModel (2)
 
 * [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) — 433 行
-* [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) — 351 行
+* [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) — 595 行
 
 ## https://github.com/FLock-io/this-that-model@6af11c63c8bb260aa4bed2b7717f33f25decd16e (1)
 
