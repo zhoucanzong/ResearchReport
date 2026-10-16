@@ -20,8 +20,8 @@
 | 条目字节 | 1,869,725 B |
 | 带 front-matter 的条目 | 4 |
 | 带合法 `date` 的条目 | 4 |
-| 文档（除生成物外的全部 `.md`） | 120 |
-| 其中文件名 `README.md` | 8 |
+| 文档（除生成物外的全部 `.md`） | 114 |
+| 其中文件名 `README.md` | 2 |
 | 纳入版本控制的文件 | 137 |
 | 纳入版本控制的 `.md` | 128 |
 
@@ -32,13 +32,13 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| Models | 23 | 29 | 14,816 | 900,388 B | [板块页 →](<Models/README.md>) |
-| LLM | 8 | 25 | 5,217 | 340,987 B | [板块页 →](<LLM/README.md>) |
-| VisualGen | 8 | 9 | 6,805 | 318,086 B | [板块页 →](<VisualGen/README.md>) |
-| WorldModel | 2 | 18 | 1,028 | 105,003 B | [板块页 →](<WorldModel/README.md>) |
-| Infra | 3 | 15 | 1,866 | 100,011 B | [板块页 →](<Infra/README.md>) |
-| OpenSource | 4 | 18 | 1,056 | 105,250 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **48** | **120** | **30,788** | **1,869,725 B** | — |
+| Models | 23 | 28 | 14,816 | 900,388 B | [板块页 →](<Models/README.md>) |
+| LLM | 8 | 24 | 5,217 | 340,987 B | [板块页 →](<LLM/README.md>) |
+| VisualGen | 8 | 8 | 6,805 | 318,086 B | [板块页 →](<VisualGen/README.md>) |
+| WorldModel | 2 | 17 | 1,028 | 105,003 B | [板块页 →](<WorldModel/README.md>) |
+| Infra | 3 | 14 | 1,866 | 100,011 B | [板块页 →](<Infra/README.md>) |
+| OpenSource | 4 | 17 | 1,056 | 105,250 B | [板块页 →](<OpenSource/README.md>) |
+| **合计** | **48** | **114** | **30,788** | **1,869,725 B** | — |
 
 ## 分面索引
 
@@ -54,7 +54,7 @@
 
 ## 条目索引（按板块目录折叠，可直达条目与子报告）
 
-### Models（23 条目 / 29 文档）
+### Models（23 条目 / 28 文档）
 
 <details>
 <summary><b>模型系列 Models（23 条目 / 5 子文档）</b></summary>
@@ -340,7 +340,7 @@
 
 </details>
 
-### LLM（8 条目 / 25 文档）
+### LLM（8 条目 / 24 文档）
 
 <details>
 <summary><b>语言模型 LLM（8 条目 / 16 子文档）</b></summary>
@@ -458,7 +458,7 @@
 
 </details>
 
-### VisualGen（8 条目 / 9 文档）
+### VisualGen（8 条目 / 8 文档）
 
 <details>
 <summary><b>视觉生成 VisualGen（8 条目 / 0 子文档）</b></summary>
@@ -561,7 +561,7 @@
 
 </details>
 
-### WorldModel（2 条目 / 18 文档）
+### WorldModel（2 条目 / 17 文档）
 
 <details>
 <summary><b>世界模型 WorldModel（2 条目 / 15 子文档）</b></summary>
@@ -606,7 +606,7 @@
 
 </details>
 
-### Infra（3 条目 / 15 文档）
+### Infra（3 条目 / 14 文档）
 
 <details>
 <summary><b>基础设施 Infra（3 条目 / 11 子文档）</b></summary>
@@ -659,7 +659,7 @@
 
 </details>
 
-### OpenSource（4 条目 / 18 文档）
+### OpenSource（4 条目 / 17 文档）
 
 <details>
 <summary><b>开源仓库 OpenSource（4 条目 / 12 子文档）</b></summary>
@@ -729,14 +729,8 @@
 
 | 文档 | 板块 | 行数 | 字节 |
 | --- | --- | --: | --: |
-| [Infra/README.md](<Infra/README.md>) | Infra | 45 | 2,487 B |
-| [LLM/README.md](<LLM/README.md>) | LLM | 55 | 3,584 B |
-| [Models/README.md](<Models/README.md>) | Models | 65 | 3,584 B |
-| [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 59 | 2,471 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 735 | 34,490 B |
 | [README.md](<README.md>) |  | 105 | 7,858 B |
-| [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,616 B |
-| [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 25 | 909 B |
 | [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 10,798 B |
 | [docs/statistics.md](<docs/statistics.md>) | docs | 212 | 16,019 B |
 | [docs/team.md](<docs/team.md>) | docs | 95 | 9,137 B |
