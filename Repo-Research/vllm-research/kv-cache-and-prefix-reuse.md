@@ -14,7 +14,7 @@
 
 1. **PagedAttention 在 V1 里不是一棵树，而是一张"链式哈希 → 物理块"的字典 + 一条按淘汰序排列的空闲链表。** 三个结构定义了全部语义：`BlockHashToBlockMap`（`[block_pool.py:35](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)`）、`FreeKVCacheBlockQueue`（`[kv_cache_utils.py:258](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_utils.py>)`）、`BlockPool`（`[block_pool.py:136](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)`）。**[精读原文]**
 2. **哈希是"累积"的，因此命中自动蕴含前缀全同**：`hash(parent_hash, block_tokens, extra_keys)`（`[kv_cache_utils.py:1003](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_utils.py>)`）。代价是**任何一处不匹配，其后全部失效**，亚块粒度的共享前缀无法复用。**[精读原文]**
-3. **淘汰没有独立触发者**：`get_new_blocks` 每拿到一个块就顺手清它的哈希（`[block_pool.py:686](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)`）。"淘汰"是分配路径的副作用。**[精读原文]**
+3. **淘汰没有独立触发者**：`get_new_blocks` 每拿到一个块就顺手清它的哈希（`[block_pool.py:689](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)`）。"淘汰"是分配路径的副作用。**[精读原文]**
 
 ---
 
@@ -34,7 +34,7 @@
 |---|---|---|---|
 | 索引层 | `BlockHashToBlockMap` | `hash → KVCacheBlock`，支持一个哈希对应多块（同哈希重复块）；实例在 `[block_pool.py:851](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)` | `[block_pool.py:35](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)` |
 | 空闲层 | `FreeKVCacheBlockQueue` | 双向链表，按淘汰序排列；**为支持 O(1) 中间删除**才不用 `deque`；实例在 `[block_pool.py:178](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)` | `[kv_cache_utils.py:258-274](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_utils.py>)` |
-| 池层 | `BlockPool` | 分配 / 释放 / 缓存 / 淘汰 / 事件 | `[block_pool.py:136](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)` |
+| 池层 | `BlockPool` | 分配 / 释放 / 缓存 / 淘汰 / 事件；`null_block` 在 `:187`（`:185-186` 为其 ref_cnt 注释）、`kv_event_queue` 在 `:191`、`free_block_queue` 在 `:178` | `[block_pool.py:136](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)` |
 
 `FreeKVCacheBlockQueue` 的 docstring 把淘汰序写死了两条（`[kv_cache_utils.py:267-274](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_utils.py>)`）**[精读原文]**：
 
@@ -66,7 +66,7 @@
 
 > "When all tokens hit the cache, we must recompute the last token to obtain logits." … "This can trigger recomputation of an entire block, rather than just the single last token, because allocate_slots() requires num_computed_tokens to be block-size aligned. Removing this limitation could slightly improve performance in the future."
 
-**研究推断**：这是"全命中"场景的**已知代价**，仓库用注释承认它、并明确标注为未来可优化点。它不是 bug，是块对齐约束的直接推论（块对齐约束在 [`vllm/v1/core/kv_cache_manager.py:292`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_manager.py#L292>) 与 [`vllm/v1/core/single_type_kv_cache_manager.py:827`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/single_type_kv_cache_manager.py#L827>)）。
+**研究推断**：这是"全命中"场景的**已知代价**，仓库用注释承认它、并明确标注为未来可优化点。它不是 bug，是块对齐约束的直接推论（块对齐约束与"减一"实现在 [`vllm/v1/core/kv_cache_manager.py:295`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_manager.py#L295>)（`max_cache_hit_length = request.num_tokens - 1`）与 [`vllm/v1/core/single_type_kv_cache_manager.py:827`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/single_type_kv_cache_manager.py#L827>)（`num_blocks = cdiv(hit_length, block_size)`））。
 
 ### 3.2 写入：只写满块，且哈希在 Request 侧算
 
@@ -79,15 +79,15 @@
 ### 3.3 分配：`get_new_blocks` 即淘汰点
 
 ```
-get_new_blocks(n)  (block_pool.py:666)
-  → free_block_queue.popleft_n(n)
-  → for block in ret: _maybe_evict_cached_block(block)   # :686  ← 淘汰在这里发生
-  → assert block.ref_cnt == 0; block.ref_cnt += 1
+get_new_blocks(n, block_pool.py:666)
+  → free_block_queue.popleft_n(n)            # block_pool.py:681
+  → for block in ret: _maybe_evict_cached_block(block)   # block_pool.py:689  ← 淘汰在这里发生
+  → assert block.ref_cnt == 0; block.ref_cnt += 1        # block_pool.py:690-691
 ```
 
 **[精读原文]**
 
-`_maybe_evict_cached_block`（`[block_pool.py:729](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)`）做三件事：通知 metrics、`_remove_cached_block_hashes(block)` 摘掉哈希、发 `BlockRemoved` 事件。**[精读原文]**
+`_maybe_evict_cached_block`（`[block_pool.py:729](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)`）做三件事：通知 metrics（`:738`）、`_remove_cached_block_hashes(block)` 摘掉哈希（`:741`）、发 `BlockRemoved` 事件（`:747`）。**[精读原文]**
 
 ### 3.4 释放：按"有无哈希"分流
 
@@ -165,7 +165,7 @@ self.waiting.prepend_request(request)  # scheduler.py:1692
 | 边界（锚点：[`vllm/v1/core/kv_cache_utils.py:993`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_utils.py#L993>)） | 代码事实 | 影响面 |
 |---|---|---|
 | 只缓存满块 | `[kv_cache_utils.py:993](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_utils.py>)` | 尾块永远不可复用；短 prompt 命中率结构性偏低 |
-| 全命中也得重算最后一段 | `[kv_cache_manager.py:289-299](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_manager.py>)` | 至少重算一个块 |
+| 全命中也得重算最后一段 | `[kv_cache_manager.py:289-300](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_manager.py>)` | 至少重算一个块 |
 | 块表 append-only，重复块延迟合并 | `[prefix_caching.md:194](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/docs/design/prefix_caching.md>)` | 同前缀多份物理块 |
 
 ---
@@ -201,6 +201,6 @@ flowchart LR
 ## 7. 维护者笔记（KV 侧）
 
 1. **改任何块生命周期逻辑前，先确认 `ref_cnt` 的三条不变式**：`get_new_blocks` 里 `assert block.ref_cnt == 0`、`unpin_blocks` 里 `assert block.ref_cnt > 0 and not block.is_null`、`free_blocks` 里 `null_block` 直接 `continue`。**[精读原文]**
-2. **`null_block` 是哨兵不是普通块**：`[block_pool.py:184-188](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)` 的注释原文 "The ref_cnt of null_block is not maintained, needs special care to avoid freeing it." **[精读原文]**
+2. **`null_block` 是哨兵不是普通块**：`[block_pool.py:184-188](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)`（赋值在 `:187-188`）的注释原文 "The ref_cnt of null_block is not maintained, needs special care to avoid freeing it." **[精读原文]**
 3. **多个 KV group（混合模型）时查找是"所有 group 都有才算命中"**：`get_cached_block` 对 `kv_cache_group_ids` 逐个查，任一 miss 即 `None`（`[block_pool.py:213-224](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)`）。**[精读原文]**
 4. **`hash_block_size` 与 group block_size 可以不等**：构造参数文档在 `[block_pool.py:147-150](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)`，粗粒度 group 通过 `BlockHashListWithBlockSize`（`[kv_cache_utils.py:1111](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_utils.py>)`）直接复用细粒度哈希。**[精读原文]**

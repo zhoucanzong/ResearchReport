@@ -12,7 +12,7 @@
 
 ## 1. 先给答案
 
-1. **调度器没有 prefill/decode 两相**，它统一成"让 `num_computed_tokens` 追上 `num_tokens_with_spec`"（`[scheduler.py:623-632](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py>)`）。chunked prefill 在 V1 里不是"一种模式"，而是**默认形态**：`:1216` 只在 `enable_chunked_prefill=False` 时才走"要么整段要么不排"。**[精读原文]**
+1. **调度器没有 prefill/decode 两相**，它统一成"让 `num_computed_tokens` 追上 `num_tokens_with_spec`"（`[scheduler.py:623-641](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py>)`，`:623-632` 为 NOTE 注释段、实体代码自 `:634` 起、预算赋值在 `:641`）。chunked prefill 在 V1 里不是"一种模式"，而是**默认形态**：`:1216` 只在 `enable_chunked_prefill=False` 时才走"要么整段要么不排"。**[精读原文]**
 2. **抢占 = 全量重算**：`num_computed_tokens = 0` + 回 waiting 队列（`[scheduler.py:1671](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py>)`、`:1692`）。V1 **没有 swap-out 路径**（本报告在 `vllm/v1/core/` 下未找到 CPU/磁盘换出实现；措辞按"未找到证据"处理）。**[精读原文 + 范围声明]**
 3. **默认草稿是 one-hot**，且这一取舍**写在配置的 docstring 里、由 kernel 内的 `draft_prob = 1` 落地**（`[speculative.py:604](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/config/speculative.py>)`、`[rejection_sampler.py:870](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/sample/rejection_sampler.py>)`）。**[精读原文]**
 4. **开启 structured output 时，验证判据作用在"掩码后未重归一化"的目标分布上**，因此不是严格意义上对"实际被采样的那个分布"的无偏拒绝采样。**[精读原文 + 研究推断]**
@@ -29,7 +29,7 @@
 | `running` | 隐含在 `self.running` list | 本步正在跑的请求 |
 | `kv_holding_waiting` | `[scheduler.py:227](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py>)` | KV 交接中的请求（连接器/异步加载），**不计入 `waiting`** |
 
-队列策略由 `SchedulingPolicy` 二选一：`FCFS`（`deque`）或 `PRIORITY`（`heapq` + `arrival_time` 平局裁决），见 `[request_queue.py:13-18](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/request_queue.py>)`、`:131-159`。**[精读原文]**
+队列策略由 `SchedulingPolicy` 二选一：`FCFS`（`deque`）或 `PRIORITY`（`heapq` + `arrival_time` 平局裁决），见 `[request_queue.py:13-17](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/request_queue.py>)`（`SchedulingPolicy`，`FCFS` 在 `:16`、`PRIORITY` 在 `:17`）、`[request_queue.py:131-159](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/request_queue.py>)`（`PriorityRequestQueue`）。**[精读原文]**
 
 ### 2.2 预算：两个数字，不是三个
 
@@ -77,13 +77,13 @@ request.num_output_placeholders = 0
 
 **[精读原文]**
 
-**研究推断**：`drop_stale_output` 的两个用途（reset_prefix_cache 与 "connectors with a pending KV hand-off"）在 docstring 里写明了；`:1676-1682` 的注释解释了为什么**不能直接丢**在途 token（"dropping them would perturb spec-decode acceptance"）。这说明**异步调度 + 抢占 + 投机解码三者叠在一起时，"什么算已生成"这一语义已经很微妙**，是维护风险点（`drop_stale_output` 写入点 [`vllm/v1/core/sched/scheduler.py:1676`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py#L1676>)，在途 token 语义见 [`vllm/v1/core/sched/scheduler.py:2210`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py#L2210>)）。
+**研究推断**：`drop_stale_output` 的两个用途（reset_prefix_cache 与 "connectors with a pending KV hand-off"）在 docstring 里写明了（[`scheduler.py:1657-1660`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py#L1657>)）；`:1674-1680` 的注释解释了为什么**不能直接丢**在途 token（"dropping them would perturb spec-decode acceptance"，原文在 `:1675`）。这说明**异步调度 + 抢占 + 投机解码三者叠在一起时，"什么算已生成"这一语义已经很微妙**，是维护风险点（`drop_stale_output` 赋值点 [`vllm/v1/core/sched/scheduler.py:1681`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py#L1681>)，在途 token 语义见 [`vllm/v1/core/sched/scheduler.py:2205-2209`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py#L2205>)）。
 
-### 2.5 调度侧与投机解码的两个耦合点（锚点：[`vllm/v1/core/sched/scheduler.py:1189`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py#L1189>)、[`vllm/v1/core/sched/scheduler.py:1672`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py#L1672>)）
+### 2.5 调度侧与投机解码的两个耦合点（锚点：[`vllm/v1/core/sched/scheduler.py:1189`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py#L1189>) 的 `:1196` = `padded_num_tokens = 1 + self.num_spec_tokens`、[`vllm/v1/core/sched/scheduler.py:1672`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py#L1672>)）
 
 | 耦合点 | 代码 | 行为 |
 |---|---|---|
-| decode 对齐 padding | `[scheduler.py:1189-1208](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py>)` | 开 spec 且非 prefill 步时，单 token 的 decode 被 **padding 到 `1 + num_spec_tokens`** 以保住 uniform cudagraph；预算不够时**宁可这一步不排**（`break`） |
+| decode 对齐 padding | `[scheduler.py:1189-1208](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py>)`（补齐赋值在 `:1196-1207`） | 开 spec 且非 prefill 步时，单 token 的 decode 被 **padding 到 `1 + num_spec_tokens`** 以保住 uniform cudagraph；预算不够时**宁可这一步不排**（`break`） |
 | 抢占时清草稿 | `[scheduler.py:1672-1673](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py>)` | `request.spec_token_ids = []`，避免旧草稿被跨抢占复用 |
 
 **[精读原文]**
@@ -106,9 +106,9 @@ flowchart LR
     G -->|"all_greedy / 混合"| H["_rejection_greedy_sample<br/>:472"]
     G -->|"有随机请求"| I["rejection_random_sample_kernel<br/>:890"]
     I --> J{"NO_DRAFT_PROBS?"}
-    J -->|"是（默认 greedy 草稿）"| K["draft_prob = 1<br/>:870"]
-    J -->|"否"| L["读 draft_probs_ptr<br/>:872-876"]
-    H --> M["SchedulerOutput 回写<br/>scheduler.py:2200 回滚 num_computed_tokens"]
+    J -->|"是（默认 greedy 草稿）"| K["draft_prob = 1<br/>:872"]
+    J -->|"否"| L["读 draft_probs_ptr<br/>:874-878"]
+    H --> M["SchedulerOutput 回写<br/>scheduler.py:2207 回滚 num_computed_tokens"]
     K --> M
     L --> M
 ```
@@ -117,7 +117,7 @@ flowchart LR
 
 ### 3.2 判据的确切数学形式
 
-`rejection_random_sample_kernel` 的内层循环（`[rejection_sampler.py:860-887](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/sample/rejection_sampler.py>)`）**[精读原文]**：
+`rejection_random_sample_kernel`（定义在 `[rejection_sampler.py:829](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/sample/rejection_sampler.py>)`）的内层循环（`[rejection_sampler.py:860-890](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/sample/rejection_sampler.py>)`）**[精读原文]**：
 
 ```python
 if draft_token_id < 0:
@@ -134,7 +134,7 @@ else:
     accepted = draft_prob > 0 and target_prob / draft_prob >= uniform_prob
 ```
 
-即标准 Leviathan 判据 $u \le \min(1, p(x)/q(x))$；默认 greedy 草稿下 $q \equiv 1$，判据退化为 $u \le p(x)$，**残差采样也相应退化为 $p$ 本身**（`sample_recovered_tokens` 用 `draft_probs` 与 `target_probs` 构造残差，`:492-502`）。**[精读原文 + 研究推断]**
+即标准 Leviathan 判据 $u \le \min(1, p(x)/q(x))$（判据行 `[rejection_sampler.py:884](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/sample/rejection_sampler.py>)`）；默认 greedy 草稿下 $q \equiv 1$（`:871-872`），判据退化为 $u \le p(x)$，**残差采样也相应退化为 $p$ 本身**（`sample_recovered_tokens` 用 `draft_probs` 与 `target_probs` 构造残差，`[rejection_sampler.py:492-502](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/sample/rejection_sampler.py>)`）。**[精读原文 + 研究推断]**
 
 **研究推断（与 SGLang 的对照结论）**：这与 SGLang 默认路径（`draft_probs = torch.zeros_like(target_probs)`，[speculative-decoding-path.md §4.2](../sglang-research/speculative-decoding-path.md)）**在数学上不同构**——SGLang 是把 $q$ 置零后走另一支 kernel 的 `prob_acc/threshold_acc` 判据；vLLM 是把 $q$ 置 1 后走 $p/q$ 判据。**两者最终在 top-1 线性链上都退化为"接受概率 = 目标概率"**，但**退化路径不同**（一个是 $q=0$ 走特判分支，一个是 $q=1$ 走通用公式）。这个区别只在读代码时重要：**断言"两侧行为一致"必须先把这两条路径都读掉，不能只看"都是 one-hot"。** **[精读原文 + 研究推断]**
 
@@ -150,7 +150,7 @@ else:
 
 **[精读原文]**
 
-**研究推断**：这条链上有 **两个独立开关**（`rejection_sample_method` 与 `draft_sample_method`），但只有**它们的合取**才真正产出概率。也就是说：单独设 `rejection_sample_method="synthetic"` 而不设 `probabilistic`，走的是"合成接受率"第三条路（`[speculative.py:533-548](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/config/speculative.py>)`）。**三条验证语义（standard / synthetic / block）与两种草稿语义（greedy / probabilistic）是正交的**——这一点文档里有，但代码里没有任何地方把它们合并成一个"当前实际用哪套数学"的统一输出。**[精读原文 + 研究推断]**
+**研究推断**：这条链上有 **两个独立开关**（`rejection_sample_method` 与 `draft_sample_method`），但只有**它们的合取**才真正产出概率。也就是说：单独设 `rejection_sample_method="synthetic"` 而不设 `probabilistic`，走的是"合成接受率"第三条路（`[speculative.py:533-547](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/config/speculative.py>)`，`:533` 是 `rejection_sample_method`、`:541` 是 `synthetic_acceptance_rates`）。**三条验证语义（standard / synthetic / block）与两种草稿语义（greedy / probabilistic）是正交的**——这一点文档里有，但代码里没有任何地方把它们合并成一个"当前实际用哪套数学"的统一输出。**[精读原文 + 研究推断]**
 
 ### 3.4 口径：`num_draft_tokens` 是"语法过滤后"的数
 
@@ -174,8 +174,8 @@ else:
 | 1 | `[spec_decode/utils.py:64-68](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/worker/gpu/spec_decode/utils.py>)` | **仅当 batch 含 structured output 请求**时，才把草稿 token 异步拷回 CPU |
 | 2 | `[scheduler.py:2679-2686](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py>)` | `validate_tokens` 过滤非法草稿，缺失位置补 `-1`，计入 `num_invalid_spec_tokens` |
 | 3 | `[structured_output/__init__.py:455-489](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/structured_output/__init__.py>)` | 逐位置填 bitmask；被拒草稿之后复用最后一个合法状态的 bitmask（`failed_index`，`:458`/`:488`） |
-| 4 | `[structured_outputs.py:199-204](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/worker/gpu/structured_outputs.py>)` | kernel 就行把非法 token 的 logits 写成 `-float("inf")` |
-| 5 | `[model_runner.py:1634-1636](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/worker/gpu/model_runner.py>)` vs `:1655` | 掩码在 `self.sampler(...)` **之前**；验证 kernel 用同一批 logits 的 `softmax`（`[rejection_sampler.py:487](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/sample/rejection_sampler.py>)`） |
+| 4 | `[structured_outputs.py:195-198](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/worker/gpu/structured_outputs.py>)`（`-float("inf")` 在 `:197`、mask 在 `:198`） | kernel 就地（in-place）把非法 token 的 logits 写成 `-float("inf")` |
+| 5 | `[model_runner.py:1636](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/worker/gpu/model_runner.py>)`（调用 `apply_grammar_bitmask`）vs `:1655`（`self.sampler`） | 掩码在 `self.sampler(...)` **之前**；验证 kernel 用同一批 logits 的 `softmax`（`[rejection_sampler.py:487](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/sample/rejection_sampler.py>)`） |
 
 **[精读原文]**
 
@@ -194,7 +194,7 @@ flowchart TB
 
 **[精读原文（vLLM 源码 @ 本报告 SHA）]**
 
-### 4.3 代码事实与推断的边界（掩码施加点 [`vllm/v1/worker/gpu/model_runner.py:1634`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/worker/gpu/model_runner.py#L1634>)；验证取值点 [`vllm/v1/sample/rejection_sampler.py:487`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/sample/rejection_sampler.py#L487>)）
+### 4.3 代码事实与推断的边界（掩码施加点 [`vllm/v1/worker/gpu/model_runner.py:1636`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/worker/gpu/model_runner.py#L1636>)；验证取值点 [`vllm/v1/sample/rejection_sampler.py:487`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/sample/rejection_sampler.py#L487>)）
 
 **代码事实**：
 
@@ -206,7 +206,7 @@ flowchart TB
 
 ### 4.4 一个可观测的旁证
 
-`[spec_decode/utils.py:88](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/worker/gpu/spec_decode/utils.py>)` 在**没有** structured output 请求且异步调度关闭时，把草稿 token 填成 `[[-1] * self.num_draft_tokens ...]`。而 `-1` 在验证 kernel 里就是"直接拒"（`[rejection_sampler.py:864-865](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/sample/rejection_sampler.py>)`），在语法侧则被 `strip_speculative_padding` 截断（`[structured_output/utils.py:48-58](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/structured_output/utils.py>)`）。**[精读原文]**
+`[spec_decode/utils.py:88](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/worker/gpu/spec_decode/utils.py>)` 在**没有** structured output 请求且异步调度关闭时，把草稿 token 填成 `[[-1] * self.num_draft_tokens ...]`。而 `-1` 在验证 kernel 里就是"直接拒"（`[rejection_sampler.py:864-866](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/sample/rejection_sampler.py>)`，`accepted = False` 在 `:866`），在语法侧则被 `strip_speculative_padding` 截断（`[structured_output/utils.py:48-58](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/structured_output/utils.py>)`，返回语句 `:58`）。**[精读原文]**
 
 **研究推断**：`-1` 是一个**跨三个子系统共享的哨兵**（worker 的占位、kernel 的拒绝、grammar 的截断）。任何新增"草稿位置"语义的改动都必须同时照顾这三处，是明确的维护触点。
 
@@ -216,14 +216,14 @@ flowchart TB
 
 | 维度 | 条件 | vLLM @ `fa75d345` | SGLang @ `2a08e261` |
 |---|---|---|---|
-| 调度相态 | 一般情况 | 无 prefill/decode 两相（`scheduler.py:623-632`） | 有 prefill / decode 两条 batch 构造路径（[scheduler-and-prefix-cache.md §4](../sglang-research/scheduler-and-prefix-cache.md)） |
+| 调度相态 | 一般情况 | 无 prefill/decode 两相（`scheduler.py:623-641`） | 有 prefill / decode 两条 batch 构造路径（[scheduler-and-prefix-cache.md §4](../sglang-research/scheduler-and-prefix-cache.md)） |
 | 抢占恢复 | 一般情况 | **recompute-from-zero**（`scheduler.py:1671`） | 本报告未核验，不填 |
 | 草稿采样 | `draft_sample_method="greedy"`（**vLLM 默认**） | argmax 且不产概率（`llm_base_proposer.py:454`） | topk=1 时 `ret_topk_p = torch.ones_like(...)`（[speculative-decoding-path.md §3.1](../sglang-research/speculative-decoding-path.md)） |
-| 默认验证判据 | greedy 草稿 + 随机目标 | $u \le p(x)$（$q$ 被置 1，`rejection_sampler.py:870-882`） | `coin < prob_acc / threshold_acc`（`draft_probs` 置零，走 target-only kernel）（[speculative-decoding-path.md §4.2](../sglang-research/speculative-decoding-path.md)） |
+| 默认验证判据 | greedy 草稿 + 随机目标 | $u \le p(x)$（$q$ 被置 1，`rejection_sampler.py:871-884`：`:871` `if NO_DRAFT_PROBS:`、`:872` `draft_prob = 1`、`:884` 判据） | `coin < prob_acc / threshold_acc`（`draft_probs` 置零，走 target-only kernel）（[speculative-decoding-path.md §4.2](../sglang-research/speculative-decoding-path.md)） |
 | 严格验证判据 | `probabilistic` / `--speculative-use-rejection-sampling` | $u \le p(x)/q(x)$（`rejection_sampler.py:881`） | `coin * q < p`（[speculative-decoding-path.md §4.3](../sglang-research/speculative-decoding-path.md)） |
 | 验证语义可选项 | 配置组合 | 3 种 `rejection_sample_method`（standard / synthetic / block）+ 2 种 `draft_sample_method`（`speculative.py:533`、`:604`） | 2 条路径（目标-only / 严格拒绝采样） |
 | 语法约束下的草稿 | 开启 structured output | **事后删除非法草稿** + 下一步逐位置 bitmask（`scheduler.py:2679`、`structured_output/__init__.py:455-489`） | 本报告未核验，不填 |
-| 验证所用目标分布 | 开启 structured output | 掩码后未重归一化的 softmax（`model_runner.py:1634` → `rejection_sampler.py:487`） | 未核验 |
+| 验证所用目标分布 | 开启 structured output | 掩码后未重归一化的 softmax（`model_runner.py:1636` → `rejection_sampler.py:487`） | 未核验 |
 | 指标口径 | 开启 structured output | `num_draft_tokens` **已扣除**语法非法草稿（`stats.py:367`） | 未核验 |
 
 **[精读原文：vLLM 列来自 vLLM @ `fa75d345`；SGLang 列转引本仓库既有条目]**。空白格保持空白——**不填没读过的格子**。
