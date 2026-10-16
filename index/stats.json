@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "97756c789a345e825a92bd900611deaa001b906de60f2a10fab61112ca05c8ec",
+  "content_fingerprint": "a167f46a631970de2886b98c0a3115dba39592a4c354567c363d8bc0fa981ad0",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -27,7 +27,7 @@
     "named_report_md": 47,
     "named_readme_md": 4,
     "lines": 43877,
-    "bytes": 2874213
+    "bytes": 2874414
   },
   "libraries": {
     "AIGC-Research": {
@@ -90,7 +90,7 @@
       "lines_raw": 828,
       "dir_files": 17,
       "dir_md": 16,
-      "dir_bytes": 402058,
+      "dir_bytes": 402259,
       "du_sk": 424
     }
   },
@@ -99,7 +99,7 @@
     "library_entries": 47,
     "library_documents_md": 94,
     "library_dir_files": 96,
-    "library_dir_bytes": 2814897,
+    "library_dir_bytes": 2815098,
     "library_du_sk": 2932,
     "library_entry_lines": 30264,
     "library_entry_bytes": 1818281
@@ -226,13 +226,13 @@
           "files": 13,
           "lines": 4935,
           "lines_raw": 4935,
-          "bytes": 304697
+          "bytes": 304898
         },
         "dir_md": {
           "files": 16,
           "lines": 5745,
           "lines_raw": 5763,
-          "bytes": 385764
+          "bytes": 385965
         }
       }
     },
@@ -240,13 +240,13 @@
       "files": 100,
       "lines": 43877,
       "lines_raw": 44035,
-      "bytes": 2874213
+      "bytes": 2874414
     },
     "library_md": {
       "files": 94,
       "lines": 42899,
       "lines_raw": 43057,
-      "bytes": 2798311
+      "bytes": 2798512
     },
     "root_readme": {
       "files": 1,

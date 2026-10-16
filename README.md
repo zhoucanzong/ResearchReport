@@ -249,7 +249,7 @@ grep -r "DiT" --include='*.md' AIGC-Research LLM-Research Repo-Research
 | [report.md](Repo-Research/vllm-research/report.md) | 35,658 B / 303 行（正文 294 + front-matter 9） | **主文档**：执行摘要 / 三个判断 / Codebase Map / 架构分层图 / 运行故事（抢占 + 投机）/ 模块摘要 / **带条件列的 SGLang 对照表** / 设计取舍 / 证据索引 |
 | [kv-cache-and-prefix-reuse.md](Repo-Research/vllm-research/kv-cache-and-prefix-reuse.md) | 19,069 B / 206 行 | **子文档**：链式块哈希、`FreeKVCacheBlockQueue` 的 LIFO/FIFO 双序淘汰、append-only 块表、`allocate_slots` 五段布局、抢占重算与前缀缓存的交互（含未确证项） |
 | [scheduling-and-spec-decode.md](Repo-Research/vllm-research/scheduling-and-spec-decode.md) | 24,076 B / 244 行 | **子文档**：无 prefill/decode 两相的调度、两档预算、抢占点；投机解码三段与判据数学形式；**与 structured output 的五步交互链** |
-| [claim-audit.md](Repo-Research/vllm-research/claim-audit.md) | 44,029 B / 365 行 | **子文档**：方法学记录、canonical `claim_audit.py` 四文档结果、阅读覆盖、自检九项、未确证清单，以及 **§3.5 锚点复检（162 处 `.py:行` 机械核验，未命中 0）与附录 A 锚点全表** |
+| [claim-audit.md](Repo-Research/vllm-research/claim-audit.md) | 44,391 B / 365 行 | **子文档**：方法学记录、canonical `claim_audit.py` 四文档结果、阅读覆盖、自检九项、未确证清单，以及 **§3.5 锚点复检（162 处 `.py:行` 机械核验，未命中 0）与附录 A 锚点全表** |
 
 > ③ ④ 两条互引：vLLM 主文档 §7 与 SGLang `scheduler-and-prefix-cache.md` / `speculative-decoding-path.md` 之间有带条件列的机制对照表。
 

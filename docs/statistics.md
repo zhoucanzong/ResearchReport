@@ -173,13 +173,13 @@
 | **vllm-research/report.md** | **仓库代码分析报告（条目）** | **294**（正文，另有 9 行 front-matter 围栏块） | **35,658** |
 | vllm-research/kv-cache-and-prefix-reuse.md | 子文档：KV 缓存 / 块池 / 前缀复用 | 206 | 19,069 |
 | vllm-research/scheduling-and-spec-decode.md | 子文档：调度 / 投机解码 / 语法约束交互 | 244 | 24,076 |
-| vllm-research/claim-audit.md | 子文档：结论审计、阅读覆盖与自检（含 §3.5 锚点复检 + 附录 A 全表 162 行） | **365** | **44,029** |
+| vllm-research/claim-audit.md | 子文档：结论审计、阅读覆盖与自检（含 §3.5 锚点复检 + 附录 A 全表 162 行） | **365** | **44,391** |
 | **合计** | **17 个文件** | **5,763** | **402,058** |
 
-> 16 个 `.md` 合计 **385,764 B / 5,763 行**（其中 vLLM 条目 4 份共 1,118 行 / 122,845 B）；加上 `papers/nemotron-labs-diffusion.json`（16,294 B / 47 行）即目录内容 **402,058 B**（脚本口径；「合计行」的 5,763 只含 `.md` 行数，不含 JSON 的 47 行）。**正文字节与目录内容字节均取自 `index/stats.json`**（`libraries["Repo-Research"]` 的 `bytes` 与 `dir_bytes`）。
+> 16 个 `.md` 合计 **385,764 B / 5,763 行**（其中 vLLM 条目 4 份共 1,118 行 / 123,194 B）；加上 `papers/nemotron-labs-diffusion.json`（16,294 B / 47 行）即目录内容 **402,058 B**（脚本口径；「合计行」的 5,763 只含 `.md` 行数，不含 JSON 的 47 行）。**正文字节与目录内容字节均取自 `index/stats.json`**（`libraries["Repo-Research"]` 的 `bytes` 与 `dir_bytes`）。
 > 注：`.json` 的 47 "行"仅为文件行数，其价值在于结构化字段，不按文档篇幅计入正文行数。
 > SGLang 子文档的行数 / 字节以 `wc -l` / `stat -f '%z'` 实测为准：`report.md` 319 行（正文 310 + front-matter 围栏块 9）/ 32,226 B、`speculative-decoding-path.md` 230 行 / 25,276 B、`scheduler-and-prefix-cache.md` 174 行 / 20,863 B、`claim-audit.md` **149 行** / 11,639 B。
-> vLLM 条目同样以 `wc -l` / `stat -f '%z'` 实测（**本批终态**）：`report.md` **303 行（正文 294 + front-matter 围栏块 9）/ 35,658 B**、`kv-cache-and-prefix-reuse.md` 206 行 / 19,069 B、`scheduling-and-spec-decode.md` 244 行 / 24,076 B、`claim-audit.md` **365 行 / 44,029 B**（本次锚点复检后由 131 行 / 10,273 B 增长）。**vLLM 是本仓库第二个带 front-matter 的条目**（`with_front_matter` 由 1 → 2）。
+> vLLM 条目同样以 `wc -l` / `stat -f '%z'` 实测（**本批终态**）：`report.md` **303 行（正文 294 + front-matter 围栏块 9）/ 35,658 B**、`kv-cache-and-prefix-reuse.md` 206 行 / 19,069 B、`scheduling-and-spec-decode.md` 244 行 / 24,076 B、`claim-audit.md` **365 行 / 44,391 B**（本次锚点复检后由 131 行 / 10,273 B 增长）。**vLLM 是本仓库第二个带 front-matter 的条目**（`with_front_matter` 由 1 → 2）。
 
 ---
 

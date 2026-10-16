@@ -130,10 +130,10 @@ git show fa75d3456d60a5ffe923818c4b495295675b38e1:<path> | sed -n "<行>p"
 
 | # | 检查项 | 结果 |
 |---|---|---|
-| 1 | 主工作树干净且在 `main` | ✅ `git status --short` 为空；`git rev-parse --abbrev-ref HEAD` = `main`（`5c3225e`） |
+| 1 | 主工作树干净且在 `main` | ✅ 本轮收尾时 `git status --short` 为空；`git rev-parse --abbrev-ref HEAD` = `main`（基线由 `5c3225e` 推进到 **`acafc4e`**，本分支已 rebase） |
 | 2 | 独立 worktree 串行化 | ✅ `git worktree list` 显示 `/private/tmp/wt-vllm [research/vllm-research-yanyan]` 与主工作树分离 |
 | 3 | 无源码 / 克隆残留 | ✅ 新条目目录只含 4 个 `.md`；`git status --porcelain` 中无源码文件；clone（186 MB）在交付前删除 |
-| 4 | 条目统计一致性 | 见 §6（`entries.total` 46 → 47，`children` 41 → 44） |
+| 4 | 条目统计一致性 | 见 §6：基线 `acafc4e` 的 46 → **47**，`children` **44**，`lines` **30,264**，`bytes` **1,818,281** |
 | 5 | front-matter 契约 | ✅ 仅 `report.md` 带 front-matter（9 行：7 字段 + 首尾围栏），与 `docs/team.md` 契约一致；三份子文档不带 |
 | 6 | 链接回测 | 见 §5（0 新增失效） |
 | 7 | gitlink 0 | ✅ `git ls-files -s` 中 `mode 160000` 计数为 0 |
@@ -148,10 +148,10 @@ git show fa75d3456d60a5ffe923818c4b495295675b38e1:<path> | sed -n "<行>p"
 
 | 阶段 | 相对链接总数 | 失效 |
 | :-- | --: | --: |
-| 基线（`main` @ `5c3225e`，文档未落盘时实测） | 1,656 | **0** |
-| 本批（`research/vllm-research-yanyan`，含 4 份新文档 + 生成物 + `README.md`/`statistics.md` 更新） | 1,735 | **0** |
+| 基线（`origin/main` @ `acafc4e`，本分支改动前实测） | 1,656 | **0** |
+| 本批（`research/vllm-research-yanyan`，含 4 份新文档 + 生成物 + `README.md`/`statistics.md` 更新） | **1,768** | **0** |
 
-**新增 79 条**（1,656 → 1,735），**新增失效 0**。其中新条目文档本身贡献 54 条，其余来自 `INDEX.md` / `index/*` 生成物与 `README.md`、`docs/statistics.md` 的索引补齐。
+**新增 112 条**（1,656 → 1,768），**新增失效 0**。其中新条目文档本身贡献 54 条、`claim-audit.md` 的 §3.5 与附录 A 再贡献一批锚点链接，其余来自 `INDEX.md` / `index/*` 生成物与 `README.md`、`docs/statistics.md` 的索引补齐。
 
 **基线绝对值说明**：`docs/statistics.md` 末次留痕记的 1,650 是 Decision Models 批次当时的实测值；本次在同一脚本（同一顺序、同一跳过规则：跳过 `.git`、跳过围栏内文本、跳过行内反引号）下测得 **1,656**。差异 6 条来自**生成物与既有文档的后续变化**，不是本批引入——本批文档若进入基线计数，只会增加。本报告按"同一脚本同期实测"口径记录 1,656，不沿用旧值。
 
@@ -174,7 +174,7 @@ git show fa75d3456d60a5ffe923818c4b495295675b38e1:<path> | sed -n "<行>p"
   - [report.md](report.md)：303 行（正文 294 + front-matter 9）/ 35,658 B
   - [kv-cache-and-prefix-reuse.md](kv-cache-and-prefix-reuse.md)：206 行 / 19,069 B
   - [scheduling-and-spec-decode.md](scheduling-and-spec-decode.md)：244 行 / 24,076 B
-  - 本文 [claim-audit.md](claim-audit.md)：365 行 / 44,029 B（含 §3.5 锚点复检与附录 A 锚点全表 162 行）
+  - 本文 [claim-audit.md](claim-audit.md)：365 行 / 44,391 B（含 §3.5 锚点复检与附录 A 锚点全表 162 行）
 - **未确证 / 待跟踪**（不入正文结论）：
   1. 抢占后 `get_computed_blocks` 是否真退化为零命中——§4.2 的推断需要构造实验确证（打印 `num_preemptions` 与命中数）。
   2. structured output 下验证判据的参照分布语义：是"近似"还是"仓库定义的正确答案"——仓库内**未找到明文定义**，检索 `docs/` 无结论。
