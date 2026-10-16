@@ -14,15 +14,15 @@
 | 指标 | 数量 |
 | --- | --- |
 | **条目数**（`report.md`） | **46** |
-| 条目子文档数 | 28 |
-| 条目正文行数（剔除 front-matter） | 29,663 |
-| 条目字节 | 1,735,390 B |
+| 条目子文档数 | 41 |
+| 条目正文行数（剔除 front-matter） | 29,764 |
+| 条目字节 | 1,748,714 B |
 | 带 front-matter 的条目 | 1 |
 | 带合法 `date` 的条目 | 1 |
-| 文档（除生成物外的全部 `.md`） | 83 |
+| 文档（除生成物外的全部 `.md`） | 96 |
 | 其中文件名 `README.md` | 4 |
-| 纳入版本控制的文件 | 96 |
-| 纳入版本控制的 `.md` | 91 |
+| 纳入版本控制的文件 | 109 |
+| 纳入版本控制的 `.md` | 104 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 
@@ -31,9 +31,9 @@
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
 | AIGC-Research | 18 | 19 | 13,336 | 671,827 B | [#AIGC-Research](#aigc-research) |
-| LLM-Research | 26 | 46 | 15,811 | 1,018,154 B | [#LLM-Research](#llm-research) |
+| LLM-Research | 26 | 59 | 15,912 | 1,031,478 B | [#LLM-Research](#llm-research) |
 | Repo-Research | 2 | 12 | 516 | 45,409 B | [#Repo-Research](#repo-research) |
-| **合计** | **46** | **83** | **29,663** | **1,735,390 B** | — |
+| **合计** | **46** | **96** | **29,764** | **1,748,714 B** | — |
 
 ## 分面索引
 
@@ -277,7 +277,7 @@
 
 </details>
 
-### LLM-Research（26 条目 / 46 文档）
+### LLM-Research（26 条目 / 59 文档）
 
 <details>
 <summary><b>模型系列 ModelSeries（15 条目 / 5 子文档）</b></summary>
@@ -468,7 +468,7 @@
 </details>
 
 <details>
-<summary><b>技术专题 TechnicalTopics（11 条目 / 14 子文档）</b></summary>
+<summary><b>技术专题 TechnicalTopics（11 条目 / 27 子文档）</b></summary>
 
   <details>
   <summary><b>Agent-research</b> · <code>LLM-Research/TechnicalTopics/Agent-research/report.md</code> · 698 行 · —</summary>
@@ -495,15 +495,28 @@
   </details>
 
   <details>
-  <summary><b>DecisionModels-research</b> · <code>LLM-Research/TechnicalTopics/DecisionModels-research/report.md</code> · 709 行 · —</summary>
+  <summary><b>DecisionModels-research</b> · <code>LLM-Research/TechnicalTopics/DecisionModels-research/report.md</code> · 810 行 · —</summary>
   
 
-    * **条目**：[LLM-Research/TechnicalTopics/DecisionModels-research/report.md](<LLM-Research/TechnicalTopics/DecisionModels-research/report.md>)（709 行 / 77,275 B）
+    * **条目**：[LLM-Research/TechnicalTopics/DecisionModels-research/report.md](<LLM-Research/TechnicalTopics/DecisionModels-research/report.md>)（810 行 / 90,599 B）
     * **专题目录**：`LLM-Research/TechnicalTopics/DecisionModels-research`
     * **元数据**：type=`—` · domain=`LLM-Research` · subject=`TechnicalTopics` · date=`—` · status=`—`
-    * **子文档（3）**
+    * **子文档（16）**
         * [calibration.md](<LLM-Research/TechnicalTopics/DecisionModels-research/calibration.md>) — 261 行 / 28,421 B
         * [experiments.md](<LLM-Research/TechnicalTopics/DecisionModels-research/experiments.md>) — 349 行 / 25,200 B
+        * [open-implementations.md](<LLM-Research/TechnicalTopics/DecisionModels-research/open-implementations.md>) — 412 行 / 32,731 B
+        * [papers/2609.23886-this-that-model.md](<LLM-Research/TechnicalTopics/DecisionModels-research/papers/2609.23886-this-that-model.md>) — 102 行 / 9,013 B
+        * [papers/2609.23986-jev-mem.md](<LLM-Research/TechnicalTopics/DecisionModels-research/papers/2609.23986-jev-mem.md>) — 88 行 / 7,976 B
+        * [papers/2609.24052-crash-narrative-calibration.md](<LLM-Research/TechnicalTopics/DecisionModels-research/papers/2609.24052-crash-narrative-calibration.md>) — 98 行 / 12,084 B
+        * [papers/2609.24574-css-text-annotation.md](<LLM-Research/TechnicalTopics/DecisionModels-research/papers/2609.24574-css-text-annotation.md>) — 180 行 / 40,153 B
+        * [papers/2609.25845-visual-jev.md](<LLM-Research/TechnicalTopics/DecisionModels-research/papers/2609.25845-visual-jev.md>) — 90 行 / 9,091 B
+        * [papers/2609.26532-reflex-selective-control.md](<LLM-Research/TechnicalTopics/DecisionModels-research/papers/2609.26532-reflex-selective-control.md>) — 95 行 / 10,725 B
+        * [papers/2609.26550-jev-as-a-judge.md](<LLM-Research/TechnicalTopics/DecisionModels-research/papers/2609.26550-jev-as-a-judge.md>) — 245 行 / 36,204 B
+        * [papers/2609.26758-option-name-vs-definition.md](<LLM-Research/TechnicalTopics/DecisionModels-research/papers/2609.26758-option-name-vs-definition.md>) — 334 行 / 50,110 B
+        * [papers/2609.28613-decision-hijacking.md](<LLM-Research/TechnicalTopics/DecisionModels-research/papers/2609.28613-decision-hijacking.md>) — 97 行 / 9,916 B
+        * [papers/2609.30243-jevout-natural-context-flip.md](<LLM-Research/TechnicalTopics/DecisionModels-research/papers/2609.30243-jevout-natural-context-flip.md>) — 310 行 / 33,313 B
+        * [papers/2609.33209-probability-axioms-coherence.md](<LLM-Research/TechnicalTopics/DecisionModels-research/papers/2609.33209-probability-axioms-coherence.md>) — 92 行 / 10,312 B
+        * [papers/2610.09683-system-switch.md](<LLM-Research/TechnicalTopics/DecisionModels-research/papers/2610.09683-system-switch.md>) — 90 行 / 10,672 B
         * [taxonomy.md](<LLM-Research/TechnicalTopics/DecisionModels-research/taxonomy.md>) — 254 行 / 24,958 B
 
   </details>
@@ -661,7 +674,7 @@
 | 文档 | 所属库 | 行数 | 字节 |
 | --- | --- | --: | --: |
 | [AIGC-Research/README.md](<AIGC-Research/README.md>) | AIGC-Research | 131 | 8,137 B |
-| [LLM-Research/README.md](<LLM-Research/README.md>) | LLM-Research | 177 | 13,739 B |
+| [LLM-Research/README.md](<LLM-Research/README.md>) | LLM-Research | 179 | 14,410 B |
 | [Repo-Research/mini-swe-agent-research/mini-swe-agent-deep-report.md](<Repo-Research/mini-swe-agent-research/mini-swe-agent-deep-report.md>) | Repo-Research | 735 | 34,490 B |
 
 

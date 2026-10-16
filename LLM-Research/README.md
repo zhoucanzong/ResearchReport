@@ -64,11 +64,13 @@
 | 8  | 🔬 | [**TrainingInfra**](./TechnicalTopics/TrainingInfra-research/) | 训练基础设施 |   1   | DeepSpeed/FSDP/Megatron，3D并行，万卡集群 |
 | 9  | 🔬 | [**QuantizationEdge**](./TechnicalTopics/QuantizationEdge-research/) | 量化与边缘部署 |   1   | AWQ/GPTQ/GGUF/FP8，vLLM/Ollama，Jetson边缘 |
 | 10 | 🔬 | [**RAG**](./TechnicalTopics/RAG-research/)                 | 检索增强生成 |   1   | RAG 0.0→4.0，GraphRAG，Agentic RAG，混合检索 |
-| 11 | 🔬 | [**DecisionModels**](./TechnicalTopics/DecisionModels-research/) | 决策模型（System One / Typed Decision Model） |   **4**   | Choice/Score/Noul 类型化输出、隐藏状态直读、零输出 token、`confidence` 语义；**RLCD 同名消歧**（≠ 2023 Contrastive Distillation）；官方九类 jaggedness；第三方研究地图含**失效与攻击**；**JEV 为主线案例**，同类含 `this-that-model` / `Laya` / `Kev` / `JevLite` |
+| 11 | 🔬 | [**DecisionModels**](./TechnicalTopics/DecisionModels-research/) | 决策模型（System One / Typed Decision Model） |  **17**   | Choice/Score/Noul 类型化输出、隐藏状态直读、零输出 token、`confidence` 语义；**RLCD 同名消歧**（≠ 2023 Contrastive Distillation）；官方九类 jaggedness；第三方研究地图含**失效与攻击**；**JEV 为主线案例**，同类含 `this-that-model` / `Laya` / `Kev` / `JevLite`；**第二批新增逐篇论文提取 12 篇（`papers/`）与开源实现情报（`open-implementations.md`）** |
 
 > **🔬 技术专题 11 个** &nbsp;|&nbsp; 共 **46 份** Markdown 报告
 >
 > **DecisionModels 条目已升格为领域研究（第一批·结构层）**：主文档 `report.md` + 三份子文档 [`taxonomy.md`](./TechnicalTopics/DecisionModels-research/taxonomy.md)（边界 / 接口谱系 / 训练目标谱系 + Mermaid 分类图）、[`calibration.md`](./TechnicalTopics/DecisionModels-research/calibration.md)（ECE / Brier / 可靠性曲线的跨域-跨语言-不平衡-OOD 证据链）、[`experiments.md`](./TechnicalTopics/DecisionModels-research/experiments.md)（§八 复核清单的可执行实验协议）。
+>
+> **第二批·证据层（2026-10-16）**：新增 [`papers/`](./TechnicalTopics/DecisionModels-research/papers/)（**12 篇逐篇结构化提取**，统一 方法 / 实验 / 数字+条件 / 失效边界 / 关联本条目结论 模板，每条数字附可 grep 的 `find:` 串）与 [`open-implementations.md`](./TechnicalTopics/DecisionModels-research/open-implementations.md)（`this-that-model` / `Laya` / `Kev` / `JevLite` / `Visual Jev` 的 readout 实现路径、权重与许可、接口依赖与模型卡口径，外链全部实测状态码）。
 
 ---
 

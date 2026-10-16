@@ -9,7 +9,9 @@
 > **调研口径**：时间不限、详细度=详细；**不做教学讲解、不做知识图谱**；本条目为技术专题（`subject: decision-models`），同类已纳入 `this-that-model` / `Laya` / `Kev` / `JevLite` 等开源决策模型
 > **条目路径**：`LLM-Research/TechnicalTopics/DecisionModels-research/report.md`（非 skill 默认输出目录）
 > **子文档**（领域研究第一批·结构层）：[taxonomy.md](taxonomy.md)（边界 / 接口谱系 / 训练目标谱系 + 分类图）· [calibration.md](calibration.md)（ECE/Brier/可靠性曲线的跨域-跨语言-不平衡-OOD 证据链、阈值迁移与重校准成本）· [experiments.md](experiments.md)（§八 复核清单的可执行实验协议）
-> **子文档口径**：三份子文档与本文共用同一套证据等级标签（单一主等级、混合取最弱，来源类型写括号）与同一条硬规则（**不做跨论文排行榜**；对照表必带条件列）。子文档中的"研究推断"一律显式标注，**不在本文正文内新增结论**。
+> **子文档**（领域研究第二批·证据层，2026-10-16）：**逐篇论文提取 12 篇** → [`papers/`](papers/)（每篇一份：方法 / 实验 / 数字+条件 / 失效边界 / 关联到本文哪条结论；统一模板并逐条附可 grep 的 `find:` 串）· [open-implementations.md](open-implementations.md)（`this-that-model` / `Laya` / `Kev` / `JevLite` / `Visual Jev` 的**实现路径**（隐藏状态直读 / 微调分类头 / LM head 读数）、**可复现性**（权重·许可·接口·依赖）与**模型卡口径**；全部外链实测状态码）
+> **第二批论文索引（12 篇，编号↔标题均已核对）**：[2609.24574 CSS 横评](papers/2609.24574-css-text-annotation.md) · [2609.26550 as-a-Judge](papers/2609.26550-jev-as-a-judge.md) · [2609.26758 选项名 vs 定义](papers/2609.26758-option-name-vs-definition.md) · [2609.30243 JevOut](papers/2609.30243-jevout-natural-context-flip.md) · [2609.28613 Decision Hijacking](papers/2609.28613-decision-hijacking.md) · [2609.23986 Jev-Mem](papers/2609.23986-jev-mem.md) · [2609.26532 REFLEX](papers/2609.26532-reflex-selective-control.md) · [2609.23886 this-that-model](papers/2609.23886-this-that-model.md) · [2609.25845 Visual Jev](papers/2609.25845-visual-jev.md) · [2609.24052 事故叙述编码](papers/2609.24052-crash-narrative-calibration.md) · [2609.33209 概率公理一致性](papers/2609.33209-probability-axioms-coherence.md) · [2610.09683 System Switch](papers/2610.09683-system-switch.md)
+> **子文档口径**：三份子文档与本文共用同一套证据等级标签（单一主等级、混合取最弱，来源类型写括号）与同一条硬规则（**不做跨论文排行榜**；对照表必带条件列）。子文档中的"研究推断"一律显式标注，**不在本文正文内新增结论**。第二批的 `papers/` 与 `open-implementations.md` 遵守同一套标签与硬规则；**凡未能确证的均列入各文件 §7「未确证/待跟踪」，不入正文**。
 
 ---
 
@@ -707,3 +709,102 @@ TypeSafe 把 Jev 定位为 **System One 模型**（"first System One model"）�
 | gitlink（子模块）| **0**（`git ls-files -s` 无 mode `160000`） |
 | 远端分支 SHA = 本地 | **是**。本行钉在**本批首次提交**的 HEAD 上（`d2b1534fab5e2501e4513cb1fe2444d291a2e959`）；其后按 Orchestrator 要求补了一个**普通追加提交**（canonical `claim_audit.py` 重跑 + 链接编码顺序更正），故最终分支 HEAD 比本行新一格。交付时以交付报告中的 `git ls-remote` 输出为准 |
 | 主工作树 | 完成后回到 `main`，`git status --short` 为空；分支 worktree `/tmp/wt-dm` 已移除 |
+
+---
+
+## 十二、交付自检与机械审计记录（2026-10-16，第二批·证据层）
+
+> 本节是本条目"领域研究第二批"的**交付留证**，**不新增任何技术结论**，结论与证据仍以 §〇–§十 为准。
+
+### 12.1 本批交付物结构
+
+| 交付物 | 数量 | 内容 |
+| :-- | --: | :-- |
+| [`papers/`](papers/) | **12 篇** | 逐篇结构化提取，统一模板：**方法 / 实验设置与条件 / 关键数字+条件（逐条附可 grep 的 `find:` 串）/ 失效边界 / 关联到本文哪条结论 / 与本文的差异** |
+| [open-implementations.md](open-implementations.md) | 1 份 | `this-that-model` / `Laya` / `Kev` / `JevLite` / `Visual Jev` 的**实现路径**、**可复现性**（权重·许可·接口·依赖）、**模型卡口径**；全部外链实测状态码 |
+
+**12 篇清单**（编号↔标题均已逐条核对，见各文件 §7）：`2609.24574`、`2609.26550`、`2609.26758`、`2609.30243`、`2609.28613`、`2609.23986`、`2609.26532`、`2609.23886`、`2609.25845`、`2609.24052`，**增补 2 篇** `2609.33209`（概率公理类）、`2610.09683`（System Switch 类）——后两篇正是任务书列出的可选增补类别。
+
+### 12.2 claim 审计：以 canonical 脚本重跑（`~/.dsh/skills/code-researcher/scripts/claim_audit.py`）
+
+**canonical 实测（2026-10-16，`--lang zh --format json`）**：
+
+| 文档 | 高影响结论 | 缺少邻近源码证据 |
+| :-- | --: | --: |
+| `papers/2609.24574-css-text-annotation.md` | 8 | 2 |
+| `papers/2609.26550-jev-as-a-judge.md` | 8 | 5 |
+| `papers/2609.26758-option-name-vs-definition.md` | 15 | 8 |
+| `papers/2609.30243-jevout-natural-context-flip.md` | 24 | 13 |
+| `papers/2609.28613-decision-hijacking.md` | 13 | 6 |
+| `papers/2609.23986-jev-mem.md` | 3 | 3 |
+| `papers/2609.26532-reflex-selective-control.md` | 8 | 4 |
+| `papers/2609.23886-this-that-model.md` | 2 | 2 |
+| `papers/2609.25845-visual-jev.md` | 7 | 4 |
+| `papers/2609.24052-crash-narrative-calibration.md` | 8 | 2 |
+| `papers/2609.33209-probability-axioms-coherence.md` | 4 | 3 |
+| `papers/2610.09683-system-switch.md` | 5 | 1 |
+| [open-implementations.md](open-implementations.md) | 6 | 2 |
+| **本批合计（12 篇 + 1 份）** | **111** | **55** |
+| 第一批三份子文档（对照） | 43 | 22 |
+| **全部子文档合计** | **154** | **77** |
+| [`report.md`](report.md)（本条主文档，仅参考） | 48 | 25 |
+
+**口径与解读（与第一批同一脚本、同一 `--lang zh`）**：canonical 按**高影响词表**认定"高影响结论"，再看该行**邻域 ±1 行**内是否有**路径型证据**（URL 亦算）。
+
+本批 55 处"缺少邻近源码证据"的**逐类复核**（与第一批同一结论）：
+
+1. **表格行把出处放在行尾反引号内的 `find:` 串**——canonical 的正则把它算作"路径证据"的极少，故大量**已带出处**的行被计入；本批 `papers/` 的**每一条数字**都在同表行尾给出 `find:`（可在 arXiv 正文逐字 grep），另有 §7 来源表给出 URL。
+2. **标题行与 `## N` 小节行**（如 `## 4 失效边界`、`### 3.2 …`）按设计不是引文行。
+3. **协议/设计行**（实验设置表内的"缓存：未报告"、"对照模型：…"）由定义即非引文。
+
+**逐行复核未发现"有事实性主张、无任何出处"的行**；本批所有 `find:` 串均已对其所依据的 **arXiv 正文版本**做过 grep 命中自查（版本与命中口径见各文件顶部说明）。**最终口径：高影响结论 111 / 缺少邻近源码证据 55（本批）；全部子文档 154 / 77。**
+
+### 12.3 统计口径（生成物随子文档变化）
+
+本批新增 13 份子文档后，仓库生成物按同一口径重跑 `scripts/library_index.py --repo-root . --out-root . --write-stats --check-links`（先 `--dry-run` 预演）：
+
+| 口径量 | 本批前（`5944189`） | 本批后 | 说明 |
+| :-- | --: | --: | :-- |
+| `entries.total` | **46** | **46** | **不变**：`papers/` 与 `open-implementations.md` 都不是 `report.md`，**不新增条目** |
+| 条目子文档数（children） | 28 | **41** | **+13**（12 篇 `papers/` + `open-implementations.md`） |
+| 条目正文行数（`lines`，剔除 front-matter） | 29,663 | **29,763** | **+100**，全部来自 `report.md` 本批增补（子文档导航 + 本节 §12）；**子文档不计入** `lines` |
+| 条目字节 | 1,735,390 B | **≈1,748,282 B** | 约 **+12,892 B**（同上，仅条目口径；**自指量**——本节自身也在 `report.md` 内，故标约值，见下口径提醒） |
+| `report.md` 本文件行数（`wc -l`） | 709 | **809** | 与 `lines` 增量一致（本条目无 front-matter；809 − 100 = 709 与基线一致） |
+| 文档数（除生成物的 `.md`） | 83 | **96** | **+13** |
+| 全仓库跟踪文件数 | 96 | **109** | **+13**（本批 13 份子文档提交后实测；`git ls-files` 含生成物） |
+
+> **口径提醒**：`lines` = **各条目 `report.md` 合计 − front-matter 行数**（本仓库仅 1 份条目带 front-matter，8 行；另有 1 份文件无结尾换行，故 `wc -l` 合计 29,774 − 8 − 1 = **29,765**），**不含**子文档。派生数字（根 `README.md`、`LLM-Research/README.md`、`docs/statistics.md`）均由脚本产出，不手改。
+> **自指量说明**：`条目字节`（含本条 `report.md` 自身）与 `report.md 行数` 都是**自指量**——本节的任何编辑都会轻微改变它们。故此处字节数标约值，**权威值以仓库生成物 [`index/stats.json`](../index/stats.json) 为准**。
+
+### 12.4 链接与卫生自检
+
+| 检查 | 结果 |
+| :-- | :-- |
+| 链接核验脚本 | `/tmp/dm2/linkcheck.py`（**未入库**，一次性留证）：剥**围栏代码块** → 剥**行内反引号** → **剥裸 autolink `<scheme:…>`** → 取 `[label](target)` → **先剥 `<>` → 判 scheme → percent-decode（`urllib.parse.unquote`）→ 查存在性** |
+| 全仓相对链接回测（正确顺序） | 基线 `5944189`（`git stash` 后同一脚本实测）：总计 **1,603**、外链 450、仓内相对 **834**、纯锚点 319、**失效 0**；本批终态：总计 **1,638**、外链 450、仓内相对 **869**、纯锚点 319、**失效 0** → **本批 0 新增失效** |
+| 一处**假阳性已排除** | 基线核验曾把 `Repo-Research/sglang-research/report.md` 的**裸 autolink** `<https://github.com/…/README.md>` 当作仓内相对链接。**正确顺序**是先剥 `<>`、判 scheme，故它是**外链**。已按正确顺序重跑，**0 失效** |
+| 本批新增文档外链可达性 | `papers/` 12 篇覆盖的 **10 篇原始论文 + 2 篇增补**：`arxiv.org/abs/<id>` 与 `arxiv.org/html/<id>` 均 **HTTP 200**、`<title>` 与任务书给定标题**逐条一致**；`open-implementations.md` 另实测 **19 条 2xx + 2 条 404**（404 已移入该文件 §7 并改列） |
+| 源码/克隆残留 | **无**：本批**未克隆任何仓库**；仓内 `scripts/` 仅原有 `library_index.py`；`papers/` 与 `open-implementations.md` **均不含**源码片段或 `仓库@commit:文件:行` 断言（`open-implementations.md` §9 明示该断言为 0） |
+| 临时分析源 | 抓取的 arXiv HTML 曾镜像到工作区 `.tmp-dm-src/`（已被 `.gitignore` 的临时忽略项覆盖），**交付前已删除**，未入库 |
+| gitlink（子模块） | **0**（`git ls-files -s` 无 mode `160000`） |
+| 远端分支 SHA = 本地 | **是**（见交付报告中的 `git ls-remote` 输出与本地 `git rev-parse` 对照） |
+| 主工作树 | 完成后回到 `main`，`git status --short` 为空；分支 worktree `/tmp/wt-dm-b2` 已移除 |
+
+### 12.5 本批**未确证 / 待更正**事项（**不入正文**，仅登记）
+
+> 本节只登记"证据不足或与来源存在张力"的项，**不改动 §〇–§十 的任何结论或证据**；由 Orchestrator / 泡泡决定是否后续修正。
+
+| # | 事项 | 实测情况 | 建议 |
+| :-- | :-- | :-- | :-- |
+| D1 | §1.2.1 第 71 行记 JEV-as-a-Judge 的 `0.36%` 为"**仅摘要，正文查无**" | **该判定基于 v1**。当前版本 **v5** 正文含字面串：`JEV comes within three points of GPT-6 at 0.36% of its fee and a 0.15-second median latency` | **升为正文可证**，可改标 `精读原文` |
+| D2 | §7.2 "费用为最强 LLM 评判者的 0.36%（仅摘要，正文查无）" | 同 D1 | 同 D1 |
+| D3 | §7.1 / §7.2 写「正文可证的 **RewardBench 94.0% vs 93.5%**」 | **归属错**：RewardBench 上 JEV 为 **92.2%** vs GPT-6 **93.5%**；**94.0** 属 (a) 150 条既有标签上的 JEV 分数（vs GPT-6 96.7），或 (b) RewardBench 上 τ=0.9 **单序级联**的分数 | 改为「RewardBench **92.2% vs 93.5%**；150 条既有标签 **94.0% vs 96.7**」 |
+| D4 | §6.4 末句"**把选项名换成随机字符串则结果改变**" | **方向相反**：`2609.26758` v3 正文为 `random strings used as option names yield mean flip rates close to those of neutral controls across all three models`——随机串≈中性对照，**不**引发更多翻转 | 改为"**随机字符串回落到中性对照档，并不引发更多翻转**"；真正驱动翻转的是名称的**语义极性**（`yes/no` 对 `0/1` 高 **70.4 pp**） |
+| D5 | §7.3 "校准**随模型而变而非随范式而变**" | `2609.24052` 正文可确证"typed 模型与**一个** frontier 分支按交付状态未校准、**另一个**已校准"，但**未定位到**该概括句 | 改为可逐字支撑的写法，或标注为**本报告跨来源概括** |
+| D6 | §6.4 "**选项顺序已坐实**"（指 `2609.26758`） | 该文 **v3 未测选项顺序**；其可测的是**名称语义极性**；选项顺序的独立实测见 `2610.09683`（正确答案在首位 **41%**，已每局打乱） | 拆分表述：顺序证据归 `2610.09683`；名称极性归 `2609.26758` |
+| D7 | §6.2 表把 `2609.33209` 记为 `摘要级·预印本` | 本批已**精读其正文**：0.064（CI 0.055–0.072）/ 0.293 / 0.122 / 4.6× / 5× 噪声地板 / 单标签和 **1.14** / yes-no↔choice 差 **0.09** | **升为 `精读原文`**；并补"Jev 比所测 LLM 读出更一致，但**本身并不一致**" |
+| D8 | §6.2 表把 `2610.09683` 记为 `摘要级·预印本` | 本批已**精读其正文**：AUROC–增益排序相关 **0.87**（18 对）/ hel-dout 增益 **+0.13 [0.08,0.18]** / **33 局 3 seed 无一到达出口** | **升为 `精读原文`**；并新增一条失效边界"**闭环下门控增益不转化为任务成功**" |
+| D9 | v1 ↔ 当前版本差异（`2609.24574`→v2、`2609.26550`→**v5**、`2609.26758`→**v3**、`2609.30243`→v2） | 本批**已全部改用当前版本复核**。其中 `2609.26758` 的 **v1 是另一篇**（标题 `A Constrained Decision Head`、2 作者）；`2609.26550` v1 无 `0.36`/`1,610`，**v5 两者皆有**（`1,610` 构成为 1,340 RewardBench + 270 JudgeBench，另有 **live test** 510 对：**0.27 s vs 2.10 s**） | 主报告若引用版本敏感数字，应标注所用版本 |
+| D10 | `github.com/mizoreww/laya-coreml` | **实测 404**（[open-implementations.md §7 U2](open-implementations.md)） | 若主报告来源清单引用该 URL 需同步更正 |
+| D11 | `Visual Jev` 的权重、许可证、代码仓库 | **均未找到**（[open-implementations.md §7 U1](open-implementations.md)） | 记"未找到"，不得转引为"可复现实现" |
+| D12 | `jev-lite` 的可商用性 | 权重许可为 **Gemma Terms of Use**；训练数据含 **ANLI（CC BY-NC 4.0）与 RACE（研究用途）**，模型卡自陈 `should be treated as non-commercial / research use` | 主报告 §6.5 开源复刻表**未记录该限制**，建议补上 |

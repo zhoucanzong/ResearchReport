@@ -47,7 +47,7 @@
 * [LLM-Research/ModelSeries/Qwen-research/report.md](<../LLM-Research/ModelSeries/Qwen-research/report.md>) — 918 行
 * [LLM-Research/TechnicalTopics/Agent-research/report.md](<../LLM-Research/TechnicalTopics/Agent-research/report.md>) — 698 行
 * [LLM-Research/TechnicalTopics/Alignment-research/report.md](<../LLM-Research/TechnicalTopics/Alignment-research/report.md>) — 588 行
-* [LLM-Research/TechnicalTopics/DecisionModels-research/report.md](<../LLM-Research/TechnicalTopics/DecisionModels-research/report.md>) — 709 行
+* [LLM-Research/TechnicalTopics/DecisionModels-research/report.md](<../LLM-Research/TechnicalTopics/DecisionModels-research/report.md>) — 810 行
 * [LLM-Research/TechnicalTopics/LongContext-research/report.md](<../LLM-Research/TechnicalTopics/LongContext-research/report.md>) — 608 行
 * [LLM-Research/TechnicalTopics/MoE-research/report.md](<../LLM-Research/TechnicalTopics/MoE-research/report.md>) — 405 行
 * [LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md](<../LLM-Research/TechnicalTopics/QuantizationEdge-research/report.md>) — 777 行
