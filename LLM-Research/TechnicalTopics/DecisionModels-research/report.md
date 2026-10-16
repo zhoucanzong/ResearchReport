@@ -781,7 +781,8 @@ TypeSafe 把 Jev 定位为 **System One 模型**（"first System One model"）�
 | 检查 | 结果 |
 | :-- | :-- |
 | 链接核验脚本 | `/tmp/dm2/linkcheck.py`（**未入库**，一次性留证）：剥**围栏代码块** → 剥**行内反引号** → **剥裸 autolink `<scheme:…>`** → 取 `[label](target)` → **先剥 `<>` → 判 scheme → percent-decode（`urllib.parse.unquote`）→ 查存在性** |
-| 全仓相对链接回测（正确顺序） | 基线 `5944189`（`git stash` 后同一脚本实测）：总计 **1,603**、外链 450、仓内相对 **834**、纯锚点 319、**失效 0**；本批终态：总计 **1,638**、外链 450、仓内相对 **869**、纯锚点 319、**失效 0** → **本批 0 新增失效** |
+| 全仓相对链接回测（正确顺序） | 基线 `5944189`（`git stash` 后同一脚本实测）：总计 **1,603**、外链 450、仓内相对 **834**、纯锚点 319、**失效 0**；本批终态：总计 **1,640**、外链 450、仓内相对 **871**、纯锚点 319、**失效 0** → **本批 0 新增失效** |
+| 本批自查中**抓到并修掉 1 处真失效** | 本报告 §12.3 引用生成物时最初误写为 `../index/stats.json`，正确应为 `../../../index/stats.json`（本条目位于 `LLM-Research/TechnicalTopics/DecisionModels-research/` 下 3 层）。回测**报出**该失效（`broken=1`），修正后重测为 **0**。这说明该检查既不漏报，也不因本批新增 13 份文档而失灵 |
 | 一处**假阳性已排除** | 基线核验曾把 `Repo-Research/sglang-research/report.md` 的**裸 autolink** `<https://github.com/…/README.md>` 当作仓内相对链接。**正确顺序**是先剥 `<>`、判 scheme，故它是**外链**。已按正确顺序重跑，**0 失效** |
 | 本批新增文档外链可达性 | `papers/` 12 篇覆盖的 **10 篇原始论文 + 2 篇增补**：`arxiv.org/abs/<id>` 与 `arxiv.org/html/<id>` 均 **HTTP 200**、`<title>` 与任务书给定标题**逐条一致**；`open-implementations.md` 另实测 **19 条 2xx + 2 条 404**（404 已移入该文件 §7 并改列） |
 | 源码/克隆残留 | **无**：本批**未克隆任何仓库**；仓内 `scripts/` 仅原有 `library_index.py`；`papers/` 与 `open-implementations.md` **均不含**源码片段或 `仓库@commit:文件:行` 断言（`open-implementations.md` §9 明示该断言为 0） |
