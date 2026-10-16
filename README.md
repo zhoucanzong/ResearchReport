@@ -4,14 +4,37 @@
 
 **一个仓库收敛 AIGC / LLM / 论文深读全部研究产出**
 
+🌐 **[在线阅读](https://zhoucanzong.github.io/ResearchReport/)** · 📦 [GitHub 仓库](https://github.com/zhoucanzong/ResearchReport)
+
 <!-- SCRIPT:badges START -->
-![Entries](https://img.shields.io/badge/Entries-48-3f51b5?style=flat-square)
-![Topics](https://img.shields.io/badge/Topics-21-5c6bc0?style=flat-square)
-![Panels](https://img.shields.io/badge/Panels-6-7986cb?style=flat-square)
-![Updated](https://img.shields.io/badge/Updated-2026--10--16-9e9e9e?style=flat-square)
+[![Site](https://img.shields.io/badge/Site-在线阅读-3f51b5?style=flat-square)](https://zhoucanzong.github.io/ResearchReport/)
+![Entries](https://img.shields.io/badge/Entries-48-5c6bc0?style=flat-square)
+![Topics](https://img.shields.io/badge/Topics-21-7986cb?style=flat-square)
+![Panels](https://img.shields.io/badge/Panels-6-9fa8da?style=flat-square)
+![Updated](https://img.shields.io/badge/Updated-2026--10--17-9e9e9e?style=flat-square)
 <!-- SCRIPT:badges END -->
 
 </div>
+
+## 🌳 图书馆结构
+
+<!-- SCRIPT:structure START · 来源 scripts/panels.json（配置驱动，勿手改） -->
+```text
+ResearchReport/    48 条目 · 21 专题 · 6 板块
+│
+├─ 🧠 Models/        23 条 · 厂商模型 / 系列逐个精读（GPT · Qwen · Gemini …）
+├─ 💬 LLM/            8 条 · 语言模型能力与技术专题（ReasoningModels · LongContext · MoE …）
+├─ 🎨 VisualGen/      8 条 · 视觉与多模态生成（VideoGen · DiT · DiffusionModels …）
+├─ 🌍 WorldModel/     2 条 · 世界模型与具身 VLA（WorldModels · EmbodiedVLA …）
+├─ ⚙️ Infra/          3 条 · 推理 / 训练基础设施（SpeculativeDecoding · QuantizationEdge · TrainingInfra …）
+├─ 🔧 OpenSource/     4 条 · 开源仓库代码深读（vllm · sglang · nemotron …）
+│
+└─ ⚙ 生成管线：scripts/panels.json（单一真值）→ library_index.py
+              → README / INDEX.md / index/* / 站点 nav
+```
+<!-- SCRIPT:structure END -->
+
+## 🗂 六大板块
 
 <!-- SCRIPT:panels START · 来源 scripts/panels.json（配置驱动，勿手改） -->
 <table>
@@ -28,19 +51,28 @@
 </table>
 <!-- SCRIPT:panels END -->
 
-<details>
-<summary>🏷 <b>21 个技术专题标签</b>（点击展开）</summary>
+## ✨ 亮点推荐
 
-<!-- SCRIPT:topics START -->
-`Agent` · `Alignment` · `DecisionModels` · `LongContext` · `MoE` · `RAG` · `ReasoningModels` · `VLM` · `3DGen` · `AudioGen` · `AvatarGen` · `ControllableGen` · `DiT` · `DiffusionModels` · `ImageEditing` · `VideoGen` · `EmbodiedVLA` · `WorldModels` · `QuantizationEdge` · `SpeculativeDecoding` · `TrainingInfra`
+新读者从这里看起（`scripts/panels.json` 的 `highlights` 配置驱动）：
+
+<!-- SCRIPT:highlights START -->
+- 🧠 **[GPT](<Models/GPT/report.md>)** — OpenAI GPT 系列模型深度调研报告
+- 💬 **[ReasoningModels](<LLM/ReasoningModels/report.md>)** — 推理模型（Reasoning Models）与 Test-Time Compute 研究报告
+- 🎨 **[VideoGen](<VisualGen/VideoGen/report.md>)** — 视频生成技术研究报告
+- 🔧 **[vllm](<OpenSource/vllm/report.md>)** — vLLM 仓库代码分析报告
+<!-- SCRIPT:highlights END -->
+
+## 🏷 专题标签
+
+点击标签直达对应条目：
+
+<!-- SCRIPT:topics START · 从条目目录生成 -->
+[`Agent`](<LLM/Agent/report.md>) · [`Alignment`](<LLM/Alignment/report.md>) · [`DecisionModels`](<LLM/DecisionModels/report.md>) · [`LongContext`](<LLM/LongContext/report.md>) · [`MoE`](<LLM/MoE/report.md>) · [`RAG`](<LLM/RAG/report.md>) · [`ReasoningModels`](<LLM/ReasoningModels/report.md>) · [`VLM`](<LLM/VLM/report.md>) · [`3DGen`](<VisualGen/3DGen/report.md>) · [`AudioGen`](<VisualGen/AudioGen/report.md>) · [`AvatarGen`](<VisualGen/AvatarGen/report.md>) · [`ControllableGen`](<VisualGen/ControllableGen/report.md>) · [`DiT`](<VisualGen/DiT/report.md>) · [`DiffusionModels`](<VisualGen/DiffusionModels/report.md>) · [`ImageEditing`](<VisualGen/ImageEditing/report.md>) · [`VideoGen`](<VisualGen/VideoGen/report.md>) · [`EmbodiedVLA`](<WorldModel/EmbodiedVLA/report.md>) · [`WorldModels`](<WorldModel/WorldModels/report.md>) · [`QuantizationEdge`](<Infra/QuantizationEdge/report.md>) · [`SpeculativeDecoding`](<Infra/SpeculativeDecoding/report.md>) · [`TrainingInfra`](<Infra/TrainingInfra/report.md>)
 <!-- SCRIPT:topics END -->
 
-</details>
+## 🕒 最近更新
 
-<details>
-<summary>🕒 <b>最近更新</b>（点击展开）</summary>
-
-<!-- SCRIPT:recent START -->
+<!-- SCRIPT:recent START · front-matter date，缺失时回退 git 最近提交日 -->
 | 条目 | 板块 | 日期 | 来源 |
 | :-- | :-- | :-- | :-- |
 | [sglang](<OpenSource/sglang/report.md>) | OpenSource | 2026-10-16 | front-matter date |
@@ -50,12 +82,17 @@
 | [SpeculativeDecoding](<Infra/SpeculativeDecoding/report.md>) | Infra | 2026-10-16 | 最近提交日 |
 <!-- SCRIPT:recent END -->
 
-</details>
+## 📖 怎么用这个图书馆
+
+- **按板块读**：从上面六张卡片进入板块页，每个板块有自己的 README 导览
+- **按专题读**：用上面的标签云直达条目，或查 [index/by-topic.md](<index/by-topic.md>) 分面
+- **在线阅读**：[站点版](https://zhoucanzong.github.io/ResearchReport/) 有全文搜索、目录树与深/浅色模式
+- **找最新**：[index/recent.md](<index/recent.md>) 按日期降序；[index/stale.md](<index/stale.md>) 列出待复核条目
 
 <details>
 <summary>📖 <b>完整索引</b>（48 条，点击展开）</summary>
 
-<!-- SCRIPT:index START -->
+<!-- SCRIPT:index START · 摘要 + 链接（48 行单一真值在 index/by-report.md） -->
 共 **48** 条，分属 **6** 个板块：Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 4。
 完整 48 行（条目 | 板块 | 路径）见 **[index/by-report.md](<index/by-report.md>)**；按域 / 主题 / 来源分面见 [index/](<index/>)，总目录见 [INDEX.md](<INDEX.md>)。
 <!-- SCRIPT:index END -->

@@ -222,4 +222,5 @@ nav:
       - "Team · 技术研究": "docs/team.md"
       - "🔍 校验记录 · Verification Log": "docs/verification.md"
       - "scripts/": "scripts/README.md"
+  - "🐙 GitHub 仓库": "https://github.com/zhoucanzong/ResearchReport"
   # SCRIPT:nav END

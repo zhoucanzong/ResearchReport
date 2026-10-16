@@ -86,5 +86,11 @@
         "OpenSource/nemotron"
       ]
     }
+  ],
+  "highlights": [
+    "Models/GPT",
+    "LLM/ReasoningModels",
+    "VisualGen/VideoGen",
+    "OpenSource/vllm"
   ]
 }

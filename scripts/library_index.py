@@ -1113,6 +1113,9 @@ def validate_panels(entries: list, cfg: dict, repo_root: str) -> tuple:
     """生成前的板块校验：未归类 / 重复归类 / 代表条目缺 report.md 都必须为 0。"""
     mapping, unassigned, duplicated = match_panels(entries, cfg)
     missing = panel_representatives(repo_root, cfg)
+    for rel in cfg.get("highlights", []):
+        if not os.path.isfile(os.path.join(repo_root, rel, ENTRY_BASENAME)):
+            missing.append(("highlights", rel))
 
     print(f"板块校验：条目 {len(entries)} · 已归类 {len(mapping)} · "
           f"未归类 {len(unassigned)} · 重复归类 {len(duplicated)} · "
@@ -1172,7 +1175,11 @@ def entry_short_name(doc: dict) -> str:
 # --------------------------------------------------------------------------
 
 README_FILE = "README.md"
-README_BLOCKS = ("badges", "panels", "topics", "recent", "index")
+README_BLOCKS = ("badges", "structure", "panels", "highlights", "topics", "recent", "index")
+
+#: 站点与仓库的公开地址（README 徽章/入口、站点首页与 nav 互链使用）。
+SITE_URL = "https://zhoucanzong.github.io/ResearchReport/"
+REPO_URL = "https://github.com/zhoucanzong/ResearchReport"
 
 
 def block_pattern(name: str):
@@ -1188,14 +1195,59 @@ def generated_md_count(out_root: str = "") -> int:
 
 
 def render_badges(stats: dict, topics: int, today: _dt.date, panels: int = 6) -> str:
-    """徽章行：统一 flat-square + 靛蓝色系（与站点主题色一致）。"""
+    """徽章行：统一 flat-square + 靛蓝色系（与站点主题色一致）；Site 徽章直达在线站点。"""
     updated = today.isoformat().replace("-", "--")
     return "\n".join([
-        f"![Entries](https://img.shields.io/badge/Entries-{stats['entries']['total']}-3f51b5?style=flat-square)",
-        f"![Topics](https://img.shields.io/badge/Topics-{topics}-5c6bc0?style=flat-square)",
-        f"![Panels](https://img.shields.io/badge/Panels-{panels}-7986cb?style=flat-square)",
+        f"[![Site](https://img.shields.io/badge/Site-在线阅读-3f51b5?style=flat-square)]({SITE_URL})",
+        f"![Entries](https://img.shields.io/badge/Entries-{stats['entries']['total']}-5c6bc0?style=flat-square)",
+        f"![Topics](https://img.shields.io/badge/Topics-{topics}-7986cb?style=flat-square)",
+        f"![Panels](https://img.shields.io/badge/Panels-{panels}-9fa8da?style=flat-square)",
         f"![Updated](https://img.shields.io/badge/Updated-{updated}-9e9e9e?style=flat-square)",
     ])
+
+
+def render_structure_block(cfg: dict, mapping: dict, entries: list) -> str:
+    """图书馆结构树（代码块，GitHub 与站点都可读）：6 板块 + 计数 + 代表条目 + 生成管线。"""
+    topics = sum(1 for d in entries
+                 if d["top"] in ("LLM", "VisualGen", "WorldModel", "Infra"))
+    lines = [
+        "```text",
+        f"ResearchReport/    {len(entries)} 条目 · {topics} 专题 · {len(cfg['panels'])} 板块",
+        "│",
+    ]
+    panels = cfg["panels"]
+    for i, panel in enumerate(panels):
+        members = [d for d in entries
+                   if mapping.get(d["path"], {}).get("id") == panel["id"]]
+        branch = "├─"  # 生成管线才是树的最后一个分支（└─）
+        reps = " · ".join(rel.rstrip("/").rsplit("/", 1)[-1]
+                          for rel in panel.get("representatives", [])[:3])
+        rep_text = f"（{reps} …）" if reps else ""
+        lines.append(
+            f"{branch} {panel['emoji']} {panel['title'] + '/':<14}"
+            f" {len(members):>2} 条 · {panel['tagline']}{rep_text}"
+        )
+    lines += [
+        "│",
+        "└─ ⚙ 生成管线：scripts/panels.json（单一真值）→ library_index.py",
+        "              → README / INDEX.md / index/* / 站点 nav",
+        "```",
+    ]
+    return "\n".join(lines)
+
+
+def render_highlights_block(cfg: dict, mapping: dict, entries: list) -> str:
+    """亮点推荐：panels.json 的 ``highlights`` 列表驱动，给新读者一个「从哪看起」。"""
+    by_dir = {entry_dir(d["path"]): d for d in entries}
+    lines = []
+    for rel in cfg.get("highlights", []):
+        doc = by_dir.get(rel)
+        if doc is None:
+            continue  # validate_panels 已在生成前拦截缺失项
+        panel = mapping.get(doc["path"], {})
+        emoji = panel.get("emoji", "📄")
+        lines.append(f"- {emoji} **[{entry_short_name(doc)}](<{doc['path']}>)** — {doc['title']}")
+    return "\n".join(lines)
 
 
 def render_panels_block(cfg: dict, mapping: dict, entries: list, label_limit: int = 12) -> str:
@@ -1250,7 +1302,7 @@ def render_topics_block(entries: list, mapping: dict, panels: list) -> str:
         return (order.get(panel["id"], len(order)) if panel else len(order),
                 doc["path"])
 
-    return " · ".join(f"`{entry_short_name(d)}`" for d in sorted(entries, key=sort_key))
+    return " · ".join(f"[`{entry_short_name(d)}`](<{d['path']}>)" for d in sorted(entries, key=sort_key))
 
 
 def render_recent_block(rows: list, mapping: dict) -> str:
@@ -1287,7 +1339,9 @@ def render_readme_blocks(cfg: dict, entries: list, stats: dict, mapping: dict,
                  if d["top"] in ("LLM", "VisualGen", "WorldModel", "Infra"))
     return {
         "badges": render_badges(stats, topics, today, len(cfg["panels"])),
+        "structure": render_structure_block(cfg, mapping, entries),
         "panels": render_panels_block(cfg, mapping, entries),
+        "highlights": render_highlights_block(cfg, mapping, entries),
         "topics": render_topics_block(entries, mapping, cfg["panels"]),
         "recent": render_recent_block(recent_rows(repo_root, entries, cfg), mapping),
         "index": render_index_block(entries, mapping, cfg["panels"]),
@@ -1603,6 +1657,8 @@ def render_site_nav(cfg: dict, mapping: dict, docs: list, orphans: list) -> str:
         lines.append(f"  - {_yaml_dq('📖 文档')}:")
         for doc in meta_docs:
             lines.append(f"      - {_yaml_dq(doc['title'])}: {_yaml_dq(doc['path'])}")
+    # 外部互链：站点 ↔ 仓库（外链 nav 项，MkDocs 原生支持）
+    lines.append(f"  - {_yaml_dq('🐙 GitHub 仓库')}: {_yaml_dq(REPO_URL)}")
     return "\n".join(lines)
 
 
@@ -1695,6 +1751,8 @@ def render_site_home(cfg: dict, mapping: dict, entries: list,
          f'<span class="chip">{len(topic_names)} 专题</span> '
          f'<span class="chip">{len(cfg["panels"])} 板块</span>'),
         "",
+        f"[🐙 在 GitHub 查看仓库]({REPO_URL}){{ .md-button }}",
+        "",
         '<div class="grid cards" markdown>',
         "",
     ]
@@ -1720,6 +1778,11 @@ def render_site_home(cfg: dict, mapping: dict, entries: list,
         ]
     lines += ["</div>", ""]
 
+    # 亮点推荐（panels.json highlights 驱动，与根 README 同源）
+    highlights = render_highlights_block(cfg, mapping, entries)
+    if highlights:
+        lines += ["## ✨ 亮点推荐", "", highlights, ""]
+
     # 最近更新（口径与根 README 的 recent 区块一致）
     if recent:
         lines += ["## 🕒 最近更新", "",
@@ -1733,16 +1796,11 @@ def render_site_home(cfg: dict, mapping: dict, entries: list,
             )
         lines.append("")
 
-    # 专题标签云：链接到 by-topic 分面的对应锚点（GitHub 口径 slug，与站点一致）
-    if topic_names:
-        counts = {}
-        for d in topics_entries:
-            counts[d["topic"]] = counts.get(d["topic"], 0) + 1
+    # 专题标签云：每个标签直达对应条目页（专题名与条目目录同名，与根 README 一致）
+    if topics_entries:
         chips = []
-        for name in topic_names:
-            anchor = re.sub(r"[^\w\- ]+", "", f"{name} ({counts[name]})".lower()) \
-                .replace(" ", "-")
-            chips.append(f"[`{name}`](<{GENERATED_DIR}/by-topic.md#{anchor}>)")
+        for d in sorted(topics_entries, key=lambda d: d["path"]):
+            chips.append(f"[`{entry_short_name(d)}`](<{d['path']}>)")
         lines += ["## 🏷 技术专题", "", " · ".join(chips), ""]
 
     lines += [

@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "1b85b03a9bcd827be78f7e5ce6b68e2c4b2bb33125813d8352ffad95f807d2c2",
+  "content_fingerprint": "b8ec61b4360afb74abf079bfc6d9adc3872066ca6c0d08962b4425714319dc3b",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -27,8 +27,8 @@
     "with_front_matter": 16,
     "named_report_md": 48,
     "named_readme_md": 8,
-    "lines": 43917,
-    "bytes": 2873600
+    "lines": 43954,
+    "bytes": 2876725
   },
   "libraries": {
     "Models": {
@@ -566,9 +566,9 @@
     },
     "repo_md": {
       "files": 105,
-      "lines": 43917,
-      "lines_raw": 44084,
-      "bytes": 2873600
+      "lines": 43954,
+      "lines_raw": 44121,
+      "bytes": 2876725
     },
     "library_md": {
       "files": 99,
@@ -578,9 +578,9 @@
     },
     "root_readme": {
       "files": 1,
-      "lines": 66,
-      "lines_raw": 66,
-      "bytes": 4500
+      "lines": 103,
+      "lines_raw": 103,
+      "bytes": 7625
     },
     "docs_md": {
       "files": 4,
@@ -600,6 +600,6 @@
     ]
   },
   "du": {
-    "worktree_excluding_git": 175372
+    "worktree_excluding_git": 175732
   }
 }
