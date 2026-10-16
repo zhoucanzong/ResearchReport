@@ -805,7 +805,7 @@ def render_index(docs: list, orphans: list, stats: dict, out_root: str, dry_run:
         lines.append(
             f"| {lib} | {lib_stats['entries']} | {lib_stats['documents_md']} | "
             f"{lib_stats['lines']:,} | {lib_stats['bytes']:,} B | "
-            f"[#{lib}](#{lib.lower()}) |"
+            f"[板块页 →](<{lib}/README.md>) |"
         )
     lines += [
         f"| **合计** | **{counts['total']}** | **{dc['md_total']}** | "

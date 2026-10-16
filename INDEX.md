@@ -32,12 +32,12 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| Models | 23 | 29 | 14,816 | 900,388 B | [#Models](#models) |
-| LLM | 8 | 25 | 5,217 | 340,987 B | [#LLM](#llm) |
-| VisualGen | 8 | 9 | 6,805 | 318,086 B | [#VisualGen](#visualgen) |
-| WorldModel | 2 | 3 | 750 | 77,166 B | [#WorldModel](#worldmodel) |
-| Infra | 3 | 15 | 1,866 | 100,011 B | [#Infra](#infra) |
-| OpenSource | 4 | 18 | 1,056 | 105,250 B | [#OpenSource](#opensource) |
+| Models | 23 | 29 | 14,816 | 900,388 B | [板块页 →](<Models/README.md>) |
+| LLM | 8 | 25 | 5,217 | 340,987 B | [板块页 →](<LLM/README.md>) |
+| VisualGen | 8 | 9 | 6,805 | 318,086 B | [板块页 →](<VisualGen/README.md>) |
+| WorldModel | 2 | 3 | 750 | 77,166 B | [板块页 →](<WorldModel/README.md>) |
+| Infra | 3 | 15 | 1,866 | 100,011 B | [板块页 →](<Infra/README.md>) |
+| OpenSource | 4 | 18 | 1,056 | 105,250 B | [板块页 →](<OpenSource/README.md>) |
 | **合计** | **48** | **105** | **30,510** | **1,841,888 B** | — |
 
 ## 分面索引
