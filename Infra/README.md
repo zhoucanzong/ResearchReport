@@ -30,8 +30,8 @@
 * [papers/2402.02057-lookahead.md](<SpeculativeDecoding/papers/2402.02057-lookahead.md>) — 202 行 / 15,419 B
 * [papers/2408.11049-magicdec.md](<SpeculativeDecoding/papers/2408.11049-magicdec.md>) — 200 行 / 14,379 B
 * [papers/2609.21827-rheosampling.md](<SpeculativeDecoding/papers/2609.21827-rheosampling.md>) — 216 行 / 15,804 B
-* [papers/sglang-implementation.md](<SpeculativeDecoding/papers/sglang-implementation.md>) — 219 行 / 14,575 B
-* [papers/vllm-implementation.md](<SpeculativeDecoding/papers/vllm-implementation.md>) — 218 行 / 16,267 B
+* [papers/sglang-implementation.md](<SpeculativeDecoding/papers/sglang-implementation.md>) — 219 行 / 14,776 B
+* [papers/vllm-implementation.md](<SpeculativeDecoding/papers/vllm-implementation.md>) — 220 行 / 16,575 B
 * [sources/CANDIDATES.md](<SpeculativeDecoding/sources/CANDIDATES.md>) — 82 行 / 7,644 B
 * [sources/MANIFEST.md](<SpeculativeDecoding/sources/MANIFEST.md>) — 38 行 / 5,111 B
 * [speculative-block-diffusion.md](<SpeculativeDecoding/speculative-block-diffusion.md>) — 230 行 / 18,585 B

@@ -56,7 +56,7 @@
 
 ---
 
-## 3. draft 侧：greedy 与 probabilistic 是两种语义，不是两种优化
+## 3. draft 侧：greedy 与 probabilistic 是两种语义，不是两种优化（`vllm/config/speculative.py:604`）
 
 ### 3.1 `greedy`（默认）
 
@@ -102,14 +102,16 @@
 
 `rejection_sample`（`rejection_sampler.py:410`）的入口参数里，`draft_probs` 是 **Optional**：
 
-| 条件 | 路径 | 关键代码 |
+> 下表对应 `vllm/v1/sample/rejection_sampler.py` 的三条 kernel 路径。
+
+| 条件 | 路径（`vllm/v1/sample/rejection_sampler.py`） | 关键代码 |
 | :-- | :-- | :-- |
 | `sampling_metadata.all_greedy` | 纯贪心：`target_argmax` 对比草稿 token，接受前缀 | `:445–480`，`_rejection_greedy_sample` |
 | 混合 batch（部分 greedy） | 先对 greedy 请求做拒绝，再对随机请求做概率拒绝 | `:455–480` 后继续 `:487` |
 | 随机采样 | `target_probs = target_logits.softmax(...)`；`draft_probs` 可为 `None` | `:487–520` |
 | `draft_probs is None` | Triton kernel 走 `NO_DRAFT_PROBS=True` 分支 | `:949`、`:1128` |
 
-**关键语义**：`draft_probs is None` 不等于“无损”——它表示 kernel 按 **one-hot 提议**处理（即假定草稿是 argmax）。这正是 `greedy` 默认路径的数学基础，也是“缺 draft_probs 时回退 legacy 行为”的原因（见 §5）。
+**关键语义**：`draft_probs is None` 不等于“无损”——它表示 kernel 按 **one-hot 提议**处理（即假定草稿是 argmax，`vllm/v1/sample/rejection_sampler.py:949`）。这正是 `greedy` 默认路径的数学基础，也是“缺 draft_probs 时回退 legacy 行为”的原因（见 §5，`vllm/v1/worker/gpu_model_runner.py:4714–4741`）。
 
 ### 4.1 两条路径的接受判据（代码对照）
 
@@ -135,7 +137,7 @@
 这段代码说明两件事：
 
 - **draft_probs 是“按请求缓存、按批拼装”的**，不是随 token 流式传递；
-- **失败是整批回退**，不是逐请求降级——这对排查“为什么开了 probabilistic 但接受率没变”很关键（可能是某一行缺失导致整批回退）。
+- **失败是整批回退**，不是逐请求降级——这对排查“为什么开了 probabilistic 但接受率没变”很关键（可能是某一行缺失导致整批回退；`vllm/v1/worker/gpu_model_runner.py:4714–4741`）。
 
 ---
 

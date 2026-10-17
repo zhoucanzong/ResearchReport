@@ -65,11 +65,11 @@
 4. **验证**：`eagle_sample` 按 greedy / sampling 分流（`eagle_utils.py:860`）。
 5. **写回**：接受路径写 KV / 序列；被拒位置由 target 采样补 token。
 
-关键：整条链路只在“**非 greedy 且开启拒绝采样**”时才构造 `draft_probs`（`:727–733`）。greedy 批不构造，因为 `verify_tree_greedy_func` 只比较 argmax，不读分布。
+关键：整条链路只在“**非 greedy 且开启拒绝采样**”时才构造 `draft_probs`（`python/sglang/srt/speculative/eagle_worker_v2.py:727–733`）。greedy 批不构造，因为 `verify_tree_greedy_func` 只比较 argmax，不读分布。
 
 ---
 
-## 4. `draft_probs` 的出现条件：一条 assert 定边界
+## 4. `draft_probs` 的出现条件：一条 assert 定边界（`python/sglang/srt/speculative/eagle_worker_v2.py:178–180`）
 
 `eagle_worker_v2.py:178–180`：
 
@@ -151,7 +151,7 @@ if get_spec().speculative_use_rejection_sampling:
 | :-- | :-- |
 | topk>1 树 + 真 draft 概率 | 当前 assert 禁止；树路径仍 target-only |
 | 默认开关 | `speculative_use_rejection_sampling` 的默认值未在本分册核验的文件中定位（`get_spec()` 的配置对象来自运行时上下文，未逐一展开） |
-| 与结构化输出约束的耦合 | 未核验 `num_draft_tokens` 扣除逻辑 |
+| 与结构化输出约束的耦合 | 未核验 `num_draft_tokens` 扣除逻辑（对照 `python/sglang/srt/speculative/eagle_utils.py:1000–1013` 的校验路径） |
 | 性能影响 | 未跑 benchmark；拒绝采样的额外开销未知 |
 
 ---
