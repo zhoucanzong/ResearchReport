@@ -443,6 +443,8 @@ graph LR
 1. **稠密 7B 主线**（2025）：以 MiMo-7B 为底座，向 VL / Audio / Embodied 横向扩展，每条线复用 base 模型 + 阶段化课程 + GRPO 变体。
 2. **稀疏 MoE 主线**（2025.12 起）：从 309B/15B Flash 起步，9 个月内跃迁到 ~1T/42B Pro，再于 2026.04 全面升级至 V2.5 系列；MoE + 1M 长上下文 + 混合注意力 + MTP 成为标配。V2.5 系列进一步统一全模态感知与语音能力。
 
+> 2026-09 的 MiMo-V2.6 沿用这条稀疏 MoE 主线（Pro 与 V2.5-Pro 同骨架、Flash 与 V2.5 同骨架，见 §8.6.5），代际增益主要来自 mid-training 与规模化 RL（§8.6）；V3 目前只公开了 HySparse2 架构、尚无模型发布（§8.7），因此**不进**上图。
+
 ### 8.6 MiMo-V2.6 系列（2026-09-22 发布并开源）
 
 > **证据等级：精读原文**（官方发布页 / 官方更新时间线 / 官方定价页 / 技术报告 PDF / HF 模型卡 / `config.json` 原文，均于 2026-10-17 回查）。除特别写明外，本节规模与评测数字均为**厂商自报**；唯一的第三方独立数字来自 Artificial Analysis，按仓库口径记「**二手**」（第三方页面，但分数由该机构自家评测产出，见 §8.6.4）。
@@ -537,6 +539,51 @@ graph LR
 | 训练成本 \$0.85M / \$2.62M、6 天、75 万轨迹 | 厂商自报，无第三方对账 |
 | MTP 层数口径 | 报告 / 模型卡写「5 层 SWA drafter」；Flash `config.json` 另有 `num_nextn_predict_layers=3`、Pro config 无该键 → 两者对应关系**未确证** |
 | Pro 页 AA 读数 48 tok/s（Flash 51.9） | 第三方单点测量，未复测；仅作参考，不参与结论 |
+
+### 8.7 MiMo-V3 与 HySparse2（2026-09-22 架构公开；**模型未发布**）
+
+> **状态（截至 2026-10-17）：架构已公开，模型未发布。** 本节只写论文公开的架构与作者声称的收益，**不构成任何发布信息**；请勿把本节数字读作 MiMo-V3 的实测结果。
+
+> **证据等级：精读原文**（HySparse2 论文原文，arXiv:2609.26368 v1，2026-09-22；作者含 Xiaomi LLM-Core 的 Fuli Luo、Shijie Cao 等 15 人）。「V3 将采用 HySparse2」一句为**二手**（环球网 2026-09-24 转述罗福莉发言，未见官方一手页面）。**未发布核验（2026-10-17）**：HF `XiaomiMiMo` 组织页最新权重为 2026-09-21 上传的 V2.6 系列，无 V3 仓库；官方更新时间线最新条目为 2026-09-22 的 V2.6；官方文档 sitemap（180 条 URL）无 V3 / HySparse 页面；arXiv 检索无「MiMo-V3」论文。
+
+#### 8.7.1 机制：两级 KV 共享
+
+HySparse2 是 HySparse（Gao et al., 2026）的迭代，针对 Agent 推理「短动作 + 长观测」负载：每轮工具返回的长文本都要重新 prefill，上下文持续累加，于是预填充成本、KV cache 容量与长上下文检索精度同时成为瓶颈。它做两级共享：
+
+1. **外层 KV Bridging（YOCO 式 self-decoder / cross-decoder）**
+   - 主干拆成 self-decoder（full attention + SWA）与 cross-decoder（full attention + sparse attention）；
+   - **只桥接 full-attention 层**：cross-decoder 的每个 full 层用自己的 K/V 投影，从 self-decoder 对应 full 层的 hidden state 构建 KV；Q 仍来自 cross 层自身；
+   - 因此 cross-decoder 的全部 KV 都可由 self-decoder 的 hidden state 构造 → **prefill 在 self-decoder 之后即可退出**，跳过全部 cross 层。
+2. **内层 KV Reuse（沿用 HySparse）**：每个 hybrid block 内，sparse 层直接复用该 block full 层的 KV cache 与 token 选择索引。
+
+相对 HySparse 的两处改动：
+
+- **token 级稀疏选择**取代 block 级（block = 64）：把稀疏预算分配到单个 token，长上下文检索更精细；
+- **去掉独立 SWA 分支**，改为把最近 128 个 token **强制**选入稀疏集合（forced SWA）；局部与全局 token 共享同一份 full-attn KV cache，并消除独立 SWA 分支的投影参数与随深度线性增长的依赖，使 prefill 早退成立。
+
+**实现细节（论文口径）**：full-attention 层同时充当 indexer（用精确注意力分数给出 token 选择），**不需要单独的 indexer 或蒸馏目标**；80B-A3B 验证配置中 Hybrid SWA 用 9 个 full 层、HySparse / HySparse2 只用 5 个 full 层；HySparse2 用 MQA（Q/KV 64/1，head dim 256/256）。
+
+#### 8.7.2 声称的收益（论文自报，80B-A3B 验证模型）
+
+| 指标 | HySparse2 | HySparse | Hybrid SWA | 口径 |
+|---|---|---|---|---|
+| 1M 预填充 FLOPs | 基准 | **2.92×**（HySparse2 更低） | **5.02×**（HySparse2 更低） | 80B-A3B，FP8 KV，1k–1M |
+| 1M KV cache | **2.69 GB** | 6.72 GB | 12.09 GB | 同上（12.09÷2.69 = 4.49×） |
+| RULER（预训练） | **90.77** | 84.89 | 88.71 | 80B-A3B，~500B tokens，32k 训练 |
+| NoLiMa（预训练） | **49.76** | 40.27 | 30.13 | 同上 |
+| RULER-v2 @256k（后训练） | **58.45** | 32.61 | 35.74 | +100B tokens 后训练，256k |
+| MRCR-v2 均值（后训练） | 基准 | HySparse2 高 **+11.30** | HySparse2 高 **+6.44** | 后训练，各上下文长度等权平均 |
+| RULER-v2 均值（后训练） | 基准 | HySparse2 高 **+19.81** | HySparse2 高 **+18.65** | 同上 |
+
+- **消融 1（token 级 vs block 级）**：RULER-v2 49.56→56.13、MRCR-v2（2-needle）12.94→21.08、GraphWalks 29.38→34.92；代价是 NoLiMa 40.27→38.43、BBH 61.93→60.70。
+- **消融 2（forced SWA vs gated SWA）**：GSM8K 64.52→59.44、MRCR-v2 27.66→22.67、LongPPL +1.50%；换来 RULER 88.19→89.84、RULER-v2 53.66→55.98、GraphWalks 35.39→37.13。
+- **消融 3（KV Bridging）**：在 **290B-A8B**、约 1.8T tokens、32k 上下文上，开 / 关 KV Bridging 的 MMLU 72.68→72.80、TriviaQA 73.32→74.10、RULER 96.32→96.01、DROP 71.37→68.17、LongPPL 3.6053→3.4202（质量基本持平，个别任务有小幅波动）。
+
+> **这些数字的边界**：① 全部在 **80B-A3B 验证模型**（49 层、hidden 2048、~500B 预训练 + ~100B 后训练）上取得，**不是 MiMo-V3**；② 论文没有给出 V3 的参数、层数、专家数、上下文或发布日期；③ 收益为作者自报，未见独立复现；④ 5.02× 的对照是 **Hybrid SWA**（V2 系列所用骨架），不是「相对上一代 V2.6 的端到端加速」。**V3 上的收益一律未确证。**
+
+#### 8.7.3 二手传播的口径偏差（记录，避免误读）
+
+环球网 / 新浪财经（2026-09-24）称「V3 将搭载 HySparse2」「百万 Token 下预填充算力降低 5 倍、KV 缓存缩小 4.5 倍」。与论文对照：5.02× 的基线是 **Hybrid SWA**（不是 HySparse），4.5× 对应 12.09÷2.69 = 4.49×（同样对 Hybrid SWA）；且这两个数出自 **80B-A3B 验证模型**，不是 V3。该报道标题中的「正式发布」指**架构公开**、不是模型发布——本报告按后者理解，并在小节标题写明「架构公开 / 未发布」。
 
 ---
 
