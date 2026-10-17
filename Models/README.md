@@ -52,7 +52,7 @@
 <details>
 <summary><b>Google-Gen</b>（1 份）</summary>
 
-* [papers/2604.20329-vision-banana.md](<Google-Gen/papers/2604.20329-vision-banana.md>) — 423 行 / 53,971 B
+* [papers/2604.20329-vision-banana.md](<Google-Gen/papers/2604.20329-vision-banana.md>) — 423 行 / 54,186 B
 
 </details>
 

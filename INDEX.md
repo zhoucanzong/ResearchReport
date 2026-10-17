@@ -164,7 +164,7 @@
     * **专题目录**：`Models/Google-Gen`
     * **元数据**：type=`—` · domain=`Models` · subject=`Google-Gen` · date=`—` · status=`—`
     * **子文档（1）**
-        * [papers/2604.20329-vision-banana.md](<Models/Google-Gen/papers/2604.20329-vision-banana.md>) — 423 行 / 53,971 B
+        * [papers/2604.20329-vision-banana.md](<Models/Google-Gen/papers/2604.20329-vision-banana.md>) — 423 行 / 54,186 B
 
   </details>
 
