@@ -107,7 +107,7 @@ status: completed
 
 | 档 | 定义 | 代表 | 可否写“严格无损” |
 | :-- | :-- | :-- | :-- |
-| **严格分布等价** | 对任意序列，输出概率 = p(Seq) | 经典单链；静态树；RheoSampling（Theorem 1）；Traversal Verification；HeteroSpec | ✅ |
+| **严格分布等价** | 对任意序列，输出概率 = p(Seq) | 经典单链；静态树；RheoSampling（Theorem 1）；Traversal Verification；HeteroSpec（ACL 2026，`[摘要级]`） | ✅ |
 | **序列级等价** | 以整条序列概率判接受（而非逐 token） | Traversal Verification 的视角 | ✅（在其定义域） |
 | **有界风险** | 接受放宽到“分布偏移受控” | ARC-Decode（JS 上界，ICML 2026 会议页 `[摘要级]`）；Medusa typical acceptance（[papers/2401.10774-medusa.md](papers/2401.10774-medusa.md) §2.3）；CDSL（NAACL 2025，素材层） | ❌ 只能写“质量近乎不变” |
 
