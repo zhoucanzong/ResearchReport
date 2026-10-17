@@ -284,6 +284,7 @@ Gemini 1.5 Pro的MoE是这些研究的集大成者，实现了：
 - **WebDev Arena**: 1487 Elo
 - **Terminal-Bench 2.0**: 54.2%
 - **上下文窗口**：1M输入 + 64K输出
+- **图像侧衍生产品 Nano Banana Pro**（= Gemini 3 Pro Image，2025-11-20 官方博客口径；arXiv:2604.20329 正文本身只写 "Nano Banana Pro"）被 Google 拿去做 instruction-tuning 得到 Vision Banana，"生成即理解"的精读见 [Google-Gen 分册](../Google-Gen/papers/2604.20329-vision-banana.md)。
 
 **Gemini 3 Flash（2025-12-17）**：
 - 高效旗舰变体，1M token上下文窗口
