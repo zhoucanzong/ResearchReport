@@ -34,8 +34,8 @@
 * [open-implementations.md](<DecisionModels/open-implementations.md>) — 412 行 / 32,731 B
 * [papers/2609.23886-this-that-model.md](<DecisionModels/papers/2609.23886-this-that-model.md>) — 102 行 / 9,013 B
 * [papers/2609.23986-jev-mem.md](<DecisionModels/papers/2609.23986-jev-mem.md>) — 88 行 / 7,976 B
-* [papers/2609.24052-crash-narrative-calibration.md](<DecisionModels/papers/2609.24052-crash-narrative-calibration.md>) — 98 行 / 12,084 B
-* [papers/2609.24574-css-text-annotation.md](<DecisionModels/papers/2609.24574-css-text-annotation.md>) — 180 行 / 40,153 B
+* [papers/2609.24052-crash-narrative-calibration.md](<DecisionModels/papers/2609.24052-crash-narrative-calibration.md>) — 98 行 / 12,094 B
+* [papers/2609.24574-css-text-annotation.md](<DecisionModels/papers/2609.24574-css-text-annotation.md>) — 180 行 / 40,168 B
 * [papers/2609.25845-visual-jev.md](<DecisionModels/papers/2609.25845-visual-jev.md>) — 90 行 / 9,091 B
 * [papers/2609.26532-reflex-selective-control.md](<DecisionModels/papers/2609.26532-reflex-selective-control.md>) — 95 行 / 10,725 B
 * [papers/2609.26550-jev-as-a-judge.md](<DecisionModels/papers/2609.26550-jev-as-a-judge.md>) — 245 行 / 36,136 B

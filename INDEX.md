@@ -17,7 +17,7 @@
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 4 |
 | 条目子文档数 | 72 |
 | 条目正文行数（剔除 front-matter） | 30,967 |
-| 条目字节 | 1,893,876 B |
+| 条目字节 | 1,893,882 B |
 | 带 front-matter 的条目 | 4 |
 | 带合法 `date` 的条目 | 4 |
 | 文档（除生成物外的全部 `.md`） | 133 |
@@ -33,12 +33,12 @@
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
 | Models | 23 | 29 | 14,816 | 900,388 B | [板块页 →](<Models/README.md>) |
-| LLM | 8 | 25 | 5,217 | 340,987 B | [板块页 →](<LLM/README.md>) |
+| LLM | 8 | 25 | 5,217 | 340,993 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,805 | 318,086 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 2 | 31 | 1,207 | 129,154 B | [板块页 →](<WorldModel/README.md>) |
 | Infra | 3 | 15 | 1,866 | 100,011 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 4 | 18 | 1,056 | 105,250 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **48** | **133** | **30,967** | **1,893,876 B** | — |
+| **合计** | **48** | **133** | **30,967** | **1,893,882 B** | — |
 
 ## 分面索引
 
@@ -373,7 +373,7 @@
   <summary><b>DecisionModels</b> · <code>LLM/DecisionModels/report.md</code> · 869 行 · —</summary>
   
 
-    * **条目**：[LLM/DecisionModels/report.md](<LLM/DecisionModels/report.md>)（869 行 / 107,572 B）
+    * **条目**：[LLM/DecisionModels/report.md](<LLM/DecisionModels/report.md>)（869 行 / 107,578 B）
     * **专题目录**：`LLM/DecisionModels`
     * **元数据**：type=`—` · domain=`LLM` · subject=`DecisionModels` · date=`—` · status=`—`
     * **子文档（16）**
@@ -382,8 +382,8 @@
         * [open-implementations.md](<LLM/DecisionModels/open-implementations.md>) — 412 行 / 32,731 B
         * [papers/2609.23886-this-that-model.md](<LLM/DecisionModels/papers/2609.23886-this-that-model.md>) — 102 行 / 9,013 B
         * [papers/2609.23986-jev-mem.md](<LLM/DecisionModels/papers/2609.23986-jev-mem.md>) — 88 行 / 7,976 B
-        * [papers/2609.24052-crash-narrative-calibration.md](<LLM/DecisionModels/papers/2609.24052-crash-narrative-calibration.md>) — 98 行 / 12,084 B
-        * [papers/2609.24574-css-text-annotation.md](<LLM/DecisionModels/papers/2609.24574-css-text-annotation.md>) — 180 行 / 40,153 B
+        * [papers/2609.24052-crash-narrative-calibration.md](<LLM/DecisionModels/papers/2609.24052-crash-narrative-calibration.md>) — 98 行 / 12,094 B
+        * [papers/2609.24574-css-text-annotation.md](<LLM/DecisionModels/papers/2609.24574-css-text-annotation.md>) — 180 行 / 40,168 B
         * [papers/2609.25845-visual-jev.md](<LLM/DecisionModels/papers/2609.25845-visual-jev.md>) — 90 行 / 9,091 B
         * [papers/2609.26532-reflex-selective-control.md](<LLM/DecisionModels/papers/2609.26532-reflex-selective-control.md>) — 95 行 / 10,725 B
         * [papers/2609.26550-jev-as-a-judge.md](<LLM/DecisionModels/papers/2609.26550-jev-as-a-judge.md>) — 245 行 / 36,136 B
@@ -746,7 +746,7 @@
 | [Models/README.md](<Models/README.md>) | Models | 65 | 3,584 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 59 | 2,471 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 735 | 34,490 B |
-| [README.md](<README.md>) |  | 105 | 7,858 B |
+| [README.md](<README.md>) |  | 105 | 7,862 B |
 | [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,616 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 67 | 3,896 B |
 | [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 10,798 B |

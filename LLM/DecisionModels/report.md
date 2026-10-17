@@ -278,7 +278,7 @@ TypeSafe 把 Jev 定位为 **System One 模型**（"first System One model"）�
 |---|---|---|
 | 别名 | `jev-latest`（最稳定官方版，SDK 默认） | `jev-preview`（最新，含 preview） |
 | 发布 | — | 2026-10-14 |
-| 价格 | $42 / Btok 输入，**$0.042 / Mtok 输入** | 同左 |
+| 价格 | \$42 / Btok 输入，**\$0.042 / Mtok 输入** | 同左 |
 | 输出计费 | **免费**（"你只为输入 token 付费，输出 token 免费"） | 同左 |
 | 上下文 | 64k per-request / 32k per-question；开 `TypeSafe-Danger-Zone-Long-Context: true` 后 262k | 同左 |
 | 输入模态 | 文本 | 文本 |
@@ -352,7 +352,7 @@ TypeSafe 把 Jev 定位为 **System One 模型**（"first System One model"）�
 |---|---|---|---|---|
 | Replacing Large Language Models with Jev Decision Models for **Low-Latency Edge Service Orchestration** | [2609.22753](https://arxiv.org/abs/2609.22753) | 边缘服务编排 | 提取 4–8 个有界意图字段；决策时延中位降 15.9–26.5%；**提速集中在"首次解释"**，重复请求缓存会消掉大部分差距 | 精读原文·预印本 |
 | **Intent Interpretation at RIC Timescales**: Jev Decision Models versus LLMs in 6G Open RAN | [2609.23136](https://arxiv.org/abs/2609.23136) | 6G / O-RAN | 决策模型返回类型化策略字段、生成式模型逐 token 产出策略；配平解释正确率后时延降 22.4%/61.9%，建模场景完成率 +3.50/+8.35 个百分点 | 精读原文·预印本 |
-| **Calibrated Decisions at Scale**: Converting Police Crash Narratives into Probabilistic Crash Variables | [2609.24052](https://arxiv.org/abs/2609.24052) | 公共安全数据 | 筛 499,500 条德州叙述、按 27 问 schema 编码 195,857 条，实测 **$0.154/千条**，全 5,018,080 条外推 **$774**；**独立审计发现 typed model 按交付状态未校准**，重校准使校准误差降 **3.3 倍** | 精读原文·预印本 |
+| **Calibrated Decisions at Scale**: Converting Police Crash Narratives into Probabilistic Crash Variables | [2609.24052](https://arxiv.org/abs/2609.24052) | 公共安全数据 | 筛 499,500 条德州叙述、按 27 问 schema 编码 195,857 条，实测 **\$0.154/千条**，全 5,018,080 条外推 **\$774**；**独立审计发现 typed model 按交付状态未校准**，重校准使校准误差降 **3.3 倍** | 精读原文·预印本 |
 | Jev for **Scientific Decisions**: Evaluating Semantic Choices and Their Consequences | [2609.24965](https://arxiv.org/abs/2609.24965) | 科研工作流 | 前提是"先选已知关系、再做确定性计算"；Jev 与另外 5 种配置并列达到完全语义正确（正文可证）；"取得最低中位时延"一说**仅在摘要**，正文查无（见 §1.2.1）；强调**错误的关系会被代码精确执行并产出错误的科学结果** | 精读原文·预印本（"最低中位时延"单条为摘要级） |
 
 **应用类共性**：这些研究都把 Jev 放在"有界语义判断"的位置，把算术/排序/传播留给代码——与官方 jaggedness 的第 1–3 条建议同向。它们的收益多在**延迟与费用**，而非任务正确率。
@@ -446,7 +446,7 @@ TypeSafe 把 Jev 定位为 **System One 模型**（"first System One model"）�
 | 官方工作流自评 | 快 193.6× / 便宜 444.6× | 未在官方文档站点定位到原始自评页；厂商**自标为乐观上限** | 未公开 | 未公开 | 二手·技术分析（**禁止通用化**） |
 | 边缘编排 | 决策时延 −15.9～26.5%；端到端 −11.1～25.3%；**每次正确完成**的 API 费 −69.0～70.6% | 简洁结构化输出的 DeepSeek 部署 | **无缓存**；同缓存策略下差距被重复请求缓存消掉 | 8 个条件、3 个连续测量块 | 精读原文·预印本 |
 | 6G O-RAN | 决策时延 −22.4%（vs DeepSeek）、−61.9%（vs Gemini）；direct-attribute Qwen 对照仍 −53.0% | DeepSeek / Gemini / Qwen 三路 | 未述跨请求缓存 | RIC 时间尺度、契约解释正确性配平 | 精读原文·预印本 |
-| 大规模编码成本 | $0.154/千条叙述；全州 5,018,080 条外推 $774 | 未与 frontier LLM 同表比价 | 不适用 | 10 问筛查 + 27 问编码 | 精读原文·预印本 |
+| 大规模编码成本 | \$0.154/千条叙述；全州 5,018,080 条外推 \$774 | 未与 frontier LLM 同表比价 | 不适用 | 10 问筛查 + 27 问编码 | 精读原文·预印本 |
 | 评判替代 | 费用为最强 LLM 评判者的 **0.36%**（v5 正文原句；正文另可证 RewardBench **92.2% vs 93.5%**、HaluEval **87.5% vs 86.7%**、既有 150 条标签 **94.0% vs 96.7**）；"保留 99%"须锚定**冻结双序**（τ=0.9、510 对、92.5% vs 93.1%） | 16 个生成式/reward 评判者 | 冻结级联（高置信接受/低置信上抛） | 多基准 + 人工盲审 | 精读原文·预印本 |
 | Agent 控制 | 成本 −3.7× vs 只用强模型 | 强模型单臂 | 置信度门控 | τ 风格 300 回合 | 精读原文·预印本 |
 | 记忆系统 | 构建 6.6× 提速、查询延迟 −36.7% | 最快的竞争记忆系统 | 不适用 | LoCoMo | 精读原文·预印本 |
