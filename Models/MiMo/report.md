@@ -577,7 +577,7 @@ HySparse2 是 HySparse（Gao et al., 2026）的迭代，针对 Agent 推理「�
 
 - **消融 1（token 级 vs block 级）**：RULER-v2 49.56→56.13、MRCR-v2（2-needle）12.94→21.08、GraphWalks 29.38→34.92；代价是 NoLiMa 40.27→38.43、BBH 61.93→60.70。
 - **消融 2（forced SWA vs gated SWA）**：GSM8K 64.52→59.44、MRCR-v2 27.66→22.67、LongPPL +1.50%；换来 RULER 88.19→89.84、RULER-v2 53.66→55.98、GraphWalks 35.39→37.13。
-- **消融 3（KV Bridging）**：在 **290B-A8B**、约 1.8T tokens、32k 上下文上，开 / 关 KV Bridging 的 MMLU 72.68→72.80、TriviaQA 73.32→74.10、RULER 96.32→96.01、DROP 71.37→68.17、LongPPL 3.6053→3.4202（质量基本持平，个别任务有小幅波动）。
+- **消融 3（KV Bridging）**：在 **290B-A8B**、约 1.8T tokens、32k 上下文上，**关→开** KV Bridging 的 MMLU 72.68→72.80、TriviaQA 73.32→74.10、RULER 96.32→96.01、DROP 71.37→68.17、LongPPL 3.6053→3.4202（质量基本持平，个别任务有小幅波动）。
 
 > **这些数字的边界**：① 全部在 **80B-A3B 验证模型**（49 层、hidden 2048、~500B 预训练 + ~100B 后训练）上取得，**不是 MiMo-V3**；② 论文没有给出 V3 的参数、层数、专家数、上下文或发布日期；③ 收益为作者自报，未见独立复现；④ 5.02× 的对照是 **Hybrid SWA**（V2 系列所用骨架），不是「相对上一代 V2.6 的端到端加速」。**V3 上的收益一律未确证。**
 
