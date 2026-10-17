@@ -206,7 +206,7 @@
     "library_entry_bytes": 1893876
   },
   "version_control": {
-    "tracked_total": 150,
+    "tracked_total": 153,
     "tracked_md": 141,
     "tracked_report_md": 48,
     "tracked_libraries": 128,
@@ -601,7 +601,7 @@
     ]
   },
   "storage": {
-    "tracked_bytes": 3640573,
+    "tracked_bytes": 8506430,
     "definition": "纳入版本控制的文件字节合计（`git ls-files` 跟踪路径逐个 getsize 求和）；刻意**不**用 du 量工作树——工作树含 site/site-docs/构建产物、别人的未提交草稿、虚拟环境等「车间地面」，会让数字每个 clone 一个样、生成物不可复现。本字段与提交树同源，任意 clone 重跑一致。"
   }
 }

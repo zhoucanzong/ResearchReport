@@ -71,7 +71,16 @@ markdown_extensions:
   - admonition
   - tables
   - pymdownx.details
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        # ```mermaid 图：输出 <pre class="mermaid"><code>…</code></pre>；
+        # mermaid.js 加载失败时天然降级为可读代码块
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.arithmatex:
+      generic: true      # 通用模式：\(...\) / \[...\]，供 MathJax 渲染
+      smart_dollar: true # 货币 / $PATH 等两侧带空格的 $ 不当公式（防误伤）
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.highlight:
@@ -86,6 +95,13 @@ markdown_extensions:
 # extra_css 会被 staging 镜像进 site-docs/assets/
 extra_css:
   - assets/site.css
+
+# MathJax（公式）与 mermaid.js（图表）：vendored 本地资源，零外链、国内可达。
+# 加载顺序：先 init（设置 window.MathJax 配置与 mermaid 主题）再载渲染器。
+extra_javascript:
+  - assets/vendor/renderers-init.js
+  - assets/vendor/tex-svg.js
+  - assets/vendor/mermaid.min.js
 
 validation:
   # 未进 nav 的页面（子文档、根 README）仍然构建、可访问，仅记 info —— 让 --strict 聚焦真正的坏链

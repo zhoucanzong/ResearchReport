@@ -22,7 +22,7 @@
 | 带合法 `date` 的条目 | 4 |
 | 文档（除生成物外的全部 `.md`） | 133 |
 | 其中文件名 `README.md` | 8 |
-| 纳入版本控制的文件 | 150 |
+| 纳入版本控制的文件 | 153 |
 | 纳入版本控制的 `.md` | 141 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
