@@ -1,8 +1,8 @@
 # GLM 系列模型深度调研报告
 
 > 调研对象：智谱 AI（Zhipu AI / Z.ai）与清华大学 KEG 实验室（THUDM）联合研发的 GLM/ChatGLM/CogVLM/CogVideoX/GLM-Z1/GLM-4.5 等模型家族
-> 时间跨度：2021 年 CogView 至 2025–2026 年 GLM-4.5/4.6/4.7/5/5V-Turbo
-> 调研日期：2026-06-05
+> 时间跨度：2021 年 CogView 至 2026 年 8 月 GLM-5.3 / GLM-5.3-Flash
+> 调研日期：2026-06-05 ｜ **最近更新：2026-10-17**（增量增补 GLM-5.2 / GLM-5.3 / GLM-5.3-Flash 三个新版本，新增 §2.9、§2.10；并据官方发布记录校正 GLM-5.1 上线日期；既有结论未改动）
 > 资料来源：arXiv 论文、Z.ai 官方博客与文档（z.ai / bigmodel.cn）、GitHub（THUDM、zai-org）、Hugging Face、ICLR/NeurIPS/ACL 等会议论文
 
 ---
@@ -49,8 +49,13 @@ GLM 系列的独特之处在于：早期（2021–2023）坚持自主路线 —�
 | 2026-01-12 | **GLM-4.7 正式发布** | 官方正式版上线 bigmodel.cn 与 Z.ai |
 | 2026-02 | **GLM-5** | 744B MoE，SWE-bench 77.8%，继续基于 slime RL 框架 |
 | 2026-03-04 | **API 价格大幅上调** | 全线 API 价格上涨 30–100% |
-| 2026-04 | **GLM-5V-Turbo** | 基于 GLM-5 底座的旗舰视觉模型，多模态推理增强 |
+| 2026-04 | **GLM-5V-Turbo** | 基于 GLM-5 底座的旗舰视觉模型，多模态推理增强（官方上线日 2026-04-02） |
+| 2026-04-07 | **GLM-5.1** 上线 | 长程任务强化，单次任务可持续自主工作约 8 小时；官方称综合能力对齐 Claude Opus 4.6（日期取自官方发布记录，详见 §2.8 校正说明） |
 | 2026-05 | **API 调用量翻倍** | 官方披露日调用量较 2025 年底翻倍 |
+| 2026-06-16 | **GLM-5.2** 上线（同日开源） | 1M 上下文；IndexShare 跨层复用 indexer；MIT 许可。详见 §2.9.1 |
+| 2026-08-19 | **GLM-5.3** 上线 | 与 GLM-5.2 **同一基座**，全部增益来自后训练（IndexShare + SAO + slime）；编码与网络安全能力大幅提升。详见 §2.9.2 |
+| 2026-08-25 | **GLM-5.3 / 5.3-Flash 权重上线 HF** | 官方称发布两周后开放权重（先完成安全评估与加固） |
+| 2026-08-26 | **GLM-5.3-Flash / FlashX** 上线 | GLM-5 系列首个**原生多模态**成员：320B 总 / 18B 激活，稀疏+线性注意力混合架构，mHC。详见 §2.9.3 |
 
 > 注：智谱 2025 年起将海外品牌名启用 **Z.ai**，开源仓库迁至 **github.com/zai-org**（原 THUDM 仓库部分仍保留）。
 
@@ -213,8 +218,183 @@ GLM 系列的独特之处在于：早期（2021–2023）坚持自主路线 —�
   - 在 MMLU Pro、AIME 2025、GPQA、LiveCodeBench 等 12 项综合基准上保持全球前 3；
   - 上下文 200K，最大输出 131K；
   - API 价格随 2026-03 调价上涨，但性价比仍优于同性能闭源竞品；
-- **GLM-5.1**（2026 初）：GLM-5 的迭代微调版本，强化 Agent 与长上下文能力；
-- **GLM-5V-Turbo**（2026-04）：基于 GLM-5 底座的旗舰视觉语言模型，继承 GLM-4.5V/4.6V 的 Encoder + Projector + LLM 架构，在多模态推理与长视频理解上进一步突破。
+- **GLM-5.1**（**2026-04-07 上线**，本轮据官方发布记录校正）：GLM-5 的迭代版本，强化 Agent 与长程任务能力。官方口径：单次任务可持续自主工作约 **8 小时**；综合与 Coding 能力**整体对齐 Claude Opus 4.6**。带条件数字见 §2.9.0。
+- **GLM-5V-Turbo**（2026-04）：基于 GLM-5 底座的旗舰视觉语言模型，继承 GLM-4.5V/4.6V 的 Encoder + Projector + LLM 架构，在多模态推理与长视频理解上进一步突破。技术报告见 arXiv:2604.26752（v3 2026-05-12）。
+
+> **校正说明（本轮）**：原文写作「GLM-5.1（2026 初）」。智谱官方发布记录给出 **GLM-5.1 上线日期为 2026-04-07**（`docs.bigmodel.cn/cn/update/new-releases`），HuggingFace 仓库 `zai-org/GLM-5.1` 的 `createdAt` 为 2026-04-03。此处以官方发布记录为准。同理，GLM-4.7 官方记录为 **2025-12-22 上线**（原文记「2026-01-12 正式发布」，两者可能分别指 API 上线与正式版发布，本轮**不改原文**，仅在此标注口径差异）。
+
+### 2.9 GLM-5.2 / GLM-5.3 / GLM-5.3-Flash（2026-06 起）
+
+> **证据等级：精读原文（HuggingFace 官方模型卡 + 智谱官方文档原文 + 官方发布记录）**。z.ai / docs.z.ai 在本环境 **TLS 不可达**（`web_fetch` 与 `curl` 均失败），因此本节全部数字改用 **HF 官方模型卡**与 **docs.bigmodel.cn 官方文档**核验，均为**厂商自报**；依赖 z.ai 博客原文的项一律标注「核验受限」。
+
+#### 2.9.0 GLM-5.1 的带条件数字（为 §2.9 的对照基线）
+
+来源：[HF 模型卡 `zai-org/GLM-5.1`](https://huggingface.co/zai-org/GLM-5.1)（MIT 许可）。官方自报，同表内 9 个模型同条件对照：
+
+| 基准 | GLM-5.1 | GLM-5 | Claude Opus 4.6 | Gemini 3.1 Pro | 条件/说明 |
+| --- | --- | --- | --- | --- | --- |
+| SWE-Bench Pro | **58.4** | 55.1 | 57.3 | 54.2 | 官方称「刷新全球最佳表现」 |
+| NL2Repo | 42.7 | 35.9 | **49.8** | 33.4 | 仓库生成 |
+| Terminal-Bench 2.0 (Terminus-2) | 63.5 | 56.2 | 65.4 | **68.5** | 同 harness |
+| CyberGym | **68.7** | 48.3 | 66.6 | 38.8 | 漏洞发现 |
+| BrowseComp（带上下文管理） | 79.3 | 75.9 | 84.0 | **85.9** | 两个口径分列（无/有上下文管理） |
+| τ³-Bench | 70.6 | 69.2 | 72.4 | 67.1 | 工具/agent 场景 |
+
+另（官方 docs 表述，带条件）：**KernelBench Level 3** 上经千轮工具调用优化真实 ML 负载，实现 **3.6× 几何平均加速**，对比 `torch.compile` max-autotune 的 **1.49×**；典型案例中 8 小时内从零构建完整 Linux 桌面系统、或在向量数据库上完成 655 轮迭代把查询吞吐提到初始正式版的 **6.9×**。这些是**官方选取的案例**，不是基准分布。
+
+#### 2.9.1 GLM-5.2（2026-06-16 上线并开源）
+
+**发布信息**
+
+- **日期**：官方发布记录 **2026-06-16**；HuggingFace 仓库 `zai-org/GLM-5.2` 的 `createdAt` 同为 **2026-06-16**（两条一手源互证）。
+- **形态**：**开源权重，MIT 许可**（模型卡 `license: mit`，官方称「Pure Open — no regional limits」）。这是 GLM 旗舰线首次用纯 MIT（此前 GLM-4.5/4.6/4.7/5/5.1 亦为 MIT，但 GLM-5.3 起改为自定义许可，见 §2.9.2）。
+- **上下文**：**1M tokens**（官方称「solid 1M context」）；文档口径最大输出 128K。
+- **与前代的定位差**：从 GLM-5.1 的「200K + 8 小时长程」推到「**1M + 项目级工程上下文**」。
+
+**新增架构：IndexShare（跨层复用稀疏注意力索引）**
+
+- 官方模型卡表述：提出 **IndexShare**，**在每 4 层稀疏注意力之间复用同一个 indexer**，在 1M 上下文下把**每 token FLOPs 降低 2.9×**。
+- 模型卡把 IndexShare 链接到 **arXiv:2603.12201**，该论文题目为 *IndexCache: Accelerating Sparse Attention via Cross-Layer Index Reuse*（v1 2026-03-12）。论文侧的数字与模型卡不同口径，须并列记录：**在 30B DSA 模型上移除 75% 的 indexer 计算**、质量退化可忽略，**prefill 1.82× / decode 1.48× 加速**（相对标准 DSA），并在**生产级 GLM-5** 上做了初步验证。→ 引用时务必区分「论文的 30B 实验数字」与「GLM-5.2 模型卡的 1M 上下文 2.9× FLOPs」。
+- 另一项改动：改进 **MTP（multi-token prediction）层**用于投机解码，**接受长度提升最多 20%**。
+
+**能力与基准（官方模型卡，全表 8 模型同条件）**
+
+| 基准 | **GLM-5.2** | GLM-5.1 | DeepSeek-V4-Pro | Claude Opus 4.8 | GPT-5.5 | Gemini 3.1 Pro | 条件（官方脚注要点） |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| HLE | 40.5 | 31 | 37.7 | 49.8\* | 41.4\* | 45 | temp 1.0 / top_p 0.95，最大生成 163,840；默认 text-only 子集，\* 为全量集 |
+| HLE (w/ Tools) | 54.7 | 52.3 | 48.2 | 57.9\* | 52.2\* | 51.4\* | 最大上下文 300K，**不做上下文管理** |
+| GPQA-Diamond | 91.2 | 86.2 | 90.1 | 93.6 | 93.6 | 94.3 | 同上采样参数 |
+| SWE-bench Pro | 62.1 | 58.4 | 55.4 | 69.2 | 58.6 | 54.2 | OpenHands；temp 1 / top_p 1 / max_new 32k / **400K 上下文** |
+| NL2Repo | 48.9 | 42.7 | 35.5 | 69.7 | 50.7 | 33.4 | temp 1.0 / top_p 1.0 / max_new 48k / 400K 上下文 + 反作弊（规则 + LLM 判定） |
+| DeepSWE | 46.2 | 18 | 8 | 58 | 70 | 10 | 官方 pier 框架 + **mini-swe-agent**；temp 1.0 / top_p 1.0 / timeout 2h / **400K 上下文**；每任务隔离容器 2 CPU / 8GB / 无网 |
+| ProgramBench | 63.7 | 50.9 | 47.8 | 71.9 | 70.8 | 39.5 | Claude-Code 2.1.156；max_tokens 64k / max_turns 2000 / sample_timeout 6h / reasoning_effort=max / 400K 上下文 |
+| Terminal Bench 2.1 (Terminus-2) | 81.0 | 63.5 | 64 | 85 | 84 | 74 | Terminus-2：parser=json / timeout 4h / max_new 48k / max_episodes 500 / **256K 上下文** |
+| Terminal Bench 2.1 (Best Harness) | 82.7 | 69 | — | 78.9 | 83.4 | 70.7 | Claude Code 2.1.167；max_new_tokens 131,072、5 次平均、取消 wall-clock 限制 |
+| FrontierSWE (Dominance) | 74.4 | 30.5 | 29.0 | 75.1 | 72.6 | 39.6 | **第三方 Proximal 评测**，1M 上下文 / max effort / 128K 输出，**分数截至 2026-06-16** |
+| PostTrainBench | 34.3 | 20.1 | — | 37.2 | 28.4 | 21.6 | **第三方 PostTrainBench 评测**，1M 上下文 / max effort / 128K 输出 |
+| SWE-Marathon | 13.0 | 1.0 | — | 26.0 | 12.0 | 4.0 | **第三方 Abundant AI 评测**，同 1M/max/128K 设定 |
+| MCP-Atlas (Public Set) | 76.8 | 71.8 | 73.6 | 77.8 | 75.3 | 69.2 | 500 任务公开子集，think 模式，每任务 10 分钟超时，**Gemini-3.0-Pro 作裁判** |
+| Tool-Decathlon | 48.2 | 40.7 | 52.8 | 59.9 | 55.6 | 48.8 | 官方评测服务，max_token 128K |
+
+**与前代的可判定差异（GLM-5.1 → GLM-5.2）**
+
+1. **上下文 200K → 1M**，且官方文档给了「累计处理 **>85 万 tokens**、接近用满 1M 窗口」的实际案例（一次连续长程任务完成 Web/移动端/小程序交付）——这是**上下文能力的可用性证据**，不是基准分数。
+2. **DeepSWE 18 → 46.2、FrontierSWE 30.5 → 74.4、SWE-Marathon 1.0 → 13.0、PostTrainBench 20.1 → 34.3**：官方表内同条件对照，可判定。
+3. **effort 可调**：官方称提供**多档 thinking effort**以平衡性能与延迟（GLM-5.3 起进一步固化为 `low/high/max`）。
+4. **许可**：旗舰线维持 **MIT**（GLM-5.3 起改自定义许可，是该系列的一次转向）。
+
+**失效边界**
+
+- **仍落后最强闭源**：SWE-Marathon 13.0 vs Claude Opus 4.8 的 26.0；NL2Repo 48.9 vs 69.7；Terminal Bench 2.1 81.0 vs 85。
+- **部分指标靠第三方评测**：FrontierSWE / PostTrainBench / SWE-Marathon 三行明确写「evaluation was conducted by …」，其口径（1M 上下文 / max effort / 128K 输出）与官方自跑项**不同**，不能与其他行混算平均。
+- **IndexShare 的收益是分层的**：模型卡的 **2.9× FLOPs（1M）** 与论文的 **75% indexer 计算移除 / 1.82× prefill（30B）** 是**不同模型、不同口径**的两个结论，互相不能替代。
+- **核验受限**：官方 `z.ai/blog/glm-5.2` 原文本环境不可达，模型卡中「Check out the GLM-5.2 blog」的链接目标内容未直读；模型卡内的 `bench_52.png`（另一张基准图）为图片，未做 OCR 取值。
+
+#### 2.9.2 GLM-5.3（2026-08-19 上线 / 2026-08-25 权重）
+
+**发布信息**
+
+- **日期**：官方发布记录 **2026-08-19**（「GLM-5.3 新一代旗舰模型上线」）；HuggingFace 仓库 `zai-org/GLM-5.3` 的 `createdAt` 为 **2026-08-25**，与官方「发布两周后开放模型权重（此前完成安全评估与模型加固）」的表述一致。
+- **形态**：开源权重，但许可**不再是 MIT**——模型卡 `license: other` / `license_name: glm-5.3`（自定义许可）。对比：同期的 GLM-5.3-Flash 是 **MIT**。
+- **上下文**：官方文档 **1M 上下文窗口，最大输出 128K**；仅支持文本模态。
+- **思考模式**：**始终启用**，`reasoning_effort` 三档 `low/high/max`（默认 `max`）；**不再支持禁用思考**。迁移提示（官方原文）：若应用原先用 `thinking.type: "disabled"`，必须先改为 `enabled` 并把 `reasoning_effort` 设为 `low`，否则请求失败。
+
+**最关键的一条：与 GLM-5.2 同一基座，全部增益来自后训练**
+
+官方中英文口径一致——「GLM-5.3 uses the same base model as GLM-5.2 — every gain comes from post-training」。相对 GLM-5.2 的后训练改动是：**更大的任务环境规模化**（数十倍的长程任务环境、更多环境类型、更长后训练时间）、**IndexShare + SAO（结合上下文压缩）+ 持续演进的新一代 Slime 框架**。
+
+- **任务环境规模化（官方描述，可迁移的方法论）**：训练任务不再是「编程题」，而是**接近专家真实工作单元的完整环境**（例如给模型计算集群、存储、内部文档、代码库与实验结果，要求定位训练栈瓶颈、实施优化、跑实验、在保证正确性前提下拿到可量化端到端加速）。难点从模型转移到**环境**：环境必须可执行、可验证、贴近真实工作。为此他们建了**端到端合成任务环境**的流水线，并为部分任务**自动生成 RL 奖励信号**；验证器在**不访问参考解法**的前提下生成，并用求解轨迹识别、消除 reward shortcut；**只有同时通过 Oracle / 空操作 / 未解决状态三类检查的验证器**，其二值奖励才允许用于训练。
+
+**能力与基准（官方模型卡，全表 9 模型同条件）**
+
+| 基准 | **GLM-5.3** | GLM-5.2 | Kimi K3 | Claude Opus 4.8 | Claude Fable 5 (w/ fallback) | GPT-5.6 Sol | 条件（官方脚注要点） |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Terminal Bench 2.1 | 88.2 | 81.0 | 88.3 | 85.0 | 88.0 | **88.8** | Claude Code 2.1.207；temp 1.0 / top_p 1 / max_new 65,536；**6h 超时** |
+| Terminal Bench 3.0 | 28.3 | 4.6 | 17.4 | 21.1 | 33.7 | **34.6** | Claude Code 2.1.207，max effort，**400K 上下文 / 128K 输出**，**avg@3**；每 rollout 独立容器、600 agent turns、10h 超时；关闭 Tool Search，由任务官方 verifier 打分 |
+| DeepSWE (v1.1) | 66.9 | 46.2 | 67.5 | 58.0 | 69.7 | **72.7** | mini-swe-agent；temp 0.95 / top_p 1.0 / timeout **6h** / 400K 上下文 |
+| NL2Repo | 58.0 | 48.9 | 58.0 | **69.7** | — | — | temp 1.0 / top_p 1.0 / max_new 64k / **1M 上下文** + 反作弊 |
+| ProgramBench (Almost Solved) | 19.0 | 9.5 | 17.5 | 15.5 | **33.0** | 23.0 | 「Almost Solved」子集口径（与 GLM-5.2 卡的 63.7 不是同一个指标） |
+| FrontierSWE | 78.1 | 67.5 | — | 66.5 | **88.2** | — | 第三方 Proximal，1M / max effort / 128K 输出，**分数截至 2026-08-14** |
+| SWE-Marathon (v1.1) | 42.5 | 19.4 | 48.1 | **48.8** | 33.1 | 42.5 | Claude Code 2.1.207，1M 上下文 / 128K 输出；官方说明修改了 2 处过严反作弊/镜像构建问题 |
+| PostTrainBench | 39.8 | 31.7 | 32.0 | 32.9 | **41.8** | 36.2 | Claude Code 2.1.207，1M 上下文，3 次加权平均；失败运行回落到官方 zero-shot 基线分 |
+| CyberGym | **84.5** | 77.2 | 80.0 | 78.1 | 83.8 | 83.6 | Claude Code 2.1.207，max effort，**无 web 工具**，temp 1.0 / top_p 1.0 / max_new 128,000；**不限超时**，1,507 任务单次 pass@1；agent 置于任务容器内，**移除全部 Git 信息 + 域名白名单**防作弊 |
+| ExploitGym (2h / 6h) | 105 / 130 | 29 / 39 | 36 / 70 | 80 / 120 | 181 / 247 | **216 / 293** | 869 任务单次 pass@1；**按各模型 TPS 折算 API 推理时间**（GLM-5.3 115 TPS / K3 40 TPS / Qwen3.8 Max 47 TPS）+ 非 API 开销 |
+| ExploitBench | 54.4 | 24.4 | 32.2 | 40.0 | **78.0** | 76.5 | 41 任务 3 轮，最多 300 轮交互，取覆盖能力并集后平均 |
+| Toolathlon Verified | 73.0 | 59.9 | **76.5** | 76.2 | 74.7 | 74.9 | 官方评测服务，pass@1 三次平均 |
+| AutomationBench (v1.0.6) | **48.2** | 26.2 | 46.7 | 41.0 | 46.2 | 45.8 | v1.0.6（含修复 `null` 类型处理的 PR #13） |
+| Agents' Last Exam (ALE-CLI) | 28.5 | 23.8 | 27.6 | 25.7 | 23.8 | **28.6** | 官方协议，Claude Code harness，max effort，**1M 上下文 / 64K 输出**；105 任务，隔离 Docker，默认 4h 超时（个别最长 8h），关闭 Tool Search |
+| HLE w/ Tools | 62.5 | 54.7 | 59.8 | 57.9 | 63.9 | **64.5** | temp 1.0 / top_p 0.95，最大生成 163,840；**300K 上下文 + 上下文管理策略**；裁判 GPT-5.6-luna (medium) |
+| GDPval-AA v2 (Elo) | **1769** | 1508 | 1682 | 1588 | 1743 | 1730 | **由 Artificial Analysis 评测**（非厂商自跑） |
+
+**与 GLM-5.2 的可判定差异（同基座、纯后训练，因此归因最干净）**
+
+因为**基座相同**，这一组对比是本次更新里**归因最干净的 A/B**——同一基座、同一 harness、同一采样参数，差异只来自后训练：
+
+1. **Terminal Bench 3.0：4.6 → 28.3**（+23.7 分，约 6 倍）。这是本轮最大的单点跃迁。
+2. **DeepSWE v1.1：46.2 → 66.9**；**ALE-CLI：23.8 → 28.5**（官方文档另给 23.8→28.5，模型卡同）。
+3. **网络安全能力是「涌现」而非定向优化**（官方原话承认「我们原本预计……令人意外的是，随着训练规模持续扩大，这项能力也迅速演进」）：CyberGym **77.2 → 84.5**（官方称该基准当前最佳，超过 Mythos 5 的 83.8 与 GPT-5.6 Sol 的 83.6）；ExploitBench **24.4 → 54.4**（翻倍以上）；ExploitGym 2h/6h **29/39 → 105/130**。官方给出的规律：**漏洞利用链越往深处，相对 GLM-5.2 的提升越大，同时与闭源前沿的差距也越大**。
+4. **真实场景侧证**：官方称自 GLM-5.2 起与中国多家安全团队合作，在 **269 个项目**中发现 **2,436 个漏洞**（其中 **1,097 个中高危**），涵盖内核、操作系统、浏览器引擎、开源基础设施、Web 应用与网络协议；存在时间最长的漏洞在代码库中约 **40 年**。
+5. **Token 效率同时改善**（官方内部 Z.ai Code Bench）：Max 档准确率 **34.5%**（GLM-5.2 为 **23.4%**），而每任务平均输出约 **7.5 万** token（GLM-5.2 约 **9.6 万**）——**分更高、token 更少**。
+
+**失效边界**
+
+- **编程之外不一定同向**：官方自己给的对照中说，Max 档准确率 34.5% **仍低于 Claude Fable 5 的 39.5%**；ExploitBench 54.4% 远低于 Mythos 5 的 78.0% 与 GPT-5.6 Sol 的 76.5%。
+- **部分基准的「提升」口径要小心**：GLM-5.2 卡里的 ProgramBench 是 **63.7**，GLM-5.3 卡里的 ProgramBench 是「**Almost Solved** 19.0」——**不是同一子集/指标**，两者不能相减。
+- **`license_name: glm-5.3` 是自定义许可**，条款未逐条核验 → 不能默认等同 MIT 使用范围（见 §2.10）。
+- **代码安全能力的双面性（官方自述）**：官方在 GLM-5.3 中文稿中说明开源权重前需「完成必要的安全加固，尽可能限制其潜在攻击能力，保留其防御价值」——这意味着**发布版与内部版在攻击性上存在人为差异**，复现「未加固」表现不可行。
+- **核验受限**：`z.ai/blog/glm-5.3` 原文本环境不可达；官方中文研究页（`zhipuai.cn/zh/research/161`）可读，作为中文侧补充源。
+
+#### 2.9.3 GLM-5.3-Flash / FlashX（2026-08-26 上线）：GLM-5 系列首个原生多模态
+
+**发布信息**
+
+- **日期**：官方发布记录 **2026-08-26**（「GLM-5.3-Flash 原生多模态模型上线」）；HuggingFace 仓库 `createdAt` 为 **2026-08-25**。
+- **形态**：**开源权重，MIT 许可**（模型卡 `license: mit`）；**原生多模态**（输入 视频 / 图像 / 文本 / 文件；输出文本）——GLM-5 系列第一个原生多模态成员。
+- **规模**：**320B 总参数 / 18B 激活参数**。
+- **上下文**：**1M**；最大输出 **128K**。
+- **推理档位**：`reasoning_effort` `low/high/max`（默认 `max`），`thinking.type` **仅支持 enabled**。
+- **Flash vs FlashX**：`glm-5.3-flash` / `glm-5.3-flashx` 两个模型 ID；**FlashX 推理速度 200 tokens/s**（官方文档）。Coding Plan 当前**未开放 FlashX**。
+
+**关键架构变化（与前两代不是同一基座）**
+
+官方模型卡明确：GLM-5.3-Flash **starts from a newly trained base model**（新训基座），架构与训练配方围绕能力与效率重设计。三项：
+
+1. **稀疏注意力 + 线性注意力的混合架构**——官方称是「**首个采用该混合架构的开源前沿模型**」；相比 GLM-5.3，**注意力计算量降低 3.01×、KV cache 降低 4.44×**。
+2. **mHC（Manifold-Constrained Hyper-Connections）**——用于进一步提升 scaling 效率。
+3. **30T token 多模态预训练语料**。
+
+> ⚠️ 与 GLM-5.3 的关系要说清：**GLM-5.3 是「同一基座 + 后训练」；GLM-5.3-Flash 是「新基座 + 新架构」**。两者只共享「后训练方法论（SAO / slime / 任务环境规模化）」与命名，**不是同一模型的蒸馏版**。
+
+**能力与基准**
+
+官方文档给出的带条件数字/表述：
+
+- **Artificial Analysis Intelligence Index：57 分**，**超过 GLM-5.2**，与 **Claude Opus 4.8 持平**（官方自报，非第三方直读）。
+- **Z.ai Code Bench**：编程表现与 **Claude Opus 4.8 相当**（官方自报，非公开基准）。
+- **价格**：**GLM-5.3 的 1/10**（限时折扣内 **1/20**；为 Opus 4.8 的 **1/40**）——这是官方主打的性价比论点。
+- 官方还宣称拓展到 Office 文档与金融研究工作流，可交付 PPTX / PDF / DOCX / XLSX。
+
+**失效边界**
+
+- **基准表是图片**：模型卡只嵌了 `bench_53.png`，**未提供可解析的基准表**；官方文档也只给「AA II 57 / Z.ai Code Bench 与 Opus 4.8 相当」这类表述。因此本条目**不列 GLM-5.3-Flash 的逐项基准数字**——图片未做 OCR 取值，属**核验受限**。
+- **「与 Opus 4.8 持平」是官方口径**，且是在 **AA Index（单一综合分）** 上的持平，不等于逐任务持平。
+- **原生多模态的评测覆盖未知**：文档只提到视觉 coding 与 Office/金融场景，**未见多模态基准的逐项分数**。
+- **FlashX 的 200 tokens/s** 是官方给出的推理速度，**未说明测量条件**（batch / 硬件 / 上下文长度 / 输出长度），不可直接与别家吞吐对比。
+
+### 2.10 未确证与待跟踪（2026-06 以来）
+
+以下条目**未进入正文**，仅登记待核：
+
+| 事项 | 现状 | 处置 |
+| --- | --- | --- |
+| GLM-5.3 的自定义许可 `glm-5.3` 条款 | HF 仅标 `license: other` / `license_name: glm-5.3` | 待读 LICENSE 原文；在读到前不称「可商用等同于 MIT」 |
+| z.ai 官方博客原文（glm-5.2 / glm-5.3 / glm-5.3-flash） | 本环境 TLS 不可达（`web_fetch` + `curl` 均失败） | 数字改用 HF 模型卡与 bigmodel 官方文档核验；博客原话未逐字核对 |
+| GLM-5.2 / 5.3 的精确总参/激活参 | 官方文档与模型卡**均未给** GLM-5.2、GLM-5.3 的参数量 | 不沿用此前「744B/40B 属 GLM-5」以外的推测；待官方披露 |
+| GLM-5.3-Flash 的逐项基准 | 模型卡只有 `bench_53.png` 图片 | 待从可解析来源取得后再入表 |
+| GLM-5.3-Flash 的 mHC 细节 | 官方只给名称与「提升 scaling 效率」 | 是否有独立技术报告待跟踪（检索到 `Manifold-Constrained Hyper-Connections` 方向的论文，但未确认与 GLM 实现的对应关系） |
+| GLM-5.3-FlashX 的 200 tokens/s | 无测量条件 | 待官方补 benchmark 口径 |
+| GLM-OCR / GLM-Image / GLM-TTS / GLM-5-Turbo | 分别于 2026-02-03 / 2026-01-14 / 2025-12 / 2026-03-15 上线，**早于本轮「2026-06 起」窗口**，且本条目此前未覆盖 | 本轮不补写（避免超出「增量补充 2026-06 起」的范围）；若协调者要求扩容再另立一段 |
+| 智谱「IndexShare」与论文「IndexCache」的命名对应 | 模型卡用 IndexShare，链接指向 arXiv:2603.12201 *IndexCache* | 正文已并列标注两种名称与各自数字口径；名称是否等价未获官方文字确认 |
 
 ---
 
@@ -422,6 +602,17 @@ GLM 家族最具特色的演进，是从最初坚持"自回归填空"独特路�
 - GLM-Z1 推理模型在科研、金融分析等长思考任务上的渗透；
 - 开源生态反哺：GLM-4-32B-0414 等开源模型带动社区应用，进而转化为商业 API 用户。
 
+### 7.4 GLM Coding Plan 与「低价 + 高额度」打法（2026-04 起，本轮新增）
+
+这条线与模型发布同等重要，是 GLM-5.x 三代共同的商业化载体：
+
+- **2026-04-07**：GLM Coding Plan 随 GLM-5.1 上线（个人版）；
+- **2026-05-29**：GLM Coding Plan **团队版**上线，支持席位/权限/用量/预算统一管理、集中账单与统一开票，官方承诺**默认不将代码、提示词与对话内容用于模型训练**，高级版首发接入最新旗舰；
+- **2026-08-19 / 08-26**：GLM-5.3 与 GLM-5.3-Flash **全量进入** Coding Plan；Flash 的可用额度为 GLM-5.3 的 **3 倍**（官方口径）；
+- **计费机制变化**：新版 Coding Plan 改为**基于积分的配额系统**，官方称额度公开透明；**非高峰时段（含周末全天）的调用只消耗标准积分的 50%**。
+
+**定价叙事的变化值得记一笔**：GLM-5.3-Flash 官方定价为 **GLM-5.3 的 1/10**（限时折扣内 **1/20**）、**Opus 4.8 的 1/40**。这与 §7.2 记录的 2026-03「全线上调 30–100%」方向相反——**旗舰涨价、轻量档大幅降价**，用同一家族内的价格分层来同时守毛利与抢用量。这是本轮最值得跟踪的商业信号（能否兑现取决于 Flash 的实际质量，见 §2.9.3 的核验受限说明）。
+
 ---
 
 ## 八、关键创新点汇总
@@ -443,6 +634,10 @@ GLM 家族最具特色的演进，是从最初坚持"自回归填空"独特路�
 | 13 | **Loss-free Balance Routing**（在 GLM-4.5 MoE 中） | GLM-4.5 | 替代 auxiliary load loss，提升 MoE 训练稳定性 |
 | 14 | **Preserved Thinking** | GLM-4.7 | 在多轮工具调用之间保留思考链，提升自主编程 |
 | 15 | **GLM-5 大规模 MoE 基座** | GLM-5 (2026-02) | 744B/40B 激活，SWE-bench 77.8%，开源旗舰新标杆 |
+| 16 | **IndexShare（跨层复用稀疏注意力 indexer）** | GLM-5.2 (2026-06) | 每 4 层稀疏注意力复用同一 indexer，1M 上下文下每 token FLOPs −2.9×（官方口径）；对应论文 arXiv:2603.12201 *IndexCache* |
+| 17 | **MTP 层改进（投机解码接受长度 +≤20%）** | GLM-5.2 (2026-06) | 直接提升长程任务的解码效率 |
+| 18 | **「同基座 + 极致后训练 Scaling」范式** | GLM-5.3 (2026-08) | 首次公开宣称旗舰代际提升**全部来自后训练**（基座与 GLM-5.2 相同）；Terminal Bench 3.0 4.6→28.3 |
+| 19 | **稀疏 + 线性注意力混合架构（开源前沿首个）** | GLM-5.3-Flash (2026-08) | 320B/18B；注意力计算 −3.01×、KV cache −4.44×（相对 GLM-5.3）；结合 mHC 与 30T 多模态语料，原生多模态 |
 
 ---
 
@@ -464,6 +659,13 @@ GLM 家族最具特色的演进，是从最初坚持"自回归填空"独特路�
 | GLM-4.6 | 2025.09 | MoE | 357B / 32B | **200K** | — | 与 Claude Sonnet 4.5 近平价 |
 | GLM-4.7 | 2025.12 / 2026.01 | MoE + Preserved Thinking | 同代 | 200K | — | 自主编程方向 |
 | GLM-5 | 2026.02 | MoE | **744B / 40B** | 200K | — | SWE-bench 77.8%，12 项基准全球前 3 |
+| GLM-5.1 | 2026.04.07 | MoE（承 GLM-5） | 官方未披露 | 200K | — | SWE-Bench Pro 58.4（官方称全球最佳）；8 小时长程（详见 §2.9.0） |
+| GLM-5.2 | 2026.06.16 | MoE + IndexShare + 改进 MTP | 官方未披露 | **1M** | — | DeepSWE 46.2、FrontierSWE 74.4、SWE-Marathon 13.0（带条件，见 §2.9.1）；MIT |
+| GLM-5.3 | 2026.08.19 | **与 GLM-5.2 同一基座**（纯后训练） | 同 GLM-5.2 | 1M | — | Terminal Bench 3.0 28.3、DeepSWE 66.9、CyberGym 84.5（带条件，见 §2.9.2）；自定义许可 |
+| GLM-5.3-Flash | 2026.08.26 | **稀疏+线性注意力混合 + mHC**（新训基座） | **320B / 18B** | 1M | 30T（多模态语料） | 原生多模态；AA II 57；价格为 GLM-5.3 的 1/10（见 §2.9.3）；MIT |
+
+> ⚠️ 本表「典型评测亮点」列只做条目指路，**不构成跨厂商排名**；每个数字的 harness / 上下文 / effort / 是否第三方评测各不相同，引用前必须回看 §2.9 的对应条件列。
+> 另一处口径提示：GLM-5.2 与 GLM-5.3 的**总参/激活参官方均未披露**（本表据实写「官方未披露」，不沿用 GLM-5 的 744B/40B 推测）。
 
 ### 9.2 多模态模型横向对比
 
@@ -475,7 +677,8 @@ GLM 家族最具特色的演进，是从最初坚持"自回归填空"独特路�
 | GLM-4.1V-9B-Thinking | 2025.07 | 视觉编码器 + MLP | **Encoder + Projector + LLM**（弃用 Visual Expert） | GLM-4-9B | 9B | RL Thinking 链 |
 | GLM-4.5V | 2025.08 | 同上 | Encoder + Projector + LLM | GLM-4.5-Air (MoE) | 106B / 12B | 42 项基准 SOTA |
 | GLM-4.6V / 4.6V-Flash | 2025 Q4–12 | 同上 | Encoder + Projector + LLM | GLM-4.6 / 9B | 357B / 9B | 200K + 端侧 |
-| GLM-5V-Turbo | 2026.04 | 同上 | Encoder + Projector + LLM | GLM-5 (MoE) | 744B / 40B | 旗舰 VLM，多模态推理新高度 |
+| GLM-5V-Turbo | 2026.04 | 同上 | Encoder + Projector + LLM | GLM-5 (MoE) | 744B / 40B | 旗舰 VLM，多模态推理新高度；技术报告 arXiv:2604.26752（v3 2026-05-12） |
+| **GLM-5.3-Flash / FlashX** | 2026.08.26 | 官方未披露（**原生多模态**，非「LLM + 后接编码器」的拼接式） | 视觉原生融入同一主干（官方口径：视觉进入 coding 循环） | 新训基座（稀疏+线性注意力混合 + mHC） | **320B / 18B** | GLM-5 系列首个原生多模态；AA II 57；FlashX 200 tokens/s（见 §2.9.3） |
 
 ---
 
@@ -496,28 +699,39 @@ GLM 家族最具特色的演进，是从最初坚持"自回归填空"独特路�
 11. Team GLM-V. **GLM-4.1V-Thinking & GLM-4.5V & GLM-4.6V: Towards Versatile Multimodal Reasoning with a Family of VLMs**. arXiv:2507.01006 (2025).
 12. Team GLM. **GLM-4.5: Agentic, Reasoning, and Coding (ARC) Foundation Models**. arXiv:2508.06471 (2025-08).
 13. Z.ai Blog. **GLM-5: Scaling Reasoning and Coding with 744B MoE**. 2026-02.
-14. Z.ai Blog. **GLM-5V-Turbo: Multimodal Reasoning at Scale**. 2026-04.
-15. 智谱 AI 招股书 / 港交所公告. **Zhipu AI 香港主板上市**. 2025-12-20.
-16. bigmodel.cn 官方公告. **API 价格调整通知**. 2026-03-04.
+14. Team GLM. **GLM-5: from Vibe Coding to Agentic Engineering**. arXiv:2602.15763（**v1 2026-02-17 / v2 2026-02-24**）。GLM-5 / GLM-5.1 / GLM-5.2 / GLM-5.3 的模型卡均引用此报告。
+15. Team GLM. **IndexCache: Accelerating Sparse Attention via Cross-Layer Index Reuse**. arXiv:2603.12201（v1 **2026-03-12**）。GLM-5.2 模型卡以 **IndexShare** 之名引用；论文主实验为 30B DSA 模型。
+16. Team GLM. **GLM-5V-Turbo: Toward a Native Foundation Model for Multimodal Agents**. arXiv:2604.26752（**v1 2026-04-29 / v3 2026-05-12**）。
+17. Z.ai Blog. **GLM-5V-Turbo: Multimodal Reasoning at Scale**. 2026-04.
+18. 智谱 AI 招股书 / 港交所公告. **Zhipu AI 香港主板上市**. 2025-12-20.
+19. bigmodel.cn 官方公告. **API 价格调整通知**. 2026-03-04.
+
+> 版本口径（本轮）：第 14–16 条 arXiv ID 的标题、版本号、版本日期均于 2026-10-17 回查 `export.arxiv.org/api`；GLM-5 报告作者列为 `GLM-5-Team`（模型卡 bibtex 可见完整作者表）。
 
 ### 官方资源
 
-13. Z.AI 官网与开发者文档：https://z.ai ｜ https://docs.z.ai
-14. 智谱 AI 开放平台 / bigmodel.cn：https://open.bigmodel.cn ｜ https://www.bigmodel.cn
-15. Z.AI / 智谱 GitHub 组织：https://github.com/zai-org （含 GLM-130B、GLM-4、GLM-4.5、GLM-V、CogVLM2、CogVideo、CogView4、slime 等仓库）
-16. THUDM GitHub 组织：https://github.com/THUDM （含 GLM、ChatGLM-6B、ChatGLM2-6B、ChatGLM3、GLM-4、slime 等历史仓库）
-17. Hugging Face：https://huggingface.co/zai-org （GLM-4.6、CogVLM2、CogView 等权重）
-18. GLM-130B 官方博客：https://keg.cs.tsinghua.edu.cn/glm-130b/
-19. CogVLM2-Video 项目页：https://cogvlm2-video.github.io/
-20. slime（RL 后训练框架）：https://github.com/THUDM/slime
+20. Z.AI 官网与开发者文档：https://z.ai ｜ https://docs.z.ai（**注：`z.ai` 与 `docs.z.ai` 在本次核对环境（2026-10-17）TLS 不可达，未能直读博客原文**）
+21. 智谱 AI 开放平台 / bigmodel.cn：https://open.bigmodel.cn ｜ https://www.bigmodel.cn
+22. **智谱官方发布记录（日期的一手出处）**：https://docs.bigmodel.cn/cn/update/new-releases —— GLM-5（2026-02-12 / 02-03 GLM-OCR）、GLM-5-Turbo（2026-03-15）、GLM-5V-Turbo（2026-04-02）、GLM-5.1（2026-04-07）、GLM-5.2（2026-06-16）、GLM-5.3（2026-08-19）、GLM-5.3-Flash（2026-08-26）的上线日期均取自此页
+23. **智谱官方模型文档页**：`docs.bigmodel.cn/cn/guide/models/text/glm-5.2`、`…/glm-5.3`、`…/vlm/glm-5.3-flash`、`…/glm-5.1`、`…/glm-5`（本轮 §2.9 的上下文/输出/思考模式/定价口径来源）
+24. Z.AI / 智谱 GitHub 组织：https://github.com/zai-org （含 GLM-130B、GLM-4、GLM-4.5、GLM-V、CogVLM2、CogVideo、CogView4、slime、GLM-5 等仓库）
+25. THUDM GitHub 组织：https://github.com/THUDM （含 GLM、ChatGLM-6B、ChatGLM2-6B、ChatGLM3、GLM-4、slime 等历史仓库）
+26. Hugging Face：https://huggingface.co/zai-org （GLM-5.3-Flash / GLM-5.3 / GLM-5.2 / GLM-5.1 / GLM-5 等权重）
+27. **GLM 官方模型卡（本轮新增内容的核验主源）**：`huggingface.co/zai-org/GLM-5.2`（createdAt 2026-06-16）、`…/GLM-5.3`（2026-08-25）、`…/GLM-5.3-Flash`（2026-08-25）、`…/GLM-5.1`（2026-04-03）、`…/GLM-5`
+28. **智谱中文官方研究页**：https://www.zhipuai.cn/zh/research/161 （GLM-5.3 发布文，含任务环境规模化与安全能力叙述）
+29. GLM-130B 官方博客：https://keg.cs.tsinghua.edu.cn/glm-130b/
+30. CogVLM2-Video 项目页：https://cogvlm2-video.github.io/
+31. slime（RL 后训练框架）：https://github.com/THUDM/slime
 
 ### 第三方分析（参考）
 
-21. Z.ai Blog. **GLM-4.5: Reasoning, Coding, and Agentic Abililties**. https://z.ai/blog/glm-4.5
-22. APXML. *GLM-4.5 / GLM-4.6 Specifications and GPU VRAM Requirements*. https://apxml.com/models/glm-45 ｜ https://apxml.com/models/glm-46
-23. The Decoder (2025-12). *Zhipu AI challenges Western rivals with low-cost GLM-4.7*.
-24. vLLM 官方博客 (2025-08-19). *GLM-4.5 Meets vLLM: Built for Intelligent Agents*.
+32. Z.ai Blog. **GLM-4.5: Reasoning, Coding, and Agentic Abililties**. https://z.ai/blog/glm-4.5
+33. APXML. *GLM-4.5 / GLM-4.6 Specifications and GPU VRAM Requirements*. https://apxml.com/models/glm-45 ｜ https://apxml.com/models/glm-46
+34. The Decoder (2025-12). *Zhipu AI challenges Western rivals with low-cost GLM-4.7*.
+35. vLLM 官方博客 (2025-08-19). *GLM-4.5 Meets vLLM: Built for Intelligent Agents*.
 
 ---
 
 > 编纂说明：本报告以官方论文与发布信息为主要依据，对于社区流出的部分参数（如 GLM-4.7 / GLM-5 系列的精确激活/总参）已做标注；ChatGLM2/3 在"是否仍为 Prefix LM"上社区描述存在口径不一，本报告以官方仓库 README 与 ChatGLM 综述论文 (arXiv:2406.12793) 的最终归纳为准，并在第六章给出渐进式转型的判断。
+
+> **2026-10-17 增量说明**：本轮只做增补与修正，不改动 2026-06 前已核验的结论。新增内容集中在 **§2.9**（GLM-5.2 / GLM-5.3 / GLM-5.3-Flash，含 §2.9.0 为对照基线补的 GLM-5.1 带条件数字）、**§2.10**（未确证与待跟踪，9 项，均不入正文）、**§7.4**（Coding Plan 与价格分层）；同步更新 §1.1 时间线、§8 创新点表（+4 项）、§9.1/§9.2 横向对比表、§10 参考文献与官方资源编号（原「官方资源」编号与论文列表重复，本轮一并重排）。**证据分级口径**：精读原文（官方模型卡 / 官方文档 / 官方发布记录原文）、摘要级（仅读 arXiv 摘要与元数据）、二手（第三方页面或他人转述）、受限核验（原始页面在本环境不可达）。本轮 GLM-5.2 / 5.3 / 5.3-Flash 的主体数字均为「精读原文」；**受限核验项（z.ai 博客原文、GLM-5.3-Flash 基准图为图片）已明确标注，不参与结论**。
