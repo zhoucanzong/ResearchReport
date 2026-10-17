@@ -11,7 +11,7 @@
 ![Entries](https://img.shields.io/badge/Entries-48-5c6bc0?style=flat-square)
 ![Topics](https://img.shields.io/badge/Topics-21-7986cb?style=flat-square)
 ![Panels](https://img.shields.io/badge/Panels-6-9fa8da?style=flat-square)
-![Updated](https://img.shields.io/badge/Updated-2026--10--17-9e9e9e?style=flat-square)
+![Updated](https://img.shields.io/badge/Updated-2026--10--18-9e9e9e?style=flat-square)
 <!-- SCRIPT:badges END -->
 
 </div>
@@ -77,11 +77,11 @@ ResearchReport/    48 条目 · 21 专题 · 6 板块
 <!-- SCRIPT:recent START · front-matter date，缺失时回退 git 最近提交日 -->
 | 条目 | 板块 | 日期 | 来源 |
 | :-- | :-- | :-- | :-- |
+| [Gemini](<Models/Gemini/report.md>) | Models | 2026-10-18 | 最近提交日 |
+| [Qwen](<Models/Qwen/report.md>) | Models | 2026-10-18 | 最近提交日 |
 | [SpeculativeDecoding](<Infra/SpeculativeDecoding/report.md>) | Infra | 2026-10-17 | front-matter date |
 | [WorldModels](<WorldModel/WorldModels/report.md>) | WorldModel | 2026-10-17 | front-matter date |
 | [Alignment](<LLM/Alignment/report.md>) | LLM | 2026-10-17 | 最近提交日 |
-| [DecisionModels](<LLM/DecisionModels/report.md>) | LLM | 2026-10-17 | 最近提交日 |
-| [GLM](<Models/GLM/report.md>) | Models | 2026-10-17 | 最近提交日 |
 <!-- SCRIPT:recent END -->
 
 ## 📖 怎么用这个图书馆
