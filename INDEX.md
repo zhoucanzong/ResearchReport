@@ -15,15 +15,15 @@
 | --- | --- |
 | **条目数**（`report.md`） | **48** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 4 |
-| 条目子文档数 | 72 |
-| 条目正文行数（剔除 front-matter） | 30,967 |
-| 条目字节 | 1,894,090 B |
-| 带 front-matter 的条目 | 4 |
-| 带合法 `date` 的条目 | 4 |
-| 文档（除生成物外的全部 `.md`） | 133 |
+| 条目子文档数 | 85 |
+| 条目正文行数（剔除 front-matter） | 31,197 |
+| 条目字节 | 1,900,335 B |
+| 带 front-matter 的条目 | 5 |
+| 带合法 `date` 的条目 | 5 |
+| 文档（除生成物外的全部 `.md`） | 146 |
 | 其中文件名 `README.md` | 8 |
-| 纳入版本控制的文件 | 153 |
-| 纳入版本控制的 `.md` | 141 |
+| 纳入版本控制的文件 | 166 |
+| 纳入版本控制的 `.md` | 154 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -36,9 +36,9 @@
 | LLM | 8 | 25 | 5,217 | 340,995 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,805 | 318,091 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 2 | 31 | 1,207 | 129,154 B | [板块页 →](<WorldModel/README.md>) |
-| Infra | 3 | 15 | 1,866 | 100,011 B | [板块页 →](<Infra/README.md>) |
+| Infra | 3 | 28 | 2,096 | 106,256 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 4 | 18 | 1,056 | 105,250 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **48** | **133** | **30,967** | **1,894,090 B** | — |
+| **合计** | **48** | **146** | **31,197** | **1,900,335 B** | — |
 
 ## 分面索引
 
@@ -618,10 +618,10 @@
 
 </details>
 
-### Infra（3 条目 / 15 文档）
+### Infra（3 条目 / 28 文档）
 
 <details>
-<summary><b>基础设施 Infra（3 条目 / 11 子文档）</b></summary>
+<summary><b>基础设施 Infra（3 条目 / 24 子文档）</b></summary>
 
   <details>
   <summary><b>QuantizationEdge</b> · <code>Infra/QuantizationEdge/report.md</code> · 777 行 · —</summary>
@@ -636,13 +636,23 @@
   </details>
 
   <details>
-  <summary><b>SpeculativeDecoding</b> · <code>Infra/SpeculativeDecoding/report.md</code> · 369 行 · —</summary>
+  <summary><b>SpeculativeDecoding</b> · <code>Infra/SpeculativeDecoding/report.md</code> · 599 行 · 2026-10-17</summary>
   
 
-    * **条目**：[Infra/SpeculativeDecoding/report.md](<Infra/SpeculativeDecoding/report.md>)（369 行 / 33,957 B）
+    * **条目**：[Infra/SpeculativeDecoding/report.md](<Infra/SpeculativeDecoding/report.md>)（599 行 / 40,202 B）
     * **专题目录**：`Infra/SpeculativeDecoding`
-    * **元数据**：type=`—` · domain=`Infra` · subject=`SpeculativeDecoding` · date=`—` · status=`—`
-    * **子文档（11）**
+    * **元数据**：type=`topic-research` · domain=`Infra` · subject=`SpeculativeDecoding` · date=`2026-10-17` · status=`completed`
+    * **子文档（24）**
+        * [papers/2305.09781-specinfer.md](<Infra/SpeculativeDecoding/papers/2305.09781-specinfer.md>) — 201 行 / 15,667 B
+        * [papers/2401.10774-medusa.md](<Infra/SpeculativeDecoding/papers/2401.10774-medusa.md>) — 204 行 / 15,815 B
+        * [papers/2401.15077-eagle-series.md](<Infra/SpeculativeDecoding/papers/2401.15077-eagle-series.md>) — 244 行 / 19,834 B
+        * [papers/2402.02057-lookahead.md](<Infra/SpeculativeDecoding/papers/2402.02057-lookahead.md>) — 202 行 / 15,419 B
+        * [papers/2408.11049-magicdec.md](<Infra/SpeculativeDecoding/papers/2408.11049-magicdec.md>) — 200 行 / 14,379 B
+        * [papers/2609.21827-rheosampling.md](<Infra/SpeculativeDecoding/papers/2609.21827-rheosampling.md>) — 216 行 / 15,804 B
+        * [papers/sglang-implementation.md](<Infra/SpeculativeDecoding/papers/sglang-implementation.md>) — 219 行 / 14,575 B
+        * [papers/vllm-implementation.md](<Infra/SpeculativeDecoding/papers/vllm-implementation.md>) — 218 行 / 16,267 B
+        * [sources/CANDIDATES.md](<Infra/SpeculativeDecoding/sources/CANDIDATES.md>) — 82 行 / 7,644 B
+        * [sources/MANIFEST.md](<Infra/SpeculativeDecoding/sources/MANIFEST.md>) — 38 行 / 5,111 B
         * [speculative-block-diffusion.md](<Infra/SpeculativeDecoding/speculative-block-diffusion.md>) — 230 行 / 18,585 B
         * [speculative-cascade-heterogeneous.md](<Infra/SpeculativeDecoding/speculative-cascade-heterogeneous.md>) — 141 行 / 11,829 B
         * [speculative-classical-and-self.md](<Infra/SpeculativeDecoding/speculative-classical-and-self.md>) — 157 行 / 12,110 B
@@ -654,6 +664,9 @@
         * [speculative-stochastic-verification.md](<Infra/SpeculativeDecoding/speculative-stochastic-verification.md>) — 234 行 / 28,374 B
         * [speculative-systems-and-frameworks.md](<Infra/SpeculativeDecoding/speculative-systems-and-frameworks.md>) — 206 行 / 18,394 B
         * [speculative-training-optimization.md](<Infra/SpeculativeDecoding/speculative-training-optimization.md>) — 128 行 / 14,086 B
+        * [topics/algorithm-families.md](<Infra/SpeculativeDecoding/topics/algorithm-families.md>) — 164 行 / 11,910 B
+        * [topics/systems-throughput-latency.md](<Infra/SpeculativeDecoding/topics/systems-throughput-latency.md>) — 168 行 / 10,532 B
+        * [topics/verification-acceptance.md](<Infra/SpeculativeDecoding/topics/verification-acceptance.md>) — 216 行 / 12,395 B
 
   </details>
 

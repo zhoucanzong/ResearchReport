@@ -12,16 +12,16 @@
 | 条目 | date | 板块 | 专题 |
 | --- | --- | --- | --- |
 | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 2026-10-17 | WorldModel | WorldModels |
+| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 2026-10-17 | Infra | SpeculativeDecoding |
 | [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | 2026-10-16 | OpenSource | vllm |
 | [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | 2026-10-16 | OpenSource | this-that-model |
 | [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | 2026-10-16 | OpenSource | sglang |
 
-## 无 date 元数据（44）
+## 无 date 元数据（43）
 
 以下条目缺少可解析的 `date`，无法参与「最近更新」排序：
 
 * [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>)
-* [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>)
 * [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>)
 * [LLM/Agent/report.md](<../LLM/Agent/report.md>)
 * [LLM/Alignment/report.md](<../LLM/Alignment/report.md>)

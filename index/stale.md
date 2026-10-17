@@ -9,21 +9,21 @@
 
 判定口径：`status` 不是 active/current/ok/stable/published，或 `date` 早于 180 天。
 
-## 已标记（4）
+## 已标记（5）
 
 | 条目 | 原因 |
 | --- | --- |
+| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | status=completed |
 | [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | status=completed |
 | [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | status=completed |
 | [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | status=completed |
 | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | status=completed |
 
-## 无 date 且无 status（无法判定，44）
+## 无 date 且无 status（无法判定，43）
 
 以下条目既没有 `date` 也没有 `status`，陈旧度无法评估（不算作已标记）：
 
 * [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>)
-* [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>)
 * [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>)
 * [LLM/Agent/report.md](<../LLM/Agent/report.md>)
 * [LLM/Alignment/report.md](<../LLM/Alignment/report.md>)

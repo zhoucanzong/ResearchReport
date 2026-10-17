@@ -109,9 +109,9 @@ status: completed
 | :-- | :-- | :-- | :-- |
 | **严格分布等价** | 对任意序列，输出概率 = p(Seq) | 经典单链；静态树；RheoSampling（Theorem 1）；Traversal Verification；HeteroSpec | ✅ |
 | **序列级等价** | 以整条序列概率判接受（而非逐 token） | Traversal Verification 的视角 | ✅（在其定义域） |
-| **有界风险** | 接受放宽到“分布偏移受控” | ARC-Decode（JS 上界）；Medusa typical acceptance；CDSL（任务奖励） | ❌ 只能写“质量近乎不变” |
+| **有界风险** | 接受放宽到“分布偏移受控” | ARC-Decode（JS 上界，ICML 2026 会议页 `[摘要级]`）；Medusa typical acceptance（[papers/2401.10774-medusa.md](papers/2401.10774-medusa.md) §2.3）；CDSL（NAACL 2025，素材层） | ❌ 只能写“质量近乎不变” |
 
-> **反例**：把 ARC-Decode 的“相对 EAGLE-3 最高 1.6×”与 RheoSampling 的“相对自回归 2.93×”并列，是**量纲 + 基准 + 保证等级**三重错配。
+> **反例**：把 ARC-Decode 的“相对 EAGLE-3 最高 1.6×”（ICML 2026 会议页 `[摘要级]`）与 RheoSampling 的“相对自回归 2.93×”（[papers/2609.21827-rheosampling.md](papers/2609.21827-rheosampling.md) §4）并列，是**量纲 + 基准 + 保证等级**三重错配。
 
 ### 1.4 指标口径（工程硬要求）
 
@@ -237,7 +237,7 @@ flowchart LR
 
 **读法**：三次转折都不是“算法更准”，而是“**把某个系统约束显式化**”——① 把覆盖率显式化，② 把 draft 获取成本显式化，③ 把负载/温度显式化。这也是为什么同一算法在不同系统里表现差异巨大。
 
-### 3.8 一个请求从进入到返回的投机路径（跨系统抽象）
+### 3.8 一个请求从进入到返回的投机路径（跨系统抽象；vLLM `llm_base_proposer.py:511` / SGLang `eagle_worker_v2.py:676`）
 
 | 步 | 做什么 | vLLM 对应 | SGLang 对应 |
 | --: | :-- | :-- | :-- |
@@ -361,7 +361,7 @@ flowchart LR
 3. **素材层与分册冲突时以分册为准**（例：EAGLE 的 arXiv 编号）。
 4. **代码行为绑定 commit**：vLLM `2b85d9cb`、SGLang `2a08e261`；换版本需重核。
 
-### 6.4 失效边界矩阵（按场景查）
+### 6.4 失效边界矩阵（按场景查；依据 [RheoSampling](papers/2609.21827-rheosampling.md) §6、[MagicDec](papers/2408.11049-magicdec.md) §6、[topic 3](topics/systems-throughput-latency.md) §8）
 
 | 场景 | 最可能踩的坑 | 先查哪篇 |
 | :-- | :-- | :-- |
@@ -549,7 +549,7 @@ flowchart LR
 ## 12. 引用注意（一句话版）
 
 - 引用加速比：必须带 `(batch, T, 序列长度, 硬件, 树参数)`。
-- 引用“无损”：必须说明是严格 / 序列级 / 有界风险。
+- 引用“无损”：必须说明是严格 / 序列级 / 有界风险（三档定义见 [topics/verification-acceptance.md](topics/verification-acceptance.md) §6）。
 - 引用 EAGLE-3：6.5× 是上限，1.38× 是 batch=64 吞吐，2.36× 是 batch=1 吞吐。
 - 引用 RheoSampling：2.93× 是相对自回归，不是相对 EAGLE-3。
 - 引用 SGLang #10308：分开写“issue 状态”与“代码能力”。
@@ -568,7 +568,7 @@ flowchart LR
 | 动态草稿树 | dynamic draft tree | 按上下文/置信度建树 |
 | 树注意 | tree attention | 一次前向验证整棵树 |
 | 前缀依赖 | prefix dependency | 草稿是否依赖前一个草稿 token |
-| 有界风险 | risk-bounded | 分布偏移受控但非严格等价 |
+| 有界风险 | risk-bounded | 分布偏移受控但非严格等价（见 [topic 2 §6](topics/verification-acceptance.md)） |
 | 稀疏 KV | sparse KV | 只保留部分 KV 做 draft |
 | 临界序列长度 | critical/inflection sequence length | 投机收益随 batch 反转的分界 |
 | 逐位置接受率 | per-position acceptance rate | 第 j 个草稿位置的历史接受率 |

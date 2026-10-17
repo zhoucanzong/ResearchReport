@@ -60,7 +60,7 @@ ResearchReport/    48 条目 · 21 专题 · 6 板块
 - 💬 **[ReasoningModels](<LLM/ReasoningModels/report.md>)** — 推理模型（Reasoning Models）与 Test-Time Compute 研究报告
 - 🎨 **[VideoGen](<VisualGen/VideoGen/report.md>)** — 视频生成技术研究报告
 - 🌍 **[WorldModels](<WorldModel/WorldModels/report.md>)** — WorldModels 技术专题调研
-- ⚙️ **[SpeculativeDecoding](<Infra/SpeculativeDecoding/report.md>)** — 投机解码（Speculative Decoding）技术深度调研报告
+- ⚙️ **[SpeculativeDecoding](<Infra/SpeculativeDecoding/report.md>)** — 投机解码（Speculative Decoding）技术专题 · 深度调研
 - 🔧 **[vllm](<OpenSource/vllm/report.md>)** — vLLM 仓库代码分析报告
 <!-- SCRIPT:highlights END -->
 
@@ -77,11 +77,11 @@ ResearchReport/    48 条目 · 21 专题 · 6 板块
 <!-- SCRIPT:recent START · front-matter date，缺失时回退 git 最近提交日 -->
 | 条目 | 板块 | 日期 | 来源 |
 | :-- | :-- | :-- | :-- |
+| [SpeculativeDecoding](<Infra/SpeculativeDecoding/report.md>) | Infra | 2026-10-17 | front-matter date |
 | [WorldModels](<WorldModel/WorldModels/report.md>) | WorldModel | 2026-10-17 | front-matter date |
 | [Alignment](<LLM/Alignment/report.md>) | LLM | 2026-10-17 | 最近提交日 |
 | [DecisionModels](<LLM/DecisionModels/report.md>) | LLM | 2026-10-17 | 最近提交日 |
 | [GLM](<Models/GLM/report.md>) | Models | 2026-10-17 | 最近提交日 |
-| [GPT](<Models/GPT/report.md>) | Models | 2026-10-17 | 最近提交日 |
 <!-- SCRIPT:recent END -->
 
 ## 📖 怎么用这个图书馆
