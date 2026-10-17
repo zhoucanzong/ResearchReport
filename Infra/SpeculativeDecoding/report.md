@@ -40,7 +40,7 @@ status: completed
 | 4 | [2305.09781-specinfer.md](papers/2305.09781-specinfer.md) | SpecInfer | 独立 draft·树验证系统 | 201 |
 | 5 | [2408.11049-magicdec.md](papers/2408.11049-magicdec.md) | MagicDec | 系统条件·长上下文大 batch | 200 |
 | 6 | [2609.21827-rheosampling.md](papers/2609.21827-rheosampling.md) | RheoSampling | T>0 动态树的无损修复 | 216 |
-| 7 | [vllm-implementation.md](papers/vllm-implementation.md) | vLLM @ 2b85d9cb | 生产框架·draft/verify 两路径 | 218 |
+| 7 | [vllm-implementation.md](papers/vllm-implementation.md) | vLLM @ 2b85d9cb | 生产框架·draft/verify 两路径 | 220 |
 | 8 | [sglang-implementation.md](papers/sglang-implementation.md) | SGLang @ 2a08e261 | 生产框架·topk=1 拒绝采样 | 219 |
 
 ### 横切专题（`topics/`，3 篇）
@@ -51,11 +51,11 @@ status: completed
 | 2 | [verification-acceptance.md](topics/verification-acceptance.md) | 单链/树/有界风险的无损性准则、top-K 到底改变什么、指标口径 | 216 |
 | 3 | [systems-throughput-latency.md](topics/systems-throughput-latency.md) | batch×序列×硬件的相图、吞吐-延迟权衡、上线清单 | 168 |
 
-### 历史素材层（保留的 11 篇横切子文档）
+### 历史素材层（legacy 素材，未按新标准校验）
 
-本轮按“**改造，不是从零写**”的要求，保留了 2026-10 之前的 11 篇横切子文档作为素材层，**未重写、未删除**：
+本轮按“**改造，不是从零写**”的要求，保留了 2026-10 之前的 11 篇横切子文档作为素材层，**未重写、未删除**，并已整体移入 [`legacy/`](legacy/)（内容未改，仅修正指向主报告的相对链接）：
 
-`speculative-classical-and-self.md`、`speculative-eagle-series.md`、`speculative-stochastic-verification.md`、`speculative-block-diffusion.md`、`speculative-cascade-heterogeneous.md`、`speculative-draft-training-2026.md`、`speculative-training-optimization.md`、`speculative-edge-cloud-hardware.md`、`speculative-domain-language.md`、`speculative-multimodal.md`、`speculative-systems-and-frameworks.md`。
+[`speculative-classical-and-self.md`](legacy/speculative-classical-and-self.md)、[`speculative-eagle-series.md`](legacy/speculative-eagle-series.md)、[`speculative-stochastic-verification.md`](legacy/speculative-stochastic-verification.md)、[`speculative-block-diffusion.md`](legacy/speculative-block-diffusion.md)、[`speculative-cascade-heterogeneous.md`](legacy/speculative-cascade-heterogeneous.md)、[`speculative-draft-training-2026.md`](legacy/speculative-draft-training-2026.md)、[`speculative-training-optimization.md`](legacy/speculative-training-optimization.md)、[`speculative-edge-cloud-hardware.md`](legacy/speculative-edge-cloud-hardware.md)、[`speculative-domain-language.md`](legacy/speculative-domain-language.md)、[`speculative-multimodal.md`](legacy/speculative-multimodal.md)、[`speculative-systems-and-frameworks.md`](legacy/speculative-systems-and-frameworks.md)。
 
 > **使用规则**：素材层用于查“2026 上半年的横向线索”；**与 `papers/` 冲突时以 `papers/` 为准**（例：素材层里 EAGLE 的 arXiv 编号有一处误写为 `2403.00835`，该编号实际是 CLLMs；正确编号是 **2401.15077**，见 [papers/2401.15077-eagle-series.md](papers/2401.15077-eagle-series.md)）。
 
@@ -582,21 +582,21 @@ flowchart LR
 
 ---
 
-## 附录 A：历史素材层（11 篇）的定位
+## 附录 A：历史素材层（11 篇）的定位（legacy 素材，未按新标准校验）
 
 | 素材文档 | 保留原因 | 与新结构的关系 |
 | :-- | :-- | :-- |
-| `speculative-classical-and-self.md` | 经典/自投机的时间线 | 被 `papers/` 1–3 覆盖，保留作素材 |
-| `speculative-eagle-series.md` | EAGLE 细节（含一处错误 ID） | 以 `papers/2401.15077-eagle-series.md` 为准 |
-| `speculative-stochastic-verification.md` | T>0 的首轮分析 | 被 `topics/verification-acceptance.md` + RheoSampling 分册升级 |
-| `speculative-block-diffusion.md` | 块扩散/检索式线索 | 谱系 IV 的素材；本轮未设分册 |
-| `speculative-cascade-heterogeneous.md` | 级联/异构 | 系统条件的补充素材 |
-| `speculative-draft-training-2026.md` | 训练目标新法 | 与 EAGLE-3/Medusa 训练章节交叉 |
-| `speculative-training-optimization.md` | 训练目标优化 | 同上 |
-| `speculative-edge-cloud-hardware.md` | 端侧/硬件 | 系统条件补充 |
-| `speculative-domain-language.md` | 领域/语种 | 检索式/结构化输出的补充 |
-| `speculative-multimodal.md` | 多模态 | 本轮未覆盖的方向 |
-| `speculative-systems-and-frameworks.md` | 系统/框架 | 被 vLLM/SGLang 分册 + topic 3 升级 |
+| [`speculative-classical-and-self.md`](legacy/speculative-classical-and-self.md) | 经典/自投机的时间线 | 被 `papers/` 1–3 覆盖，保留作素材 |
+| [`speculative-eagle-series.md`](legacy/speculative-eagle-series.md) | EAGLE 细节（含一处错误 ID） | 以 `papers/2401.15077-eagle-series.md` 为准 |
+| [`speculative-stochastic-verification.md`](legacy/speculative-stochastic-verification.md) | T>0 的首轮分析 | 被 `topics/verification-acceptance.md` + RheoSampling 分册升级 |
+| [`speculative-block-diffusion.md`](legacy/speculative-block-diffusion.md) | 块扩散/检索式线索 | 谱系 IV 的素材；本轮未设分册 |
+| [`speculative-cascade-heterogeneous.md`](legacy/speculative-cascade-heterogeneous.md) | 级联/异构 | 系统条件的补充素材 |
+| [`speculative-draft-training-2026.md`](legacy/speculative-draft-training-2026.md) | 训练目标新法 | 与 EAGLE-3/Medusa 训练章节交叉 |
+| [`speculative-training-optimization.md`](legacy/speculative-training-optimization.md) | 训练目标优化 | 同上 |
+| [`speculative-edge-cloud-hardware.md`](legacy/speculative-edge-cloud-hardware.md) | 端侧/硬件 | 系统条件补充 |
+| [`speculative-domain-language.md`](legacy/speculative-domain-language.md) | 领域/语种 | 检索式/结构化输出的补充 |
+| [`speculative-multimodal.md`](legacy/speculative-multimodal.md) | 多模态 | 本轮未覆盖的方向 |
+| [`speculative-systems-and-frameworks.md`](legacy/speculative-systems-and-frameworks.md) | 系统/框架 | 被 vLLM/SGLang 分册 + topic 3 升级 |
 
 ---
 

@@ -24,27 +24,27 @@
 <details>
 <summary><b>SpeculativeDecoding</b>（24 份）</summary>
 
+* [legacy/speculative-block-diffusion.md](<SpeculativeDecoding/legacy/speculative-block-diffusion.md>) — 230 行 / 18,588 B
+* [legacy/speculative-cascade-heterogeneous.md](<SpeculativeDecoding/legacy/speculative-cascade-heterogeneous.md>) — 141 行 / 11,829 B
+* [legacy/speculative-classical-and-self.md](<SpeculativeDecoding/legacy/speculative-classical-and-self.md>) — 157 行 / 12,113 B
+* [legacy/speculative-domain-language.md](<SpeculativeDecoding/legacy/speculative-domain-language.md>) — 182 行 / 14,598 B
+* [legacy/speculative-draft-training-2026.md](<SpeculativeDecoding/legacy/speculative-draft-training-2026.md>) — 199 行 / 15,583 B
+* [legacy/speculative-eagle-series.md](<SpeculativeDecoding/legacy/speculative-eagle-series.md>) — 113 行 / 11,905 B
+* [legacy/speculative-edge-cloud-hardware.md](<SpeculativeDecoding/legacy/speculative-edge-cloud-hardware.md>) — 182 行 / 18,130 B
+* [legacy/speculative-multimodal.md](<SpeculativeDecoding/legacy/speculative-multimodal.md>) — 152 行 / 15,666 B
+* [legacy/speculative-stochastic-verification.md](<SpeculativeDecoding/legacy/speculative-stochastic-verification.md>) — 234 行 / 28,374 B
+* [legacy/speculative-systems-and-frameworks.md](<SpeculativeDecoding/legacy/speculative-systems-and-frameworks.md>) — 206 行 / 18,397 B
+* [legacy/speculative-training-optimization.md](<SpeculativeDecoding/legacy/speculative-training-optimization.md>) — 128 行 / 14,089 B
 * [papers/2305.09781-specinfer.md](<SpeculativeDecoding/papers/2305.09781-specinfer.md>) — 201 行 / 15,667 B
 * [papers/2401.10774-medusa.md](<SpeculativeDecoding/papers/2401.10774-medusa.md>) — 204 行 / 15,815 B
 * [papers/2401.15077-eagle-series.md](<SpeculativeDecoding/papers/2401.15077-eagle-series.md>) — 244 行 / 19,834 B
 * [papers/2402.02057-lookahead.md](<SpeculativeDecoding/papers/2402.02057-lookahead.md>) — 202 行 / 15,419 B
 * [papers/2408.11049-magicdec.md](<SpeculativeDecoding/papers/2408.11049-magicdec.md>) — 200 行 / 14,379 B
 * [papers/2609.21827-rheosampling.md](<SpeculativeDecoding/papers/2609.21827-rheosampling.md>) — 216 行 / 15,804 B
-* [papers/sglang-implementation.md](<SpeculativeDecoding/papers/sglang-implementation.md>) — 219 行 / 14,776 B
-* [papers/vllm-implementation.md](<SpeculativeDecoding/papers/vllm-implementation.md>) — 220 行 / 16,575 B
+* [papers/sglang-implementation.md](<SpeculativeDecoding/papers/sglang-implementation.md>) — 219 行 / 14,815 B
+* [papers/vllm-implementation.md](<SpeculativeDecoding/papers/vllm-implementation.md>) — 220 行 / 16,588 B
 * [sources/CANDIDATES.md](<SpeculativeDecoding/sources/CANDIDATES.md>) — 82 行 / 7,644 B
-* [sources/MANIFEST.md](<SpeculativeDecoding/sources/MANIFEST.md>) — 38 行 / 5,111 B
-* [speculative-block-diffusion.md](<SpeculativeDecoding/speculative-block-diffusion.md>) — 230 行 / 18,585 B
-* [speculative-cascade-heterogeneous.md](<SpeculativeDecoding/speculative-cascade-heterogeneous.md>) — 141 行 / 11,829 B
-* [speculative-classical-and-self.md](<SpeculativeDecoding/speculative-classical-and-self.md>) — 157 行 / 12,110 B
-* [speculative-domain-language.md](<SpeculativeDecoding/speculative-domain-language.md>) — 182 行 / 14,598 B
-* [speculative-draft-training-2026.md](<SpeculativeDecoding/speculative-draft-training-2026.md>) — 199 行 / 15,583 B
-* [speculative-eagle-series.md](<SpeculativeDecoding/speculative-eagle-series.md>) — 113 行 / 11,902 B
-* [speculative-edge-cloud-hardware.md](<SpeculativeDecoding/speculative-edge-cloud-hardware.md>) — 182 行 / 18,130 B
-* [speculative-multimodal.md](<SpeculativeDecoding/speculative-multimodal.md>) — 152 行 / 15,663 B
-* [speculative-stochastic-verification.md](<SpeculativeDecoding/speculative-stochastic-verification.md>) — 234 行 / 28,374 B
-* [speculative-systems-and-frameworks.md](<SpeculativeDecoding/speculative-systems-and-frameworks.md>) — 206 行 / 18,394 B
-* [speculative-training-optimization.md](<SpeculativeDecoding/speculative-training-optimization.md>) — 128 行 / 14,086 B
+* [sources/MANIFEST.md](<SpeculativeDecoding/sources/MANIFEST.md>) — 38 行 / 5,138 B
 * [topics/algorithm-families.md](<SpeculativeDecoding/topics/algorithm-families.md>) — 164 行 / 11,910 B
 * [topics/systems-throughput-latency.md](<SpeculativeDecoding/topics/systems-throughput-latency.md>) — 168 行 / 10,532 B
 * [topics/verification-acceptance.md](<SpeculativeDecoding/topics/verification-acceptance.md>) — 216 行 / 12,395 B

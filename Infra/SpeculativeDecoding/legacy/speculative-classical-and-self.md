@@ -4,7 +4,7 @@
 >
 > **调研日期**：2026 年 10 月（本轮更新；v1 为 2026 年 6 月）
 > **本次改动**：新增 §3.2.5「2025 年自投机新解法：SWIFT 与 CLaSp」；**修复 v1 中 Hydra 的错误链接**；新增 §3.2.6「回指：自投机与随机采样验证的关系」；新增「证据等级」列。
-> **本文定位**：本文是《投机解码技术深度调研报告》的子报告之一，聚焦经典独立模型 draft 与自投机方法。主报告见 [report.md](report.md)；验证正确性的新章节见 [speculative-stochastic-verification.md](speculative-stochastic-verification.md)。
+> **本文定位**：本文是《投机解码技术深度调研报告》的子报告之一，聚焦经典独立模型 draft 与自投机方法。主报告见 [report.md](../report.md)；验证正确性的新章节见 [speculative-stochastic-verification.md](speculative-stochastic-verification.md)。
 > **证据等级约定**：**[精读原文]**、**[摘要级]**、**[二手]**。
 > **等级规则**：每条结论只取**一个主等级**（精读原文 / 摘要级 / 二手 / 受限核验）；**混合来源取最弱等级**并在正文注明来源类型（如 `[精读原文（vLLM 官方文档）]`）；不使用 `A + B`、`A（摘要层）` 这类复合标签。
 

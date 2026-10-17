@@ -17,7 +17,7 @@
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 4 |
 | 条目子文档数 | 85 |
 | 条目正文行数（剔除 front-matter） | 31,197 |
-| 条目字节 | 1,900,987 B |
+| 条目字节 | 1,902,100 B |
 | 带 front-matter 的条目 | 5 |
 | 带合法 `date` 的条目 | 5 |
 | 文档（除生成物外的全部 `.md`） | 146 |
@@ -36,9 +36,9 @@
 | LLM | 8 | 25 | 5,217 | 340,995 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,805 | 318,091 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 2 | 31 | 1,207 | 129,154 B | [板块页 →](<WorldModel/README.md>) |
-| Infra | 3 | 28 | 2,096 | 106,908 B | [板块页 →](<Infra/README.md>) |
+| Infra | 3 | 28 | 2,096 | 108,021 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 4 | 18 | 1,056 | 105,250 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **48** | **146** | **31,197** | **1,900,987 B** | — |
+| **合计** | **48** | **146** | **31,197** | **1,902,100 B** | — |
 
 ## 分面索引
 
@@ -639,31 +639,31 @@
   <summary><b>SpeculativeDecoding</b> · <code>Infra/SpeculativeDecoding/report.md</code> · 599 行 · 2026-10-17</summary>
   
 
-    * **条目**：[Infra/SpeculativeDecoding/report.md](<Infra/SpeculativeDecoding/report.md>)（599 行 / 40,854 B）
+    * **条目**：[Infra/SpeculativeDecoding/report.md](<Infra/SpeculativeDecoding/report.md>)（599 行 / 41,967 B）
     * **专题目录**：`Infra/SpeculativeDecoding`
     * **元数据**：type=`topic-research` · domain=`Infra` · subject=`SpeculativeDecoding` · date=`2026-10-17` · status=`completed`
     * **子文档（24）**
+        * [legacy/speculative-block-diffusion.md](<Infra/SpeculativeDecoding/legacy/speculative-block-diffusion.md>) — 230 行 / 18,588 B
+        * [legacy/speculative-cascade-heterogeneous.md](<Infra/SpeculativeDecoding/legacy/speculative-cascade-heterogeneous.md>) — 141 行 / 11,829 B
+        * [legacy/speculative-classical-and-self.md](<Infra/SpeculativeDecoding/legacy/speculative-classical-and-self.md>) — 157 行 / 12,113 B
+        * [legacy/speculative-domain-language.md](<Infra/SpeculativeDecoding/legacy/speculative-domain-language.md>) — 182 行 / 14,598 B
+        * [legacy/speculative-draft-training-2026.md](<Infra/SpeculativeDecoding/legacy/speculative-draft-training-2026.md>) — 199 行 / 15,583 B
+        * [legacy/speculative-eagle-series.md](<Infra/SpeculativeDecoding/legacy/speculative-eagle-series.md>) — 113 行 / 11,905 B
+        * [legacy/speculative-edge-cloud-hardware.md](<Infra/SpeculativeDecoding/legacy/speculative-edge-cloud-hardware.md>) — 182 行 / 18,130 B
+        * [legacy/speculative-multimodal.md](<Infra/SpeculativeDecoding/legacy/speculative-multimodal.md>) — 152 行 / 15,666 B
+        * [legacy/speculative-stochastic-verification.md](<Infra/SpeculativeDecoding/legacy/speculative-stochastic-verification.md>) — 234 行 / 28,374 B
+        * [legacy/speculative-systems-and-frameworks.md](<Infra/SpeculativeDecoding/legacy/speculative-systems-and-frameworks.md>) — 206 行 / 18,397 B
+        * [legacy/speculative-training-optimization.md](<Infra/SpeculativeDecoding/legacy/speculative-training-optimization.md>) — 128 行 / 14,089 B
         * [papers/2305.09781-specinfer.md](<Infra/SpeculativeDecoding/papers/2305.09781-specinfer.md>) — 201 行 / 15,667 B
         * [papers/2401.10774-medusa.md](<Infra/SpeculativeDecoding/papers/2401.10774-medusa.md>) — 204 行 / 15,815 B
         * [papers/2401.15077-eagle-series.md](<Infra/SpeculativeDecoding/papers/2401.15077-eagle-series.md>) — 244 行 / 19,834 B
         * [papers/2402.02057-lookahead.md](<Infra/SpeculativeDecoding/papers/2402.02057-lookahead.md>) — 202 行 / 15,419 B
         * [papers/2408.11049-magicdec.md](<Infra/SpeculativeDecoding/papers/2408.11049-magicdec.md>) — 200 行 / 14,379 B
         * [papers/2609.21827-rheosampling.md](<Infra/SpeculativeDecoding/papers/2609.21827-rheosampling.md>) — 216 行 / 15,804 B
-        * [papers/sglang-implementation.md](<Infra/SpeculativeDecoding/papers/sglang-implementation.md>) — 219 行 / 14,776 B
-        * [papers/vllm-implementation.md](<Infra/SpeculativeDecoding/papers/vllm-implementation.md>) — 220 行 / 16,575 B
+        * [papers/sglang-implementation.md](<Infra/SpeculativeDecoding/papers/sglang-implementation.md>) — 219 行 / 14,815 B
+        * [papers/vllm-implementation.md](<Infra/SpeculativeDecoding/papers/vllm-implementation.md>) — 220 行 / 16,588 B
         * [sources/CANDIDATES.md](<Infra/SpeculativeDecoding/sources/CANDIDATES.md>) — 82 行 / 7,644 B
-        * [sources/MANIFEST.md](<Infra/SpeculativeDecoding/sources/MANIFEST.md>) — 38 行 / 5,111 B
-        * [speculative-block-diffusion.md](<Infra/SpeculativeDecoding/speculative-block-diffusion.md>) — 230 行 / 18,585 B
-        * [speculative-cascade-heterogeneous.md](<Infra/SpeculativeDecoding/speculative-cascade-heterogeneous.md>) — 141 行 / 11,829 B
-        * [speculative-classical-and-self.md](<Infra/SpeculativeDecoding/speculative-classical-and-self.md>) — 157 行 / 12,110 B
-        * [speculative-domain-language.md](<Infra/SpeculativeDecoding/speculative-domain-language.md>) — 182 行 / 14,598 B
-        * [speculative-draft-training-2026.md](<Infra/SpeculativeDecoding/speculative-draft-training-2026.md>) — 199 行 / 15,583 B
-        * [speculative-eagle-series.md](<Infra/SpeculativeDecoding/speculative-eagle-series.md>) — 113 行 / 11,902 B
-        * [speculative-edge-cloud-hardware.md](<Infra/SpeculativeDecoding/speculative-edge-cloud-hardware.md>) — 182 行 / 18,130 B
-        * [speculative-multimodal.md](<Infra/SpeculativeDecoding/speculative-multimodal.md>) — 152 行 / 15,663 B
-        * [speculative-stochastic-verification.md](<Infra/SpeculativeDecoding/speculative-stochastic-verification.md>) — 234 行 / 28,374 B
-        * [speculative-systems-and-frameworks.md](<Infra/SpeculativeDecoding/speculative-systems-and-frameworks.md>) — 206 行 / 18,394 B
-        * [speculative-training-optimization.md](<Infra/SpeculativeDecoding/speculative-training-optimization.md>) — 128 行 / 14,086 B
+        * [sources/MANIFEST.md](<Infra/SpeculativeDecoding/sources/MANIFEST.md>) — 38 行 / 5,138 B
         * [topics/algorithm-families.md](<Infra/SpeculativeDecoding/topics/algorithm-families.md>) — 164 行 / 11,910 B
         * [topics/systems-throughput-latency.md](<Infra/SpeculativeDecoding/topics/systems-throughput-latency.md>) — 168 行 / 10,532 B
         * [topics/verification-acceptance.md](<Infra/SpeculativeDecoding/topics/verification-acceptance.md>) — 216 行 / 12,395 B
@@ -754,7 +754,7 @@
 
 | 文档 | 板块 | 行数 | 字节 |
 | --- | --- | --: | --: |
-| [Infra/README.md](<Infra/README.md>) | Infra | 58 | 3,921 B |
+| [Infra/README.md](<Infra/README.md>) | Infra | 58 | 4,075 B |
 | [LLM/README.md](<LLM/README.md>) | LLM | 55 | 3,584 B |
 | [Models/README.md](<Models/README.md>) | Models | 65 | 3,584 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 59 | 2,471 B |

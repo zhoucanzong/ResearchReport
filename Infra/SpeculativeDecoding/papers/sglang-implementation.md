@@ -39,18 +39,18 @@
 | 关注点 | 文件 | 行号（本 commit） | 说明 |
 | :-- | :-- | :-- | :-- |
 | 顶层开关 | `eagle_worker_v2.py` | `178–180` | `self.topk = get_spec().speculative_eagle_topk`；开启拒绝采样时 `assert self.topk == 1` |
-| 步数/草稿数 | 同上 | `184–186` | `speculative_num_steps`、`speculative_num_draft_tokens` |
+| 步数/草稿数 | 同上 | `181–182` | `speculative_num_steps`、`speculative_num_draft_tokens` |
 | 草稿输出 | 同上 | `648–657` | CUDA graph 输出 `draft_probs`，并 `clone()` 出图内存池 |
-| 构造验证输入 | 同上 | `676–681` | `build_eagle_verify_input(..., draft_probs, topk=...)` |
+| 构造验证输入 | 同上 | `671–684` | `build_eagle_verify_input(..., draft_probs, topk=...)` |
 | 何时需要 draft_probs | 同上 | `727–733` | `needs_draft_probs = speculative_use_rejection_sampling and not is_all_greedy` |
 | 树构造 | `eagle_utils.py` | `157` | `build_tree_kernel_efficient(...)` |
 | 贪心验证 | 同上 | `384` | `verify_tree_greedy_func(...)` |
 | 统一验证入口 | 同上 | `741` | `eagle_sample(...)` |
 | 读开关 | 同上 | `860` | `use_rejection_sampling = get_spec().speculative_use_rejection_sampling` |
-| 贪心分支 | 同上 | `862–916` | `_verify_uses_greedy(...)` → `verify_tree_greedy_func` |
+| 贪心分支 | 同上 | `861–916` | `_verify_uses_greedy(...)` → `verify_tree_greedy_func` |
 | 采样分支 | 同上 | `947–1030` | 选 `chain_speculative_sampling_triton` 或 `tree_speculative_sampling_target_only` |
 | draft_probs 校验 | 同上 | `1000–1013` | 拒绝采样时检查 `draft_probs` 存在且词表匹配，否则 `ValueError` |
-| 传入 kernel | 同上 | `1030–1044` | `target_probs`、`draft_probs`、`uniform_samples` 一起传 |
+| 传入 kernel | 同上 | `1032–1038` | `target_probs`、`draft_probs`、`uniform_samples` 一起传 |
 | 字段定义 | `eagle_info.py` | `35`、`162` | `EagleVerifyInput.draft_probs`、`EagleDraftInput.draft_probs` |
 
 ---
@@ -61,7 +61,7 @@
 
 1. **draft 前向**：跑 `speculative_num_steps` 步草稿；CUDA graph 路径返回 `(parent_list, top_scores_index, draft_tokens, draft_probs)`（`:648–657`）。
 2. **draft_probs 出池**：CUDA graph 的 `draft_probs` 指向图私有内存池，必须 `clone()`（`:650–657` 的注释明确写了池会被 DSA top-k mask 复用，不 clone 会读到 `-inf`）。
-3. **组装验证输入**：`build_eagle_verify_input(..., draft_probs, topk=self.topk, ...)`（`:676–681`）。
+3. **组装验证输入**：`build_eagle_verify_input(..., draft_probs, topk=self.topk, ...)`（`:671–684`）。
 4. **验证**：`eagle_sample` 按 greedy / sampling 分流（`eagle_utils.py:860`）。
 5. **写回**：接受路径写 KV / 序列；被拒位置由 target 采样补 token。
 
@@ -137,7 +137,7 @@ if get_spec().speculative_use_rejection_sampling:
 3. `eagle_info.py:35`/`162`：`EagleVerifyInput` / `EagleDraftInput` 都有 `draft_probs` 字段；
 4. `eagle_utils.py:947`：选择 `chain_speculative_sampling_triton`；
 5. `eagle_utils.py:1000–1013`：`draft_probs` 缺失/词表不匹配 → 硬报错；
-6. `eagle_utils.py:1030–1044`：`target_probs`、`draft_probs`、`uniform_samples` 一起传入采样 kernel。
+6. `eagle_utils.py:1032–1038`：`target_probs`、`draft_probs`、`uniform_samples` 一起传入采样 kernel。
 
 **结论（可引用）**：issue 本身**没有 linked PR**、以 inactive 关闭；但**它请求的能力在 2026-10 的主线代码中以“topk=1 + 拒绝采样开关”的形式存在**。因此：
 
@@ -158,7 +158,7 @@ if get_spec().speculative_use_rejection_sampling:
 
 ## 7. 与 vLLM 的实现对照
 
-| 维度 | SGLang @ 2a08e261 | vLLM @ 2b85d9cb |
+| 维度 | SGLang @ 2a08e261 | vLLM（对照，见 vLLM 分册） |
 | :-- | :-- | :-- |
 | 开关命名 | `speculative_use_rejection_sampling` | `rejection_sample_method` + `draft_sample_method` |
 | one-hot 草稿 | 未开拒绝采样时，树路径 `draft_probs` 置零 | `draft_sample_method="greedy"`（默认） |
@@ -166,7 +166,7 @@ if get_spec().speculative_use_rejection_sampling:
 | 约束 | **assert topk==1** | 不要求 topk=1；异构词表只允许 greedy |
 | 缺概率时 | **硬报错**（ValueError） | 整批回退 legacy（warning + None） |
 | 树路径 | `tree_speculative_sampling_target_only` | `_rejection_random_sample` / `NO_DRAFT_PROBS` |
-| 指标 | 未见独立 metrics 文件；接受长度由调度侧统计 | `metrics.py:107–122` 显式两个分母 |
+| 指标 | 未见独立 metrics 文件；接受长度由调度侧统计 | `vllm/v1/spec_decode/metrics.py:107–122` 显式两个分母 |
 
 **可判定差异一句话**：SGLang 把“topk=1 链式 + 真概率”做成**强约束的专用路径**；vLLM 把它做成**可配置的正交开关**。两者都在 2026-10 具备“把 draft 概率传给验证”的能力，但适用形状不同。
 

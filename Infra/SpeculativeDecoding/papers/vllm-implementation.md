@@ -146,17 +146,17 @@
 | 模式 | 语义 | 是否保分布 | 备注 |
 | :-- | :-- | :-- | :-- |
 | `standard` | 概率拒绝采样（`p/q` 比值 + 残差重采样） | ✅ 严格（在 `q` 正确传递时） | 默认；支持 greedy 与 probabilistic |
-| `synthetic` | 按 `synthetic_acceptance_rates` / `synthetic_acceptance_length` 衰减接受 | ❌ 不保分布 | 用于模拟/压测；参数必须单调不增（`speculative.py:533–560`） |
+| `synthetic` | 按 `synthetic_acceptance_rates` / `synthetic_acceptance_length` 衰减接受 | ❌ 不保分布 | 用于模拟/压测；参数必须单调不增（`speculative.py:533–553`） |
 | `block` | 块验证（Sun et al.） | 取决于实现 | 与“逐 token 验证”相对 |
 
-- **`enable_adaptive_verification`**（`speculative.py:560` 附近）：按请求置信度自适应验证预算，注释写明“currently only supported for method='dspark'”——这与 [papers/2408.11049-magicdec.md](2408.11049-magicdec.md) 的“按负载选 γ”同源。
+- **`enable_adaptive_verification`**（`speculative.py:555`）：按请求置信度自适应验证预算，注释写明“currently only supported for method='dspark'”——这与 [papers/2408.11049-magicdec.md](2408.11049-magicdec.md) 的“按负载选 γ”同源。
 - **`parallel_drafting`**（`llm_base_proposer.py:112–114`）：DFlash 一类并行草稿一次出 `num_speculative_tokens` 行；`_sample_from_logits` 里专门处理“logits 行数 = batch×K、sampling metadata 是 per-request”的广播（`:459–472`）。
 
 ---
 
 ## 7. 指标实现：分母写死在代码里
 
-`metrics.py:107–122`：
+`vllm/v1/spec_decode/metrics.py:107–122`：
 
 - `draft_acceptance_rate = num_accepted_tokens / num_draft_tokens × 100`（分母是**提议草稿数**）；
 - `mean_acceptance_length = 1 + num_accepted_tokens / num_drafts`（分母是**验证步数**，含 bonus token）；
