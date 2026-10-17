@@ -51,9 +51,9 @@ OpenAI 的 GPT 家族是过去八年大模型行业的主轴线。从 2018 年 1
 | 2023-09 | **GPT-4V(ision)** System Card | 多模态 | 把 GPT-4 的视觉输入正式开放 API |
 | 2023-11-06 | **GPT-4 Turbo**（gpt-4-1106-preview） | LLM | 128K 上下文、JSON Mode、知识截止 2023-04 |
 | 2024-05-13 | **GPT-4o**（"omni"）System Card | 多模态 | 单模型端到端处理 text/audio/image/video，语音延迟 ~320ms |
-| 2024-07-18 | **GPT-4o mini** | 小模型 | 替代 GPT-3.5 Turbo，**MMLU 82%**，价格 $0.15/$0.60 per 1M |
+| 2024-07-18 | **GPT-4o mini** | 小模型 | 替代 GPT-3.5 Turbo，**MMLU 82%**，价格 \$0.15/\$0.60 per 1M |
 | 2024-09-12 | **o1-preview / o1-mini**（"Strawberry"） | 推理 | 首次产品化 *Long CoT + RL*，竞赛数学/科学推理大幅提升 |
-| 2024-12-05 | **o1 (full) / o1-pro** | 推理 | o1 正式版上线 ChatGPT Pro $200/月套餐，支持 ProSearch |
+| 2024-12-05 | **o1 (full) / o1-pro** | 推理 | o1 正式版上线 ChatGPT Pro \$200/月套餐，支持 ProSearch |
 | 2024-12-20 | **o3 / o3-mini** 预览（外部红队） | 推理 | ARC-AGI 公开测试集 87.5%（high-compute），震动学界 |
 | 2025-01-31 | **o3-mini** 正式上线 API | 推理 | low/medium/high 三档 reasoning effort |
 | 2025-04 | **o3 / o4-mini** 全量开放 | 推理 | 首次原生 tool-use（python、search、image）的推理模型 |
@@ -192,7 +192,7 @@ GPT-4 是 OpenAI **第一份「明确不公开技术细节」** 的旗舰：
 广为流传但**未经官方确认**的描述（仅供参考）：
 - *推测* 总参数 ~1.8T，**8 路 MoE × 220B 专家**（Geohot/SemiAnalysis 2023-07 披露）；
 - *推测* 训练 token ~13T，使用 ~25,000 张 A100 训练 90~100 天；
-- *推测* 训练成本 ~$63M。
+- *推测* 训练成本 ~\$63M。
 
 **这些数字未被 OpenAI 任何官方文件背书。** 行业引用时一般标注为「广泛流传的估计」。
 
@@ -202,7 +202,7 @@ GPT-4 是 OpenAI **第一份「明确不公开技术细节」** 的旗舰：
 - **128K 上下文**（首次跨入十万 token 级，与同期 Claude 2.1 200K 错位）；
 - **JSON Mode** + **Function Calling 升级**：原生结构化输出，工程上替代 LangChain 的多数包装；
 - **知识截止前推到 2023-04**；
-- **成本下降 ~3×**（输入 $0.01/1K，输出 $0.03/1K）。
+- **成本下降 ~3×**（输入 \$0.01/1K，输出 \$0.03/1K）。
 
 技术上 *推测* 是同代基座的蒸馏 + 长上下文继续训练，未发表正式论文。
 
@@ -215,8 +215,8 @@ GPT-4o 的「o」代表 **omni**，是 OpenAI 第一个**单模型端到端处�
 - **原生音频**：以前的 ChatGPT Voice 是 ASR (Whisper) → GPT-4 → TTS 三段串联，端到端延迟 2.8~5.4 s；GPT-4o 直接以**音频 token** 作为输入输出，平均延迟 ~**320 ms**，逼近人类对话节奏（确认）。
 - **多模态融合方式**（*Implied + 推测*）：模型同时接收 *unified token stream*（文字、视觉 patch、音频帧均映射到同一序列），共享 Transformer 计算；System Card 提到「single model trained end-to-end across text, vision, and audio」。
 - **能力指标**（确认）：MMLU 88.7、HumanEval 90.2、MGSM（多语言数学）90.5，在英语外语种上明显优于 GPT-4 Turbo。
-- **价格**：API 单价较 GPT-4 Turbo 砍半至输入 $5/1M，输出 $15/1M。
-- **GPT-4o mini**（2024-07）：MMLU 82%，价格 $0.15/$0.60，正式取代 gpt-3.5-turbo。
+- **价格**：API 单价较 GPT-4 Turbo 砍半至输入 \$5/1M，输出 \$15/1M。
+- **GPT-4o mini**（2024-07）：MMLU 82%，价格 \$0.15/\$0.60，正式取代 gpt-3.5-turbo。
 
 **未公开**：参数量、激活策略、token 化方式（视觉/音频 codebook 的设计）、训练数据。社区基于 inference 速度与价格 *推测* 总参数低于 GPT-4，但激活更高效（可能是 MoE 的某种瘦身或 dense 重构），**无任何官方信息**。
 
