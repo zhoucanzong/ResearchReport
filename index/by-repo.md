@@ -10,7 +10,7 @@
 ## Infra (3)
 
 * [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) — 777 行
-* [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) — 599 行
+* [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) — 601 行
 * [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) — 720 行
 
 ## LLM (8)

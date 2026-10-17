@@ -71,7 +71,7 @@ status: completed
 6. **高 batch 的结论要加第三维：序列长度**。短序列 + 大 batch 亏（SpecInfer/Medusa/vLLM 口径一致）；长序列 + 大 batch 可能赚（MagicDec：S≥4000 时加速随 batch 上升，最高 2.51×）。`[精读原文]`
 7. **指标必须成对**：`draft_acceptance_rate`（分母=提议草稿数）与 `mean_acceptance_length`（分母=验证步数，含 bonus）会反向移动；只报一个会得出相反结论。`[精读原文（vLLM 代码）]`
 8. **工程落地已经分叉成两种语义**：vLLM 用 `draft_sample_method ∈ {greedy, probabilistic}`；SGLang 用 `speculative_use_rejection_sampling` + `assert topk == 1`。两者都能把真实 `draft_probs` 传给验证，但适用形状不同。`[精读原文（代码）]`
-9. **历史 issue #10308 的准确结论**：issue 以 inactive 关闭、无 linked PR；但它请求的“topk=1 采样验证”能力已在 SGLang 主线以 `draft_probs` + 拒绝采样开关实现，且**硬限制 topk=1**；tree topk>1 仍走 target-only kernel。`[精读原文（代码）]`
+9. **历史 issue #10308 的准确结论**：issue 于 2025-09-11 开立、2026-01-03 以 `state_reason=completed` 由 `github-actions[bot]` 关闭，timeline 无 linked PR/commit；但它请求的“topk=1 采样验证”能力已在 SGLang 主线以 `draft_probs` + 拒绝采样开关实现，且**硬限制 topk=1**；tree topk>1 仍走 target-only kernel。`[精读原文（代码）]`
 10. **证据边界**：本条目 8 篇分册中 6 篇是论文正文精读、2 篇是代码级核验；**未做独立复现**，所有加速比均为论文/官方自报值。
 
 ---
@@ -237,7 +237,7 @@ flowchart LR
 
 **读法**：三次转折都不是“算法更准”，而是“**把某个系统约束显式化**”——① 把覆盖率显式化，② 把 draft 获取成本显式化，③ 把负载/温度显式化。这也是为什么同一算法在不同系统里表现差异巨大。
 
-### 3.8 一个请求从进入到返回的投机路径（跨系统抽象；vLLM `llm_base_proposer.py:511` / SGLang `eagle_worker_v2.py:676`）
+### 3.8 一个请求从进入到返回的投机路径（跨系统抽象；vLLM `llm_base_proposer.py:511` / SGLang `eagle_worker_v2.py:671`）
 
 | 步 | 做什么 | vLLM 对应 | SGLang 对应 |
 | --: | :-- | :-- | :-- |
@@ -429,14 +429,15 @@ flowchart LR
 
 **结论（准确表述）**：
 
-1. issue `sgl-project/sglang#10308` **真实存在**：标题 *[Feature] Speculative sampling supports passing the predicted probability of the draft model and sample token for verification when **topk=1***；2025-11-03 开立、指派 `hnyls2002`；**2026-01-03 被 github-actions 以 inactive 自动关闭**；页面 timeline **未观察到 linked / merged PR**。
+1. issue `sgl-project/sglang#10308` **真实存在**：标题 *[Feature] Speculative sampling supports passing the predicted probability of the draft model and sample token for verification when **topk=1***；**2025-09-11 开立**（API `created_at=2025-09-11T08:20:37Z`；2025-11-03 指派 `hnyls2002`，为另一里程碑）；**2026-01-03 关闭（API `state_reason=completed`，`closed_by=github-actions[bot]`）**；页面 timeline **无 linked PR/commit，无法确证由哪个变更关闭**。
 2. **能力已在主线**（`sgl-project/sglang` @ `2a08e261`，2026-10-16）：
    - `eagle_worker_v2.py:178–180`：开启 `speculative_use_rejection_sampling` 时 `assert self.topk == 1`；
    - `eagle_worker_v2.py:727–733`：非 greedy 且开启拒绝采样 → 构造 `draft_probs`；
    - `eagle_info.py:35`/`:162`：`EagleVerifyInput` / `EagleDraftInput` 均有 `draft_probs` 字段；
    - `eagle_utils.py:947`：选 `chain_speculative_sampling_triton`；
    - `eagle_utils.py:1000–1013`：`draft_probs` 缺失/词表不匹配 → **硬报错**；
-   - `eagle_utils.py:1030–1044`：`target_probs`、`draft_probs`、`uniform_samples` 一起传入 kernel。
+   - `eagle_utils.py:1032–1038`：`uniform_samples`（1032–1033）、`target_probs`（1034）、`draft_probs`（1035）一起传入 kernel；
+   - `eagle_utils.py:951–959`：`use_rejection_sampling=False` 时走 `tree_speculative_sampling_target_only`（tree topk>1 的 target-only 依据）。
 3. **因此**：
    - 说“#10308 已修复”**不准确**（无 linked PR，issue 未 reopen）；
    - 说“完全没处理”**也不准确**（能力已在 topk=1 路径）；
@@ -521,9 +522,10 @@ flowchart LR
 | EAGLE 代码 | @ `cb7e0841`（2026-02-20），`utils.py:398–399`、`modeling_eagle.py:1427` |
 | vLLM 代码 | @ `2b85d9cb`（2026-10-17），5 个文件的行号锚点 |
 | SGLang 代码 | @ `2a08e261`（2026-10-16），4 个文件的行号锚点 |
-| issue #10308 | 页面 timeline：assigned / comment / closed(inactive) / labeled；无 linked PR |
+| issue #10308 | 开立 2025-09-11；2025-11-03 assigned；2026-01-03 closed（`state_reason=completed`，`closed_by=github-actions[bot]`）；无 linked PR/commit |
 | 独立复现 | ❌ 未做；所有性能数字为论文/官方自报 |
 | `claim_audit` | 见交付说明（`--lang zh` 报数） |
+| 代码锚点清单 | [sources/CODE-AUDIT.md](sources/CODE-AUDIT.md)（vLLM 24 + SGLang 16 + EAGLE 4 条） |
 
 ### 11.1 本轮自检清单
 

@@ -1,7 +1,7 @@
 # SGLang 实现核验：EAGLE 草稿链与 topk=1 的拒绝采样（仓库 @ 2a08e261）
 
 > **一手来源**：`sgl-project/sglang` @ **`2a08e261ecd4cdfb04ec354f9005f18b88108b7d`**（2026-10-16），只读快照；license = **Apache-2.0**。｜ **主等级**：`[精读原文]`（代码路径）
-> **核验范围**：`python/sglang/srt/speculative/eagle_worker_v2.py`、`eagle_utils.py`、`eagle_info.py`、`runtime_context.py` 的投机相关分支。
+> **核验范围**：`python/sglang/srt/speculative/eagle_worker_v2.py`、`eagle_utils.py`、`eagle_info.py`、`runtime_context.py` 的投机相关分支。逐条锚点见 [sources/CODE-AUDIT.md](../sources/CODE-AUDIT.md)。
 > **一句话定位**：SGLang 的 EAGLE 路径把“贪心验证”和“采样验证”彻底分开；2026-10 的主线已支持 **topk=1 链式草稿 + 真 draft 概率 + 拒绝采样**，并用 `speculative_use_rejection_sampling` 开关与一条 `assert topk == 1` 把适用范围钉死。
 > **亮点与差异四行**
 > - **一句话亮点**：在 `eagle_sample` 里按 `use_rejection_sampling` 选择不同的验证 kernel；topk=1 链式草稿可以拿到真实 `draft_probs`，不再把草稿概率当 one-hot。
@@ -96,6 +96,7 @@ if get_spec().speculative_use_rejection_sampling:
 | **贪心** | `_verify_uses_greedy(...)` 为真 | `verify_tree_greedy_func`（`:384`） | ❌ 不需要（比较 argmax） |
 | **稀疏 UNO 采样** | `_can_use_sparse_uno_tree_target_sampling(...)` | `sample_uno_tree_target_tokens` | ❌ 目标侧 top-k 采样 |
 | **一般采样 + 拒绝采样开** | `use_rejection_sampling` | `chain_speculative_sampling_triton`（`:947`） | ✅ **必须**，校验后传入 |
+| **tree topk>1（不开拒绝采样）** | 否则分支 | `tree_speculative_sampling_target_only`（`:951–959`） | ❌ `draft_probs` 置零 |
 | **一般采样 + 拒绝采样关** | 否则 | `tree_speculative_sampling_target_only` | ❌ `draft_probs` 置 `zeros_like`（`:1002–1003`） |
 
 ### 5.1 拒绝采样路径的校验（防御性）
@@ -124,8 +125,8 @@ if get_spec().speculative_use_rejection_sampling:
 | 项 | 核验结果 |
 | :-- | :-- |
 | issue | `sgl-project/sglang#10308`，标题：*[Feature] Speculative sampling supports passing the predicted probability of the draft model and sample token for verification when **topk=1*** |
-| 开立 | 2025-11-03，指派 `hnyls2002` |
-| 关闭 | **2026-01-03 被 github-actions 以 inactive 自动关闭**（"automatically closed due to inactivity"） |
+| 开立 | **2025-09-11**（API `created_at=2025-09-11T08:20:37Z`）；2025-11-03 指派 `hnyls2002`（另一里程碑） |
+| 关闭 | **2026-01-03 关闭**（API `state_reason=completed`，`closed_by=github-actions[bot]`）；timeline 无 linked PR/commit，**无法确证由哪个变更关闭** |
 | linked PR | **未观察到 linked / merged PR**（issue 页面 timeline 只有 assigned / comment / closed / labeled） |
 
 ### 6.2 当前主线是否已具备该能力
@@ -139,7 +140,7 @@ if get_spec().speculative_use_rejection_sampling:
 5. `eagle_utils.py:1000–1013`：`draft_probs` 缺失/词表不匹配 → 硬报错；
 6. `eagle_utils.py:1032–1038`：`target_probs`、`draft_probs`、`uniform_samples` 一起传入采样 kernel。
 
-**结论（可引用）**：issue 本身**没有 linked PR**、以 inactive 关闭；但**它请求的能力在 2026-10 的主线代码中以“topk=1 + 拒绝采样开关”的形式存在**。因此：
+**结论（可引用）**：issue 本身**没有 linked PR/commit**、于 2026-01-03 以 `state_reason=completed` 由 `github-actions[bot]` 关闭；但**它请求的能力在 2026-10 的主线代码中以“topk=1 + 拒绝采样开关”的形式存在**。因此：
 
 - 说“#10308 已修复”**不准确**（没有 linked PR，issue 也没 reopen）；
 - 说“#10308 完全没被处理”**也不准确**（能力已在代码里）；
@@ -206,7 +207,7 @@ EAGLE-3 论文 Table 4（SGLang 团队在 1×H100、LLaMA-3.1-8B、MT-Bench 上�
 | 代码是否入库 | ❌ 未入库；只留 `文件:行` 短引用 |
 | 引用长度 | 每条 ≤ 3 行语义锚点 |
 | 是否跑 benchmark | ❌ 未跑；吞吐数字来自 EAGLE-3 论文 |
-| #10308 | issue 无 linked PR、inactive 关闭；能力已在主线 topk=1 路径实现 |
+| #10308 | issue 无 linked PR/commit；2026-01-03 `state_reason=completed` 关闭（`closed_by=github-actions[bot]`）；能力已在主线 topk=1 路径实现 |
 | 已知限制 | topk>1 不支持；默认开关未确认 |
 
 ---
@@ -215,5 +216,5 @@ EAGLE-3 论文 Table 4（SGLang 团队在 1×H100、LLaMA-3.1-8B、MT-Bench 上�
 
 - 仓库：`https://github.com/sgl-project/sglang` @ `2a08e261`（Apache-2.0）。
 - 文件：`python/sglang/srt/speculative/eagle_worker_v2.py`、`eagle_utils.py`、`eagle_info.py`、`runtime_context.py`。
-- issue：`https://github.com/sgl-project/sglang/issues/10308`（2025-11-03 开，2026-01-03 inactive 关闭，无 linked PR）。
+- issue：`https://github.com/sgl-project/sglang/issues/10308`（2025-09-11 开；2026-01-03 关闭，`state_reason=completed`，`closed_by=github-actions[bot]`；无 linked PR/commit）。
 - 吞吐数字：EAGLE-3 论文 arXiv:2503.01840v3 Table 4（SGLang 团队提供）。

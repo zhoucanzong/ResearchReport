@@ -25,6 +25,8 @@
 | 10 | [SGLang 实现核验](../papers/sglang-implementation.md) | `sgl-project/sglang` | `2a08e261ecd4cdfb04ec354f9005f18b88108b7d` | 2026-10-16 | `speculative/eagle_worker_v2.py:178–180,181–182,648–657,671–684,727–733`；`speculative/eagle_utils.py:157,384,741,860–916,947,1000–1013,1032–1038`；`speculative/eagle_info.py:35,162` | Apache-2.0 |
 | 11 | [EAGLE 分册 §8.1 + report §8.1](../papers/2401.15077-eagle-series.md) | `SafeAILab/EAGLE` | `cb7e0841fe0c206c6ed74a197ad5e2a1f13f5a2b` | 2026-02-20 | `eagle/model/utils.py:398–399`（`qx=1.0`）；`eagle/model/ea_model.py:270,452`；`eagle/modeling_eagle.py:1427` | 未核实（仓库根有 LICENSE，未逐字读） |
 
+逐条锚点、支撑断言与行号更正历史见 [CODE-AUDIT.md](CODE-AUDIT.md)。
+
 ## 3. 版本与引用规则
 
 1. **版本日期**取 arXiv 元数据的 `updated`（最新版本），不是首次提交日；同一论文的后续版本可能改数字，引用以本表版本为准。

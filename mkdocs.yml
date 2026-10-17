@@ -238,6 +238,7 @@ nav:
         - "sglang-implementation": "Infra/SpeculativeDecoding/papers/sglang-implementation.md"
         - "vllm-implementation": "Infra/SpeculativeDecoding/papers/vllm-implementation.md"
         - "CANDIDATES": "Infra/SpeculativeDecoding/sources/CANDIDATES.md"
+        - "CODE-AUDIT": "Infra/SpeculativeDecoding/sources/CODE-AUDIT.md"
         - "MANIFEST": "Infra/SpeculativeDecoding/sources/MANIFEST.md"
         - "algorithm-families": "Infra/SpeculativeDecoding/topics/algorithm-families.md"
         - "systems-throughput-latency": "Infra/SpeculativeDecoding/topics/systems-throughput-latency.md"

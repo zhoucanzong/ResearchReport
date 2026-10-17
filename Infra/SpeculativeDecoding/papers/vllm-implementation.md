@@ -1,7 +1,7 @@
 # vLLM 实现核验：投机解码的 draft/verify 两条路径（仓库 @ 2b85d9cb）
 
 > **一手来源**：`vllm-project/vllm` @ **`2b85d9cb65c1f56c347cb7f56f1596a6b8b28373`**（2026-10-17，commit `2b85d9cb`，committed 2026-10-17T02:55:28−07:00），只读快照；license = **Apache-2.0**。｜ **主等级**：`[精读原文]`（代码路径）
-> **核验范围**：`vllm/config/speculative.py`、`vllm/v1/spec_decode/llm_base_proposer.py`、`vllm/v1/sample/rejection_sampler.py`、`vllm/v1/spec_decode/metrics.py`、`vllm/v1/worker/gpu_model_runner.py` 的投机相关分支（非全仓库）。
+> **核验范围**：`vllm/config/speculative.py`、`vllm/v1/spec_decode/llm_base_proposer.py`、`vllm/v1/sample/rejection_sampler.py`、`vllm/v1/spec_decode/metrics.py`、`vllm/v1/worker/gpu_model_runner.py` 的投机相关分支（非全仓库）。逐条锚点见 [sources/CODE-AUDIT.md](../sources/CODE-AUDIT.md)。
 > **一句话定位**：vLLM 把投机解码拆成「**draft 采样**（greedy / probabilistic）」×「**验证规则**（standard / synthetic / block）」两个正交开关；`greedy` 默认把草稿概率当 one-hot，`probabilistic` 才真正把 draft 分布传给拒绝采样。
 > **亮点与差异四行**
 > - **一句话亮点**：在同一个 proposer 里同时支持 EAGLE/MTP/DFlash/standalone draft，并用 `draft_sample_method` 显式区分“草稿是 one-hot 还是真分布”。
