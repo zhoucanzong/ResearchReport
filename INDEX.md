@@ -22,8 +22,8 @@
 | 带合法 `date` 的条目 | 5 |
 | 文档（除生成物外的全部 `.md`） | 150 |
 | 其中文件名 `README.md` | 8 |
-| 纳入版本控制的文件 | 169 |
-| 纳入版本控制的 `.md` | 157 |
+| 纳入版本控制的文件 | 170 |
+| 纳入版本控制的 `.md` | 158 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -758,7 +758,7 @@
 | --- | --- | --: | --: |
 | [Infra/README.md](<Infra/README.md>) | Infra | 59 | 4,167 B |
 | [LLM/README.md](<LLM/README.md>) | LLM | 55 | 3,584 B |
-| [Models/README.md](<Models/README.md>) | Models | 73 | 3,816 B |
+| [Models/README.md](<Models/README.md>) | Models | 80 | 3,979 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 59 | 2,471 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 735 | 34,490 B |
 | [README.md](<README.md>) |  | 105 | 7,830 B |
