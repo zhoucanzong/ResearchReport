@@ -15,12 +15,12 @@
 | --- | --- |
 | **条目数**（`report.md`） | **48** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 4 |
-| 条目子文档数 | 88 |
-| 条目正文行数（剔除 front-matter） | 31,765 |
-| 条目字节 | 1,973,147 B |
+| 条目子文档数 | 89 |
+| 条目正文行数（剔除 front-matter） | 31,837 |
+| 条目字节 | 1,981,483 B |
 | 带 front-matter 的条目 | 5 |
 | 带合法 `date` 的条目 | 5 |
-| 文档（除生成物外的全部 `.md`） | 149 |
+| 文档（除生成物外的全部 `.md`） | 150 |
 | 其中文件名 `README.md` | 8 |
 | 纳入版本控制的文件 | 169 |
 | 纳入版本控制的 `.md` | 157 |
@@ -32,13 +32,13 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| Models | 23 | 31 | 15,382 | 971,042 B | [板块页 →](<Models/README.md>) |
+| Models | 23 | 32 | 15,454 | 979,378 B | [板块页 →](<Models/README.md>) |
 | LLM | 8 | 25 | 5,217 | 340,995 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,805 | 318,091 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 2 | 31 | 1,207 | 129,154 B | [板块页 →](<WorldModel/README.md>) |
 | Infra | 3 | 29 | 2,098 | 108,615 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 4 | 18 | 1,056 | 105,250 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **48** | **149** | **31,765** | **1,973,147 B** | — |
+| **合计** | **48** | **150** | **31,837** | **1,981,483 B** | — |
 
 ## 分面索引
 
@@ -54,10 +54,10 @@
 
 ## 条目索引（按板块目录折叠，可直达条目与子报告）
 
-### Models（23 条目 / 31 文档）
+### Models（23 条目 / 32 文档）
 
 <details>
-<summary><b>模型系列 Models（23 条目 / 7 子文档）</b></summary>
+<summary><b>模型系列 Models（23 条目 / 8 子文档）</b></summary>
 
   <details>
   <summary><b>Alibaba-Gen</b> · <code>Models/Alibaba-Gen/report.md</code> · 803 行 · —</summary>
@@ -230,14 +230,14 @@
   </details>
 
   <details>
-  <summary><b>MiMo</b> · <code>Models/MiMo/report.md</code> · 677 行 · —</summary>
+  <summary><b>MiMo</b> · <code>Models/MiMo/report.md</code> · 749 行 · —</summary>
   
 
-    * **条目**：[Models/MiMo/report.md](<Models/MiMo/report.md>)（677 行 / 54,820 B）
+    * **条目**：[Models/MiMo/report.md](<Models/MiMo/report.md>)（749 行 / 63,156 B）
     * **专题目录**：`Models/MiMo`
     * **元数据**：type=`—` · domain=`Models` · subject=`MiMo` · date=`—` · status=`—`
-    * **子文档（0）**
-        * _该条目暂无子文档_
+    * **子文档（1）**
+        * [papers/2610.11959-mimo-v2-6.md](<Models/MiMo/papers/2610.11959-mimo-v2-6.md>) — 437 行 / 36,488 B
 
   </details>
 

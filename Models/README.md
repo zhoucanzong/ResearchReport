@@ -29,7 +29,7 @@
 | **Kimi** | [Kimi 系列模型深度调研报告](<Kimi/report.md>) | 616 行 |
 | **Kling** | [快手可灵（Kling）视频生成模型系列研究报告](<Kling/report.md>) | 537 行 |
 | **LLaMA** | [Meta LLaMA 系列大模型完整研究报告](<LLaMA/report.md>) | 483 行 |
-| **MiMo** | [小米 MiMo 系列模型深度调研报告](<MiMo/report.md>) | 677 行 |
+| **MiMo** | [小米 MiMo 系列模型深度调研报告](<MiMo/report.md>) | 749 行 |
 | **Midjourney** | [Midjourney 图像生成模型系列研究报告](<Midjourney/report.md>) | 587 行 |
 | **MiniMax** | [MiniMax 系列模型研究报告：以 Lightning Attention 重写 Transformer 的扩展曲线](<MiniMax/report.md>) | 517 行 |
 | **Mistral** | [Mistral AI 系列模型深度调研报告](<Mistral/report.md>) | 495 行 |
@@ -54,6 +54,13 @@
 
 * [papers/2607.24653-kimi-k3.md](<Kimi/papers/2607.24653-kimi-k3.md>) — 251 行 / 30,000 B
 * [sources/MANIFEST.md](<Kimi/sources/MANIFEST.md>) — 47 行 / 3,924 B
+
+</details>
+
+<details>
+<summary><b>MiMo</b>（1 份）</summary>
+
+* [papers/2610.11959-mimo-v2-6.md](<MiMo/papers/2610.11959-mimo-v2-6.md>) — 437 行 / 36,488 B
 
 </details>
 

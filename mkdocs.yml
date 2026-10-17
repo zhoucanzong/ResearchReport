@@ -132,7 +132,9 @@ nav:
         - "MANIFEST": "Models/Kimi/sources/MANIFEST.md"
     - "Kling": "Models/Kling/report.md"
     - "LLaMA": "Models/LLaMA/report.md"
-    - "MiMo": "Models/MiMo/report.md"
+    - "MiMo":
+        - "总报告": "Models/MiMo/report.md"
+        - "2610.11959-mimo-v2-6": "Models/MiMo/papers/2610.11959-mimo-v2-6.md"
     - "Midjourney": "Models/Midjourney/report.md"
     - "MiniMax": "Models/MiniMax/report.md"
     - "Mistral": "Models/Mistral/report.md"

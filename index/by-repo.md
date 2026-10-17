@@ -40,7 +40,7 @@
 * [Models/Kimi/report.md](<../Models/Kimi/report.md>) — 616 行
 * [Models/Kling/report.md](<../Models/Kling/report.md>) — 537 行
 * [Models/LLaMA/report.md](<../Models/LLaMA/report.md>) — 483 行
-* [Models/MiMo/report.md](<../Models/MiMo/report.md>) — 677 行
+* [Models/MiMo/report.md](<../Models/MiMo/report.md>) — 749 行
 * [Models/Midjourney/report.md](<../Models/Midjourney/report.md>) — 587 行
 * [Models/MiniMax/report.md](<../Models/MiniMax/report.md>) — 517 行
 * [Models/Mistral/report.md](<../Models/Mistral/report.md>) — 495 行
