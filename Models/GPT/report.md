@@ -230,7 +230,7 @@ GPT-4.1 不再是「下一代基座」而是「同代工程冲刺」：
 - **Coding**：SWE-bench Verified 54.6%（从 GPT-4o 33.2% 提升），Aider Polyglot 51.6%；
 - **Instruction Following**：MultiChallenge 38.3%（GPT-4o 27.8%）；
 - **Long-context**：MRCR 上 1M token 检索能保持高准确率（OpenAI 自评）；
-- **三档定价**：GPT-4.1 / 4.1 mini / 4.1 nano，价格分别为 $2.0/$8.0、$0.4/$1.6、$0.1/$0.4 per 1M token；nano 是 OpenAI 首次推出的「真·端侧候选」尺寸。
+- **三档定价**：GPT-4.1 / 4.1 mini / 4.1 nano，价格分别为 \$2.0/\$8.0、\$0.4/\$1.6、\$0.1/\$0.4 per 1M token；nano 是 OpenAI 首次推出的「真·端侧候选」尺寸。
 
 **未公开**：参数量、训练数据组成；OpenAI 官方仅称「improved post-training and tool-use distillation」。
 
@@ -292,7 +292,7 @@ GPT-5.5 是自 GPT-4.5（2025-04）以来 OpenAI 发布的**首个全新预训�
 
 - **原生全模态 (Native Omnimodal)**：在预训练阶段即融合文本、图像、音频、视频 token，而非 GPT-5 的「router + 多权重」拼接方案；
 - **上下文**：API 支持 **1M tokens** 输入，Codex 版本支持 **400K tokens** 输出；
-- **定价**：API $5 / $30 per 1M tokens（输入/输出），定位高端旗舰；
+- **定价**：API \$5 / \$30 per 1M tokens（输入/输出），定位高端旗舰；
 - **能力**（确认）：
   - SWE-bench Verified **79.4%**；
   - AIME 2025 **96.8%**（无工具）；
@@ -303,7 +303,7 @@ GPT-5.5 是自 GPT-4.5（2025-04）以来 OpenAI 发布的**首个全新预训�
 - 幻觉率较 GPT-5.3 Instant **下降 52.5%**；
 - AIME 2025 **81.2 分**；
 - MMMU-Pro **76 分**；
-- 定价 $2 / $8 per 1M tokens，成为大多数开发者的首选默认模型。
+- 定价 \$2 / \$8 per 1M tokens，成为大多数开发者的首选默认模型。
 
 **GPT-5.5 Pro API**（2026-04-24）：面向企业级工作负载的专用 API 端点，支持批量推理、SLA 保障与专属推理集群。
 
