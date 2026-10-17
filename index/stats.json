@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "9f259500d53841b0f530b7bdd3ad0ac350fa2bd64060dc0509f53621484df2d4",
+  "content_fingerprint": "a6e90dff80896dab9a7fe316b1c602097395d36773f490795ba9f1e315e9169d",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -18,8 +18,8 @@
     "with_front_matter": 5,
     "without_front_matter": 43,
     "with_date": 5,
-    "lines": 31837,
-    "bytes": 1981483,
+    "lines": 31653,
+    "bytes": 1961053,
     "children": 89
   },
   "documents": {
@@ -28,8 +28,8 @@
     "with_front_matter": 18,
     "named_report_md": 48,
     "named_readme_md": 8,
-    "lines": 53878,
-    "bytes": 3752371
+    "lines": 53680,
+    "bytes": 3749794
   },
   "libraries": {
     "Models": {
@@ -51,13 +51,13 @@
         "Infra": 0,
         "OpenSource": 0
       },
-      "lines": 15454,
-      "bytes": 979378,
-      "lines_raw": 15454,
+      "lines": 15268,
+      "bytes": 957940,
+      "lines_raw": 15268,
       "dir_files": 32,
       "dir_md": 32,
-      "dir_bytes": 1176422,
-      "du_sk": 1212
+      "dir_bytes": 1172837,
+      "du_sk": 1208
     },
     "LLM": {
       "entries": 8,
@@ -105,12 +105,12 @@
         "Infra": 0,
         "OpenSource": 0
       },
-      "lines": 6805,
-      "bytes": 318091,
-      "lines_raw": 6805,
+      "lines": 6807,
+      "bytes": 319099,
+      "lines_raw": 6807,
       "dir_files": 9,
       "dir_md": 9,
-      "dir_bytes": 319707,
+      "dir_bytes": 320715,
       "du_sk": 332
     },
     "WorldModel": {
@@ -200,10 +200,10 @@
     "library_entries": 48,
     "library_documents_md": 144,
     "library_dir_files": 145,
-    "library_dir_bytes": 3707249,
-    "library_du_sk": 3880,
-    "library_entry_lines": 31837,
-    "library_entry_bytes": 1981483
+    "library_dir_bytes": 3704672,
+    "library_du_sk": 3876,
+    "library_entry_lines": 31653,
+    "library_entry_bytes": 1961053
   },
   "version_control": {
     "tracked_total": 170,
@@ -219,16 +219,16 @@
       "Models": {
         "report_md": {
           "files": 23,
-          "lines": 15454,
-          "lines_raw": 15454,
-          "bytes": 979378
+          "lines": 15268,
+          "lines_raw": 15268,
+          "bytes": 957940
         },
         "report_md_by_category": {
           "Models": {
             "files": 23,
-            "lines": 15454,
-            "lines_raw": 15454,
-            "bytes": 979378
+            "lines": 15268,
+            "lines_raw": 15268,
+            "bytes": 957940
           },
           "LLM": {
             "files": 0,
@@ -263,15 +263,15 @@
         },
         "other_md": {
           "files": 9,
-          "lines": 3184,
-          "lines_raw": 3184,
-          "bytes": 197044
+          "lines": 3170,
+          "lines_raw": 3170,
+          "bytes": 214897
         },
         "dir_md": {
           "files": 32,
-          "lines": 18638,
-          "lines_raw": 18638,
-          "bytes": 1176422
+          "lines": 18438,
+          "lines_raw": 18438,
+          "bytes": 1172837
         }
       },
       "LLM": {
@@ -335,9 +335,9 @@
       "VisualGen": {
         "report_md": {
           "files": 8,
-          "lines": 6805,
-          "lines_raw": 6805,
-          "bytes": 318091
+          "lines": 6807,
+          "lines_raw": 6807,
+          "bytes": 319099
         },
         "report_md_by_category": {
           "Models": {
@@ -354,9 +354,9 @@
           },
           "VisualGen": {
             "files": 8,
-            "lines": 6805,
-            "lines_raw": 6805,
-            "bytes": 318091
+            "lines": 6807,
+            "lines_raw": 6807,
+            "bytes": 319099
           },
           "WorldModel": {
             "files": 0,
@@ -385,9 +385,9 @@
         },
         "dir_md": {
           "files": 9,
-          "lines": 6836,
-          "lines_raw": 6836,
-          "bytes": 319707
+          "lines": 6838,
+          "lines_raw": 6838,
+          "bytes": 320715
         }
       },
       "WorldModel": {
@@ -567,15 +567,15 @@
     },
     "repo_md": {
       "files": 150,
-      "lines": 53878,
-      "lines_raw": 54061,
-      "bytes": 3752371
+      "lines": 53680,
+      "lines_raw": 53863,
+      "bytes": 3749794
     },
     "library_md": {
       "files": 144,
-      "lines": 53024,
-      "lines_raw": 53207,
-      "bytes": 3690955
+      "lines": 52826,
+      "lines_raw": 53009,
+      "bytes": 3688378
     },
     "root_readme": {
       "files": 1,
@@ -601,7 +601,7 @@
     ]
   },
   "storage": {
-    "tracked_bytes": 8855229,
+    "tracked_bytes": 8852680,
     "definition": "纳入版本控制的文件字节合计（`git ls-files` 跟踪路径逐个 getsize 求和）；刻意**不**用 du 量工作树——工作树含 site/site-docs/构建产物、别人的未提交草稿、虚拟环境等「车间地面」，会让数字每个 clone 一个样、生成物不可复现。本字段与提交树同源，任意 clone 重跑一致。"
   }
 }
