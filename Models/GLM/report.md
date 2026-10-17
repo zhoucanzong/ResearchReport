@@ -247,7 +247,7 @@ GLM 系列的独特之处在于：早期（2021–2023）坚持自主路线 —�
 **发布信息**
 
 - **日期**：官方发布记录 **2026-06-16**；HuggingFace 仓库 `zai-org/GLM-5.2` 的 `createdAt` 同为 **2026-06-16**（两条一手源互证）。
-- **形态**：**开源权重，MIT 许可**（模型卡 `license: mit`，官方称「Pure Open — no regional limits」）。这是 GLM 旗舰线首次用纯 MIT（此前 GLM-4.5/4.6/4.7/5/5.1 亦为 MIT，但 GLM-5.3 起改为自定义许可，见 §2.9.2）。
+- **形态**：**开源权重，MIT 许可**（模型卡 `license: mit`，官方称「Pure Open — no regional limits, technical access without borders」）。前代 GLM-5.1 的模型卡同为 `license: mit`；**MIT 状态维持到 GLM-5.2 为止，GLM-5.3 起改为自定义许可**（见 §2.9.2）。
 - **上下文**：**1M tokens**（官方称「solid 1M context」）；文档口径最大输出 128K。
 - **与前代的定位差**：从 GLM-5.1 的「200K + 8 小时长程」推到「**1M + 项目级工程上下文**」。
 
