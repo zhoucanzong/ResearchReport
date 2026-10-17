@@ -36,7 +36,7 @@
 | Kimi | Models | [Models/Kimi/report.md](<../Models/Kimi/report.md>) | 2 | 616 | — |
 | Kling | Models | [Models/Kling/report.md](<../Models/Kling/report.md>) | 0 | 537 | — |
 | LLaMA | Models | [Models/LLaMA/report.md](<../Models/LLaMA/report.md>) | 0 | 483 | — |
-| MiMo | Models | [Models/MiMo/report.md](<../Models/MiMo/report.md>) | 0 | 510 | — |
+| MiMo | Models | [Models/MiMo/report.md](<../Models/MiMo/report.md>) | 0 | 677 | — |
 | Midjourney | Models | [Models/Midjourney/report.md](<../Models/Midjourney/report.md>) | 0 | 587 | — |
 | MiniMax | Models | [Models/MiniMax/report.md](<../Models/MiniMax/report.md>) | 0 | 517 | — |
 | Mistral | Models | [Models/Mistral/report.md](<../Models/Mistral/report.md>) | 0 | 495 | — |
@@ -59,4 +59,4 @@
 | VideoGen | VisualGen | [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) | 0 | 898 | — |
 | EmbodiedVLA | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 13 | 609 | — |
 | WorldModels | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 598 | 2026-10-17 |
-| **合计** | — | — | **88** | **31,598** | — |
+| **合计** | — | — | **88** | **31,765** | — |
