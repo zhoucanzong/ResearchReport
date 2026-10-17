@@ -126,7 +126,10 @@ nav:
     - "Google-Gen": "Models/Google-Gen/report.md"
     - "Grok": "Models/Grok/report.md"
     - "Hunyuan": "Models/Hunyuan/report.md"
-    - "Kimi": "Models/Kimi/report.md"
+    - "Kimi":
+        - "总报告": "Models/Kimi/report.md"
+        - "2607.24653-kimi-k3": "Models/Kimi/papers/2607.24653-kimi-k3.md"
+        - "MANIFEST": "Models/Kimi/sources/MANIFEST.md"
     - "Kling": "Models/Kling/report.md"
     - "LLaMA": "Models/LLaMA/report.md"
     - "MiMo": "Models/MiMo/report.md"

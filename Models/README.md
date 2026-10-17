@@ -20,13 +20,13 @@
 | **Claude** | [Anthropic Claude 系列模型深度调研报告](<Claude/report.md>) | 611 行 |
 | **DeepSeek** | [DeepSeek 系列模型深度调研报告](<DeepSeek/report.md>) | 751 行 |
 | **Doubao-Seed** | [Doubao/Seed系列模型深度调研报告](<Doubao-Seed/report.md>) | 643 行 |
-| **GLM** | [GLM 系列模型深度调研报告](<GLM/report.md>) | 523 行 |
+| **GLM** | [GLM 系列模型深度调研报告](<GLM/report.md>) | 737 行 |
 | **GPT** | [OpenAI GPT 系列模型深度调研报告](<GPT/report.md>) | 759 行 |
 | **Gemini** | [Google Gemini系列模型深度调研报告](<Gemini/report.md>) | 788 行 |
 | **Google-Gen** | [Google / DeepMind 生成模型系列研究报告](<Google-Gen/report.md>) | 826 行 |
 | **Grok** | [xAI Grok 系列模型深度调研报告](<Grok/report.md>) | 469 行 |
 | **Hunyuan** | [Hunyuan系列模型深度调研报告](<Hunyuan/report.md>) | 525 行 |
-| **Kimi** | [Kimi 系列模型深度调研报告](<Kimi/report.md>) | 431 行 |
+| **Kimi** | [Kimi 系列模型深度调研报告](<Kimi/report.md>) | 616 行 |
 | **Kling** | [快手可灵（Kling）视频生成模型系列研究报告](<Kling/report.md>) | 537 行 |
 | **LLaMA** | [Meta LLaMA 系列大模型完整研究报告](<LLaMA/report.md>) | 483 行 |
 | **MiMo** | [小米 MiMo 系列模型深度调研报告](<MiMo/report.md>) | 510 行 |
@@ -46,6 +46,14 @@
 
 * [deepseek-multimodal-and-specialized.md](<DeepSeek/deepseek-multimodal-and-specialized.md>) — 367 行 / 24,706 B
 * [deepseek-text-models.md](<DeepSeek/deepseek-text-models.md>) — 407 行 / 33,119 B
+
+</details>
+
+<details>
+<summary><b>Kimi</b>（2 份）</summary>
+
+* [papers/2607.24653-kimi-k3.md](<Kimi/papers/2607.24653-kimi-k3.md>) — 251 行 / 30,000 B
+* [sources/MANIFEST.md](<Kimi/sources/MANIFEST.md>) — 47 行 / 3,924 B
 
 </details>
 

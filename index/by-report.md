@@ -27,13 +27,13 @@
 | Claude | Models | [Models/Claude/report.md](<../Models/Claude/report.md>) | 0 | 611 | — |
 | DeepSeek | Models | [Models/DeepSeek/report.md](<../Models/DeepSeek/report.md>) | 2 | 751 | — |
 | Doubao-Seed | Models | [Models/Doubao-Seed/report.md](<../Models/Doubao-Seed/report.md>) | 0 | 643 | — |
-| GLM | Models | [Models/GLM/report.md](<../Models/GLM/report.md>) | 0 | 523 | — |
+| GLM | Models | [Models/GLM/report.md](<../Models/GLM/report.md>) | 0 | 737 | — |
 | GPT | Models | [Models/GPT/report.md](<../Models/GPT/report.md>) | 0 | 759 | — |
 | Gemini | Models | [Models/Gemini/report.md](<../Models/Gemini/report.md>) | 0 | 788 | — |
 | Google-Gen | Models | [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>) | 0 | 826 | — |
 | Grok | Models | [Models/Grok/report.md](<../Models/Grok/report.md>) | 0 | 469 | — |
 | Hunyuan | Models | [Models/Hunyuan/report.md](<../Models/Hunyuan/report.md>) | 0 | 525 | — |
-| Kimi | Models | [Models/Kimi/report.md](<../Models/Kimi/report.md>) | 0 | 431 | — |
+| Kimi | Models | [Models/Kimi/report.md](<../Models/Kimi/report.md>) | 2 | 616 | — |
 | Kling | Models | [Models/Kling/report.md](<../Models/Kling/report.md>) | 0 | 537 | — |
 | LLaMA | Models | [Models/LLaMA/report.md](<../Models/LLaMA/report.md>) | 0 | 483 | — |
 | MiMo | Models | [Models/MiMo/report.md](<../Models/MiMo/report.md>) | 0 | 510 | — |
@@ -59,4 +59,4 @@
 | VideoGen | VisualGen | [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) | 0 | 898 | — |
 | EmbodiedVLA | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 13 | 609 | — |
 | WorldModels | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 598 | 2026-10-17 |
-| **合计** | — | — | **86** | **31,199** | — |
+| **合计** | — | — | **88** | **31,598** | — |

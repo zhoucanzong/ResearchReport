@@ -15,15 +15,15 @@
 | --- | --- |
 | **条目数**（`report.md`） | **48** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 4 |
-| 条目子文档数 | 86 |
-| 条目正文行数（剔除 front-matter） | 31,199 |
-| 条目字节 | 1,902,694 B |
+| 条目子文档数 | 88 |
+| 条目正文行数（剔除 front-matter） | 31,598 |
+| 条目字节 | 1,952,897 B |
 | 带 front-matter 的条目 | 5 |
 | 带合法 `date` 的条目 | 5 |
-| 文档（除生成物外的全部 `.md`） | 147 |
+| 文档（除生成物外的全部 `.md`） | 149 |
 | 其中文件名 `README.md` | 8 |
-| 纳入版本控制的文件 | 167 |
-| 纳入版本控制的 `.md` | 155 |
+| 纳入版本控制的文件 | 169 |
+| 纳入版本控制的 `.md` | 157 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -32,13 +32,13 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| Models | 23 | 29 | 14,816 | 900,589 B | [板块页 →](<Models/README.md>) |
+| Models | 23 | 31 | 15,215 | 950,792 B | [板块页 →](<Models/README.md>) |
 | LLM | 8 | 25 | 5,217 | 340,995 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,805 | 318,091 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 2 | 31 | 1,207 | 129,154 B | [板块页 →](<WorldModel/README.md>) |
 | Infra | 3 | 29 | 2,098 | 108,615 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 4 | 18 | 1,056 | 105,250 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **48** | **147** | **31,199** | **1,902,694 B** | — |
+| **合计** | **48** | **149** | **31,598** | **1,952,897 B** | — |
 
 ## 分面索引
 
@@ -54,10 +54,10 @@
 
 ## 条目索引（按板块目录折叠，可直达条目与子报告）
 
-### Models（23 条目 / 29 文档）
+### Models（23 条目 / 31 文档）
 
 <details>
-<summary><b>模型系列 Models（23 条目 / 5 子文档）</b></summary>
+<summary><b>模型系列 Models（23 条目 / 7 子文档）</b></summary>
 
   <details>
   <summary><b>Alibaba-Gen</b> · <code>Models/Alibaba-Gen/report.md</code> · 803 行 · —</summary>
@@ -121,10 +121,10 @@
   </details>
 
   <details>
-  <summary><b>GLM</b> · <code>Models/GLM/report.md</code> · 523 行 · —</summary>
+  <summary><b>GLM</b> · <code>Models/GLM/report.md</code> · 737 行 · —</summary>
   
 
-    * **条目**：[Models/GLM/report.md](<Models/GLM/report.md>)（523 行 / 39,755 B）
+    * **条目**：[Models/GLM/report.md](<Models/GLM/report.md>)（737 行 / 68,173 B）
     * **专题目录**：`Models/GLM`
     * **元数据**：type=`—` · domain=`Models` · subject=`GLM` · date=`—` · status=`—`
     * **子文档（0）**
@@ -193,14 +193,15 @@
   </details>
 
   <details>
-  <summary><b>Kimi</b> · <code>Models/Kimi/report.md</code> · 431 行 · —</summary>
+  <summary><b>Kimi</b> · <code>Models/Kimi/report.md</code> · 616 行 · —</summary>
   
 
-    * **条目**：[Models/Kimi/report.md](<Models/Kimi/report.md>)（431 行 / 33,344 B）
+    * **条目**：[Models/Kimi/report.md](<Models/Kimi/report.md>)（616 行 / 55,129 B）
     * **专题目录**：`Models/Kimi`
     * **元数据**：type=`—` · domain=`Models` · subject=`Kimi` · date=`—` · status=`—`
-    * **子文档（0）**
-        * _该条目暂无子文档_
+    * **子文档（2）**
+        * [papers/2607.24653-kimi-k3.md](<Models/Kimi/papers/2607.24653-kimi-k3.md>) — 251 行 / 30,000 B
+        * [sources/MANIFEST.md](<Models/Kimi/sources/MANIFEST.md>) — 47 行 / 3,924 B
 
   </details>
 
