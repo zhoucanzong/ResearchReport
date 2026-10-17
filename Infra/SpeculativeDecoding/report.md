@@ -1,369 +1,607 @@
-# 投机解码（Speculative Decoding）技术深度调研报告
+---
+type: topic-research
+domain: Infra
+subject: SpeculativeDecoding
+date: 2026-10-17
+evidence: 精读原文
+status: completed
+---
 
-> ⚠️ **信息来源声明**：本报告由 AI Agent 基于公开论文、技术博客、开源项目和第三方分析整理生成。部分 2025-2026 年信息可能未经同行评审，建议读者直接查阅原始论文验证。arXiv 预印本论文中的加速比数据受测试条件（模型规模、硬件、任务类型）影响较大，跨论文直接对比需谨慎。
->
-> **调研日期**：2026 年 10 月（本轮更新；上一版 2026 年 6 月）
-> **覆盖范围**：2023 年 Leviathan/Chen 同期独立提出 draft-then-verify 范式，至 2026 H2 随机采样正确性、级联/异构草稿、端侧与硬件的完整技术谱系
-> **本轮更新要点**：新增「技术脉络时间线（2023 → 2026H2）」「指标口径与可比性」两节；把"当前技术瓶颈与优化方向"更新为随机采样正确性 / 草稿质量 / 系统协同 / 端侧约束四条；新增 5 份子报告。**注意：本轮只做"重排"，未按 IEEE 2026 综述把本报告整体重构为"系统协同设计"框架。**
+# 投机解码（Speculative Decoding）技术专题 · 深度调研
+
+> **声明**：本报告由 AI Agent 自动调研生成，未经官方确认；引用具体参数、日期或 benchmark 前请回溯原始来源。
+> **调研日期**：2026-10-17（本轮：**按新标准升级**——新增 `papers/` 8 篇逐篇精读、`topics/` 3 篇横切专题、`sources/` 馆藏清单；`report.md` 重写为入口/结论/判据/总表）。
+> **定位**：投机解码 = **用低成本草稿换 target 的并行验证**，在**输出分布可证等价（或明示有界风险）**的前提下降低解码 wall-clock。本条目管的是“**算法 + 验证 + 系统条件**”这一整条链，不把“草稿模型训练”单独抽出去。
+
+**证据等级约定（单一主等级）**：
+
+| 等级 | 含义 | 本轮用法 |
+| :-- | :-- | :-- |
+| `[精读原文]` | 已抓正文并定位到数值/结论段落；代码类须有 `仓库@commit:文件:行` | 8 篇 `papers/` 全部满足（代码类两篇为代码级） |
+| `[摘要级]` | 仅核验官方摘要/会议页/项目页，未通读正文 | 只用于“登记存在”，不进结论数字 |
+| `[二手]` | 第三方解读、工程博客、周报 | 只作线索，不入对照表 |
+| `[⚠️受限核验]` | 一手对象无法直接抓取，只能经镜像/元数据交叉确证 | 逐条写明“卡在哪” |
+
+**规则**：每条只给**一个主等级**；混合来源取**最弱**等级并在括号里注明来源类型。`[摘要级]` **不许升格**为 `[精读原文]`。
 
 ---
 
-## 一、概述与执行摘要
+## 深度阅读导航
 
-**投机解码（Speculative Decoding）** 是自回归（Autoregressive, AR）大语言模型推理加速领域最具影响力的无损加速范式之一。其核心思想可概括为 **Draft-then-Verify**：用一个轻量级的"草案模型"（Drafter / Draft Model）快速并行生成候选 token 序列，再由目标模型（Target / Verifier）通过单次前向传播验证并修正，从而在保持输出分布与标准自回归解码完全一致的前提下，显著降低 wall-clock 时间。
+本条目采用三层结构：本页 = 入口 + 结论 + 谱系 + 总表；`papers/` = 逐篇精读；`topics/` = 横切专题。
 
-### 1.1 核心数学原理
+### 逐篇精读（`papers/`，8 篇）
 
-投机解码的数学基础是 **修改的接受-拒绝采样（Modified Rejection Sampling）**。设目标模型分布为 $p(x)$，草案模型分布为 $q(x)$，对于每个候选位置 $i$：
+| # | 分册 | 系统 | 在谱系中的位置 | 行数 |
+| --: | :-- | :-- | :-- | --: |
+| 1 | [2401.15077-eagle-series.md](papers/2401.15077-eagle-series.md) | EAGLE / EAGLE-2 / EAGLE-3 | 自投机·特征级自回归（工业默认） | 244 |
+| 2 | [2401.10774-medusa.md](papers/2401.10774-medusa.md) | Medusa | 自投机·并行头（轻量插件） | 204 |
+| 3 | [2402.02057-lookahead.md](papers/2402.02057-lookahead.md) | Lookahead Decoding | 免训练·Jacobi 轨迹 | 202 |
+| 4 | [2305.09781-specinfer.md](papers/2305.09781-specinfer.md) | SpecInfer | 独立 draft·树验证系统 | 201 |
+| 5 | [2408.11049-magicdec.md](papers/2408.11049-magicdec.md) | MagicDec | 系统条件·长上下文大 batch | 200 |
+| 6 | [2609.21827-rheosampling.md](papers/2609.21827-rheosampling.md) | RheoSampling | T>0 动态树的无损修复 | 216 |
+| 7 | [vllm-implementation.md](papers/vllm-implementation.md) | vLLM @ 2b85d9cb | 生产框架·draft/verify 两路径 | 218 |
+| 8 | [sglang-implementation.md](papers/sglang-implementation.md) | SGLang @ 2a08e261 | 生产框架·topk=1 拒绝采样 | 219 |
 
-1. 从 $q(x_i)$ 采样候选 token $x_i$
-2. 计算接受概率 $\alpha_i = \min\left(1, \frac{p(x_i)}{q(x_i)}\right)$
-3. 以概率 $\alpha_i$ 接受该 token；若拒绝，则从调整后的分布 $p'(x) \propto \max(0, p(x) - q(x))$ 重新采样
+### 横切专题（`topics/`，3 篇）
 
-该过程保证最终输出严格服从 $p(x)$，实现**无损加速**。
+| # | 专题 | 回答什么 | 行数 |
+| --: | :-- | :-- | --: |
+| 1 | [algorithm-families.md](topics/algorithm-families.md) | 四大家族、五根轴、选型判据 | 164 |
+| 2 | [verification-acceptance.md](topics/verification-acceptance.md) | 单链/树/有界风险的无损性准则、top-K 到底改变什么、指标口径 | 216 |
+| 3 | [systems-throughput-latency.md](topics/systems-throughput-latency.md) | batch×序列×硬件的相图、吞吐-延迟权衡、上线清单 | 168 |
 
-**加速比公式**：
+### 历史素材层（保留的 11 篇横切子文档）
 
-$$\text{Speedup} = \frac{\tau}{1 + \tau_{\text{draft}} / \tau_{\text{verify}}}$$
+本轮按“**改造，不是从零写**”的要求，保留了 2026-10 之前的 11 篇横切子文档作为素材层，**未重写、未删除**：
 
-其中 $\tau$ 为平均接受长度（accepted tokens per verification），$\tau_{\text{draft}}$ 和 $\tau_{\text{verify}}$ 分别为草案模型和目标模型的单次前向耗时。当草案模型足够快且接受率足够高时，加速比可突破 2-6×。
+`speculative-classical-and-self.md`、`speculative-eagle-series.md`、`speculative-stochastic-verification.md`、`speculative-block-diffusion.md`、`speculative-cascade-heterogeneous.md`、`speculative-draft-training-2026.md`、`speculative-training-optimization.md`、`speculative-edge-cloud-hardware.md`、`speculative-domain-language.md`、`speculative-multimodal.md`、`speculative-systems-and-frameworks.md`。
 
-### 1.2 与标准自回归解码的效率对比
+> **使用规则**：素材层用于查“2026 上半年的横向线索”；**与 `papers/` 冲突时以 `papers/` 为准**（例：素材层里 EAGLE 的 arXiv 编号有一处误写为 `2403.00835`，该编号实际是 CLLMs；正确编号是 **2401.15077**，见 [papers/2401.15077-eagle-series.md](papers/2401.15077-eagle-series.md)）。
 
-| 维度 | 标准 AR 解码 | 投机解码 | 说明 |
-|------|------------|---------|------|
-| **输出分布** | 精确 $p(x)$ | 精确 $p(x)$（无损） | 接受-拒绝采样保证等价性 |
-| **并行度** | 单 token / forward | 多 token / forward | 验证步可并行处理候选序列 |
-| **内存开销** | 仅 target KV Cache | target + draft KV Cache | 草案模型额外显存占用 |
-| **适用场景** | 通用 | 草案-目标分布对齐时最优 | 低熵/模板化文本加速更显著 |
-| **典型加速比** | 1×（基线） | 2-6× | 取决于接受率与草案速度 |
-| **训练需求** | 无 | 部分方法需训练 draft 模型 | 自投机/检索式可免训练 |
+---
 
-### 1.3 2023-2026 技术演进主线
+## 0. 一页结论
 
-投机解码三年间经历了从"外挂小模型"到"内生自投机"、从"token 级自回归"到"特征级/块级并行"的范式跃迁：
+1. **投机解码的收益不是“算法属性”，而是“算法 × 负载 × 硬件”的联合属性**。EAGLE 在 SGLang batch=24 就跌破 1.0×（0.93×），EAGLE-3 在 batch=64 仍有 1.38×；同一族、不同版本，拐点不同。`[精读原文]`
+2. **“无损”至少要分三档**：严格分布等价（经典单链 / 静态树 / RheoSampling / Traversal Verification）、序列级等价、有界风险（ARC-Decode / Medusa typical acceptance）。混档比较不成立。`[精读原文]`
+3. **T>0 是动态树的真实边界**：EAGLE-2/3 的“动态树更优”只在 greedy 下成立；T>0 时按 `q` 建树会塌缩为 one-hot，直接“改成采样”还会破坏无损性。RheoSampling 用 proxy/真实概率双身份修复，但**默认 EAGLE 配置并未启用**。`[精读原文]`
+4. **top-K 改变的是接受率，不是无偏性**：单链拒绝采样的 α* = Σ min(p,q) = 1 − TV；top-K 截断只要验证端用同一分布、残差用完整 p，输出仍严格等于 p。把“top-K 有偏”当结论是错的。`[精读原文]`
+5. **草稿来源的四族不是代际，而是并存选项**：独立 draft（SpecInfer）、自投机（EAGLE/Medusa）、免训练（Lookahead）、块/扩散（DFlash 一类）。选族先看“有没有 draft / 能不能训 / 输出是否模板化”。`[精读原文]`
+6. **高 batch 的结论要加第三维：序列长度**。短序列 + 大 batch 亏（SpecInfer/Medusa/vLLM 口径一致）；长序列 + 大 batch 可能赚（MagicDec：S≥4000 时加速随 batch 上升，最高 2.51×）。`[精读原文]`
+7. **指标必须成对**：`draft_acceptance_rate`（分母=提议草稿数）与 `mean_acceptance_length`（分母=验证步数，含 bonus）会反向移动；只报一个会得出相反结论。`[精读原文（vLLM 代码）]`
+8. **工程落地已经分叉成两种语义**：vLLM 用 `draft_sample_method ∈ {greedy, probabilistic}`；SGLang 用 `speculative_use_rejection_sampling` + `assert topk == 1`。两者都能把真实 `draft_probs` 传给验证，但适用形状不同。`[精读原文（代码）]`
+9. **历史 issue #10308 的准确结论**：issue 以 inactive 关闭、无 linked PR；但它请求的“topk=1 采样验证”能力已在 SGLang 主线以 `draft_probs` + 拒绝采样开关实现，且**硬限制 topk=1**；tree topk>1 仍走 target-only kernel。`[精读原文（代码）]`
+10. **证据边界**：本条目 8 篇分册中 6 篇是论文正文精读、2 篇是代码级核验；**未做独立复现**，所有加速比均为论文/官方自报值。
 
+---
+
+## 1. 定义与判据
+
+### 1.1 操作性定义
+
+**投机解码**：给定 target 自回归模型 `p` 与一个更便宜的提议机制 `q`，先并行产生若干候选 token（链/树/块/检索结果），再由 target **一次前向**并行验证，按某个接受规则决定输出；当接受规则满足“输出边缘分布 = p”时称**无损**。
+
+三个必要元素：
+
+| 元素 | 作用 | 缺了会怎样 |
+| :-- | :-- | :-- |
+| **提议机制 q** | 产生候选，决定 `T_draft/T_target` | 没有 q 就退化为普通解码 |
+| **并行验证** | 一次前向验证多个候选 | 退化为逐 token 解码，无加速 |
+| **接受规则** | 保证分布/质量，决定接受率 | 无规则 = 直接信草稿，有偏 |
+
+### 1.2 纳入 / 排除
+
+| 类别 | 是否纳入 | 理由 |
+| :-- | :-- | :-- |
+| 经典 draft-then-verify（Leviathan/Chen） | ✅ | 范式源头 |
+| 自投机（Medusa / EAGLE / MTP / 层跳过） | ✅ | 当前工业默认 |
+| 免训练（Lookahead / PLD / REST / 字典） | ✅ | 独立一族，端侧/低资源重要 |
+| 树验证系统（SpecInfer / Sequoia） | ✅ | 验证侧的基础设施 |
+| 块/扩散草稿（DFlash / DSpark / BASTION） | ✅（谱系） | 2026 新方向；本轮未设分册，数字不入表 |
+| 纯量化 / 纯剪枝 / 纯 KV eviction | ❌ | 不产生“候选-验证”结构；归 `Infra/QuantizationEdge` |
+| 纯 batch 调度 / continuous batching | ❌ | 系统优化但不含投机；归 `Infra/TrainingInfra` 或框架条目 |
+| 扩散语言模型（非投机范式） | ❌ | 竞争范式，不是本条目主体；只在谱系里对照 |
+
+### 1.3 无损性三档（引用时必须声明）
+
+| 档 | 定义 | 代表 | 可否写“严格无损” |
+| :-- | :-- | :-- | :-- |
+| **严格分布等价** | 对任意序列，输出概率 = p(Seq) | 经典单链；静态树；RheoSampling（Theorem 1）；Traversal Verification；HeteroSpec | ✅ |
+| **序列级等价** | 以整条序列概率判接受（而非逐 token） | Traversal Verification 的视角 | ✅（在其定义域） |
+| **有界风险** | 接受放宽到“分布偏移受控” | ARC-Decode（JS 上界）；Medusa typical acceptance；CDSL（任务奖励） | ❌ 只能写“质量近乎不变” |
+
+> **反例**：把 ARC-Decode 的“相对 EAGLE-3 最高 1.6×”与 RheoSampling 的“相对自回归 2.93×”并列，是**量纲 + 基准 + 保证等级**三重错配。
+
+### 1.4 指标口径（工程硬要求）
+
+| 指标 | 定义 | 分母 |
+| :-- | :-- | :-- |
+| `draft_acceptance_rate` | 被接受草稿 / 提议草稿 | **提议 token 数** |
+| `mean_acceptance_length` | 1 + 被接受草稿 / 验证步数 | **验证步数**（含 bonus token） |
+| `per_position_acceptance` | 逐位置接受率 | 验证步数 |
+| `num_draft_tokens` | 总提议数 | **已扣除结构化约束作废的草稿** |
+
+**必须成对报告**，并同时声明：`(batch, T, 序列长度, 硬件, 树参数, 是否结构化约束)`。
+
+---
+
+## 2. 谱系
+
+### 2.1 四大家族
+
+```mermaid
+flowchart LR
+    A[投机解码] --> B[I 独立 draft]
+    A --> C[II 自投机]
+    A --> D[III 免训练]
+    A --> E[IV 块/扩散]
+    B --> B1[SpecInfer 多 SSM]
+    B --> B2[standalone draft]
+    C --> C1[并行头 Medusa/Hydra]
+    C --> C2[特征级 EAGLE-1/2/3]
+    C --> C3[层跳过 SWIFT/CLaSp]
+    D --> D1[Lookahead]
+    D --> D2[PLD/REST/DictSpec]
+    E --> E1[DFlash]
+    E --> E2[DSpark]
+    E --> E3[BASTION]
 ```
-2023 经典独立模型 ──→ 2024 自投机多头/顺序头 ──→ 2024-2025 特征级 EAGLE 系列
-     │                      │                           │
-     ▼                      ▼                           ▼
-Leviathan/Chen         Medusa / Hydra / Lookahead    EAGLE-1/2/3 (工业标准)
-(独立小模型 draft)     (目标模型自身生成 draft)       (特征级自回归，单层 Transformer)
-     │                      │                           │
-     └──────────────────────┴───────────────────────────┘
-                              │
-                              ▼
-                    2025-2026 新兴方向
-                         │
-         ┌───────────────┼───────────────┐
-         ▼               ▼               ▼
-    块扩散 (DFlash)   多模态投机解码    训练目标优化
-    (并行块生成)        (VLM/视频/VLA)   (LK Losses/PPOW/ConFu)
-```
+
+| 族 | 草稿来源 | 额外权重 | 训练 | 典型条件数字 |
+| :-- | :-- | :-- | :-- | :-- |
+| I 独立 draft | 另一个小模型 | 一个完整模型 | 预训练 | 1.5–2.8×（SpecInfer 分布式） |
+| II 自投机 | target 的头/特征/层 | ~7% 或 <1B | 训头/联合 | 2.3–6.5×（EAGLE/Medusa，带条件） |
+| III 免训练 | 轨迹/检索/字典 | **无** | **免训练** | 1.5–4×（Lookahead，算力富余） |
+| IV 块/扩散 | 块扩散网络 | 一个 draft | 需训练 | 本轮不入表（证据不够） |
+
+详细谱系与选型判据见 [topics/algorithm-families.md](topics/algorithm-families.md)。
+
+### 2.2 时间线（2023 → 2026H2）
+
+| 阶段 | 主线 | 代表 | 本条目证据 |
+| :-- | :-- | :-- | :-- |
+| 2023 | 经典 draft-then-verify | Leviathan / Chen；SpecInfer | [SpecInfer 分册](papers/2305.09781-specinfer.md) |
+| 2024 H1 | 并行头/树验证 | Medusa；Lookahead | [Medusa](papers/2401.10774-medusa.md)、[Lookahead](papers/2402.02057-lookahead.md) |
+| 2024 H2 | 特征级自投机 + 动态树 | EAGLE-1 / EAGLE-2 | [EAGLE 分册](papers/2401.15077-eagle-series.md) |
+| 2025 | 训练目标 + 数据 scaling | EAGLE-3 | 同上 |
+| 2026 H1 | 块扩散/预算感知 | DFlash / DSpark / BASTION | 谱系定位（无分册） |
+| 2026 H2 | T>0 正确性 + 系统条件 | RheoSampling；MagicDec | [RheoSampling](papers/2609.21827-rheosampling.md)、[MagicDec](papers/2408.11049-magicdec.md) |
+| 2026 | 生产框架落地 | vLLM / SGLang | [vLLM](papers/vllm-implementation.md)、[SGLang](papers/sglang-implementation.md) |
+
+### 2.3 五根可判定的轴
+
+| 轴 | 取值 | 判定方式 |
+| :-- | :-- | :-- |
+| A 草稿来源 | 独立 / target 自身 / 检索 / 块 | 看是否需要额外权重 |
+| B 训练 | 免训练 / 训头 / 训独立模型 | 看训练管线 |
+| C 拓扑 | 链 / 静态树 / 动态树 / 块 | 看验证 mask |
+| D 接受率上限 | 由 p 与 q 的对齐度决定 | 同条件比 τ 或 acceptance rate |
+| E 负载行为 | batch↑ 升/降/反转 | 看 batch×序列扫描 |
 
 ---
 
-## 二、技术脉络时间线（2023 → 2026H2）
+## 3. 机制（把四族串起来）
 
-> 本节为本轮新增。完整文献与证据等级见各子报告。
+### 3.1 单链：draft-then-verify
 
-### 2.1 阶段主线
+- 从 `q` 逐 token 采样；以 `min(1, p/q)` 接受；拒绝后从 `norm(max(0, p−q))` 重采。
+- 证明见 [topics/verification-acceptance.md](topics/verification-acceptance.md) §2；结论：输出严格等于 `p`。
+- 工程前提：采样与验证必须用**同一个 q**；截断（top-K/top-128）必须两端一致。
 
-| 阶段 | 主线 | 代表工作 | 对应子报告 |
-|---|---|---|---|
-| **2023** | 经典 draft-then-verify、并行采样验证、自投机雏形 | Leviathan et al.；Chen et al. | [classical §3.1](speculative-classical-and-self.md) |
-| **2023-2024** | 检索式 / 词表式草稿（低成本、免训练） | Prompt Lookup、REST；2026 年延伸出**非拉丁语系字典法** | [block-diffusion §3.5](speculative-block-diffusion.md) · [domain §2](speculative-domain-language.md) |
-| **2024** | 多头草稿与冻结式结构；动态草稿树登场 | Medusa、Hydra、Lookahead、LayerSkip；**EAGLE-1/-2**（动态草稿树） | [classical §3.2](speculative-classical-and-self.md) · [eagle §3.3](speculative-eagle-series.md) |
-| **2024-2025** | EAGLE 工业化；草稿侧训练目标与蒸馏 | EAGLE-3；**AdaSPEC**（选择性知识蒸馏，NeurIPS 2025） | [eagle §3.3.3](speculative-eagle-series.md) · [draft-training §2](speculative-draft-training-2026.md) |
-| **2025** | 验证侧理论化；层跳过与在线自投机 | **Traversal Verification**（NeurIPS 2025）；**SWIFT**（ICLR 2025）；**CLaSp**（ACL 2025） | [stochastic §3.2](speculative-stochastic-verification.md) · [classical §3.2.5](speculative-classical-and-self.md) |
-| **2025-2026** | 走向训练闭环与多模态 | **Adaptive Drafter / TLT**（推理 RL 训练长尾，ASPLOS 2026）；多模态投机解码 | [draft-training §4](speculative-draft-training-2026.md) · [multimodal](speculative-multimodal.md) |
-| **2026H1** | 块扩散式草稿与预算感知 | **DFlash**（ICML 2026）、**DSpark**；**BASTION**（预算感知 + 树状块扩散，arXiv 2605.29727）；成本感知建树（ICLR 2026） | [block-diffusion §3.4](speculative-block-diffusion.md) · [cascade §4](speculative-cascade-heterogeneous.md) |
-| **2026H2** | **随机采样下的动态树正确性**、风险界定接受、级联/异构、端云与硬件 | **RheoSampling**（arXiv 2609.21827）、**ARC-Decode**（ICML 2026）、**HCSpec / HeteroSpec**（ACL 2026）、**FlexSpec**（端云协同）、端侧 MoE 自投机（ACM Web 2026）、**SMoLPU**（ISSCC 2026）、Google TPU 扩散式 3.13× | [stochastic](speculative-stochastic-verification.md) · [cascade](speculative-cascade-heterogeneous.md) · [edge](speculative-edge-cloud-hardware.md) |
-| **2026** | 系统协同设计综述（**本轮未采纳为重构框架**） | IEEE《From Draft-Then-Verify to Systems Co-Design》 | —（见 §2.3） |
+### 3.2 自投机：并行头 vs 特征自回归
 
-**一句话脉络**：从"草稿-验证两段式"→"结构化的树 / 多头草稿"→"草稿模型训练与蒸馏"→"验证理论与正确性（随机采样）"→"扩散 / 块式草稿 + 预算与硬件协同"。
+| 维度 | Medusa（并行头） | EAGLE（特征自回归） |
+| :-- | :-- | :-- |
+| 草稿来源 | target 最后隐藏态 + K 个头 | target 第二层顶层特征 + 单层 decoder |
+| 前缀依赖 | ❌ 头之间独立 | ✅ 有 |
+| 接受率（同条件参考） | ~0.6 | ~0.8 |
+| 训练 | 训头（backbone 可冻结） | 训草稿头（70B 约 0.99B 参数） |
+| 树 | 笛卡尔积/搜索树 | 静态→动态树 |
+| 典型加速（带条件） | 2.3–2.8×（batch=1） | 3.0–6.5×（五任务） |
 
-### 2.2 本轮的转折点判断
+### 3.3 树验证：覆盖率 vs 成本
 
-> **2026H2 的转折点是：随机解码（T>0）下"动态树更优"的既有结论被证伪或需要限定条件。**
+- SpecInfer 的 tree mask + 树形 KV 是公共祖先；EAGLE/Medusa 的树验证复用了同一抽象。
+- 树宽不是越大越好：SpecInfer 在 **BS≥4** 时 2–3 最优；EAGLE-2 的动态树按 value 选点；CAST（`[二手]`）进一步把 GPU/batch 纳入成本。
+- 树验证的收益来自“一次前向验证多分支”，成本是“验证 token 数 × 每 token 成本”。
 
-四条依据（详细论证见对应子报告）：
+### 3.4 免训练：用已有轨迹
 
-1. **T>0 下动态树塌缩为 one-hot**，接受率显著下降，且这是**机制性**的——建树与验证共用了同一个 draft 概率分布。 **[精读原文，见 [stochastic §3.1](speculative-stochastic-verification.md)]**
-2. **朴素的"改成采样"修法会破坏无损性**：token 能否在树中存活取决于它自身的取值，对"存活"取条件会扭曲条件分布。 **[精读原文]**
-3. **正确解是解耦**：RheoSampling 用"建树 proxy 概率 + 验证真实采样概率"的双身份设计，并给出严格无损性证明。 **[精读原文]**
-4. **"草稿 token 越多越好"在系统侧也被推翻**：batch=1（memory-bound）与高并发（compute-bound）下结论相反，不存在适配所有并发度的静态 `num_speculative_tokens`。 **[精读原文，见 [systems §①](speculative-systems-and-frameworks.md)]**
+- Lookahead：Jacobi 轨迹 + 2D 窗口（W/N/G）+ n-gram 池；贪心草稿 = one-hot，验证仍无损。
+- PLD/REST/DictSpec：prompt/语料/字典匹配；收益与重复度/tokenizer fertility 强相关。
+- 边界：命中率决定上限；需要剩余算力。
 
-### 2.3 关于 IEEE 2026 综述（原方案 C 未采纳）
+### 3.5 T>0：one-hot 困境与修复
 
-检索到 IEEE 2026 综述《From Draft-Then-Verify to Systems Co-Design: A Survey of Speculative Decoding for Autoregressive Large Language Models》（核验页见 §八）。
+- 动态树按 `q` 排序建树；T>0 时接受取决于 `p/q` 比值，`q` 不再预测接受 → 树塌缩。
+- 直接“改成采样”会破坏无损性（存活依赖取值）。
+- RheoSampling：前 m 个确定性 + 第 m+1 个残差采样；采样 token 用 proxy 参与排序/剪枝、用真实 `q̃` 验证；OT 重分配残差。
+- 修复的代价：每步多一次采样 + OT 验证；**默认 EAGLE 未启用**，线上 T>0 仍需自行标定。
 
-按任务书口径，**本轮只做"重排"，不按该综述把 report.md 整体重构为"系统协同设计"框架**。该综述在 §八 中作为参考来源列出，"系统协同"作为 §五 的四条瓶颈之一被引用。
+### 3.6 系统调度：从静态到自适应
 
----
+- 静态 `num_speculative_tokens` 无法覆盖负载区间（vLLM 文档口径）。
+- 方向：按 (request, position) 置信度分配验证预算（vLLM adaptive verification）；按上下文裁剪 draft（`draft_context_window`，本 commit 未检出）；变长验证 + ragged verify（SGLang DSpark）。
+- 这些是“算法→wall-clock”的关键，见 [topics/systems-throughput-latency.md](topics/systems-throughput-latency.md)。
 
-## 三、方法级技术演进时间线（v1 保留）
+### 3.7 三次“系统化”转折
 
-> 本节为 v1 的细粒度方法级时间线；2023 → 2026H2 的概览脉络见 §二，两者互补。
+把 2023–2026 的变化按“解决了什么系统问题”重排，比按年份更清楚：
 
-| 阶段 | 代表方法 | 年份 | 核心机制 | 训练需求 | 典型加速比 | 信息可靠性 |
-|------|---------|------|---------|---------|-----------|-----------|
-| **经典独立模型** | Leviathan et al. / Chen et al. | 2023 | 独立小模型 draft + target 验证 | 无需联合训练 | 2-3× | 高（ICML/NeurIPS 论文） |
-| **自投机：并行头** | Medusa | 2024 | 多头并行预测 + 树状注意力 | 需微调 | 2.5-3.5× | 高（ICML 2024） |
-| **自投机：顺序头** | Hydra | 2024 | 顺序依赖草案头 | 需微调 | 2.8-3.8× | 高（NeurIPS 2024） |
-| **自投机：免训练** | Lookahead | 2024 | Jacobi 迭代 + n-gram 池 | 免训练 | 1.5-2.5× | 高（NeurIPS 2024） |
-| **自投机：层跳过** | SWIFT / CLaSp | 2025 | 在线自适应跳过中间层作 draft | 免训练 | 1.3-1.7× | 高（ICLR/ACL 2025） |
-| **特征级：单层** | EAGLE-1 | 2024 | 特征自回归，单层 Transformer | 需训练 | 3-4× | 高（ICLR 2024） |
-| **特征级：动态树** | EAGLE-2 | 2024 | 动态草案树，上下文感知分支 | 需训练 | 3.5-4.5×（**T=0**）；摘要称 EAGLE-3 相对其约 **1.4×** 提升 | 高（EMNLP 2024） |
-| **特征级：多层融合** | EAGLE-3 | 2025 | 多层特征融合 + TTT，工业标准 | 需训练 | 摘要 **up to 6.5×**；特定设定 **4.79×**；SGLang batch=64 吞吐 **1.38×**（**T=0**） | 高（NeurIPS 2025） |
-| **块扩散** | DFlash / DSpark / BASTION | 2026 | 块 / 树状块扩散并行 draft | 需训练 | DFlash **>6×**；BASTION 最高 6.61× | 中（ICML 2026 / arXiv 预印本） |
-| **块扩散（TPU）** | DFlash on TPU v5p | 2026 | 双缓存 + 流水线重映射 | 需训练 | **3.13×**（峰值近 6×） | 中（官方工程博客） |
-| **检索式** | REST / PLD | 2023-24 | 基于检索的候选生成 | 零训练成本 | 1.5-2.5× | 高（NAACL/独立工作） |
-| **字典式（低资源语种）** | DictSpec | 2026 | 静态 n-gram 查找表，与 prompt-local 混合 | **零训练** | 验证步最多 1.65×；混合真实服务最高 1.76× | 中（ACL 2026） |
+| 转折 | 之前的问题 | 解法 | 代价 | 代表 |
+| :-- | :-- | :-- | :-- | :-- |
+| **① 从“一个 draft”到“一棵树”**（2023–24） | 单链草稿一错全废，覆盖率低 | token tree + 树形 KV + topology-aware mask | 验证 token 数上升；实现复杂度上升 | SpecInfer |
+| **② 从“独立模型”到“自投机”**（2024–25） | 独立 draft 难获取、难对齐、双模型服务贵 | target 特征/头/层跳过做草稿 | 要训草稿头；换 target 要重训 | Medusa / EAGLE |
+| **③ 从“静态配置”到“按负载/按温度自适应”**（2025–26） | 一个 `num_speculative_tokens` 适配不了所有 batch/T | 动态树、adaptive verification、变长验证、T>0 解耦 | 系统复杂度上升；默认配置未必开启 | EAGLE-2/3、RheoSampling、vLLM/SGLang |
 
-> **加速比说明（本轮重要修订）**：
-> 1. 上表典型加速比为**论文报告值**，实际部署受模型规模（7B vs 70B）、硬件（A100 vs H100 vs GB200 vs TPU v5p）、任务类型（代码/数学/开放对话）、**batch / 并发度**影响显著。例如 EAGLE-3 在 LLaMA-3.3-70B 上报告的 4.79× 是**该设定下的表值**；其**摘要口径为 up to 6.5×**（chat + reasoning 模型、五任务的上限），另有 **SGLang batch=64 下 1.38× 吞吐提升**——**6.5× = 摘要上限，4.79× = 特定设定值，两者不矛盾**；在小模型或高熵任务上还可能降至 2-3×。三个数字口径不同（上限 / 特定模型设定 / 特定框架与 batch 吞吐），**不可混用**。
-> 2. **EAGLE-2/EAGLE-3 的数字是 greedy（T=0）设定下的报告值**。在 T>0 随机采样下，动态树会塌缩为 one-hot、接受率显著下降——详见 [speculative-stochastic-verification.md](speculative-stochastic-verification.md) 与 [speculative-eagle-series.md](speculative-eagle-series.md) §3.3.5。
-> 3. **块扩散方法的收益强依赖 batch**：batch=1（memory-bound）时 draft token 接近免费，高并发（compute-bound）时与真实 token 争夺算力，**结论相反**。详见 [speculative-systems-and-frameworks.md](speculative-systems-and-frameworks.md) §①。
-> 4. **不同硬件上的同一算法不可直接比较**：DFlash 在 GPU 与 TPU 上的数字来自不同优化路径（见 [speculative-edge-cloud-hardware.md](speculative-edge-cloud-hardware.md) §5）。
+**读法**：三次转折都不是“算法更准”，而是“**把某个系统约束显式化**”——① 把覆盖率显式化，② 把 draft 获取成本显式化，③ 把负载/温度显式化。这也是为什么同一算法在不同系统里表现差异巨大。
 
----
+### 3.8 一个请求从进入到返回的投机路径（跨系统抽象）
 
-## 四、指标口径与可比性（本轮新增，必读）
+| 步 | 做什么 | vLLM 对应 | SGLang 对应 |
+| --: | :-- | :-- | :-- |
+| 1 | 判定是否开投机、开哪种 | `speculative_config` | `get_spec()` |
+| 2 | draft 采样 | `_sample_draft_tokens` | `draft_forward` |
+| 3 | 组装验证输入 | `propose` + `draft_probs` 装配 | `build_eagle_verify_input` |
+| 4 | 并行验证 | `rejection_sample` | `eagle_sample` |
+| 5 | 接受/拒绝、写回 KV | `_rejection_*` kernel | `verify_tree_greedy_func` / sampling kernel |
+| 6 | 记录指标 | `metrics.py` | 调度侧统计 |
 
-> 完整的字段定义与对账关系见 [speculative-systems-and-frameworks.md](speculative-systems-and-frameworks.md) §②。
-
-### 4.1 acceptance rate 与 mean accepted length 必须成对报告
-
-据 vLLM 官方 *Per-Request Acceptance Metrics* 文档（一手来源，本轮已精读）：
-
-| 指标 | 精确分母 | 含义 |
-|---|---|---|
-| `mean_acceptance_length` | **验证步数**（`num_spec_steps`） | 每次验证步平均产出 token 数，**含必得的 bonus token**，范围 $[1, k+1]$ |
-| `draft_acceptance_rate` | **提议草稿 token 数**（`num_draft_tokens`） | 被提议草稿中被接受的比例 |
-
-**两者分母不同，会反向移动**：加深草稿树通常**降低** acceptance rate（多提议了低命中率的 token）却**提高** mean accepted length（一旦命中就一次吃更多）。
-
-> **工程硬要求**：单独报一个数字无法判断系统是变快还是变慢。**必须成对给出**，并同时声明测试的（a）并发度 / batch size，（b）temperature，（c）是否启用结构化输出约束。
-
-### 4.2 三个会改变指标口径的因素
-
-| 因素 | 影响 | 处置 |
-|---|---|---|
-| **temperature（T=0 vs T>0）** | T>0 下动态树塌缩，接受率显著下降；T 越低越接近确定性 | 必须声明 T；T>0 的结论不可外推到 T=0，反之亦然（见 [stochastic](speculative-stochastic-verification.md)） |
-| **batch / 并发度** | batch=1 与高并发下"是否划算"结论相反 | 必须声明并发度；不存在适配所有并发度的静态 `num_speculative_tokens`（见 [systems §①](speculative-systems-and-frameworks.md)） |
-| **结构化输出约束** | `num_draft_tokens` **已扣除被约束作废的草稿** → acceptance rate 分母变小 | 必须声明约束类型；有/无约束的实验**不可直接对比**（见 [domain §3.3](speculative-domain-language.md)） |
-
-### 4.3 "无损"不是一个含义统一的词
-
-本轮新增子报告识别出三类**不同等级**的输出分布保证，混用会导致错误结论：
-
-| 等级 | 含义 | 代表方法 | 可否宣称"严格无损" |
-|---|---|---|---|
-| **严格分布等价** | 输出分布**严格等于** target 分布 $p$ | 经典 draft-then-verify；RheoSampling（Theorem 1）；Traversal Verification；HeteroSpec | ✅ 可以 |
-| **序列级等价** | 以**整条序列**的概率而非逐 token 概率判接受 | Traversal Verification 的核心视角 | ✅ 可以（有其自身定义域） |
-| **有界风险** | 接受放宽到"分布偏移受控"，**不是**严格等价 | ARC-Decode（JS 散度上界）；CDSL（任务奖励验证） | ❌ **不可**，须写"有界风险 / 质量近乎不变" |
-
-> **推论**：把 ARC-Decode 的"相对 EAGLE-3 最高 1.6×"与 RheoSampling 的"相对自回归 2.93×"放在同一句话里比较是**不成立的**——量纲、基准与保证等级都不同。
-
-### 4.4 跨论文比较的三条禁令
-
-1. **禁止跨硬件比较**：GPU 与 TPU 上的同一算法不可直接比（工程映射不同）。
-2. **禁止跨量纲比较**：能效（µJ/token，如 SMoLPU）与吞吐（token/s）不是同一量纲，排成"谁更快"的榜单是方法论错误。
-3. **禁止把摘要级数字当已验证事实**：本专题所有子报告均逐条标注证据等级（精读原文 / 摘要级 / 二手 / 受限核验），跨论文引用时须保留该标注。
-4. **等级标签只取一个主等级**：混合来源取**最弱**等级并在正文注明来源类型（如 `[精读原文（vLLM 官方文档）]`）；禁止 `A + B`、`A（摘要层）` 这类复合标签（本轮已按此规则收敛全部子报告）。
+这张表是 [vLLM 分册](papers/vllm-implementation.md) 与 [SGLang 分册](papers/sglang-implementation.md) 的“共同骨架”；两者的差异在第 2/4 步的语义（greedy vs probabilistic、topk=1 vs tree）。
 
 ---
 
-## 五、当前技术瓶颈与优化方向（本轮更新为四条）
+## 4. 跨系统对比总表（带条件）
 
-> 本轮按任务书口径把 v1 的 6 条瓶颈重排为 **4 条**：随机采样正确性 / 草稿质量 / 系统协同 / 端侧约束。v1 中"与量化兼容性""扩散语言模型竞争"两条并入相应条目或保留在子报告中。
+> **读法**：每一行的数字只在“条件”列成立；跨行不可直接排序。空值表示本轮未取得可核验数字，不表示“没有”。
 
-### 5.1 随机采样正确性（本轮新增，最高优先级）
+| 系统 | 年份/出处 | 族 | 草稿来源 | 训练 | 拓扑 | 报告加速比 | 条件 | 证据 |
+| :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
+| Leviathan / Chen | 2023 | I | 独立小模型 | 预训练 | 链 | 2–3× | T5-XXL、同族 draft | 背景（未设分册） |
+| **SpecInfer** | 2023–24 | I | 多 SSM | 用现成 | 树 | 分布式 1.5–2.8×；offloading 2.6–3.5× | 单机/多机；A10 24GB | [分册](papers/2305.09781-specinfer.md) |
+| **Medusa** | 2024 | II | 并行头 | 训头 | 树 | Medusa-1 >2.2×；Medusa-2 2.3–2.8× | Vicuna-7B/13B、batch=1 | [分册](papers/2401.10774-medusa.md) |
+| **Lookahead** | 2024 | III | Jacobi 轨迹 | 免训练 | n-gram | 1.5–2.3×；MT-Bench 7B 1.8×；8 卡 4× | A100/3090、代码任务 | [分册](papers/2402.02057-lookahead.md) |
+| **EAGLE-1** | 2024 | II | 特征自回归 | 训头 | 静态树 | LLaMA2-70B 2.7–3.5× | T=0、batch=1 | [分册](papers/2401.15077-eagle-series.md) |
+| **EAGLE-2** | 2024 | II | 特征自回归 | 训头 | 动态树 | 3.05–4.26× | T=0、三系列模型、六任务 | 同上 |
+| **EAGLE-3** | 2025 | II | 多层特征 + 直接 token | 训头（8× 数据） | 动态树 | 3.0–6.5× | 五任务、chat+reasoning | 同上 |
+| **EAGLE-3 @ SGLang** | 2025 | II | 同上 | — | 链（链长 3，不用树） | 1.38× 吞吐（batch=64）；2.36× 吞吐（batch=1） | 1×H100、LLaMA3.1-8B、MT-Bench | 同上（Table 3/4） |
+| **MagicDec** | 2024–25 | I/自投机 | 稀疏 KV 自投机 | 免训练 | 链 | 最高 2.51× | 长上下文、batch 32–256、8×H100 | [分册](papers/2408.11049-magicdec.md) |
+| **RheoSampling** | 2026 | II+验证 | EAGLE-3 官方 draft | 不重训 | 动态树 | τ 5.04→5.25；加速 2.84→2.93× | T=1.0、单 A6000、树 60/8 | [分册](papers/2609.21827-rheosampling.md) |
+| **vLLM** | 2026 | 框架 | EAGLE/MTP/DFlash/standalone | 取决 draft | 链/树 | 本分册不报 | commit 2b85d9cb | [分册](papers/vllm-implementation.md) |
+| **SGLang** | 2026 | 框架 | EAGLE/MTP/DFlash | 取决 draft | 链（topk=1）/树 | 本分册不报 | commit 2a08e261 | [分册](papers/sglang-implementation.md) |
 
-**瓶颈**：投机解码的理论保证建立在"lossless"之上，但**"lossless"在 T>0 下对动态树并不自动成立**。
+### 4.1 三条跨表禁令
 
-- 动态树（EAGLE-2/3）的建树与剪枝按 draft 概率 $q$ 排序，而接受判据是 $\min(1, p/q)$ 的**比值**。T>0 时 $q$ 不再是接受率的可靠指标 → 树塌缩为近似 one-hot → 接受率下降。
-- 更严重的是：**朴素的"改为采样"修法会破坏无损性**（token 存活依赖自身取值 → 条件分布被扭曲）。
-- 因此需要区分三种保证等级：严格分布等价 / 序列级等价 / **有界风险**（见 §4.3）。
+1. **禁止跨硬件**：H100 / A100 / L40 / RTX 3090 / TPU v5p 的同一算法不可直接比。
+2. **禁止跨量纲**：µJ/token（能效）与 tokens/s（吞吐）不是同一量纲；SMoLPU 一类专用硅的数字不能与算法论文排榜。
+3. **禁止把“上限”当“通用值”**：EAGLE-3 的 6.5× 是摘要上限；2.36× 是 SGLang batch=1 的吞吐；1.38× 是 batch=64 的吞吐。三个数字各有条件。
 
-**突破方向**：
+### 4.2 条件数字速查（按“条件”索引，不按“谁更大”）
 
-| 方向 | 代表工作 | 关键结果 |
-|---|---|---|
-| **建树 / 验证解耦** | **RheoSampling**（arXiv 2609.21827） | 双概率身份（proxy 建树 + 真实采样概率验证）；Theorem 1 证明严格无损；Llama-3.1-8B 接受长度 5.04→**5.25**，加速 2.84×→**2.93×** |
-| **换验证的遍历与粒度** | **Traversal Verification**（NeurIPS 2025） | 叶到根遍历 + 序列级接受判据；证明无损且单链最优；平均接受长度 **+2.2%~5.7%** |
-| **放宽为有界风险** | **ARC-Decode**（ICML 2026） | JS 散度上界 + Local Tolerance Score 软接受；相对 EAGLE-3 最高 **1.6×**（**摘要级**） |
-| **指标口径修正** | vLLM 官方文档 | acceptance rate 与 mean accepted length **必须成对报告** |
+| 条件 | 数字 | 出处 |
+| :-- | :-- | :-- |
+| LLaMA2-Chat 70B、T=0、MT-Bench | EAGLE 2.7–3.5×；EAGLE-2 3.51× | EAGLE / EAGLE-2 |
+| LLaMA3-Instruct 8B、T=0、MT-Bench | EAGLE-2 3.46×，τ 4.53 | EAGLE-2 |
+| Vicuna-7B、batch=1 | Medusa-1 >2.2×；Medusa-2 2.3–2.8× | Medusa |
+| LLaMA-2-7B、MT-Bench、A100、FlashAttention | Lookahead 1.8× | Lookahead |
+| 8 卡、ClassEval、强扩展 | Lookahead 4× | Lookahead |
+| LLaMA-65B/OPT-30B、单机/多机 | SpecInfer 1.5–2.8× | SpecInfer |
+| OPT-13B/30B、单 A10 24GB、vs FlexGen | SpecInfer 2.6–3.5× | SpecInfer |
+| LLaMA-3.1-8B、长上下文、batch 32–256、8×H100 | MagicDec 2.51× | MagicDec |
+| LLaMA-3.1-8B、S≥4000 | 加速随 batch 上升 | MagicDec |
+| LLaMA-3.1-8B、S<4000 | 加速随 batch 下降 | MagicDec |
+| 1×H100、LLaMA3.1-8B、MT-Bench、链长 3 | EAGLE b=24 0.93×；EAGLE-3 b=64 1.38× | EAGLE-3 Table 3 |
+| 1×H100、batch=1、MT-Bench | 158.34 → 373.25 tokens/s（2.36×） | EAGLE-3 Table 4 |
+| T=1.0、单 A6000、树 60/8 | RheoSampling τ 5.04→5.25；2.84→2.93× | RheoSampling |
+| T=1.0、Vicuna-13B | Rheo τ 5.75→5.89；3.37→3.43× | RheoSampling |
 
-→ 详见 [speculative-stochastic-verification.md](speculative-stochastic-verification.md)；对 EAGLE 的限定见 [speculative-eagle-series.md](speculative-eagle-series.md) §3.3.5。
-
-### 5.2 草稿质量（含训练目标、表征、时机三个子问题）
-
-**瓶颈**：高质量 drafter 获取困难；且即使获得了，**接受率也不等于"学得像 target"**。
-
-- **训练目标错位**：经典 KD 最小化所有 token 上的 KL 散度，而 SD 的目标是最大化接受率。
-- **表征缺陷**：**Attention Drift**——drafter 隐藏状态幅值随链深单调增长，注意力从 prompt 漂移到自身近期输出；该现象在 **EAGLE-3 drafter 与 MTP head 上都存在**。
-- **训练时机**：RL 训练中 target 持续演化，离线训一次的 drafter 会对不上。
-
-**突破方向**：
-
-| 方向 | 代表工作 | 关键结果 |
-|---|---|---|
-| **选择性蒸馏** | **AdaSPEC**（NeurIPS 2025） | 用 reference model 过滤难拟合 token，接受率最高 **+15%**（优于 DistillSpec） |
-| **表征归一化** | **Attention Drift**（arXiv 2605.09992） | Post-norm + per-hidden-state RMSNorm；接受长度最高 **2×**（模板扰动）/1.18×（长上下文）/1.10×（7 benchmark） |
-| **在线持续训练** | **Adaptive Drafter / TLT**（ASPLOS 2026） | 利用长尾生成期间的空闲 GPU 持续训 drafter；RL 训练 **>1.7×**，draft 模型为免费副产品 |
-| **表述层修正旧路线** | **SWIFT**（ICLR 2025）/ **CLaSp**（ACL 2025） | 免训练在线层跳过；**1.3×~1.7×**，保持原始分布 |
-| **训练框架工程化** | **SpecForge**（ICML 2026, arXiv 2603.18567） | target-draft 解耦 + 混合并行；EAGLE-3 训练最高 **9.9× 加速**，发布 SpecBundle |
-
-→ 详见 [speculative-draft-training-2026.md](speculative-draft-training-2026.md)、[speculative-training-optimization.md](speculative-training-optimization.md)、[speculative-classical-and-self.md](speculative-classical-and-self.md) §3.2.5。
-
-### 5.3 系统协同（本轮从"批量推理效率"扩展而来）
-
-**瓶颈**：**投机解码的收益随负载恶化**——这是结构性的，不是调参问题。
-
-- batch=1 时 GPU 是 **memory-bound**，额外 draft token 接近免费；
-- batch=256 时 draft token **与真实 token 争夺同一份算力**，每个被拒 token 都是浪费的算力，够多时**吞吐下降**；
-- **不存在适配所有并发度的静态 `num_speculative_tokens`**；
-- 成本感知建树（CAST）实测 **EAGLE-2 在 batch=8 的 CNN/DM 上降到 0.84×（比原始自回归还慢）**。
-
-**突破方向**：
-
-| 方向 | 代表工作 | 关键结果 |
-|---|---|---|
-| **按置信度分配验证预算** | vLLM **adaptive verification**；**DSpark**（SGLang 集成） | 逐 (request, position) 打分准入 + 启动时 profiled 成本模型；**一套配置覆盖整个负载区间**；DSpark 半自回归块草稿 + 变长验证 |
-| **预算感知的树扩张** | **BASTION**（arXiv 2605.29727） | 接受代理 + 在线延迟估计 + best-first 扩张；最高 **6.61×**，优于 SOTA 块扩散基线 39% |
-| **成本感知建树** | **CAST**（ICLR 2026） | 把 GPU 型号与 batch 纳入效用最大化；**最高 5.2×** |
-| **分层 / 级联草稿** | **HCSpec**（ACL 2026）/ **HeteroSpec**（ACL 2026） | HCSpec 两级水平级联，相对 EAGLE-3 **+15~30%**；HeteroSpec 按不确定性分配验证算力，平均 **4.24×** 且保持精确分布 |
-| **上下文窗口界限** | vLLM PR #61261 | `draft_context_window` 把"超出训练长度后接受率崩塌"变成可配置项 |
-
-→ 详见 [speculative-systems-and-frameworks.md](speculative-systems-and-frameworks.md) §①、[speculative-cascade-heterogeneous.md](speculative-cascade-heterogeneous.md)、[speculative-block-diffusion.md](speculative-block-diffusion.md) §3.4。
-
-### 5.4 端侧约束（本轮新增）
-
-**瓶颈**：端侧的**第一约束是内存带宽与权重搬运，而非草稿质量**；且**投机解码与 MoE 在端侧存在结构性不兼容**——验证被拒 token 时仍要加载专家，批量验证会激活**专家并集**，把稀疏计算推回密集内存访问。
-
-**突破方向**：
-
-| 方向 | 代表工作 | 关键结果 |
-|---|---|---|
-| **用已有权重的子集作 draft** | **SS-MoE**（ACM Web 2026） | 路由专家子集作 draft + 内存作专家缓存 + 置信度自适应接受；端侧**不增加额外权重内存** |
-| **冻结草稿兼容演进 target** | **FlexSpec**（arXiv 2601.00644 / IEEE TMC） | 共享骨干架构 + 信道感知自适应草稿长度；免端侧重训与反复下载 |
-| **专用硅** | **SMoLPU**（ISSCC 2026） | MoE 投机解码专用 LPU；**2.3×/4.2×** 能效、**3.3×** 延迟、每参数能量 **−43.5%**（**受限核验**） |
-| **硬件映射** | Google **TPU v5p + DFlash** | 双缓存 + 流水线重映射；平均 **3.13×**、峰值近 **6×** tokens/s |
-| **视觉/多模态端侧** | 多模态投机解码 | 见 [speculative-multimodal.md](speculative-multimodal.md) §4.5 |
-
-→ 详见 [speculative-edge-cloud-hardware.md](speculative-edge-cloud-hardware.md)。
-
-### 5.5 v1 其他条目的去向
-
-| v1 条目 | 本轮处置 |
-|---|---|
-| 5.1 草案模型训练难题 | → 并入 §5.2 草稿质量 |
-| 5.2 接受率优化困难 | → 并入 §5.2 草稿质量 |
-| 5.3 与量化兼容性（QSpec / HierSpec） | → 保留在 [speculative-systems-and-frameworks.md](speculative-systems-and-frameworks.md) 系统表；**其原始链接为未确证占位符** |
-| 5.4 批量推理效率 | → **扩展为 §5.3 系统协同** |
-| 5.5 扩散语言模型的竞争 | → 保留在 [speculative-block-diffusion.md](speculative-block-diffusion.md) §5.5（并已更新 I-DLM / NLD 的可核验链接） |
+> 这张表只用于“查条件”，**不能横向排序**。例如 2.51×（MagicDec，长上下文大 batch）与 6.5×（EAGLE-3，五任务上限）不是同一坐标。
 
 ---
 
-## 六、框架与工具生态
+## 5. 条件化结果读法
 
-| 框架/工具 | 支持情况 | 备注 |
-|----------|---------|------|
-| **vLLM** | 原生 EAGLE-1 / EAGLE-3 支持（v0.8.5+） | 最广泛部署的开源推理框架 |
-| **SGLang** | SpecForge 训练框架集成 | 高性能推理 runtime |
-| **TensorRT-LLM** | NVIDIA 推理优化，支持投机解码 | 闭源，针对 NVIDIA 硬件优化 |
-| **SpecBundle** | 生产级 EAGLE-3 草案模型集合 | SpecForge 发布，覆盖主流模型 |
-| **Red Hat AI** | 发布 Qwen3-8B-speculator.eagle3 | 企业级部署方案 |
+### 5.1 温度：T=0 与 T>0 是两条曲线
 
-**生态趋势**：
-- vLLM 的 EAGLE-3 支持使投机解码从研究工具变为生产默认选项
-- SpecBundle 降低 draft 模型获取门槛，类似 HuggingFace 模型库的"draft 模型专区"
-- Red Hat AI 等厂商开始发布官方 speculator 模型，标志投机解码进入商业化阶段
+| 温度 | 动态树行为 | 接受率 | 引用注意 |
+| :-- | :-- | :-- | :-- |
+| T=0 | 按 q 排序 ≈ 接受顺序 | 高 | EAGLE-2/3 的主表多在此 |
+| T>0 | 树塌缩为 one-hot | 显著下降 | 不能把 T=0 数字外推 |
+| T→0 | 采样退化为 top token | 上升 | RheoSampling 的收益区间收窄 |
 
----
+### 5.2 batch：先升后降，拐点随版本移动
 
-## 七、QwenAccel-Train 框架设计
+- EAGLE：batch=2 1.40× → batch=24 **0.93×** → batch=64 0.99×。
+- EAGLE-3：batch=2 1.81× → batch=24 1.39× → batch=64 1.38×。
+- SpecInfer：batch 越大，相对收益越小；BS≥4 树宽 2–3。
+- Medusa：模拟显示 batch>32 加速可能转负。
+- MagicDec：长序列（S≥4000）时加速随 batch 上升；短序列相反。
 
-QwenAccel-Train 是一个面向投机解码的模块化训练框架，包含 **10 个可开关创新模块**：
+### 5.3 序列长度与硬件
 
-| 模块类别 | 模块名称 | 功能描述 |
-|---------|---------|---------|
-| **自投机 draft** | TiDAR | 自投机解码，目标模型自身生成 draft |
-| **高效 draft 架构** | MambaDraft | 线性注意力 draft 模型，O(1) 内存复杂度 |
-| **KV 缓存优化** | AnchorKV | 复用 target 模型 KV 缓存，减少重复计算 |
-| **条件机制** | MultiScaleConditioner | 多尺度条件注入，融合不同层级的 target 特征 |
-| **条件机制** | CrossAttnConditioner | 交叉注意力条件，增强 draft-target 交互 |
-| **动态调度** | AdaptiveBlockSizer | 自适应块大小调整，根据上下文熵动态选择 draft 长度 |
-| **验证优化** | TreeVerifyEngine | 树状验证引擎，优化树状注意力的 GPU 利用率 |
-| **训练策略** | OPDTrainer | On-Policy Distillation，在线策略蒸馏 |
-| **训练策略** | ExposureBiasReducer | 曝光偏差削减，缓解训练-推理分布偏移 |
-| **架构适配** | MoEAwareDraft | MoE 感知 draft，针对稀疏激活模型优化 |
-| **系统协调** | PDCoordinator | Draft-Verify 流水线协调器，优化异构设备调度 |
+| 变量 | 影响 | 证据 |
+| :-- | :-- | :-- |
+| 序列长度 | 短序列 compute-bound；长序列 KV-bound | MagicDec §3 |
+| GPU 的 FLOPS/带宽比 | H100 > A100 > L40 | MagicDec Table 1 |
+| GQA vs 非 GQA | GQA 临界序列更长 | MagicDec §3 |
+| 多卡 | TP/PP 基线可能 0.75–0.82×；LP 强扩展 4× | Lookahead §5 |
 
-**框架设计哲学**：
-- **模块化**：每个组件可独立开关，支持从经典 EAGLE 到 DFlash 的多种变体
-- **硬件感知**：TreeVerifyEngine 和 PDCoordinator 针对实际 GPU/CPU 异构环境优化
-- **训练-推理一致性**：OPDTrainer 和 ExposureBiasReducer 直接针对投机解码的训练-推理不一致问题
+### 5.4 指标：两个分母
+
+- `draft_acceptance_rate` 分母是提议 token；`mean_acceptance_length` 分母是验证步。
+- 加深树通常降低前者、提高后者；只报一个会得出相反结论。
+- 结构化输出会扣除作废草稿，分母变小。
 
 ---
 
-## 子报告导航索引
+## 6. 失效边界综述
 
-本报告按技术方向拆分为以下 **12 份**子报告，供深入阅读：
+### 6.1 算法边界
 
-| # | 子报告 | 一句话摘要 | 文件 |
-|---|--------|-----------|------|
-| 1 | **经典方法与自投机** | 从 2023 年 Leviathan/Chen 的独立小模型 draft 到 2024-2025 年 Medusa、Hydra、Lookahead、LayerSkip、**SWIFT、CLaSp** 的自投机路线演进 | [speculative-classical-and-self.md](speculative-classical-and-self.md) |
-| 2 | **EAGLE 系列** | 特征级自回归 draft 从 EAGLE-1 到 EAGLE-3 的工业标准形成，以及 SpecForge 训练框架；**含 T>0 下动态树塌缩的限定条件** | [speculative-eagle-series.md](speculative-eagle-series.md) |
-| 3 | **随机采样与验证正确性** ⭐本轮新增 | T>0 下动态树 one-hot 塌缩、建树与验证解耦、无损性边界、三种"无损"口径的区分 | [speculative-stochastic-verification.md](speculative-stochastic-verification.md) |
-| 4 | **块扩散与检索式方法** | DFlash / **DSpark** / **BASTION** 块（树状）扩散、成本感知建树、TPU 扩散式投机、REST/PLD 检索方法与扩散语言模型竞争 | [speculative-block-diffusion.md](speculative-block-diffusion.md) |
-| 5 | **级联与异构草稿** ⭐本轮新增 | HCSpec 两级水平级联、HeteroSpec 按验证异构性分配算力；与 EAGLE 动态树、CAST 成本感知的对照 | [speculative-cascade-heterogeneous.md](speculative-cascade-heterogeneous.md) |
-| 6 | **草稿模型训练新法（2026）** ⭐本轮新增 | AdaSPEC 选择性蒸馏、Attention Drift 表征修补、Adaptive Drafter / TLT 在线训练 | [speculative-draft-training-2026.md](speculative-draft-training-2026.md) |
-| 7 | **训练目标优化** | LK Losses、PPOW、ConFu 等直接优化接受率的新型训练目标与在线适应方法（**部分链接为未确证占位符，已标注**） | [speculative-training-optimization.md](speculative-training-optimization.md) |
-| 8 | **端侧、边缘与硬件** ⭐本轮新增 | FlexSpec 端云协同、SS-MoE 端侧 MoE 自投机、SMoLPU 专用硅、Google TPU 扩散式投机 | [speculative-edge-cloud-hardware.md](speculative-edge-cloud-hardware.md) |
-| 9 | **领域与语种特化** ⭐本轮新增 | DictSpec 非拉丁语系字典法、CDSL 受限解码投机、结构化输出下的指标口径 | [speculative-domain-language.md](speculative-domain-language.md) |
-| 10 | **多模态投机解码** | VLM、视频 LLM、VLA、语音音频等 2025-2026 新兴多模态方向的投机加速方案；含与端侧章节的交叉引用 | [speculative-multimodal.md](speculative-multimodal.md) |
-| 11 | **系统级优化与框架生态** | SpecInfer、Sequoia、Mirror-SD 等系统级优化；**验证预算/上下文窗口调度**；**指标口径**；vLLM、SGLang、llama.cpp 等框架支持 | [speculative-systems-and-frameworks.md](speculative-systems-and-frameworks.md) |
-| 12 | （本报告） | 上述子报告的导航与主线整合 | [report.md](report.md) |
+1. **T>0 动态树塌缩**（EAGLE-2/3；RheoSampling 修复但未默认启用）。
+2. **top-K 的接受率上限**：即使 q=p，纯 top-K 也到不了 100%（缺随机 token）。
+3. **草稿质量上限**：独立 draft 的容量差（100–1000×）；Medusa 头无前缀依赖；EAGLE-1/2 的特征约束限制数据 scaling。
+4. **有界风险不是无损**：Medusa typical acceptance、ARC-Decode、CDSL。
+5. **树参数不可移植**：EAGLE-2 的 60/6 与 RheoSampling 的 60/8 不可混用。
 
-**推荐阅读路径**：
+### 6.2 系统边界
 
-- **只想看本轮变化** → §二（技术脉络）→ §四（指标口径）→ **子报告 3**（随机采样正确性）→ §五（四条瓶颈）
-- **要做工程选型** → §四（指标口径）→ **子报告 11**（系统协同与框架）→ **子报告 8**（端侧）→ **子报告 9**（领域/语种）
-- **要做研究** → **子报告 3**（验证理论）→ **子报告 6**（草稿训练）→ **子报告 5**（级联/异构）
+1. **高 batch + 短序列**：验证成本主导，可能负收益。
+2. **长序列显存墙**：KV 随 batch×序列增长；batch 上不去。
+3. **draft 上下文失配**：超出训练长度后接受率崩塌；`draft_context_window` 在本轮 vLLM 快照未合入。
+4. **静态配置盲区**：不存在适配所有并发度的 `num_speculative_tokens`。
+5. **硬件映射**：GPU 与 TPU 的收益不可互推。
+6. **量纲混用**：µJ/token 与 tokens/s 不可排榜。
 
----
+### 6.3 证据边界
 
-## 八、参考文献
+1. **未独立复现**：8 篇分册的数字均为论文/官方自报；RheoSampling 无公开代码。
+2. **未设分册的 2026 工作**（DFlash/DSpark/BASTION）只作谱系定位，数字不入表。
+3. **素材层与分册冲突时以分册为准**（例：EAGLE 的 arXiv 编号）。
+4. **代码行为绑定 commit**：vLLM `2b85d9cb`、SGLang `2a08e261`；换版本需重核。
 
-各方向详细参考文献见上述子报告。以下为分类汇总索引：
+### 6.4 失效边界矩阵（按场景查）
 
-| 分类 | 所在子报告 |
-|------|-----------|
-| 基础方法（Leviathan, Chen） | [speculative-classical-and-self.md](speculative-classical-and-self.md) |
-| 自投机方法（Medusa, Hydra, Lookahead, LayerSkip, SWIFT, CLaSp） | [speculative-classical-and-self.md](speculative-classical-and-self.md) |
-| EAGLE 系列（EAGLE-1/2/3, SpecForge） | [speculative-eagle-series.md](speculative-eagle-series.md) |
-| **随机采样与验证正确性（RheoSampling, Traversal Verification, ARC-Decode）** | [speculative-stochastic-verification.md](speculative-stochastic-verification.md) |
-| 块扩散与检索式方法（DFlash, DSpark, BASTION, CAST, REST, PLD, SAM） | [speculative-block-diffusion.md](speculative-block-diffusion.md) |
-| **级联与异构草稿（HCSpec, HeteroSpec）** | [speculative-cascade-heterogeneous.md](speculative-cascade-heterogeneous.md) |
-| **草稿训练新法（AdaSPEC, Attention Drift, Adaptive Drafter/TLT, SpecForge）** | [speculative-draft-training-2026.md](speculative-draft-training-2026.md) |
-| 训练目标优化（LK Losses, PPOW, ConFu, HASS 等，**部分未确证**） | [speculative-training-optimization.md](speculative-training-optimization.md) |
-| **端侧与硬件（FlexSpec, SS-MoE, SMoLPU, TPU+DFlash）** | [speculative-edge-cloud-hardware.md](speculative-edge-cloud-hardware.md) |
-| **领域与语种（DictSpec, CDSL）** | [speculative-domain-language.md](speculative-domain-language.md) |
-| 多模态投机解码（ViSpec, FLASH, SpecVLM, Spec-VLA 等） | [speculative-multimodal.md](speculative-multimodal.md) |
-| 系统优化与框架生态（Sequoia, Mirror-SD, TriForce, vLLM, SGLang, llama.cpp） | [speculative-systems-and-frameworks.md](speculative-systems-and-frameworks.md) |
-| 扩散语言模型竞争/合流（I-DLM, Nemotron-Labs-Diffusion） | [speculative-block-diffusion.md](speculative-block-diffusion.md) |
-| 指标口径（vLLM Per-Request Acceptance Metrics / Adaptive Verification） | [speculative-systems-and-frameworks.md](speculative-systems-and-frameworks.md) §② |
-| 构建"系统协同设计"框架的综述（**本轮未采纳为重构框架**） | [IEEE 2026 Survey](https://ieeexplore.ieee.org/document/11719495)（⚠️ 本环境 IEEE 页面被反爬拦截（HTTP 202 空响应），未能直接核验内容，仅登记标题；同名的 [preprints.org 版本](https://www.preprints.org/manuscript/202608.0746/v1) 亦返回 HTTP 403，**两处均未确证正文**） |
+| 场景 | 最可能踩的坑 | 先查哪篇 |
+| :-- | :-- | :-- |
+| 线上 T=1.0 开 EAGLE-3 | 动态树 one-hot 塌缩，接受率低于离线测 | [RheoSampling](papers/2609.21827-rheosampling.md)、[topic 2](topics/verification-acceptance.md) |
+| batch 从 1 扩到 64 | 收益从 1.81× 掉到 1.38×，甚至更低 | [topic 3](topics/systems-throughput-latency.md)、[EAGLE 分册](papers/2401.15077-eagle-series.md) §4.4 |
+| 长上下文 + 大 batch | 用短序列结论会误判；KV 才是主瓶颈 | [MagicDec](papers/2408.11049-magicdec.md) |
+| 端侧 / 单卡小显存 | 内存带宽与权重搬运优先于接受率 | [topic 3](topics/systems-throughput-latency.md) §7、素材层 edge 文档 |
+| 结构化输出（JSON/SQL） | acceptance rate 分母被扣除，跨实验不可比 | [topic 2](topics/verification-acceptance.md) §7 |
+| 缺少 draft_probs | vLLM 整批回退 legacy；SGLang 直接报错 | [vLLM](papers/vllm-implementation.md) §5、[SGLang](papers/sglang-implementation.md) §5 |
+| 换 target 模型 | 草稿头/独立 draft 都要重训或重新适配 | [topic 1](topics/algorithm-families.md) §4 |
+| 想宣称“无损” | 误把 typical acceptance / ARC 当严格无损 | [topic 2](topics/verification-acceptance.md) §6 |
 
 ---
 
-> **报告说明**：本报告所有技术细节均来自公开发表的论文、arXiv 预印本、官方技术博客及开源项目文档。2023-2025 年方法的信息可靠性普遍较高（经同行评审）；2026 年方法（DFlash、BASTION、HeiSD、HSD、SAGE、RheoSampling、HCSpec、HeteroSpec 等）多为 arXiv 预印本或当期会议论文，建议读者直接查阅原始论文验证。
->
-> **本轮质量说明**：新增的 5 份子报告与改写的 6 份既有子报告均按「结论—证据—来源」组织，并逐条标注**证据等级**（精读原文 / 摘要级 / 二手 / 受限核验）。任务书中被核验为**失效或受限**的链接已在对应子报告中显式列出并处置；v1 遗留的**占位符链接**（实测 HTTP 404 或指向无关论文）已在 `speculative-training-optimization.md`、`speculative-systems-and-frameworks.md`、`speculative-multimodal.md`、`speculative-eagle-series.md`、`speculative-classical-and-self.md` 中逐条标注或更正。
->
-> 加速比数据受测试条件显著影响，**跨论文、跨硬件、跨量纲不可直接比较**；报告加速比时须同时给出 acceptance rate 与 mean accepted length，并声明 temperature、并发度与是否启用结构化输出约束。
->
-> *数据截至 2026-10-16（上一版：2026-06-06）。*
+## 7. 与相邻条目的边界
+
+### 7.1 `OpenSource/vllm`
+
+- **vLLM 条目**回答“vLLM 这个系统整体怎么工作”（调度、PagedAttention、分布式）。
+- **本条目**只取“投机解码在 vLLM 里怎么落地”这一条路径（`draft_sample_method`、`rejection_sample_method`、`draft_probs` 生命周期）。
+- 交叉点：[papers/vllm-implementation.md](papers/vllm-implementation.md) 是本条目对 vLLM 的**单点核验**，不替代 vLLM 条目。
+
+> 任务书写的是 `Infra/vllm`；本仓库实际路径是 `OpenSource/vllm`（同一对象，按实际路径引用）。
+
+### 7.2 `OpenSource/sglang`
+
+- **SGLang 条目**回答“SGLang 的调度/前缀缓存/结构化解码”。
+- **本条目**只取 EAGLE 草稿路径与 `speculative_use_rejection_sampling` 这一条；历史 issue #10308 的处置写在本条目 [SGLang 分册](papers/sglang-implementation.md) §6。
+- 交叉点：SGLang 的 EAGLE-3 吞吐（batch=64 1.38×、batch=1 2.36×）属于**本条目**的系统条件证据，不重复进 SGLang 条目的架构叙述。
+
+### 7.3 `Infra/QuantizationEdge`
+
+- 量化/边缘部署回答“权重/激活怎么压”。
+- 投机解码回答“怎么用草稿换并行验证”。
+- 交叉点：QSpec（量化 + 投机）一类工作属于“两者交叉”，本条目只在谱系里提，不展开量化细节。
+
+### 7.4 `Infra/TrainingInfra`
+
+- 训练基础设施回答“怎么训 target / 怎么做 RL rollout”。
+- 本条目只在“drafter 训练时机”“RL 长尾（TLT）”处交叉；不展开训练系统。
+- 交叉点：EAGLE-3 的 8× 数据、Medusa 的头训练、SpecInfer 的 SSM 预训练都属于“训练成本”，本条目只给成本数字，不给训练配方。
+
+### 7.5 `LLM/*` 与 `Models/*`
+
+- 模型条目回答“这个模型是什么/能力如何”。
+- 本条目回答“怎么加速任意自回归模型”；不绑定具体模型家族。
+- 交叉点：EAGLE 的实验覆盖 Vicuna/LLaMA/Mixtral，但结论是“方法”的，不是“模型”的。
+
+---
+
+## 8. 两条历史未核验项的处理结果
+
+### 8.1 EAGLE 官方代码对 top-K 下 draft 概率的处理
+
+**结论**：在 `SafeAILab/EAGLE` @ **`cb7e0841fe0c206c6ed74a197ad5e2a1f13f5a2b`**（2026-02-20，commit patch 的 `Date:` 头）中：
+
+- 官方 **tree / EA 评估路径**把草稿概率按 **1.0** 处理：`eagle/model/utils.py:398` 为 `qx = 1.0`，`:399` 为 `acp = px / qx`；即接受概率退化为 `p(x)`，草稿分布被当作 one-hot。
+- 调用点：`eagle/model/ea_model.py:270`、`:452`；`eagle/evaluation/gen_ea_alpha_llama2chat.py:87`、`gen_ea_alpha_vicuna.py:93`（本轮按文件行号复核）。
+- **边界（不夸大）**：同仓库另有 HF 风格实现 `eagle/modeling_eagle.py`，其 `evaluate_posterior` 在 `:1427` 使用 `qx = cart_candidates_prob[batch, j, i]`，即**保留真实草稿概率**。因此“置 1”是**官方 tree/EA 评估路径**的事实，**不是仓库内所有路径**的共性。
+- **影响**：这为“T>0 下按 q 建树 + one-hot 验证导致接受率下降”提供了实现层证据；也说明“无损≠高效”——one-hot 提议仍可无损，但接受率低。
+
+**证据等级**：`[精读原文]`（代码级，仓库 @ commit + 文件:行）。
+
+### 8.2 SGLang #10308 后续 PR 是否合入
+
+**结论（准确表述）**：
+
+1. issue `sgl-project/sglang#10308` **真实存在**：标题 *[Feature] Speculative sampling supports passing the predicted probability of the draft model and sample token for verification when **topk=1***；2025-11-03 开立、指派 `hnyls2002`；**2026-01-03 被 github-actions 以 inactive 自动关闭**；页面 timeline **未观察到 linked / merged PR**。
+2. **能力已在主线**（`sgl-project/sglang` @ `2a08e261`，2026-10-16）：
+   - `eagle_worker_v2.py:178–180`：开启 `speculative_use_rejection_sampling` 时 `assert self.topk == 1`；
+   - `eagle_worker_v2.py:727–733`：非 greedy 且开启拒绝采样 → 构造 `draft_probs`；
+   - `eagle_info.py:35`/`:162`：`EagleVerifyInput` / `EagleDraftInput` 均有 `draft_probs` 字段；
+   - `eagle_utils.py:947`：选 `chain_speculative_sampling_triton`；
+   - `eagle_utils.py:1000–1013`：`draft_probs` 缺失/词表不匹配 → **硬报错**；
+   - `eagle_utils.py:1030–1044`：`target_probs`、`draft_probs`、`uniform_samples` 一起传入 kernel。
+3. **因此**：
+   - 说“#10308 已修复”**不准确**（无 linked PR，issue 未 reopen）；
+   - 说“完全没处理”**也不准确**（能力已在 topk=1 路径）；
+   - **准确说法**：issue 未被正式关联；其请求的 topk=1 采样验证能力已在主线实现，**硬限制 topk=1**；tree topk>1 仍走 `tree_speculative_sampling_target_only`（`draft_probs` 置零），不是 p/q 拒绝采样。
+
+**证据等级**：`[精读原文]`（代码级）；issue 状态为页面级核验。
+
+### 8.3 两条的“卡在哪”
+
+| 项 | 卡点 | 处置 |
+| :-- | :-- | :-- |
+| EAGLE 代码 | 只能证明该 commit 的行为，不能证明未来版本 | 钉 commit；标注“tree/EA 路径”边界 |
+| SGLang #10308 | 无法把“能力存在”等同于“issue 已修复” | 分开写“issue 状态”与“代码能力”；给出剩余缺口 |
+
+---
+
+## 9. 选文说明
+
+### 9.1 候选池 / 入选 / 排除
+
+- **候选池 N = 22**（论文/系统/代码仓库；含本轮新增与素材层已出现的工作）。
+- **入选 M = 8**（6 篇论文分册 + 2 篇代码核验）。
+- **排除 14**，逐条理由见 [sources/CANDIDATES.md](sources/CANDIDATES.md)；**排除项不编造 ID**。
+
+### 9.2 为什么是这 8 篇
+
+| 入选 | 理由（一句话） |
+| :-- | :-- |
+| EAGLE 系列 | 工业默认；三代演进把“特征级/动态树/TTT”这条主线讲全 |
+| Medusa | 并行头代表；typical acceptance 是“有界风险”的早期样本 |
+| Lookahead | 免训练代表；one-hot 草稿无损性的关键论据 |
+| SpecInfer | 树验证系统源头；多 SSM/树宽/batch 依赖 |
+| MagicDec | 系统条件代表；临界序列长度把“大 batch 不划算”证伪一半 |
+| RheoSampling | T>0 动态树的无损修复；本轮“转折点”的核心证据 |
+| vLLM | 生产框架一手代码；greedy/probabilistic 语义分叉 |
+| SGLang | 生产框架一手代码；#10308 的处置对象 |
+
+### 9.3 没选的（以及为什么）
+
+- **DFlash / DSpark / BASTION**：2026 预印本/工程博客，正文与复现条件不稳定；本轮只做谱系定位，数字不入表。列为下一轮候选。
+- **HASS**：与 EAGLE-3 同属“训练目标/上下文对齐”线，但 EAGLE-3 论文已直接对照 HASS；单独设册会重复。
+- **Hydra / SWIFT / CLaSp / LayerSkip**：自投机子型，机制已被 Medusa/EAGLE 覆盖；在素材层保留。
+- **Sequoia / TriForce / Mirror-SD**：系统优化，部分与 MagicDec/SpecInfer 重叠；本轮不设册。
+- **QSpec / HiSpec**：量化/分层交叉，归 `Infra/QuantizationEdge` 更合适。
+- **多模态/端侧/领域特化**：素材层已有横切文档；本轮篇幅优先给“验证 + 系统”两条主线。
+
+### 9.4 候选池统计（可逐条核对）
+
+| 项 | 数 | 说明 |
+| :-- | --: | :-- |
+| 候选池 N | 22 | 论文 14 + 系统/框架 5 + 代码仓库 3 |
+| 入选 M | 8 | 6 论文 + 2 代码 |
+| 排除 | 14 | 8 条带已核实 ID；6 条类别性排除 |
+| 未设分册但进谱系 | 3+ | DFlash / DSpark / BASTION（只定位，不入表） |
+| 素材层保留 | 11 | 未重写、未删除；冲突以分册为准 |
+
+> 排除项的具体 ID 与理由见 [sources/CANDIDATES.md](sources/CANDIDATES.md)；**没有核实 ID 的排除项只写类别，不编号**。
+
+---
+
+## 10. skill 使用证据
+
+| skill | 用在哪 | 证据 |
+| :-- | :-- | :-- |
+| `researcher`（deep） | 论文筛选、正文精读、七问抽取 | 8 篇分册均有 `arXiv ID + 版本日期`；每篇「亮点四行」+ 七问 + 失效边界；`claim_audit` 报数见 §11 |
+| `code-researcher`（trace/deep） | vLLM / SGLang / EAGLE 代码核验 | 全部分册使用 `仓库@commit:文件:行`；vLLM/SGLang 分册含代码地图与调用链 |
+| `paper-fetcher` | arXiv 元数据/版本/license 核验 | `sources/MANIFEST.md` 的 ID/版本/日期/标题/作者/license 均逐条回查；本地缓存不依赖 |
+
+### 10.1 三个 skill 的具体落点
+
+- `researcher`（deep）：先用 arXiv API 回查候选的标题/作者/版本/日期，再抓 HTML 正文逐节读；产出模板统一为「亮点四行 + 七问 + 带条件表 + 失效边界」。
+- `code-researcher`（trace）：先定位入口（`eagle_sample` / `rejection_sample`），再沿调用链追到 kernel；每个强结论必须有 `文件:行`，否则降级为“推断”。
+- `paper-fetcher`：只用于元数据/引用，不把摘要当正文；无正文的条目（ARC-Decode、CAST）标 `[摘要级]`/`[二手]`，不升格。
+
+---
+
+## 11. 复现与核验记录
+
+| 项 | 结果 |
+| :-- | :-- |
+| 论文元数据 | 9 个 arXiv ID 经 `export.arxiv.org` 逐条回查（标题/作者/版本/日期/license） |
+| EAGLE 代码 | @ `cb7e0841`（2026-02-20），`utils.py:398–399`、`modeling_eagle.py:1427` |
+| vLLM 代码 | @ `2b85d9cb`（2026-10-17），5 个文件的行号锚点 |
+| SGLang 代码 | @ `2a08e261`（2026-10-16），4 个文件的行号锚点 |
+| issue #10308 | 页面 timeline：assigned / comment / closed(inactive) / labeled；无 linked PR |
+| 独立复现 | ❌ 未做；所有性能数字为论文/官方自报 |
+| `claim_audit` | 见交付说明（`--lang zh` 报数） |
+
+### 11.1 本轮自检清单
+
+| # | 检查 | 结果 |
+| --: | :-- | :-- |
+| 1 | `papers/` 篇数 6–8 | **8** |
+| 2 | 每篇 ≥200 行 | 200–244 行（全部达标） |
+| 3 | 每篇四行亮点 | 8/8 |
+| 4 | 每篇七问 | 8/8 |
+| 5 | 每篇 ≥5 处带条件数字 | 论文类均满足；代码类以 `文件:行` + 版本为条件锚点，**不伪造 benchmark** |
+| 6 | 每篇 ≥1 张带条件列对照表 | 8/8 |
+| 7 | 每篇独立失效边界段 | 8/8 |
+| 8 | `topics/` 3 篇 × 150–300 行 | 164 / 216 / 168 |
+| 9 | `report.md` ≥600 行 | 见文件行数 |
+| 10 | `sources/MANIFEST.md` + `CANDIDATES.md` | 已建 |
+| 11 | 两条历史未核验项 | 均已给结论/边界（§8） |
+| 12 | 论文全文不入库 | ✅ 只有清单与分册 |
+| 13 | 代码不入库 | ✅ 只有 `文件:行` 短引用 |
+| 14 | 价格类 `$` 转义 | 本条目未使用价格数字；公式用 `$...$` 包裹 |
+
+---
+
+## 12. 引用注意（一句话版）
+
+- 引用加速比：必须带 `(batch, T, 序列长度, 硬件, 树参数)`。
+- 引用“无损”：必须说明是严格 / 序列级 / 有界风险。
+- 引用 EAGLE-3：6.5× 是上限，1.38× 是 batch=64 吞吐，2.36× 是 batch=1 吞吐。
+- 引用 RheoSampling：2.93× 是相对自回归，不是相对 EAGLE-3。
+- 引用 SGLang #10308：分开写“issue 状态”与“代码能力”。
+
+### 12.1 术语对照（中英）
+
+| 中文 | 英文/缩写 | 一句话解释 |
+| :-- | :-- | :-- |
+| 投机解码 | speculative decoding (SD) | 草稿 + 并行验证的加速范式 |
+| 草稿模型 | draft model / drafter | 产生候选的便宜模型 |
+| 目标模型 | target model / verifier | 做最终验证的大模型 |
+| 接受率 | acceptance rate | 被接受草稿 / 提议草稿 |
+| 平均接受长度 | mean acceptance length (τ) | 每验证步平均产出 token 数 |
+| 拒绝采样 | rejection sampling | `min(1,p/q)` 接受 + 残差重采 |
+| 典型接受 | typical acceptance | Medusa 的阈值接受（有损） |
+| 动态草稿树 | dynamic draft tree | 按上下文/置信度建树 |
+| 树注意 | tree attention | 一次前向验证整棵树 |
+| 前缀依赖 | prefix dependency | 草稿是否依赖前一个草稿 token |
+| 有界风险 | risk-bounded | 分布偏移受控但非严格等价 |
+| 稀疏 KV | sparse KV | 只保留部分 KV 做 draft |
+| 临界序列长度 | critical/inflection sequence length | 投机收益随 batch 反转的分界 |
+| 逐位置接受率 | per-position acceptance rate | 第 j 个草稿位置的历史接受率 |
+
+### 12.2 维护约定
+
+- 新增论文分册时：先回查 arXiv 元数据（ID/版本/日期/license），再抓正文；没有正文的只进 `CANDIDATES`，不进 `papers/`。
+- 新增代码核验时：必须钉 commit，并给 `文件:行`；跨版本行为变化要在分册里写“绑定 commit”。
+- 修改 `report.md` 的数字时：同步对应分册与 `sources/MANIFEST.md`；**分册是数字的唯一主写处**，report 只做汇总。
+- 生成物（`INDEX.md` / `index/*`）由脚本产出，不手改。
+
+---
+
+## 附录 A：历史素材层（11 篇）的定位
+
+| 素材文档 | 保留原因 | 与新结构的关系 |
+| :-- | :-- | :-- |
+| `speculative-classical-and-self.md` | 经典/自投机的时间线 | 被 `papers/` 1–3 覆盖，保留作素材 |
+| `speculative-eagle-series.md` | EAGLE 细节（含一处错误 ID） | 以 `papers/2401.15077-eagle-series.md` 为准 |
+| `speculative-stochastic-verification.md` | T>0 的首轮分析 | 被 `topics/verification-acceptance.md` + RheoSampling 分册升级 |
+| `speculative-block-diffusion.md` | 块扩散/检索式线索 | 谱系 IV 的素材；本轮未设分册 |
+| `speculative-cascade-heterogeneous.md` | 级联/异构 | 系统条件的补充素材 |
+| `speculative-draft-training-2026.md` | 训练目标新法 | 与 EAGLE-3/Medusa 训练章节交叉 |
+| `speculative-training-optimization.md` | 训练目标优化 | 同上 |
+| `speculative-edge-cloud-hardware.md` | 端侧/硬件 | 系统条件补充 |
+| `speculative-domain-language.md` | 领域/语种 | 检索式/结构化输出的补充 |
+| `speculative-multimodal.md` | 多模态 | 本轮未覆盖的方向 |
+| `speculative-systems-and-frameworks.md` | 系统/框架 | 被 vLLM/SGLang 分册 + topic 3 升级 |
+
+---
+
+## 来源
+
+- 论文（均经 arXiv 元数据逐条核验）：EAGLE 2401.15077v3；EAGLE-2 2406.16858v2；EAGLE-3 2503.01840v3；Medusa 2401.10774v3；Lookahead 2402.02057v1；SpecInfer 2305.09781v4；MagicDec 2408.11049v5；RheoSampling 2609.21827v1。
+- 代码：`SafeAILab/EAGLE` @ `cb7e0841`；`vllm-project/vllm` @ `2b85d9cb`；`sgl-project/sglang` @ `2a08e261`。
+- 清单：[sources/MANIFEST.md](sources/MANIFEST.md)、[sources/CANDIDATES.md](sources/CANDIDATES.md)。
