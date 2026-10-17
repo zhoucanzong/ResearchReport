@@ -56,11 +56,11 @@
 
 ## VisualGen (8)
 
-* [VisualGen/3DGen/report.md](<../VisualGen/3DGen/report.md>) — 898 行
+* [VisualGen/3DGen/report.md](<../VisualGen/3DGen/report.md>) — 899 行
 * [VisualGen/AudioGen/report.md](<../VisualGen/AudioGen/report.md>) — 913 行
 * [VisualGen/AvatarGen/report.md](<../VisualGen/AvatarGen/report.md>) — 592 行
 * [VisualGen/ControllableGen/report.md](<../VisualGen/ControllableGen/report.md>) — 923 行
-* [VisualGen/DiT/report.md](<../VisualGen/DiT/report.md>) — 892 行
+* [VisualGen/DiT/report.md](<../VisualGen/DiT/report.md>) — 893 行
 * [VisualGen/DiffusionModels/report.md](<../VisualGen/DiffusionModels/report.md>) — 855 行
 * [VisualGen/ImageEditing/report.md](<../VisualGen/ImageEditing/report.md>) — 834 行
 * [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) — 898 行

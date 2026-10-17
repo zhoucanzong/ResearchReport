@@ -16,8 +16,8 @@
 | **条目数**（`report.md`） | **48** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 4 |
 | 条目子文档数 | 89 |
-| 条目正文行数（剔除 front-matter） | 31,650 |
-| 条目字节 | 1,959,722 B |
+| 条目正文行数（剔除 front-matter） | 31,652 |
+| 条目字节 | 1,960,730 B |
 | 带 front-matter 的条目 | 5 |
 | 带合法 `date` 的条目 | 5 |
 | 文档（除生成物外的全部 `.md`） | 150 |
@@ -34,11 +34,11 @@
 | --- | --: | --: | --: | --: | --- |
 | Models | 23 | 32 | 15,267 | 957,617 B | [板块页 →](<Models/README.md>) |
 | LLM | 8 | 25 | 5,217 | 340,995 B | [板块页 →](<LLM/README.md>) |
-| VisualGen | 8 | 9 | 6,805 | 318,091 B | [板块页 →](<VisualGen/README.md>) |
+| VisualGen | 8 | 9 | 6,807 | 319,099 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 2 | 31 | 1,207 | 129,154 B | [板块页 →](<WorldModel/README.md>) |
 | Infra | 3 | 29 | 2,098 | 108,615 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 4 | 18 | 1,056 | 105,250 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **48** | **150** | **31,650** | **1,959,722 B** | — |
+| **合计** | **48** | **150** | **31,652** | **1,960,730 B** | — |
 
 ## 分面索引
 
@@ -465,10 +465,10 @@
 <summary><b>视觉生成 VisualGen（8 条目 / 0 子文档）</b></summary>
 
   <details>
-  <summary><b>3DGen</b> · <code>VisualGen/3DGen/report.md</code> · 898 行 · —</summary>
+  <summary><b>3DGen</b> · <code>VisualGen/3DGen/report.md</code> · 899 行 · —</summary>
   
 
-    * **条目**：[VisualGen/3DGen/report.md](<VisualGen/3DGen/report.md>)（898 行 / 46,655 B）
+    * **条目**：[VisualGen/3DGen/report.md](<VisualGen/3DGen/report.md>)（899 行 / 47,178 B）
     * **专题目录**：`VisualGen/3DGen`
     * **元数据**：type=`—` · domain=`VisualGen` · subject=`3DGen` · date=`—` · status=`—`
     * **子文档（0）**
@@ -513,10 +513,10 @@
   </details>
 
   <details>
-  <summary><b>DiT</b> · <code>VisualGen/DiT/report.md</code> · 892 行 · —</summary>
+  <summary><b>DiT</b> · <code>VisualGen/DiT/report.md</code> · 893 行 · —</summary>
   
 
-    * **条目**：[VisualGen/DiT/report.md](<VisualGen/DiT/report.md>)（892 行 / 45,829 B）
+    * **条目**：[VisualGen/DiT/report.md](<VisualGen/DiT/report.md>)（893 行 / 46,314 B）
     * **专题目录**：`VisualGen/DiT`
     * **元数据**：type=`—` · domain=`VisualGen` · subject=`DiT` · date=`—` · status=`—`
     * **子文档（0）**
