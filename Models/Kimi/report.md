@@ -1,9 +1,9 @@
 # Kimi 系列模型深度调研报告
 
 > 调研对象：Moonshot AI（月之暗面）的 Kimi 模型家族
-> 时间跨度：2023 年 10 月 ~ 2026 年 6 月
+> 时间跨度：2023 年 10 月 ~ 2026 年 10 月
 > 资料来源：arXiv 论文、Moonshot AI 官方技术博客、HuggingFace 模型卡、GitHub 仓库
-> 撰写日期：2026 年 6 月
+> 撰写日期：2026 年 6 月 ｜ **最近更新：2026-10-17**（增量增补 Kimi K2.7 Code、Kimi K3 两个新版本，新增 §4.4、§4.5 与 [K3 精读分册](papers/2607.24653-kimi-k3.md)；既有结论未改动）
 
 ---
 
@@ -14,6 +14,8 @@ Moonshot AI（月之暗面，Beijing Yuezhi Technology Co., Ltd.）由清华大�
 1. **长上下文主线**：Moonshot-v1（200K）→ 2M 字符内测 → **MoBA**（块级稀疏注意力）→ **Kimi Linear / KDA**（线性注意力混合架构），系统性回答「如何让 Transformer 真正吃下百万 token」。
 2. **推理（Reasoning）主线**：**Kimi k1**（2024.11，多模态思考预览）→ **Kimi k1.5**（2025.01，对标 OpenAI o1）→ **Kimi K2 Thinking**（2025.11，对标 GPT-5、Claude Sonnet 4.5），形成「以长上下文 RL + Long2Short」为核心的独特路线。
 3. **基础模型与多模态主线**：**Moonlight 16B-A3B**（2025.02，首个用 Muon 优化器训练的 MoE）→ **Kimi-VL / Kimi-VL-Thinking**（2025.04）→ **Kimi-Audio**（2025.04）→ **Kimi K2 1T-A32B**（2025.07，开源「Open Agentic Intelligence」）→ **Kimi K2.5**（2026.01，原生多模态 Agent）→ **Kimi K2.6**（2026.04，开源编码/多 Agent 集群旗舰）→ **K2 系列退役**（2026.05）。
+
+**2026 年中之后的两步（本轮新增，详见 §4.4 / §4.5）**：**Kimi K2.7 Code**（2026-06-11，1T-A32B 同架构续训、编程向）与 **Kimi K3**（2026-07-16 发布 / 2026-07-27 权重与技术报告，2.8T-A104B、原生多模态、1M 上下文）。K3 是 K2 之后**第一次同时改基座规模与注意力骨架**的版本：K2 / K2.5 是**全层 MLA + RoPE/YaRN**，K3 改为 **69 层 KDA + 24 层 Gated MLA（3:1）+ 全层 NoPE**——即 Kimi Linear（2025-10，48B 验证性模型）的 3:1 混合首次被搬到旗舰规模上，并取代了 K2 的纯 MLA 骨架。
 
 ### 1.1 关键时间线
 
@@ -37,6 +39,9 @@ Moonshot AI（月之暗面，Beijing Yuezhi Technology Co., Ltd.）由清华大�
 | 2026-04-20 | **Kimi K2.6** 开源 | 1T 参数 / 32B 激活 MoE，256K 上下文，SWE-Bench Verified 80.2%（开源模型第一），Modified MIT License，API \$0.95/\$4.00 per 1M tokens |
 | 2026-05-25 | **K2 系列退役** | K2 系列正式停止支持，仅 K2.6 继续维护 |
 | 2026-06 | **Claw Groups / 视频输入** | 异构代理集群研究预览；支持 mp4, mov, webm, avi 视频输入 |
+| 2026-06-11 | **Kimi K2.7 Code** 开源 | 1T 总 / 32B 激活 MoE（沿用 K2.6 架构），256K 上下文，强制思考；思考 token 较 K2.6 约 −30%（官方自报），详见 §4.4 |
+| 2026-07-16 | **Kimi K3** 发布（官方博客 + 产品上线） | 2.8T 总 / 104B 激活 MoE，原生多模态，1M 上下文；KDA + Attention Residuals + Stable LatentMoE，详见 §4.5 |
+| 2026-07-27 | **Kimi K3 权重开源 + 技术报告 v1**（arXiv:2607.24653） | 官方称「首个开源 3T 级模型」；技术报告 v2 于 2026-08-07 |
 
 > 注：本报告的「推理模型」与「基座模型」在 2025 年 11 月之后开始合流——K2 Thinking 起，Moonshot 选择**单一旗舰多形态**（base / instruct / thinking）的发布范式，与 DeepSeek 模式趋同。
 
@@ -233,6 +238,171 @@ Kimi-Audio（arXiv:2504.18425）是 Moonshot 的音频基础模型，7B 参数�
 
 至此，Moonshot 的多模态路线呈现「**小而强（VL/Audio 单独发版）→ 大而全（K2.5 单一旗舰原生多模态）→ 开源旗舰（K2.6 开源 + 编码工具）**」的演进。
 
+### 4.4 Kimi K2.7 Code（2026-06-11）：编程向旗舰，K2.6 之上继续训练
+
+> **证据等级：精读原文（官方模型卡 + 官方产品页原文）**。本节所有数字均来自 [HuggingFace 模型卡 `moonshotai/Kimi-K2.7-Code`](https://huggingface.co/moonshotai/Kimi-K2.7-Code) 与 [kimi.com 官方资源页](https://www.kimi.com/resources/kimi-k2-7-code)（页面标注「更新于 2026-10-08」），属**厂商自报**，非第三方复现。
+
+**发布信息**
+
+- **日期**：HuggingFace 仓库 `createdAt = 2026-06-11`、`lastModified = 2026-06-15`（取 HF API 元数据）；官方产品页仅给「更新于 2026-10-08」，未给首发日，故本节以 HF 仓库创建日 2026-06-11 作为可核验的最早公开时间点。
+- **命名与形态**：`Kimi K2.7 Code`，**开源权重**（license 为 *Modified MIT*，HF `license_name: modified-mit`）。
+- **与 K2.6 的关系（官方原文）**：「a coding-focused agentic model built upon Kimi K2.6」，且「has the same architecture as Kimi-K2.5/Kimi-K2.6, and the deployment method can be directly reused」——即**同架构、纯后训练/续训产物**，不是新基座。
+
+**规格（官方模型卡，逐项）**
+
+| 项 | 取值 |
+| --- | --- |
+| 架构 | MoE |
+| 总参数 / 激活参数 | 1T / 32B |
+| 层数（含稠密层） | 61（稠密层 1） |
+| 注意力 | MLA，hidden 7168，64 头 |
+| MoE | 每专家 hidden 2048，384 专家，每 token 选 8，共享专家 1 |
+| 词表 / 上下文 | 160K / 256K |
+| 激活函数 | SwiGLU |
+| 视觉编码器 | MoonViT，400M |
+| 量化 | 原生 INT4（沿用 Kimi-K2-Thinking 的方法） |
+
+**能力与基准（官方自报，附条件）**
+
+评测条件（模型卡脚注 1 原文要点）：K2.7 Code 与 K2.6 均以 **Kimi Code CLI、开启思考模式、`temperature=1.0`、`top_p=0.95`、262,144 token 上下文**评测；GPT-5.5 在 **Codex（xhigh）**、Claude Opus 4.8 在 **Claude Code（xhigh）**；除上述差异外各基准条件一致。
+
+| 基准 | Kimi K2.6 | **Kimi K2.7 Code** | GPT-5.5 | Claude Opus 4.8 | 基准性质 |
+| --- | --- | --- | --- | --- | --- |
+| Kimi Code Bench v2 | 50.9 | **62.0** | 69.0 | 67.4 | Moonshot 内部基准 |
+| Program Bench | 48.3 | **53.6** | 69.1 | 63.8 | 公开（200 任务，248k+ fuzz 行为测试） |
+| MLS Bench Lite | 26.7 | **35.1** | 35.5 | 42.8 | 公开（官方 30 任务子集） |
+| Kimi Claw 24/7 Bench | 42.9 | **46.9** | 52.8 | 50.4 | Moonshot 内部（17 场景 / 610 评分点） |
+| MCP Atlas | 69.4 | **76.0** | 79.4 | 81.3 | 公开（500 任务子集，100 次工具调用预算） |
+| MCP Mark Verified | 72.8 | **81.1** | 92.9 | 76.4 | 公开（人工核验版，100 步预算） |
+
+**与前代的可判定差异**
+
+1. **编码基准全面上移**：Kimi Code Bench v2 +21.8%（50.9→62.0）、Program Bench +11.0%、MLS Bench Lite +31.5%——三者均为官方同条件对照，可判定。
+2. **Agent 基准约 +10%**：Kimi Claw 24/7、MCP Atlas、MCP Mark Verified 三处同向提升（官方口径「约提升 10%」）。
+3. **推理效率**：思考 token 用量较 K2.6 **平均减少约 30%**（官方自报；同一或更高得分配更少 token，属可判定的效率变化，但**未给出 token 计数的绝对测量口径**）。
+4. **强制思考**：不支持非思考模式，`thinking` 与 `preserve_thinking` 均强制为 True；在 Kimi Code 里若请求关闭思考，**会自动改由 K2.6 提供服务**。
+
+**失效边界**
+
+- **定位是编程专用**：官方明确「对于写作、分析、对话等通用场景，我们推荐能力更均衡的 K2.6」——用 K2.7 Code 做通用对话不是它的设计目标。
+- **仍落后闭源前沿**：MLS Bench Lite 35.1 vs Opus 4.8 的 42.8；Kimi Code Bench v2 62.0 vs GPT-5.5 69.0；MCP Mark Verified 81.1 vs GPT-5.5 92.9。
+- **视频输入受限**：模型卡注明「Chat with video content is an experimental feature and is only supported in our official API for now」——第三方 vLLM/SGLang 部署下视频输入不可用（或仅实验）。
+- **无独立技术报告**：截至 2026-10-17，未检索到 K2.7 Code 的 arXiv 技术报告，架构层面的解释只能回落到 K2.6 的公开信息（见 §4.3）。
+
+**价格（官方产品页，2026-10-17 访问）**：`kimi-k2.7-code` API 为 ¥1.30（缓存命中输入）/ ¥6.50（未命中输入）/ ¥27.00（输出）每 1M tokens，上下文窗口 262,144 tokens。
+
+### 4.5 Kimi K3（2026-07）：首个开源 3T 级、原生多模态、1M 上下文旗舰
+
+> **证据等级：精读原文（技术报告全文 + 官方模型卡 + 官方博客）**。arXiv:2607.24653 正文（HTML 全文 38 张表/图）已逐节读取；所有评测数字来自报告 §6/模型卡，属**厂商自报**，第三方结论单列为转引。
+
+**发布信息与时间线（三个可核验时间点）**
+
+| 时间 | 事件 | 来源 |
+| --- | --- | --- |
+| 2026-07-16 | 官方博客与产品上线（[kimi.com/blog/kimi-k3](https://www.kimi.com/blog/kimi-k3)，Kimi 研究博客索引标注日期） | 官方博客页 + 研究索引 |
+| 2026-07-27 | **权重开源 + 技术报告 v1**（arXiv:2607.24653v1，16:49 UTC） | arXiv API 元数据 |
+| 2026-08-07 | 技术报告 v2（当日 06:33 UTC 更新） | arXiv API 元数据 |
+
+- **命名**：`Kimi K3`；**开源权重**，许可为 **Kimi K3 License**（非标准 OSI 许可，条款未逐条核验 → 见 §4.6）。
+- **形态**：原生多模态 MoE；模型卡 `Modality` 字段列 **Text, Image**，官方博客则称「understands text, images, and video within the same model」——视频能力的落地范围（是否随 API 全量开放）**未在模型卡中确认**。
+- **API 定价**：\$0.30 / \$3.00 / \$15.00 per 1M tokens（缓存命中输入 / 缓存未命中输入 / 输出）。
+- **上下文**：1,048,576 tokens。
+
+**规格（K3 模型卡，与 K2 的官方对照见表内「K2」列，数据出自技术报告 Table 1）**
+
+| 项 | Kimi K2 | **Kimi K3** | 变化 |
+| --- | --- | --- | --- |
+| 层数 | 61 | **93** | +52% |
+| 总参数 | 1.04T | **2.78T** | +167% |
+| 激活参数 | 32.6B | **104.2B** | +220% |
+| Hidden | 7,168 | 7,168 | 不变 |
+| Latent MoE 维度 | — | **3,584（0.5×）** | 新增 |
+| 每专家 MoE hidden | 2,048 | **3,072** | +50% |
+| 路由专家 / 每 token 激活 / 共享专家 | 384 / 8 / 1 | **896 / 16 / 2** | +133% / +100% / +100% |
+| 注意力头 | 64 | **96** | +50% |
+| 注意力层构成 | MLA 全层 | **69 KDA + 24 Gated MLA**（3:1） | 架构变更 |
+| 预训练上下文 | 128K | **1M** | 8× |
+| 视觉编码器 | MoonViT 400M | **MoonViT-V2 401M**（27 层） | 从零训练 |
+| 激活函数 | SwiGLU | **SiTU-GLU**（β₁=4, β₂=25） | 架构变更 |
+| 量化 | — | **MXFP4 权重 / MXFP8 激活**（QAT 自 SFT 起） | 新增 |
+| 词表 | 160K | 160K | 不变 |
+| 位置编码 | RoPE/YaRN | **NoPE（全 MLA 层）** | 架构变更 |
+
+**四项架构改动（逐项可判定，非营销口径）**
+
+1. **KDA 的下界衰减（lower-bounded decay）**：Kimi Linear 用无界负 Softplus `g = −e^A·Softplus(z)`，导致 chunk 内倒数累积衰减 `1/Γ` 可能溢出，对角线 tile 只能用逐 position-pair 计算。K3 改为 `g = g_min·Sigmoid(e^A z)`、固定 `g_min = −5`，使每个保留因子 `α > e^{-5} ≈ 6.7×10^{-3}`、16-token tile 的累积 log-decay 落在 `(−80, 0)`、倒数缩放因子 `< e^80` **留在 BF16 动态范围内**——于是对角线与非对角线 tile 都能走 Tensor Core 稠密矩阵乘，**彻底移除 position-pair 路径**。这是「数学上改一处参数化，工程上拿掉一类 kernel」的典型案例。
+2. **Attention Residuals（AttnRes，深度方向的注意力）**：把 residual 从「累加」改成「对 embedding + 所有前序层输出做注意力」。K3 用 **Block AttnRes**：93 层切成 8 个 12 层 block（+ embedding 共 9 个源），块内求和、跨块做全注意力；显存/通信从 `O(Ld)` 降到 `O(Nd)`，推理期可借 online softmax 把「并行块间结果」与「串行块内部分和」合并。
+3. **Stable LatentMoE（896 专家 / 16 激活，稀疏度 56）**：三件套解决极端稀疏的两个失效模式——① routed 分支 `W↓ → 门控专家 FFN → W↑` 近似四次连乘导致激活爆炸 → 在 up-projection 前插 **RMSNorm** 并换 **SiTU-GLU**（`β tanh(x/β)` 软钳位，输出满足 `|f(x)| ≤ β₁β₂ = 100`，而 SwiGLU 无界）；② 896 专家的负载均衡超出 aux-loss-free 固定步长 bias 更新的稳定区间 → 换 **Quantile Balancing（QB）**：直接按 router score 分位数设 bias（`−quantile_{1−k/n}(s_{:,j} − α)`），并用**直方图估计**把全 batch 分位数的通信成本压到每专家几百个 bin。
+4. **Per-Head Muon**：把 Q/K/V 投影的动量矩阵按 head 分块做 Newton–Schulz 正交化，避免大尺度 head 主导共享更新方向；官方称训练更稳、且优化器开销略降。
+
+**预训练与其可迁移结论**
+
+- **数据**：Web Text / Code / Mathematics / Knowledge 四域 + 大规模视觉语料（caption、图文交错、OCR、感知、视频、**视觉编程数据**：SVG / 3D 资产 / Webpage / Game / CAD）；沿用 K2 的 rephrase 配方（风格/视角多样化 prompting + chunk-wise 自回归 + 对源文档的保真校验）。
+- **Scaling law 结论（可直接引用的一条）**：在**各自独立重调超参**（batch size、LR、TPP、model shape）后，**cosine decay 一致优于 WSD**；官方特别指出「用同一套超参比较两种 schedule 会不公平地偏向某一方」。这条对做训练 recipe 选择的人有直接价值。
+- **相对 K2 的 scaling 效率约 2.5×**（held-out OOD 验证集上的拟合曲线）。
+- **上下文课程（四阶段）**：预训练 8K → 64K；cooldown 阶段 256K → 1M。因全程 **NoPE**，扩到 1M **不需要**改 RoPE 基频、不需要 YaRN 类插值——这是与 K2 长上下文扩展路径的**结构性差别**（K2 依赖 YaRN）。
+- **长上下文数据不是「拼长」**：官方承认长文档/长视频质量低（近似重复、二进制块、截断文件、无效日志），因此做去重 + 帧级感知哈希 + 结构校验；并**合成「只有跨 1M 全窗口取信息才能解」的置换拼接任务**，防止注意力退化成局部模式。
+
+**后训练（三段式，架构差异之外的关键）**
+
+`SFT（XTML 模板 + QAT）→ RL（3 域 × 3 档 effort = 9 个专家模型）→ multi-teacher on-policy distillation（MOPD）合并为单一模型`。
+
+- **3 域**：general（经验/视觉/推理/忠实性/搜索/知识工作）、general agents（长程助手/深度研究/段落级写作）、coding agents（SWE/编码体验/kernel/Web 开发）。
+- **effort 控制**：给每题一个由 cold-start 模型估计的 token 预算 `b₀(x)`，超 `τ·b₀(x)` 直接给 −1 奖励；先训大 τ 的 max 档，再退火 τ 得 high/low 档。**注意**：发布时 low/high 档尚未上线（官方博客原文「low- and high-effort modes to be introduced in subsequent updates」）。
+- **RL 环境侧的新东西**：统一白盒 RL 环境（把 harness 拆成工具接口/系统提示/上下文管理/skills/memory/subagent 等可配置模块，可实例化 Kimi Code、Claude Code、Codex、OpenClaw、Hermes 等）以**防止对单一 harness 过拟合**；知识图谱驱动的任务合成；kernel 优化任务（含**反 reward hacking 检测**，惩罚 CUDA graph replay / 输入缓存 / 降精度）；mock 版 Gmail/Notion/Slack/Canvas 的个人助理长程任务；**AET（Autonomous Execution Tasks）**——奖励只认 verifier 对最终环境状态的判定，不认模型自述完成。
+
+**基础设施（三条，与「3T + 1M + agentic」一一对应）**
+
+1. **KDA 的算法-系统协同**：融合 kernel、**KDA Context Parallelism**（跨设备切序列）、**state-aware prefix caching**（KDA 是递推状态，常规 prefix cache 不适用）；已向 vLLM 社区提交对应实现。
+2. **MoonEP**（独立仓库 `MoonshotAI/MoonEP`，2026-07-24 创建）：静态计算形状 + 零拷贝通信的**完全均衡**专家并行，关键路径上无主机同步。
+3. **1M agentic RL**：partial rollout + 外部 KV-cache 保留 + 自适应限流 + **可恢复 microVM 沙箱**，让单条长轨迹跨多个训练迭代而不丢状态。
+
+**部署侧**：MXFP4/MXFP8 QAT（从 SFT 起，rollout 与训练同量化，消除训练-推理失配）；把预训练的 MTP 层微调成 **EAGLE-3 draft**，直接用**接受率的负对数（LK loss）**优化而非 KL 代理；融合 1st / 4th / 末个 AttnRes block 的低/中/高层特征做 draft 输入。官方建议部署在 **64 卡以上的 supernode** 配置上。
+
+**评测（厂商自报；条件列必须随表读）**
+
+统一条件（模型卡脚注）：K3 全部结果取 **reasoning effort = max、`temperature = 1.0`**；单步任务（GPQA Diamond、HLE-Full、无工具的视觉基准）`top_p=0.95`，agentic 任务 `top_p=1.0`；harness 按基准在 **Kimi Code / Claude Code / Codex** 三者中指定（见各基准脚注）。下表只选与 K2.6→K3 代际判定相关的项：
+
+| 基准 | Kimi K3 (max) | 对照（同表，官方口径） | 备注（条件） |
+| --- | --- | --- | --- |
+| GPQA Diamond | 93.5 | GPT-5.6 Sol 94.1 / Claude Opus 4.8 91.0 | 单步，无工具 |
+| HLE-Full | 43.5 / 56.0 | Fable 5 53.3 / 63.0（无/带工具） | 两列分别为无工具/带通用工具 |
+| DeepSWE (v1.1) | 67.5 | Opus 4.8 59.0 / GPT-5.6 Sol 73.0 | Kimi Code harness；mini-SWE-agent 下 67.3 |
+| Terminal-Bench 2.1 | 88.3 | GPT-5.6 Sol 88.8 / Opus 4.8 84.6 | 各家取最优 harness |
+| SWE-Marathon | 42.0 | Fable 5 35.0 / Opus 4.8 40.0 | H20 校准分支；Fable 5 有 35% 任务命中 fallback |
+| MLS-Bench-Lite | 48.3 | Fable 5 49.9 / GPT-5.6 Sol 46.2 | H20 上 3 次平均（官方设定为 H100） |
+| Kimi Code Bench 2.0 | 72.9 | Fable 5 76.9 / GPT-5.5 69.0 | 内部基准；Claude Code harness 下 73.7 |
+| BrowseComp | 91.2 | Fable 5 88.0 / GPT-5.6 Sol 90.4 | 300K 触发上下文压缩；无压缩满 1M 时为 90.4 |
+| MCPMark-Verified | 94.5 | GPT-5.6 Sol 92.9 / Opus 4.8 76.4 | 公共 500 任务子集，100 轮 |
+| Video-MME (w. sub) | 90.0 | GPT-5.6 Sol 89.5 / Opus 4.8 86.0 | 3 次平均 |
+| ZeroBench (pass@5) | 23.0 / 41.0 | Fable 5 23.0 / 46.0 | 官方设定，5 次 |
+
+**成本-性能（官方 §6.4）**：Kimi Code Bench 2.0 上落后 Claude Fable 5 仅 4.0 分而成本为其 38%；BrowseComp 以 **\$2.03/任务**拿下同表最高分 91.2%；GDPval-AA v2 比 GPT-5.6 Sol 低 50 Elo 但成本低 13%，比 Fable 5 便宜 2.6×。
+
+**第三方评测（转引，二手）**：官方技术报告 §6.3 转述——Artificial Analysis **Intelligence Index v4.1 = 57.1**（580 个模型中第 4，若把 GPT-5.6 Sol 的多档 effort 合并计为一条则为第 3）；Vals AI **Vals Index 74.7%**（39 个模型中第 2）。**这两项本报告未直接访问 AA / Vals 原始页面复现**，仅作为「官方转述的第三方结果」记录（见 §4.6）。
+
+**失效边界（官方明示 + 本报告判断）**
+
+1. **对 thinking history 高度敏感（官方明示）**：K3 在 *preserved thinking history* 模式下训练。harness 若未按要求回传全部历史思考内容，或把别的模型正在进行的会话中途切到 K3，**生成质量会高度不稳定**。官方建议只用已验证兼容的 harness（如 Kimi Code），且不要中途切换。
+2. **过度主动（excessive proactiveness，官方明示）**：长程任务训练导致模型遇到小问题/歧义意图时**替用户做决定**。需要边界严格的应用应在 system prompt / AGENTS.md 中显式约束。
+3. **与最强闭源仍有明显差距（官方承认）**：官方原文承认在用户体验上与 Claude Fable 5、GPT-5.6 Sol 存在「noticeable gap」；表内也能看到 CritPt（23.4 vs 32.3）、FrontierSWE（81.2 vs 86.6）、SWE-Marathon 之外的若干项落后。
+4. **本报告判断：2.8T 的可及性门槛**。权重「开源」但 2.8T 全量权重 + MXFP4 权重的部署成本远超 1T 级；官方推荐 ≥64 加速器 supernode。因此「开源 3T 级」在**研究可复现性**上的意义，显著大于**个人可部署性**。
+5. **effort 档位不完整**：发布时只有 max 档可用（low/high 待后续更新），因此所有官方数字都是 max 档口径，**不能**据此推断低成本档表现。
+
+### 4.6 未确证与待跟踪（2026-06 以来）
+
+以下条目**未进入正文**，仅登记待核：
+
+| 事项 | 现状 | 处置 |
+| --- | --- | --- |
+| Kimi K3 License 具体条款 | 模型卡只给「Kimi K3 License」名称，未列条款 | 待读 LICENSE 原文；在读到前不称「OSI 许可」/「可商用」 |
+| K3 视频输入的产品化范围 | 博客称同一模型理解视频；模型卡 `Modality` 仅列 Text, Image | 正文已按「模型卡列 Text/Image」表述，视频部分标注未确认 |
+| K3 第三方评测原始记录 | AA 57.1 / Vals 74.7% 仅有官方技术报告的转述 | 需直接抓 AA / Vals 页面；未抓到前按二手处理 |
+| K3 的 low / high effort 档 | 官方称「后续更新引入」 | 待官方上线后补数字 |
+| K2.7 Code 的思考 token −30% | 只有相对百分比，无绝对 token 计数口径 | 待官方补测量方法（当前无法自行复现） |
+| Complex KDA（arXiv:2609.24797，2026-09-21） | 独立团队（OpenEuroLLM）对 KDA 表达力的改进：把门控放开到 `[−1,1]`、`β ∈ [0,2]`，使单个 delta-rule 转移实现 2D 旋转，声称达到 DeltaProduct₂ 的状态跟踪表达力 | **不是 Moonshot 的模型发布**，故不写入正文；仅登记为 KDA 路线的外部研究跟进 |
+| K3 的 MoE 负载均衡收益在推理期的表现 | 技术报告给出训练侧 QB 机制与证明，推理期 bias 冻结 | 推理期是否仍需调 bias、对吞吐的影响未披露 |
+
 ---
 
 ## 5. 跨代技术演进分析
@@ -357,12 +527,12 @@ K2 Thinking 在后训练阶段对 MoE 部分做 **INT4 weight-only QAT**，所�
 
 | 维度 | Kimi (Moonshot) | DeepSeek | Qwen (阿里) | OpenAI | Anthropic |
 | --- | --- | --- | --- | --- | --- |
-| 最大开源旗舰 | **K2 / K2 Thinking 1T MoE** | DeepSeek-V3 / R1 671B MoE | Qwen3-MoE 系列 | gpt-oss | 不开源 |
+| 最大开源旗舰 | **K2 / K2 Thinking 1T MoE**；2026-07 起为 **K3 2.8T MoE（104B 激活）** | DeepSeek-V3 / R1 671B MoE | Qwen3-MoE 系列 | gpt-oss | 不开源 |
 | 推理模型路线 | **长上下文 RL + Mirror Descent** | GRPO + R1-Zero | QwQ / Qwen3-Thinking | o1/o3/o4/GPT-5 | Claude with Extended Thinking |
-| 长上下文创新 | **MoBA + KDA** | NSA / DeepSeek-V3.2 sparse | Dual-Chunk / YaRN 扩展 | 未公开 | 内部技术 |
-| 优化器创新 | **Muon → MuonClip** | AdamW | AdamW | 未公开 | 未公开 |
-| 多模态 | Kimi-VL（MoE 2.8B-A3B）+ Audio + K2.5（原生） | DeepSeek-VL2 | Qwen-VL / Qwen2.5-VL（强力） | GPT-4o / GPT-5 | Claude 3.5 Sonnet+ |
-| 量化 | **K2 Thinking 原生 INT4 QAT** | 后置量化 | GPTQ / AWQ | 黑盒 | 黑盒 |
+| 长上下文创新 | **MoBA + KDA**（K3 起 KDA 全面替代 MLA 主体，仅保留 24 层 Gated MLA） | NSA / DeepSeek-V3.2 sparse | Dual-Chunk / YaRN 扩展 | 未公开 | 内部技术 |
+| 优化器创新 | **Muon → MuonClip → Per-Head Muon** | AdamW | AdamW | 未公开 | 未公开 |
+| 多模态 | Kimi-VL（MoE 2.8B-A3B）+ Audio + K2.5（原生）+ **K3（原生，从零训练 MoonViT-V2）** | DeepSeek-VL2 | Qwen-VL / Qwen2.5-VL（强力） | GPT-4o / GPT-5 | Claude 3.5 Sonnet+ |
+| 量化 | **K2 Thinking 原生 INT4 QAT**；**K3 为 MXFP4 权重 / MXFP8 激活 QAT（自 SFT 起）** | 后置量化 | GPTQ / AWQ | 黑盒 | 黑盒 |
 
 可以看到 **Moonshot 在「优化器（MuonClip）+ 注意力（MoBA / KDA）+ 长上下文 RL」三个底层栈上同时输出原创性工作**——这是它与 Qwen「数据 + 工程拼杀」、DeepSeek「算法极致 + 高效训练」差异化的核心。
 
@@ -398,6 +568,10 @@ K2 Thinking 在后训练阶段对 MoE 部分做 **INT4 weight-only QAT**，所�
 8. **Kimi K2.5: Visual Agentic Intelligence**, Kimi Team, arXiv:2602.02276 (2026-01).
 9. **Kimi K2.6: Open Agentic Intelligence v2**, Kimi Team, arXiv:2604.20534 (2026-04).
 10. **Kimi Code K2.6 Technical Report**, Kimi Team, arXiv:2604.18425 (2026-04).
+11. **Kimi K3: Open Frontier Intelligence**, Kimi Team, arXiv:2607.24653（v1 2026-07-27 / **v2 2026-08-07**，本轮引用版本）。精读见 [`papers/2607.24653-kimi-k3.md`](papers/2607.24653-kimi-k3.md)。
+
+> 版本口径：K3 的 arXiv 元数据首提交 2026-07-27T16:49:54Z、最新更新 2026-08-07T06:33:46Z，正文数字以 v2 为准。
+> 本条目**未**发现 K2.7 Code 的独立技术报告（截至 2026-10-17）——其架构描述只能回落到 K2.6 公开信息与 K2.7 Code 模型卡的架构表，见 §4.4。
 
 ### 9.2 官方资源
 
@@ -408,6 +582,15 @@ K2 Thinking 在后训练阶段对 MoE 部分做 **INT4 weight-only QAT**，所�
 - Kimi K2 项目页：https://moonshotai.github.io/Kimi-K2/
 - Kimi K2 Thinking 项目页：https://moonshotai.github.io/Kimi-K2/thinking.html
 - Kimi K2.5 博客：https://www.kimi.com/blog/kimi-k2-5
+- **Kimi K3 技术博客**：https://www.kimi.com/blog/kimi-k3（2026-07-16 上线公告；访问日期 2026-10-17）
+- **Kimi K3 模型卡**：https://huggingface.co/moonshotai/Kimi-K3（repo created 2026-06-13，lastModified 2026-09-02）
+- **Kimi K3 GitHub**：https://github.com/MoonshotAI/Kimi-K3
+- **Kimi K2.7 Code 模型卡**：https://huggingface.co/moonshotai/Kimi-K2.7-Code（createdAt 2026-06-11 / lastModified 2026-06-15）
+- **Kimi K2.7 Code 官方资源页**：https://www.kimi.com/resources/kimi-k2-7-code（页面标注「更新于 2026-10-08」）
+- **Kimi 研究博客索引**（各博客发布日期的一手出处）：https://www.kimi.com/blog
+- **MoonEP 仓库**（K3 的完全均衡专家并行库）：https://github.com/MoonshotAI/MoonEP
+- **FlashKDA 仓库**（KDA 高性能 kernel）：https://github.com/MoonshotAI/FlashKDA
+- **Attention-Residuals 仓库**：https://github.com/MoonshotAI/Attention-Residuals
 
 ### 9.3 关键背景文献
 
@@ -429,3 +612,5 @@ K2 Thinking 在后训练阶段对 MoE 部分做 **INT4 weight-only QAT**，所�
 ---
 
 > **报告说明**：本报告所有技术细节均来自 Moonshot AI 公开发布的论文、官方博客、GitHub 仓库与 HuggingFace 模型卡。Kimi 早期 Moonshot-v1 阶段未公布完整技术报告，对应章节内容综合自官方公告、平台 API 文档与第三方权威分析；其余章节细节均直接引用对应一作论文。
+
+> **2026-10-17 增量说明**：本轮只做增补与修正，不改动 2026-06 之前已核验的结论。新增内容集中在 §4.4（Kimi K2.7 Code）、§4.5（Kimi K3）、§4.6（未确证与待跟踪），并同步更新 §1.1 时间线、§7 横向比较表的相关格、§9 参考文献与官方资源。证据分级口径：**精读原文**（技术报告全文 / 官方模型卡 / 官方文档原文）、**摘要级**（仅读 arXiv 摘要与元数据）、**二手**（第三方页面或他人转述）、**受限核验**（原始页面在本环境不可达，只能用镜像/模型卡替代）。本条目 2026-06 之后的新增内容全部为「精读原文」等级；「二手」与「受限核验」条目一律落在 §4.6，不入正文。
