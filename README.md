@@ -78,10 +78,10 @@ ResearchReport/    48 条目 · 21 专题 · 6 板块
 | 条目 | 板块 | 日期 | 来源 |
 | :-- | :-- | :-- | :-- |
 | [WorldModels](<WorldModel/WorldModels/report.md>) | WorldModel | 2026-10-17 | front-matter date |
+| [Alignment](<LLM/Alignment/report.md>) | LLM | 2026-10-17 | 最近提交日 |
 | [DecisionModels](<LLM/DecisionModels/report.md>) | LLM | 2026-10-17 | 最近提交日 |
 | [GLM](<Models/GLM/report.md>) | Models | 2026-10-17 | 最近提交日 |
 | [GPT](<Models/GPT/report.md>) | Models | 2026-10-17 | 最近提交日 |
-| [Grok](<Models/Grok/report.md>) | Models | 2026-10-17 | 最近提交日 |
 <!-- SCRIPT:recent END -->
 
 ## 📖 怎么用这个图书馆
