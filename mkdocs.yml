@@ -123,7 +123,9 @@ nav:
     - "GLM": "Models/GLM/report.md"
     - "GPT": "Models/GPT/report.md"
     - "Gemini": "Models/Gemini/report.md"
-    - "Google-Gen": "Models/Google-Gen/report.md"
+    - "Google-Gen":
+        - "总报告": "Models/Google-Gen/report.md"
+        - "2604.20329-vision-banana": "Models/Google-Gen/papers/2604.20329-vision-banana.md"
     - "Grok": "Models/Grok/report.md"
     - "Hunyuan": "Models/Hunyuan/report.md"
     - "Kimi":

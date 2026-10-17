@@ -50,6 +50,13 @@
 </details>
 
 <details>
+<summary><b>Google-Gen</b>（1 份）</summary>
+
+* [papers/2604.20329-vision-banana.md](<Google-Gen/papers/2604.20329-vision-banana.md>) — 423 行 / 53,971 B
+
+</details>
+
+<details>
 <summary><b>Kimi</b>（2 份）</summary>
 
 * [papers/2607.24653-kimi-k3.md](<Kimi/papers/2607.24653-kimi-k3.md>) — 251 行 / 30,000 B
