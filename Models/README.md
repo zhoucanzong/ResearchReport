@@ -22,7 +22,7 @@
 | **Doubao-Seed** | [Doubao/Seed系列模型深度调研报告](<Doubao-Seed/report.md>) | 643 行 |
 | **GLM** | [GLM 系列模型深度调研报告](<GLM/report.md>) | 737 行 |
 | **GPT** | [OpenAI GPT 系列模型深度调研报告](<GPT/report.md>) | 759 行 |
-| **Gemini** | [Google Gemini系列模型深度调研报告](<Gemini/report.md>) | 1,092 行 |
+| **Gemini** | [Google Gemini系列模型深度调研报告](<Gemini/report.md>) | 1,094 行 |
 | **Google-Gen** | [Google / DeepMind 生成模型系列研究报告](<Google-Gen/report.md>) | 878 行 |
 | **Grok** | [xAI Grok 系列模型深度调研报告](<Grok/report.md>) | 469 行 |
 | **Hunyuan** | [Hunyuan系列模型深度调研报告](<Hunyuan/report.md>) | 525 行 |
@@ -35,7 +35,7 @@
 | **Mistral** | [Mistral AI 系列模型深度调研报告](<Mistral/report.md>) | 495 行 |
 | **Nemotron** | [NVIDIA Nemotron 系列研究脉络](<Nemotron/report.md>) | 465 行 |
 | **OpenAI-Gen** | [OpenAI 生成模型系列研究报告](<OpenAI-Gen/report.md>) | 859 行 |
-| **Qwen** | [Qwen系列模型深度调研报告](<Qwen/report.md>) | 1,109 行 |
+| **Qwen** | [Qwen系列模型深度调研报告](<Qwen/report.md>) | 1,111 行 |
 | **Runway** | [Runway 视频生成与编辑模型系列研究报告](<Runway/report.md>) | 732 行 |
 | **StabilityAI** | [Stability AI / Black Forest Labs 图像生成模型系列研究报告](<StabilityAI/report.md>) | 873 行 |
 

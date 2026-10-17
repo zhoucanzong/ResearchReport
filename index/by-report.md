@@ -29,7 +29,7 @@
 | Doubao-Seed | Models | [Models/Doubao-Seed/report.md](<../Models/Doubao-Seed/report.md>) | 0 | 643 | — |
 | GLM | Models | [Models/GLM/report.md](<../Models/GLM/report.md>) | 0 | 737 | — |
 | GPT | Models | [Models/GPT/report.md](<../Models/GPT/report.md>) | 0 | 759 | — |
-| Gemini | Models | [Models/Gemini/report.md](<../Models/Gemini/report.md>) | 0 | 1,092 | — |
+| Gemini | Models | [Models/Gemini/report.md](<../Models/Gemini/report.md>) | 0 | 1,094 | — |
 | Google-Gen | Models | [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>) | 1 | 878 | — |
 | Grok | Models | [Models/Grok/report.md](<../Models/Grok/report.md>) | 0 | 469 | — |
 | Hunyuan | Models | [Models/Hunyuan/report.md](<../Models/Hunyuan/report.md>) | 0 | 525 | — |
@@ -42,7 +42,7 @@
 | Mistral | Models | [Models/Mistral/report.md](<../Models/Mistral/report.md>) | 0 | 495 | — |
 | Nemotron | Models | [Models/Nemotron/report.md](<../Models/Nemotron/report.md>) | 0 | 465 | — |
 | OpenAI-Gen | Models | [Models/OpenAI-Gen/report.md](<../Models/OpenAI-Gen/report.md>) | 0 | 859 | — |
-| Qwen | Models | [Models/Qwen/report.md](<../Models/Qwen/report.md>) | 3 | 1,109 | — |
+| Qwen | Models | [Models/Qwen/report.md](<../Models/Qwen/report.md>) | 3 | 1,111 | — |
 | Runway | Models | [Models/Runway/report.md](<../Models/Runway/report.md>) | 0 | 732 | — |
 | StabilityAI | Models | [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>) | 0 | 873 | — |
 | nemotron | OpenSource | [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | 6 | 206 | — |
@@ -59,4 +59,4 @@
 | VideoGen | VisualGen | [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) | 0 | 898 | — |
 | EmbodiedVLA | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 13 | 609 | — |
 | WorldModels | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 598 | 2026-10-17 |
-| **合计** | — | — | **90** | **32,386** | — |
+| **合计** | — | — | **90** | **32,390** | — |

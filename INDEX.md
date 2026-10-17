@@ -16,8 +16,8 @@
 | **条目数**（`report.md`） | **48** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 4 |
 | 条目子文档数 | 90 |
-| 条目正文行数（剔除 front-matter） | 32,386 |
-| 条目字节 | 2,024,775 B |
+| 条目正文行数（剔除 front-matter） | 32,390 |
+| 条目字节 | 2,025,167 B |
 | 带 front-matter 的条目 | 5 |
 | 带合法 `date` 的条目 | 5 |
 | 文档（除生成物外的全部 `.md`） | 151 |
@@ -32,13 +32,13 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| Models | 23 | 33 | 16,001 | 1,021,662 B | [板块页 →](<Models/README.md>) |
+| Models | 23 | 33 | 16,005 | 1,022,054 B | [板块页 →](<Models/README.md>) |
 | LLM | 8 | 25 | 5,217 | 340,995 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,807 | 319,099 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 2 | 31 | 1,207 | 129,154 B | [板块页 →](<WorldModel/README.md>) |
 | Infra | 3 | 29 | 2,098 | 108,615 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 4 | 18 | 1,056 | 105,250 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **48** | **151** | **32,386** | **2,024,775 B** | — |
+| **合计** | **48** | **151** | **32,390** | **2,025,167 B** | — |
 
 ## 分面索引
 
@@ -145,10 +145,10 @@
   </details>
 
   <details>
-  <summary><b>Gemini</b> · <code>Models/Gemini/report.md</code> · 1092 行 · —</summary>
+  <summary><b>Gemini</b> · <code>Models/Gemini/report.md</code> · 1094 行 · —</summary>
   
 
-    * **条目**：[Models/Gemini/report.md](<Models/Gemini/report.md>)（1092 行 / 57,151 B）
+    * **条目**：[Models/Gemini/report.md](<Models/Gemini/report.md>)（1094 行 / 57,347 B）
     * **专题目录**：`Models/Gemini`
     * **元数据**：type=`—` · domain=`Models` · subject=`Gemini` · date=`—` · status=`—`
     * **子文档（0）**
@@ -302,10 +302,10 @@
   </details>
 
   <details>
-  <summary><b>Qwen</b> · <code>Models/Qwen/report.md</code> · 1109 行 · —</summary>
+  <summary><b>Qwen</b> · <code>Models/Qwen/report.md</code> · 1111 行 · —</summary>
   
 
-    * **条目**：[Models/Qwen/report.md](<Models/Qwen/report.md>)（1109 行 / 72,390 B）
+    * **条目**：[Models/Qwen/report.md](<Models/Qwen/report.md>)（1111 行 / 72,586 B）
     * **专题目录**：`Models/Qwen`
     * **元数据**：type=`—` · domain=`Models` · subject=`Qwen` · date=`—` · status=`—`
     * **子文档（3）**
