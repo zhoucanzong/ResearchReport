@@ -34,7 +34,7 @@ Moonshot AI（月之暗面，Beijing Yuezhi Technology Co., Ltd.）由清华大�
 | 2025-11-06 | **Kimi K2 Thinking** 发布 | 1T MoE + 256K 上下文 + 原生 INT4，HLE 44.9%（带工具） |
 | 2026-01-27 | **Kimi K2.5** | 在 K2 基础上继续预训练 ~15T 视觉-文本 token，原生多模态 Agent，Agent Swarm 100 子代理 |
 | 2026-04-13 | **Kimi Code K2.6** | 编码代理工具发布 |
-| 2026-04-20 | **Kimi K2.6** 开源 | 1T 参数 / 32B 激活 MoE，256K 上下文，SWE-Bench Verified 80.2%（开源模型第一），Modified MIT License，API $0.95/$4.00 per 1M tokens |
+| 2026-04-20 | **Kimi K2.6** 开源 | 1T 参数 / 32B 激活 MoE，256K 上下文，SWE-Bench Verified 80.2%（开源模型第一），Modified MIT License，API \$0.95/\$4.00 per 1M tokens |
 | 2026-05-25 | **K2 系列退役** | K2 系列正式停止支持，仅 K2.6 继续维护 |
 | 2026-06 | **Claw Groups / 视频输入** | 异构代理集群研究预览；支持 mp4, mov, webm, avi 视频输入 |
 
@@ -226,7 +226,7 @@ Kimi-Audio（arXiv:2504.18425）是 Moonshot 的音频基础模型，7B 参数�
   - **SWE-Bench Pro 58.6%**——与 GPT-5.5 持平；
   - **Agent Swarm 300 子代理 / 4000 步**——面向超长程软件工程任务；
   - 官方披露可**连续编码 13 小时**；
-  - **API 定价**：$0.95 / $4.00 per 1M tokens（输入/输出）。
+  - **API 定价**：\$0.95 / \$4.00 per 1M tokens（输入/输出）。
 - **Kimi Code K2.6（2026-04-13）**：编码代理工具，面向 IDE 集成与自动化软件工程。
 - **视频输入支持**：新增 mp4、mov、webm、avi 格式视频输入能力。
 - **Claw Groups（研究预览）**：异构代理集群（Heterogeneous Agent Cluster），支持不同类型 Agent 协同完成复杂任务。
@@ -379,7 +379,7 @@ K2 Thinking 在后训练阶段对 MoE 部分做 **INT4 weight-only QAT**，所�
 到 2026 年中，Moonshot 已经从「一家做长文本 ChatBot 的公司」演化为「在底层算法、注意力机制、优化器、Agent 系统四个维度都有原创贡献的开源大模型领先力量」。其 K2 系列已与 DeepSeek、Qwen 一起被国际社区视作开源模型「中国三强」。
 
 **商业与融资动态**：
-- **Moonshot AI 估值**：约 **180 亿美元**（~$18B），累计融资 **17.7 亿美元**（~$1.77B），投资方包括红杉中国、阿里巴巴、腾讯等（确认）。
+- **Moonshot AI 估值**：约 **180 亿美元**（~\$18B），累计融资 **17.7 亿美元**（~\$1.77B），投资方包括红杉中国、阿里巴巴、腾讯等（确认）。
 - **K2 系列退役（2026-05-25）**：K2 系列正式停止支持，仅 K2.6 继续维护，标志着 Moonshot 从「多版本并行」转向「单一旗舰开源」策略。
 
 ---

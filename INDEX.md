@@ -17,7 +17,7 @@
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 4 |
 | 条目子文档数 | 72 |
 | 条目正文行数（剔除 front-matter） | 30,967 |
-| 条目字节 | 1,893,882 B |
+| 条目字节 | 1,894,033 B |
 | 带 front-matter 的条目 | 4 |
 | 带合法 `date` 的条目 | 4 |
 | 文档（除生成物外的全部 `.md`） | 133 |
@@ -32,13 +32,13 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| Models | 23 | 29 | 14,816 | 900,388 B | [板块页 →](<Models/README.md>) |
+| Models | 23 | 29 | 14,816 | 900,539 B | [板块页 →](<Models/README.md>) |
 | LLM | 8 | 25 | 5,217 | 340,993 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,805 | 318,086 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 2 | 31 | 1,207 | 129,154 B | [板块页 →](<WorldModel/README.md>) |
 | Infra | 3 | 15 | 1,866 | 100,011 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 4 | 18 | 1,056 | 105,250 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **48** | **133** | **30,967** | **1,893,882 B** | — |
+| **合计** | **48** | **133** | **30,967** | **1,894,033 B** | — |
 
 ## 分面索引
 
@@ -124,7 +124,7 @@
   <summary><b>GLM</b> · <code>Models/GLM/report.md</code> · 523 行 · —</summary>
   
 
-    * **条目**：[Models/GLM/report.md](<Models/GLM/report.md>)（523 行 / 39,747 B）
+    * **条目**：[Models/GLM/report.md](<Models/GLM/report.md>)（523 行 / 39,755 B）
     * **专题目录**：`Models/GLM`
     * **元数据**：type=`—` · domain=`Models` · subject=`GLM` · date=`—` · status=`—`
     * **子文档（0）**
@@ -172,7 +172,7 @@
   <summary><b>Grok</b> · <code>Models/Grok/report.md</code> · 469 行 · —</summary>
   
 
-    * **条目**：[Models/Grok/report.md](<Models/Grok/report.md>)（469 行 / 32,612 B）
+    * **条目**：[Models/Grok/report.md](<Models/Grok/report.md>)（469 行 / 32,693 B）
     * **专题目录**：`Models/Grok`
     * **元数据**：type=`—` · domain=`Models` · subject=`Grok` · date=`—` · status=`—`
     * **子文档（0）**
@@ -196,7 +196,7 @@
   <summary><b>Kimi</b> · <code>Models/Kimi/report.md</code> · 431 行 · —</summary>
   
 
-    * **条目**：[Models/Kimi/report.md](<Models/Kimi/report.md>)（431 行 / 33,338 B）
+    * **条目**：[Models/Kimi/report.md](<Models/Kimi/report.md>)（431 行 / 33,344 B）
     * **专题目录**：`Models/Kimi`
     * **元数据**：type=`—` · domain=`Models` · subject=`Kimi` · date=`—` · status=`—`
     * **子文档（0）**
@@ -268,7 +268,7 @@
   <summary><b>Mistral</b> · <code>Models/Mistral/report.md</code> · 495 行 · —</summary>
   
 
-    * **条目**：[Models/Mistral/report.md](<Models/Mistral/report.md>)（495 行 / 29,259 B）
+    * **条目**：[Models/Mistral/report.md](<Models/Mistral/report.md>)（495 行 / 29,315 B）
     * **专题目录**：`Models/Mistral`
     * **元数据**：type=`—` · domain=`Models` · subject=`Mistral` · date=`—` · status=`—`
     * **子文档（0）**

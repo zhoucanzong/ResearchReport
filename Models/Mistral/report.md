@@ -28,11 +28,11 @@
 1. **开源权重 + 商业 API 双轮驱动**：以 Apache 2.0 / Modified MIT 许可证发布开放权重模型，同时通过 La Plateforme API 平台和企业服务实现商业化。
 2. **欧洲数据主权合规优先**：原生满足 GDPR 与 EU AI Act 要求，数据驻留欧洲，为受监管行业（金融、医疗、政府、国防）提供不可替代的合规部署选项。
 
-截至 2026 年初，Mistral AI 估值约 **$13.8B**（€11.7B），ARR 约 **$400M**（2026 年 1 月数据，来源：Sacra），2026 全年收入目标 $1.1–1.2B。累计融资超过 **$1.28B**，包括：
+截至 2026 年初，Mistral AI 估值约 **\$13.8B**（€11.7B），ARR 约 **\$400M**（2026 年 1 月数据，来源：Sacra），2026 全年收入目标 \$1.1–1.2B。累计融资超过 **\$1.28B**，包括：
 - Seed：€105M（Lightspeed Venture Partners，2023-06）
-- Series A：€385M / ~$415M（a16z 领投，2023-12）
-- Series C：€1.7B / ~$1.5B（ASML 领投 €1.3B，2025-09，投后估值 €11.7B）
-- 债务融资：$830M（2026-03，用于巴黎附近 Bruyères-le-Châtel 数据中心 13,800 张 NVIDIA GB300 GPU）
+- Series A：€385M / ~\$415M（a16z 领投，2023-12）
+- Series C：€1.7B / ~\$1.5B（ASML 领投 €1.3B，2025-09，投后估值 €11.7B）
+- 债务融资：\$830M（2026-03，用于巴黎附近 Bruyères-le-Châtel 数据中心 13,800 张 NVIDIA GB300 GPU）
 
 ### 1.2 技术演进主线
 
@@ -79,7 +79,7 @@ Mistral 的模型演进可归纳为四条主线：
 | 2026-03 | **Mistral Small 4** | 119B 总 / 6.5B 激活 | Apache 2.0 | **统一模型**：MoE，文本+图像，可配置推理深度 |
 | 2026-03 | **Mistral Vibe CLI** | - | - | 编码 Agent 工具，VS Code 集成 |
 | 2026-03 | **Mistral Forge** | - | 企业平台 | 企业预训练+RL 平台，NVIDIA GTC 发布 |
-| 2026-04 | **Mistral Medium 3.1** | 未公开 | 专有 | 性价比前沿模型，$0.40/$2.00 per 1M |
+| 2026-04 | **Mistral Medium 3.1** | 未公开 | 专有 | 性价比前沿模型，\$0.40/\$2.00 per 1M |
 | 2026-04-27 | **Workflows** | - | - | 自动化业务流程编排，Temporal 驱动 |
 | 2026-05 | **Mistral Large 3** | 675B 总 / 41B 激活 | Apache 2.0 | **旗舰开源**，128K/256K 上下文，80+ 语言，3,000 H200 训练 |
 | 2026 | **Ministral 3** | 3B / 8B / 14B | Apache 2.0 | 小模型系列，边缘部署 |
@@ -126,7 +126,7 @@ Mistral 的模型演进可归纳为四条主线：
 - 123B Dense 架构，128K 上下文。
 - 80+ 语言原生支持，法语/德语/西班牙语/意大利语等企业场景质量突出。
 - 函数调用、JSON Mode、多语言嵌入（Embed v3）。
-- 定价：$2/$6 per 1M tokens（输入/输出）。
+- 定价：\$2/\$6 per 1M tokens（输入/输出）。
 
 **退役计划**：Mistral Large 2.1 已于 2026-02-27 弃用，2026-05-31 正式退役，由 Mistral Large 3 全面替代。
 
@@ -141,7 +141,7 @@ Mistral 的模型演进可归纳为四条主线：
 #### 3.4.2 Mistral Small 3 / 3.1（2025-01 / 2025-03）
 
 - **Small 3**：24B Dense，HumanEval 84.8%，150 tok/s 推理速度，量化后可在 RTX 4090 运行。
-- **Small 3.1**：新增图像理解（Pixtral 技术下放），保持 $0.10/$0.30 per 1M 的极低定价。
+- **Small 3.1**：新增图像理解（Pixtral 技术下放），保持 \$0.10/\$0.30 per 1M 的极低定价。
 - 定位：高吞吐量、低成本的生产级工作负载（分类、客服、文档分流）。
 
 ### 3.5 第五代：垂直专业化模型（2024-05 ~ 2025-09）
@@ -203,7 +203,7 @@ Magistral 是 Mistral 对 OpenAI o3/o4-mini 的直接回应：
 **Voxtral TTS** 补齐语音输出：
 - 3-5 秒参考音频即可克隆声音，跨语言保留口音与语调。
 - 4B 参数 / ~3GB RAM，手机级边缘可运行。
-- API 定价 $0.016/1K 字符，权重 CC BY-NC 开源。
+- API 定价 \$0.016/1K 字符，权重 CC BY-NC 开源。
 
 > 来源：Voxtral 技术评测（chatforest.com, 2026-05）★★★☆☆
 
@@ -252,10 +252,10 @@ Magistral 是 Mistral 对 OpenAI o3/o4-mini 的直接回应：
 
 | 产品 | 定位 | 关键特征 | 定价 |
 |------|------|---------|------|
-| **Le Chat** | 消费者/企业聊天机器人 | 免费版 + Pro $14.99/月 + Team/Enterprise | Pro 比 ChatGPT Plus/Claude Pro 便宜 ~25% |
+| **Le Chat** | 消费者/企业聊天机器人 | 免费版 + Pro \$14.99/月 + Team/Enterprise | Pro 比 ChatGPT Plus/Claude Pro 便宜 ~25% |
 | **Mistral Studio** | AI 应用与 Agent 构建平台 | 可视化编排、模型选择、RAG、工作流 | 按使用量计费 |
 | **Mistral Vibe** | 编码工作流产品 | VS Code 扩展、背景 Agent、代码生成 | 包含在 Le Chat Pro / Enterprise |
-| **Mistral Forge** | 企业预训练+RL 平台 | 全生命周期：预训练→SFT→DPO→RLHF→蒸馏 | 企业定制报价（预计 $100K+） |
+| **Mistral Forge** | 企业预训练+RL 平台 | 全生命周期：预训练→SFT→DPO→RLHF→蒸馏 | 企业定制报价（预计 \$100K+） |
 | **La Plateforme** | API 平台 | 全模型家族 API、Batch API（50% 折扣） | 见下表 |
 | **Workflows** | 业务流程自动化 | Temporal 驱动、人机协同、审计追踪 | 企业定制 |
 
@@ -263,16 +263,16 @@ Magistral 是 Mistral 对 OpenAI o3/o4-mini 的直接回应：
 
 | 模型 | 输入 ($/1M) | 输出 ($/1M) | 上下文 | 备注 |
 |------|------------|------------|--------|------|
-| **Mistral Large 3** | $2.00 | $6.00 | 128K/256K | 旗舰开源，Apache 2.0 |
-| **Mistral Medium 3.1** | $0.40 | $2.00 | 131K | **性价比之王** |
-| **Mistral Small 3.2** | $0.10 | $0.30 | 128K | 高吞吐量场景 |
-| **Mistral Small 4** | $0.15 | $0.60 | 256K | 统一模型，可配置推理 |
+| **Mistral Large 3** | \$2.00 | \$6.00 | 128K/256K | 旗舰开源，Apache 2.0 |
+| **Mistral Medium 3.1** | \$0.40 | \$2.00 | 131K | **性价比之王** |
+| **Mistral Small 3.2** | \$0.10 | \$0.30 | 128K | 高吞吐量场景 |
+| **Mistral Small 4** | \$0.15 | \$0.60 | 256K | 统一模型，可配置推理 |
 | **Devstral Small 2505** | **免费** | **免费** | 128K | 免费 API 代码模型 |
-| **Devstral 2** | $1.00 | $3.00 | 256K | 旗舰代码 Agent |
-| **Codestral** | $0.20 | $0.60 | 256K | FIM 代码补全 |
-| **Magistral Medium** | $2.00 | $5.00 | 128K | 企业推理 |
-| **Voxtral Small** | ~$0.004/min | $0.10/$0.30 | 32K | 语音理解 |
-| **Le Chat Pro** | $14.99/月 | - | - | 行业最便宜 Pro 订阅 |
+| **Devstral 2** | \$1.00 | \$3.00 | 256K | 旗舰代码 Agent |
+| **Codestral** | \$0.20 | \$0.60 | 256K | FIM 代码补全 |
+| **Magistral Medium** | \$2.00 | \$5.00 | 128K | 企业推理 |
+| **Voxtral Small** | ~\$0.004/min | \$0.10/\$0.30 | 32K | 语音理解 |
+| **Le Chat Pro** | \$14.99/月 | - | - | 行业最便宜 Pro 订阅 |
 
 > 注：Batch API 全 token 成本 50% 折扣（24 小时内处理）。
 
@@ -293,7 +293,7 @@ Magistral 是 Mistral 对 OpenAI o3/o4-mini 的直接回应：
 | 定制深度 | 预训练级（参数层面内化领域知识） | 行为调整（LoRA/Full FT） |
 | 数据量需求 | TB 级 | 数百至数千样本 |
 | 权重归属 | 客户完全拥有 | API 托管，不拥有权重 |
-| 典型预算 | $100K–$500K+ | $3K–$15K |
+| 典型预算 | \$100K–\$500K+ | \$3K–\$15K |
 | 部署模式 | On-premise / 私有云 | Mistral 云托管 |
 
 > 来源：Forge 产品分析（tensoria.fr / TechCrunch, 2026-03~05）★★★★☆
@@ -379,8 +379,8 @@ Mistral 在多语言支持上的投入是其区别于美国实验室的核心能
 
 | 维度 | Mistral Large 3 | GPT-5 | Claude 4.5 Sonnet | Gemini 3 Pro |
 |------|----------------|-------|-------------------|--------------|
-| **输入价格** | $2/1M | ~$5-10/1M | $3/1M | $3.5/1M |
-| **输出价格** | $6/1M | ~$15-30/1M | $15/1M | $10.5/1M |
+| **输入价格** | \$2/1M | ~\$5-10/1M | \$3/1M | \$3.5/1M |
+| **输出价格** | \$6/1M | ~\$15-30/1M | \$15/1M | \$10.5/1M |
 | **开源权重** | **是（Apache 2.0）** | 否 | 否 | 否 |
 | **多语言** | 欧洲语言 Tier-1 | 英语优先 | 英语优先 | 多语言强 |
 | **合规** | GDPR/EU AI Act 原生 | 需额外适配 | 需额外适配 | 需额外适配 |
@@ -403,12 +403,12 @@ Mistral 在多语言支持上的投入是其区别于美国实验室的核心能
 
 | 模型 | 输入+输出 ($/1M, 3:1 比例) | MMLU-Pro | 每分智能成本 |
 |------|---------------------------|----------|-------------|
-| Mistral Small 4 | $0.375 | ~75* | 极低 |
-| Mistral Medium 3.1 | $0.80 | 68.3 | 低 |
-| Mistral Large 3 | $3.50 | 80.7 | 中等 |
-| GPT-4o mini | ~$0.60 | ~70 | 低 |
-| Claude 3.5 Haiku | ~$1.25 | ~65 | 中等 |
-| DeepSeek-V4-Flash | ~$0.50 | ~78 | 极低 |
+| Mistral Small 4 | \$0.375 | ~75* | 极低 |
+| Mistral Medium 3.1 | \$0.80 | 68.3 | 低 |
+| Mistral Large 3 | \$3.50 | 80.7 | 中等 |
+| GPT-4o mini | ~\$0.60 | ~70 | 低 |
+| Claude 3.5 Haiku | ~\$1.25 | ~65 | 中等 |
+| DeepSeek-V4-Flash | ~\$0.50 | ~78 | 极低 |
 
 *Small 4 官方未完整披露 MMLU-Pro，基于架构推断。
 
@@ -458,10 +458,10 @@ Mistral 在多语言支持上的投入是其区别于美国实验室的核心能
 
 | # | 来源 | 时间 | 关键数据 |
 |---|------|------|---------|
-| 18 | Sacra: Mistral Revenue & Funding | 2026-05 | ARR $400M, 估值 $13.8B |
-| 19 | TechCrunch: Mistral Forge Launch | 2026-03-17 | Forge 发布，$1B ARR 目标 |
+| 18 | Sacra: Mistral Revenue & Funding | 2026-05 | ARR \$400M, 估值 \$13.8B |
+| 19 | TechCrunch: Mistral Forge Launch | 2026-03-17 | Forge 发布，\$1B ARR 目标 |
 | 20 | VentureBeat: Mistral Workflows | 2026-04-28 | Workflows 公测，Temporal 架构 |
-| 21 | CNBC: Mistral $830M Debt for GPUs | 2026-03 | 巴黎数据中心 13,800 GB300 |
+| 21 | CNBC: Mistral \$830M Debt for GPUs | 2026-03 | 巴黎数据中心 13,800 GB300 |
 | 22 | Presenc AI: European AI Sovereignty | 2026-05 | EU AI Continent Action Plan €20B |
 | 23 | The Agent Report: Mistral 2026 | 2026-05 | Les Ulis 10MW 推理数据中心 |
 
