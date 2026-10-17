@@ -16,14 +16,14 @@
 | **条目数**（`report.md`） | **48** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 4 |
 | 条目子文档数 | 89 |
-| 条目正文行数（剔除 front-matter） | 31,598 |
-| 条目字节 | 1,953,087 B |
+| 条目正文行数（剔除 front-matter） | 31,650 |
+| 条目字节 | 1,959,722 B |
 | 带 front-matter 的条目 | 5 |
 | 带合法 `date` 的条目 | 5 |
 | 文档（除生成物外的全部 `.md`） | 150 |
 | 其中文件名 `README.md` | 8 |
-| 纳入版本控制的文件 | 169 |
-| 纳入版本控制的 `.md` | 157 |
+| 纳入版本控制的文件 | 170 |
+| 纳入版本控制的 `.md` | 158 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -32,13 +32,13 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| Models | 23 | 32 | 15,215 | 950,982 B | [板块页 →](<Models/README.md>) |
+| Models | 23 | 32 | 15,267 | 957,617 B | [板块页 →](<Models/README.md>) |
 | LLM | 8 | 25 | 5,217 | 340,995 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,805 | 318,091 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 2 | 31 | 1,207 | 129,154 B | [板块页 →](<WorldModel/README.md>) |
 | Infra | 3 | 29 | 2,098 | 108,615 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 4 | 18 | 1,056 | 105,250 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **48** | **150** | **31,598** | **1,953,087 B** | — |
+| **合计** | **48** | **150** | **31,650** | **1,959,722 B** | — |
 
 ## 分面索引
 
@@ -157,10 +157,10 @@
   </details>
 
   <details>
-  <summary><b>Google-Gen</b> · <code>Models/Google-Gen/report.md</code> · 826 行 · —</summary>
+  <summary><b>Google-Gen</b> · <code>Models/Google-Gen/report.md</code> · 878 行 · —</summary>
   
 
-    * **条目**：[Models/Google-Gen/report.md](<Models/Google-Gen/report.md>)（826 行 / 33,598 B）
+    * **条目**：[Models/Google-Gen/report.md](<Models/Google-Gen/report.md>)（878 行 / 40,233 B）
     * **专题目录**：`Models/Google-Gen`
     * **元数据**：type=`—` · domain=`Models` · subject=`Google-Gen` · date=`—` · status=`—`
     * **子文档（1）**
@@ -758,7 +758,7 @@
 | --- | --- | --: | --: |
 | [Infra/README.md](<Infra/README.md>) | Infra | 59 | 4,167 B |
 | [LLM/README.md](<LLM/README.md>) | LLM | 55 | 3,584 B |
-| [Models/README.md](<Models/README.md>) | Models | 73 | 3,816 B |
+| [Models/README.md](<Models/README.md>) | Models | 80 | 3,999 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 59 | 2,471 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 735 | 34,490 B |
 | [README.md](<README.md>) |  | 105 | 7,830 B |

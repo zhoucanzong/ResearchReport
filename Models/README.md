@@ -23,7 +23,7 @@
 | **GLM** | [GLM 系列模型深度调研报告](<GLM/report.md>) | 737 行 |
 | **GPT** | [OpenAI GPT 系列模型深度调研报告](<GPT/report.md>) | 759 行 |
 | **Gemini** | [Google Gemini系列模型深度调研报告](<Gemini/report.md>) | 788 行 |
-| **Google-Gen** | [Google / DeepMind 生成模型系列研究报告](<Google-Gen/report.md>) | 826 行 |
+| **Google-Gen** | [Google / DeepMind 生成模型系列研究报告](<Google-Gen/report.md>) | 878 行 |
 | **Grok** | [xAI Grok 系列模型深度调研报告](<Grok/report.md>) | 469 行 |
 | **Hunyuan** | [Hunyuan系列模型深度调研报告](<Hunyuan/report.md>) | 525 行 |
 | **Kimi** | [Kimi 系列模型深度调研报告](<Kimi/report.md>) | 616 行 |

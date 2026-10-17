@@ -30,7 +30,7 @@
 | GLM | Models | [Models/GLM/report.md](<../Models/GLM/report.md>) | 0 | 737 | — |
 | GPT | Models | [Models/GPT/report.md](<../Models/GPT/report.md>) | 0 | 759 | — |
 | Gemini | Models | [Models/Gemini/report.md](<../Models/Gemini/report.md>) | 0 | 788 | — |
-| Google-Gen | Models | [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>) | 1 | 826 | — |
+| Google-Gen | Models | [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>) | 1 | 878 | — |
 | Grok | Models | [Models/Grok/report.md](<../Models/Grok/report.md>) | 0 | 469 | — |
 | Hunyuan | Models | [Models/Hunyuan/report.md](<../Models/Hunyuan/report.md>) | 0 | 525 | — |
 | Kimi | Models | [Models/Kimi/report.md](<../Models/Kimi/report.md>) | 2 | 616 | — |
@@ -59,4 +59,4 @@
 | VideoGen | VisualGen | [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) | 0 | 898 | — |
 | EmbodiedVLA | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 13 | 609 | — |
 | WorldModels | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 598 | 2026-10-17 |
-| **合计** | — | — | **89** | **31,598** | — |
+| **合计** | — | — | **89** | **31,650** | — |

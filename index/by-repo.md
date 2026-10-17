@@ -34,7 +34,7 @@
 * [Models/GLM/report.md](<../Models/GLM/report.md>) — 737 行
 * [Models/GPT/report.md](<../Models/GPT/report.md>) — 759 行
 * [Models/Gemini/report.md](<../Models/Gemini/report.md>) — 788 行
-* [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>) — 826 行
+* [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>) — 878 行
 * [Models/Grok/report.md](<../Models/Grok/report.md>) — 469 行
 * [Models/Hunyuan/report.md](<../Models/Hunyuan/report.md>) — 525 行
 * [Models/Kimi/report.md](<../Models/Kimi/report.md>) — 616 行
