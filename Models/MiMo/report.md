@@ -625,6 +625,8 @@ MiMo 系列只用了不到一年时间，就从「内部 MiLM」走到了「业�
 
 对于研究者，MiMo-7B 是目前研究「base model reasoning potential 与 RL 上限关系」的最佳开源样本；对于工程团队，MiMo-V2-Flash 与 Pro 提供了以国产开源 MoE + 1M 上下文构建低成本 Agent 系统的现实选择；**V2.5 系列则进一步将全模态感知与高强度 Agent 能力推向开源前沿**。
 
+**2026-09 的增量（本轮，§8.6 / §8.7）**：MiMo-V2.6 保留了上一代的「MoE + 1M 上下文」骨架（Pro 与 V2.5-Pro、Flash 与 V2.5 的 `config.json` 骨架逐项相同），把 Pro 从纯文本升级为原生全模态，并用一次混合 RL 在 6 天内完成 30 步训练。官方给出的 out-of-sample 提升为 DeepSWE v1.1 **+14.2（Pro，58.4→72.6）**与 **+17.0（Flash，48.8→65.7）**；第三方 AA Intelligence Index **46** 使其成为该指数下开放权重类内最高分（AA 口径，§8.6.4）。**V3 的 HySparse2 则把「效率」再往前推**：两级 KV 共享 + token 级稀疏 + prefill 早退，论文在 80B-A3B 验证模型上报告 1M 预填充 FLOPs 较 Hybrid SWA 低 5.02×、KV cache 2.69 GB——但 **V3 尚未发布**（架构公开、无权重 / API / 模型卡），这些收益不能算到任何已发布模型头上。
+
 ---
 
 ## 参考文献
@@ -654,3 +656,22 @@ MiMo 系列只用了不到一年时间，就从「内部 MiLM」走到了「业�
 18. 财联社（2025-04-30）：[小米首个推理大模型开源](https://www.cls.cn/detail/2020226)
 19. 知乎专栏：[小米开源 MiMo-7B：从预训练到强化学习](https://zhuanlan.zhihu.com/p/1905558313715872209) / [MiMo-V2-Flash 技术细节全拆解](https://zhuanlan.zhihu.com/p/1987220975503310994)
 20. AIGC 行业报告：《小米 AI 布局》（2024-12，东方财富研报）
+
+### 2026-10 增量来源（MiMo-V2.6 / HySparse2）
+
+**一手（官方 / 原文）**
+
+21. Xiaomi MiMo 官方发布页：[MiMo-V2.6: Scaling Up Reinforcement Learning for Self-Improvement](https://mimo.mi.com/docs/en-US/news/latest/v2-6)（2026-09-22）
+22. Xiaomi MiMo 官方更新时间线：[Model Release](https://mimo.mi.com/docs/en-US/updates/model) —— 2026-09-22「MiMo-V2.6 Series Release」（pro / flash / pro-ultraspeed）与 2026-10-21 退役说明
+23. Xiaomi MiMo 官方定价页：[Pay-As-You-Go](https://mimo.mi.com/docs/en-US/price/pay-as-you-go)（2026-10-08 更新）
+24. Xiaomi LLM-Core Team. [MiMo-V2.6: Scaling Reinforcement Learning Towards Self-Improvement](https://arxiv.org/abs/2610.11959). arXiv:2610.11959（v1 2026-10-08）｜技术报告 PDF：[MiMo_V2_6_technical_report.pdf](https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL/blob/main/MiMo_V2_6_technical_report.pdf)
+25. HF 模型卡：[MiMo-V2.6-Pro-RL](https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL)（MIT；createdAt 2026-09-21T15:39Z）｜[MiMo-V2.6-Flash-RL](https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Flash-RL)（MIT）
+26. 两仓库 `config.json`（层数 / 专家 / heads / 上下文 / 模态的一手出处）：`MiMo-V2.6-Pro-RL/raw/main/config.json`、`MiMo-V2.6-Flash-RL/raw/main/config.json`；对照用 V2.5 配置：`MiMo-V2.5-Pro/raw/main/config.json`、`MiMo-V2.5/raw/main/config.json`
+27. HF 合集：[MiMo-V2.6](https://huggingface.co/collections/XiaomiMiMo/mimo-v26)
+28. Jianyu Wei, Yizhao Gao, … Fuli Luo. [HySparse2: Hybrid Sparse Attention with Two-Level KV Sharing](https://arxiv.org/abs/2609.26368). arXiv:2609.26368（v1 2026-09-22）｜[PDF](https://arxiv.org/pdf/2609.26368)
+29. **未发布核验的负证据**：[HF 组织页](https://huggingface.co/XiaomiMiMo)（2026-10-17 最新为 V2.6 系列）、官方时间线（第 22 条）、[官方文档 sitemap](https://mimo.mi.com/sitemap.xml)（180 条 URL，无 V3 / HySparse 页面）
+
+**二手 / 第三方**
+
+30. Artificial Analysis 模型页（第三方独立评测）：[MiMo-V2.6-Pro](https://artificialanalysis.ai/models/mimo-v2-6-pro) ｜ [MiMo-V2.6-Flash](https://artificialanalysis.ai/models/mimo-v2-6-flash)
+31. 环球网（2026-09-24，经新浪财经转载）：[V3 全新架构核心技术 HySparse2 正式发布 百万 Token 下预填充算力降低 5 倍](https://finance.sina.com.cn/jjxw/2026-09-24/doc-iniswvxm0582826.shtml) —— 「罗福莉宣布下一代 MiMo-V3 将搭载 HySparse2」一句的出处；数字口径以论文为准
