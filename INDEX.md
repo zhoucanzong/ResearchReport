@@ -17,7 +17,7 @@
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 4 |
 | 条目子文档数 | 72 |
 | 条目正文行数（剔除 front-matter） | 30,967 |
-| 条目字节 | 1,894,058 B |
+| 条目字节 | 1,894,090 B |
 | 带 front-matter 的条目 | 4 |
 | 带合法 `date` 的条目 | 4 |
 | 文档（除生成物外的全部 `.md`） | 133 |
@@ -32,13 +32,13 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| Models | 23 | 29 | 14,816 | 900,559 B | [板块页 →](<Models/README.md>) |
-| LLM | 8 | 25 | 5,217 | 340,993 B | [板块页 →](<LLM/README.md>) |
+| Models | 23 | 29 | 14,816 | 900,589 B | [板块页 →](<Models/README.md>) |
+| LLM | 8 | 25 | 5,217 | 340,995 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,805 | 318,091 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 2 | 31 | 1,207 | 129,154 B | [板块页 →](<WorldModel/README.md>) |
 | Infra | 3 | 15 | 1,866 | 100,011 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 4 | 18 | 1,056 | 105,250 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **48** | **133** | **30,967** | **1,894,058 B** | — |
+| **合计** | **48** | **133** | **30,967** | **1,894,090 B** | — |
 
 ## 分面索引
 
@@ -232,7 +232,7 @@
   <summary><b>MiMo</b> · <code>Models/MiMo/report.md</code> · 510 行 · —</summary>
   
 
-    * **条目**：[Models/MiMo/report.md](<Models/MiMo/report.md>)（510 行 / 34,754 B）
+    * **条目**：[Models/MiMo/report.md](<Models/MiMo/report.md>)（510 行 / 34,760 B）
     * **专题目录**：`Models/MiMo`
     * **元数据**：type=`—` · domain=`Models` · subject=`MiMo` · date=`—` · status=`—`
     * **子文档（0）**
@@ -256,7 +256,7 @@
   <summary><b>MiniMax</b> · <code>Models/MiniMax/report.md</code> · 517 行 · —</summary>
   
 
-    * **条目**：[Models/MiniMax/report.md](<Models/MiniMax/report.md>)（517 行 / 41,290 B）
+    * **条目**：[Models/MiniMax/report.md](<Models/MiniMax/report.md>)（517 行 / 41,294 B）
     * **专题目录**：`Models/MiniMax`
     * **元数据**：type=`—` · domain=`Models` · subject=`MiniMax` · date=`—` · status=`—`
     * **子文档（0）**
@@ -280,7 +280,7 @@
   <summary><b>Nemotron</b> · <code>Models/Nemotron/report.md</code> · 465 行 · —</summary>
   
 
-    * **条目**：[Models/Nemotron/report.md](<Models/Nemotron/report.md>)（465 行 / 32,700 B）
+    * **条目**：[Models/Nemotron/report.md](<Models/Nemotron/report.md>)（465 行 / 32,720 B）
     * **专题目录**：`Models/Nemotron`
     * **元数据**：type=`—` · domain=`Models` · subject=`Nemotron` · date=`—` · status=`—`
     * **子文档（0）**
@@ -361,7 +361,7 @@
   <summary><b>Alignment</b> · <code>LLM/Alignment/report.md</code> · 588 行 · —</summary>
   
 
-    * **条目**：[LLM/Alignment/report.md](<LLM/Alignment/report.md>)（588 行 / 35,712 B）
+    * **条目**：[LLM/Alignment/report.md](<LLM/Alignment/report.md>)（588 行 / 35,714 B）
     * **专题目录**：`LLM/Alignment`
     * **元数据**：type=`—` · domain=`LLM` · subject=`Alignment` · date=`—` · status=`—`
     * **子文档（0）**
@@ -385,8 +385,8 @@
         * [papers/2609.24052-crash-narrative-calibration.md](<LLM/DecisionModels/papers/2609.24052-crash-narrative-calibration.md>) — 98 行 / 12,094 B
         * [papers/2609.24574-css-text-annotation.md](<LLM/DecisionModels/papers/2609.24574-css-text-annotation.md>) — 180 行 / 40,168 B
         * [papers/2609.25845-visual-jev.md](<LLM/DecisionModels/papers/2609.25845-visual-jev.md>) — 90 行 / 9,091 B
-        * [papers/2609.26532-reflex-selective-control.md](<LLM/DecisionModels/papers/2609.26532-reflex-selective-control.md>) — 95 行 / 10,725 B
-        * [papers/2609.26550-jev-as-a-judge.md](<LLM/DecisionModels/papers/2609.26550-jev-as-a-judge.md>) — 245 行 / 36,146 B
+        * [papers/2609.26532-reflex-selective-control.md](<LLM/DecisionModels/papers/2609.26532-reflex-selective-control.md>) — 95 行 / 10,729 B
+        * [papers/2609.26550-jev-as-a-judge.md](<LLM/DecisionModels/papers/2609.26550-jev-as-a-judge.md>) — 245 行 / 36,150 B
         * [papers/2609.26758-option-name-vs-definition.md](<LLM/DecisionModels/papers/2609.26758-option-name-vs-definition.md>) — 334 行 / 50,076 B
         * [papers/2609.28613-decision-hijacking.md](<LLM/DecisionModels/papers/2609.28613-decision-hijacking.md>) — 97 行 / 9,916 B
         * [papers/2609.30243-jevout-natural-context-flip.md](<LLM/DecisionModels/papers/2609.30243-jevout-natural-context-flip.md>) — 310 行 / 33,313 B

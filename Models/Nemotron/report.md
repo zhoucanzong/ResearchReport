@@ -159,7 +159,7 @@ Nemotron 3 是 NVIDIA 面向 Agentic AI 时代推出的全新模型家族，采�
   - **Intelligence Index**：36 分
   - **知识截止**：2025-06
 - **架构延续**：与 Nano 相同的 Mamba-2 + Attention MoE + Latent-MoE + MTP 架构
-- **部署**：支持 DeepInfra（$0.10/M input, $0.50/M output）、NVIDIA NIM、OpenRouter、Hugging Face
+- **部署**：支持 DeepInfra（\$0.10/M input, \$0.50/M output）、NVIDIA NIM、OpenRouter、Hugging Face
 
 #### 3.4.3 Nemotron 3 Ultra（2026-06-01 宣布，06-04 发布）
 - **发布场合**：GTC Taipei 2026 / Computex 2026 主题演讲，黄仁勋亲自宣布
@@ -266,7 +266,7 @@ Nemotron 系列在开源模型生态中占据独特位置——它既是**模型
 | **开源程度** | 全开源（权重+数据+代码） | 权重开源，数据/代码部分 | 权重开源，训练细节有限 |
 | **多模态** | Omni / VoiceChat / RAG 子系列 | Qwen-VL / Qwen-Audio | 文本为主 |
 
-**关键观察**：在绝对智能分数上，Nemotron 3 Ultra（48）略低于 Kimi K2.6（54）和 Qwen3.5-Max（~50），但 Nemotron 的差异化在于**速度-成本-开源三角**：300+ tok/s 的推理速度是 Kimi 的 3-6 倍，API 成本（DeepInfra $0.37/$1.08 per 1M）与 Qwen 接近，且提供完整的训练数据和环境复现能力。对于需要"自托管 + 高吞吐 + 长上下文"的企业用户，Nemotron 3 形成了独特的价值主张。
+**关键观察**：在绝对智能分数上，Nemotron 3 Ultra（48）略低于 Kimi K2.6（54）和 Qwen3.5-Max（~50），但 Nemotron 的差异化在于**速度-成本-开源三角**：300+ tok/s 的推理速度是 Kimi 的 3-6 倍，API 成本（DeepInfra \$0.37/\$1.08 per 1M）与 Qwen 接近，且提供完整的训练数据和环境复现能力。对于需要"自托管 + 高吞吐 + 长上下文"的企业用户，Nemotron 3 形成了独特的价值主张。
 
 ---
 
@@ -289,13 +289,13 @@ NVIDIA 官方不直接提供 Nemotron 的公共 API，而是通过合作伙伴�
 
 | 提供商 | 模型 | 输入 ($/1M) | 输出 ($/1M) | 特点 |
 |--------|------|-------------|-------------|------|
-| **DeepInfra** | Nemotron 3 Ultra | $0.37 | $1.08 | 预发布端点，价格低于同级中位数 |
-| **DeepInfra** | Nemotron 3 Super | $0.10 | $0.50 | 支持 JSON/Function Calling |
-| **OpenRouter** | Nemotron 3 Super | $0.09 | $0.45 | 最低价，1M 上下文 |
-| **AWS Bedrock** | Nemotron 3 Nano | $0.06 | $0.24 | 企业级托管 |
-| **AWS Bedrock** | Nemotron 3 Super | $0.15 | $0.65 | SOC 2 / ISO 27001 合规 |
+| **DeepInfra** | Nemotron 3 Ultra | \$0.37 | \$1.08 | 预发布端点，价格低于同级中位数 |
+| **DeepInfra** | Nemotron 3 Super | \$0.10 | \$0.50 | 支持 JSON/Function Calling |
+| **OpenRouter** | Nemotron 3 Super | \$0.09 | \$0.45 | 最低价，1M 上下文 |
+| **AWS Bedrock** | Nemotron 3 Nano | \$0.06 | \$0.24 | 企业级托管 |
+| **AWS Bedrock** | Nemotron 3 Super | \$0.15 | \$0.65 | SOC 2 / ISO 27001 合规 |
 
-> 注：Nemotron 3 Ultra 的 DeepInfra 定价（$0.37/$1.08）在 550B 级开源模型中属于较低水平，对比同等规模的 Hermes 3 405B（$1.00/$1.00）和 Qwen3.5-397B（$0.49/$0.49）具有成本竞争力。
+> 注：Nemotron 3 Ultra 的 DeepInfra 定价（\$0.37/\$1.08）在 550B 级开源模型中属于较低水平，对比同等规模的 Hermes 3 405B（\$1.00/\$1.00）和 Qwen3.5-397B（\$0.49/\$0.49）具有成本竞争力。
 
 ### 6.3 企业合作伙伴模式
 

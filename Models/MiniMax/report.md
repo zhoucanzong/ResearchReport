@@ -104,8 +104,8 @@ abab 系列的最大遗留问题，是仍然以**标准 Softmax Attention** 为�
 
 - **SWE-Bench Verified 80.2%**，Multi-SWE-Bench 51.3%，BrowseComp 76.3%——软件工程与 Agent 工具使用能力跃居开源第一梯队；
 - **速度比 M2.1 快 37%**，端到端 agent 循环延迟与 Claude Opus 4.6 持平（22.8 分钟 vs 22.9 分钟）；
-- **成本仅 Claude Opus 4.6 的 10%**：$0.15/M input tokens，$1.15/M output tokens；
-- **M2.5-Lightning**：100 tokens/秒极速版本，定价 $0.3/M input、$2.4/M output，面向高并发交互场景；
+- **成本仅 Claude Opus 4.6 的 10%**：\$0.15/M input tokens，\$1.15/M output tokens；
+- **M2.5-Lightning**：100 tokens/秒极速版本，定价 \$0.3/M input、\$2.4/M output，面向高并发交互场景；
 - 开源权重，**197K 上下文**支持；
 - **10+ 语言编程**能力，在 20 万+ 真实软件工程环境中完成 RL 训练；
 - 定位"原生 Agent 生产级 LLM"，覆盖编程、工具调用、信息检索与办公场景。

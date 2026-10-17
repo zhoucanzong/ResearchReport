@@ -391,8 +391,8 @@ MiMo-7B-RL 的根本不同在于**「自训练」而非「蒸馏」**：
 发布前两款模型以「Hunter Alpha」「Healer Alpha」代号匿名上线 OpenRouter，调用量多日登顶日榜，累计调用量突破 1 万亿 tokens。
 
 **API 定价**（platform.xiaomimimo.com）：
-- MiMo-V2-Pro 256K 上下文 $1.0/$3.0 (输入/输出 per M tokens)；1M 上下文 $2.0/$6.0
-- MiMo-V2-Omni 256K $0.40/$2.0
+- MiMo-V2-Pro 256K 上下文 \$1.0/\$3.0 (输入/输出 per M tokens)；1M 上下文 \$2.0/\$6.0
+- MiMo-V2-Omni 256K \$0.40/\$2.0
 - 通过 OpenClaw、OpenCode、KiloCode、Blackbox、Cline 提供一周免费试用
 
 **资本承诺**：雷军在发布会上宣布 2026 年 AI 研发与资本预算超 160 亿元，未来 3 年至少 600 亿元（确认）。
