@@ -77,11 +77,11 @@ ResearchReport/    48 条目 · 21 专题 · 6 板块
 <!-- SCRIPT:recent START · front-matter date，缺失时回退 git 最近提交日 -->
 | 条目 | 板块 | 日期 | 来源 |
 | :-- | :-- | :-- | :-- |
+| [DecisionModels](<LLM/DecisionModels/report.md>) | LLM | 2026-10-19 | 最近提交日 |
 | [Gemini](<Models/Gemini/report.md>) | Models | 2026-10-18 | 最近提交日 |
 | [Qwen](<Models/Qwen/report.md>) | Models | 2026-10-18 | 最近提交日 |
 | [SpeculativeDecoding](<Infra/SpeculativeDecoding/report.md>) | Infra | 2026-10-17 | front-matter date |
 | [WorldModels](<WorldModel/WorldModels/report.md>) | WorldModel | 2026-10-17 | front-matter date |
-| [Alignment](<LLM/Alignment/report.md>) | LLM | 2026-10-17 | 最近提交日 |
 <!-- SCRIPT:recent END -->
 
 ## 📖 怎么用这个图书馆
