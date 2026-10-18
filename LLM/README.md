@@ -32,7 +32,7 @@
 * [calibration.md](<DecisionModels/calibration.md>) — 261 行 / 28,387 B
 * [experiments.md](<DecisionModels/experiments.md>) — 349 行 / 25,166 B
 * [open-implementations.md](<DecisionModels/open-implementations.md>) — 412 行 / 32,731 B
-* [papers/2609.23886-this-that-model.md](<DecisionModels/papers/2609.23886-this-that-model.md>) — 289 行 / 22,354 B
+* [papers/2609.23886-this-that-model.md](<DecisionModels/papers/2609.23886-this-that-model.md>) — 289 行 / 22,356 B
 * [papers/2609.23986-jev-mem.md](<DecisionModels/papers/2609.23986-jev-mem.md>) — 88 行 / 7,976 B
 * [papers/2609.24052-crash-narrative-calibration.md](<DecisionModels/papers/2609.24052-crash-narrative-calibration.md>) — 98 行 / 12,094 B
 * [papers/2609.24574-css-text-annotation.md](<DecisionModels/papers/2609.24574-css-text-annotation.md>) — 180 行 / 40,168 B
