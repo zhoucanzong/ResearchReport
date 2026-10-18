@@ -767,7 +767,7 @@
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 52 | 4,227 B |
 | [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 10,798 B |
 | [docs/statistics.md](<docs/statistics.md>) | docs | 212 | 16,435 B |
-| [docs/team.md](<docs/team.md>) | docs | 109 | 11,205 B |
+| [docs/team.md](<docs/team.md>) | docs | 113 | 11,634 B |
 | [docs/verification.md](<docs/verification.md>) | docs | 243 | 16,496 B |
 | [scripts/README.md](<scripts/README.md>) | scripts | 99 | 4,589 B |
 
