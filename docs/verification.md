@@ -154,3 +154,90 @@ add59912f210a242d8cd988d54303dac8cabefc78ce94d55008c5b26e8e5d710  nemotron-tri-m
 ---
 
 *记录时间：2026-10-16 · 数据来源：本仓库实际文件系统与 Git 状态*
+
+---
+
+## 5. 深挖体量与渲染校验（机器可查，2026-10-18 起）
+
+> 用途：把"够不够深""公式是否误伤""生成物是否可复现""代码锚点是否自洽"变成**可执行判据**，不再靠目测。
+> 基准值随每次合并更新；**判据只认输出，不认自述**。
+
+### 5.1 分册体量（行数或字符数任一达标）
+
+```bash
+# 分册：≥300 行 或 ≥15,000 字符
+for f in */papers/*.md; do
+  l=$(wc -l < "$f"); c=$(wc -m < "$f")
+  { [ "$l" -ge 300 ] || [ "$c" -ge 15000 ]; } || echo "UNDER: $f ($l 行 / $c 字符)"
+done
+# 旗舰篇：每条目至少 1 篇 ≥400 行 或 ≥20,000 字符
+```
+
+**理由**：只查行数会导致"拆句凑行"；只查字符会漏掉"表格密但文字少"的情况。两者取一，能覆盖两种极端。
+
+### 5.2 伪公式 = 0（含"纯数字+斜杠"型）
+
+```bash
+python3 - <<'PY'
+import re,glob
+cur=re.compile(r'^\s*[\d.,]+\s*(/\s*[\d.,]*)?\s*$'); cjk=re.compile(r'[\u4e00-\u9fff]')
+bad=[]
+for p in glob.glob("site/**/*.html", recursive=True):
+    t=open(p,encoding="utf-8").read()
+    for m in re.finditer(r'class="arithmatex"[^>]*>\s*\\\((.{0,240}?)\\\)\s*</span>', t, flags=re.S):
+        s=re.sub('<[^>]+>','',m.group(1)).strip()
+        if cur.match(s) or cjk.search(s) or re.search(r'per\s*1M|千条|千问|/月', s):
+            bad.append((p,s[:60]))
+print("伪公式:", len(bad)); [print("  ",b) for b in bad[:5]]
+PY
+```
+
+**判据**：伪公式必须 **0**。典型误伤：`$2.0/$8.0` 被配对成 `\(2.0/\)`；价格类 `$` 一律写 `\$`。
+
+### 5.3 真公式计数不下降
+
+```bash
+python3 - <<'PY'
+import re,glob
+real=0
+for p in glob.glob("site/**/*.html", recursive=True):
+    t=open(p,encoding="utf-8").read()
+    for m in re.finditer(r'class="arithmatex"[^>]*>\s*\\\((.{0,240}?)\\\)\s*</span>', t, flags=re.S):
+        s=re.sub('<[^>]+>','',m.group(1))
+        if re.search(r'\\[a-zA-Z]|\^|_|\{|\}', s): real+=1
+print("真公式:", real)
+PY
+```
+
+**判据**：合并前后**必须相等**（历史基准：`f95a6f5` 起 198；2026-10-18 起随合并更新）。**减少即判失败**——说明误伤。
+
+### 5.4 代码类核证三件套（`papers/*` 含代码事实时）
+
+1. **锚点自洽**：同一分册内所有代码锚点必须属于**同一个 `仓库@commit`**；出现两套 SHA 即判不合格（2026-10-17 曾出现 vLLM/SGLang SHA 互换）。
+2. **锚点支撑力**：每条锚点必须**逐字支撑**其所附断言；落在 `import`／注释／日志串／实参行的判"引而未落地"；**行为级断言需 2–3 处锚点构成调用链**（入口→中间→分支）。
+3. **复核留痕**：必须附 `sources/CODE-AUDIT.md`，每条 = `仓库@commit:文件:行` ｜ 支撑哪句断言 ｜ 核验日期 ｜ 更正历史。**没有清单 = 未核。**
+
+附：`state_reason` / `closed_by` / `created_at` 这类 API 字段必须**逐项回查**，不许凭印象写（2026-10-17 曾把 issue 开立日写错、把 `completed` 写成 `inactive`）。
+
+### 5.5 生成物幂等（必须用会写文件的同一组参数）
+
+```bash
+python3 scripts/library_index.py --repo-root . --out-root . --write-stats --check-links
+git status --porcelain   # 必须为空
+python3 scripts/library_index.py --repo-root . --out-root . --write-stats --check-links
+git status --porcelain   # 再跑一次仍必须为空
+```
+
+**为什么连跑两次**：只用 `--check-links`（不写文件）会掩盖统计漂移；2026-10-17 就因此漏过一版 `stats.json` 不一致。
+
+### 5.6 当前基准（`7af2928`，2026-10-18）
+
+| 指标 | 基准值 |
+|---|---|
+| `entries` | **48** |
+| `children` | **90** |
+| 分册体量 | 31/39 篇 ≥300 行或 ≥15k 字符（其余为早期条目，待回炉）|
+| 伪公式 | **0** |
+| 真公式 | **198**（随合并更新）|
+| 相对链接失效 | **0** |
+| 生成器幂等 | `--write-stats` 连跑两次 **0 diff** |
