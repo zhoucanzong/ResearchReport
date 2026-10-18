@@ -17,7 +17,7 @@
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 4 |
 | 条目子文档数 | 92 |
 | 条目正文行数（剔除 front-matter） | 32,390 |
-| 条目字节 | 2,025,167 B |
+| 条目字节 | 2,025,361 B |
 | 带 front-matter 的条目 | 5 |
 | 带合法 `date` 的条目 | 5 |
 | 文档（除生成物外的全部 `.md`） | 154 |
@@ -33,12 +33,12 @@
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
 | Models | 23 | 33 | 16,005 | 1,022,054 B | [板块页 →](<Models/README.md>) |
-| LLM | 8 | 27 | 5,217 | 340,995 B | [板块页 →](<LLM/README.md>) |
+| LLM | 8 | 27 | 5,217 | 341,189 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,807 | 319,099 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 2 | 31 | 1,207 | 129,154 B | [板块页 →](<WorldModel/README.md>) |
 | Infra | 3 | 29 | 2,098 | 108,615 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 4 | 18 | 1,056 | 105,250 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **48** | **154** | **32,390** | **2,025,167 B** | — |
+| **合计** | **48** | **154** | **32,390** | **2,025,361 B** | — |
 
 ## 分面索引
 
@@ -374,7 +374,7 @@
   <summary><b>DecisionModels</b> · <code>LLM/DecisionModels/report.md</code> · 869 行 · —</summary>
   
 
-    * **条目**：[LLM/DecisionModels/report.md](<LLM/DecisionModels/report.md>)（869 行 / 107,578 B）
+    * **条目**：[LLM/DecisionModels/report.md](<LLM/DecisionModels/report.md>)（869 行 / 107,772 B）
     * **专题目录**：`LLM/DecisionModels`
     * **元数据**：type=`—` · domain=`LLM` · subject=`DecisionModels` · date=`—` · status=`—`
     * **子文档（18）**
