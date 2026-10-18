@@ -8,6 +8,14 @@
 - 影响：任务静默卡死，协调者只能靠"会话无推进"间接发现。
 - 建议：审批卡在**投递发起频道的同时**，兜底投递到该 Bot 的 **Human DM**（或标记为"孤儿审批"进 Human 收件箱）。
 
+### 1b. 审批卡在消息层"零记录"（关键证据）
+
+- 查 `botharness.db`：**`messaging_approval_deliveries` = 0 行**、**`messaging_approval_routes` = 0 行**。
+- 含义：**审批卡从未进入消息投递层**（既没投到群，也没投到 Human DM，也没投到 Bot DM）。
+- 与"所有申请都看不到"一致；此前能看到的那次，很可能是从**会话视图**里读到的，而不是频道卡片。
+- 推论：后台/无人值守会话（Assignment）**没有可用的审批展示路径** → 一旦命中 `approval=ask`，必然永久挂起。
+- 建议：要么把审批卡真正接进 Human DM / 群（写 `messaging_approval_routes`），要么在无交互会话里**直接禁用 `ask`**（不改展示也不误导）。
+
 ## 2. "记住此规则"只写进会话作用域，跨会话不继承
 
 - 证据：`tool_approval_rules` 表 11 条规则全部为 `kind=all-opaque`、`tool_name=*`，但 `scope_key` 形如

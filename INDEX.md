@@ -764,7 +764,7 @@
 | [README.md](<README.md>) |  | 105 | 7,822 B |
 | [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,616 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 67 | 3,896 B |
-| [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 37 | 2,981 B |
+| [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 45 | 3,740 B |
 | [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 10,798 B |
 | [docs/statistics.md](<docs/statistics.md>) | docs | 212 | 16,435 B |
 | [docs/team.md](<docs/team.md>) | docs | 109 | 11,205 B |
