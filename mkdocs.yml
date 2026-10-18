@@ -170,6 +170,8 @@ nav:
         - "2609.30243-jevout-natural-context-flip": "LLM/DecisionModels/papers/2609.30243-jevout-natural-context-flip.md"
         - "2609.33209-probability-axioms-coherence": "LLM/DecisionModels/papers/2609.33209-probability-axioms-coherence.md"
         - "2610.09683-system-switch": "LLM/DecisionModels/papers/2610.09683-system-switch.md"
+        - "CANDIDATES": "LLM/DecisionModels/sources/CANDIDATES.md"
+        - "MANIFEST": "LLM/DecisionModels/sources/MANIFEST.md"
         - "taxonomy": "LLM/DecisionModels/taxonomy.md"
     - "LongContext": "LLM/LongContext/report.md"
     - "MoE": "LLM/MoE/report.md"

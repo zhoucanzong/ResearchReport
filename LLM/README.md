@@ -27,23 +27,25 @@
 ## 📎 子文档
 
 <details>
-<summary><b>DecisionModels</b>（16 份）</summary>
+<summary><b>DecisionModels</b>（18 份）</summary>
 
 * [calibration.md](<DecisionModels/calibration.md>) — 261 行 / 28,387 B
 * [experiments.md](<DecisionModels/experiments.md>) — 349 行 / 25,166 B
 * [open-implementations.md](<DecisionModels/open-implementations.md>) — 412 行 / 32,731 B
 * [papers/2609.23886-this-that-model.md](<DecisionModels/papers/2609.23886-this-that-model.md>) — 289 行 / 22,356 B
-* [papers/2609.23986-jev-mem.md](<DecisionModels/papers/2609.23986-jev-mem.md>) — 296 行 / 21,554 B
+* [papers/2609.23986-jev-mem.md](<DecisionModels/papers/2609.23986-jev-mem.md>) — 334 行 / 27,127 B
 * [papers/2609.24052-crash-narrative-calibration.md](<DecisionModels/papers/2609.24052-crash-narrative-calibration.md>) — 98 行 / 12,094 B
 * [papers/2609.24574-css-text-annotation.md](<DecisionModels/papers/2609.24574-css-text-annotation.md>) — 180 行 / 40,168 B
 * [papers/2609.25845-visual-jev.md](<DecisionModels/papers/2609.25845-visual-jev.md>) — 291 行 / 22,080 B
 * [papers/2609.26532-reflex-selective-control.md](<DecisionModels/papers/2609.26532-reflex-selective-control.md>) — 95 行 / 10,729 B
 * [papers/2609.26550-jev-as-a-judge.md](<DecisionModels/papers/2609.26550-jev-as-a-judge.md>) — 245 行 / 36,150 B
 * [papers/2609.26758-option-name-vs-definition.md](<DecisionModels/papers/2609.26758-option-name-vs-definition.md>) — 334 行 / 50,076 B
-* [papers/2609.28613-decision-hijacking.md](<DecisionModels/papers/2609.28613-decision-hijacking.md>) — 291 行 / 22,071 B
+* [papers/2609.28613-decision-hijacking.md](<DecisionModels/papers/2609.28613-decision-hijacking.md>) — 317 行 / 26,528 B
 * [papers/2609.30243-jevout-natural-context-flip.md](<DecisionModels/papers/2609.30243-jevout-natural-context-flip.md>) — 310 行 / 33,313 B
 * [papers/2609.33209-probability-axioms-coherence.md](<DecisionModels/papers/2609.33209-probability-axioms-coherence.md>) — 92 行 / 10,312 B
 * [papers/2610.09683-system-switch.md](<DecisionModels/papers/2610.09683-system-switch.md>) — 90 行 / 10,672 B
+* [sources/CANDIDATES.md](<DecisionModels/sources/CANDIDATES.md>) — 70 行 / 8,315 B
+* [sources/MANIFEST.md](<DecisionModels/sources/MANIFEST.md>) — 62 行 / 8,371 B
 * [taxonomy.md](<DecisionModels/taxonomy.md>) — 254 行 / 24,924 B
 
 </details>

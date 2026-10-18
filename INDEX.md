@@ -15,12 +15,12 @@
 | --- | --- |
 | **条目数**（`report.md`） | **48** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 4 |
-| 条目子文档数 | 90 |
+| 条目子文档数 | 92 |
 | 条目正文行数（剔除 front-matter） | 32,390 |
 | 条目字节 | 2,025,167 B |
 | 带 front-matter 的条目 | 5 |
 | 带合法 `date` 的条目 | 5 |
-| 文档（除生成物外的全部 `.md`） | 152 |
+| 文档（除生成物外的全部 `.md`） | 154 |
 | 其中文件名 `README.md` | 8 |
 | 纳入版本控制的文件 | 172 |
 | 纳入版本控制的 `.md` | 160 |
@@ -33,12 +33,12 @@
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
 | Models | 23 | 33 | 16,005 | 1,022,054 B | [板块页 →](<Models/README.md>) |
-| LLM | 8 | 25 | 5,217 | 340,995 B | [板块页 →](<LLM/README.md>) |
+| LLM | 8 | 27 | 5,217 | 340,995 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,807 | 319,099 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 2 | 31 | 1,207 | 129,154 B | [板块页 →](<WorldModel/README.md>) |
 | Infra | 3 | 29 | 2,098 | 108,615 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 4 | 18 | 1,056 | 105,250 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **48** | **152** | **32,390** | **2,025,167 B** | — |
+| **合计** | **48** | **154** | **32,390** | **2,025,167 B** | — |
 
 ## 分面索引
 
@@ -341,10 +341,10 @@
 
 </details>
 
-### LLM（8 条目 / 25 文档）
+### LLM（8 条目 / 27 文档）
 
 <details>
-<summary><b>语言模型 LLM（8 条目 / 16 子文档）</b></summary>
+<summary><b>语言模型 LLM（8 条目 / 18 子文档）</b></summary>
 
   <details>
   <summary><b>Agent</b> · <code>LLM/Agent/report.md</code> · 698 行 · —</summary>
@@ -377,22 +377,24 @@
     * **条目**：[LLM/DecisionModels/report.md](<LLM/DecisionModels/report.md>)（869 行 / 107,578 B）
     * **专题目录**：`LLM/DecisionModels`
     * **元数据**：type=`—` · domain=`LLM` · subject=`DecisionModels` · date=`—` · status=`—`
-    * **子文档（16）**
+    * **子文档（18）**
         * [calibration.md](<LLM/DecisionModels/calibration.md>) — 261 行 / 28,387 B
         * [experiments.md](<LLM/DecisionModels/experiments.md>) — 349 行 / 25,166 B
         * [open-implementations.md](<LLM/DecisionModels/open-implementations.md>) — 412 行 / 32,731 B
         * [papers/2609.23886-this-that-model.md](<LLM/DecisionModels/papers/2609.23886-this-that-model.md>) — 289 行 / 22,356 B
-        * [papers/2609.23986-jev-mem.md](<LLM/DecisionModels/papers/2609.23986-jev-mem.md>) — 296 行 / 21,554 B
+        * [papers/2609.23986-jev-mem.md](<LLM/DecisionModels/papers/2609.23986-jev-mem.md>) — 334 行 / 27,127 B
         * [papers/2609.24052-crash-narrative-calibration.md](<LLM/DecisionModels/papers/2609.24052-crash-narrative-calibration.md>) — 98 行 / 12,094 B
         * [papers/2609.24574-css-text-annotation.md](<LLM/DecisionModels/papers/2609.24574-css-text-annotation.md>) — 180 行 / 40,168 B
         * [papers/2609.25845-visual-jev.md](<LLM/DecisionModels/papers/2609.25845-visual-jev.md>) — 291 行 / 22,080 B
         * [papers/2609.26532-reflex-selective-control.md](<LLM/DecisionModels/papers/2609.26532-reflex-selective-control.md>) — 95 行 / 10,729 B
         * [papers/2609.26550-jev-as-a-judge.md](<LLM/DecisionModels/papers/2609.26550-jev-as-a-judge.md>) — 245 行 / 36,150 B
         * [papers/2609.26758-option-name-vs-definition.md](<LLM/DecisionModels/papers/2609.26758-option-name-vs-definition.md>) — 334 行 / 50,076 B
-        * [papers/2609.28613-decision-hijacking.md](<LLM/DecisionModels/papers/2609.28613-decision-hijacking.md>) — 291 行 / 22,071 B
+        * [papers/2609.28613-decision-hijacking.md](<LLM/DecisionModels/papers/2609.28613-decision-hijacking.md>) — 317 行 / 26,528 B
         * [papers/2609.30243-jevout-natural-context-flip.md](<LLM/DecisionModels/papers/2609.30243-jevout-natural-context-flip.md>) — 310 行 / 33,313 B
         * [papers/2609.33209-probability-axioms-coherence.md](<LLM/DecisionModels/papers/2609.33209-probability-axioms-coherence.md>) — 92 行 / 10,312 B
         * [papers/2610.09683-system-switch.md](<LLM/DecisionModels/papers/2610.09683-system-switch.md>) — 90 行 / 10,672 B
+        * [sources/CANDIDATES.md](<LLM/DecisionModels/sources/CANDIDATES.md>) — 70 行 / 8,315 B
+        * [sources/MANIFEST.md](<LLM/DecisionModels/sources/MANIFEST.md>) — 62 行 / 8,371 B
         * [taxonomy.md](<LLM/DecisionModels/taxonomy.md>) — 254 行 / 24,924 B
 
   </details>
@@ -757,7 +759,7 @@
 | 文档 | 板块 | 行数 | 字节 |
 | --- | --- | --: | --: |
 | [Infra/README.md](<Infra/README.md>) | Infra | 59 | 4,167 B |
-| [LLM/README.md](<LLM/README.md>) | LLM | 55 | 3,591 B |
+| [LLM/README.md](<LLM/README.md>) | LLM | 57 | 3,761 B |
 | [Models/README.md](<Models/README.md>) | Models | 87 | 4,166 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 59 | 2,471 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 735 | 34,490 B |

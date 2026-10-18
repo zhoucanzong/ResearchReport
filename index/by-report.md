@@ -16,7 +16,7 @@
 | TrainingInfra | Infra | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 0 | 720 | — |
 | Agent | LLM | [LLM/Agent/report.md](<../LLM/Agent/report.md>) | 0 | 698 | — |
 | Alignment | LLM | [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) | 0 | 588 | — |
-| DecisionModels | LLM | [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | 16 | 869 | — |
+| DecisionModels | LLM | [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | 18 | 869 | — |
 | LongContext | LLM | [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 0 | 608 | — |
 | MoE | LLM | [LLM/MoE/report.md](<../LLM/MoE/report.md>) | 0 | 405 | — |
 | RAG | LLM | [LLM/RAG/report.md](<../LLM/RAG/report.md>) | 0 | 851 | — |
@@ -59,4 +59,4 @@
 | VideoGen | VisualGen | [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) | 0 | 898 | — |
 | EmbodiedVLA | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 13 | 609 | — |
 | WorldModels | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 598 | 2026-10-17 |
-| **合计** | — | — | **90** | **32,390** | — |
+| **合计** | — | — | **92** | **32,390** | — |
