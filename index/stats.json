@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "0fb6237de2a63d994c7a7a7b3543bbc1d650e1e057b337ee8d5f88fe12fa53f3",
+  "content_fingerprint": "c0fed37fe2693f3d9265ff70ac98f20fc74076818144ca560005a20e142a37b7",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -28,8 +28,8 @@
     "with_front_matter": 18,
     "named_report_md": 48,
     "named_readme_md": 8,
-    "lines": 54959,
-    "bytes": 3856018
+    "lines": 54962,
+    "bytes": 3856492
   },
   "libraries": {
     "Models": {
@@ -567,9 +567,9 @@
     },
     "repo_md": {
       "files": 151,
-      "lines": 54959,
-      "lines_raw": 55142,
-      "bytes": 3856018
+      "lines": 54962,
+      "lines_raw": 55145,
+      "bytes": 3856492
     },
     "library_md": {
       "files": 145,
@@ -585,9 +585,9 @@
     },
     "docs_md": {
       "files": 4,
-      "lines": 748,
-      "lines_raw": 748,
-      "bytes": 54460
+      "lines": 751,
+      "lines_raw": 751,
+      "bytes": 54934
     },
     "scripts_md": {
       "files": 1,
@@ -601,7 +601,7 @@
     ]
   },
   "storage": {
-    "tracked_bytes": 8959101,
+    "tracked_bytes": 8959575,
     "definition": "纳入版本控制的文件字节合计（`git ls-files` 跟踪路径逐个 getsize 求和）；刻意**不**用 du 量工作树——工作树含 site/site-docs/构建产物、别人的未提交草稿、虚拟环境等「车间地面」，会让数字每个 clone 一个样、生成物不可复现。本字段与提交树同源，任意 clone 重跑一致。"
   }
 }
