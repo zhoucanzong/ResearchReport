@@ -20,7 +20,7 @@
 | 条目字节 | 2,025,167 B |
 | 带 front-matter 的条目 | 5 |
 | 带合法 `date` 的条目 | 5 |
-| 文档（除生成物外的全部 `.md`） | 151 |
+| 文档（除生成物外的全部 `.md`） | 152 |
 | 其中文件名 `README.md` | 8 |
 | 纳入版本控制的文件 | 171 |
 | 纳入版本控制的 `.md` | 159 |
@@ -38,7 +38,7 @@
 | WorldModel | 2 | 31 | 1,207 | 129,154 B | [板块页 →](<WorldModel/README.md>) |
 | Infra | 3 | 29 | 2,098 | 108,615 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 4 | 18 | 1,056 | 105,250 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **48** | **151** | **32,390** | **2,025,167 B** | — |
+| **合计** | **48** | **152** | **32,390** | **2,025,167 B** | — |
 
 ## 分面索引
 
@@ -764,6 +764,7 @@
 | [README.md](<README.md>) |  | 105 | 7,822 B |
 | [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,616 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 67 | 3,896 B |
+| [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 37 | 2,981 B |
 | [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 10,798 B |
 | [docs/statistics.md](<docs/statistics.md>) | docs | 212 | 16,435 B |
 | [docs/team.md](<docs/team.md>) | docs | 109 | 11,205 B |

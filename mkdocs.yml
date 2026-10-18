@@ -284,6 +284,7 @@ nav:
       - "最近更新": "index/recent.md"
       - "待复核": "index/stale.md"
   - "📖 文档":
+      - "DSH Harness 反馈清单（2026-10-18，来自一次真实事故）": "docs/harness-feedback.md"
       - "🛠 维护指南 · Maintenance": "docs/maintenance.md"
       - "📊 统计明细 · Statistics": "docs/statistics.md"
       - "Team · 技术研究": "docs/team.md"

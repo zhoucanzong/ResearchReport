@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "c0fed37fe2693f3d9265ff70ac98f20fc74076818144ca560005a20e142a37b7",
+  "content_fingerprint": "b03a9cf76be73e886a61fe8039eb3af2b5abce42e9d436c3391a7c6e8c1980ee",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -23,13 +23,13 @@
     "children": 90
   },
   "documents": {
-    "md_total": 151,
+    "md_total": 152,
     "md_libraries": 145,
     "with_front_matter": 18,
     "named_report_md": 48,
     "named_readme_md": 8,
-    "lines": 54962,
-    "bytes": 3856492
+    "lines": 54999,
+    "bytes": 3859473
   },
   "libraries": {
     "Models": {
@@ -566,10 +566,10 @@
       }
     },
     "repo_md": {
-      "files": 151,
-      "lines": 54962,
-      "lines_raw": 55145,
-      "bytes": 3856492
+      "files": 152,
+      "lines": 54999,
+      "lines_raw": 55182,
+      "bytes": 3859473
     },
     "library_md": {
       "files": 145,
@@ -584,10 +584,10 @@
       "bytes": 7822
     },
     "docs_md": {
-      "files": 4,
-      "lines": 751,
-      "lines_raw": 751,
-      "bytes": 54934
+      "files": 5,
+      "lines": 788,
+      "lines_raw": 788,
+      "bytes": 57915
     },
     "scripts_md": {
       "files": 1,
