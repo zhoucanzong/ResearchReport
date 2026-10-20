@@ -287,6 +287,7 @@ nav:
       - "待复核": "index/stale.md"
   - "📖 文档":
       - "DeepSeek Harness 深读：compaction 后端与 base 插件清单（只读）": "docs/deepread-dsh-compaction-bundles.md"
+      - "DSH `api/gateway` 与\"事件→客户端\"投影（深读第六步）": "docs/deepread-dsh-gateway-projection.md"
       - "DSH `ptc` 线深读：Programmatic Tool Calling 的机制与安全边界": "docs/deepread-dsh-ptc.md"
       - "DSH Harness 反馈清单（2026-10-18，来自一次真实事故）": "docs/harness-feedback.md"
       - "🛠 维护指南 · Maintenance": "docs/maintenance.md"

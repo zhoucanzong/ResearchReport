@@ -20,7 +20,7 @@
 | 条目字节 | 2,025,361 B |
 | 带 front-matter 的条目 | 5 |
 | 带合法 `date` 的条目 | 5 |
-| 文档（除生成物外的全部 `.md`） | 157 |
+| 文档（除生成物外的全部 `.md`） | 158 |
 | 其中文件名 `README.md` | 8 |
 | 纳入版本控制的文件 | 177 |
 | 纳入版本控制的 `.md` | 165 |
@@ -38,7 +38,7 @@
 | WorldModel | 2 | 31 | 1,207 | 129,154 B | [板块页 →](<WorldModel/README.md>) |
 | Infra | 3 | 29 | 2,098 | 108,615 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 4 | 18 | 1,056 | 105,250 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **48** | **157** | **32,390** | **2,025,361 B** | — |
+| **合计** | **48** | **158** | **32,390** | **2,025,361 B** | — |
 
 ## 分面索引
 
@@ -767,6 +767,7 @@
 | [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,616 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 67 | 3,896 B |
 | [docs/deepread-dsh-compaction-bundles.md](<docs/deepread-dsh-compaction-bundles.md>) | docs | 380 | 45,465 B |
+| [docs/deepread-dsh-gateway-projection.md](<docs/deepread-dsh-gateway-projection.md>) | docs | 131 | 10,558 B |
 | [docs/deepread-dsh-ptc.md](<docs/deepread-dsh-ptc.md>) | docs | 249 | 35,235 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 86 | 6,458 B |
 | [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 10,798 B |
