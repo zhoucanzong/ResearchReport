@@ -17,7 +17,7 @@
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 5 |
 | 条目子文档数 | 95 |
 | 条目正文行数（剔除 front-matter） | 32,758 |
-| 条目字节 | 2,052,587 B |
+| 条目字节 | 2,052,304 B |
 | 带 front-matter 的条目 | 6 |
 | 带合法 `date` 的条目 | 6 |
 | 文档（除生成物外的全部 `.md`） | 158 |
@@ -32,13 +32,13 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| Models | 23 | 33 | 16,005 | 1,022,054 B | [板块页 →](<Models/README.md>) |
-| LLM | 8 | 27 | 5,217 | 341,189 B | [板块页 →](<LLM/README.md>) |
+| Models | 23 | 33 | 16,005 | 1,021,801 B | [板块页 →](<Models/README.md>) |
+| LLM | 8 | 27 | 5,217 | 341,168 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,807 | 319,099 B | [板块页 →](<VisualGen/README.md>) |
-| WorldModel | 2 | 31 | 1,207 | 129,154 B | [板块页 →](<WorldModel/README.md>) |
+| WorldModel | 2 | 31 | 1,207 | 129,145 B | [板块页 →](<WorldModel/README.md>) |
 | Infra | 3 | 29 | 2,098 | 108,615 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 5 | 22 | 1,424 | 132,476 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **49** | **158** | **32,758** | **2,052,587 B** | — |
+| **合计** | **49** | **158** | **32,758** | **2,052,304 B** | — |
 
 ## 分面索引
 
@@ -124,7 +124,7 @@
   <summary><b>GLM</b> · <code>Models/GLM/report.md</code> · 737 行 · —</summary>
   
 
-    * **条目**：[Models/GLM/report.md](<Models/GLM/report.md>)（737 行 / 68,363 B）
+    * **条目**：[Models/GLM/report.md](<Models/GLM/report.md>)（737 行 / 68,351 B）
     * **专题目录**：`Models/GLM`
     * **元数据**：type=`—` · domain=`Models` · subject=`GLM` · date=`—` · status=`—`
     * **子文档（0）**
@@ -148,7 +148,7 @@
   <summary><b>Gemini</b> · <code>Models/Gemini/report.md</code> · 1094 行 · —</summary>
   
 
-    * **条目**：[Models/Gemini/report.md](<Models/Gemini/report.md>)（1094 行 / 57,347 B）
+    * **条目**：[Models/Gemini/report.md](<Models/Gemini/report.md>)（1094 行 / 57,231 B）
     * **专题目录**：`Models/Gemini`
     * **元数据**：type=`—` · domain=`Models` · subject=`Gemini` · date=`—` · status=`—`
     * **子文档（0）**
@@ -305,7 +305,7 @@
   <summary><b>Qwen</b> · <code>Models/Qwen/report.md</code> · 1111 行 · —</summary>
   
 
-    * **条目**：[Models/Qwen/report.md](<Models/Qwen/report.md>)（1111 行 / 72,586 B）
+    * **条目**：[Models/Qwen/report.md](<Models/Qwen/report.md>)（1111 行 / 72,461 B）
     * **专题目录**：`Models/Qwen`
     * **元数据**：type=`—` · domain=`Models` · subject=`Qwen` · date=`—` · status=`—`
     * **子文档（3）**
@@ -374,7 +374,7 @@
   <summary><b>DecisionModels</b> · <code>LLM/DecisionModels/report.md</code> · 869 行 · —</summary>
   
 
-    * **条目**：[LLM/DecisionModels/report.md](<LLM/DecisionModels/report.md>)（869 行 / 107,772 B）
+    * **条目**：[LLM/DecisionModels/report.md](<LLM/DecisionModels/report.md>)（869 行 / 107,751 B）
     * **专题目录**：`LLM/DecisionModels`
     * **元数据**：type=`—` · domain=`LLM` · subject=`DecisionModels` · date=`—` · status=`—`
     * **子文档（18）**
@@ -388,12 +388,12 @@
         * [papers/2609.25845-visual-jev.md](<LLM/DecisionModels/papers/2609.25845-visual-jev.md>) — 291 行 / 22,086 B
         * [papers/2609.26532-reflex-selective-control.md](<LLM/DecisionModels/papers/2609.26532-reflex-selective-control.md>) — 95 行 / 10,729 B
         * [papers/2609.26550-jev-as-a-judge.md](<LLM/DecisionModels/papers/2609.26550-jev-as-a-judge.md>) — 245 行 / 36,150 B
-        * [papers/2609.26758-option-name-vs-definition.md](<LLM/DecisionModels/papers/2609.26758-option-name-vs-definition.md>) — 334 行 / 50,076 B
+        * [papers/2609.26758-option-name-vs-definition.md](<LLM/DecisionModels/papers/2609.26758-option-name-vs-definition.md>) — 334 行 / 50,064 B
         * [papers/2609.28613-decision-hijacking.md](<LLM/DecisionModels/papers/2609.28613-decision-hijacking.md>) — 317 行 / 26,528 B
         * [papers/2609.30243-jevout-natural-context-flip.md](<LLM/DecisionModels/papers/2609.30243-jevout-natural-context-flip.md>) — 310 行 / 33,313 B
         * [papers/2609.33209-probability-axioms-coherence.md](<LLM/DecisionModels/papers/2609.33209-probability-axioms-coherence.md>) — 92 行 / 10,312 B
         * [papers/2610.09683-system-switch.md](<LLM/DecisionModels/papers/2610.09683-system-switch.md>) — 90 行 / 10,672 B
-        * [sources/CANDIDATES.md](<LLM/DecisionModels/sources/CANDIDATES.md>) — 70 行 / 8,315 B
+        * [sources/CANDIDATES.md](<LLM/DecisionModels/sources/CANDIDATES.md>) — 70 行 / 8,312 B
         * [sources/MANIFEST.md](<LLM/DecisionModels/sources/MANIFEST.md>) — 62 行 / 8,371 B
         * [taxonomy.md](<LLM/DecisionModels/taxonomy.md>) — 254 行 / 24,924 B
 
@@ -597,7 +597,7 @@
   <summary><b>WorldModels</b> · <code>WorldModel/WorldModels/report.md</code> · 598 行 · 2026-10-17</summary>
   
 
-    * **条目**：[WorldModel/WorldModels/report.md](<WorldModel/WorldModels/report.md>)（598 行 / 60,297 B）
+    * **条目**：[WorldModel/WorldModels/report.md](<WorldModel/WorldModels/report.md>)（598 行 / 60,288 B）
     * **专题目录**：`WorldModel/WorldModels`
     * **元数据**：type=`topic-research` · domain=`WorldModel` · subject=`WorldModels` · date=`2026-10-17` · status=`completed`
     * **子文档（15）**
