@@ -8,7 +8,7 @@
 
 ## 1. 结论摘要（5 条）
 
-1. **投影是"白名单 + 单一声明"**：Host 只转发 `API_REMOTE_FORWARDED_EVENTS` 里的 26 个事件，声明集中在 `packages/api/remotes/src/remote-events.ts:26-55`。
+1. **投影是"白名单 + 单一声明"**：Host 只转发 `API_REMOTE_FORWARDED_EVENTS` 里的 **28** 个事件（数组声明在 `packages/api/remotes/src/remote-events.ts:26`，条目 `:27-54`，闭合 `:55`），条目数已逐行核对。
 2. **审批走 waterfall 事件**：`{ event: 'approval/request', mode: 'waterfall' }`（同文件 `:28`），与 `user-questions/request`（`:54`）同一类——**一问一答的交互式事件**，不是广播。
 3. **会话级是结构性设计**：会话集合事件显式带 `resources: { session: … }`（`:29-34`），事件是**资源受限**的；审批事件虽未声明资源，但客户端把它归到**发起它的会话**的待处理交互上（`ui-session` 的 `PendingSessionInteractionMap`）。
 4. **没有"全局审批汇总"出口**：白名单里**没有**任何聚合审批/任务的事件；集合类变化按文档说明走 **follow streams**，而不是一次性广播（`:20-24` 注释）。
