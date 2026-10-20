@@ -771,7 +771,7 @@
 | [docs/deepread-dsh-ptc.md](<docs/deepread-dsh-ptc.md>) | docs | 249 | 35,235 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 86 | 6,458 B |
 | [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 10,798 B |
-| [docs/repo-deep-read-deepseek-harness.md](<docs/repo-deep-read-deepseek-harness.md>) | docs | 373 | 27,413 B |
+| [docs/repo-deep-read-deepseek-harness.md](<docs/repo-deep-read-deepseek-harness.md>) | docs | 373 | 27,541 B |
 | [docs/statistics.md](<docs/statistics.md>) | docs | 212 | 16,435 B |
 | [docs/team.md](<docs/team.md>) | docs | 115 | 12,167 B |
 | [docs/verification.md](<docs/verification.md>) | docs | 262 | 17,942 B |

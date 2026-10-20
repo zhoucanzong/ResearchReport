@@ -63,8 +63,8 @@
 | 步 | 位置 | 发生了什么 | 证据 |
 |---|---|---|---|
 | 1 | `apps/cli/src/bin.ts:1` | `#!/usr/bin/env node` 的 bin 入口 | package `bin` 指向 `lib/bin.js`（`apps/cli/package.json`）|
-| 2 | `bin.ts:27` | `runCli()` 读取运行时版本、解析参数 | `getDshRuntimeVersion()`、`parseDshArgs(...)` |
-| 3 | `bin.ts:36-38` | 按 `invocation.mode` 分派；`profile` 模式进入 `runProfile` | `const { runProfile } = await import('./profile-boot.ts')` |
+| 2 | `bin.ts:26-29` | `runCli()` 定义在 `:26`；`:27` 读运行时版本；`:29` 解析参数 | `export async function runCli` / `getDshRuntimeVersion()` / `parseDshArgs(...)` |
+| 3 | `bin.ts:31-33` | `:31` `switch (invocation.mode)` 分派；`:32` `case 'profile'`；`:33` 动态 import `runProfile` | `switch (invocation.mode)`、`const { runProfile } = await import('./profile-boot.ts')` |
 | 4 | `profile-boot.ts:271` | `runProfile()`：装载环境 → 组合 profile → 启动 | `Promise<{ ctx: Context; shutdown: ProcessShutdown }>` |
 | 5 | `profile-boot.ts:292` | **`composeProfile(...)`**：把 profile 与 bundle 组合成插件清单 | `const composed = await composeProfile(` |
 | 6 | `profile-boot.ts:323` | **`boot(NAME, rootConfig, patches, ...)`**：交给 Loader 启动 | `const ctx = await boot(NAME, rootConfig, ...)` |
@@ -366,8 +366,8 @@ sequenceDiagram
 | 仓库版本 0.2.1-rc.2 | `package.json`（`@deepseek-ai/dsh-root`）|
 | 一切皆插件、Cordis 驱动 | `README.zh.md:5` |
 | 开发者预览、会有破坏性变更 | `README.zh.md:13` |
-| 入口为 `bin.ts` 的 `runCli()` | `apps/cli/src/bin.ts:1,27` |
-| profile 模式进 `runProfile` | `apps/cli/src/bin.ts:36-38`、`apps/cli/src/profile-boot.ts:271` |
+| 入口为 `bin.ts` 的 `runCli()` | `apps/cli/src/bin.ts:1,26-29` |
+| profile 模式进 `runProfile` | `apps/cli/src/bin.ts:31-33`、`apps/cli/src/profile-boot.ts:271` |
 | 组合 → boot → 插件管理 | `profile-boot.ts:292,323,329` |
 | 环境分层 / 重组 / patch 对账 | `app-boot/src/index.ts:238,307,322` |
 | agent-loop 是"标准组合应挂载"的驱动器 | `packages/core/agent-loop/README.zh.md:11` |
