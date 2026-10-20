@@ -1,6 +1,6 @@
 # DSH `ptc` 线深读：Programmatic Tool Calling 的机制与安全边界
 
-> **对象**：`/tmp/dsh-src`（DSH 仓库 checkout，**无 `.git`**，全程只读，不 commit、不改动）。
+> **对象**：`/tmp/dsh-src`（DSH 仓库 checkout，**无 `.git`**，全程只读，不 commit、不改动）。本题所有代码引用均相对该目录；引用的限制条目原文见 `packages/ptc-runtime/ptc-runtime-node/README.md`。
 > **版本依据**：`package.json:3` → `"version": "0.2.1-rc.2"`。仓库无 `.git`，无法用 tag/commit 交叉验证，此为该文件的一手声明。
 > **方法**：`code-researcher` skill 的 `deep` 模式（Codebase Map → Runtime Story → Design Inquiry → Maintainer Notes）；结论一律带 `文件:行`。
 > **一手文件 21 个**：`package.json`、`core/tools/src/ptc.ts`、`core/tools/src/ptc-calls.ts`、`core/tools/src/index.ts`、`core/tools/tests/ptc.spec.ts`、`core/tools/tests/ptc-calls.spec.ts`、`core/tools/README.md`、`ptc-runtime/ptc-runtime/src/{index,types}.ts`、`ptc-runtime/ptc-runtime/README.md`、`ptc-runtime/ptc-runtime-node/src/{index,config,launch,protocol,policy-processes}.ts`、`ptc-runtime/ptc-runtime-node/README.md`、`sandbox/sandbox/src/escalation.ts`、`experimental/ptc-runtime-python/README.md`、`experimental/ptc-runtime-python/src/{index,launch}.ts`、`snapshots/session/ptc-node-workspace/cordis.yml`。
@@ -130,9 +130,9 @@ sequenceDiagram
 
 > ## Known Limitations and Deferred Work
 >
-> These limits qualify the execution guarantees and retained output.
+> These limits qualify the execution guarantees and retained output.（`packages/ptc-runtime/ptc-runtime-node/README.md:162`）
 >
-> - **Confinement inherits the selected backend's limits** — full and partial enforcement are reported separately; sandbox policy and managed-process containment are distinct guarantees.
+> - **Confinement inherits the selected backend's limits** — full and partial enforcement are reported separately; sandbox policy and managed-process containment are distinct guarantees.（`packages/ptc-runtime/ptc-runtime-node/README.md:164`）
 > - **The heap cap is not a process-tree memory limit** — native allocations and descendant memory are outside the V8 old-generation bound. No process-tree CPU meter is supplied.
 > - **Cleanup inherits subprocess observability** — escaped descendants on a fallback platform may remain outside the managed range; see the subprocess provider's stated limits.
 > - **Default execution is one-shot** — retained state requires `executionMode: persistent-in-memory`; neither mode offers a yield/wait API.
