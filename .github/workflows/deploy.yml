@@ -21,7 +21,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false # 连推不再互相取消：取消的运行会被当作失败并发通知
 
 jobs:
   build:
