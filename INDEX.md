@@ -767,7 +767,7 @@
 | [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,616 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 67 | 3,896 B |
 | [docs/deepread-dsh-compaction-bundles.md](<docs/deepread-dsh-compaction-bundles.md>) | docs | 380 | 45,465 B |
-| [docs/deepread-dsh-gateway-projection.md](<docs/deepread-dsh-gateway-projection.md>) | docs | 131 | 10,558 B |
+| [docs/deepread-dsh-gateway-projection.md](<docs/deepread-dsh-gateway-projection.md>) | docs | 131 | 10,634 B |
 | [docs/deepread-dsh-ptc.md](<docs/deepread-dsh-ptc.md>) | docs | 249 | 35,235 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 86 | 6,458 B |
 | [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 10,798 B |

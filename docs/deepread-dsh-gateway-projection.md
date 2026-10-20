@@ -51,8 +51,8 @@
 | 要素 | 内容 |
 |---|---|
 | **搜索面** | `packages/api/remotes/src/remote-events.ts`（唯一的转发白名单文件）|
-| **方法** | 逐条读 26 个条目的 `event` 名与 `mode`；并 `grep -rn "approval" packages/api/remotes/src/remote-events.ts` 确认只有 `approval/request` 一条 |
-| **结果** | 26 条中与审批相关仅 `approval/request`（`:28`）；与会话集合相关的是 `api-session/{added,removed,status,activity,error}`（`:29-34`），均为**单会话资源**事件；**没有任何** `approvals/*` 聚合事件或全局待办流 |
+| **方法** | 逐条读 **28** 个条目的 `event` 名与 `mode`；并 `grep -rn "approval" packages/api/remotes/src/remote-events.ts` 确认只有 `approval/request` 一条 |
+| **结果** | **28** 条中与审批相关仅 `approval/request`（`:28`）；与会话集合相关的是 `api-session/{added,removed,status,activity,error}`（`:29-34`），均为**单会话资源**事件；**没有任何** `approvals/*` 聚合事件或全局待办流 |
 | **结论边界** | 这证明的是"**该应用的转发白名单里没有跨会话审批汇总**"；如果闭源层另有推送通道（如 Bot Harness 自建），本仓库看不到 |
 
 ---
@@ -109,7 +109,7 @@
 
 | 结论 | 证据 |
 |---|---|
-| 转发白名单是唯一真源（26 条） | `packages/api/remotes/src/remote-events.ts:1-6,26-55` |
+| 转发白名单是唯一真源（**28** 条） | `packages/api/remotes/src/remote-events.ts:1-6,26-55` |
 | `approval/request` 为 waterfall | 同文件 `:28` |
 | `user-questions/request` 同为 waterfall | `:54` |
 | 会话类事件带 `resources.session` | `:29-34` |
