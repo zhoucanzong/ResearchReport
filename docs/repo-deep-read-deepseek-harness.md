@@ -200,11 +200,56 @@ sequenceDiagram
 | 审批是会话级待处理交互 | `packages/client/ui-session/src/client/index.ts:51`、`ui-approval/src/client/contract/slots.ts:21-27` |
 | 审批详情插槽作用域 = session | `slots.ts:36-39`（`scope: 'session'`）|
 
+## 5.7 第三步：会话事件模型与组合包（代码事实）
+
+### 5.7.1 会话是"仅追加的事件日志"
+
+`packages/core/session/README.zh.md` 的定位（原文摘要，`kind: package-reference`）：
+> 在**仅追加**的会话日志中记录每个模型可见事实，并**从该记录派生模型历史**；消费方可检查、回放、fork、刷新会话，同时保留历史事件；**压缩（compaction）只在活跃对话中隐藏被取代的条目，不删除**；除非加持久化后端，否则会话仅驻留内存。
+
+**事件词表是封闭的**（`packages/core/session/src/known-event-types.ts`，90 行），与本主题直接相关的三条：
+
+| 事件 | 位置 | 含义 |
+|---|---|---|
+| `approval/asked` | `known-event-types.ts:25` | 审批被请求 |
+| `approval/decided` | `:26` | 审批有结论 |
+| `approval/policy` | `:27` | 策略级（非单次）决定 |
+
+同文件还有 `assistant/attempt`、`assistant/message`、`compaction/{start,prune,summary,end}`、`goal/change`、`hook/{invoked,result}` 等。
+
+> **这解释了为什么"审批"在我们的观测里既是"会话内 UI"又是"日志事件"**：它同时是 **session 级待处理交互**（`ui-session` 的 `SessionPendingInteractionMap`）和 **session 日志里的一条事件**（`approval/asked`）。两者都不是"跨会话广播"——**没有全局审批总线**。
+
+### 5.7.2 组合包：`base` 是"共享核心 + 分层 patch"，`sdk-minimal` 是"独立整树"
+
+| 组合包 | 清单行数 | 结构 | 关键注释（原文） |
+|---|---|---|---|
+| `packages/bundle/base` | **529 行** `cordis.patch.yml` | **一个 insert 覆盖空 profile root**，作为共享核心；后续 bundle 与用户 patch 按 `id` 覆盖，**逐行 last write wins** | "applied as ONE insert over the empty profile root"；"the last write wins per row" |
+| `packages/bundle/sdk-minimal` | **172 行** `cordis.patch.yml` | **不叠在 base 之上**，自身就是完整的 Cordis 树 | "does not layer over dsh-base: this insert is the complete Cordis tree" |
+
+**两条设计事实（都可引用行号）**
+1. **patch 是"替换整行 config"而不是深合并**：`base/cordis.patch.yml:7-9` 明写 "A patch replaces the targeted row's whole `config` rather than merging into it"，所以"按模式取值不同"的配置**不在 base 里**，而由各模式 bundle 完整重述。
+2. **行的顺序不承载加载语义**：`base/cordis.patch.yml:13` 写 "Row order carries no load semantics (activation is service-availability driven)"——**激活由服务可用性驱动**，不是按 YAML 顺序启动。
+
+> **维护含义**：想"改一个插件的行为"，正确做法是**改它所在模式 bundle 的那一行**（整行 config 替换）；想"加一个能力"，要**同时**更新组合清单与用户 profile，否则 profile 层根本看不到它。
+
 ## 5.6 待补（第三步）
 
 - `core/session` 的事件模型：谁产生事件、谁投影到客户端、谁落盘；
 - 测试门槛：`agent-loop/tests/*.spec.ts` 覆盖的契约（如 `inbox.spec.ts` 对应"轮次内排队"）；
-- 组合包对比：`bundle/base` vs `bundle/sdk-minimal` 的插件清单差异（解释"能力裁剪"）。
+- `core/tools` 的工具注册与 `tool-calls.ts` 的调度关系（并行调用上限 `maxParallelToolCalls` 的落点）；
+- 压缩（compaction）与"派生历史"的边界：哪些事件会改变模型可见历史。
+
+## 5.8 证据索引补充（第三步）
+
+| 结论 | 证据 |
+|---|---|
+| 会话是仅追加日志、历史由事件派生 | `packages/core/session/README.zh.md` 概述段 |
+| 压缩隐藏不删除 | 同上（"hide superseded entries…does not delete"）|
+| 事件词表封闭且含审批三类事件 | `packages/core/session/src/known-event-types.ts:25-27`（`approval/asked`、`approval/decided`、`approval/policy`）|
+| base 是"共享核心 + 逐行 last write wins" | `packages/bundle/base/cordis.patch.yml:1-4` |
+| patch 替换整行 config、不深合并 | `packages/bundle/base/cordis.patch.yml:7-9` |
+| 行顺序不承载加载语义、激活由服务可用性驱动 | `packages/bundle/base/cordis.patch.yml:13` |
+| sdk-minimal 不叠 base、自身是完整树 | `packages/bundle/sdk-minimal/cordis.patch.yml:1-3` |
 
 ## 6. 证据索引（本文）
 
