@@ -245,9 +245,9 @@ sequenceDiagram
 | 调度器失败处理 | `tool-calls.ts:114-119,142,171,208-210`：**排空已派发、拒绝后续** | 失败不留半截 |
 | 上限是**可热更**配置 | `packages/core/agent-loop/src/index.ts:308,345-346`（`Volatile<number>`、zod `.min(1).default(...).volatile()`）| 运行时调；`0` 被 schema 拒绝（`tests/settings.spec.ts:35`）|
 
-> **设计判断**（研究推断）：关键不是"并行"，而是"**并行度是安全属性**"——执行前重新分类 + 有界池，保证独占调用不被并行池里的其它调用夹住；这也是让**工具自己声明 `executionMode`** 而不是调度器猜的原因。
+> **设计判断**（研究推断；依据 `packages/core/agent-loop/src/tool-calls.ts:204-205` 的启动前重分类与 `packages/core/tools/src/index.ts:1311` 的 `executionMode`）：关键不是"并行"，而是"**并行度是安全属性**"——执行前重新分类 + 有界池，保证独占调用不被并行池里的其它调用夹住；这也是让工具自己声明执行模式、而不是调度器猜的原因。
 
-### 5.9.2 压缩（compaction）的语义边界
+### 5.9.2 压缩（compaction）的语义边界（证据：`packages/compaction/compaction/README.zh.md`）
 
 | 事实 | 位置 | 说明 |
 |---|---|---|
