@@ -19,7 +19,7 @@
 | [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | status=completed |
 | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | status=completed |
 
-## 无 date 且无 status（无法判定，43）
+## 无 date 且无 status（无法判定，44）
 
 以下条目既没有 `date` 也没有 `status`，陈旧度无法评估（不算作已标记）：
 
@@ -56,6 +56,7 @@
 * [Models/Qwen/report.md](<../Models/Qwen/report.md>)
 * [Models/Runway/report.md](<../Models/Runway/report.md>)
 * [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>)
+* [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>)
 * [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>)
 * [VisualGen/3DGen/report.md](<../VisualGen/3DGen/report.md>)
 * [VisualGen/AudioGen/report.md](<../VisualGen/AudioGen/report.md>)

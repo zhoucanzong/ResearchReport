@@ -84,6 +84,9 @@
         "OpenSource/vllm",
         "OpenSource/sglang",
         "OpenSource/nemotron"
+      ],
+      "entries": [
+        "OpenSource/DeepSeekHarness"
       ]
     }
   ],

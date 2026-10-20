@@ -8,7 +8,7 @@
 
 <!-- SCRIPT:badges START -->
 [![Site](https://img.shields.io/badge/Site-在线阅读-3f51b5?style=flat-square)](https://zhoucanzong.github.io/ResearchReport/)
-![Entries](https://img.shields.io/badge/Entries-48-5c6bc0?style=flat-square)
+![Entries](https://img.shields.io/badge/Entries-49-5c6bc0?style=flat-square)
 ![Topics](https://img.shields.io/badge/Topics-21-7986cb?style=flat-square)
 ![Panels](https://img.shields.io/badge/Panels-6-9fa8da?style=flat-square)
 ![Updated](https://img.shields.io/badge/Updated-2026--10--20-9e9e9e?style=flat-square)
@@ -20,14 +20,14 @@
 
 <!-- SCRIPT:structure START · 来源 scripts/panels.json（配置驱动，勿手改） -->
 ```text
-ResearchReport/    48 条目 · 21 专题 · 6 板块
+ResearchReport/    49 条目 · 21 专题 · 6 板块
 │
 ├─ 🧠 Models/        23 条 · 厂商模型 / 系列逐个精读（GPT · Qwen · Gemini …）
 ├─ 💬 LLM/            8 条 · 语言模型能力与技术专题（ReasoningModels · LongContext · MoE …）
 ├─ 🎨 VisualGen/      8 条 · 视觉与多模态生成（VideoGen · DiT · DiffusionModels …）
 ├─ 🌍 WorldModel/     2 条 · 世界模型与具身 VLA（WorldModels · EmbodiedVLA …）
 ├─ ⚙️ Infra/          3 条 · 推理 / 训练基础设施（SpeculativeDecoding · QuantizationEdge · TrainingInfra …）
-├─ 🔧 OpenSource/     4 条 · 开源仓库代码深读（vllm · sglang · nemotron …）
+├─ 🔧 OpenSource/     5 条 · 开源仓库代码深读（vllm · sglang · nemotron …）
 │
 └─ ⚙ 生成管线：scripts/panels.json（单一真值）→ library_index.py
               → README / INDEX.md / index/* / 站点 nav
@@ -46,7 +46,7 @@ ResearchReport/    48 条目 · 21 专题 · 6 板块
 <tr>
 <td align="center" width="33%"><br>🌍<br><b>WorldModel</b> · <b>2</b> 条<br><sub>世界模型与具身 VLA</sub><br><sub><a href="WorldModel/WorldModels/report.md">WorldModels</a> · <a href="WorldModel/EmbodiedVLA/report.md">EmbodiedVLA</a></sub><br><a href="WorldModel/"><b>进入 →</b></a><br><br></td>
 <td align="center" width="33%"><br>⚙️<br><b>Infra</b> · <b>3</b> 条<br><sub>推理 / 训练基础设施</sub><br><sub><a href="Infra/SpeculativeDecoding/report.md">SpeculativeDecoding</a> · <a href="Infra/QuantizationEdge/report.md">QuantizationEdge</a> · <a href="Infra/TrainingInfra/report.md">TrainingInfra</a></sub><br><a href="Infra/"><b>进入 →</b></a><br><br></td>
-<td align="center" width="33%"><br>🔧<br><b>OpenSource</b> · <b>4</b> 条<br><sub>开源仓库代码深读</sub><br><sub><a href="OpenSource/vllm/report.md">vllm</a> · <a href="OpenSource/sglang/report.md">sglang</a> · <a href="OpenSource/nemotron/report.md">nemotron</a></sub><br><a href="OpenSource/"><b>进入 →</b></a><br><br></td>
+<td align="center" width="33%"><br>🔧<br><b>OpenSource</b> · <b>5</b> 条<br><sub>开源仓库代码深读</sub><br><sub><a href="OpenSource/vllm/report.md">vllm</a> · <a href="OpenSource/sglang/report.md">sglang</a> · <a href="OpenSource/nemotron/report.md">nemotron</a></sub><br><a href="OpenSource/"><b>进入 →</b></a><br><br></td>
 </tr>
 </table>
 <!-- SCRIPT:panels END -->
@@ -95,8 +95,8 @@ ResearchReport/    48 条目 · 21 专题 · 6 板块
 <summary>📖 <b>完整索引</b>（48 条，点击展开）</summary>
 
 <!-- SCRIPT:index START · 摘要 + 链接（48 行单一真值在 index/by-report.md） -->
-共 **48** 条，分属 **6** 个板块：Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 4。
-完整 48 行（条目 | 板块 | 路径）见 **[index/by-report.md](<index/by-report.md>)**；按域 / 主题 / 来源分面见 [index/](<index/>)，总目录见 [INDEX.md](<INDEX.md>)。
+共 **49** 条，分属 **6** 个板块：Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 5。
+完整 49 行（条目 | 板块 | 路径）见 **[index/by-report.md](<index/by-report.md>)**；按域 / 主题 / 来源分面见 [index/](<index/>)，总目录见 [INDEX.md](<INDEX.md>)。
 <!-- SCRIPT:index END -->
 
 </details>

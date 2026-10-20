@@ -291,13 +291,13 @@ sequenceDiagram
 
 ## 5.10 第五步：吸收两份专项深读（ptc 与 compaction/组合包）
 
-> 两份专项由研研、究究各自独立完成，正文分别是 [`deepread-dsh-ptc.md`](deepread-dsh-ptc.md) 与 [`deepread-dsh-compaction-bundles.md`](deepread-dsh-compaction-bundles.md)。本节只做**要点吸收与交叉引用**，不复述全文。
+> 两份专项由研研、究究各自独立完成，正文分别是 [`ptc.md`](ptc.md) 与 [`compaction-and-bundles.md`](compaction-and-bundles.md)。本节只做**要点吸收与交叉引用**，不复述全文。
 
 ### 5.10.1 `ptc`（Programmatic Tool Calling）：程序在沙箱、工具在宿主
 
 | 结论 | 证据（详见子报告）|
 |---|---|
-| 模型输出一段**程序**，程序在**受沙箱约束的子进程**里用 `await tools.<name>(args)` 嵌套调**宿主工具** | `docs/deepread-dsh-ptc.md` §机制；本仓 `packages/core/tools/src/ptc.ts` |
+| 模型输出一段**程序**，程序在**受沙箱约束的子进程**里用 `await tools.<name>(args)` 嵌套调**宿主工具** | `ptc.md` §机制；本仓 `packages/core/tools/src/ptc.ts` |
 | 入口工具 `run_code`；开关 `mode:'ptc'` 或 per-agent `presentAs('ptc')` | 子报告 §3 |
 | **审批严格早于执行**：程序级升级复用 `approveEscalation`，测试证明审批未答时 resolver 未被调用 | 子报告 §4 |
 | 失败是**结果字段**（8 类 kind）而非异常；deadline 含嵌套审批等待、不含外层程序级审批（默认 120s / 上限 600s）| 子报告 §5 |

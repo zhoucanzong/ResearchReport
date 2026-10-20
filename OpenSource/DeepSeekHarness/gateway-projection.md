@@ -1,7 +1,7 @@
 # DSH `api/gateway` 与"事件→客户端"投影（深读第六步）
 
 > **对象**：`/tmp/dsh-src`（`deepseek-harness` `master`，`@deepseek-ai/dsh-root` **0.2.1-rc.2**），全程只读。
-> **方法**：`code-researcher` deep 模式的"运行路径 + 设计追问"，结论一律带 `文件:行`；否定性结论按 `docs/verification.md §5.7` 三要素（搜索面/方法/结果）写。
+> **方法**：`code-researcher` deep 模式的"运行路径 + 设计追问"，结论一律带 `文件:行`；否定性结论按 `../../docs/verification.md §5.7` 三要素（搜索面/方法/结果）写。
 > **本文回答四问**：①事件如何投影到客户端；②审批卡如何被投影、为何天然会话级；③是否存在跨会话汇总出口；④`Orchestrator run is unavailable` 这类不可用如何表达。
 
 ---
@@ -65,7 +65,7 @@
 | 仓库中 **`orchestrator run` 0 命中** | 同上（大小写不敏感）|
 | 可见的相关事件 | `api-session/error`（`remote-events.ts:32`）、`cordis/request-run` 与 `cordis/request-run-resolved`（`:39-40`）|
 
-**推论**：该错误文案来自**闭源 Bot Harness 编排层**，不在开源仓库；开源层能表达"会话出错"（`api-session/error`）与"Cordis 运行请求"（`cordis/request-run`），但**没有**"编排不可用"的专用事件。所以那类故障在开源侧表现为**普通的工具错误字符串**，人类侧无法据此区分"工具失败"与"编排挂掉"——这也是我们建议 DSH 加**主动通知 + 健康状态位**的原因（见 `docs/harness-feedback.md` 第 6 条）。
+**推论**：该错误文案来自**闭源 Bot Harness 编排层**，不在开源仓库；开源层能表达"会话出错"（`api-session/error`）与"Cordis 运行请求"（`cordis/request-run`），但**没有**"编排不可用"的专用事件。所以那类故障在开源侧表现为**普通的工具错误字符串**，人类侧无法据此区分"工具失败"与"编排挂掉"——这也是我们建议 DSH 加**主动通知 + 健康状态位**的原因（见 `../../docs/harness-feedback.md` 第 6 条）。
 
 ---
 

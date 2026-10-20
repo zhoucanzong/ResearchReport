@@ -253,8 +253,13 @@ nav:
         - "systems-throughput-latency": "Infra/SpeculativeDecoding/topics/systems-throughput-latency.md"
         - "verification-acceptance": "Infra/SpeculativeDecoding/topics/verification-acceptance.md"
     - "TrainingInfra": "Infra/TrainingInfra/report.md"
-  - "🔧 OpenSource · 4":
+  - "🔧 OpenSource · 5":
     - "OpenSource/README.md"
+    - "DeepSeekHarness":
+        - "总报告": "OpenSource/DeepSeekHarness/report.md"
+        - "compaction-and-bundles": "OpenSource/DeepSeekHarness/compaction-and-bundles.md"
+        - "gateway-projection": "OpenSource/DeepSeekHarness/gateway-projection.md"
+        - "ptc": "OpenSource/DeepSeekHarness/ptc.md"
     - "nemotron":
         - "总报告": "OpenSource/nemotron/report.md"
         - "knowledge-graph": "OpenSource/nemotron/knowledge-graph.md"
@@ -286,12 +291,8 @@ nav:
       - "最近更新": "index/recent.md"
       - "待复核": "index/stale.md"
   - "📖 文档":
-      - "DeepSeek Harness 深读：compaction 后端与 base 插件清单（只读）": "docs/deepread-dsh-compaction-bundles.md"
-      - "DSH `api/gateway` 与\"事件→客户端\"投影（深读第六步）": "docs/deepread-dsh-gateway-projection.md"
-      - "DSH `ptc` 线深读：Programmatic Tool Calling 的机制与安全边界": "docs/deepread-dsh-ptc.md"
       - "DSH Harness 反馈清单（2026-10-18，来自一次真实事故）": "docs/harness-feedback.md"
       - "🛠 维护指南 · Maintenance": "docs/maintenance.md"
-      - "DeepSeek Harness 仓库深读（第一步：地图 + 启动链）": "docs/repo-deep-read-deepseek-harness.md"
       - "📊 统计明细 · Statistics": "docs/statistics.md"
       - "Team · 技术研究": "docs/team.md"
       - "🔍 校验记录 · Verification Log": "docs/verification.md"

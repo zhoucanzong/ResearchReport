@@ -7,7 +7,7 @@
 
 ---
 
-共 **48** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter；「板块」列由 [`scripts/panels.json`](<../scripts/panels.json>) 驱动。
+共 **49** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter；「板块」列由 [`scripts/panels.json`](<../scripts/panels.json>) 驱动。
 
 | 条目 | 板块 | 路径 | 子报告数 | 行数 | 日期 |
 | --- | --- | --- | --: | --: | --- |
@@ -45,6 +45,7 @@
 | Qwen | Models | [Models/Qwen/report.md](<../Models/Qwen/report.md>) | 3 | 1,111 | — |
 | Runway | Models | [Models/Runway/report.md](<../Models/Runway/report.md>) | 0 | 732 | — |
 | StabilityAI | Models | [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>) | 0 | 873 | — |
+| DeepSeekHarness | OpenSource | [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | 3 | 373 | — |
 | nemotron | OpenSource | [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | 6 | 206 | — |
 | sglang | OpenSource | [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | 3 | 310 | 2026-10-16 |
 | this-that-model | OpenSource | [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | 0 | 246 | 2026-10-16 |
@@ -59,4 +60,4 @@
 | VideoGen | VisualGen | [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) | 0 | 898 | — |
 | EmbodiedVLA | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 13 | 609 | — |
 | WorldModels | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 598 | 2026-10-17 |
-| **合计** | — | — | **92** | **32,390** | — |
+| **合计** | — | — | **95** | **32,763** | — |

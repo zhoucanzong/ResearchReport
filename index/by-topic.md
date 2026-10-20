@@ -73,6 +73,12 @@
 | --- | --- | --- | --- | --- |
 | [Models/DeepSeek/report.md](<../Models/DeepSeek/report.md>) | DeepSeek 系列模型深度调研报告 | — | — | — |
 
+## DeepSeekHarness (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | DeepSeek Harness 仓库深读（第一步：地图 + 启动链） | — | — | — |
+
 ## DiT (1)
 
 | 条目 | 标题 | type | date | status |

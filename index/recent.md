@@ -17,7 +17,7 @@
 | [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | 2026-10-16 | OpenSource | this-that-model |
 | [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | 2026-10-16 | OpenSource | sglang |
 
-## 无 date 元数据（43）
+## 无 date 元数据（44）
 
 以下条目缺少可解析的 `date`，无法参与「最近更新」排序：
 
@@ -54,6 +54,7 @@
 * [Models/Qwen/report.md](<../Models/Qwen/report.md>)
 * [Models/Runway/report.md](<../Models/Runway/report.md>)
 * [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>)
+* [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>)
 * [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>)
 * [VisualGen/3DGen/report.md](<../VisualGen/3DGen/report.md>)
 * [VisualGen/AudioGen/report.md](<../VisualGen/AudioGen/report.md>)

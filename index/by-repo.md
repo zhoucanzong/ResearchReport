@@ -50,8 +50,9 @@
 * [Models/Runway/report.md](<../Models/Runway/report.md>) — 732 行
 * [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>) — 873 行
 
-## OpenSource (1)
+## OpenSource (2)
 
+* [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) — 373 行
 * [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) — 206 行
 
 ## VisualGen (8)
