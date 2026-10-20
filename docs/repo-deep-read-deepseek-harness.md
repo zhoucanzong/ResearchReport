@@ -219,11 +219,11 @@ sequenceDiagram
 
 > **这解释了为什么"审批"在我们的观测里既是"会话内 UI"又是"日志事件"**：它同时是 **session 级待处理交互**（`ui-session` 的 `SessionPendingInteractionMap`）和 **session 日志里的一条事件**（`approval/asked`）。两者都不是"跨会话广播"——**没有全局审批总线**。
 
-### 5.7.2 组合包：`base` 是"共享核心 + 分层 patch"，`sdk-minimal` 是"独立整树"
+### 5.7.2 组合包：`base` 是"共享核心 + 分层 patch"，`sdk-minimal` 是"独立整树"（证据：`packages/bundle/base/cordis.patch.yml`、`packages/bundle/sdk-minimal/cordis.patch.yml`）
 
 两份清单分别是 `packages/bundle/base/cordis.patch.yml`（529 行）与 `packages/bundle/sdk-minimal/cordis.patch.yml`（172 行）；下表的行数与结构均取自这两个文件及其首段注释。
 
-| 组合包 | 清单行数 | 结构 | 关键注释（原文） |
+| 组合包（清单文件见上方两路径） | 清单行数 | 结构 | 关键注释（原文） |
 |---|---|---|---|
 | `packages/bundle/base` | **529 行** `cordis.patch.yml` | **一个 insert 覆盖空 profile root**，作为共享核心；后续 bundle 与用户 patch 按 `id` 覆盖，**逐行 last write wins** | "applied as ONE insert over the empty profile root"；"the last write wins per row" |
 | `packages/bundle/sdk-minimal` | **172 行** `cordis.patch.yml` | **不叠在 base 之上**，自身就是完整的 Cordis 树 | "does not layer over dsh-base: this insert is the complete Cordis tree" |
