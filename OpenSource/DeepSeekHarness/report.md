@@ -295,7 +295,7 @@ sequenceDiagram
 
 ## 5.10 第五步：吸收两份专项深读（ptc 与 compaction/组合包）
 
-> 两份专项由研研、究究各自独立完成，正文分别是 [`ptc.md`](ptc.md) 与 [`compaction-and-bundles.md`](compaction-and-bundles.md)。本节只做**要点吸收与交叉引用**，不复述全文。
+> 两份专项报告独立完成，正文分别是 [`ptc.md`](ptc.md) 与 [`compaction-and-bundles.md`](compaction-and-bundles.md)。本节只做**要点吸收与交叉引用**，不复述全文。
 
 ### 5.10.1 `ptc`（Programmatic Tool Calling）：程序在沙箱、工具在宿主
 
