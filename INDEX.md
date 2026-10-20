@@ -20,7 +20,7 @@
 | 条目字节 | 2,025,361 B |
 | 带 front-matter 的条目 | 5 |
 | 带合法 `date` 的条目 | 5 |
-| 文档（除生成物外的全部 `.md`） | 154 |
+| 文档（除生成物外的全部 `.md`） | 155 |
 | 其中文件名 `README.md` | 8 |
 | 纳入版本控制的文件 | 174 |
 | 纳入版本控制的 `.md` | 162 |
@@ -38,7 +38,7 @@
 | WorldModel | 2 | 31 | 1,207 | 129,154 B | [板块页 →](<WorldModel/README.md>) |
 | Infra | 3 | 29 | 2,098 | 108,615 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 4 | 18 | 1,056 | 105,250 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **48** | **154** | **32,390** | **2,025,361 B** | — |
+| **合计** | **48** | **155** | **32,390** | **2,025,361 B** | — |
 
 ## 分面索引
 
@@ -768,6 +768,7 @@
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 67 | 3,896 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 52 | 4,227 B |
 | [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 10,798 B |
+| [docs/repo-deep-read-deepseek-harness.md](<docs/repo-deep-read-deepseek-harness.md>) | docs | 142 | 9,255 B |
 | [docs/statistics.md](<docs/statistics.md>) | docs | 212 | 16,435 B |
 | [docs/team.md](<docs/team.md>) | docs | 115 | 12,167 B |
 | [docs/verification.md](<docs/verification.md>) | docs | 243 | 16,496 B |
