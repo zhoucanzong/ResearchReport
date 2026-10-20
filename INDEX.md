@@ -17,7 +17,7 @@
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 5 |
 | 条目子文档数 | 95 |
 | 条目正文行数（剔除 front-matter） | 32,758 |
-| 条目字节 | 2,052,629 B |
+| 条目字节 | 2,052,605 B |
 | 带 front-matter 的条目 | 6 |
 | 带合法 `date` 的条目 | 6 |
 | 文档（除生成物外的全部 `.md`） | 158 |
@@ -37,8 +37,8 @@
 | VisualGen | 8 | 9 | 6,807 | 319,099 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 2 | 31 | 1,207 | 129,154 B | [板块页 →](<WorldModel/README.md>) |
 | Infra | 3 | 29 | 2,098 | 108,615 B | [板块页 →](<Infra/README.md>) |
-| OpenSource | 5 | 22 | 1,424 | 132,518 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **49** | **158** | **32,758** | **2,052,629 B** | — |
+| OpenSource | 5 | 22 | 1,424 | 132,494 B | [板块页 →](<OpenSource/README.md>) |
+| **合计** | **49** | **158** | **32,758** | **2,052,605 B** | — |
 
 ## 分面索引
 
@@ -697,12 +697,12 @@
   <summary><b>DeepSeekHarness</b> · <code>OpenSource/DeepSeekHarness/report.md</code> · 368 行 · 2026-10-20</summary>
   
 
-    * **条目**：[OpenSource/DeepSeekHarness/report.md](<OpenSource/DeepSeekHarness/report.md>)（368 行 / 27,268 B）
+    * **条目**：[OpenSource/DeepSeekHarness/report.md](<OpenSource/DeepSeekHarness/report.md>)（368 行 / 27,244 B）
     * **专题目录**：`OpenSource/DeepSeekHarness`
     * **元数据**：type=`repo-research` · domain=`Repo-Research` · subject=`DeepSeekHarness` · date=`2026-10-20` · status=`completed`
     * **子文档（3）**
         * [compaction-and-bundles.md](<OpenSource/DeepSeekHarness/compaction-and-bundles.md>) — 380 行 / 45,465 B
-        * [gateway-projection.md](<OpenSource/DeepSeekHarness/gateway-projection.md>) — 131 行 / 10,616 B
+        * [gateway-projection.md](<OpenSource/DeepSeekHarness/gateway-projection.md>) — 131 行 / 10,561 B
         * [ptc.md](<OpenSource/DeepSeekHarness/ptc.md>) — 249 行 / 35,235 B
 
   </details>

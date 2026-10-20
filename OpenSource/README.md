@@ -27,7 +27,7 @@
 <summary><b>DeepSeekHarness</b>（3 份）</summary>
 
 * [compaction-and-bundles.md](<DeepSeekHarness/compaction-and-bundles.md>) — 380 行 / 45,465 B
-* [gateway-projection.md](<DeepSeekHarness/gateway-projection.md>) — 131 行 / 10,616 B
+* [gateway-projection.md](<DeepSeekHarness/gateway-projection.md>) — 131 行 / 10,561 B
 * [ptc.md](<DeepSeekHarness/ptc.md>) — 249 行 / 35,235 B
 
 </details>

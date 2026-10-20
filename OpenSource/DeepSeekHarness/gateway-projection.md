@@ -65,7 +65,7 @@
 | 仓库中 **`orchestrator run` 0 命中** | 同上（大小写不敏感）|
 | 可见的相关事件 | `api-session/error`（`remote-events.ts:32`）、`cordis/request-run` 与 `cordis/request-run-resolved`（`:39-40`）|
 
-**推论**：该错误文案来自**闭源 Bot Harness 编排层**，不在开源仓库；开源层能表达"会话出错"（`api-session/error`）与"Cordis 运行请求"（`cordis/request-run`），但**没有**"编排不可用"的专用事件。所以那类故障在开源侧表现为**普通的工具错误字符串**，人类侧无法据此区分"工具失败"与"编排挂掉"——这也是我们建议 DSH 加**主动通知 + 健康状态位**的原因（见 `../../docs/harness-feedback.md` 第 6 条）。
+**推论**：该错误文案来自**闭源 Bot Harness 编排层**，不在开源仓库；开源层能表达"会话出错"（`api-session/error`）与"Cordis 运行请求"（`cordis/request-run`），但**没有**"编排不可用"的专用事件。所以那类故障在开源侧表现为**普通的工具错误字符串**，人类侧无法据此区分"工具失败"与"编排挂掉"——这也是建议 DSH 增加**主动通知 + 健康状态位**的原因。
 
 ---
 
