@@ -775,9 +775,9 @@
 | [Infra/README.md](<Infra/README.md>) | Infra | 59 | 4,167 B |
 | [LLM/README.md](<LLM/README.md>) | LLM | 57 | 3,761 B |
 | [Models/README.md](<Models/README.md>) | Models | 87 | 4,166 B |
-| [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 69 | 2,929 B |
+| [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 69 | 2,901 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 735 | 34,490 B |
-| [README.md](<README.md>) |  | 105 | 7,838 B |
+| [README.md](<README.md>) |  | 105 | 7,840 B |
 | [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,616 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 67 | 3,896 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 86 | 6,458 B |
