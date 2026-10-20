@@ -70,7 +70,7 @@
 - 手动：`compactNow` 在空闲会话上运行（`index.ts:383-435`，非空闲直接 `busy`：`:428-434`）；`/compact` 是它的命令外壳（`packages/compaction/command-compact/src/index.ts:67`）。
 - 每次压力触发后先跑可选的 pruner，再复测，仍超阈值才摘要；摘要后仍超阈值就按 `compactionRetries` 重试（`index.ts:289-347`，`spec.compactionRetries` 默认 1：`config.ts:105`）。
 
-**④ "被遮蔽内容仍留在会话日志"的代码实现**：这是本任务最核心的一问，答案是**两层校验 + 一次投影**：
+**④ "被遮蔽内容仍留在会话日志"的代码实现**（证据：`packages/compaction/compaction-basic/src/region.ts:505-509`、`packages/core/session/src/surface.ts:330-364,563-585`、`packages/core/session/src/index.ts:886`）：这是本任务最核心的一问，答案是**两层校验 + 一次投影**：
 
 1. 后端提交替换时，用 `surfaceOp: { op: 'replace', startSeq, endSeq }`，并把 `[startEvent.seq, summaryEvent.seq, ...shadowedSeqs]` 全部写进 `sourceEventSeqs`（`packages/compaction/compaction-basic/src/region.ts:505-509`）；
 2. 会话在 append 时校验：`sourceEventSeqs` 必须**覆盖每一个被遮蔽表面节点**，否则抛 `surface replace: sourceEventSeqs must include every shadowed surface node`（`packages/core/session/src/surface.ts:330-364`，判定在 `:361-364`）；
@@ -148,7 +148,7 @@
 | G4 凭据与账户 | 3 | `117:authorization`、`120:deepseek-account`、`125:credentials` |
 | G5 会话、存储与持久化 | 14 | `40:session`、`43:session-log-deepseek`、`60:session-title`、`67:session-title-llm`、`138:session-persistence-jsonl`、`146:attachment-local`、`157:session-query-sqlite`、`166:working-directory`、`172:session-projection`、`179:storage`、`182:storage-json`、`187:storage-domain`、`196:session-projection-cache`、`420:session-checkpoint-policy` |
 | G6 遥测 | 2 | `202:otel`、`218:session-telemetry-otel` |
-| G7 执行边界：子进程 / 沙箱 / 权限 / Shell 环境 | 11 | `96:jobs`、`234:subprocess`、`240:sandbox`、`243:sandbox-policy`、`249:bash-sandbox`、`255:pwsh-sandbox`、`259:approval`、`264:permission`、`278:shell-env`、`292:fs-observation-policy`、`518:fs-sandbox` |
+| G7 执行边界：子进程 / 沙箱 / 权限 / Shell 环境（`packages/bundle/base/cordis.patch.yml`）| 11 | `96:jobs`、`234:subprocess`、`240:sandbox`、`243:sandbox-policy`、`249:bash-sandbox`、`255:pwsh-sandbox`、`259:approval`、`264:permission`、`278:shell-env`、`292:fs-observation-policy`、`518:fs-sandbox` |
 | G8 文件与 Shell 工具 | 6 | `169:tool-working-directory`、`281:tool-bash`、`285:tool-pwsh`、`289:tool-jobs`、`295:tool-fs`、`298:tool-fs-search` |
 | G9 技能、指令与 MCP | 5 | `303:agent-instructions`、`308:skill`、`311:skill-filesystem`、`314:tool-skill`、`492:mcp-resources` |
 | G10 交互、命令、计划与目标 | 9 | `79:user-questions`、`317:commands`、`320:command-feedback`、`323:goal`、`326:goal-round-driver`、`329:command-goal`、`332:plan-mode`、`437:tool-todo`、`444:tool-goal` |
@@ -324,7 +324,7 @@ rows with config 33 / row keys ['config','disabled','id','name']
 | 95 | 525 | `llm-deepseek` | `@deepseek-ai/dsh-llm-deepseek-api-key` | 必挂 |
 | 96 | 528 | `llm-deepseek-account` | `@deepseek-ai/dsh-llm-deepseek-account` | 必挂 |
 
-### 边界：base 层的"必挂"≠ 全局必挂
+### 边界：base 层的"必挂"≠ 全局必挂（证据：`packages/bundle/base/cordis.patch.yml`、`packages/bundle/sdk-minimal/cordis.patch.yml`）
 
 - 组合机制是按 id 的 patch 覆盖、最后一层赢（`packages/bundle/base/cordis.patch.yml:1-10`）；"必挂"只表示**这一层没有 disable**。
 - 上层 overlay 可关：`packages/bundle/web-app/cordis.patch.yml:539-546` 在主机面把 `compaction-basic`、`command-compact`、`tool-result-pruner` 设为 `disabled: true`（交给 preset 层）；`packages/bundle/sdk-minimal/cordis.patch.yml:64-68` 是另一套独立清单，直接挂 `compaction-basic` 与 `image-offload`。
