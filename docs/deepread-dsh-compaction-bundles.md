@@ -80,6 +80,8 @@
 
 结论：日志保留不是"后端自觉"，而是**会话层强制替换必须引用被遮蔽 seq**；后端少引一个 seq 就无法提交。
 
+**证明方式（否定性结论的搜索面）**：对 `packages/core/session/src/*.ts` 执行 `grep -rnE "\.log\.(splice|pop|shift|length *=)|delete .*log|truncate"` → **0 命中**；唯一写入是 `this.log.push`（`index.ts` 内 2 处）。这证明的是"**会话包源码里没有删除/截断日志的调用**"，**不是**"运行时不会经由其它模块改写日志"。
+
 **⑤ 失败/回滚路径**：
 
 - **替换前失败**（选段/摘要/稳定性）：`compaction/start` 已落盘（`region.ts:210`，它就是锁），失败时**恰好一次** `compaction/end` 带 `error`（`:240-251`）；这段历史完全没变。
