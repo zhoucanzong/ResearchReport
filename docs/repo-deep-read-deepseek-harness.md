@@ -221,6 +221,8 @@ sequenceDiagram
 
 ### 5.7.2 组合包：`base` 是"共享核心 + 分层 patch"，`sdk-minimal` 是"独立整树"
 
+两份清单分别是 `packages/bundle/base/cordis.patch.yml`（529 行）与 `packages/bundle/sdk-minimal/cordis.patch.yml`（172 行）；下表的行数与结构均取自这两个文件及其首段注释。
+
 | 组合包 | 清单行数 | 结构 | 关键注释（原文） |
 |---|---|---|---|
 | `packages/bundle/base` | **529 行** `cordis.patch.yml` | **一个 insert 覆盖空 profile root**，作为共享核心；后续 bundle 与用户 patch 按 `id` 覆盖，**逐行 last write wins** | "applied as ONE insert over the empty profile root"；"the last write wins per row" |
