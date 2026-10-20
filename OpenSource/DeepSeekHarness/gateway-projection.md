@@ -1,4 +1,4 @@
-# DSH `api/gateway` 与"事件→客户端"投影（深读第六步）
+# DSH `api/gateway` 与"事件→客户端"投影
 
 > **对象**：`/tmp/dsh-src`（`deepseek-harness` `master`，`@deepseek-ai/dsh-root` **0.2.1-rc.2**），全程只读。
 > **方法**：`code-researcher` deep 模式的"运行路径 + 设计追问"，结论一律带 `文件:行`；否定性结论按 `../../docs/verification.md §5.7` 三要素（搜索面/方法/结果）写。

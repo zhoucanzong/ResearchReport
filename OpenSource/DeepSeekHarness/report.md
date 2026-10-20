@@ -7,17 +7,16 @@ date: 2026-10-20
 evidence: 精读原文
 status: completed
 ---
-
 # DeepSeek Harness（DSH）仓库深读
 
 > **方法**：`code-researcher` skill 的 `deep` 模式（四层法：Codebase Map → Runtime Story → Design Inquiry → Maintainer Notes），结论一律带 `文件:行`。
 > **对象**：`github.com/deepseek-ai/deepseek-harness`，`master` = **`0.2.1-rc.2`**（本机安装的桌面版为 `0.2.0-rc.2`）。
 > **快照**：2026-10-20，仓库 tarball 解包于 `/tmp/dsh-src`（`git clone` 在本机网络下会断流，改用 codeload）。
-> **状态**：六步全部完成——地图/启动链、工具与审批链、会话事件、压缩与组合包、ptc、gateway 投影；三篇专题在 [ptc.md](ptc.md)、[compaction-and-bundles.md](compaction-and-bundles.md)、[gateway-projection.md](gateway-projection.md)。
+> **范围**：仓库全貌 → 三条运行路径（启动链、工具调用与审批、会话事件）→ 工具调度与压缩语义 → 两份专项（ptc、compaction 与组合包）→ 设计追问 → 维护者笔记 → 证据索引。全文结论均带 `文件:行`。
 
 ---
 
-## 1. Codebase Map：这个仓库是什么
+## 1 仓库全貌：规模、分层与阅读路线
 
 一句话：**一个"一切皆插件"的 agent harness**，由 [Cordis](https://github.com/cordiverse/cordis) 驱动，设计论文指向 *A Programming Paradigm for Spatiotemporal Composability*（`README.zh.md:5`）。
 
@@ -66,7 +65,7 @@ status: completed
 
 ---
 
-## 2. Runtime Story #1：从命令到"运行中的应用"
+## 2 运行路径一：从命令到运行中的应用（启动链）
 
 **场景**：执行 `dsh`（或 `npx @deepseek-ai/dsh web`）时，仓库内部到底发生了什么。
 
@@ -102,35 +101,7 @@ flowchart LR
 
 ---
 
-## 3. Design Inquiry（初探）：为什么要"一切皆插件"
-
-**观察（代码事实）**
-- 启动路径上没有"应用主类"，只有 `composeProfile → boot`（`profile-boot.ts:292,323`）。
-- 组合包（`bundle/base`、`bundle/sdk-minimal`）只是**配置清单**，`agent-loop` 的 README 明确写"标准 agent 组合应挂载本包"（`packages/core/agent-loop/README.zh.md:11`）。
-- 插件管理在运行期可用（`plugin-manager/README.zh.md`），且 HMR 只在 YAML 开时生效。
-
-**推断（研究判断，非代码事实）**
-1. **插件化的收益是"能力可替换 + 启动可裁剪"**：同一条 `boot` 路径既能起 Web、也能起 CLI、也能起 Desktop，差别只在 profile 组合。
-2. **代价是"间接层变厚"**：读代码时，"这个功能在哪"要靠组合清单反查，而组合清单本身是配置（YAML），不是 import 图。
-3. **Cordis 的"时空可组合"**（论文标题）在本仓库最直接的体现就是：**同一套插件在有/无某能力的会话里表现不同**（session/scope 语义），这也是"scope"包存在的理由。
-
-> **待验证**：`core/scope` 的语义边界、以及"插件之间不允许直接 import"的约束是否被 lint 强制——留给第二步。
-
----
-
-## 4. Maintainer Notes（初版）
-
-| 关注点 | 现状（证据） | 影响 |
-|---|---|---|
-| **扩展点** | 新增能力 = 新增包 + 在 bundle/profile 里挂载 | 不需要改核心；但**必须同时改组合清单**，否则不会生效 |
-| **兼容性** | README 明示"开发者预览，会有破坏性变更"（`README.zh.md:13`） | 依赖它的外部项目要锁版本 |
-| **配置分层** | 环境层 + profile + patch（`app-boot`） | 排障时先看"哪一层覆盖了谁"，别直接改代码 |
-| **审批与沙箱** | `sandbox/escalation` 执行前 fail-closed | 想加"免审批"要走策略层，不要在工具里绕 |
-| **测试门槛** | 包内 `tests/` 密度高（如 `agent-loop/tests/` 10+ 个 spec） | 改动前先跑对应包的 spec |
-
----
-
-## 4.5 Runtime Story #2：一次工具调用与审批（代码事实）
+## 3 运行路径二：一次工具调用与审批
 
 **场景**：模型发起一次越界工具调用（例如写授权区外路径），系统如何"先问人、再执行"。
 
@@ -174,39 +145,15 @@ sequenceDiagram
   end
 ```
 
-### 4.5.1 边界：开源层能解释什么、不能解释什么
+### 3.1 边界：开源层能解释什么、不能解释什么
 
 上表的三条代码事实到此为止。**再往外就不是本仓库能证明的了**——例如"审批帧是否真的送达了某个具体客户端""某个会话为何长时间停在 `working`"，取决于 Host/Bot 运行层（闭源）的调度与推送实现，本仓库看不到，本文不作推断。
 
 ---
 
-## 5. 下一步（第二步要交付的）
+## 4 运行路径三：会话事件模型与组合包
 
-1. **Runtime Story #2：一次工具调用与审批** —— `core/agent-loop/src/tool-calls.ts` → `sandbox/sandbox/src/escalation.ts` → `client/ui-approval/src/client/contract/slots.ts`，把"卡为什么只在会话内可见"讲成代码事实。
-2. **设计追问**：`core/session` 的事件模型（谁投影到客户端、谁写盘）。
-3. **证据索引 + claim audit**：汇总所有结论↔`文件:行`，对强结论跑 `claim_audit.py`。
-
----
-
-## 5.5 证据索引补充（第二步）
-
-| 结论 | 证据 |
-|---|---|
-| 工具调用统一入口 | `packages/core/agent-loop/src/tool-calls.ts:60` |
-| 执行前可 await、dispatch/body 才重叠 | `tool-calls.ts:211,216` |
-| 审批由工具层闭包下传，沙箱不依赖 approval 类型 | `packages/sandbox/sandbox/src/escalation.ts:11-13` |
-| 严格更宽阶梯 | `escalation.ts:28`（`WIDER_MODES`）|
-| 升级目标为封闭词表 | `escalation.ts:41`（`ESCALATION_TARGETS`）|
-| `sandbox_permissions` 与 `justification` 必须成对 | `escalation.ts:51`（`validateEscalationArgs`）|
-| 无 approver / 无 agent 即抛错（fail-closed）| `escalation.ts:approveEscalation` 前半段 |
-| 审批结果闭集（allowed-once / rejected / cancelled / unavailable）| 同上 `switch` |
-| 无通道 = 抛 `unavailable`，不是挂起 | 同上错误文本 |
-| 审批是会话级待处理交互 | `packages/client/ui-session/src/client/index.ts:51`、`ui-approval/src/client/contract/slots.ts:21-27` |
-| 审批详情插槽作用域 = session | `slots.ts:36-39`（`scope: 'session'`）|
-
-## 5.7 第三步：会话事件模型与组合包（代码事实）
-
-### 5.7.1 会话是"仅追加的事件日志"
+### 4.1 会话是"仅追加的事件日志"
 
 `packages/core/session/README.zh.md` 的定位（原文摘要，`kind: package-reference`）：
 > 在**仅追加**的会话日志中记录每个模型可见事实，并**从该记录派生模型历史**；消费方可检查、回放、fork、刷新会话，同时保留历史事件；**压缩（compaction）只在活跃对话中隐藏被取代的条目，不删除**；除非加持久化后端，否则会话仅驻留内存。
@@ -223,7 +170,7 @@ sequenceDiagram
 
 > **这解释了为什么"审批"同时表现为"会话内 UI"与"日志事件"**：它同时是 **session 级待处理交互**（`ui-session` 的 `SessionPendingInteractionMap`）和 **session 日志里的一条事件**（`approval/asked`）。两者都不是"跨会话广播"——**没有全局审批总线**。
 
-### 5.7.2 组合包：`base` 是"共享核心 + 分层 patch"，`sdk-minimal` 是"独立整树"（证据：`packages/bundle/base/cordis.patch.yml`、`packages/bundle/sdk-minimal/cordis.patch.yml`）
+### 4.2 组合包：`base` 是"共享核心 + 分层 patch"，`sdk-minimal` 是"独立整树"（证据：`packages/bundle/base/cordis.patch.yml`、`packages/bundle/sdk-minimal/cordis.patch.yml`）
 
 两份清单分别是 `packages/bundle/base/cordis.patch.yml`（529 行）与 `packages/bundle/sdk-minimal/cordis.patch.yml`（172 行）；下表的行数与结构均取自这两个文件及其首段注释。
 
@@ -236,9 +183,9 @@ sequenceDiagram
 
 > **维护含义**：想"改一个插件的行为"，正确做法是**改它所在模式 bundle 的那一行**（整行 config 替换）；想"加一个能力"，要**同时**更新组合清单与用户 profile，否则 profile 层根本看不到它。
 
-## 5.9 第四步：工具调度、压缩语义与测试契约（代码事实）
+## 5 工具调度、压缩语义与测试契约
 
-### 5.9.1 并行工具的"有界滚动池 + 启动前重新分类"
+### 5.1 并行工具的"有界滚动池 + 启动前重新分类"
 
 | 事实 | 位置 | 说明 |
 |---|---|---|
@@ -251,7 +198,7 @@ sequenceDiagram
 
 > **设计判断**（研究推断；依据 `packages/core/agent-loop/src/tool-calls.ts:204-205` 的启动前重分类与 `packages/core/tools/src/index.ts:1311` 的 `executionMode`）：关键不是"并行"，而是"**并行度是安全属性**"——执行前重新分类 + 有界池，保证独占调用不被并行池里的其它调用夹住；这也是让工具自己声明执行模式、而不是调度器猜的原因。
 
-### 5.9.2 压缩（compaction）的语义边界（证据：`packages/compaction/compaction/README.zh.md`）
+### 5.2 压缩（compaction）的语义边界（证据：`packages/compaction/compaction/README.zh.md`）
 
 | 事实 | 位置 | 说明 |
 |---|---|---|
@@ -261,13 +208,13 @@ sequenceDiagram
 
 > 与 §5.7.1 的关系：会话是仅追加日志 → 压缩只改"当前活跃视图"，不改历史；这正是"回放/fork 可重建"的前提。
 
-### 5.9.3 `core/tools` 的职责边界
+### 5.3 `core/tools` 的职责边界
 
 `packages/core/tools/src/` 的组成即边界：`index.ts`（注册与执行模式）、`schema.ts` / `json-schema.ts` / `ts-types.ts` / `py-types.ts`（跨语言 schema 生成）、`presentation.ts`（呈现）、`ptc.ts` / `ptc-calls.ts`（Programmatic Tool Calling 形态）、`testing.ts`（夹具）。
 
 **推断**：`ptc` 的存在意味着工具可由代码编排而非仅模型逐步调用——值得单独深读（本次不含）。
 
-### 5.9.4 测试契约（目录名就是契约名）
+### 5.4 测试契约（目录名就是契约名）
 
 `packages/core/agent-loop/tests/` 共 **29 个 spec**，命名直接标出被保护的契约：
 
@@ -283,7 +230,7 @@ sequenceDiagram
 
 > **维护含义**：改调度/注入/恢复逻辑时，这 29 个 spec 是最低门槛；`contract-regressions` 与 `properties`（属性测试）说明作者把"行为契约"看得比"实现"重。
 
-### 5.9.5 审批的"可见面"：数据在会话级，入口在会话视图
+### 5.5 审批的"可见面"：数据在会话级，入口在会话视图
 
 | 事实 | 位置 |
 |---|---|
@@ -293,11 +240,11 @@ sequenceDiagram
 
 **结论（部分推断）**：数据模型把"待处理交互"挂在**会话粒度**上，所以"会话列表给标记"结构上可行；但**批准卡仍渲染在会话视图内**（§4.5），**开源代码里没有跨会话/OS 级通知通道**。后台会话的问题因此不是"数据没有"，而是"**没有面向人的入口**"。
 
-## 5.10 第五步：吸收两份专项深读（ptc 与 compaction/组合包）
+## 6 专项深读：ptc 与 compaction/组合包
 
 > 两份专项报告独立完成，正文分别是 [`ptc.md`](ptc.md) 与 [`compaction-and-bundles.md`](compaction-and-bundles.md)。本节只做**要点吸收与交叉引用**，不复述全文。
 
-### 5.10.1 `ptc`（Programmatic Tool Calling）：程序在沙箱、工具在宿主
+### 6.1 `ptc`（Programmatic Tool Calling）：程序在沙箱、工具在宿主
 
 | 结论 | 证据（详见子报告）|
 |---|---|
@@ -306,7 +253,7 @@ sequenceDiagram
 | **审批严格早于执行**：程序级升级复用 `approveEscalation`，测试证明审批未答时 resolver 未被调用 | 子报告 §4 |
 | 失败是**结果字段**（8 类 kind）而非异常；deadline 含嵌套审批等待、不含外层程序级审批（默认 120s / 上限 600s）| 子报告 §5 |
 
-### 5.10.2 `compaction`：日志保留是**会话层强制**，不是后端自觉
+### 6.2 `compaction`：日志保留是**会话层强制**，不是后端自觉
 
 | 结论 | 证据 |
 |---|---|
@@ -316,7 +263,7 @@ sequenceDiagram
 | 元数据侧再留清单（`shadowedRange`/`shadowedSeqs`/`shadowedTokenCount`）| `packages/compaction/compaction/src/types.ts:34-53` |
 | 失败/回滚：替换前失败有 `compaction/end(error)`；替换后失败**无回滚**，分类为 `ManualCompactionError('commit'/'persistence', …)`；孤儿锁靠 `session/end-seed` 判定陈旧 | 子报告 §失败与回滚 |
 
-### 5.10.3 `bundle/base` 的插件计数（三种数法交叉）
+### 6.3 `bundle/base` 的插件计数（三种数法交叉）
 
 | 口径 | 计数 |
 |---|---|
@@ -326,7 +273,7 @@ sequenceDiagram
 | 条件挂载（`!!js` 表达式）| **8** |
 | 校验 | 87 + 1 + 8 = 96 ✅；`!!js` 全文 16 次，其中 **8 次是挂载条件**、另 8 次在 `config` 中 |
 
-### 5.10.4 否定性结论怎么证明（这一节是给质检看的）
+### 6.4 否定性结论怎么证明
 
 "没找到 X"是**否定性结论**，不能只说"没找到"（下表的搜索面与方法均来自 `packages/core/tools/src/ptc.ts`、`packages/ptc-runtime/**`、`packages/core/session/src/*.ts` 的实际 grep）。本次两条核心否定结论的**证明方式**如下：
 
@@ -337,21 +284,56 @@ sequenceDiagram
 
 > **口径**：以上是"**穷举这些文件里的相关符号**"，不是"证明整个系统不存在该路径"。要写进结论时，必须把**搜索面与方法**一起写出来——这是否定性结论的验收标准。
 
-### 5.10.5 补强证据（质检指出）
+### 6.5 补强证据
 
 | 结论 | 证据 |
 |---|---|
 | `EscalationOutcome` 闭集四值 | `packages/sandbox/sandbox/src/escalation.ts:104` |
 | 结果的 4 分支 switch（`allowed-once` / `rejected` / `cancelled` / `unavailable`）| 同文件 `:202-206`（`unavailable` 在 `:205` 抛错）|
 
-## 5.6 待补（第五步）
+## 7 设计追问：为什么要"一切皆插件"
 
-- `core/session` 的事件模型：谁产生事件、谁投影到客户端、谁落盘；
-- 测试门槛：`agent-loop/tests/*.spec.ts` 覆盖的契约（如 `inbox.spec.ts` 对应"轮次内排队"）；
-- `core/tools` 的工具注册与 `tool-calls.ts` 的调度关系（并行调用上限 `maxParallelToolCalls` 的落点）；
-- 压缩（compaction）与"派生历史"的边界：哪些事件会改变模型可见历史。
+**观察（代码事实）**
+- 启动路径上没有"应用主类"，只有 `composeProfile → boot`（`profile-boot.ts:292,323`）。
+- 组合包（`bundle/base`、`bundle/sdk-minimal`）只是**配置清单**，`agent-loop` 的 README 明确写"标准 agent 组合应挂载本包"（`packages/core/agent-loop/README.zh.md:11`）。
+- 插件管理在运行期可用（`plugin-manager/README.zh.md`），且 HMR 只在 YAML 开时生效。
 
-## 5.8 证据索引补充（第三步）
+**推断（研究判断，非代码事实）**
+1. **插件化的收益是"能力可替换 + 启动可裁剪"**：同一条 `boot` 路径既能起 Web、也能起 CLI、也能起 Desktop，差别只在 profile 组合。
+2. **代价是"间接层变厚"**：读代码时，"这个功能在哪"要靠组合清单反查，而组合清单本身是配置（YAML），不是 import 图。
+3. **Cordis 的"时空可组合"**（论文标题）在本仓库最直接的体现就是：**同一套插件在有/无某能力的会话里表现不同**（session/scope 语义），这也是"scope"包存在的理由。
+
+> **边界**：`core/scope` 的语义细节，以及"插件之间不允许直接 import"是否有 lint 强制，本文未展开——不在本报告的可证范围内。
+
+---
+
+## 8 维护者笔记
+
+| 关注点 | 现状（证据） | 影响 |
+|---|---|---|
+| **扩展点** | 新增能力 = 新增包 + 在 bundle/profile 里挂载 | 不需要改核心；但**必须同时改组合清单**，否则不会生效 |
+| **兼容性** | README 明示"开发者预览，会有破坏性变更"（`README.zh.md:13`） | 依赖它的外部项目要锁版本 |
+| **配置分层** | 环境层 + profile + patch（`app-boot`） | 排障时先看"哪一层覆盖了谁"，别直接改代码 |
+| **审批与沙箱** | `sandbox/escalation` 执行前 fail-closed | 想加"免审批"要走策略层，不要在工具里绕 |
+| **测试门槛** | 包内 `tests/` 密度高（如 `agent-loop/tests/` 10+ 个 spec） | 改动前先跑对应包的 spec |
+
+---
+
+## 9 证据索引
+
+| 结论 | 证据 |
+|---|---|
+| 工具调用统一入口 | `packages/core/agent-loop/src/tool-calls.ts:60` |
+| 执行前可 await、dispatch/body 才重叠 | `tool-calls.ts:211,216` |
+| 审批由工具层闭包下传，沙箱不依赖 approval 类型 | `packages/sandbox/sandbox/src/escalation.ts:11-13` |
+| 严格更宽阶梯 | `escalation.ts:28`（`WIDER_MODES`）|
+| 升级目标为封闭词表 | `escalation.ts:41`（`ESCALATION_TARGETS`）|
+| `sandbox_permissions` 与 `justification` 必须成对 | `escalation.ts:51`（`validateEscalationArgs`）|
+| 无 approver / 无 agent 即抛错（fail-closed）| `escalation.ts:approveEscalation` 前半段 |
+| 审批结果闭集（allowed-once / rejected / cancelled / unavailable）| 同上 `switch` |
+| 无通道 = 抛 `unavailable`，不是挂起 | 同上错误文本 |
+| 审批是会话级待处理交互 | `packages/client/ui-session/src/client/index.ts:51`、`ui-approval/src/client/contract/slots.ts:21-27` |
+| 审批详情插槽作用域 = session | `slots.ts:36-39`（`scope: 'session'`）|
 
 | 结论 | 证据 |
 |---|---|
@@ -362,8 +344,6 @@ sequenceDiagram
 | patch 替换整行 config、不深合并 | `packages/bundle/base/cordis.patch.yml:7-9` |
 | 行顺序不承载加载语义、激活由服务可用性驱动 | `packages/bundle/base/cordis.patch.yml:13` |
 | sdk-minimal 不叠 base、自身是完整树 | `packages/bundle/sdk-minimal/cordis.patch.yml:1-3` |
-
-## 6. 证据索引（本文）
 
 | 结论 | 证据 |
 |---|---|

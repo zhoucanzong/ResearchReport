@@ -15,7 +15,7 @@
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
-| **DeepSeekHarness** | [DeepSeek Harness（DSH）仓库深读](<DeepSeekHarness/report.md>) | 368 行 |
+| **DeepSeekHarness** | [DeepSeek Harness（DSH）仓库深读](<DeepSeekHarness/report.md>) | 348 行 |
 | **nemotron** | [Nemotron-Labs-Diffusion 阅读报告](<nemotron/report.md>) | 206 行 |
 | **sglang** | [SGLang 仓库代码分析报告](<sglang/report.md>) | 310 行 |
 | **this-that-model** | [this-that-model 仓库深读](<this-that-model/report.md>) | 246 行 |
@@ -27,8 +27,8 @@
 <summary><b>DeepSeekHarness</b>（3 份）</summary>
 
 * [compaction-and-bundles.md](<DeepSeekHarness/compaction-and-bundles.md>) — 380 行 / 45,465 B
-* [gateway-projection.md](<DeepSeekHarness/gateway-projection.md>) — 131 行 / 10,561 B
-* [ptc.md](<DeepSeekHarness/ptc.md>) — 249 行 / 35,235 B
+* [gateway-projection.md](<DeepSeekHarness/gateway-projection.md>) — 131 行 / 10,540 B
+* [ptc.md](<DeepSeekHarness/ptc.md>) — 249 行 / 35,232 B
 
 </details>
 
