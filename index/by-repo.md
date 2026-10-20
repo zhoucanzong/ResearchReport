@@ -50,9 +50,8 @@
 * [Models/Runway/report.md](<../Models/Runway/report.md>) — 732 行
 * [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>) — 873 行
 
-## OpenSource (2)
+## OpenSource (1)
 
-* [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) — 373 行
 * [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) — 206 行
 
 ## VisualGen (8)
@@ -74,6 +73,10 @@
 ## https://github.com/FLock-io/this-that-model@6af11c63c8bb260aa4bed2b7717f33f25decd16e (1)
 
 * [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) — 246 行
+
+## https://github.com/deepseek-ai/deepseek-harness@master(0.2.1-rc.2) (1)
+
+* [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) — 374 行
 
 ## https://github.com/sgl-project/sglang@2a08e261ecd4cdfb04ec354f9005f18b88108b7d (1)
 

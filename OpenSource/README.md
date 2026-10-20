@@ -15,7 +15,7 @@
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
-| **DeepSeekHarness** | [DeepSeek Harness 仓库深读（第一步：地图 + 启动链）](<DeepSeekHarness/report.md>) | 373 行 |
+| **DeepSeekHarness** | [DeepSeek Harness（DSH）仓库深读](<DeepSeekHarness/report.md>) | 374 行 |
 | **nemotron** | [Nemotron-Labs-Diffusion 阅读报告](<nemotron/report.md>) | 206 行 |
 | **sglang** | [SGLang 仓库代码分析报告](<sglang/report.md>) | 310 行 |
 | **this-that-model** | [this-that-model 仓库深读](<this-that-model/report.md>) | 246 行 |

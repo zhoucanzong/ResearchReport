@@ -77,7 +77,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | DeepSeek Harness 仓库深读（第一步：地图 + 启动链） | — | — | — |
+| [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | DeepSeek Harness（DSH）仓库深读 | repo-research | 2026-10-20 | completed |
 
 ## DiT (1)
 

@@ -11,13 +11,14 @@
 
 | 条目 | date | 板块 | 专题 |
 | --- | --- | --- | --- |
+| [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | 2026-10-20 | OpenSource | DeepSeekHarness |
 | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 2026-10-17 | WorldModel | WorldModels |
 | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 2026-10-17 | Infra | SpeculativeDecoding |
 | [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | 2026-10-16 | OpenSource | vllm |
 | [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | 2026-10-16 | OpenSource | this-that-model |
 | [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | 2026-10-16 | OpenSource | sglang |
 
-## 无 date 元数据（44）
+## 无 date 元数据（43）
 
 以下条目缺少可解析的 `date`，无法参与「最近更新」排序：
 
@@ -54,7 +55,6 @@
 * [Models/Qwen/report.md](<../Models/Qwen/report.md>)
 * [Models/Runway/report.md](<../Models/Runway/report.md>)
 * [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>)
-* [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>)
 * [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>)
 * [VisualGen/3DGen/report.md](<../VisualGen/3DGen/report.md>)
 * [VisualGen/AudioGen/report.md](<../VisualGen/AudioGen/report.md>)

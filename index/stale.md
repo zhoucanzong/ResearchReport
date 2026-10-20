@@ -9,17 +9,18 @@
 
 判定口径：`status` 不是 active/current/ok/stable/published，或 `date` 早于 180 天。
 
-## 已标记（5）
+## 已标记（6）
 
 | 条目 | 原因 |
 | --- | --- |
 | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | status=completed |
+| [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | status=completed |
 | [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | status=completed |
 | [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | status=completed |
 | [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | status=completed |
 | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | status=completed |
 
-## 无 date 且无 status（无法判定，44）
+## 无 date 且无 status（无法判定，43）
 
 以下条目既没有 `date` 也没有 `status`，陈旧度无法评估（不算作已标记）：
 
@@ -56,7 +57,6 @@
 * [Models/Qwen/report.md](<../Models/Qwen/report.md>)
 * [Models/Runway/report.md](<../Models/Runway/report.md>)
 * [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>)
-* [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>)
 * [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>)
 * [VisualGen/3DGen/report.md](<../VisualGen/3DGen/report.md>)
 * [VisualGen/AudioGen/report.md](<../VisualGen/AudioGen/report.md>)

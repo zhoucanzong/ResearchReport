@@ -56,17 +56,17 @@
 | [Models/Runway/report.md](<../Models/Runway/report.md>) | Runway 视频生成与编辑模型系列研究报告 | — | — | — |
 | [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>) | Stability AI / Black Forest Labs 图像生成模型系列研究报告 | — | — | — |
 
-## OpenSource (2)
+## OpenSource (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | DeepSeek Harness 仓库深读（第一步：地图 + 启动链） | — | — | — |
 | [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | Nemotron-Labs-Diffusion 阅读报告 | — | — | — |
 
-## Repo-Research (3)
+## Repo-Research (4)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
+| [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | DeepSeek Harness（DSH）仓库深读 | repo-research | 2026-10-20 | completed |
 | [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | SGLang 仓库代码分析报告 | repo-research | 2026-10-16 | completed |
 | [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | this-that-model 仓库深读 | repo-research | 2026-10-16 | completed |
 | [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | vLLM 仓库代码分析报告 | repo-research | 2026-10-16 | completed |

@@ -1,9 +1,19 @@
-# DeepSeek Harness 仓库深读（第一步：地图 + 启动链）
+---
+type: repo-research
+domain: Repo-Research
+subject: DeepSeekHarness
+upstream: https://github.com/deepseek-ai/deepseek-harness@master(0.2.1-rc.2)
+date: 2026-10-20
+evidence: 精读原文
+status: completed
+---
+
+# DeepSeek Harness（DSH）仓库深读
 
 > **方法**：`code-researcher` skill 的 `deep` 模式（四层法：Codebase Map → Runtime Story → Design Inquiry → Maintainer Notes），结论一律带 `文件:行`。
 > **对象**：`github.com/deepseek-ai/deepseek-harness`，`master` = **`0.2.1-rc.2`**（本机安装的桌面版为 `0.2.0-rc.2`）。
 > **快照**：2026-10-20，仓库 tarball 解包于 `/tmp/dsh-src`（`git clone` 在本机网络下会断流，改用 codeload）。
-> **状态**：第一步（地图 + 启动链）与第二步（工具调用与审批链）已完成；`core/session` 事件模型与测试门槛待补。
+> **状态**：六步全部完成——地图/启动链、工具与审批链、会话事件、压缩与组合包、ptc、gateway 投影；三篇专题在 [ptc.md](ptc.md)、[compaction-and-bundles.md](compaction-and-bundles.md)、[gateway-projection.md](gateway-projection.md)。
 
 ---
 
