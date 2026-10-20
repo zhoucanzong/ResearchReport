@@ -232,7 +232,64 @@ sequenceDiagram
 
 > **维护含义**：想"改一个插件的行为"，正确做法是**改它所在模式 bundle 的那一行**（整行 config 替换）；想"加一个能力"，要**同时**更新组合清单与用户 profile，否则 profile 层根本看不到它。
 
-## 5.6 待补（第三步）
+## 5.9 第四步：工具调度、压缩语义与测试契约（代码事实）
+
+### 5.9.1 并行工具的"有界滚动池 + 启动前重新分类"
+
+| 事实 | 位置 | 说明 |
+|---|---|---|
+| 并行调用用**有界滚动池**，且**启动前重新分类** | `packages/core/agent-loop/src/tool-calls.ts:3`（模块注释）| 不是"一刀切并行" |
+| 执行模式由工具注册表给出 | `packages/core/tools/src/index.ts:1311`（`executionMode(exec)`）| 工具自己声明并行/独占 |
+| 到每个调用真正启动**前**再读一次 | `tool-calls.ts:204-205`：下一个调用若非 `parallel` 就 **break** | 动态降级，避免被独占工具夹住 |
+| 独占与并行分两种推进 | `tool-calls.ts:90`：`mode === 'parallel' ? planned.slice(next) : [first]` | 独占单发成屏障 |
+| 调度器失败处理 | `tool-calls.ts:114-119,142,171,208-210`：**排空已派发、拒绝后续** | 失败不留半截 |
+| 上限是**可热更**配置 | `packages/core/agent-loop/src/index.ts:308,345-346`（`Volatile<number>`、zod `.min(1).default(...).volatile()`）| 运行时调；`0` 被 schema 拒绝（`tests/settings.spec.ts:35`）|
+
+> **设计判断**（研究推断）：关键不是"并行"，而是"**并行度是安全属性**"——执行前重新分类 + 有界池，保证独占调用不被并行池里的其它调用夹住；这也是让**工具自己声明 `executionMode`** 而不是调度器猜的原因。
+
+### 5.9.2 压缩（compaction）的语义边界
+
+| 事实 | 位置 | 说明 |
+|---|---|---|
+| 较早历史压成**一条摘要消息**，近期对话不动 | `packages/compaction/compaction/README.zh.md` 概述 | 模型"像摘要一直在"那样继续 |
+| **被遮蔽内容仍留在会话日志** | 同上 | 所以回放能确定性重现同一份压缩后对话 |
+| 压缩由**后端**执行，本包只做协议 | 同上 | 后端如 `compaction-basic`、`-image-offload`、`-tool-result-pruner`（`packages/compaction/*`）|
+
+> 与 §5.7.1 的关系：会话是仅追加日志 → 压缩只改"当前活跃视图"，不改历史；这正是"回放/fork 可重建"的前提。
+
+### 5.9.3 `core/tools` 的职责边界
+
+`packages/core/tools/src/` 的组成即边界：`index.ts`（注册与执行模式）、`schema.ts` / `json-schema.ts` / `ts-types.ts` / `py-types.ts`（跨语言 schema 生成）、`presentation.ts`（呈现）、`ptc.ts` / `ptc-calls.ts`（Programmatic Tool Calling 形态）、`testing.ts`（夹具）。
+
+**推断**：`ptc` 的存在意味着工具可由代码编排而非仅模型逐步调用——值得单独深读（本次不含）。
+
+### 5.9.4 测试契约（目录名就是契约名）
+
+`packages/core/agent-loop/tests/` 共 **29 个 spec**，命名直接标出被保护的契约：
+
+| spec | 契约 |
+|---|---|
+| `inbox.spec.ts` | 轮次内"收件箱"（中途注入消息）|
+| `tool-order.spec.ts` / `tool-updates.spec.ts` | 工具顺序与状态更新 |
+| `request-freeze` / `request-reconstruction` | 请求冻结与重建 |
+| `resume.spec.ts` / `shutdown-drain.spec.ts` | 恢复与关闭排空 |
+| `contract-regressions.spec.ts` | 契约回归（防旧行为被无意破坏）|
+| `system-prompt-admission` / `-projection` | 系统提示准入与投影 |
+| `settings.spec.ts` | 配置热更（含 `maxParallelToolCalls` 边界）|
+
+> **维护含义**：改调度/注入/恢复逻辑时，这 29 个 spec 是最低门槛；`contract-regressions` 与 `properties`（属性测试）说明作者把"行为契约"看得比"实现"重。
+
+### 5.9.5 审批的"可见面"：数据在会话级，入口在会话视图
+
+| 事实 | 位置 |
+|---|---|
+| 会话状态带 `pendingInteraction: SessionPendingInteraction \| undefined` | `packages/client/ui-session/src/client/index.ts:64` |
+| 会话列表行取该字段（`this.pendingSnapshot.get(id)`）| `:538` |
+| 变化检测基于该字段 | `:706` |
+
+**结论（部分推断）**：数据模型把"待处理交互"挂在**会话粒度**上，所以"会话列表给标记"结构上可行；但**批准卡仍渲染在会话视图内**（§4.5），**开源代码里没有跨会话/OS 级通知通道**。后台会话的问题因此不是"数据没有"，而是"**没有面向人的入口**"。
+
+## 5.6 待补（第五步）
 
 - `core/session` 的事件模型：谁产生事件、谁投影到客户端、谁落盘；
 - 测试门槛：`agent-loop/tests/*.spec.ts` 覆盖的契约（如 `inbox.spec.ts` 对应"轮次内排队"）；
