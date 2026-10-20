@@ -286,6 +286,7 @@ nav:
       - "最近更新": "index/recent.md"
       - "待复核": "index/stale.md"
   - "📖 文档":
+      - "DSH `ptc` 线深读：Programmatic Tool Calling 的机制与安全边界": "docs/deepread-dsh-ptc.md"
       - "DSH Harness 反馈清单（2026-10-18，来自一次真实事故）": "docs/harness-feedback.md"
       - "🛠 维护指南 · Maintenance": "docs/maintenance.md"
       - "DeepSeek Harness 仓库深读（第一步：地图 + 启动链）": "docs/repo-deep-read-deepseek-harness.md"
