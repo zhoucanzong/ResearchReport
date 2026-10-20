@@ -289,6 +289,57 @@ sequenceDiagram
 
 **结论（部分推断）**：数据模型把"待处理交互"挂在**会话粒度**上，所以"会话列表给标记"结构上可行；但**批准卡仍渲染在会话视图内**（§4.5），**开源代码里没有跨会话/OS 级通知通道**。后台会话的问题因此不是"数据没有"，而是"**没有面向人的入口**"。
 
+## 5.10 第五步：吸收两份专项深读（ptc 与 compaction/组合包）
+
+> 两份专项由研研、究究各自独立完成，正文分别是 [`deepread-dsh-ptc.md`](deepread-dsh-ptc.md) 与 [`deepread-dsh-compaction-bundles.md`](deepread-dsh-compaction-bundles.md)。本节只做**要点吸收与交叉引用**，不复述全文。
+
+### 5.10.1 `ptc`（Programmatic Tool Calling）：程序在沙箱、工具在宿主
+
+| 结论 | 证据（详见子报告）|
+|---|---|
+| 模型输出一段**程序**，程序在**受沙箱约束的子进程**里用 `await tools.<name>(args)` 嵌套调**宿主工具** | `docs/deepread-dsh-ptc.md` §机制；本仓 `packages/core/tools/src/ptc.ts` |
+| 入口工具 `run_code`；开关 `mode:'ptc'` 或 per-agent `presentAs('ptc')` | 子报告 §3 |
+| **审批严格早于执行**：程序级升级复用 `approveEscalation`，测试证明审批未答时 resolver 未被调用 | 子报告 §4 |
+| 失败是**结果字段**（8 类 kind）而非异常；deadline 含嵌套审批等待、不含外层程序级审批（默认 120s / 上限 600s）| 子报告 §5 |
+
+### 5.10.2 `compaction`：日志保留是**会话层强制**，不是后端自觉
+
+| 结论 | 证据 |
+|---|---|
+| 后端提交替换时必须把 `[startSeq, summarySeq, ...shadowedSeqs]` 全部写进 `sourceEventSeqs` | `packages/compaction/compaction-basic/src/region.ts:505-509` |
+| 会话 append 时校验"必须覆盖每个被遮蔽节点"，否则抛错 | `packages/core/session/src/surface.ts:330-364`（判定 `:361-364`）|
+| 表面折叠只 splice 模型可见节点列表，**日志本身只有 push** | `packages/core/session/src/surface.ts:563-585`、`packages/core/session/src/index.ts:886` |
+| 元数据侧再留清单（`shadowedRange`/`shadowedSeqs`/`shadowedTokenCount`）| `packages/compaction/compaction/src/types.ts:34-53` |
+| 失败/回滚：替换前失败有 `compaction/end(error)`；替换后失败**无回滚**，分类为 `ManualCompactionError('commit'/'persistence', …)`；孤儿锁靠 `session/end-seed` 判定陈旧 | 子报告 §失败与回滚 |
+
+### 5.10.3 `bundle/base` 的插件计数（三种数法交叉）
+
+| 口径 | 计数 |
+|---|---|
+| 插件行（`^    - id:`）| **96** |
+| 必挂（无条件、未禁用）| **87** |
+| 默认禁用（`disabled: true`）| **1**（`tool-plugin-manager`）|
+| 条件挂载（`!!js` 表达式）| **8** |
+| 校验 | 87 + 1 + 8 = 96 ✅；`!!js` 全文 16 次，其中 **8 次是挂载条件**、另 8 次在 `config` 中 |
+
+### 5.10.4 否定性结论怎么证明（这一节是给质检看的）
+
+"没找到 X"是**否定性结论**，不能只说"没找到"（下表的搜索面与方法均来自 `packages/core/tools/src/ptc.ts`、`packages/ptc-runtime/**`、`packages/core/session/src/*.ts` 的实际 grep）。本次两条核心否定结论的**证明方式**如下：
+
+| 否定结论 | 搜索面 | 方法 | 结果 |
+|---|---|---|---|
+| **`ptc` 未找到绕过审批的提权路径** | `packages/core/tools/src/ptc.ts`、`ptc-calls.ts`、`packages/ptc-runtime/**` | `grep -rn "approveEscalation\|approval"` 全量列出；确认**唯一的审批入口**是 `ptc.ts:395 await approveEscalation({...})`，其余命中是类型导入（`:21,23`）与 schema 描述（`:103,104,113,124`）| 只有一处审批调用，且在程序执行前 |
+| **会话日志无删除路径** | `packages/core/session/src/*.ts` | `grep -rnE "\.log\.(splice\|pop\|shift\|length *=)\|delete .*log\|truncate"` | **0 命中**；唯一写入是 `this.log.push`（`index.ts` 内 2 处）|
+
+> **口径**：以上是"**穷举这些文件里的相关符号**"，不是"证明整个系统不存在该路径"。要写进结论时，必须把**搜索面与方法**一起写出来——这正是我们给否定性结论定的标准。
+
+### 5.10.5 补强证据（质检指出）
+
+| 结论 | 证据 |
+|---|---|
+| `EscalationOutcome` 闭集四值 | `packages/sandbox/sandbox/src/escalation.ts:104` |
+| 结果的 4 分支 switch（`allowed-once` / `rejected` / `cancelled` / `unavailable`）| 同文件 `:202-206`（`unavailable` 在 `:205` 抛错）|
+
 ## 5.6 待补（第五步）
 
 - `core/session` 的事件模型：谁产生事件、谁投影到客户端、谁落盘；
