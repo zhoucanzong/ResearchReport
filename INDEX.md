@@ -784,7 +784,7 @@
 | [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 10,798 B |
 | [docs/statistics.md](<docs/statistics.md>) | docs | 212 | 16,435 B |
 | [docs/team.md](<docs/team.md>) | docs | 133 | 13,826 B |
-| [docs/verification.md](<docs/verification.md>) | docs | 285 | 19,491 B |
+| [docs/verification.md](<docs/verification.md>) | docs | 307 | 20,827 B |
 | [scripts/README.md](<scripts/README.md>) | scripts | 99 | 4,589 B |
 
 
