@@ -3,7 +3,7 @@
 > **方法**：`code-researcher` skill 的 `deep` 模式（四层法：Codebase Map → Runtime Story → Design Inquiry → Maintainer Notes），结论一律带 `文件:行`。
 > **对象**：`github.com/deepseek-ai/deepseek-harness`，`master` = **`0.2.1-rc.2`**（本机安装的桌面版为 `0.2.0-rc.2`）。
 > **快照**：2026-10-20，仓库 tarball 解包于 `/tmp/dsh-src`（`git clone` 在本机网络下会断流，改用 codeload）。
-> **状态**：本文是**第一步**（地图 + 第一条运行路径）；第二条运行路径（工具调用与审批）与设计取舍、维护笔记在后续补充。
+> **状态**：第一步（地图 + 启动链）与第二步（工具调用与审批链）已完成；`core/session` 事件模型与测试门槛待补。
 
 ---
 
@@ -120,6 +120,62 @@ flowchart LR
 
 ---
 
+## 4.5 Runtime Story #2：一次工具调用与审批（代码事实）
+
+**场景**：模型发起一次越界工具调用（例如写授权区外路径），系统如何"先问人、再执行"。
+
+| 步 | 位置 | 发生了什么 | 证据 |
+|---|---|---|---|
+| 1 | `core/agent-loop/src/tool-calls.ts:60` | `executeToolCalls()` 统一驱动本轮的多个工具调用 | 导出签名 |
+| 2 | `tool-calls.ts:211,216` | 执行前可 await（有序 pre-execute）；只有 dispatch/body 允许重叠 | 注释即契约 |
+| 3 | `sandbox/sandbox/src/escalation.ts:11-13` | 工具层**闭包** `ctx.approval.request(...)` 并下传，沙箱包**不依赖** approval 服务类型 | 模块注释 |
+| 4 | `escalation.ts:28` | `WIDER_MODES`：`workspace-write → danger-full-access`（严格更宽阶梯） | 常量表 |
+| 5 | `escalation.ts:41` | `ESCALATION_TARGETS`：**封闭**的升级目标词表 | 常量 |
+| 6 | `escalation.ts:51` | `validateEscalationArgs()`：`sandbox_permissions` 与 `justification` **必须成对**，缺一即"畸形请求" | 函数 |
+| 7 | `escalation.ts:approveEscalation` | 先校验"严格更宽"；再校验**有 approver**、**有 agent 可路由**；然后才 `approver.request(...)` | 逐行可见 |
+| 8 | 同上 | `request` 传 `{agent, toolName, callId, reason: "escalate sandbox to ...", displayReason{en,zh}}` | 同一处 |
+| 9 | 同上 | 结果闭集：`allowed-once` / `rejected` / `cancelled` / **`unavailable`** | `switch` 四个分支 |
+| 10 | 同上 | **`unavailable` 直接抛错**："requires approval, but no approval channel is available" | 错误文本 |
+
+**三个可以直接下结论的代码事实**
+
+1. **审批是"执行前"的硬门**：`approveEscalation` 在任何执行之前完成校验与询问，且 `rejected` 会抛硬错并提示"不要绕过"（错误文本原文如此）。**设计上是 fail-closed**。
+2. **没有 approver 就不执行**：`approval.approver === undefined` 或 `approval.agent === undefined` 都**立刻抛错**，而不是静默放行。**这推翻了"没通道就一直挂"的猜想——开源层遇到无通道是报错，不是等。**
+3. **审批是"会话级待处理交互"**：客户端把审批放进 `SessionPendingInteractionMap`（`packages/client/ui-session/src/client/index.ts:51`，由 `ui-approval` 声明 `approval: PendingApproval`，`ui-approval/src/client/contract/slots.ts:21-27`），而详情插槽 `conversation.approval.detail` 的作用域写明 `scope: 'session'`（`slots.ts:36-39`）。**所以"卡只在会话里"是类型系统层面的设计，不是渲染 bug。**
+
+```mermaid
+sequenceDiagram
+  participant M as 模型
+  participant AL as agent-loop<br/>tool-calls.ts
+  participant SB as sandbox<br/>escalation.ts
+  participant AP as approval 服务<br/>(ctx.approval.request)
+  participant UI as 客户端
+  M->>AL: 发起越界工具调用
+  AL->>SB: approveEscalation(mode, justification)
+  SB->>SB: 校验 strictly-wider + justification 成对
+  alt 无 approver / 无 agent
+    SB-->>AL: 抛错（fail-closed）
+  else 有 approver
+    SB->>AP: request(reason, displayReason)
+    AP->>UI: 投影为 SessionPendingInteraction(approval)
+    UI-->>AP: allowed-once / rejected / cancelled
+    AP-->>SB: outcome
+    SB-->>AL: 放行到 mode / 抛错
+  end
+```
+
+### 4.5.1 这对我们那两起事故意味着什么
+
+| 我们的现象 | 代码能解释的部分 | 代码不能解释的部分（推断） |
+|---|---|---|
+| 审批卡只在 Bot 私聊里可见 | **能**：审批是 session 级 pending interaction（`ui-session/src/client/index.ts:51`、`slots.ts:36-39`）| 为什么没有"跨会话/全局"的入口——**开源层就没有这个 surface** |
+| 没有审批请求被创建（`approval/asked` = 0）| **能**：没有越界调用就不会有请求 | — |
+| 会话卡在 `working` 十小时 | **部分**：开源层"无通道"是**抛错**，不是等待 | **挂起发生在闭源的 Host/Bot 层**：approver 存在但永不 settle（无人可答），或唤醒被抑制 |
+
+> **口径**：前两行是代码事实；第三行只能给"闭源层"的推断，**必须与代码事实分开写**——这也是我们给自己定的引用纪律。
+
+---
+
 ## 5. 下一步（第二步要交付的）
 
 1. **Runtime Story #2：一次工具调用与审批** —— `core/agent-loop/src/tool-calls.ts` → `sandbox/sandbox/src/escalation.ts` → `client/ui-approval/src/client/contract/slots.ts`，把"卡为什么只在会话内可见"讲成代码事实。
@@ -127,6 +183,28 @@ flowchart LR
 3. **证据索引 + claim audit**：汇总所有结论↔`文件:行`，对强结论跑 `claim_audit.py`。
 
 ---
+
+## 5.5 证据索引补充（第二步）
+
+| 结论 | 证据 |
+|---|---|
+| 工具调用统一入口 | `packages/core/agent-loop/src/tool-calls.ts:60` |
+| 执行前可 await、dispatch/body 才重叠 | `tool-calls.ts:211,216` |
+| 审批由工具层闭包下传，沙箱不依赖 approval 类型 | `packages/sandbox/sandbox/src/escalation.ts:11-13` |
+| 严格更宽阶梯 | `escalation.ts:28`（`WIDER_MODES`）|
+| 升级目标为封闭词表 | `escalation.ts:41`（`ESCALATION_TARGETS`）|
+| `sandbox_permissions` 与 `justification` 必须成对 | `escalation.ts:51`（`validateEscalationArgs`）|
+| 无 approver / 无 agent 即抛错（fail-closed）| `escalation.ts:approveEscalation` 前半段 |
+| 审批结果闭集（allowed-once / rejected / cancelled / unavailable）| 同上 `switch` |
+| 无通道 = 抛 `unavailable`，不是挂起 | 同上错误文本 |
+| 审批是会话级待处理交互 | `packages/client/ui-session/src/client/index.ts:51`、`ui-approval/src/client/contract/slots.ts:21-27` |
+| 审批详情插槽作用域 = session | `slots.ts:36-39`（`scope: 'session'`）|
+
+## 5.6 待补（第三步）
+
+- `core/session` 的事件模型：谁产生事件、谁投影到客户端、谁落盘；
+- 测试门槛：`agent-loop/tests/*.spec.ts` 覆盖的契约（如 `inbox.spec.ts` 对应"轮次内排队"）；
+- 组合包对比：`bundle/base` vs `bundle/sdk-minimal` 的插件清单差异（解释"能力裁剪"）。
 
 ## 6. 证据索引（本文）
 
