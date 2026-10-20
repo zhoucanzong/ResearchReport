@@ -93,7 +93,7 @@
 
 ---
 
-## 5.6 三类"Bot 不回话"的区分表（结合我们踩过的坑）
+## 5.6 三类"Bot 不回话"的区分表
 
 | 故障 | 可观测信号（本仓库 + 运行库）| 代码位置 |
 |---|---|---|
@@ -101,7 +101,7 @@
 | **② 回合卡住（等审批）** | `inbox_admissions` 有行；会话 `activity` 停在 `working`；`approval/asked` 已写入会话日志但无 `approval/decided` | `approval/asked` 见 `packages/core/session/src/known-event-types.ts:25-26` |
 | **③ 编排层不可用** | 工具统一返回 `Orchestrator run is unavailable`（**本仓库 0 命中**，来自闭源层）；恢复后自愈 | 无（不在开源代码内）|
 
-> **用途**：以后再遇到"Bot 不回话"，先按这三行分诊，别一律当"投递失败"处理——今晚三种我们都遇到过。
+> **用途**：遇到"Bot 不回话"时，先按这三行分诊，别一律当"投递失败"处理——三者根因不同，处置也不同。
 
 ---
 

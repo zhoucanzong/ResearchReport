@@ -76,7 +76,7 @@
 
 ## https://github.com/deepseek-ai/deepseek-harness@master(0.2.1-rc.2) (1)
 
-* [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) — 374 行
+* [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) — 368 行
 
 ## https://github.com/sgl-project/sglang@2a08e261ecd4cdfb04ec354f9005f18b88108b7d (1)
 
