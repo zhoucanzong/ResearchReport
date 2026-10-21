@@ -1,6 +1,6 @@
 # 选文说明与候选池 · SpeculativeDecoding
 
-> 目的：**先筛选、后精读**。把“为什么选这 8 篇、为什么没选其它”写清楚，以后不必重复筛。
+> 目的：**先筛选、后精读**。把“为什么选这 12 项、为什么没选其它”写清楚，以后不必重复筛。
 > 证据纪律：本页只做**选文判断**，不含未核实的论文结论。**带 ID 的排除项均已回查 arXiv 元数据**；未核实的按类别排除，**不编号、不编造 ID**。
 
 ## 1. 本条目要回答什么（决定选文标准）
@@ -14,7 +14,7 @@
 **入选门槛（满足其一）**：提出新机制或新范式 ｜ 首次在某能力上成立且有规模证据 ｜ 成为后续基线 ｜ 证伪/纠正已有共识。
 **淘汰标准（命中其一）**：增量调参无新机制 ｜ 只在玩具设置验证或无消融 ｜ 已被后续取代 ｜ 与本条目主题仅擦边 ｜ 拿不到正文。
 
-## 2. 入选（8 篇，逐篇一句理由）
+## 2. 入选（12 项，逐篇一句理由）
 
 | 分册 | 入选理由（一句话） |
 | :-- | :-- |
@@ -24,6 +24,10 @@
 | [SpecInfer](../papers/2305.09781-specinfer.md) | 树验证系统源头；多 SSM、树宽、batch 依赖，是后续所有树验证的公共祖先。 |
 | [MagicDec](../papers/2408.11049-magicdec.md) | 系统条件代表；用“临界序列长度”把“大 batch 不适合投机”证伪一半，补上 batch×序列的第三维。 |
 | [RheoSampling](../papers/2609.21827-rheosampling.md) | T>0 动态树的无损修复；本轮“转折点”的核心证据，且明确给出接受率 = `Σ min(p,q)`。 |
+| [SecureSD](../papers/2610.08678-secure-sd.md) | 2026-10 新增安全维度：测量有损验证下 jailbreak/prompt-injection 相对 utility 的退化，并提出按位置校正；arXiv 元数据称已收 IEEE S&P 2027。 |
+| [DARTree](../papers/2608.13524-dartree.md) | 把扩散块草稿的校正从一条链扩展到多条条件分支，并用分层并行扩展 + 延迟 top-B 替代逐节点 heap；代码可固定，适合解释 2026 diffusion draft 的树化。 |
+| [SpecStream](../papers/2609.33184-specstream.md) | 代表 serving 系统线：围绕已提交 KV、流式 full-attention、按 useful output 调 q 和共卡调度设计，且论文明确展示 PCIe offload 的速度边界。 |
+| [DLite](../papers/2610.23787-dlite.md) | 10 月最新的 agentic drafter 工作：把 target hidden states 当上下文，删除的是 draft 历史 KV/重复历史编码；有论文与官方推理代码可相互核对。 |
 | [vLLM 实现核验](../papers/vllm-implementation.md) | 生产框架一手代码；`greedy` vs `probabilistic` 的语义分叉，是“论文 q 如何落地”的最佳样本。 |
 | [SGLang 实现核验](../papers/sglang-implementation.md) | 生产框架一手代码；#10308 的处置对象，能同时回答“issue 状态”与“代码能力”。 |
 
@@ -44,9 +48,9 @@
 
 | # | 类别 | 排除理由（一句话） |
 | --: | :-- | :-- |
-| 5 | **块/扩散草稿**：DFlash、DSpark、BASTION 等（2026 预印本/工程博客） | 正文细节与复现条件不够稳定；本轮只做谱系定位，数字不入表，列为**下一轮首选**。 |
+| 5 | **块/扩散草稿**：DFlash、DSpark、BASTION 等 | DARTree 已覆盖“扩散 proposal + 分支条件校正”这一交叉点；其余工作仍作为 draft/训练基线留在素材层，逐篇纳入前需先比较新机制和可核实验。 |
 | 6 | **自投机子型**：Hydra、SWIFT、CLaSp、LayerSkip 等 | 机制已被 Medusa（并行头）与 EAGLE（特征级）覆盖；作为素材层保留，不重复设册。 |
-| 7 | **系统优化**：TriForce、Mirror-SD 等 | 与 MagicDec（长上下文/大 batch）和 SpecInfer（树验证）在系统轴上重叠；本轮优先保留可核验正文的两篇。 |
+| 7 | **系统优化**：TriForce、Mirror-SD 等 | SpecStream 已补 KV offload / streaming / co-execution；TriForce 作为其论文内基线出现。其它系统仍需固定实现和同条件对照，避免与 MagicDec 重复讲历史 KV 结论。 |
 | 8 | **量化/分层交叉**：QSpec、HiSpec 等 | 更适合归 `Infra/QuantizationEdge`；本条目只在谱系里提一句。 |
 | 9 | **多模态投机**：ViSpec、SpecVLM、MSD、SpecPrune-VLA 等 | 素材层已有横切文档；本轮篇幅优先给“验证 + 系统”两条主线。 |
 | 10 | **领域/语种特化**：DictSpec、CDSL 等 | 属于“检索式/受限输出”的补充；已在素材层保留，本轮不设册。 |
@@ -59,8 +63,8 @@
 
 | 项 | 数 | 说明 |
 | :-- | --: | :-- |
-| 候选池 N | **22** | 4 条带 ID 的排除 + 10 条类别排除 + 8 条入选 |
-| 入选 M | **8** | 6 篇论文分册（覆盖 8 篇论文）+ 2 篇代码核验 |
+| 候选池 N | **26** | 4 条带 ID 的排除 + 10 条类别排除 + 12 条入选 |
+| 入选 M | **12** | 10 篇论文分册（覆盖 12 篇论文）+ 2 篇框架代码核验 |
 | 排除 | **14** | 4 带 ID + 10 类别 |
 | 其中本轮重新核 ID | **4** | `2310.08461` / `2402.12374` / `2408.15766` / `2403.00835` |
 | 未设分册但进谱系 | 3+ | DFlash / DSpark / BASTION（只定位，不入表） |
@@ -69,14 +73,15 @@
 
 ## 5. 下一轮候选（按价值排序）
 
-1. **DFlash / DSpark / BASTION**：块扩散/预算感知，2026 主线；需要正文与可复现条件。
-2. **Traversal Verification**（NeurIPS 2025）：与 RheoSampling 正交的验证遍历改进，值得单独设册。
-3. **CAST**（ICLR 2026）：成本感知建树；目前只有二手解读页，需一手正文。
-4. **HCSpec / HeteroSpec**（ACL 2026）：级联/异构验证预算；需通读 PDF。
-5. **多模态/VLA 投机**：素材层线索多，但正文质量参差；先筛再读。
+1. **DLite 的迁移边界**：扩展到其它 target 家族/尺寸，并检查 LiteSpec 完整训练栈、实际模型权重和输出等价性。
+2. **SpecStream 源码/互联扩展**：找到作者实现固定 SHA，审计 SGLang 内核与 PCIe/NVLink/更大并发下的 trade-off。
+3. **Traversal Verification**（NeurIPS 2025）：与 RheoSampling 正交的验证遍历改进，值得单独设册。
+4. **CAST**（ICLR 2026）：成本感知建树；目前只有二手解读页，需一手正文。
+5. **HCSpec / HeteroSpec**（ACL 2026）：级联/异构验证预算；需通读 PDF。
+6. **多模态/VLA 投机**：素材层线索多，但正文质量参差；先筛再读。
 
 ## 6. 与 `papers/` 的对应
 
-- 入选 8 篇各有独立分册；每篇开头含「亮点与差异」四行，正文展开七问。
+- 入选的论文研究各有独立分册；每篇开头含「亮点与差异」四行，正文展开七问。
 - 本页与 [MANIFEST.md](MANIFEST.md) 配套：**清单入库、全文不入库**；代码只记 `仓库@commit:文件:行`。
 - 与 `report.md` §9 一致：report 的“选文说明”是摘要，本页是完整清单。

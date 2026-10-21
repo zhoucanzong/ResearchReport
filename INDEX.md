@@ -15,15 +15,15 @@
 | --- | --- |
 | **条目数**（`report.md`） | **50** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 6 |
-| 条目子文档数 | 106 |
-| 条目正文行数（剔除 front-matter） | 27,262 |
-| 条目字节 | 1,881,824 B |
+| 条目子文档数 | 110 |
+| 条目正文行数（剔除 front-matter） | 27,195 |
+| 条目字节 | 1,882,351 B |
 | 带 front-matter 的条目 | 9 |
 | 带合法 `date` 的条目 | 9 |
-| 文档（除生成物外的全部 `.md`） | 172 |
+| 文档（除生成物外的全部 `.md`） | 176 |
 | 其中文件名 `README.md` | 8 |
-| 纳入版本控制的文件 | 196 |
-| 纳入版本控制的 `.md` | 180 |
+| 纳入版本控制的文件 | 200 |
+| 纳入版本控制的 `.md` | 184 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -36,9 +36,9 @@
 | LLM | 8 | 27 | 4,136 | 299,102 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,758 | 320,420 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 2 | 31 | 1,213 | 130,531 B | [板块页 →](<WorldModel/README.md>) |
-| Infra | 3 | 29 | 972 | 71,984 B | [板块页 →](<Infra/README.md>) |
+| Infra | 3 | 33 | 905 | 72,511 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 33 | 1,561 | 167,014 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **50** | **172** | **27,262** | **1,881,824 B** | — |
+| **合计** | **50** | **176** | **27,195** | **1,882,351 B** | — |
 
 ## 分面索引
 
@@ -622,10 +622,10 @@
 
 </details>
 
-### Infra（3 条目 / 29 文档）
+### Infra（3 条目 / 33 文档）
 
 <details>
-<summary><b>基础设施 Infra（3 条目 / 25 子文档）</b></summary>
+<summary><b>基础设施 Infra（3 条目 / 29 子文档）</b></summary>
 
   <details>
   <summary><b>QuantizationEdge</b> · <code>Infra/QuantizationEdge/report.md</code> · 188 行 · 2026-10-22</summary>
@@ -640,13 +640,13 @@
   </details>
 
   <details>
-  <summary><b>SpeculativeDecoding</b> · <code>Infra/SpeculativeDecoding/report.md</code> · 603 行 · 2026-10-22</summary>
+  <summary><b>SpeculativeDecoding</b> · <code>Infra/SpeculativeDecoding/report.md</code> · 536 行 · 2026-10-22</summary>
 
 
-    * **条目**：[Infra/SpeculativeDecoding/report.md](<Infra/SpeculativeDecoding/report.md>)（603 行 / 43,076 B）
+    * **条目**：[Infra/SpeculativeDecoding/report.md](<Infra/SpeculativeDecoding/report.md>)（536 行 / 43,603 B）
     * **专题目录**：`Infra/SpeculativeDecoding`
     * **元数据**：type=`topic-research` · domain=`Infra` · subject=`SpeculativeDecoding` · date=`2026-10-22` · status=`needs-review`
-    * **子文档（25）**
+    * **子文档（29）**
         * [legacy/speculative-block-diffusion.md](<Infra/SpeculativeDecoding/legacy/speculative-block-diffusion.md>) — 230 行 / 18,588 B
         * [legacy/speculative-cascade-heterogeneous.md](<Infra/SpeculativeDecoding/legacy/speculative-cascade-heterogeneous.md>) — 141 行 / 11,829 B
         * [legacy/speculative-classical-and-self.md](<Infra/SpeculativeDecoding/legacy/speculative-classical-and-self.md>) — 157 行 / 12,113 B
@@ -663,15 +663,19 @@
         * [papers/2401.15077-eagle-series.md](<Infra/SpeculativeDecoding/papers/2401.15077-eagle-series.md>) — 244 行 / 19,850 B
         * [papers/2402.02057-lookahead.md](<Infra/SpeculativeDecoding/papers/2402.02057-lookahead.md>) — 202 行 / 15,270 B
         * [papers/2408.11049-magicdec.md](<Infra/SpeculativeDecoding/papers/2408.11049-magicdec.md>) — 200 行 / 14,379 B
+        * [papers/2608.13524-dartree.md](<Infra/SpeculativeDecoding/papers/2608.13524-dartree.md>) — 31 行 / 3,850 B
         * [papers/2609.21827-rheosampling.md](<Infra/SpeculativeDecoding/papers/2609.21827-rheosampling.md>) — 216 行 / 15,804 B
+        * [papers/2609.33184-specstream.md](<Infra/SpeculativeDecoding/papers/2609.33184-specstream.md>) — 44 行 / 5,416 B
+        * [papers/2610.08678-secure-sd.md](<Infra/SpeculativeDecoding/papers/2610.08678-secure-sd.md>) — 55 行 / 6,108 B
+        * [papers/2610.23787-dlite.md](<Infra/SpeculativeDecoding/papers/2610.23787-dlite.md>) — 48 行 / 6,161 B
         * [papers/sglang-implementation.md](<Infra/SpeculativeDecoding/papers/sglang-implementation.md>) — 220 行 / 15,358 B
         * [papers/vllm-implementation.md](<Infra/SpeculativeDecoding/papers/vllm-implementation.md>) — 227 行 / 18,077 B
-        * [sources/CANDIDATES.md](<Infra/SpeculativeDecoding/sources/CANDIDATES.md>) — 82 行 / 7,644 B
+        * [sources/CANDIDATES.md](<Infra/SpeculativeDecoding/sources/CANDIDATES.md>) — 87 行 / 8,871 B
         * [sources/CODE-AUDIT.md](<Infra/SpeculativeDecoding/sources/CODE-AUDIT.md>) — 87 行 / 8,110 B
-        * [sources/MANIFEST.md](<Infra/SpeculativeDecoding/sources/MANIFEST.md>) — 40 行 / 5,225 B
+        * [sources/MANIFEST.md](<Infra/SpeculativeDecoding/sources/MANIFEST.md>) — 61 行 / 8,910 B
         * [topics/algorithm-families.md](<Infra/SpeculativeDecoding/topics/algorithm-families.md>) — 164 行 / 12,014 B
         * [topics/systems-throughput-latency.md](<Infra/SpeculativeDecoding/topics/systems-throughput-latency.md>) — 168 行 / 10,532 B
-        * [topics/verification-acceptance.md](<Infra/SpeculativeDecoding/topics/verification-acceptance.md>) — 157 行 / 8,698 B
+        * [topics/verification-acceptance.md](<Infra/SpeculativeDecoding/topics/verification-acceptance.md>) — 159 行 / 9,197 B
 
   </details>
 
@@ -792,7 +796,7 @@
 
 | 文档 | 板块 | 行数 | 字节 |
 | --- | --- | --: | --: |
-| [Infra/README.md](<Infra/README.md>) | Infra | 59 | 4,166 B |
+| [Infra/README.md](<Infra/README.md>) | Infra | 63 | 4,596 B |
 | [LLM/README.md](<LLM/README.md>) | LLM | 57 | 3,746 B |
 | [Models/README.md](<Models/README.md>) | Models | 95 | 4,362 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 91 | 3,889 B |

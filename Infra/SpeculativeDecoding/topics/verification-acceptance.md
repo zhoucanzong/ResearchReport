@@ -122,6 +122,8 @@ T>0 的 point-mass 接受概率 \(p(d)\) 不等于“候选是否是 target argm
 
 [Medusa 的 typical acceptance](../papers/2401.10774-medusa.md) 不等于经典拒绝采样；在没有额外定理时，也不能笼统把它升级成“分布偏移有界”。不同保证与不同基线的加速数字不能合成排行榜。
 
+**安全评测是另一条任务指标轴。** `Secure Speculative Decoding`（arXiv `2610.08678v1`，§3–§7）研究的是**有损 verifier**：作者将标准验证与放宽验证比较，发现 jailbreak / prompt-injection 的 PRR 可早于 HumanEval / GSM8K 下降，并用早期位置校正来恢复部分安全性能。这不改变标准拒绝采样的分布等价证明，也不构成对任意攻击或所有模型的安全保证；见[论文精读](../papers/2610.08678-secure-sd.md)。
+
 ## 7. 指标口径：两个分母、一个修正 token
 
 按 [vLLM 分册及锚点表](../sources/CODE-AUDIT.md) 的固定版本记录：

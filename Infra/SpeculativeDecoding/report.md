@@ -10,14 +10,14 @@ status: needs-review
 # 投机解码（Speculative Decoding）技术专题 · 深度调研
 
 > **声明**：本报告由 AI Agent 自动调研生成，未经官方确认；引用具体参数、日期或 benchmark 前请回溯原始来源。
-> **调研日期**：2026-10-17（本轮：**按新标准升级**——新增 `papers/` 8 篇逐篇精读、`topics/` 3 篇横切专题、`sources/` 馆藏清单；`report.md` 重写为入口/结论/判据/总表）。
-> **定位**：投机解码 = **用低成本草稿换 target 的并行验证**，在**输出分布可证等价（或明示有界风险）**的前提下降低解码 wall-clock。本条目管的是“**算法 + 验证 + 系统条件**”这一整条链，不把“草稿模型训练”单独抽出去。
+> **资料核查**：截至 2026-10-22；本轮补入 [SecureSD](papers/2610.08678-secure-sd.md)、[SpecStream](papers/2609.33184-specstream.md)、[DARTree](papers/2608.13524-dartree.md) 与 [DLite](papers/2610.23787-dlite.md) 四篇新近工作，覆盖安全、长上下文 KV serving、扩散树校正、Agent 历史建模。论文与源码均固定到具体版本，证据范围见[来源清单](sources/MANIFEST.md)。
+> **定位**：投机解码 = **用低成本草稿换 target 的并行验证**，在**输出分布可证等价（或明示有界风险）**的前提下降低解码 wall-clock；定义与保证边界见[验证专题](topics/verification-acceptance.md)。本条目管的是“**算法 + 验证 + 系统条件**”这一整条链，不把“草稿模型训练”单独抽出去。
 
 **证据等级约定（单一主等级）**：
 
 | 等级 | 含义 | 本轮用法 |
 | :-- | :-- | :-- |
-| `[精读原文]` | 已抓正文并定位到数值/结论段落；代码类须有 `仓库@commit:文件:行` | 8 篇 `papers/` 全部满足（代码类两篇为代码级） |
+| `[精读原文]` | 固定论文版本并定位到支撑结论的正文；代码类须有 `仓库@commit:文件:行` | 每篇分册标出具体阅读范围；代码实现另标静态核验范围 |
 | `[摘要级]` | 仅核验官方摘要/会议页/项目页，未通读正文 | 只用于“登记存在”，不进结论数字 |
 | `[二手]` | 第三方解读、工程博客、周报 | 只作线索，不入对照表 |
 | `[⚠️受限核验]` | 一手对象无法直接抓取，只能经镜像/元数据交叉确证 | 逐条写明“卡在哪” |
@@ -32,7 +32,7 @@ status: needs-review
 
 本条目采用三层结构：本页 = 入口 + 结论 + 谱系 + 总表；`papers/` = 逐篇精读；`topics/` = 横切专题。
 
-### 逐篇精读（`papers/`，8 篇）
+### 分册（`papers/`，10 篇论文笔记覆盖 12 篇论文，另有 2 份框架代码核验）
 
 | # | 分册 | 系统 | 在谱系中的位置 | 行数 |
 | --: | :-- | :-- | :-- | --: |
@@ -42,8 +42,12 @@ status: needs-review
 | 4 | [2305.09781-specinfer.md](papers/2305.09781-specinfer.md) | SpecInfer | 独立 draft·树验证系统 | 201 |
 | 5 | [2408.11049-magicdec.md](papers/2408.11049-magicdec.md) | MagicDec | 系统条件·长上下文大 batch | 200 |
 | 6 | [2609.21827-rheosampling.md](papers/2609.21827-rheosampling.md) | RheoSampling | T>0 动态树的无损修复 | 216 |
-| 7 | [vllm-implementation.md](papers/vllm-implementation.md) | vLLM @ 2b85d9cb | 生产框架·draft/verify 两路径 | 220 |
-| 8 | [sglang-implementation.md](papers/sglang-implementation.md) | SGLang @ 2a08e261 | 生产框架·topk=1 拒绝采样 | 219 |
+| 7 | [2610.08678-secure-sd.md](papers/2610.08678-secure-sd.md) | SecureSD | 有损验证的安全—效用不对称；早期位置校正 | 55 |
+| 8 | [2608.13524-dartree.md](papers/2608.13524-dartree.md) | DARTree | 扩散草稿 + 分支条件校正 + 延迟剪枝 | 31 |
+| 9 | [2609.33184-specstream.md](papers/2609.33184-specstream.md) | SpecStream | 历史 KV 流式 offload 与共卡草稿调度 | 44 |
+| 10 | [2610.23787-dlite.md](papers/2610.23787-dlite.md) | DLite | 复用 target hidden states 的无历史 draft KV | 48 |
+| 11 | [vllm-implementation.md](papers/vllm-implementation.md) | vLLM @ 2b85d9cb | 生产框架·draft/verify 两路径 | 220 |
+| 12 | [sglang-implementation.md](papers/sglang-implementation.md) | SGLang @ 2a08e261 | 生产框架·topk=1 拒绝采样 | 219 |
 
 ### 横切专题（`topics/`，3 篇）
 
@@ -66,7 +70,7 @@ status: needs-review
 ## 0. 一页结论
 
 1. **投机解码的收益不是“算法属性”，而是“算法 × 负载 × 硬件”的联合属性**。EAGLE 在 SGLang batch=24 就跌破 1.0×（0.93×），EAGLE-3 在 batch=64 仍有 1.38×；同一族、不同版本，拐点不同。`[精读原文]`
-2. **“无损”须按保证与算法形式区分**：严格分布保持与贪心等价需要各自证明；逐 token / 序列级是验证形式，不能另当正确性等级；typical acceptance 的经验质量也不能直接升级为分布偏移有界。详见 [验证专题 §6](topics/verification-acceptance.md#6-无损需要区分保证与经验)。`[精读原文]`
+2. **“无损”须按保证与算法形式区分**：严格分布保持与贪心等价需要各自证明；逐 token / 序列级是验证形式，不能另当正确性等级；typical acceptance 的经验质量也不能直接升级为分布偏移有界。新近 SecureSD 还测到：对有损 verifier，jailbreak/prompt-injection 指标可能比通用 utility 更早退化；这不推翻严格无损方法的等价证明。详见 [验证专题 §6](topics/verification-acceptance.md#6-无损需要区分保证与经验)与[SecureSD 精读](papers/2610.08678-secure-sd.md)。`[精读原文]`
 3. **T>0 的动态树必须分析候选选择条件**：不能从贪心 benchmark 推出所有采样配置的收益。对按 `q` 排序/剪枝的随机候选，需核对存活条件和实际提议分布；RheoSampling 给出一种特定构造。未核版本的默认配置不在此断言。`[精读原文]`
 4. **top-K 改变的是接受率，不是无偏性**：单链拒绝采样的 α* = Σ min(p,q) = 1 − TV；top-K 截断只要验证端用同一分布、残差用完整 p，输出仍严格等于 p。把“top-K 有偏”当结论是错的。`[精读原文]`
 5. **草稿来源的四族不是代际，而是并存选项**：独立 draft（SpecInfer）、自投机（EAGLE/Medusa）、免训练（Lookahead）、块/扩散（DFlash 一类）。选族先看“有没有 draft / 能不能训 / 输出是否模板化”。`[精读原文]`
@@ -74,7 +78,8 @@ status: needs-review
 7. **指标必须成对**：`draft_acceptance_rate`（分母=提议草稿数）与 `mean_acceptance_length`（分母=验证步数，含 bonus）会反向移动；只报一个会得出相反结论。`[精读原文（vLLM 代码）]`
 8. **工程落地已经分叉成两种语义**：vLLM 用 `draft_sample_method ∈ {greedy, probabilistic}`；SGLang 用 `speculative_use_rejection_sampling` + `assert topk == 1`。两者都能把真实 `draft_probs` 传给验证，但适用形状不同。`[精读原文（代码）]`
 9. **历史 issue #10308 的准确结论**：issue 于 2025-09-11 开立、2026-01-03 以 `state_reason=completed` 由 `github-actions[bot]` 关闭，timeline 无 linked PR/commit；但它请求的“topk=1 采样验证”能力已在 SGLang 主线以 `draft_probs` + 拒绝采样开关实现，且**硬限制 topk=1**；tree topk>1 仍走 target-only kernel。`[精读原文（代码）]`
-10. **证据边界**：本条目 8 篇分册中 6 篇是论文正文精读、2 篇是代码级核验；**未做独立复现**，所有加速比均为论文/官方自报值。
+10. **新近工作开始解决不同瓶颈**：DARTree 改候选树构造，DLite 改草稿器的历史建模，SpecStream 改 KV 生命周期与传输调度；三者不是一条可直接按加速比排名的算法线，见 §2.4。
+11. **证据边界**：专题现含 [12 篇学术论文与 5 个固定版本代码快照](sources/MANIFEST.md)（含参考实现）；[SecureSD](papers/2610.08678-secure-sd.md)、[DARTree](papers/2608.13524-dartree.md)、[DLite](papers/2610.23787-dlite.md) 分册阅读范围各有说明，[SpecStream](papers/2609.33184-specstream.md) 未发现可固定的作者代码仓库。**没有独立复现**，性能数字均为作者或官方报告值。
 
 ---
 
@@ -168,7 +173,8 @@ flowchart LR
 | 2024 H2 | 特征级自投机 + 动态树 | EAGLE-1 / EAGLE-2 | [EAGLE 分册](papers/2401.15077-eagle-series.md) |
 | 2025 | 训练目标 + 数据 scaling | EAGLE-3 | 同上 |
 | 2026 H1 | 块扩散/预算感知 | DFlash / DSpark / BASTION | 谱系定位（无分册） |
-| 2026 H2 | T>0 正确性 + 系统条件 | RheoSampling；MagicDec | [RheoSampling](papers/2609.21827-rheosampling.md)、[MagicDec](papers/2408.11049-magicdec.md) |
+| 2026 H2 | T>0 正确性、安全边界与新系统瓶颈 | RheoSampling；SecureSD；SpecStream | [RheoSampling](papers/2609.21827-rheosampling.md)、[SecureSD](papers/2610.08678-secure-sd.md)、[SpecStream](papers/2609.33184-specstream.md) |
+| 2026 新近结构线 | 扩散草稿的分支校正；Agent 场景下复用 target 上下文 | DARTree；DLite | [DARTree](papers/2608.13524-dartree.md)、[DLite](papers/2610.23787-dlite.md) |
 | 2026 | 生产框架落地 | vLLM / SGLang | [vLLM](papers/vllm-implementation.md)、[SGLang](papers/sglang-implementation.md) |
 
 ### 2.3 五根可判定的轴
@@ -180,6 +186,20 @@ flowchart LR
 | C 拓扑 | 链 / 静态树 / 动态树 / 块 | 看验证 mask |
 | D 接受率上限 | 由 p 与 q 的对齐度决定 | 同条件比 τ 或 acceptance rate |
 | E 负载行为 | batch↑ 升/降/反转 | 看 batch×序列扫描 |
+
+> 本节依据 [DARTree](papers/2608.13524-dartree.md)、[SpecStream](papers/2609.33184-specstream.md) 与 [DLite](papers/2610.23787-dlite.md) 的固定版本原文。
+
+### 2.4 投机解码方向的新近工作
+
+截至 2026-10-22，投机解码的进展不只是“更高接受率”。下面的判断来自 [DARTree](papers/2608.13524-dartree.md)、[SpecStream](papers/2609.33184-specstream.md) 与 [DLite](papers/2610.23787-dlite.md) 固定版本精读；三篇工作分别改变不同层：
+
+| 工作 | 它改变什么 | 读它时先问什么 |
+| :-- | :-- | :-- |
+| [DARTree](papers/2608.13524-dartree.md)（8 月） | 对扩散草稿沿多条候选分支分别做因果校正，并把建树与全局 top-B 剪枝分离 | 树验证预算与候选宽度固定时，批量建树是否在目标模型/硬件上减少真实 draft wall-clock？ |
+| [SpecStream](papers/2609.33184-specstream.md)（9 月） | 按 target commit 边界 offload 历史 KV、流式验证、共享 KV 读取，并在传输等待时共卡运行 draft | PCIe 数据搬运能否被 overlap 隐藏到足以补偿每轮全历史传输？它明确显示长输入仍慢于全驻 GPU。 |
+| [DLite](papers/2610.23787-dlite.md)（10 月） | 把 target 多层 hidden states 当作紧凑上下文，草稿器仅做局部预测，不保存 draft 历史 KV | 免去的是 draft KV 和重复历史建模；target KV 仍在，收益目前由 Qwen3-4B/8B 证据支撑。 |
+
+我的阅读判断：它们分别对应**候选覆盖效率、系统内存/数据移动、草稿表征与训练**三类问题；不能把 DARTree/DLite 的 `τ` 或 AR-relative speedup 与 SpecStream 的并发服务 throughput 横向排名。若继续扩展本专题，优先追 DLite 的其它 target/训练可迁移性、SpecStream 的真实源码与不同互联拓扑，再看 lossless 与高并发共存的条件。
 
 ---
 
@@ -270,6 +290,9 @@ flowchart LR
 | **EAGLE-3 @ SGLang** | 2025 | II | 同上 | — | 链（链长 3，不用树） | 1.38× 吞吐（batch=64）；2.36× 吞吐（batch=1） | 1×H100、LLaMA3.1-8B、MT-Bench | 同上（Table 3/4） |
 | **MagicDec** | 2024–25 | I/自投机 | 稀疏 KV 自投机 | 免训练 | 链 | 最高 2.51× | 长上下文、batch 32–256、8×H100 | [分册](papers/2408.11049-magicdec.md) |
 | **RheoSampling** | 2026 | II+验证 | EAGLE-3 官方 draft | 不重训 | 动态树 | τ 5.04→5.25；加速 2.84→2.93× | T=1.0、单 A6000、树 60/8 | [分册](papers/2609.21827-rheosampling.md) |
+| **DARTree** | 2026 | IV+校正 | DFlash/扩散块 + Domino correction | 不重训 | 路径校正树 | GSM8K 9.73×；τ=12.97 | Qwen3-4B、T=0、batch=1、RTX 6000 Ada、B=64 | [分册](papers/2608.13524-dartree.md) |
+| **DLite** | 2026 | II/IV 交叉 | target hidden-state + 局部块草稿 | 两段蒸馏 | 块 + 顺序头 | SWE-Bench 2.74×；τ=3.19 | Qwen3-8B、H800、K=7、相对本地 AR | [分册](papers/2610.23787-dlite.md) |
+| **SpecStream** | 2026 | serving 系统 | Draft 与 Target 共卡 | 使用现成模型 | 流式多-query 验证 | vs TriForce 1.41×/1.32×；vs SD+Offload 1.44×/1.62× | 2×A800 PCIe、8 并发汇总；长输入仍逊于 GPU-resident SGLang | [分册](papers/2609.33184-specstream.md) |
 | **vLLM** | 2026 | 框架 | EAGLE/MTP/DFlash/standalone | 取决 draft | 链/树 | 本分册不报 | commit 2b85d9cb | [分册](papers/vllm-implementation.md) |
 | **SGLang** | 2026 | 框架 | EAGLE/MTP/DFlash | 取决 draft | 链（topk=1）/树 | 本分册不报 | commit 2a08e261 | [分册](papers/sglang-implementation.md) |
 
@@ -297,6 +320,9 @@ flowchart LR
 | 1×H100、batch=1、MT-Bench | 158.34 → 373.25 tokens/s（2.36×） | EAGLE-3 Table 4 |
 | T=1.0、单 A6000、树 60/8 | RheoSampling τ 5.04→5.25；2.84→2.93× | RheoSampling |
 | T=1.0、Vicuna-13B | Rheo τ 5.75→5.89；3.37→3.43× | RheoSampling |
+| Qwen3-4B、T=0、batch=1、RTX 6000 Ada、GSM8K | DARTree τ=12.97；9.73× vs local AR | DARTree Table 1 |
+| Qwen3-8B、T=0、H800、K=7、SWE-Bench | DLite τ=3.19；2.74× vs local AR；DSpark 1.60× | DLite Table 3 |
+| Qwen3/InternLM2.5、2×A800 PCIe、8 并发、CPU KV offload | SpecStream vs TriForce 1.41×/1.32×；vs SD+Offload 1.44×/1.62× | SpecStream §5.2.2 |
 
 > 这张表只用于“查条件”，**不能横向排序**。例如 2.51×（MagicDec，长上下文大 batch）与 6.5×（EAGLE-3，五任务上限）不是同一坐标。
 
@@ -345,6 +371,7 @@ flowchart LR
 2. **top-K 的接受率上限**：即使 q=p，纯 top-K 也到不了 100%（缺随机 token）。
 3. **草稿质量上限**：独立 draft 的容量差（100–1000×）；Medusa 头无前缀依赖；EAGLE-1/2 的特征约束限制数据 scaling。
 4. **有界风险不是无损**：Medusa typical acceptance、ARC-Decode、CDSL。
+5. **宽松验证的任务风险不只看准确率**：SecureSD 在所测设置中发现 jailbreak 和 prompt-injection PRR 早于 HumanEval/GSM8K 退化；详见 [SecureSD 精读](papers/2610.08678-secure-sd.md)。
 5. **树参数不可移植**：EAGLE-2 的 60/6 与 RheoSampling 的 60/8 不可混用。
 
 ### 6.2 系统边界
@@ -358,7 +385,7 @@ flowchart LR
 
 ### 6.3 证据边界
 
-1. **未独立复现**：8 篇分册的数字均为论文/官方自报；RheoSampling 无公开代码。
+1. **未独立复现**：所有论文分册数字均为论文/官方自报；RheoSampling 无公开代码。
 2. **未设分册的 2026 工作**（DFlash/DSpark/BASTION）只作谱系定位，数字不入表。
 3. **素材层与分册冲突时以分册为准**（例：EAGLE 的 arXiv 编号）。
 4. **代码行为绑定 commit**：vLLM `2b85d9cb`、SGLang `2a08e261`；换版本需重核。
@@ -456,109 +483,22 @@ flowchart LR
 
 ---
 
-## 9. 选文说明
+## 9. 阅读范围与证据状态
 
-### 9.1 候选池 / 入选 / 排除
+本专题汇总 12 篇学术论文（10 个论文分册，EAGLE 分册覆盖三篇）与 5 个固定版本代码快照：vLLM/SGLang 两个框架、DARTree/DLite 两个论文实现，以及 EAGLE 官方参考切面。逐篇版本、选择与排除理由见 [来源清单](sources/MANIFEST.md) 和 [选文记录](sources/CANDIDATES.md)。本轮新增 SecureSD、DARTree、SpecStream、DLite；阅读范围和代码可得性按论文分别注明，其他 legacy 素材未随本次补核升级。没有独立性能复现，所有加速数字仍应按原论文的硬件、batch、温度和序列条件理解。
 
-- **候选池 N = 22**（论文/系统/代码仓库；含本轮新增与素材层已出现的工作）。
-- **入选 M = 8**（6 篇论文分册 + 2 篇代码核验）。
-- **排除 14**，逐条理由见 [sources/CANDIDATES.md](sources/CANDIDATES.md)；**排除项不编造 ID**。
-
-### 9.2 为什么是这 8 篇
-
-| 入选 | 理由（一句话） |
-| :-- | :-- |
-| EAGLE 系列 | 工程实现代表；三代演进把“特征级/动态树/TTT”这条主线讲全 |
-| Medusa | 并行头代表；typical acceptance 是“有界风险”的早期样本 |
-| Lookahead | 免训练代表；one-hot 草稿无损性的关键论据 |
-| SpecInfer | 树验证系统源头；多 SSM/树宽/batch 依赖 |
-| MagicDec | 系统条件代表；临界序列长度把“大 batch 不划算”证伪一半 |
-| RheoSampling | T>0 动态树的无损修复；本轮“转折点”的核心证据 |
-| vLLM | 生产框架一手代码；greedy/probabilistic 语义分叉 |
-| SGLang | 生产框架一手代码；#10308 的处置对象 |
-
-### 9.3 没选的（以及为什么）
-
-- **DFlash / DSpark / BASTION**：2026 预印本/工程博客，正文与复现条件不稳定；本轮只做谱系定位，数字不入表。列为下一轮候选。
-- **HASS**：与 EAGLE-3 同属“训练目标/上下文对齐”线，但 EAGLE-3 论文已直接对照 HASS；单独设册会重复。
-- **Hydra / SWIFT / CLaSp / LayerSkip**：自投机子型，机制已被 Medusa/EAGLE 覆盖；在素材层保留。
-- **Sequoia / TriForce / Mirror-SD**：系统优化，部分与 MagicDec/SpecInfer 重叠；本轮不设册。
-- **QSpec / HiSpec**：量化/分层交叉，归 `Infra/QuantizationEdge` 更合适。
-- **多模态/端侧/领域特化**：素材层已有横切文档；本轮篇幅优先给“验证 + 系统”两条主线。
-
-### 9.4 候选池统计（可逐条核对）
-
-| 项 | 数 | 说明 |
-| :-- | --: | :-- |
-| 候选池 N | 22 | 论文 14 + 系统/框架 5 + 代码仓库 3 |
-| 入选 M | 8 | 6 论文 + 2 代码 |
-| 排除 | 14 | 8 条带已核实 ID；6 条类别性排除 |
-| 未设分册但进谱系 | 3+ | DFlash / DSpark / BASTION（只定位，不入表） |
-| 素材层保留 | 11 | 未重写、未删除；冲突以分册为准 |
-
-> 排除项的具体 ID 与理由见 [sources/CANDIDATES.md](sources/CANDIDATES.md)；**没有核实 ID 的排除项只写类别，不编号**。
-
----
-
-## 10. skill 使用证据
-
-| skill | 用在哪 | 证据 |
-| :-- | :-- | :-- |
-| `researcher`（deep） | 论文筛选、正文精读、七问抽取 | 8 篇分册均有 `arXiv ID + 版本日期`；每篇「亮点四行」+ 七问 + 失效边界；`claim_audit` 报数见 §11 |
-| `code-researcher`（trace/deep） | vLLM / SGLang / EAGLE 代码核验 | 全部分册使用 `仓库@commit:文件:行`；vLLM/SGLang 分册含代码地图与调用链 |
-| `paper-fetcher` | arXiv 元数据/版本/license 核验 | `sources/MANIFEST.md` 的 ID/版本/日期/标题/作者/license 均逐条回查；本地缓存不依赖 |
-
-### 10.1 三个 skill 的具体落点
-
-- `researcher`（deep）：先用 arXiv API 回查候选的标题/作者/版本/日期，再抓 HTML 正文逐节读；产出模板统一为「亮点四行 + 七问 + 带条件表 + 失效边界」。
-- `code-researcher`（trace）：先定位入口（`eagle_sample` / `rejection_sample`），再沿调用链追到 kernel；每个强结论必须有 `文件:行`，否则降级为“推断”。
-- `paper-fetcher`：只用于元数据/引用，不把摘要当正文；无正文的条目（ARC-Decode、CAST）标 `[摘要级]`/`[二手]`，不升格。
-
----
-
-## 11. 复现与核验记录
-
-| 项 | 结果 |
-| :-- | :-- |
-| 论文元数据 | 9 个 arXiv ID 经 `export.arxiv.org` 逐条回查（标题/作者/版本/日期/license） |
-| EAGLE 代码 | @ `cb7e0841`（2026-02-20），`utils.py:398–399`、`modeling_eagle.py:1427` |
-| vLLM 代码 | @ `2b85d9cb`（2026-10-17），5 个文件的行号锚点 |
-| SGLang 代码 | @ `2a08e261`（2026-10-16），4 个文件的行号锚点 |
-| issue #10308 | 开立 2025-09-11；2025-11-03 assigned；2026-01-03 closed（`state_reason=completed`，`closed_by=github-actions[bot]`）；无 linked PR/commit |
-| 独立复现 | ❌ 未做；所有性能数字为论文/官方自报 |
-| `claim_audit` | 见交付说明（`--lang zh` 报数） |
-| 代码锚点清单 | [sources/CODE-AUDIT.md](sources/CODE-AUDIT.md)（vLLM 24 + SGLang 16 + EAGLE 4 条） |
-
-### 11.1 本轮自检清单
-
-| # | 检查 | 结果 |
-| --: | :-- | :-- |
-| 1 | `papers/` 篇数 6–8 | **8** |
-| 2 | 每篇 ≥200 行 | 200–244 行（全部达标） |
-| 3 | 每篇四行亮点 | 8/8 |
-| 4 | 每篇七问 | 8/8 |
-| 5 | 每篇 ≥5 处带条件数字 | 论文类均满足；代码类以 `文件:行` + 版本为条件锚点，**不伪造 benchmark** |
-| 6 | 每篇 ≥1 张带条件列对照表 | 8/8 |
-| 7 | 每篇独立失效边界段 | 8/8 |
-| 8 | `topics/` 3 篇 × 150–300 行 | 164 / 216 / 168 |
-| 9 | `report.md` ≥600 行 | 见文件行数 |
-| 10 | `sources/MANIFEST.md` + `CANDIDATES.md` | 已建 |
-| 11 | 两条历史未核验项 | 均已给结论/边界（§8） |
-| 12 | 论文全文不入库 | ✅ 只有清单与分册 |
-| 13 | 代码不入库 | ✅ 只有 `文件:行` 短引用 |
-| 14 | 价格类 `$` 转义 | 本条目未使用价格数字；公式用 `$...$` 包裹 |
-
----
-
-## 12. 引用注意（一句话版）
+## 10. 引用时的边界
 
 - 引用加速比：必须带 `(batch, T, 序列长度, 硬件, 树参数)`。
-- 引用“无损”：必须说明是严格 / 序列级 / 有界风险（三档定义见 [topics/verification-acceptance.md](topics/verification-acceptance.md) §6）。
-- 引用 EAGLE-3：6.5× 是上限，1.38× 是 batch=64 吞吐，2.36× 是 batch=1 吞吐。
+- 引用“无损”：说明是严格分布等价、序列级保证，还是有界风险（定义见 [验证专题 §6](topics/verification-acceptance.md#6-无损需要区分保证与经验)）。
+- 引用 EAGLE-3：6.5× 是论文上限，1.38× 是 batch=64 的吞吐，2.36× 是 batch=1 的吞吐。
 - 引用 RheoSampling：2.93× 是相对自回归，不是相对 EAGLE-3。
-- 引用 SGLang #10308：分开写“issue 状态”与“代码能力”。
+- 引用 SecureSD：PRR 是 draft-to-target 指标差距的归一化保留率；`ΔPRR` 不是攻击成功率百分点。
+- 引用 DARTree：9.73× 是 Qwen3-4B/T=0/GSM8K/batch=1/RTX 6000 Ada 的结果，不是 7 任务平均。
+- 引用 DLite：2.74× 是 Qwen3-8B/SWE-Bench/H800/K=7 相对作者本地 AR；不是跨家族速度承诺。仓库 benchmark 不核对输出 token ID。
+- 引用 SpecStream：分别说明 TriForce 与 SD+Offload 的比较；offload 释放显存、提升并发的同时仍承担每轮 PCIe 历史传输。
 
-### 12.1 术语对照（中英）
+### 10.1 术语对照
 
 | 中文 | 英文/缩写 | 一句话解释 |
 | :-- | :-- | :-- |
@@ -572,17 +512,10 @@ flowchart LR
 | 动态草稿树 | dynamic draft tree | 按上下文/置信度建树 |
 | 树注意 | tree attention | 一次前向验证整棵树 |
 | 前缀依赖 | prefix dependency | 草稿是否依赖前一个草稿 token |
-| 有界风险 | risk-bounded | 分布偏移受控但非严格等价（见 [topic 2 §6](topics/verification-acceptance.md)） |
+| 有界风险 | risk-bounded | 分布偏移受控但非严格等价（见 [验证专题 §6](topics/verification-acceptance.md#6-无损需要区分保证与经验)） |
 | 稀疏 KV | sparse KV | 只保留部分 KV 做 draft |
 | 临界序列长度 | critical/inflection sequence length | 投机收益随 batch 反转的分界 |
 | 逐位置接受率 | per-position acceptance rate | 第 j 个草稿位置的历史接受率 |
-
-### 12.2 维护约定
-
-- 新增论文分册时：先回查 arXiv 元数据（ID/版本/日期/license），再抓正文；没有正文的只进 `CANDIDATES`，不进 `papers/`。
-- 新增代码核验时：必须钉 commit，并给 `文件:行`；跨版本行为变化要在分册里写“绑定 commit”。
-- 修改 `report.md` 的数字时：同步对应分册与 `sources/MANIFEST.md`；**分册是数字的唯一主写处**，report 只做汇总。
-- 生成物（`INDEX.md` / `index/*`）由脚本产出，不手改。
 
 ---
 
@@ -606,6 +539,6 @@ flowchart LR
 
 ## 来源
 
-- 论文（均经 arXiv 元数据逐条核验）：EAGLE 2401.15077v3；EAGLE-2 2406.16858v2；EAGLE-3 2503.01840v3；Medusa 2401.10774v3；Lookahead 2402.02057v1；SpecInfer 2305.09781v4；MagicDec 2408.11049v5；RheoSampling 2609.21827v1。
-- 代码：`SafeAILab/EAGLE` @ `cb7e0841`；`vllm-project/vllm` @ `2b85d9cb`；`sgl-project/sglang` @ `2a08e261`。
+- 论文（均经 arXiv 元数据逐条核验）：EAGLE 2401.15077v3；EAGLE-2 2406.16858v2；EAGLE-3 2503.01840v3；Medusa 2401.10774v3；Lookahead 2402.02057v1；SpecInfer 2305.09781v4；MagicDec 2408.11049v5；DARTree 2608.13524v1；SpecStream 2609.33184v1；RheoSampling 2609.21827v1；SecureSD 2610.08678v1；DLite 2610.23787v1。
+- 代码：`SafeAILab/EAGLE` @ `cb7e0841`；`VILA-Lab/DARTree` @ `5bb3240e`；`SJTU-DAI-Sys/DLite` @ `e0aa3d55`；`vllm-project/vllm` @ `2b85d9cb`；`sgl-project/sglang` @ `2a08e261`。SpecStream 未找到作者代码链接。
 - 清单：[sources/MANIFEST.md](sources/MANIFEST.md)、[sources/CANDIDATES.md](sources/CANDIDATES.md)。
