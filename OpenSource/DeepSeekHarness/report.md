@@ -2,15 +2,17 @@
 type: repo-research
 domain: Repo-Research
 subject: DeepSeekHarness
-upstream: https://github.com/deepseek-ai/deepseek-harness@master(0.2.1-rc.2)
+upstream: https://github.com/deepseek-ai/deepseek-harness
 date: 2026-10-20
 evidence: 精读原文
 status: completed
 ---
 # DeepSeek Harness（DSH）仓库深读
 
+> **2026-10-22 源码复核**：当前无 Git 身份的快照、文件指纹及已核范围见 [sources/MANIFEST.md](sources/MANIFEST.md)；版本字符串不等于 commit。
+
 > **方法**：`code-researcher` skill 的 `deep` 模式（四层法：Codebase Map → Runtime Story → Design Inquiry → Maintainer Notes），结论一律带 `文件:行`。
-> **对象**：`github.com/deepseek-ai/deepseek-harness`，`master` = **`0.2.1-rc.2`**（本机安装的桌面版为 `0.2.0-rc.2`）。
+> **对象**：`github.com/deepseek-ai/deepseek-harness`，快照的 package.json 自述 **`0.2.1-rc.2`**；缺少 commit，不能称 master 等于该版本。
 > **快照**：2026-10-20，仓库 tarball 解包于 `/tmp/dsh-src`（`git clone` 在本机网络下会断流，改用 codeload）。
 > **范围**：仓库全貌 → 三条运行路径（启动链、工具调用与审批、会话事件）→ 工具调度与压缩语义 → 两份专项（ptc、compaction 与组合包）→ 设计追问 → 维护者笔记 → 证据索引。全文结论均带 `文件:行`。
 
@@ -29,7 +31,7 @@ status: completed
 | TypeScript | **1,243,960 行** |
 | Markdown | 421,531 行 |
 | CSS / JavaScript / Python | 32,190 / 18,321 / 15,547 行 |
-| 包（`packages/`） | **约 50 个** |
+| `packages/`一级职责分组 | **约50组（不是package.json数量）** |
 | 应用（`apps/`） | **5 个**：`cli`、`desktop`、`desktop-host`、`web`、`plugin-market-generator` |
 
 ### 1.2 分层：包按职责归位（只列高信号的）
@@ -122,7 +124,7 @@ flowchart LR
 
 1. **审批是"执行前"的硬门**：`approveEscalation` 在任何执行之前完成校验与询问，且 `rejected` 会抛硬错并提示"不要绕过"（错误文本原文如此）。**设计上是 fail-closed**。
 2. **没有 approver 就不执行**：`approval.approver === undefined` 或 `approval.agent === undefined` 都**立刻抛错**，而不是静默放行。**这推翻了"没通道就一直挂"的猜想——开源层遇到无通道是报错，不是等。**
-3. **审批是"会话级待处理交互"**：客户端把审批放进 `SessionPendingInteractionMap`（`packages/client/ui-session/src/client/index.ts:51`，由 `ui-approval` 声明 `approval: PendingApproval`，`ui-approval/src/client/contract/slots.ts:21-27`），而详情插槽 `conversation.approval.detail` 的作用域写明 `scope: 'session'`（`slots.ts:36-39`）。**所以"卡只在会话里"是类型系统层面的设计，不是渲染 bug。**
+3. **审批是"会话级待处理交互"**：客户端把审批放进 `SessionPendingInteractionMap`（`packages/client/ui-session/src/client/index.ts:51`，由 `ui-approval` 声明 `approval: PendingApproval`，`ui-approval/src/client/contract/slots.ts:21-27`），而详情插槽 `conversation.approval.detail` 的作用域写明 `scope: 'session'`（`slots.ts:36-39`）。**这些类型支持会话归属；不能仅据类型声明排除跨会话 UI、通知通道或渲染缺陷。**
 
 ```mermaid
 sequenceDiagram
@@ -168,7 +170,7 @@ sequenceDiagram
 
 同文件还有 `assistant/attempt`、`assistant/message`、`compaction/{start,prune,summary,end}`、`goal/change`、`hook/{invoked,result}` 等。
 
-> **这解释了为什么"审批"同时表现为"会话内 UI"与"日志事件"**：它同时是 **session 级待处理交互**（`ui-session` 的 `SessionPendingInteractionMap`）和 **session 日志里的一条事件**（`approval/asked`）。两者都不是"跨会话广播"——**没有全局审批总线**。
+> **这解释了为什么"审批"同时表现为"会话内 UI"与"日志事件"**：它同时是 **session 级待处理交互**（`ui-session` 的 `SessionPendingInteractionMap`）和 **session 日志里的一条事件**（`approval/asked`）。两者都不是"跨会话广播"——本轮检查的声明中未发现跨会话审批聚合事件；不排除额外客户端自行汇总。
 
 ### 4.2 组合包：`base` 是"共享核心 + 分层 patch"，`sdk-minimal` 是"独立整树"（证据：`packages/bundle/base/cordis.patch.yml`、`packages/bundle/sdk-minimal/cordis.patch.yml`）
 
@@ -279,8 +281,8 @@ sequenceDiagram
 
 | 否定结论 | 搜索面 | 方法 | 结果 |
 |---|---|---|---|
-| **`ptc` 未找到绕过审批的提权路径** | `packages/core/tools/src/ptc.ts`、`ptc-calls.ts`、`packages/ptc-runtime/**` | `grep -rn "approveEscalation\|approval"` 全量列出；确认**唯一的审批入口**是 `ptc.ts:395 await approveEscalation({...})`，其余命中是类型导入（`:21,23`）与 schema 描述（`:103,104,113,124`）| 只有一处审批调用，且在程序执行前 |
-| **会话日志无删除路径** | `packages/core/session/src/*.ts` | `grep -rnE "\.log\.(splice\|pop\|shift\|length *=)\|delete .*log\|truncate"` | **0 命中**；唯一写入是 `this.log.push`（`index.ts` 内 2 处）|
+| **所查 PTC 文件仅定位到一处程序级升级审批调用；未完成绕过路径证明** | `packages/core/tools/src/ptc.ts`、`ptc-calls.ts`、`packages/ptc-runtime/**` | `grep -rn "approveEscalation\|approval"` 全量列出；确认**唯一的审批入口**是 `ptc.ts:395 await approveEscalation({...})`，其余命中是类型导入（`:21,23`）与 schema 描述（`:103,104,113,124`）| 只有一处审批调用，且在程序执行前 |
+| **所查 session 源码未匹配到列举的日志删除表达式** | `packages/core/session/src/*.ts` | `grep -rnE "\.log\.(splice\|pop\|shift\|length *=)\|delete .*log\|truncate"` | **0 命中**；唯一写入是 `this.log.push`（`index.ts` 内 2 处）|
 
 > **口径**：以上是"**穷举这些文件里的相关符号**"，不是"证明整个系统不存在该路径"。要写进结论时，必须把**搜索面与方法**一起写出来——这是否定性结论的验收标准。
 

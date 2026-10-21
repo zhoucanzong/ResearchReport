@@ -216,7 +216,7 @@ graph TD
 | TX1 | "决策模型是双向编码器 + 并行标签头" / "TypeSafe fork 过 LLaDA" | **推测**，官方无架构披露；沿用 [report.md §9.2 U1/U2](report.md) |
 | TX2 | 官方 I4/I5/I6 中**哪一种**是 TypeSafe 的实际 readout | **未知**。第三方论文提到"从 LM head 读候选概率"（[2609.25845](https://arxiv.org/abs/2609.25845)，精读原文·预印本），但那是**对 Visual Jev（第三方实现）**的描述，非 TypeSafe 披露 |
 | TX3 | Tz 谱系中"决策模型是否接受多轮对话条件化" | Laya 卡提到多轮用 `TD(λ=1.0)` over prefix slices（二手·模型卡）；官方未述。**不作为类别判据** |
-| TX4 | `confidence` 与 `probabilities` 之外，是否存在**跨问题一致性**约束 | 有旁证论文质疑概率公理自洽性（[2609.33209](https://arxiv.org/abs/2609.33209)，`摘要级·预印本`），本文件不据此下结论 |
+| TX4 | `confidence` 与 `probabilities` 之外，是否存在**跨问题一致性**约束 | [2609.33209v1 正文 §5](https://arxiv.org/html/2609.33209v1)：160 条目、480 否定对中 Jev 平均绝对违规 0.064，虽小于所测 Qwen 读出，仍约为重复噪声 5 倍；跨问题一致性需单独测量 |
 | TX5 | T5 类（微调分类头）是否被官方/第三方纳入"决策模型"口径 | **口径未统一**。本文件按契约判据将其排除（§1.4），并记为**本文件的判定**而非行业共识 |
 
 > 上述事项若后续被独立确证，应升级进正文并更新本表；**在此之前不得作为任何结论的依据**。
@@ -245,7 +245,7 @@ graph TD
 - [arXiv:2609.24574 — CSS 文本标注中的决策模型评估](https://arxiv.org/abs/2609.24574)
 - [arXiv:2609.26550 — JEV-as-a-Judge](https://arxiv.org/abs/2609.26550)
 - [arXiv:2609.24395 — JEVQA：视频质量预测](https://arxiv.org/abs/2609.24395)
-- [arXiv:2609.33209 — Beyond Calibration（概率公理自洽性）](https://arxiv.org/abs/2609.33209)（`摘要级`）
+- [arXiv:2609.33209 — Beyond Calibration（概率公理自洽性）](https://arxiv.org/html/2609.33209v1)（`精读原文·预印本正文`；2026-10-22复核）
 
 ### 开源实现材料（只读主页/模型卡，**未读源码、未克隆**）
 

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="300" viewBox="0 0 1280 300" role="img" aria-labelledby="title desc">
+<title id="title">ResearchReport · 从论文，读到实现。</title>
+<desc id="desc">AI研究图书馆：模型原理、技术专题与开源代码，关注原文证据、方法边界和源码路径。</desc>
+<rect width="1280" height="300" rx="20" fill="#18241e"/>
+<path d="M64 52h36" stroke="#a9cfb5" stroke-width="4"/>
+<text x="114" y="58" fill="#a4b7a9" font-family="Arial,sans-serif" font-size="15" letter-spacing="2.2">A FIELD GUIDE TO AI RESEARCH</text>
+<text x="64" y="142" fill="#e5ede5" font-family="PingFang SC,Microsoft YaHei,Noto Sans CJK SC,sans-serif" font-size="54" font-weight="700">从论文，读到实现。</text>
+<text x="67" y="190" fill="#a4b7a9" font-family="PingFang SC,Microsoft YaHei,sans-serif" font-size="22">模型原理 / 技术专题 / 开源代码</text>
+<path d="M66 223h610" stroke="#364d3e"/>
+<text x="67" y="258" fill="#a9cfb5" font-family="PingFang SC,Microsoft YaHei,sans-serif" font-size="18" letter-spacing="2">原文证据 · 方法边界 · 源码路径</text>
+<g transform="translate(948 56)">
+<rect x="20" y="18" width="194" height="186" rx="16" fill="#263b2d"/>
+<rect x="0" y="0" width="174" height="182" rx="12" fill="#203127" stroke="#364d3e" stroke-width="2"/>
+<path d="M28 34h72M28 47h112M28 61h93" stroke="#364d3e" stroke-width="5" stroke-linecap="round"/>
+<path d="M33 133l31-33 30 16 42-32" fill="none" stroke="#a9cfb5" stroke-width="3"/>
+<g fill="#203127" stroke="#a9cfb5" stroke-width="3">
+<circle cx="33" cy="133" r="6"/><circle cx="64" cy="100" r="6"/><circle cx="94" cy="116" r="6"/><circle cx="136" cy="84" r="6"/>
+</g>
+<path d="M28 155h112" stroke="#364d3e" stroke-width="2"/>
+</g>
+</svg>

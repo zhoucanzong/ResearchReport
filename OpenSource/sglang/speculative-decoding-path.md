@@ -14,8 +14,8 @@
 ## 1. 先给答案
 
 1. **SGLang 的 EAGLE 验证有两条路径，判据数学上不同，由 `speculative_use_rejection_sampling` 切换。** 默认（`False`）走"目标-only" kernel，草稿被当作 point mass；开启后走 Leviathan 式拒绝采样 kernel，用真实草稿分布。 **[精读原文（SGLang 源码 @ 本报告 SHA）]**
-2. **默认路径与 EAGLE `qx = 1.0` 在机制上同构**：接受概率都退化为目标概率 $p(x)$，拒绝时的残差都退化为 $p$ 本身。差异不在数学，而在**默认开关**与**工程闸门**。 **[精读原文（SGLang 源码 @ 本报告 SHA）]**
-3. **topk=1 时草稿 logits 的 top-1 概率在默认路径被显式写成 `1.0`**（`[eagle_worker_v2.py:1207](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/speculative/eagle_worker_v2.py>)`），这与 EAGLE 的 `qx = 1.0` 是**同一件事的两种写法**——前者写在提议端（`topk_p`），后者写在验证端（`qx`）。 **[精读原文（SGLang 源码 @ 本报告 SHA）+ 研究推断]**
+2. **默认路径的拒绝残差会排除已拒候选**：topk=1、阈值均为1时，接受 $p(x)$ 与条件残差混合恢复目标p；不能写成拒绝后直接从p采样。EAGLE本体拒绝分支未在本轮重新读，完整同构待证。 **[精读原文（SGLang 源码 @ 本报告 SHA）]**
+3. **topk=1 时草稿 logits 的 top-1 概率在默认路径被显式写成 `1.0`**（`[eagle_worker_v2.py:1207](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/speculative/eagle_worker_v2.py>)`），这与 EAGLE 的 `qx = 1.0` 只能作为**确定性草稿接受概率的有条件比较**，完整输出还要核拒绝残差与状态更新——前者写在提议端（`topk_p`），后者写在验证端（`qx`）。 **[精读原文（SGLang 源码 @ 本报告 SHA）+ 研究推断]**
 4. **既有专题 §5.1 第 ② 项（SGLang issue #10308 的后续修复状态）在本 commit 上得到实质性进展证据**：`--speculative-use-rejection-sampling` 正是该 issue 请求的"把 draft 预测概率传给验证阶段"，且已有专门的回归测试。但**该 flag 与 #10308 之间没有可核验的 link 关系**，我**不据 PR 编号断言"#10308 已被修复"**。 **[精读原文（SGLang 源码 @ 本报告 SHA）]**
 
 ---
@@ -112,7 +112,7 @@ kernel 内部（`[sampling.cuh:72](<https://github.com/sgl-project/sglang/blob/2
 - **关键注释**：`// FIXME: leverage draft probs`（`[sampling.cuh:92](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/kernels/jit/include/sgl_kernel/speculative/sampling.cuh>)`），该行内容是把被拒候选的目标概率**写回** `draft_probs`。
 - 残差采样：从 `relu(target_probs - draft_probs)` 上按 CDF 采样（`[sampling.cuh:104](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/kernels/jit/include/sgl_kernel/speculative/sampling.cuh>)`、`[sampling.cuh:120](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/kernels/jit/include/sgl_kernel/speculative/sampling.cuh>)`）。
 
-**研究推断（带推导，非源码断言）**：在 topk=1 的线性链上，"同层兄弟"只有一个，因此 `prob_acc` 就等于该候选自身的 `p(x)`，判据退化为 `coin < p(x)`；被拒时 `draft_probs[x] = p(x)`，残差 `relu(p - draft_probs)` 在 x 处为 0、在其他位置为 `p`，即残差就是 `p` 本身。这与 EAGLE 的 `acp = px / qx`（当 `qx = 1.0` 时 `acp = px`）加"拒绝后从 p 重采样"在 **topk=1 上行为一致**。**在 topk>1 上我不下结论**——`prob_acc` 的累加语义与 EAGLE 的逐 token 比值不是同一个公式，需要单独论证才能对齐。
+**数学解释（限定 topk=1，`threshold_acc=threshold_single=1`）**：此时只有一个确定性候选 $x$，接受条件为 $u<p(x)$。被拒时 `sampling.cuh:93` 将 $p(x)$ 写入工作缓冲 `draft_probs[x]`，`:104-123` 从 `relu(target_probs-draft_probs)` 求和采样，所以残差在 $x$ 处为零，其他位置为 $p(y)$ 的权重；归一化后是 $p(y)/(1-p(x))$，**不是 $p$ 本身**。接受和拒绝两支混合后才得到目标 $p$。该缓冲的全零初始化不表示“真实提议分布 $q=0$”，而是目标-only 算法用于记录已拒候选的工作空间。阈值修改、topk>1、多步树状态以及 EAGLE 另一实现都需要分别核验，不能由这条单步推导代替。
 
 ### 4.3 判据 C：严格拒绝采样（`coin * q < p`）
 
@@ -146,13 +146,13 @@ if q_is_prob & (coin * q < p):   # 接受
 | 是否存在保留真实 q 的第二实现 | 有：`eagle/modeling_eagle.py:1427` 用 `qx = cart_candidates_prob[batch, j, i]` | 有：`speculative_use_rejection_sampling=True` 时 `eagle_worker_v2.py:1191` 的 `sample_draft_proposal` + `reject_sampling.py:147` |
 | 默认状态 | 该路径即官方 tree/EA 评估路径（默认） | `speculative_use_rejection_sampling` 默认 `False`（`speculative_hook.py:117` 的字段定义） |
 | 副作用文案 | 未在既有核验中记录 | 仓库文档明确写出代价：`docs/docs/advanced_features/speculative_decoding.mdx:645` 原文含 "a deterministic draft is paid `p(argmax)` per slot because verify is handed a point mass" |
-| T>0 下的推论 | 接受率由 $p(x)$ 而非 $\min(1,p(x)/q(x))$ 决定 | 同（默认路径）；开启严格模式后恢复为 $\min(1,p/q)$ |
+| T>0 下的推论 | 接受率由 $p(x)$ 而非 $\min(1,p(x)/q(x))$ 决定 | 同（默认路径）；开启严格模式后使用实际随机提议分布的 $\min(1,p/q)$ |
 
 ### 5.2 结论：两侧行为是否一致
 
-**在 topk=1 的默认路径上：机制一致。** 两侧都把草稿当作 one-hot/delta 提议，接受概率都退化为目标概率 $p(x)$，拒绝后的重采样都落在 $p$（或其等价残差）上。这一结论对 SGLang 是**代码事实**（`eagle_utils.py:1000–1003` + `sampling.cuh:81/92` + `eagle_worker_v2.py:1207`），对 EAGLE 是**转引的一手核验结论**。 **[精读原文（SGLang 源码 @ 本报告 SHA）+ 精读原文（EAGLE 源码 @ cb7e0841，经既有专题转引）]**
+**已核实的是 SGLang 的单步目标-only 机制**：在 topk=1、两阈值均为 1 的条件下，接受 $x$ 的概率为 $p(x)$，拒绝后从排除 $x$ 的条件残差采样。`sampling.cuh:81,93,104-123` 支持这一结论。EAGLE 本体在本轮未重新取源；既有专题的 `qx=1` 只说明接受比值，**不足以证明其拒绝残差及整条输出行为与本实现一致**，因此跨仓库完整同构暂不作为结论。
 
-**差异集中在四处，全部是工程而非数学**：
+**需要分别跟踪的四处实现边界**：
 
 1. **默认开关的表达位置不同**。EAGLE 把 `qx = 1.0` 写在**验证端**的 `evaluate_posterior` 里；SGLang 主要写在**提议端**（`topk_p = 1.0`），验证端再用 `draft_probs = zeros` 把这个语义补全。结果是 SGLang 的"草稿是 one-hot"这件事**分散在两个文件的两处赋值**上，改一处不改另一处会产生不一致——这是我在 `report.md §1.4` 标为风险的直接原因。
 2. **SGLang 多了一道严格模式的替代路径**，EAGLE 的第二实现（`modeling_eagle.py`）是另一套 HF 风格代码，而 SGLang 是同一个 worker 内由 flag 分派。

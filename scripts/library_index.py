@@ -1271,19 +1271,18 @@ def last_commit_date(repo_root: str, fallback: _dt.date) -> _dt.date:
     return fallback
 
 
-def render_badges(stats: dict, topics: int, today: _dt.date, panels: int = 6) -> str:
-    """徽章行：统一 flat-square + 靛蓝色系（与站点主题色一致）；Site 徽章直达在线站点。
 
-    ``today`` 传入的应是 **最后一次提交日**（见 ``last_commit_date``），不是当天日期。
-    """
-    updated = today.isoformat().replace("-", "--")
-    return "\n".join([
-        f"[![Site](https://img.shields.io/badge/Site-在线阅读-3f51b5?style=flat-square)]({SITE_URL})",
-        f"![Entries](https://img.shields.io/badge/Entries-{stats['entries']['total']}-5c6bc0?style=flat-square)",
-        f"![Topics](https://img.shields.io/badge/Topics-{topics}-7986cb?style=flat-square)",
-        f"![Panels](https://img.shields.io/badge/Panels-{panels}-9fa8da?style=flat-square)",
-        f"![Updated](https://img.shields.io/badge/Updated-{updated}-9e9e9e?style=flat-square)",
-    ])
+def render_badges(stats: dict, topics: int, today: _dt.date, panels: int = 6) -> str:
+    """GitHub 原生统计导航，不依赖远程徽章图片；保留旧调用签名。"""
+    items = [
+        (stats["entries"]["total"], "主报告", "index/by-report.md"),
+        (stats["entries"]["children"], "分册与子文档", "INDEX.md"),
+        (topics, "技术专题", "index/by-topic.md"),
+        (panels, "研究板块", "#六个研究板块"),
+    ]
+    return " &nbsp; · &nbsp; ".join(
+        f"[**{count}** {label}]({target})" for count, label, target in items
+    )
 
 
 def render_structure_block(cfg: dict, mapping: dict, entries: list) -> str:
@@ -1316,83 +1315,86 @@ def render_structure_block(cfg: dict, mapping: dict, entries: list) -> str:
     return "\n".join(lines)
 
 
+
 def render_highlights_block(cfg: dict, mapping: dict, entries: list) -> str:
-    """亮点推荐：panels.json 的 ``highlights`` 列表驱动，给新读者一个「从哪看起」。"""
+    """精选入口由 panels.json 驱动，不将推荐等同于事实已全面验收。"""
     by_dir = {entry_dir(d["path"]): d for d in entries}
-    lines = []
+    lines = ["| 阅读入口 | 报告内容 |", "| :-- | :-- |"]
     for rel in cfg.get("highlights", []):
         doc = by_dir.get(rel)
         if doc is None:
-            continue  # validate_panels 已在生成前拦截缺失项
+            continue
         panel = mapping.get(doc["path"], {})
-        emoji = panel.get("emoji", "📄")
-        lines.append(f"- {emoji} **[{entry_short_name(doc)}](<{doc['path']}>)** — {doc['title']}")
+        title = doc["title"].replace("|", r"\|")
+        lines.append(
+            f"| **[{entry_short_name(doc)}](<{doc['path']}>)**"
+            f"<br><sub>{panel.get('title', '')}</sub> | {title} |"
+        )
     return "\n".join(lines)
 
 
-def render_panels_block(cfg: dict, mapping: dict, entries: list, label_limit: int = 12) -> str:
-    """卡片版首页板块区块：HTML table 3×2。
 
-    每卡六要素：emoji / 标题 / 条目数 / tagline / 代表条目直达 / 进入链接。
-    只用 GitHub 安全元素（b/sub/a/br），不用 style 属性（GitHub 会剥掉）。
-    """
+def render_panels_block(cfg: dict, mapping: dict, entries: list, label_limit: int = 12) -> str:
+    """GitHub 安全 HTML 卡片：只用语义元素，无样式属性和外部脚本。"""
     by_panel = {}
     for doc in entries:
         panel = mapping.get(doc["path"])
         if panel is not None:
             by_panel.setdefault(panel["id"], []).append(doc)
-
+    captions = {
+        "models": "模型系列", "llm": "语言模型方法", "visualgen": "视觉与多模态",
+        "worldmodel": "世界模型与具身", "infra": "训练与推理系统", "opensource": "开源代码深读",
+    }
     cards = []
-    for panel in cfg["panels"]:
-        members = by_panel.get(panel["id"], [])
+    for number, panel in enumerate(cfg["panels"], 1):
         top = panel["title"]
-        reps = []
-        for rel in panel.get("representatives", []):
-            label = rel.rstrip("/").rsplit("/", 1)[-1]
-            reps.append(f'<a href="{rel}/report.md">{label}</a>')
-        reps_html = f"<sub>{' · '.join(reps)}</sub><br>" if reps else ""
-        # 「进入 →」指向板块顶层目录（GitHub 目录页）
+        members = by_panel.get(panel["id"], [])
+        reps = [
+            f'<a href="{rel}/report.md">{rel.rstrip("/").rsplit("/", 1)[-1]}</a>'
+            for rel in panel.get("representatives", [])
+        ]
         cards.append(
-            f'<td align="center" width="33%"><br>{panel["emoji"]}<br>'
-            f'<b>{top}</b> · <b>{len(members)}</b> 条<br>'
-            f'<sub>{panel["tagline"]}</sub><br>'
-            f'{reps_html}'
-            f'<a href="{top}/"><b>进入 →</b></a><br><br></td>'
+            f'<td width="33%" valign="top">\n'
+            f'<h3>{number:02d} · <a href="{top}/README.md">{top}</a></h3>\n'
+            f'<p><strong>{captions.get(panel["id"], top)}</strong>'
+            f'<br><sub>{len(members)} 篇主报告 · {panel["tagline"]}</sub></p>\n'
+            f'<p>{" · ".join(reps)}</p>\n'
+            f'<p><a href="{top}/README.md"><strong>浏览板块 →</strong></a></p>\n'
+            f'</td>'
         )
     lines = ["<table>"]
     for i in range(0, len(cards), 3):
-        row = cards[i:i + 3]
-        while len(row) < 3:
-            row.append("<td></td>")
-        lines.append("<tr>")
-        lines.extend(row)
-        lines.append("</tr>")
+        lines += ["<tr>", *cards[i:i + 3], "</tr>"]
     lines.append("</table>")
     return "\n".join(lines)
 
 
+
 def render_topics_block(entries: list, mapping: dict, panels: list) -> str:
-    """技术专题标签：`TechnicalTopics/` 来源的条目（重排后为 LLM / VisualGen / WorldModel / Infra
-    四个专题板块），按「面板配置顺序 → 路径」排序，保证可复现。"""
-    entries = [d for d in entries if d["top"] in ("LLM", "VisualGen", "WorldModel", "Infra")]
-    order = {p["id"]: i for i, p in enumerate(panels)}
+    """按技术板块分组，让专题入口可扫描而非堆成一条标签云。"""
+    technical = {"LLM", "VisualGen", "WorldModel", "Infra"}
+    lines = ["| 方向 | 专题入口 |", "| :-- | :-- |"]
+    for panel in panels:
+        if panel["title"] not in technical:
+            continue
+        members = sorted(
+            (d for d in entries if mapping.get(d["path"], {}).get("id") == panel["id"]),
+            key=lambda d: d["path"],
+        )
+        links = " · ".join(f"[{entry_short_name(d)}](<{d['path']}>)" for d in members)
+        lines.append(f"| **{panel['title']}** | {links} |")
+    return "\n".join(lines)
 
-    def sort_key(doc):
-        panel = mapping.get(doc["path"])
-        return (order.get(panel["id"], len(order)) if panel else len(order),
-                doc["path"])
-
-    return " · ".join(f"[`{entry_short_name(d)}`](<{d['path']}>)" for d in sorted(entries, key=sort_key))
 
 
 def render_recent_block(rows: list, mapping: dict) -> str:
-    lines = ["| 条目 | 板块 | 日期 | 来源 |", "| :-- | :-- | :-- | :-- |"]
+    lines = ["| 日期 | 阅读条目 | 板块 |", "| :-- | :-- | :-- |"]
     for row in rows:
         doc = row["doc"]
         panel = mapping.get(doc["path"])
         lines.append(
-            f"| [{entry_short_name(doc)}](<{doc['path']}>) | "
-            f"{panel['title'] if panel else '—'} | {row['date']} | {row['source']} |"
+            f"| {row['date']} | [{entry_short_name(doc)}](<{doc['path']}>) | "
+            f"{panel['title'] if panel else '—'} |"
         )
     return "\n".join(lines)
 
@@ -1587,6 +1589,8 @@ def baseline_lines(stats: dict, out_root: str, dry_run: bool) -> list:
 def write_outputs(out_root: str, index_text: str, facets: dict, stats: dict | None) -> list:
     written = []
     os.makedirs(out_root, exist_ok=True)
+    # 折叠索引中的缩进空行没有语义，避免新增条目产生行尾空白。
+    index_text = re.sub(r"(?m)^[ \t]+$", "", index_text)
     index_path = os.path.join(out_root, GENERATED_TOP)
     with open(index_path, "w", encoding="utf-8", newline="\n") as fh:
         fh.write(index_text if index_text.endswith("\n") else index_text + "\n")
@@ -1799,102 +1803,145 @@ def update_mkdocs_nav(repo_root: str, nav_body: str) -> tuple:
     return path, True, True
 
 
+def _site_home_icon(panel_id: str) -> str:
+    """首页专用的小型线性图标；内联矢量，离线与浅深色均可使用。"""
+    paths = {
+        "models": '<path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/>',
+        "llm": '<path d="M5 4h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-6 4V6a2 2 0 0 1 2-2Z"/><path d="M7 9h10M7 13h6"/>',
+        "visualgen": '<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 5-5 4 4 4-6 5 7"/>',
+        "worldmodel": '<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/>',
+        "infra": '<rect x="7" y="7" width="10" height="10" rx="2"/><path d="M9 2v5m6-5v5M9 17v5m6-5v5M2 9h5m-5 6h5m10-6h5m-5 6h5"/><path d="M10 10h4v4h-4z"/>',
+        "opensource": '<path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18"/>',
+    }
+    return ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+            'stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" '
+            'aria-hidden="true">' + paths.get(panel_id, paths["models"]) + '</svg>')
+
+
 def render_site_home(cfg: dict, mapping: dict, entries: list,
                      recent: list, stats: dict) -> str:
-    """门户首页（``site-docs/index.md``）：6 板块卡片 + 最近更新 + 专题标签。
+    """研究图书馆门户；只改变展示，统计与条目归类仍使用原有扫描结果。"""
+    from html import escape
 
-    全部数据来自 panels.json 与扫描结果，与同源的根 README 卡片版对齐。
-    """
     by_panel = {}
+    by_dir = {entry_dir(d["path"]): d for d in entries}
     for doc in entries:
         panel = mapping.get(doc["path"])
         if panel is not None:
             by_panel.setdefault(panel["id"], []).append(doc)
-
-    total = len(entries)
     topics_entries = [d for d in entries
                       if d["top"] in ("LLM", "VisualGen", "WorldModel", "Infra")]
-    # 专题数口径与 by-topic 分面一致：按 topic 字段去重
-    topic_names = sorted({d["topic"] for d in topics_entries if d["topic"]})
+    topic_names = {d["topic"] for d in topics_entries if d.get("topic")}
+    child_count = stats.get("entries", {}).get(
+        "children", sum(len(d.get("children", [])) for d in entries))
+    captions = {
+        "models": "模型系列", "llm": "语言模型技术", "visualgen": "视觉与多模态",
+        "worldmodel": "世界模型与具身", "infra": "训练与推理系统", "opensource": "开源代码研究",
+    }
+
+    def label(value):
+        # 标签来自文档题名；保持 Markdown 链接结构完整。
+        return str(value).replace("\n", " ").replace("[", r"\[").replace("]", r"\]")
 
     lines = [
-        "---",
-        "hide:",
-        "  - toc",
-        "---",
-        "",
-        f"<!-- {GENERATED_NOTE}（站点门户首页，位于 site-docs/，不入库） -->",
-        "",
-        "# 📚 ResearchReport",
-        "",
-        "**研究图书馆** · AIGC / LLM / 论文深读",
-        "",
-        (f'<span class="chip">{total} 条目</span> '
-         f'<span class="chip">{len(topic_names)} 专题</span> '
-         f'<span class="chip">{len(cfg["panels"])} 板块</span>'),
-        "",
-        f"[🐙 在 GitHub 查看仓库]({REPO_URL}){{ .md-button }}",
-        "",
-        '<div class="grid cards" markdown>',
-        "",
+        "---", "hide:", "  - toc", "  - navigation", "---", "",
+        f"<!-- {GENERATED_NOTE}（门户展示层；条目与统计同源） -->", "",
+        '<div class="rr-home" markdown="1">', "",
+        '<div class="rr-hero" markdown="1">', "",
+        '<div class="rr-hero-copy" markdown="1">', "",
+        '<p class="rr-eyebrow">RESEARCHREPORT · OPEN RESEARCH LIBRARY</p>', "",
+        '# AI 研究图书馆', "",
+        '<p class="rr-intro">从模型原理到开源实现，<br class="rr-desktop-break">沿着论文证据、方法边界与源码路径深入阅读。</p>', "",
+        '<div class="rr-hero-links" markdown="1">', "",
+        f'[浏览完整索引](<{GENERATED_TOP}>){{ .rr-button .rr-button-primary }}', "",
+        f'[在 GitHub 阅读 ↗]({REPO_URL}){{ .rr-button .rr-button-secondary }}', "",
+        '</div>', "", '</div>', "",
+        '<div class="rr-stats" aria-label="图书馆内容统计">',
+        f'<div><strong>{len(entries):02d}</strong><span>研究条目</span></div>',
+        f'<div><strong>{child_count:02d}</strong><span>分册与子文档</span></div>',
+        f'<div><strong>{len(cfg["panels"]):02d}</strong><span>研究板块</span></div>',
+        '</div>', "", '</div>', "",
+        '<div class="rr-discovery" markdown="1">', "",
+        '<label for="__search" class="rr-search-launch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><span>搜索模型、论文或技术问题</span><kbd>/</kbd></label>', "",
+        '<div class="rr-quicklinks" markdown="1">', "",
+        f'[按专题探索](<{GENERATED_DIR}/by-topic.md>) · [查看最近更新](<{GENERATED_DIR}/recent.md>) · [阅读与证据说明](<docs/research-method.md>)', "",
+        '</div>', "", '</div>', "",
+        '<section class="rr-section rr-collections" markdown="1">', "",
+        '<div class="rr-section-heading" markdown="1">', "",
+        '## 六个入口，展开研究', "",
+        '<span>从一个方向开始，连接相关方法与实现。</span>', "",
+        '</div>', "", '<div class="rr-panel-grid" markdown="1">', "",
     ]
-    for panel in cfg["panels"]:
-        members = sorted(by_panel.get(panel["id"], []), key=lambda d: d["path"])
-        top = panel["title"]
+    for number, panel in enumerate(cfg["panels"], 1):
+        members = by_panel.get(panel["id"], [])
+        title = panel["title"]
         reps = []
         for rel in panel.get("representatives", []):
-            label = rel.rstrip("/").rsplit("/", 1)[-1]
-            reps.append(f"[{label}](<{rel}/report.md>)")
-        rep_text = " · ".join(reps)
+            if rel in by_dir:
+                doc = by_dir[rel]
+                reps.append(f'[{label(entry_short_name(doc))}](<{doc["path"]}>)')
         lines += [
-            f"-   {panel['emoji']} **{top}** <span class=\"card-count\">{len(members)} 条</span>",
-            "",
-            "    ---",
-            "",
-            f"    {panel['tagline']}",
-            "",
-            f"    {rep_text}",
-            "",
-            f"    [**全部 {len(members)} 条 →**](<{top}/README.md>)",
-            "",
+            f'<div class="rr-panel rr-panel-{escape(panel["id"], quote=True)}" markdown="1">', "",
+            '<div class="rr-panel-meta">'
+            f'<span class="rr-panel-icon">{_site_home_icon(panel["id"])}</span>'
+            f'<span class="rr-panel-number">{number:02d} / {len(members):02d} 条目</span></div>', "",
+            f'### [{captions.get(panel["id"], label(title))}](<{title}/README.md>){{ .rr-panel-link }}', "",
+            f'<p class="rr-panel-english">{escape(title)}</p>', "",
+            f'<p class="rr-panel-description">{escape(panel["tagline"])}</p>', "",
+            '<div class="rr-panel-reps" markdown="1">', "",
+            ' · '.join(reps), "", '</div>', "",
+            '<span class="rr-panel-arrow" aria-hidden="true">↗</span>', "", '</div>', "",
         ]
-    lines += ["</div>", ""]
-
-    # 亮点推荐（panels.json highlights 驱动，与根 README 同源）
-    highlights = render_highlights_block(cfg, mapping, entries)
-    if highlights:
-        lines += ["## ✨ 亮点推荐", "", highlights, ""]
-
-    # 最近更新（口径与根 README 的 recent 区块一致）
-    if recent:
-        lines += ["## 🕒 最近更新", "",
-                  "| 条目 | 板块 | 日期 |", "| --- | --- | --- |"]
-        for row in recent:
-            doc = row["doc"]
-            panel = mapping.get(doc["path"])
-            lines.append(
-                f"| [{entry_short_name(doc)}](<{doc['path']}>) | "
-                f"{panel['title'] if panel else '—'} | {row['date']} |"
-            )
-        lines.append("")
-
-    # 专题标签云：每个标签直达对应条目页（专题名与条目目录同名，与根 README 一致）
+    lines += ['</div>', "", '</section>', "",
+              '<div class="rr-reading-grid" markdown="1">', "",
+              '<section class="rr-section rr-start" markdown="1">', "",
+              '<div class="rr-section-heading" markdown="1">', "",
+              '## 从这里开始', "", '<span>六篇入口报告，建立研究坐标。</span>', "",
+              '</div>', "", '<div class="rr-reading-list" markdown="1">', ""]
+    for rel in cfg.get("highlights", []):
+        doc = by_dir.get(rel)
+        if doc is None:
+            continue
+        panel = mapping.get(doc["path"], {})
+        lines += [
+            '<div class="rr-reading-item" markdown="1">', "",
+            f'<span class="rr-reading-category">{escape(panel.get("title", "研究"))}</span>', "",
+            f'[{label(entry_short_name(doc))}](<{doc["path"]}>){{ .rr-reading-title }}', "",
+            f'<p>{escape(doc["title"])}</p>', "", '</div>', "",
+        ]
+    lines += ['</div>', "", '</section>', "",
+              '<section class="rr-section rr-recent" markdown="1">', "",
+              '<div class="rr-section-heading" markdown="1">', "",
+              '## 最近更新', "", f'[全部更新 →](<{GENERATED_DIR}/recent.md>)', "",
+              '</div>', "", '<div class="rr-recent-list" markdown="1">', ""]
+    for row in recent:
+        doc = row["doc"]
+        panel = mapping.get(doc["path"], {})
+        lines += [
+            '<div class="rr-recent-item" markdown="1">', "",
+            f'<time datetime="{escape(row["date"], quote=True)}">{escape(row["date"])}</time>', "",
+            f'[{label(entry_short_name(doc))}](<{doc["path"]}>){{ .rr-recent-title }}', "",
+            f'<span class="rr-recent-category">{escape(panel.get("title", "研究"))}</span>', "",
+            '</div>', "",
+        ]
+    if not recent:
+        lines += ['暂时没有可用的更新日期，可从完整索引开始阅读。', ""]
+    lines += ['</div>', "",
+              '<p class="rr-recent-note">日期优先采用条目标注，缺失时回退至最近提交日。</p>', "",
+              '</section>', "", '</div>', ""]
     if topics_entries:
-        chips = []
-        for d in sorted(topics_entries, key=lambda d: d["path"]):
-            chips.append(f"[`{entry_short_name(d)}`](<{d['path']}>)")
-        lines += ["## 🏷 技术专题", "", " · ".join(chips), ""]
-
-    lines += [
-        "## 🗂 浏览方式",
-        "",
-        (f"[完整索引](<{GENERATED_TOP}>) · "
-         f"[按条目平铺](<{GENERATED_DIR}/by-report.md>) · "
-         f"[按专题](<{GENERATED_DIR}/by-topic.md>) · "
-         f"[最近更新](<{GENERATED_DIR}/recent.md>) · "
-         f"[待复核](<{GENERATED_DIR}/stale.md>)"),
-        "",
-    ]
+        lines += ['<section class="rr-section rr-topics" markdown="1">', "",
+                  '<div class="rr-section-heading" markdown="1">', "",
+                  '## 你关注的问题', "",
+                  f'<span>{len(topic_names)} 个技术专题，继续向下探索。</span>', "",
+                  '</div>', "", '<div class="rr-topic-links" markdown="1">', ""]
+        for doc in sorted(topics_entries, key=lambda d: d["path"]):
+            lines += [f'[{label(entry_short_name(doc))}](<{doc["path"]}>){{ .rr-topic }}', ""]
+        lines += ['</div>', "", '</section>', ""]
+    lines += ['<div class="rr-library-footer" markdown="1">', "",
+              'ResearchReport · 让结论有出处，让阅读有路径。', "",
+              f'[完整索引](<{GENERATED_TOP}>) · [所有报告](<{GENERATED_DIR}/by-report.md>) · [待复核内容](<{GENERATED_DIR}/stale.md>)', "",
+              '</div>', "", '</div>', ""]
     return "\n".join(lines)
 
 
@@ -2087,8 +2134,8 @@ def main(argv=None) -> int:
                        for p in cfg["panels"]))
     print(f"最近更新口径               : front-matter date → 缺失时回退 `{cfg['date_fallback']}`"
           f"（取 {cfg['recent_limit']} 条）")
-    print(f"更新日期徽章               : 最后一次提交日 `git log -1 --format=%cs`"
-          f" = {last_commit_date(repo_root, today).isoformat()}（不取当天 wall-clock，跨零点不漂）")
+    print(f"最近提交日期               : `git log -1 --format=%cs`"
+          f" = {last_commit_date(repo_root, today).isoformat()}（日期回退以版本记录为准）")
     # 跳过要可见：若将来真有该编目的目录被误跳，一眼可见，而不是「index 里莫名少条目」。
     uniq_skipped = sorted(set(skipped_paths))
     preview = "、".join(uniq_skipped[:5]) + ("…" if len(uniq_skipped) > 5 else "")

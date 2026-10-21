@@ -21,10 +21,10 @@
    - 3.8 2025-2026 趋势展望
 4. [3D 表示方法对比](#4-3d-表示方法对比)
 5. [架构演进对比](#5-架构演进对比)
-6. [与 2D/视频生成的技术关联](#6-与-2d视频生成的技术关联)
-7. [应用场景](#7-应用场景)
-8. [挑战与未来方向](#8-挑战与未来方向)
-9. [参考链接](#9-参考链接)
+6. [应用场景](#6-应用场景)
+7. [挑战与未来方向](#7-挑战与未来方向)
+8. [参考链接](#8-参考链接)
+9. [总结](#9-总结)
 
 ---
 
@@ -65,7 +65,7 @@
 | 2024.01 | **GaussianDreamer** | 多机构 | SDS + 3D Gaussian + 文本引导 | 3D Gaussian | 优化 (分钟级) | 改进高斯初始化策略 |
 | 2024.03 | **Hunyuan3D** | 腾讯 | 多视角扩散 + 纹理扩散 | Mesh | 两阶段扩散 (秒级) | 开源，6 视图生成 + 纹理合成 |
 | 2024.10 | **Tripo3D** | VAST AI | Transformer-based 3D 生成 | Mesh | 原生生成 (秒级) | 首个大规模原生 3D 生成模型 |
-| 2025.03 | **TripoSG** | VAST AI | Sparse Gaussian + DiT | Sparse Gaussian | 原生生成 (秒级) | DiT 架构引入 3D 生成 |
+| 2025.02 | **TripoSG** | VAST等 | Rectified Flow Transformer + 3D VAE | SDF监督的形状latent，解码mesh | 图像条件生成 | 方法与输入范围按原文，不作实时承诺 |
 | 2025-2026 | **3D DiT 趋势** | 多机构 | 3D VAE + 3D DiT | 多种表示 | 原生生成 (实时) | 向单步/少步实时生成演进 |
 
 ---
@@ -277,6 +277,8 @@ Shap-E 是 Point-E 的重大升级，直接生成隐式 3D 函数参数：
 ---
 
 ### 3.4 3D Gaussian Splatting (2023, INRIA)
+
+**任务边界**：3DGS原文的real-time指已重建场景的新视角渲染；场景仍需从多视角图像优化。不能由实时渲染推出实时text/image-to-3D生成。[原文](https://arxiv.org/abs/2308.04079)
 
 3D Gaussian Splatting (3DGS) 最初是用于 3D 重建的技术，但其高效的可微分渲染特性使其迅速成为 3D 生成领域的主流表示方法。
 
@@ -495,66 +497,22 @@ Tripo3D 和 TripoSG 代表了 3D 生成技术的最新范式：原生 3D 生成�
 输出：3D 模型 (Mesh)
 ```
 
-#### 3.7.2 TripoSG (2025) 架构推测
+#### 3.7.2 TripoSG：原文可证的shape pipeline
 
-TripoSG 引入了 Sparse Gaussian 表示和 DiT (Diffusion Transformer) 架构：
+[TripoSG v1 §3](https://arxiv.org/html/2502.06608v1)是**图像条件的3D形状/mesh生成**，使用Transformer VAE与大规模rectified flow transformer。VAE训练使用SDF、normal与eikonal等监督；不能把题名中的SG自行展开为Sparse Gaussian。
+
+原稿“文本/图像/视频统一编码 → 空间深度注意力 → Sparse Gaussian”的整张架构图缺少来源，现撤下，改用原文能支持的路径：
 
 ```
-文本/图像/视频输入
-    ↓
-┌─────────────────────────────────────────┐
-│  多模态编码器                            │
-│  统一处理文本、图像、视频条件              │
-└─────────────────────────────────────────┘
-    ↓
-条件特征
-    ↓
-┌─────────────────────────────────────────┐
-│  3D VAE (变分自编码器)                   │
-│  将 3D 资产编码为紧凑的 3D Latent        │
-│  (类似视频 VAE 但处理 3D 空间)            │
-└─────────────────────────────────────────┘
-    ↓
-3D Latent Token (压缩的 3D 表示)
-    ↓
-┌─────────────────────────────────────────┐
-│  3D DiT (Diffusion Transformer)          │
-│                                         │
-│  架构类似视频 DiT (如 OpenAI Sora):      │
-│  - 空间-时间注意力 → 空间-深度注意力      │
-│  - 处理 3D 空间中的 token 关系           │
-│  - 条件注入 (AdaLN / Cross-attention)    │
-│     ↓                                   │
-│  去噪后的 3D Latent                     │
-└─────────────────────────────────────────┘
-    ↓
-3D VAE 解码器
-    ↓
-Sparse Gaussian 表示
-    ↓
-输出：3D 模型 (可渲染、可提取 Mesh)
+训练：3D形状/采样点 → 3D VAE → latent；SDF/normal/eikonal监督
+生成：输入图像条件 + latent噪声 → rectified flow transformer → VAE解码 → 形状/mesh
 ```
 
-#### 3.7.3 Sparse Gaussian 表示
+#### 3.7.3 数据与边界
 
-TripoSG 的核心创新之一是 Sparse Gaussian 表示：
+作者报告数据管线产生约200万高质量3D样本；这是训练数据规模，不是生成耗时或拓扑正确性的保证。形状生成与材质/纹理生成应分别评估。公开论文的image-to-shape能力也不能直接扩写成商业Tripo产品所有输入模态的架构披露。
 
-- **稀疏性**：不同于 3DGS 重建中使用的数百万高斯，Sparse Gaussian 使用更少的、更有语义的高斯
-- **结构化**：高斯分布更有结构，而非随机的"云"
-- **生成友好**：适合作为生成模型的输出表示，便于解码和渲染
-
-#### 3.7.4 技术贡献
-
-- **原生 3D 生成**：无需 SDS 优化，无需多视角重建，直接生成 3D
-- **秒级生成**：生成速度从分钟级缩短到秒级
-- **DiT 架构**：将 2D/视频 DiT 的成功经验扩展到 3D 领域
-- **多模态**：支持文本、图像、甚至视频作为输入条件
-
-#### 3.7.5 局限性
-
-- **数据需求**：需要大规模 3D 训练数据（可能数百万到数千万 3D 资产）
-- **计算资源**：3D DiT 大模型需要大量 GPU 资源训练
-- **拓扑复杂性**：对复杂拓扑（如人体、动物）的生成仍有挑战
+本轮核对方法身份及表示，尚未逐表复核几何指标、消融、模型规模和耗时。需要继续追踪VAE重建误差与生成误差、image alignment，以及mesh提取与后处理代价；不据演示视频声称“秒级或实时必达”。
 
 ---
 
@@ -622,7 +580,7 @@ TripoSG 的核心创新之一是 Sparse Gaussian 表示：
 | **隐式函数** | Shap-E | MLP / 特征网格 | 等值面提取 | 是 | 中 | 低 | 差 | 中 |
 | **Mesh** | Magic3D | 顶点 + 面片 | 光栅化 | 部分 | 高 | 中 | 好 | 差 (拓扑难) |
 | **3D Gaussian** | 3DGS / DreamGaussian | 高斯参数集 | 光栅化 (α-混合) | 是 | 高 | 高 (数百万) | 好 | 好 |
-| **Sparse Gaussian** | TripoSG | 稀疏高斯集 | 光栅化 | 是 | 高 | 中 | 好 | 很好 |
+| **形状latent / SDF解码** | TripoSG | VAE潜表示 | mesh提取后渲染 | 是 | 需实验评价 | 需实验评价 | 需实验评价 | 需实验评价 |
 | **Voxel Grid** | 早期方法 | 3D 体素数组 | 体渲染 | 是 | 低 | 很高 | 中 | 中 |
 
 ### 4.1 表示方法演进分析
@@ -834,12 +792,12 @@ TripoSG 的核心创新之一是 Sparse Gaussian 表示：
 | Magic3D | Magic3D: High-Resolution Text-to-3D Content Creation | https://arxiv.org/abs/2211.10440 |
 | Point-E | Point-E: A System for Generating 3D Point Clouds from Complex Prompts | https://arxiv.org/abs/2212.08751 |
 | Shap-E | Shap-E: Generating Conditional 3D Implicit Functions | https://arxiv.org/abs/2305.02463 |
-| 3D Gaussian Splatting | 3D Gaussian Splatting for Real-Time Radiance Field Rendering | https://arxiv.org/abs/2308.04075 |
+| 3D Gaussian Splatting | 3D Gaussian Splatting for Real-Time Radiance Field Rendering | https://arxiv.org/abs/2308.04079 |
 | DreamGaussian | DreamGaussian: Generative Gaussian Splatting for Efficient 3D Content Creation | https://arxiv.org/abs/2309.16653 |
 | GaussianDreamer | GaussianDreamer: Fast Generation from Text to 3D Gaussian Splatting with Point Cloud Priors | https://arxiv.org/abs/2310.08529 |
 | Hunyuan3D | Hunyuan3D: A Unified Framework for Text-to-3D and Image-to-3D Generation | https://github.com/Tencent/Hunyuan3D-1 |
 | Tripo3D | Tripo3D: Fast and Faithful 3D Reconstruction from Single Images | https://www.tripo3d.ai/ |
-| TripoSG | TripoSG: High-Fidelity 3D Shape Generation with Sparse Gaussian Representation | https://www.tripo3d.ai/ |
+| TripoSG | TripoSG: High-Fidelity 3D Shape Synthesis using Large-Scale Rectified Flow Models | https://arxiv.org/html/2502.06608v1 |
 | DiT | Scalable Diffusion Models with Transformers | https://arxiv.org/abs/2212.09748 |
 
 ### 8.2 开源项目与代码

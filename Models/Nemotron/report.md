@@ -1,22 +1,17 @@
 # NVIDIA Nemotron 系列研究脉络
 
-> 调研时间：2026-06-06  
+> 调研时间：2026-06-06；证据修订：2026-10-22
 > 覆盖范围：NVIDIA Nemotron 系列大语言模型从 2024 年至 2026 年 6 月的完整技术演进
 
 ---
 
 ## 一、执行摘要
 
-NVIDIA Nemotron 系列是英伟达自研的开源大语言模型家族，其发展脉络清晰展现了从**传统 Dense Transformer** → **合成数据驱动** → **混合 Mamba-Transformer 架构** → **Agentic 多模态全栈模型**的技术演进路径。与多数模型厂商不同，NVIDIA 的核心差异化在于**推理效率优化**与**硬件协同设计**，每一代模型都深度结合 NVIDIA GPU 架构（H100 → Blackwell）和量化技术（FP8 → NVFP4）进行端到端优化。
+Nemotron 的研究线包括早期合成数据与对齐、基于 Llama 的压缩/推理后训练，以及 Mamba–Attention–MoE 混合架构。但同一品牌不代表同一训练配方。Nemotron 3 初始 Nano 与 Super / Ultra 的关键区别是：**LatentMoE、MTP 与原生 NVFP4 训练在家族白皮书中归给两个大模型**，不能把它们全部附到 Nano 上。[新增一手来源 N1–N4]
 
-截至 2026 年 6 月，Nemotron 系列的关键技术里程碑包括：
-- **Nemotron-4 340B**（2024-06）首次展示了 98%+ 合成数据驱动的模型对齐 pipeline
-- **Llama-Nemotron**（2025-05）首次开源支持动态推理切换（reasoning toggle）的异构推理模型
-- **Nemotron-H**（2025-04）引入混合 Mamba-Transformer 架构，推理速度提升最高 3 倍
-- **Nemotron 3**（2025-12~2026-06）形成完整的三层 Agentic 家族：Nano（30B/3.5B）→ Super（120B/12B）→ Ultra（550B/55B），采用 Mamba-2 + Attention MoE 混合架构，配合 Latent-MoE、MTP、NVFP4 训练，成为 Agentic AI 的高效基座
-- **Nemotron Coalition**（2026-03）联合八大 AI 实验室共建开源前沿模型，Nemotron 4 正在开发中
+Ultra 的 550B 总参 / 55B 激活不是只能依赖第三方新闻的数字，官方模型卡和技术报告可以直接确认。官方 BF16 型号页也列出最长 1M context，原稿“BF16 只有262K，NVFP4才1M”没有该型号材料支持。真正的部署瓶颈需要同时考虑精度、批大小、序列和硬件，而非仅凭参数量分类。
 
----
+性能证据也必须带运行点：Ultra 论文在 GB200、NVFP4、8K输入/64K输出的最大吞吐比较中有优势，但相同论文在 prefill-heavy 任务给出反例。原稿的“300+ tok/s、统一快3–6倍、成本低30%、美国开源第一”缺乏对应固定协议，本轮由可核对实验与限制替代；不是将第三方数字简单改为“官方确认”。
 
 ## 二、模型演进时间线
 
@@ -32,11 +27,11 @@ NVIDIA Nemotron 系列是英伟达自研的开源大语言模型家族，其发�
 | 2025-05 | **Llama-Nemotron** (arXiv:2505.00949) | 异构推理模型家族 | 动态推理切换、RL 训练、开源 Post-Training Dataset |
 | 2025-08 | **Nemotron Nano 2** (arXiv:2508.14444) | 高效推理小模型 | Mamba-2 + Attention、6.3× 吞吐提升、20T tokens 预训练 |
 | 2025-08 | **Nemotron Nano 9B v2** | Nano 迭代版 | 知识截止 2024-09，多语言与推理增强 |
-| 2025-12 | **Nemotron 3 Nano** (arXiv:2512.20856) | Agentic 轻量基座 | Mamba-2 + Attention MoE、Latent-MoE、MTP、NVFP4、1M 上下文 |
-| 2026-03 | **Nemotron 3 Super** (120B/12B) | 中型 Agentic 模型 | SWE-Bench Verified 60.47%、Intelligence Index 36、1M 上下文 |
+| 2025-12 | **Nemotron 3 Nano**（专报2512.20848；家族白皮书2512.20856） | 混合Mamba/MoE基座 | 初始BF16/FP8 checkpoint；不能套用Super/Ultra组件，见§3.4 |
+| 2026-03-11 | **Nemotron 3 Super**（120B/12B） | 多agent基座 | 官方确认1M；评测条件待补，见§3.4 |
 | 2026-03 | **Nemotron 3 子系列** | 垂直领域扩展 | Speech、RAG、Safety、VoiceChat、Omni |
 | 2026-03 | **Nemotron Coalition** | 开放联盟 | 联合 Black Forest Labs、Cursor、LangChain、Mistral 等八大实验室 |
-| 2026-06 | **Nemotron 3 Ultra** (550B/55B) | 旗舰 Agentic 模型 | Intelligence Index 48（美国开源第一）、300+ tok/s、262K/1M 上下文 |
+| 2026-06-04 | **Nemotron 3 Ultra**（550B/55B） | 混合Mamba/LatentMoE基座 | BF16模型卡亦列1M；吞吐依工作负载，见§五 |
 
 ---
 
@@ -130,318 +125,89 @@ NVIDIA Nemotron 系列是英伟达自研的开源大语言模型家族，其发�
 
 ---
 
-### 3.4 第四代：Nemotron 3 家族（2025-12~2026-06）—— Agentic AI 的全栈基座
-
-Nemotron 3 是 NVIDIA 面向 Agentic AI 时代推出的全新模型家族，采用自研的 **Mamba-2 + Attention MoE** 混合架构，从 2025 年底的 Nano 开始，到 2026 年 6 月 Ultra 的发布，形成完整的三层产品梯队。
-
-#### 3.4.1 Nemotron 3 Nano（2025-12）
-- **论文**：*NVIDIA Nemotron 3: Efficient and Open Intelligence* (arXiv:2512.20856)
-- **定位**：轻量级 Agentic 基座，面向边缘设备和本地部署
-- **规格**：30B 总参数 / 3.5B 激活参数（A3B）
-- **核心架构**：
-  - **混合 Mamba-2 + Attention MoE**：Mamba-2 层处理长序列，Attention MoE 处理精确推理
-  - **Latent-MoE**：将 routed expert 计算压缩到低维 latent 空间，减少通信负载和内存占用
-  - **Multi-Token Prediction (MTP)**：预测多个未来 token，天然支持 speculative decoding 加速
-  - **GQA + 2 KV Heads**：极少 KV 头，降低 KV Cache 内存
-  - **1M Token 原生上下文**：支持百万级 token 长文档、代码库、多轮对话记忆
-- **训练创新**：
-  - **NVFP4 量化训练**：在 Blackwell 架构上实现 4-bit 浮点训练，Nano 模型相对 BF16 损失差距 <1%
-  - **多环境强化学习（NeMo Gym）**：在开源 Agent 环境中训练工具使用、规划、验证、多步问题解决能力
-  - **开放训练 Pipeline**：数据集、权重、详细 recipe 全部开源
-- **性能**：Nemotron 3 Nano 的吞吐量是 Nemotron 2 Nano 的 **4 倍**
-
-#### 3.4.2 Nemotron 3 Super（2026-03-11）
-- **定位**：中型 Agentic 模型，面向企业级多 Agent 协作场景
-- **规格**：120B 总参数 / 12B 激活参数（A12B），MoE 架构
-- **上下文窗口**：**1M tokens**（BF16 原生支持）
-- **关键性能**：
-  - **SWE-Bench Verified**：60.47%
-  - **Intelligence Index**：36 分
-  - **知识截止**：2025-06
-- **架构延续**：与 Nano 相同的 Mamba-2 + Attention MoE + Latent-MoE + MTP 架构
-- **部署**：支持 DeepInfra（\$0.10/M input, \$0.50/M output）、NVIDIA NIM、OpenRouter、Hugging Face
-
-#### 3.4.3 Nemotron 3 Ultra（2026-06-01 宣布，06-04 发布）
-- **发布场合**：GTC Taipei 2026 / Computex 2026 主题演讲，黄仁勋亲自宣布
-- **定位**：旗舰 Agentic 模型，面向最复杂的企业级推理和长运行 Agent 工作流
-- **规格**：**550B 总参数 / 55B 激活参数**（A55B），MoE 架构
-- **上下文窗口**：
-  - BF16 精度：**262,144 tokens**
-  - NVFP4 量化（Blackwell）：**1M tokens**
-- **训练数据**：20 万亿 tokens
-- **关键性能**：
-  - **Intelligence Index**：**48 分**——截至 2026-06 美国开源模型最高分
-  - **推理速度**：300+ tokens/second（DeepInfra 实测）
-  - **成本优势**：比同级开源模型低约 30% 的推理成本
-  - **吞吐效率**：比同类前沿模型快 3-6 倍
-- **对比定位**：
-  - 相比 Kimi K2.6（Intelligence Index 54）：Ultra 在绝对智能分上略低，但在速度（300+ vs 50-100 tok/s）和成本效益上显著领先
-  - 相比 Claude Opus 4.8 / GPT-5.5：Ultra 在 SWE-bench 等编码基准上仍有差距，但优势在于**开源权重 + 可自托管 + NVIDIA 硬件生态**
-- **部署渠道**：Hugging Face、ModelScope、OpenRouter、build.nvidia.com（NIM 微服务）
-- **硬件要求**：BF16 权重需要多 GPU 集群（A100/H100 级别），NVFP4 在 Blackwell 上更可行；消费级硬件无法本地运行
-
-#### 3.4.4 Nemotron 3 子系列（2026-03）
-在 GTC 2026 上，NVIDIA 同步发布了 Nemotron 3 的多个垂直领域子系列：
-
-| 子系列 | 定位 | 关键特性 |
-|--------|------|---------|
-| **Nemotron 3 Omni** | 多模态理解 | 融合音频、视觉与语言理解，跨模态无缝协同 |
-| **Nemotron 3 VoiceChat** | 实时语音对话 | 集成 ASR + LLM + TTS，全双工语音 Agent |
-| **Nemotron Speech** | 开源 ASR | 声称比同级竞品快 10 倍，WER 相当 |
-| **Nemotron RAG** | 企业检索 | 多模态 embedding + reranker VLM |
-| **Nemotron Safety** | 内容安全 | Llama-Nemotron Content Safety + PII 检测器，覆盖 23 类安全类别、9 种语言 |
-
----
-
-## 四、关键技术对比
-
-| 技术维度 | Nemotron-4 340B | Llama-Nemotron | Nemotron-H | Nemotron 3 Nano | Nemotron 3 Super | Nemotron 3 Ultra |
-|---------|-----------------|----------------|------------|-----------------|------------------|------------------|
-| **架构** | Dense Transformer | Dense Transformer (Llama-based) | Hybrid Mamba-Transformer | Hybrid Mamba-2 + Attention MoE | Hybrid Mamba-2 + Attention MoE | Hybrid Mamba-2 + Attention MoE |
-| **核心优化目标** | 合成数据质量 | 推理效率 + 动态推理 | 推理速度 | Agentic 边缘效率 | Agentic 企业协作 | Agentic 旗舰推理 |
-| **总参数** | 340B | 8B~253B | 8B~56B | 30B | 120B | **550B** |
-| **激活参数** | 340B | 8B~253B | 8B~47B | 3.5B | 12B | **55B** |
-| **MoE** | ❌ | ❌ | ❌ | ✅ (Latent-MoE) | ✅ (Latent-MoE) | ✅ (Latent-MoE) |
-| **Mamba** | ❌ | ❌ | ✅ (Mamba-1) | ✅ (Mamba-2) | ✅ (Mamba-2) | ✅ (Mamba-2) |
-| **上下文长度** | 标准 | 128K | 标准 | 1M | **1M** | 262K / 1M (NVFP4) |
-| **量化训练** | FP8 推理 | FP8 生成 | FP8 训练 | NVFP4 训练 | NVFP4 训练 | NVFP4 训练 |
-| **动态推理切换** | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
-| **开源程度** | 模型 + Pipeline | 模型 + 数据集 + 代码 | 模型 + 代码 | 模型 + 数据 + 环境 + 代码 | 模型 + 权重 + recipe | 模型 + 权重 + recipe |
-| **硬件绑定** | DGX H100 | 通用 GPU | 通用 GPU | Blackwell 优化 | Blackwell 优化 | **Blackwell 优化** |
-| **Intelligence Index** | — | — | — | — | 36 | **48** |
-
----
-
-## 五、与竞品横向对比
-
-Nemotron 系列在开源模型生态中占据独特位置——它既是**模型提供商**，更是**硬件平台商**的模型分支。以下从四个维度进行横向对比：
-
-### 5.1 vs LLaMA：基于 Llama 架构的改进与超越
-
-| 对比维度 | Nemotron（Llama-Nemotron / Nemotron 3） | Meta LLaMA 系列 |
-|---------|----------------------------------------|----------------|
-| **架构关系** | 早期 Llama-Nemotron 基于 Llama 3.1/3.3 改进；Nemotron 3 转向自研 Mamba-2 + Attention MoE | 纯 Dense Transformer（Llama 3/4） |
-| **核心改进** | Mamba 混合、Latent-MoE、NVFP4 量化训练、动态推理切换 | 标准 Transformer + GQA |
-| **开源策略** | 模型 + 数据集 + 训练代码 + 环境全开源 | 模型权重开源，训练细节有限 |
-| **硬件绑定** | **深度绑定 Blackwell/H100**，TensorRT-LLM 原生优化 | 通用 GPU，无硬件厂商专属优化 |
-| **定位差异** | 面向 Agentic AI 的高效推理基座 | 通用开源基座，社区生态最广 |
-
-**关键观察**：Meta 于 2025 年底宣布 LLaMA 进入"维护模式"（maintenance mode），重心转向 Llama 4 及后续闭源/半闭源方向。Nemotron 3 的发布时机恰好填补了这一空白——在 LLaMA 社区创新放缓时，NVIDIA 以全栈开源（模型+数据+代码+环境）的姿态接过了"开源前沿模型"的旗帜。Nemotron Coalition 的成立更是直接将 Mistral、Black Forest Labs 等欧洲/美国实验室纳入联盟，形成对 LLaMA 生态的替代性开源中心。
-
-### 5.2 vs DeepSeek：开源 MoE 的两种路线
-
-| 对比维度 | Nemotron 3 | DeepSeek-V3/R1 |
-|---------|-----------|----------------|
-| **架构** | Mamba-2 + Attention MoE + Latent-MoE + MTP | 纯 Transformer MoE + MLA + MTP |
-| **总/激活参数** | Ultra: 550B/55B | V3: 671B/37B |
-| **核心优化方向** | **硬件协同**：NVFP4 量化、Blackwell 原生、TensorRT-LLM | **算法效率**：MLA（多头潜在注意力）、MTP（多 token 预测）、FP8 训练 |
-| **推理速度** | 300+ tok/s（DeepInfra 实测） | ~50-100 tok/s（典型部署） |
-| **开源程度** | 模型 + 数据 + 环境 + 代码全开源 | 模型 + 论文 + 部分代码开源 |
-| **商业目标** | 拉动 GPU 销售（"卖铲人"） | 独立 AI 实验室，API 盈利 |
+### 3.4 Nemotron 3：Nano、Super 与 Ultra 分开取证
 
-**关键观察**：两者都是开源 MoE 的标杆，但优化哲学截然不同。DeepSeek 以算法创新（MLA 将 KV Cache 压缩至 1/10）降低对硬件的依赖，实现"平民化高效推理"；Nemotron 则走"硬件-软件-模型"全栈协同路线，在 Blackwell 上通过 NVFP4 实现 4-bit 训练，将 550B 模型的推理成本压至同级开源模型的 70%。这两种路线代表了开源 AI 的"算法派"与"工程派"之争。
+#### 3.4.1 初始 Nano 与家族规划
 
-### 5.3 vs Mistral：欧洲开源领袖 vs 美国硬件巨头
+NVIDIA 2025-12-15 家族页发布 Nano，并把 Super / Ultra 列为后续计划；`2512.20856` 是**家族白皮书**，Nano 专门技术报告是 **`2512.20848`**。前者的未来配置不能当作 Nano 已采用的组件清单。[N1,N2]
 
-| 对比维度 | Nemotron 3 Ultra | Mistral Large 3 |
-|---------|------------------|-----------------|
-| **总/激活参数** | 550B / 55B | 675B / 41B |
-| **架构** | Mamba-2 + Attention MoE | 纯 Transformer MoE |
-| **上下文** | 262K (BF16) / 1M (NVFP4) | 256K |
-| **Intelligence Index** | 48 | ~45（估算） |
-| **开源许可** | NVIDIA Open Model License（商用允许） | Apache 2.0 |
-| **硬件优化** | Blackwell / TensorRT-LLM 原生 | 通用 vLLM/SGLang |
-| **生态策略** | Nemotron Coalition（联合 8 家实验室） | Mistral 独立 + 欧洲监管合规 |
+Nano 专门报告写 25T tokens 预训练，后训练包括 SFT、RLVR、RLHF；公开初始 checkpoint 为 BF16 及由 BF16 经 PTQ 得到的 FP8。家族白皮书把 LatentMoE、MTP、NVFP4 训练分配给 Super / Ultra；因此撤回原稿 Nano 的“原生NVFP4训练 + LatentMoE + MTP”组合。后续另有 NVFP4 推理权重，不等于初代用了同样精度预训练。[N1 Abstract/§2.2–2.4；N2 §1、§4]
 
-**关键观察**：Mistral 是欧洲开源 AI 的旗帜，以严格的 Apache 2.0 许可和 GDPR 合规著称；NVIDIA 则以商业友好的 Open Model License 和硬件生态绑定取胜。值得注意的是，Mistral 已加入 Nemotron Coalition，双方从竞争转向合作——NVIDIA 提供 DGX Cloud 算力，Mistral 贡献模型研发专长，共同开发 Nemotron 4 基座。这反映了 2026 年开源 AI 领域"合纵连横"的新趋势。
+参数也有口径差异：模型卡的产品规格是30B总 / 3.5B激活，家族页细分为31.6B总 / 3.2B激活（含embeddings为3.6B）。引用应标明出处与是否含嵌入，不能把不同四舍五入值当作不同checkpoint。[N1官方家族页；N3 Nano Model Description]
 
-### 5.4 vs Qwen / Kimi：中国开源模型的竞争
+#### 3.4.2 Super
 
-| 对比维度 | Nemotron 3 Ultra | Qwen3.5-Max | Kimi K2.6 |
-|---------|------------------|-------------|-----------|
-| **总/激活参数** | 550B / 55B | ~400B / ~40B | ~1T / ~32B |
-| **Intelligence Index** | 48 | ~50 | **54** |
-| **上下文** | 1M (NVFP4) | 1M | 256K |
-| **推理速度** | **300+ tok/s** | ~80 tok/s | ~50-100 tok/s |
-| **开源程度** | 全开源（权重+数据+代码） | 权重开源，数据/代码部分 | 权重开源，训练细节有限 |
-| **多模态** | Omni / VoiceChat / RAG 子系列 | Qwen-VL / Qwen-Audio | 文本为主 |
+2026-03-11 官方公告确认 Super 为 **120B 总参 / 12B 激活、1M context**，定位在多 agent 工作负载；LatentMoE、MTP 与 NVFP4 配方需以对应技术报告为界。[N4] 本轮未完整读 Super 技术报告，不保留原稿缺少 harness 的 SWE-bench 60.47% 或无日期的 Intelligence Index 36 作为已核分数，也不把 Nano 后训练细节逐项继承给 Super。
 
-**关键观察**：在绝对智能分数上，Nemotron 3 Ultra（48）略低于 Kimi K2.6（54）和 Qwen3.5-Max（~50），但 Nemotron 的差异化在于**速度-成本-开源三角**：300+ tok/s 的推理速度是 Kimi 的 3-6 倍，API 成本（DeepInfra \$0.37/\$1.08 per 1M）与 Qwen 接近，且提供完整的训练数据和环境复现能力。对于需要"自托管 + 高吞吐 + 长上下文"的企业用户，Nemotron 3 形成了独特的价值主张。
+#### 3.4.3 Ultra
 
----
+官方 BF16 模型卡列出 **550B总 / 55B激活、最长1M context、Hugging Face发布日2026-06-04**。arXiv 专门报告 `2606.15007v1` 的提交日是 **2026-06-12**；两个日期是模型发布与论文存档，不相互替代。本轮 2026-10-22 可以用这份报告回查技术，但不将其 arXiv 链接伪装成原稿6月6日已访问的来源。[N5,N6]
 
-## 六、商业模式与定价策略
+Ultra 使用 Mamba-2、MoE 与少量 Attention 交错，并带 LatentMoE 和共享权重的 MTP。原文表1给出108层、64个Q heads、2个KV heads、每层512 experts选22、latent维2048、2个共享权重MTP层；这些是 **Ultra 的配置**，不统称整个 Nemotron 家族固定规格。[N6 §2.1–2.2、表1]
 
-### 6.1 NVIDIA 的"卖铲人"策略：模型免费开源 → 拉动 GPU 销售
+## 四、训练和量化：区分阶段与模型
 
-NVIDIA 的 Nemotron 系列遵循经典的"剃刀-刀片"逆向模式——**模型本身免费开源，利润来自硬件销售**：
+| 对象 | 本次核到的训练/量化事实 | 原稿需要撤回的混写 |
+|---|---|---|
+| 初始 Nano | 25T预训练；后训练后BF16→FP8 PTQ；选择性保留敏感层较高精度 | 不能写为全程NVFP4预训练，不能把20T统一套给它 [N2] |
+| Super | 家族白皮书和发布公告支持原生NVFP4、LatentMoE与MTP方向 | 具体优化器和训练token数本轮未逐表核验 [N1,N4] |
+| Ultra | 20T预训练，**15T + 5T**两阶段；NVFP4采用混合精度，部分网络保留高精度 | 原稿“前20T+后5T”、全系列同一优化器/学习率表不成立 [N6 §1、§2.2] |
 
-- **模型开源**：所有 Nemotron 模型权重、训练数据、代码均以开放许可发布，零授权费用
-- **硬件绑定**：NVFP4 量化训练仅在 Blackwell 架构上实现最优性能，BF16 推理需 H100/A100 级集群
-- **软件生态**：TensorRT-LLM、NIM 微服务、NeMo 框架均为 NVIDIA 专有软件栈，与 Nemotron 架构深度优化
-- **云服务**：DGX Cloud 提供托管 Nemotron 推理服务，按 GPU 小时计费
+Ultra 的NVFP4不是所有张量都四位。原文保留末段网络和若干敏感投影等高精度。§2.2 / 图3从5T、10T、16T检查点分支切BF16再训练74B tokens，比较训练loss gap；作者给出平均低于0.4%的差距。这是分支训练损失代理，**不是所有任务准确率损失<1%**。原文还明确切BF16没有解决所讨论的训练发散，不能据小loss gap声称低精度不会发散。
 
-这一策略的本质是**用开源模型降低 AI 应用门槛，从而扩大 GPU 市场需求**。Nemotron 3 Ultra 的 550B 参数规模意味着任何 serious 的部署都需要多 GPU 集群，直接转化为 NVIDIA 的硬件销售收入。
+Nano 的FP8也有任务差异。表4的MMLU-Pro从78.30到78.10，TauBench V2 airline从48.00到44.79；总体约99%的中位数恢复不能改成逐任务无损。§4.3和图11对attention、Mamba层与KV cache做选择性量化，体现的是精度与可用batch的取舍。[N2]
 
-### 6.2 Nemotron 3 的 API 定价（第三方托管）
+## 五、效率证据：保留运行条件与失败运行点
 
-NVIDIA 官方不直接提供 Nemotron 的公共 API，而是通过合作伙伴和开源权重支持第三方托管：
+### 5.1 Nano 的吞吐不是裸 tok/s
 
-| 提供商 | 模型 | 输入 ($/1M) | 输出 ($/1M) | 特点 |
-|--------|------|-------------|-------------|------|
-| **DeepInfra** | Nemotron 3 Ultra | \$0.37 | \$1.08 | 预发布端点，价格低于同级中位数 |
-| **DeepInfra** | Nemotron 3 Super | \$0.10 | \$0.50 | 支持 JSON/Function Calling |
-| **OpenRouter** | Nemotron 3 Super | \$0.09 | \$0.45 | 最低价，1M 上下文 |
-| **AWS Bedrock** | Nemotron 3 Nano | \$0.06 | \$0.24 | 企业级托管 |
-| **AWS Bedrock** | Nemotron 3 Super | \$0.15 | \$0.65 | SOC 2 / ISO 27001 合规 |
+Nano专门报告图1的比较是**单H200、8K输入/16K输出**，每个模型在vLLM与TRT-LLM中取较好实现。Nano与Qwen3使用FP8权重/激活，GPT-OSS使用mxfp4权重、BF16激活；作者报告相对Qwen3-30B-A3B-Thinking-2507为3.3倍，相对GPT-OSS-20B为2.2倍。不同精度与引擎选择必须伴随引用，不能称为单一架构的隔离增益。[N2 图1、§1]
 
-> 注：Nemotron 3 Ultra 的 DeepInfra 定价（\$0.37/\$1.08）在 550B 级开源模型中属于较低水平，对比同等规模的 Hermes 3 405B（\$1.00/\$1.00）和 Qwen3.5-397B（\$0.49/\$0.49）具有成本竞争力。
+### 5.2 Ultra 最大吞吐与单用户延迟分开
 
-### 6.3 企业合作伙伴模式
+Ultra报告图1在 **GB200、NVFP4、8K输入/64K输出、最大吞吐** 条件下，相对GLM-5.1、Kimi-K2.6、Qwen3.5分别为5.9/4.8/1.6倍；Ultra用TRT-LLM、对手用vLLM，各自有无投机解码取较优。它是整套部署的比较，不能解释为相同引擎下纯网络提升，也不能用它给出“DeepInfra 300+ tok/s”的服务承诺。[N6 图1与图注]
 
-Nemotron 3 发布时宣布的早期企业合作伙伴覆盖多个垂直领域：
+**需要保留的反例**：§5 / 图15另测关闭投机解码的GB200 NVL72吞吐，比较8K/64K与 **50K输入/2K输出**。后者偏prefill，Ultra相对Qwen3.5的激活参数更多，MoE GEMM成为主要开销，因而落后；“所有长上下文都更快”的结论不成立。
 
-| 合作伙伴 | 应用场景 | 集成方式 |
-|---------|---------|---------|
-| **Accenture** | 企业 AI 咨询与实施 | 将 Nemotron 纳入客户 AI 转型方案 |
-| **CrowdStrike** | 网络安全 AI Agent | 漏洞修复、威胁情报分析 |
-| **Oracle Cloud** | 云基础设施 | OCI 上托管 Nemotron 推理服务 |
-| **Palantir** | 政府/国防 AI | AIP 平台集成，任务自主执行 |
-| **Perplexity** | 搜索引擎 | 答案生成与知识检索增强 |
-| **ServiceNow** | 企业工作流自动化 | Now 平台 AI Agent 后端 |
-| **Siemens** | 工业制造 | 数字孪生、预测性维护 |
-| **Zoom** | 会议/协作 | 实时转录、会议摘要 |
+MTP同样不是固定30–50%延迟收益：小batch时权重读取占主导，多draft可能划算；大batch计算和验证开销增大，较短draft甚至关闭MTP可能更优。论文把draft长度当部署参数，并指出Mamba状态回滚需要额外snapshot，不等同于普通KV截断。[N6 §5 Inference Efficiency / 图15–16]
 
-**合作模式特点**：NVIDIA 不直接向终端用户收费，而是通过"模型开源 + 技术支持 + 硬件销售"的三层模式与合作伙伴共赢。合作伙伴获得前沿开源模型能力，NVIDIA 获得 GPU 采购订单和软件订阅收入。
+### 5.3 推理预算的质量代价
 
-### 6.4 与 NVIDIA NIM、DGX Cloud 的绑定
-
-- **NVIDIA NIM（NVIDIA Inference Microservices）**：将 Nemotron 3 打包为预构建容器，支持 Kubernetes 一键部署，按 GPU 实例计费
-- **DGX Cloud**：提供预配置 Nemotron 3 的云端 GPU 集群（H100/H200/Blackwell），企业可按月订阅
-- **TensorRT-LLM**：针对 Nemotron 的 Mamba-2 + MoE 架构提供定制 kernel 优化，推理速度比通用 vLLM 提升 20-40%
-- **NeMo Framework**：端到端训练框架，支持从数据准备到 RLHF 的全流程，与 Nemotron 训练 recipe 完全兼容
-
-这种"模型-软件-硬件"三位一体的绑定，使 Nemotron 成为 NVIDIA AI 生态的"锚点产品"——用户一旦选择 Nemotron，自然进入 NVIDIA 的软件栈和硬件采购循环。
-
----
-
-## 七、技术细节补充
-
-### 7.1 训练数据
-
-Nemotron 3 系列的预训练数据规模和质量在开源模型中处于领先水平：
+Ultra §3.5的medium-effort模式平均生成token约少2.5倍，作者同时报告约7%的准确性下降。这是其AA Intelligence Index V4任务组合上的相对取舍，不是无成本压缩。原稿“Index48即美国开源第一”缺少固定榜单集合与日期，本轮不保留排名；后续应把图11的模式、指标版本与token归一化方式一起记录。
 
-- **总预训练数据量**：**20 万亿 tokens**（Nemotron 3 Nano / Ultra 公开数据）
-- **Nemotron-Pre-Training-Dataset-v1**：**6.6 万亿 tokens**，包含：
-  - Nemotron-CC-v2：新增 8 组 CommonCrawl 快照，覆盖 15 种语言的合成 QA
-  - Nemotron-CC-Math-v1：133B 数学专用 tokens
-  - 高质量网页、维基百科、代码、学术文本、多语言内容、PDF 文档
-- **两阶段训练数据配比**：
-  - **第一阶段（前 20T tokens）**：侧重多样性，广泛覆盖各类知识领域
-  - **第二阶段（后 5T tokens）**：向高质量来源倾斜，提高维基百科、高质量 PDF、合成 STEM 数据的权重
-- **SFT 数据**：通用对话、STEM 问答、代码三类合成数据，配合人工标注的指令遵循数据
-- **RL 数据**：NeMo Gym 开源 Agent 环境，覆盖工具使用、规划、验证、多步问题解决
+## 六、上下文、开放资源与许可
 
-### 7.2 优化器与学习率调度
+Ultra BF16模型卡直接列最长1M，不支持原稿按“BF16 262K / NVFP4 1M”分成模型能力。量化能降低特定部署内存压力，但context上限、某硬件装不装得下和长任务正确率是不同问题。部署仍要固定checkpoint、运行引擎、GPU、并行方式、batch与输入/输出长度。[N5 Model Summary]
 
-Nemotron 3 系列采用业界标准的优化配置，但在规模上达到前沿水平：
+开放范围也需区分。官方家族页承诺发布**有权再分发的数据**；Ultra模型卡说披露全部数据来源、发布其中重要部分。不能写成所有预训练/后训练数据和完整旗舰复现条件无缺开放。模型权重可得、训练recipe可读与能复现全部训练是不同级别。
 
-- **优化器**：**AdamW**（β₁=0.9, β₂=0.98, ε=10⁻⁸）
-- **权重衰减**：0.1
-- **学习率调度**：**Warmup-Stable-Decay（WSD）**
-  - Warmup 阶段：前 200B tokens 线性增长至峰值 4.5×10⁻⁴
-  - Stable 阶段：保持峰值学习率
-  - Decay 阶段：最后 5T tokens 按负平方根曲线衰减至最小值 4.5×10⁻⁶
-- **训练序列长度**：8192 tokens（预训练），128K-1M（长上下文扩展阶段）
-- **批大小**：3072 条序列/批，每批约 2517 万 tokens
-- **训练精度**：FP8（Nemotron-H / Nano 2），NVFP4（Nemotron 3 系列，Blackwell 专属）
+当前Nano模型卡标 `nvidia-nemotron-open-model-license`，Ultra BF16卡标 `openmdw-1.1`；本轮只记录这些checkpoint的许可标识，不将“全部Nemotron共用NVIDIA Open Model License”推广到整个家族。模型、数据、软件各自的许可证也不能合并；原稿将NeMo、TensorRT-LLM、NIM统称专有软件的结论不保留。
 
-### 7.3 后训练流程
+## 七、服务价格与跨厂商比较
 
-Nemotron 3 的后训练采用三阶段 pipeline，在开源模型中属于最完整的披露之一：
+原稿按第三方托管价、未指定并发的tok/s和不同硬件的竞品速度推出成本低30%与快3–6倍；这些变量不能构成受控比较。没有重新获取每个提供商的具体端点、模型revision、价格日期和计量方式前，不保留其价格表或相对成本排名。
 
-**阶段一：监督微调（SFT）**
-- 训练数据：多样化的聊天、Agentic 和推理轨迹
-- 目标：赋予模型推理预算控制、推理开关控制、工具集成推理能力
-- 数据来源：合成数据 + 开源数据集 + 人工标注
+同样不把Llama3与Llama4统一写成“纯Dense”，也不采用“Meta维护模式所以Nemotron接替整个开源中心”的因果叙事。跨厂商研究应按同一任务、精度、token预算和部署目标对照。上文的prefill反例说明，agent长输出吞吐与RAG短输出性能可能作出不同选择。
 
-**阶段二：多环境强化学习（RLVR / RLHF）**
-- **RLVR（Reinforcement Learning from Verifiable Rewards）**：在 NeMo Gym 开源环境中同时训练所有任务，实现工具使用、规划、验证、多步问题解决的平滑均匀提升
-- **RLHF（Reinforcement Learning from Human Feedback）**：使用大型生成式奖励模型（GenRM）增强模型在关键聊天基准上的表现
-- 特点：多环境同时训练，避免单一任务过拟合
+## 八、生态事件与仍需补证的范围
 
-**阶段三：对齐与压缩**
-- 从 BF16 量化至 FP8（Post-Training Quantization, PTQ），精度损失极小
-- 对 Nemotron 3 Nano，NVFP4 量化相对 BF16 损失差距 <1%
+NVIDIA 2026-03-16官方新闻稿确认Nemotron Coalition，列出8个创始成员，并称首个NVIDIA/Mistral协作基座将支撑Nemotron4。[N7] 这是一项合作计划，不能作为未发布模型架构或能力的实测证据。下载量5000万、首日热榜、各企业已实现的具体业务效果缺少本轮核读的原始数据，撤出确定结论。
 
-### 7.4 推理优化
+本轮已全文读过旧报告，并实读家族白皮书、Nano报告的计时/量化段、Ultra的架构/低精度对照/推理效率段，以及官方模型卡与Super/Coalition公告。没有下载权重、跑推理、重训或第三方服务跑分。
 
-Nemotron 系列在推理阶段的优化体现了 NVIDIA 的硬件-软件协同优势：
+仍需后续补证：§3.1–3.3的早期模型原论文、98%合成数据的具体分母与RewardBench比较、Llama-Nemotron的压缩/蒸馏条件、Nemotron-H/Nano2速度协议、Super全部评测表、Ultra主评测逐项harness与采样预算。上述旧段保留研究线索，不视为本轮逐事实通过。
 
-| 优化技术 | 适用模型 | 效果 |
-|---------|---------|------|
-| **TensorRT-LLM** | 全系列 | 定制 CUDA kernel，Mamba-2 和 MoE 路由原生支持，比 vLLM 快 20-40% |
-| **NIM 微服务** | Nemotron 3 系列 | 预构建容器，Kubernetes 一键部署，自动批处理 |
-| **FP8 量化** | Nemotron-H / Nano 2 | 权重和激活均 FP8，吞吐量提升 2× |
-| **NVFP4 量化** | Nemotron 3 系列 | Blackwell 专属 4-bit 浮点，Ultra 支持 1M 上下文（BF16 仅 262K） |
-| **MTP 投机解码** | Nemotron 3 系列 | 多 token 预测天然支持 speculative decoding，延迟降低 30-50% |
-| **Latent-MoE 压缩** | Nemotron 3 系列 | 将 routed expert 计算压缩至低维 latent 空间，减少 all-to-all 通信 |
-| **GQA + 2 KV Heads** | Nemotron 3 系列 | 极致压缩 KV Cache，长上下文内存占用降低 80% |
+## 九、新增一手来源与读取锚点
 
-**部署选项对比**：
+本轮按 `researcher` 的数字条件与消融边界规范修订；用 `paper-fetcher download` 取回三份原文，缓存于仓库外 `paper-cache/research-audit-2026-10-22/models/nemotron-*`。
 
-| 部署方式 | 延迟 | 吞吐 | 成本 | 适用场景 |
-|---------|------|------|------|---------|
-| BF16 自托管（H100×8） | 低 | 中 | 高（硬件采购） | 研究/原型 |
-| NVFP4 自托管（Blackwell） | 低 | **高** | 中 | 生产部署 |
-| DeepInfra / OpenRouter API | 中 | 中 | 低（按量） | 快速启动 |
-| NIM + DGX Cloud | 低 | 高 | 高（订阅） | 企业级 SLA |
-
----
-
-## 八、生态与影响
-
-### 5.1 开源贡献
-NVIDIA Nemotron 系列在开源社区的影响力体现在：
-- **合成数据 Pipeline**：Nemotron-4 340B 的开源 SDG pipeline 成为社区重要工具
-- **Post-Training Dataset**：Llama-Nemotron 开源了完整的后训练数据集
-- **训练框架**：NeMo、NeMo-Aligner、Megatron-LM、NeMo Gym、NeMo RL 等工具链
-- **推理优化**：TensorRT-LLM、NIM 微服务对 Nemotron 架构的原生支持
-- **Nemotron-Pre-Training-Dataset-v1**：6.6 万亿 tokens，包含 Nemotron-CC-v2、Nemotron-CC-Math-v1 等
-
-### 5.2 商业采用
-Nemotron 3 发布时宣布的早期合作伙伴：
-- **Accenture**、**CrowdStrike**、**Oracle Cloud**、**Palantir**、**Perplexity**、**ServiceNow**、**Siemens**、**Zoom**
-- **CrowdStrike**：将 Nemotron 模型用于漏洞修复 AI Agent
-- **Palantir**：整合至 AI Forward Deployed Engineer 平台，实现任务自主执行
-- 覆盖制造、网络安全、软件开发、企业自动化等领域
-
-### 5.3 Nemotron Coalition（2026-03-16，GTC 2026）
-NVIDIA 在 GTC 2026 宣布牵头成立**开放前沿联盟**，旨在联合开发下一代开源前沿模型：
-- **创始成员**（8 家）：Black Forest Labs、Cursor、LangChain、Mistral AI、Perplexity、Reflection AI、Sarvam、Thinking Machines Lab
-- **合作模式**：成员贡献数据、评估、研究领域专长；NVIDIA 提供 DGX Cloud 训练算力
-- **首个成果**：**Nemotron 4** 正在开发中，由 NVIDIA 与 Mistral AI 联合开发基座模型，将支撑 Nemotron 4 家族
-- **战略意义**：NVIDIA 从"芯片制造商"向"全栈 AI 基础设施平台"转型的关键一步
-
-### 5.4 下载量与社区影响
-- Nemotron 3 系列在 2026 年 4 月前累计下载量突破 **5,000 万次**
-- Nemotron 3 Ultra 发布首日即登上 Hugging Face、ModelScope、OpenRouter 热榜
-
----
-
-## 九、研究脉络总结
-
-NVIDIA Nemotron 系列的技术演进可以概括为四条主线：
-
-1. **数据飞轮**：从 Nemotron-4 340B 的 98% 合成数据对齐，到 Llama-Nemotron 的开源 Post-Training Dataset，再到 Nemotron 3 的 20T tokens 预训练数据与开放 Agent 训练环境——NVIDIA 持续推动"数据生成 → 模型训练 → 数据增强"的自迭代飞轮
-
-2. **架构效率**：从 Dense Transformer → 混合 Mamba-Transformer（Nemotron-H）→ Mamba-2 + Attention MoE（Nemotron 3），每一步都围绕**降低推理成本**和**提升长上下文处理能力**展开。Latent-MoE 将通信压缩到低维空间，MTP 提供原生 speculative decoding，GQA+2 KV Heads 极致压缩 KV Cache
-
-3. **硬件协同**：从 H100 上的 FP8 推理 → Blackwell 上的 NVFP4 训练，Nemotron 系列始终与 NVIDIA 最新 GPU 架构深度绑定，形成"模型-软件-硬件"全栈优化壁垒。NVFP4 训练使 550B 模型在 4-bit 精度下仍保持 <1% 损失差距
-
-4. **Agentic 生态**：从单一聊天模型 → 动态推理切换（Llama-Nemotron）→ 多环境 RL 训练（NeMo Gym）→ 全双工语音 Agent（VoiceChat）+ 多模态理解（Omni）+ 企业检索（RAG）+ 内容安全（Safety），Nemotron 正在构建完整的 Agentic AI 基础设施栈
-
----
+- **N1** [Nemotron 3 家族页](https://research.nvidia.com/labs/nemotron/Nemotron-3/)，初发2025-12-15；及 [家族白皮书2512.20856v1](https://arxiv.org/abs/2512.20856v1)，2025-12-24。核对Abstract、§1、§2.2–2.4中两个大模型的组件归属。
+- **N2** [Nano技术报告2512.20848](https://arxiv.org/abs/2512.20848)：实读§1/图1计时协议、§4.3/表4/图11量化对照。下载版本身份以PDF首页和审计缓存记录为准，不与家族白皮书混同。
+- **N3** [Nano BF16模型卡](https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16)：读取Model Description/Design、许可与训练阶段；2026-10-22。
+- **N4** [NVIDIA Super发布公告](https://blogs.nvidia.com/blog/nemotron-3-super-agentic-ai/)，2026-03-11：核对参数、1M与发布时间。
+- **N5** [Ultra BF16模型卡](https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16)：读取参数、context、Release Date、Model Design与许可标识；2026-10-22。
+- **N6** [Ultra技术报告2606.15007v1](https://arxiv.org/abs/2606.15007v1)，2026-06-12提交：实读§1/图1、§2.1–2.2/表1/图3、§3.5/图11、§5推理效率/图15–16。PDF页眉印2026-06-16，不能据此更改arXiv提交日。
+- **N7** [NVIDIA Coalition新闻稿](https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Launches-Nemotron-Coalition-of-Leading-Global-AI-Labs-to-Advance-Open-Frontier-Models/default.aspx)，2026-03-16：读取成员、协作方式和未来模型计划。
 
 ## 十、参考来源
 

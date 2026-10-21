@@ -6,6 +6,21 @@
 > **分析对象**：`vllm-project/vllm` @ `fa75d3456d60a5ffe923818c4b495295675b38e1`
 > **主文档**：[report.md](report.md) ｜ [kv-cache-and-prefix-reuse.md](kv-cache-and-prefix-reuse.md) ｜ [scheduling-and-spec-decode.md](scheduling-and-spec-decode.md)
 
+## 0. 2026-10-22 语义复核（优先于下方历史机械审计）
+
+本轮重取同一固定SHA源码并运行skill扫描器，回到入口、交接与输出检查强结论。下方2026-10-16的零告警、锚点次数与表格是历史记录，**不是改后当前计数或语义通过证明**；本轮没有为了清零去给标题堆路径。
+
+| 复核问题 | 结论与直接证据 |
+|---|---|
+| grammar的归一化 | 旧runner `gpu_model_runner.py:4329-4335,3455` → `sample/rejection_sampler.py:487`；softmax已在合法集重新归一化。新runner `worker/gpu/model_runner.py:1662`走独立验证器，不能混接 |
+| one-hot与残差 | `sample/rejection_sampler.py:1044-1049`排除被拒候选；确定性q=delta_x可与该残差恢复p，one-hot不直接意味着有偏 |
+| 抢占后的前缀 | `scheduler.py:1014-1022,588-596`重新查询；`block_pool.py:776-804`释放引用不等于`:729-741`淘汰哈希，不能断言必零命中 |
+| 命中粒度/块表 | `single_type_kv_cache_manager.py:796-815`可查物理块内hash边界；`worker/block_table.py:127-153`含clear/move/swap，append-only不能解释成无其他API |
+| 对照与未覆盖 | SGLang受page_size约束；本轮未运行GPU、未做新旧runner统计对拍、未追踪attention内核，不作全配置正确性/速度结论 |
+
+
+来源、覆盖与版本见 [sources/MANIFEST.md](sources/MANIFEST.md)。机器检查只用于找线索，当前结果另记本地审查账；本页保留历史锚点表供定位，不将其“命中”符号等同于结论成立。
+
 ---
 
 ## 1. 方法学执行记录
@@ -66,7 +81,7 @@
 | `vllm/config/speculative.py` / `cache.py` / `vllm.py` | **精读（相关字段）** | `draft_sample_method`、`rejection_sample_method`、`synthetic_acceptance_*`、`enable_prefix_caching`、watermarking 闸门 |
 | `docs/design/prefix_caching.md`、`docs/design/paged_attention.md`、`docs/features/speculative_decoding/acceptance_metrics.md` | **精读（相关段落）** | 哈希键构成、append-only 声明、历史文档自废声明、指标口径 |
 | `vllm/v1/worker/block_table.py`、`vllm/v1/request.py`、`vllm/v1/metrics/stats.py` | **部分精读** | 与 KV/指标直接相关的行 |
-| `csrc/`、`rust/`、`tests/`、CI 配置 | **未读** | 本报告不涉及其结论；`docs/design/paged_attention.md` 已声明数据路径不在 `csrc/` |
+| `csrc/`、`rust/`、`tests/`、CI 配置 | **未读** | 不据历史设计文档失效排除这些区域参与attention数据计算 |
 
 ---
 
@@ -188,8 +203,8 @@ git show fa75d3456d60a5ffe923818c4b495295675b38e1:<path> | sed -n "<行>p"
   - [scheduling-and-spec-decode.md](scheduling-and-spec-decode.md)：244 行 / 24,076 B
   - 本文 [claim-audit.md](claim-audit.md)：422 行 / 52,515 B（含 §3.5 锚点复检与附录 A 锚点全表 207 行）
 - **未确证 / 待跟踪**（不入正文结论）：
-  1. 抢占后 `get_computed_blocks` 是否真退化为零命中——§4.2 的推断需要构造实验确证（打印 `num_preemptions` 与命中数）。
-  2. structured output 下验证判据的参照分布语义：是"近似"还是"仓库定义的正确答案"——仓库内**未找到明文定义**，检索 `docs/` 无结论。
+  1. 抢占后的实际命中量与恢复时延仍需实验；旧“因基数错位必零命中”推断已撤回，见§0。
+  2. structured output的全配置分布正确性未做实验；旧“softmax未归一化”指控已撤回，见§0。
   3. `vllm/v1/worker/gpu/model_runner.py` 与 `gpu_model_runner.py` 的默认关系（两套 runner 并存）。
   4. vLLM 是否有与 SGLang `event_loop_overlap` 对应的调度重叠机制。
   5. SGLang 侧的抢占恢复与语法约束下草稿处理——**本轮未 clone SGLang，不填对照表空格**。

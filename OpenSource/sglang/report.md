@@ -6,6 +6,8 @@ upstream: https://github.com/sgl-project/sglang@2a08e261ecd4cdfb04ec354f9005f18b
 date: 2026-10-16
 evidence: 精读原文
 status: completed
+> **2026-10-22 语义复核**：固定源码、已核调用链和未覆盖项见 [sources/MANIFEST.md](sources/MANIFEST.md)；本轮核验限定在列明的行为切面。
+
 ---
 
 # SGLang 仓库代码分析报告
@@ -34,19 +36,19 @@ SGLang 是一个面向 LLM / 多模态模型的高吞吐推理服务框架（[RE
 
 1. **前缀复用被抽象成"逻辑 radix 树 + 物理组件"两层**。树只管 token 键的拓扑（`RadixKey` / `TreeNode.key`），KV 槽位的分配、释放、淘汰、拷贝全交给 `TreeComponent` 驱动——`[unified_tree_core.py:416](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/unified_cache/unified_tree_core.py>)` 的类注释原文即 "Zero special-casing in the main tree"。这使 Full / SWA / Mamba 三种缓存类型能共用同一棵树。 **[精读原文]** 证据：`python/sglang/srt/mem_cache/unified_cache/components/README.md:1`
 2. **调度器把"跑当前 batch"与"处理上一 batch 结果"拆到两条流上重叠执行**，并把投机解码的 draft/verify 也塞进同一个重叠窗口。`[scheduler.py:1993](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/managers/scheduler.py>)` 的 `event_loop_overlap` 用 `result_queue` 持有上一 batch 的结果，`[eagle_worker_v2.py:1424](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/speculative/eagle_worker_v2.py>)` 在 verify 结束、draft_extend 开始之间**主动回调 `on_publish`**，让调度准备与 draft_extend 并行。 **[精读原文]**
-3. **投机解码的验证被分成"默认目标-only"与"可选严格拒绝采样"两条路径**，两者的接受判据**数学上不同**。默认路径在 `[eagle_worker_common.py:1019](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/speculative/eagle_worker_common.py>)` 把 `draft_probs` 置为全零；可选路径由 `[eagle_worker_v2.py:1191](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/speculative/eagle_worker_v2.py>)` 的 `sample_draft_proposal` 产出真实草稿分布，交给 `[reject_sampling.py:147](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/kernels/ops/speculative/reject_sampling.py>)` 的 `coin * q < p` 判据。 **[精读原文]**
+3. **投机解码的验证被分成"默认目标-only"与"可选严格拒绝采样"两条路径**，两者的接受判据**数学上不同**。默认非 rejection 路径在 `python/sglang/srt/speculative/eagle_utils.py:1000-1003` 把残差工作缓冲 `draft_probs` 初始化为全零；可选路径由 `[eagle_worker_v2.py:1191](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/speculative/eagle_worker_v2.py>)` 的 `sample_draft_proposal` 产出真实草稿分布，交给 `[reject_sampling.py:147](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/kernels/ops/speculative/reject_sampling.py>)` 的 `coin * q < p` 判据。 **[精读原文]**
 
 ### 1.3 最重要的三个判断
 
 | # | 判断 | 类型 |
 |---|---|---|
 | 1 | **本 commit 上，「topk=1 时把 draft 预测概率传给验证阶段」已存在落地路径**，即 `--speculative-use-rejection-sampling`；但**默认关闭**，且**对 EAGLE3 降维词表场景被显式排除**。因此"默认配置下 topk=1 仍把草稿当 one-hot"在代码层面依然成立。 | 代码事实 |
-| 2 | **SGLang 默认 EAGLE 验证路径与 `SafeAILab/EAGLE` @ `cb7e0841…` 的 `qx = 1.0` 在机制上同构**：接受概率都退化为目标概率 $p(x)$，残差都退化为 $p$ 本身。差异不在数学，而在**默认开关状态**与**工程闸门**（SGLang 加了 topk / 阈值 / 词表 / 确定性推理四道校验）。 | 代码事实 + 研究推断 |
+| 2 | **默认 target-only 分支不能只凭“零 draft_probs”判断有偏**。topk=1、两个阈值为 1 时，接受 $p(x)$，拒绝残差排除 $x$（`sampling.cuh:81,93,104-123`），混合后才恢复 $p$。EAGLE 本体的拒绝路径本轮未复核，不主张完整同构。 | 代码事实 + 有条件单步推导 |
 | 3 | **overlap scheduler 与 topk>1 互斥**，而 SGLang 对 Llama/Grok 的自动参数选择恰好给出 `topk=4`；同时 `rejection sampling` 要求 `topk=1`。也就是说：**"重叠调度 + 严格随机验证 + 树状投机"三者当前无法同时开启**，这是当前主干上一个显式的设计取舍边界。 | 代码事实 + 研究推断 |
 
 ### 1.4 最值得关注的风险
 
-- **默认路径的分布性代价被文档承认、但不在启动时强制提示**：`[eagle_worker_common.py:1017](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/speculative/eagle_worker_common.py>)` 的注释写明 "我们使用最后一个有效索引"，而 `draft_probs=torch.zeros_like(target_probs)` 是在同一函数内构造的；调用方**不会**因未开 rejection sampling 而收到警告。 **[精读原文]**
+- **同名 `draft_probs` 在不同分支含义不同**：`eagle_utils.py:1000-1003` 的默认路径创建残差工作缓冲，kernel 在 `sampling.cuh:93` 写入已拒候选目标概率；strict 路径传递实际提议分布。修改共享接口前需先确定分支，不能把零缓冲直接解释为“丢弃随机提议概率导致偏差”。
 - **同一语义在仓库内存在两套实现**：新 `UnifiedRadixCache`（默认，Rust TreeCore 优先）与遗留 `RadixCache`（`[radix_cache.py:281](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/radix_cache.py>)`）。后者仍被 `schedule_policy` 与 FlexKV 后端导入（`[schedule_policy.py:71](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/managers/schedule_policy.py>)`），是迁移期的**双真相源**。 **[精读原文]**
 
 ---
@@ -64,8 +66,8 @@ SGLang 的目标场景在 README 里被概括为 "agentic workloads, large-scale
 ### 2.2 与更简单做法的取舍
 
 - **不做"每请求一棵树"**：所有请求共享一棵全局 radix 树，靠 `lock_ref` 引用计数区分"可淘汰 / 被占用"（`[radix_cache.py:582](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/radix_cache.py>)` `inc_lock_ref`）。代价是任何一次 `match_prefix` 都可能**就地分裂节点**（`[radix_cache.py:662](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/radix_cache.py>)`），树结构在只读操作中被改写。
-- **不做"验证一律严格拒绝采样"**：默认走目标-only 验证（更快、无 kernel 开销、无需全词表分布），代价是 T>0 下草稿被当作 point mass。严格模式作为 opt-in 保留。
-- **不做"多语言统一"**：树热点用 Rust 重写（`rust/sglang-radix-tree/`），Python 侧只保留接口与回退。代价是**平台/工具链兼容矩阵**成为新的失败面（`[tree_core_registry.py:38](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/unified_cache/tree_core_registry.py>)` 的 `_rust_fallback_reason` 列了 6 类回退条件）。
+- **不做"验证一律严格拒绝采样"**：默认走目标-only kernel（仍需完整 `target_probs` 及同形缓冲，见 `eagle_utils.py:999-1003`；本报告未测速度差），代价是 T>0 下草稿被当作 point mass。严格模式作为 opt-in 保留。
+- **不做"多语言统一"**：树热点用 Rust 重写（`rust/sglang-radix-tree/`），Python 侧只保留接口与回退。代价是**平台/工具链兼容矩阵**成为新的失败面（`[tree_core_registry.py:44](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/unified_cache/tree_core_registry.py>)` 的 `_rust_fallback_reason` 列了 6 类回退条件）。
 
 ---
 
@@ -76,7 +78,7 @@ SGLang 的目标场景在 README 里被概括为 "agentic workloads, large-scale
 | 面 | 入口 | 说明 |
 |---|---|---|
 | HTTP / OpenAI 兼容 | `python/sglang/srt/entrypoints/` | 服务器进程入口 |
-| 请求编排 | `python/sglang/srt/managers/tokenizer_manager.py` | tokenize / 分派 / 结果回传（177k 行级大文件，本报告仅 skim） |
+| 请求编排 | `python/sglang/srt/managers/tokenizer_manager.py` | tokenize / 分派 / 结果回传（本报告仅快速阅读职责和交接处） |
 | 调度 | `python/sglang/srt/managers/scheduler.py` | 单进程调度主循环（274k 字符级大文件，本报告 traced） |
 | 模型执行 | `python/sglang/srt/model_executor/model_runner.py` | CUDA graph、attn backend 选择 |
 | 投机解码 | `python/sglang/srt/speculative/` | 按算法分 worker |
@@ -131,8 +133,8 @@ flowchart TB
     end
 
     subgraph Mem["KV 内存 @ mem_cache/"]
-        UC["UnifiedRadixCache (默认)<br/>registry.py:136"]
-        TC["UnifiedTreeCore / Rust TreeCore<br/>tree_core_registry.py:38"]
+        UC["UnifiedRadixCache (默认)<br/>registry.py:146"]
+        TC["UnifiedTreeCore / Rust TreeCore<br/>tree_core_registry.py:44"]
         RC["遗留 RadixCache<br/>radix_cache.py:281"]
         AL["allocator / memory_pool"]
     end
@@ -151,7 +153,7 @@ flowchart TB
 ```
 
 图中每条边都能对应到源码：[精读原文（SGLang 源码 @ 本报告 SHA）]
-`scheduler.py:1993`、`scheduler.py:3806`、`scheduler.py:4531`、`scheduler.py:1173`、`eagle_worker_v2.py:1350`、`eagle_utils.py:741`、`sampling.cuh:80`、`reject_sampling.py:147`、`eagle_info.py:17`、`registry.py:136`、`tree_core_registry.py:38`、`radix_cache.py:281`、`schedule_batch.py:1660`。
+`scheduler.py:1993`、`scheduler.py:3806`、`scheduler.py:4531`、`scheduler.py:1173`、`eagle_worker_v2.py:1350`、`eagle_utils.py:741`、`sampling.cuh:80`、`reject_sampling.py:147`、`eagle_info.py:17`、`registry.py:146`、`tree_core_registry.py:44`、`radix_cache.py:281`、`schedule_batch.py:1660`。
 
 ### 4.2 关键边界
 
@@ -183,22 +185,23 @@ sequenceDiagram
     DW-->>FS: EagleVerifyInput+draft_token
     FS->>T: 目标模型前向（TARGET_VERIFY）
     T->>FS: target logits
+    FS->>FS: eagle_sample → 接受/拒绝及提交输出
     FS->>S: on_publish(new_seq_lens) eagle_worker_v2.py:1424
     S->>FM: future_map.publish(...)
     FS->>DW: _draft_extend_for_decode() eagle_worker_v2.py:1430
     Note over S: 与此同时处理上一 batch 结果<br/>result_queue.popleft() scheduler.py:2004
-    FS->>S: eagle_sample() → 接受/拒绝 eagle_utils.py:741
+    FS-->>S: forward_batch_generation 结果（采样已在 verify 内完成）
 ```
 
 **分步细节**
 
 1. **收请求**：`ingest_requests()`（`[scheduler.py:2116](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/managers/scheduler.py>)`）。
-2. **选批**：`get_next_batch_to_run()`（`[scheduler.py:3806](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/managers/scheduler.py>)`）先合并上一 extend 批，再调 `get_new_batch_prefill()`（`[scheduler.py:3969](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/managers/scheduler.py>)`）做等待队列准入 —— 准入时走 **LPM（longest-prefix-match）策略**（`[schedule_policy.py:171](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/managers/schedule_policy.py>)`）。
-3. **前缀匹配**：`Req.init_next_round_input()`（`[schedule_batch.py:1660](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/managers/schedule_batch.py>)`）→ `match_kv_cache()`（`[common.py:219](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/common.py>)`）→ `tree_cache.match_prefix()`。命中长度写回 `req.prefix_len`，命中节点写回 `req.last_node`，**并为该路径加锁**（`inc_lock_ref`）。 **[精读原文]**
+2. **选批**：`get_next_batch_to_run()`（`[scheduler.py:3806](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/managers/scheduler.py>)`）先合并上一 extend 批，再调 `get_new_batch_prefill()`（`[scheduler.py:3969](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/managers/scheduler.py>)`）做等待队列准入 —— 只有配置为 cache-aware LPM 时才按最长前缀排序；排序策略并非所有运行配置固定为 LPM（`[schedule_policy.py:171](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/managers/schedule_policy.py>)`）。
+3. **前缀匹配**：`Req.init_next_round_input()`（`[schedule_batch.py:1660](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/managers/schedule_batch.py>)`）→ `match_kv_cache()`（`[common.py:219](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/common.py>)`）→ `tree_cache.match_prefix()`。命中长度写回 `req.prefix_len`，命中节点写回 `req.last_node`，；后续准入/缓存保护流程持有锁。匹配本身与锁定是不同操作（见子文档 §3）。 **[精读原文]**
 4. **前向**：overlap 路径下 `run_batch` 先 `future_map.resolve_seq_lens_cpu(batch)`——因为**上一轮的 `seq_lens` 此刻才被 GPU 写回**，这是重叠调度最核心的数据依赖修正点（`[scheduler.py:4572](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/managers/scheduler.py>)`）。 **[精读原文]**
 5. **投机解码内部**：`EAGLEWorkerV2.forward_batch_generation` 分三段——`draft()` → `verify()` → `_draft_extend_for_decode()`，并且在 verify 之后立刻 `on_publish`（`[eagle_worker_v2.py:1424](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/speculative/eagle_worker_v2.py>)`，注释原文："Publish before draft_extend so the fence is at verify-end"）。 **[精读原文]**
 6. **采样与提交**：`eagle_sample()` 返回 `(predict, accept_lens, accept_index)`，由 `prepare_verify_commit_outputs` 转成新的 `seq_lens` 与 bonus token（`[eagle_worker_common.py:713](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/speculative/eagle_worker_common.py>)`）。 **[精读原文]**
-7. **结果落地**：`process_batch_result` 释放/保留 KV（`checkpoint_kv_cache` / `release_kv_cache`，见 `[common.py](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/common.py>)` 同名函数），树在 `checkpoint` 时插入新算出的 KV 并释放重复段（`[radix_cache.py:504](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/radix_cache.py>)`）。
+7. **结果落地**：`process_batch_result` 释放/保留 KV（`checkpoint_kv_cache` / `release_kv_cache`，见 `[common.py](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/common.py>)` 同名函数），默认 UnifiedRadixCache 在 `unified_radix_cache.py:1132-1248` 进行插入和 cache actions；遗留 RadixCache 的重复段释放是 `radix_cache.py:504`，两者不可混作同一实现。
 
 ---
 
@@ -206,7 +209,7 @@ sequenceDiagram
 
 ### 6.1 前缀缓存：两代实现并存
 
-**代码事实**：`python/sglang/srt/mem_cache/registry.py:136` 在非 pure-SWA、非 FlexKV、非 external-linker 的常规情况下 **返回 `create_unified_radix_cache(ctx)`**（`[registry.py:136](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/registry.py>)`），即 `UnifiedRadixCache` 是默认。旧 `RadixCache` 仍被 `schedule_policy.py` 与 `flexkv_radix_cache.py` 导入（`[schedule_policy.py:71](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/managers/schedule_policy.py>)`）。 **[精读原文]**
+**代码事实**：`python/sglang/srt/mem_cache/registry.py:146` 在非 pure-SWA、非 FlexKV、非 external-linker 的常规情况下 **返回 `create_unified_radix_cache(ctx)`**（`[registry.py:146](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/registry.py>)`），即 `UnifiedRadixCache` 是默认。旧 `RadixCache` 仍被 `schedule_policy.py` 与 `flexkv_radix_cache.py` 导入（`[schedule_policy.py:71](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/managers/schedule_policy.py>)`）。 **[精读原文]**
 
 **设计解读**：新树的节点不再直接持有 `value: Tensor`，而是 `component_data[ComponentType]`（`[unified_tree_core.py:123](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/unified_cache/unified_tree_core.py>)`），每个 component 独立记 `lock_ref` / `host_lock_ref` / `value`。这是把"一个节点在 Full 上活着、在 SWA 上是墓碑"这件事变成数据结构的一等公民。 **[研究推断]**（依据是该结构与 `components/README.md` 中 SWA tombstone 描述的对应关系）
 
@@ -240,9 +243,9 @@ sequenceDiagram
 |---|---|---|---|
 | 逻辑树 / 物理组件分离 | 一套树支持 Full+SWA+Mamba；新增缓存类型只需加 component | 每次树操作要过 per-component hook；匹配边界必须所有 validator 通过 | `unified_tree_core.py:416`；`components/README.md:20` |
 | 双流重叠调度 | 掩盖 CPU 调度与 GPU 计算 | `seq_lens` 跨轮依赖必须显式 resolve；topk>1 不可用 | `scheduler.py:1993`；`scheduler.py:4572` |
-| 默认目标-only 验证 | 无全词表分布依赖、无 Triton 采样开销、可上 cuda graph | T>0 下草稿按 point mass 处理，接受概率退化为 $p(x)$ | `eagle_worker_common.py:1017`；`eagle_utils.py:1000–1003` |
+| 默认目标-only 验证 | 无需携带完整提议q，但仍需完整target_probs与同形残差缓冲；速度未对测 | T>0 下草稿按 point mass 处理，接受概率退化为 $p(x)$ | `eagle_worker_common.py:1017`；`eagle_utils.py:1000–1003` |
 | 严格拒绝采样作为 opt-in | 恢复 $\min(1,p/q)$ 判据 | 要求 topk=1、全词表 q、不能用 accept threshold、不能 deterministic；EAGLE3 降维词表不支持 | `speculative_hook.py:1134`；`speculative_hook.py:23` |
-| 树热点下沉 Rust | 大树上更低的每步开销 | 平台/工具链/PyTorch 版本矩阵成为新失败面 | `tree_core_registry.py:38` |
+| 树热点下沉 Rust | 大树上更低的每步开销 | 平台/工具链/PyTorch 版本矩阵成为新失败面 | `tree_core_registry.py:44` |
 
 ---
 
@@ -263,7 +266,7 @@ sequenceDiagram
 
 **安全的扩展点**
 
-- 新增缓存类型 → 实现 `TreeComponent`，在 `registry.py` 的 `tree_components` 里加 `ComponentType`；注意 Rust TreeCore 只支持 `{FULL, SWA, MAMBA}`，其他组合会回退 Python（`[tree_core_registry.py:38](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/unified_cache/tree_core_registry.py>)`）。
+- 新增缓存类型 → 实现 `TreeComponent`，在 `registry.py` 的 `tree_components` 里加 `ComponentType`；注意 Rust TreeCore 只支持 `{FULL, SWA, MAMBA}`，其他组合会回退 Python（`[tree_core_registry.py:44](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/unified_cache/tree_core_registry.py>)`）。
 - 新增投机算法 → 在 `SpeculativeAlgorithm` 上注册 worker factory（`[spec_info.py:302](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/speculative/spec_info.py>)`）。
 
 **高风险改动**
@@ -292,8 +295,8 @@ sequenceDiagram
 
 | # | 结论 | 源码 | 级别 | 置信 |
 |---|---|---|---|---|
-| E1 | 默认前缀缓存是 `UnifiedRadixCache` | `registry.py:136` | 精读原文 | 高 |
-| E2 | 默认 TreeCore 后端是 Rust，6 类条件回退 Python | `tree_core_registry.py:38` | 精读原文 | 高 |
+| E1 | 默认前缀缓存是 `UnifiedRadixCache` | `registry.py:146` | 精读原文 | 高 |
+| E2 | 默认 TreeCore 后端是 Rust，6 类条件回退 Python | `tree_core_registry.py:44` | 精读原文 | 高 |
 | E3 | 新树节点按 component 存数据，独立 lock_ref | `unified_tree_core.py:112` | 精读原文 | 高 |
 | E4 | 旧树 `match_prefix` 会就地分裂节点 | `radix_cache.py:662` | 精读原文 | 高 |
 | E5 | overlap 主循环处理上一批结果 | `scheduler.py:1993` | 精读原文 | 高 |

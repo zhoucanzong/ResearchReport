@@ -7,24 +7,24 @@
 
 ---
 
-共 **49** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter；「板块」列由 [`scripts/panels.json`](<../scripts/panels.json>) 驱动。
+共 **50** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter；「板块」列由 [`scripts/panels.json`](<../scripts/panels.json>) 驱动。
 
 | 条目 | 板块 | 路径 | 子报告数 | 行数 | 日期 |
 | --- | --- | --- | --: | --: | --- |
-| QuantizationEdge | Infra | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 0 | 777 | — |
-| SpeculativeDecoding | Infra | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 25 | 601 | 2026-10-17 |
-| TrainingInfra | Infra | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 0 | 720 | — |
-| Agent | LLM | [LLM/Agent/report.md](<../LLM/Agent/report.md>) | 0 | 698 | — |
-| Alignment | LLM | [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) | 0 | 588 | — |
-| DecisionModels | LLM | [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | 18 | 869 | — |
-| LongContext | LLM | [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 0 | 608 | — |
+| QuantizationEdge | Infra | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 0 | 188 | 2026-10-22 |
+| SpeculativeDecoding | Infra | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 25 | 603 | 2026-10-22 |
+| TrainingInfra | Infra | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 0 | 181 | 2026-10-22 |
+| Agent | LLM | [LLM/Agent/report.md](<../LLM/Agent/report.md>) | 0 | 105 | — |
+| Alignment | LLM | [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) | 0 | 114 | — |
+| DecisionModels | LLM | [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | 18 | 874 | — |
+| LongContext | LLM | [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 0 | 609 | — |
 | MoE | LLM | [LLM/MoE/report.md](<../LLM/MoE/report.md>) | 0 | 405 | — |
-| RAG | LLM | [LLM/RAG/report.md](<../LLM/RAG/report.md>) | 0 | 851 | — |
-| ReasoningModels | LLM | [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) | 0 | 681 | — |
-| VLM | LLM | [LLM/VLM/report.md](<../LLM/VLM/report.md>) | 0 | 517 | — |
-| Alibaba-Gen | Models | [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) | 0 | 803 | — |
-| ByteDance-Gen | Models | [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) | 0 | 711 | — |
-| Claude | Models | [Models/Claude/report.md](<../Models/Claude/report.md>) | 0 | 611 | — |
+| RAG | LLM | [LLM/RAG/report.md](<../LLM/RAG/report.md>) | 0 | 834 | — |
+| ReasoningModels | LLM | [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) | 0 | 679 | — |
+| VLM | LLM | [LLM/VLM/report.md](<../LLM/VLM/report.md>) | 0 | 516 | — |
+| Alibaba-Gen | Models | [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) | 0 | 95 | — |
+| ByteDance-Gen | Models | [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) | 0 | 336 | — |
+| Claude | Models | [Models/Claude/report.md](<../Models/Claude/report.md>) | 0 | 580 | — |
 | DeepSeek | Models | [Models/DeepSeek/report.md](<../Models/DeepSeek/report.md>) | 2 | 751 | — |
 | Doubao-Seed | Models | [Models/Doubao-Seed/report.md](<../Models/Doubao-Seed/report.md>) | 0 | 643 | — |
 | GLM | Models | [Models/GLM/report.md](<../Models/GLM/report.md>) | 0 | 737 | — |
@@ -37,27 +37,28 @@
 | Kling | Models | [Models/Kling/report.md](<../Models/Kling/report.md>) | 0 | 537 | — |
 | LLaMA | Models | [Models/LLaMA/report.md](<../Models/LLaMA/report.md>) | 0 | 483 | — |
 | MiMo | Models | [Models/MiMo/report.md](<../Models/MiMo/report.md>) | 1 | 749 | — |
-| Midjourney | Models | [Models/Midjourney/report.md](<../Models/Midjourney/report.md>) | 0 | 587 | — |
+| Midjourney | Models | [Models/Midjourney/report.md](<../Models/Midjourney/report.md>) | 0 | 85 | — |
 | MiniMax | Models | [Models/MiniMax/report.md](<../Models/MiniMax/report.md>) | 0 | 517 | — |
 | Mistral | Models | [Models/Mistral/report.md](<../Models/Mistral/report.md>) | 0 | 495 | — |
-| Nemotron | Models | [Models/Nemotron/report.md](<../Models/Nemotron/report.md>) | 0 | 465 | — |
-| OpenAI-Gen | Models | [Models/OpenAI-Gen/report.md](<../Models/OpenAI-Gen/report.md>) | 0 | 859 | — |
-| Qwen | Models | [Models/Qwen/report.md](<../Models/Qwen/report.md>) | 3 | 1,111 | — |
-| Runway | Models | [Models/Runway/report.md](<../Models/Runway/report.md>) | 0 | 732 | — |
-| StabilityAI | Models | [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>) | 0 | 873 | — |
-| DeepSeekHarness | OpenSource | [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | 3 | 348 | 2026-10-20 |
-| nemotron | OpenSource | [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | 6 | 206 | — |
-| sglang | OpenSource | [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | 3 | 310 | 2026-10-16 |
-| this-that-model | OpenSource | [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | 0 | 246 | 2026-10-16 |
-| vllm | OpenSource | [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | 3 | 294 | 2026-10-16 |
-| 3DGen | VisualGen | [VisualGen/3DGen/report.md](<../VisualGen/3DGen/report.md>) | 0 | 899 | — |
-| AudioGen | VisualGen | [VisualGen/AudioGen/report.md](<../VisualGen/AudioGen/report.md>) | 0 | 913 | — |
-| AvatarGen | VisualGen | [VisualGen/AvatarGen/report.md](<../VisualGen/AvatarGen/report.md>) | 0 | 592 | — |
-| ControllableGen | VisualGen | [VisualGen/ControllableGen/report.md](<../VisualGen/ControllableGen/report.md>) | 0 | 923 | — |
-| DiT | VisualGen | [VisualGen/DiT/report.md](<../VisualGen/DiT/report.md>) | 0 | 893 | — |
-| DiffusionModels | VisualGen | [VisualGen/DiffusionModels/report.md](<../VisualGen/DiffusionModels/report.md>) | 0 | 855 | — |
+| Nemotron | Models | [Models/Nemotron/report.md](<../Models/Nemotron/report.md>) | 0 | 231 | — |
+| OpenAI-Gen | Models | [Models/OpenAI-Gen/report.md](<../Models/OpenAI-Gen/report.md>) | 0 | 385 | — |
+| Qwen | Models | [Models/Qwen/report.md](<../Models/Qwen/report.md>) | 3 | 1,113 | — |
+| Runway | Models | [Models/Runway/report.md](<../Models/Runway/report.md>) | 0 | 94 | — |
+| StabilityAI | Models | [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>) | 0 | 727 | — |
+| DeepInfer | OpenSource | [OpenSource/DeepInfer/report.md](<../OpenSource/DeepInfer/report.md>) | 4 | 140 | 2026-10-22 |
+| DeepSeekHarness | OpenSource | [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | 4 | 350 | 2026-10-20 |
+| nemotron | OpenSource | [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | 7 | 220 | — |
+| sglang | OpenSource | [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | 4 | 311 | 2026-10-16 |
+| this-that-model | OpenSource | [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | 1 | 246 | 2026-10-16 |
+| vllm | OpenSource | [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | 4 | 294 | 2026-10-16 |
+| 3DGen | VisualGen | [VisualGen/3DGen/report.md](<../VisualGen/3DGen/report.md>) | 0 | 857 | — |
+| AudioGen | VisualGen | [VisualGen/AudioGen/report.md](<../VisualGen/AudioGen/report.md>) | 0 | 914 | — |
+| AvatarGen | VisualGen | [VisualGen/AvatarGen/report.md](<../VisualGen/AvatarGen/report.md>) | 0 | 594 | — |
+| ControllableGen | VisualGen | [VisualGen/ControllableGen/report.md](<../VisualGen/ControllableGen/report.md>) | 0 | 916 | — |
+| DiT | VisualGen | [VisualGen/DiT/report.md](<../VisualGen/DiT/report.md>) | 0 | 887 | — |
+| DiffusionModels | VisualGen | [VisualGen/DiffusionModels/report.md](<../VisualGen/DiffusionModels/report.md>) | 0 | 858 | — |
 | ImageEditing | VisualGen | [VisualGen/ImageEditing/report.md](<../VisualGen/ImageEditing/report.md>) | 0 | 834 | — |
 | VideoGen | VisualGen | [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) | 0 | 898 | — |
-| EmbodiedVLA | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 13 | 609 | — |
-| WorldModels | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 598 | 2026-10-17 |
-| **合计** | — | — | **95** | **32,738** | — |
+| EmbodiedVLA | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 13 | 611 | — |
+| WorldModels | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 602 | 2026-10-22 |
+| **合计** | — | — | **104** | **27,539** | — |

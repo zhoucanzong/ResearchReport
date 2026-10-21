@@ -15,9 +15,9 @@
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
-| **QuantizationEdge** | [模型量化与边缘部署研究报告](<QuantizationEdge/report.md>) | 777 行 |
-| **SpeculativeDecoding** | [投机解码（Speculative Decoding）技术专题 · 深度调研](<SpeculativeDecoding/report.md>) | 601 行 |
-| **TrainingInfra** | [大模型训练基础设施与分布式训练研究报告](<TrainingInfra/report.md>) | 720 行 |
+| **QuantizationEdge** | [模型量化与边缘部署研究报告](<QuantizationEdge/report.md>) | 188 行 |
+| **SpeculativeDecoding** | [投机解码（Speculative Decoding）技术专题 · 深度调研](<SpeculativeDecoding/report.md>) | 603 行 |
+| **TrainingInfra** | [大模型训练基础设施与分布式训练研究报告](<TrainingInfra/report.md>) | 181 行 |
 
 ## 📎 子文档
 
@@ -37,18 +37,18 @@
 * [legacy/speculative-training-optimization.md](<SpeculativeDecoding/legacy/speculative-training-optimization.md>) — 128 行 / 14,089 B
 * [papers/2305.09781-specinfer.md](<SpeculativeDecoding/papers/2305.09781-specinfer.md>) — 201 行 / 15,667 B
 * [papers/2401.10774-medusa.md](<SpeculativeDecoding/papers/2401.10774-medusa.md>) — 204 行 / 15,815 B
-* [papers/2401.15077-eagle-series.md](<SpeculativeDecoding/papers/2401.15077-eagle-series.md>) — 244 行 / 19,834 B
-* [papers/2402.02057-lookahead.md](<SpeculativeDecoding/papers/2402.02057-lookahead.md>) — 202 行 / 15,419 B
+* [papers/2401.15077-eagle-series.md](<SpeculativeDecoding/papers/2401.15077-eagle-series.md>) — 244 行 / 19,850 B
+* [papers/2402.02057-lookahead.md](<SpeculativeDecoding/papers/2402.02057-lookahead.md>) — 202 行 / 15,270 B
 * [papers/2408.11049-magicdec.md](<SpeculativeDecoding/papers/2408.11049-magicdec.md>) — 200 行 / 14,379 B
 * [papers/2609.21827-rheosampling.md](<SpeculativeDecoding/papers/2609.21827-rheosampling.md>) — 216 行 / 15,804 B
 * [papers/sglang-implementation.md](<SpeculativeDecoding/papers/sglang-implementation.md>) — 220 行 / 15,358 B
-* [papers/vllm-implementation.md](<SpeculativeDecoding/papers/vllm-implementation.md>) — 220 行 / 16,656 B
+* [papers/vllm-implementation.md](<SpeculativeDecoding/papers/vllm-implementation.md>) — 227 行 / 18,077 B
 * [sources/CANDIDATES.md](<SpeculativeDecoding/sources/CANDIDATES.md>) — 82 行 / 7,644 B
 * [sources/CODE-AUDIT.md](<SpeculativeDecoding/sources/CODE-AUDIT.md>) — 87 行 / 8,110 B
 * [sources/MANIFEST.md](<SpeculativeDecoding/sources/MANIFEST.md>) — 40 行 / 5,225 B
-* [topics/algorithm-families.md](<SpeculativeDecoding/topics/algorithm-families.md>) — 164 行 / 11,910 B
+* [topics/algorithm-families.md](<SpeculativeDecoding/topics/algorithm-families.md>) — 164 行 / 12,014 B
 * [topics/systems-throughput-latency.md](<SpeculativeDecoding/topics/systems-throughput-latency.md>) — 168 行 / 10,532 B
-* [topics/verification-acceptance.md](<SpeculativeDecoding/topics/verification-acceptance.md>) — 216 行 / 12,395 B
+* [topics/verification-acceptance.md](<SpeculativeDecoding/topics/verification-acceptance.md>) — 157 行 / 8,698 B
 
 </details>
 

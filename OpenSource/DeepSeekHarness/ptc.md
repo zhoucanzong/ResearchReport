@@ -1,5 +1,7 @@
 # DSH `ptc` 线深读：Programmatic Tool Calling 的机制与安全边界
 
+> **2026-10-22 源码复核**：当前无 Git 身份的快照、文件指纹及已核范围见 [sources/MANIFEST.md](sources/MANIFEST.md)；版本字符串不等于 commit。
+
 > **对象**：`/tmp/dsh-src`（DSH 仓库 checkout，**无 `.git`**，全程只读，不 commit、不改动）。本题所有代码引用均相对该目录；引用的限制条目原文见 `packages/ptc-runtime/ptc-runtime-node/README.md`。
 > **版本依据**：`package.json:3` → `"version": "0.2.1-rc.2"`。仓库无 `.git`，无法用 tag/commit 交叉验证，此为该文件的一手声明。
 > **方法**：`code-researcher` skill 的 `deep` 模式（Codebase Map → Runtime Story → Design Inquiry → Maintainer Notes）；结论一律带 `文件:行`。
@@ -9,7 +11,7 @@
 
 1. **`ptc` 是"程序化工具调用"：模型输出一段程序，程序在运行时里用 `await tools.<name>(args)` 调工具。** 与 one-tool-per-turn 的差别不在速度，而在**谁决定调用序列**：一次 `run_code` 调用内部可以嵌套任意多次工具 sub-dispatch，这些 sub-dispatch 记入 Session 日志用于重建，但**只有外层 curated 结果进入模型历史**（`packages/core/tools/src/ptc.ts:1-7`；协议字段见 `packages/ptc-runtime/ptc-runtime/src/types.ts:20,51-67,81`）。
 2. **能用的入口只有一个工具 `run_code`，开关是 `tools` 的 `mode: 'ptc'`（或 per-agent `presentAs('ptc')`）。** 在 `ptc` 模式下一次装配只把 `run_code` 投给模型，其余工具名在模型直呼时被确定性拒绝并给出改道提示；程序运行在独立子进程（Node 后端 `isolation = 'process'`，受 `ctx.sandbox.confine` 约束），而**嵌套工具在宿主进程内执行**（`packages/core/tools/src/index.ts:60,812,1034-1035,1473-1479`；`packages/ptc-runtime/ptc-runtime-node/src/index.ts:41,219,231`）。
-3. **安全边界：程序级"更宽模式"审批复用了 `approveEscalation`，且审批发生在 `runtime.resolve/run` 之前；嵌套工具各自走自己的 `tools/pre-execute` + approval，互不继承。** 代码里**没有找到**绕过审批的提权路径，并有三处反复用护栏（同 Session 换模式即 abort 并等清理、失效进程、升级运行时丢弃 `stateOwner`）。**证明方式（否定性结论必须写清搜索面）**：在 `packages/core/tools/src/ptc.ts`、`packages/core/tools/src/ptc-calls.ts`、`packages/ptc-runtime/**` 内 `grep -rn 'approveEscalation\|approval'` 全量枚举，**唯一审批调用**是 `ptc.ts:395 await approveEscalation({...})`，其余命中为类型导入（`ptc.ts:21,23`）与 schema 描述（`:103,104,113,124`）。这证明的是"**这些文件里没有第二条审批路径**"，**不是**"整个系统不存在该路径"。
+3. **安全边界：程序级"更宽模式"审批复用了 `approveEscalation`，且审批发生在 `runtime.resolve/run` 之前；嵌套工具各自走自己的 `tools/pre-execute` + approval，互不继承。** 所查调用链中程序级升级审批在执行前，但这**不构成整个系统无绕过路径的证明**，并有三处反复用护栏（同 Session 换模式即 abort 并等清理、失效进程、升级运行时丢弃 `stateOwner`）。**证明方式（否定性结论必须写清搜索面）**：在 `packages/core/tools/src/ptc.ts`、`packages/core/tools/src/ptc-calls.ts`、`packages/ptc-runtime/**` 内 `grep -rn 'approveEscalation\|approval'` 全量枚举，**唯一审批调用**是 `ptc.ts:395 await approveEscalation({...})`，其余命中为类型导入（`ptc.ts:21,23`）与 schema 描述（`:103,104,113,124`）。这证明的是"**这些文件里没有第二条审批路径**"，**不是**"整个系统不存在该路径"。
 
 需要明确的是：**幂等重放当前模式本来就不触发审批**（`escalation.ts:173`），且程序自身对文件系统的直接效果由 OS 沙箱一次性授权覆盖、不逐次审批——这是设计而非绕过（见「机制 §4」与「未能确证」）。
 4. **失败是结果字段而非异常；超时/中断在运行时侧被归一成 `timeout` / `abort` 两类 kind。** `PtcRunResult.error.kind` 有 8 类正交取值；`run_code` 把它转成 `CodeRunFailedError`（code `CODE_RUN_FAILED`），最终以结构化 `isError` 结果回给模型，文本形如 `code run failed (<kind>): <message>` + `Captured output:` + `File sandbox:` 行（`types.ts:139-144,146-150`；`ptc.ts:168-173,736-741`）。

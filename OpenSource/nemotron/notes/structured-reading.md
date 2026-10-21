@@ -37,9 +37,9 @@ $$\mathcal{L}(\theta) = \mathcal{L}_{AR}(\theta) + \alpha \cdot \mathcal{L}_{dif
 - **Noisy→Noisy** intra-block 双向、跨 block causal；**Noisy→Clean** 让 noisy block 看 clean prefix 实现 condition。
 
 ### 2.3 关键训练技巧
-两个最大单点收益：
-- **+AR loss → +7.48%**（diffusion mode 的 avg accuracy）
-- **+ two-stage training → +5.74%**
+Table 1 的两个较大累计增量（25B-token CPT、diffusion mode、6项编码/数学任务均值；非独立移除实验）：
+- **累计加入 AR loss：62.80→70.28，+7.48个百分点**（diffusion mode 的 avg accuracy）
+- **累计加入两阶段训练：57.06→62.80，+5.74个百分点**
 
 其它技巧：
 - **Global Loss Averaging（Eq.5）**：用 batch 内全部 $NL$ token 数归一化（而非 sequence-wise）。原因：diffusion loss 的 $1/t$ 重权 + 每条 sample 不同噪声 token 数，导致 sequence-wise 平均会放大小 $t$ 样本的影响，增大梯度方差。
@@ -49,9 +49,9 @@ $$\mathcal{L}(\theta) = \mathcal{L}_{AR}(\theta) + \alpha \cdot \mathcal{L}_{dif
 
 ### 2.4 AR 与 Diffusion 损失互相影响
 - **AR loss 提升 diffusion 精度**（+7.48%，最大收益）。
-- **Diffusion loss 几乎不损 AR 精度**（base +0.14%，instruct +0.43%）。
+- **Diffusion loss 几乎不损 AR 精度**（base +0.14个百分点、instruct +0.43个百分点）。
 - 两者在 α=0.3 同时最优——**不是 zero-sum**。
-- 唯一可见的代价：instruct 模型在 IFEval -3.01%、HumanEval -2.44%——说明严格指令遵循略受影响。
+- Table3中两个下降的具体任务：instruct 模型在 IFEval -3.01个百分点、HumanEval -2.44个百分点——说明严格指令遵循略受影响。
 
 ## 3. 三模式推理（Sec.3）
 

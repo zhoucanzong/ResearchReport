@@ -13,7 +13,7 @@
 ## 1. 先给答案
 
 1. **PagedAttention 在 V1 里不是一棵树，而是一张"链式哈希 → 物理块"的字典 + 一条按淘汰序排列的空闲链表。** 三个结构定义了全部语义：`BlockHashToBlockMap`（`[block_pool.py:35](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)`）、`FreeKVCacheBlockQueue`（`[kv_cache_utils.py:258](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_utils.py>)`）、`BlockPool`（`[block_pool.py:136](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)`）。**[精读原文]**
-2. **哈希是"累积"的，因此命中自动蕴含前缀全同**：`hash(parent_hash, block_tokens, extra_keys)`（`[kv_cache_utils.py:1003](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_utils.py>)`）。代价是**任何一处不匹配，其后全部失效**，亚块粒度的共享前缀无法复用。**[精读原文]**
+2. **哈希是"累积"的，因此命中自动蕴含前缀全同**：`hash(parent_hash, block_tokens, extra_keys)`（`[kv_cache_utils.py:1003](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_utils.py>)`）。代价是**任何一处不匹配，其后全部失效**，默认匹配不复用未满物理块的前缀；细粒度模式按 hash 单元匹配（§3.1 phase 2）。**[精读原文]**
 3. **淘汰没有独立触发者**：`get_new_blocks` 每拿到一个块就顺手清它的哈希（`[block_pool.py:689](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)`）。"淘汰"是分配路径的副作用。**[精读原文]**
 
 ---
@@ -45,7 +45,7 @@
 
 ### 2.3 块表：append-only
 
-`BlockTable` 是一个 `[max_num_reqs, max_num_blocks_per_req]` 的 int32 缓冲（`[block_table.py:80-83](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/worker/block_table.py>)`），只有"追加行"和"整行搬移"两种写操作（`append_row:114`、`move_row:137`）。**[精读原文]**
+`BlockTable` 是一个 `[max_num_reqs, max_num_blocks_per_req]` 的 int32 缓冲（`[block_table.py:80-83](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/worker/block_table.py>)`），除追加外，也有 `add_row:127`、`clear_row:131`、`move_row:137`、`swap_row:149` 等操作；文档里的 append-only 约束针对请求正常增长时不替换已映射的重复块，并非说 BlockTable API 只能追加（`append_row:114`、`move_row:137`）。**[精读原文]**
 
 `[docs/design/prefix_caching.md:194](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/docs/design/prefix_caching.md>)` 把这条设计约束与其后果写在一起（原文要点）：v0 在检测到重复块时会释放新块并让请求改用旧块，**v1 的 block table 是 append-only，因此不允许把 `[0, 3]` 改写成 `[0, 1]`**，重复块要等到请求释放才消除。**[精读原文（vLLM 仓库文档 @ 本报告 SHA）]**
 
@@ -68,11 +68,11 @@
 
 **研究推断**：这是"全命中"场景的**已知代价**，仓库用注释承认它、并明确标注为未来可优化点。它不是 bug，是块对齐约束的直接推论（块对齐约束与"减一"实现在 [`vllm/v1/core/kv_cache_manager.py:295`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_manager.py#L295>)（`max_cache_hit_length = request.num_tokens - 1`）与 [`vllm/v1/core/single_type_kv_cache_manager.py:827`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/single_type_kv_cache_manager.py#L827>)（`num_blocks = cdiv(hit_length, block_size)`））。
 
-### 3.2 写入：只写满块，且哈希在 Request 侧算
+### 3.2 写入：哈希在 Request 侧按完整 hash 单元算
 
 `cache_full_blocks`（`[block_pool.py:226](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)`）的 docstring 明确："The block hashes values are computed by the Request object immediately when it is created and when new tokens are appended." **[精读原文]**
 
-`Request.update_block_hashes`（`[request.py:285-288](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/request.py>)`）通过 `_block_hasher` 回调增量追加哈希；而 hasher 本身在 `[kv_cache_utils.py:993](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_utils.py>)` 对非满块直接 `return []`。**[精读原文]**
+`Request.update_block_hashes`（`[request.py:285-288](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/request.py>)`）通过 `_block_hasher` 回调增量追加哈希；而 hasher 本身在 `[kv_cache_utils.py:993](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_utils.py>)` 没有新完整 hash 单元时直接 `return []`；hash_block_size 可以小于物理块。**[精读原文]**
 
 **研究推断**：把哈希计算放在 Request 侧（而非 KV 管理器侧）意味着**哈希是请求状态的函数，不是内存状态的函数**；因此同一条请求被抢占重算时，它的哈希序列不会变——这是 §4.2 讨论的基础。
 
@@ -105,7 +105,7 @@ self.free_block_queue.prepend_n(blocks_to_evict_first)
 self.free_block_queue.append_n(blocks_to_evict_last)
 ```
 
-**研究推断**：这里把两种**相互冲突的目标**（GPU 局部性 vs 前缀复用价值）用"有没有哈希"这一个判据切开了。它的隐含假设是"没哈希的块永远不可能被 APC 命中"——这与 `[kv_cache_utils.py:993](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_utils.py>)`"只哈希满块"是配套的：部分填充的尾块天然无哈希，复用价值低，所以让它先被复用（LIFO）。
+**研究推断**：这里把两种**相互冲突的目标**（GPU 局部性 vs 前缀复用价值）用"有没有哈希"这一个判据切开了。它的隐含假设是"没哈希的块永远不可能被 APC 命中"——这与 `[kv_cache_utils.py:993](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_utils.py>)`“只哈希完整 hash 单元”是配套的：部分填充的尾块天然无哈希，复用价值低，所以让它先被复用（LIFO）。
 
 ### 3.5 额外机制：`unpin_blocks` 与 reuse watcher
 
@@ -151,12 +151,9 @@ self.waiting.prepend_request(request)  # scheduler.py:1692
 
 **[精读原文]**
 
-**研究推断（需要显式标注为推断）**：被打回的请求下一轮会重新走 `get_computed_blocks` → `find_longest_cache_hit`。它的 `block_hashes` 是按**已写入 token 数**派生的，而重算时 `num_computed_tokens = 0`（[`vllm/v1/core/sched/scheduler.py:1671`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py#L1671>)），命中长度必须落到块边界（[`vllm/v1/core/single_type_kv_cache_manager.py:827`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/single_type_kv_cache_manager.py#L827>)）。因此：
+**代码事实**：归零后的请求重新走 waiting 准入，`scheduler.py:1014-1022,588-596` 用 `get_computed_blocks` 查 `request.block_hashes`；`kv_cache_manager.py:295-299` 的查询上限是 `request.num_tokens - 1`，并不由归零后的 `num_computed_tokens` 推导哈希基数。`block_pool.py:776-804` 释放引用时不会立刻删除缓存哈希；实际清哈希在重新分配块时的 `_maybe_evict_cached_block`（`:729-741`）。
 
-- 若该请求此前**已经生成过若干完整块且这些块的哈希仍在表中**（同一批其他请求还在引用，或未被淘汰），则命中数 > 0，重算量小于全长；
-- 若这些块已被自己释放后**立即被别的请求取走**（没有任何 GC 窗口），则命中数 = 0，退化为全长重算。
-
-**我没有找到"抢占后保留该请求自身块"的机制**——`_free_request_blocks` 是立刻执行的。**"退化为零块"这一点我没有找到逐行证据，属于推断**，需要单独构造实验（打印 `num_preemptions` 与 `get_computed_blocks` 命中数）才能确证。**已记入本条目「未确证 / 待跟踪」。**
+因此，之前缓存的前缀若仍在表中就可以再次命中；中间分配、显式重置或配置限制可能减少命中。不能把“计数归零”推成“块基数对不齐、一定零命中”，也不能反向保证原块仍在。本文没有运行压力负载，具体恢复代价留待测量。
 
 ---
 
@@ -164,8 +161,8 @@ self.waiting.prepend_request(request)  # scheduler.py:1692
 
 | 边界（锚点：[`vllm/v1/core/kv_cache_utils.py:993`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_utils.py#L993>)） | 代码事实 | 影响面 |
 |---|---|---|
-| 只缓存满块 | `[kv_cache_utils.py:993](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_utils.py>)` | 尾块永远不可复用；短 prompt 命中率结构性偏低 |
-| 全命中也得重算最后一段 | `[kv_cache_manager.py:289-300](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_manager.py>)` | 至少重算一个块 |
+| 默认以满物理块复用；细粒度模式可匹配块内 hash 边界 | `[kv_cache_utils.py:993](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_utils.py>)` | 默认可能损失尾块复用；细粒度路径见 `single_type_kv_cache_manager.py:796-815` 与 `block_pool.py:461-522` |
+| 全命中也得重算最后一段 | `[kv_cache_manager.py:289-300](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_manager.py>)` | 至少重算最后一个 token；物理块模式可多算到块边界，细粒度模式按 alignment_tokens 取界 |
 | 块表 append-only，重复块延迟合并 | `[prefix_caching.md:194](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/docs/design/prefix_caching.md>)` | 同前缀多份物理块 |
 
 ---

@@ -772,15 +772,15 @@ EditEval_v1 是综合性编辑评测基准：
 | InstructPix2Pix: Learning to Follow Image Editing Instructions | Brooks et al. | 2023 | [CVPR](https://openaccess.thecvf.com/content/CVPR2023/html/Brooks_InstructPix2Pix_Learning_To_Follow_Image_Editing_Instructions_CVPR_2023_paper.html) |
 | MasaCtrl: Tuning-Free Mutual Self-Attention Control for Consistent Image Synthesis and Editing | Cao et al. | 2023 | [ICCV](https://openaccess.thecvf.com/content/ICCV2023/html/Cao_MasaCtrl_Tuning-Free_Mutual_Self-Attention_Control_for_Consistent_Image_Synthesis_ICCV_2023_paper.html) |
 | MagicBrush: A Manually Annotated Dataset for Instruction-Guided Image Editing | Zhang et al. | 2023 | [arXiv](https://arxiv.org/abs/2306.10012) |
-| ImageReward: Learning and Evaluating Human Preferences for Text-to-Image Generation | Xu et al. | 2023 | [NeurIPS](https://proceedings.neurips.cc/paper_files/paper/2023/hash/1a779a4e5f5e8e6c2c2c2c2c2c2c2c2c-Abstract-Conference.html) |
+| ImageReward: Learning and Evaluating Human Preferences for Text-to-Image Generation | Xu et al. | 2023 | [NeurIPS](https://arxiv.org/abs/2304.05977) |
 | MGIE: Guiding Image Editing via Multimodal Instruction | Fu et al. | 2024 | [CVPR](https://openaccess.thecvf.com/content/CVPR2024/html/Fu_MGIE_Guiding_Image_Editing_via_Multimodal_Instruction_CVPR_2024_paper.html) |
 | UltraEdit: Instruction-based Fine-grained Image Editing at Scale | Zhang et al. | 2024 | [arXiv](https://arxiv.org/abs/2407.03162) |
 | Emu Edit: Precise Image Editing via Recognition and Generation Tasks | Sheynin et al. | 2024 | [arXiv](https://arxiv.org/abs/2311.10071) |
 | BrushNet: A Plug-and-Play Image Inpainting Model with Decomposed Dual-Branch Diffusion | Zhang et al. | 2024 | [ECCV](https://arxiv.org/abs/2403.06976) |
-| Scaling Rectified Flow Transformers for High-Resolution Image Synthesis | Esser et al. | 2024 | [arXiv](https://arxiv.org/abs/2403.03206) (FLUX) |
-| Flow-GRPO: Optimizing Flow Matching via Group Relative Policy Optimization | (2025) | 2025 | [arXiv](https://arxiv.org/) |
+| Scaling Rectified Flow Transformers for High-Resolution Image Synthesis | Esser et al. | 2024 | [arXiv](https://arxiv.org/abs/2403.03206) (Stable Diffusion 3，不能当作FLUX技术报告) |
+| Flow-GRPO: Training Flow Matching Models via Online RL | Jie Liu et al. | 2025 | [arXiv](https://arxiv.org/abs/2505.05470)（本轮核题录/摘要，未重做实验精读） |
 | FLUX.1-Kontext: In-Context Editing with Flow Matching | Black Forest Labs | 2025 | [BFL](https://blackforestlabs.ai/) |
-| OmniGen2: Unified Image Generation and Editing | (2025) | 2025 | [arXiv](https://arxiv.org/) |
+| OmniGen2: Towards Instruction-Aligned Multimodal Generation | Chenyuan Wu et al. | 2025首发，v4于2026 | [arXiv v4](https://arxiv.org/abs/2506.18871v4)（题录已核，旧版题名Exploration to Advanced Multimodal Generation） |
 | FireRed: Distilled Real-Time Image Editing | (2026) | 2026 | [arXiv](https://arxiv.org/) |
 
 ### 14.2 开源项目与工具

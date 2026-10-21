@@ -16,7 +16,7 @@
    - 3.3 SDXL (2023)
    - 3.4 Stable Diffusion 3 (2024)
    - 3.5 FLUX (2024, Black Forest Labs)
-   - 3.6 SD3.5 / 后续迭代 (2025)
+   - 3.6 SD3.5 / 后续迭代 (2024)
 4. [架构演进对比](#4-架构演进对比)
 5. [开源生态与工具链](#5-开源生态与工具链)
 6. [与竞品对比](#6-与竞品对比)
@@ -43,20 +43,20 @@ Stability AI 是开源图像生成领域的奠基者之一。自 2022 年发布 
 
 | 时间 | 模型/事件 | 核心架构 | 参数量 | 关键特性 |
 |------|-----------|----------|--------|----------|
-| 2022.08 | **Stable Diffusion 1.4** | LDM (VAE + U-Net + CLIP) | ~890M (U-Net) | 开源文生图里程碑，消费级 GPU 可运行 |
-| 2022.10 | **Stable Diffusion 1.5** | LDM (同上) | ~890M | 社区微调基础模型 |
+| 2022.08 | **Stable Diffusion 1.4** | LDM (VAE + U-Net + CLIP) | ~860M (U-Net) [论文表 1] | 开源文生图里程碑，消费级 GPU 可运行 |
+| 2022.10 | **Stable Diffusion 1.5** | LDM (同上) | ~860M | 社区微调基础模型 |
 | 2022.11 | **Stable Diffusion 2.0** | LDM (OpenCLIP) | ~865M | 重新训练，OpenCLIP ViT-H 替代 CLIP |
 | 2022.12 | **Stable Diffusion 2.1** | LDM (OpenCLIP) | ~865M | 输出分辨率 768x768 |
-| 2023.07 | **SDXL 1.0** | Base + Refiner 两级 U-Net | Base 3.5B + Refiner 1.3B | 1024x1024 原生分辨率，双文本编码器 |
-| 2023.11 | **SDXL Turbo** | SDXL + Adversarial Distillation | Base 3.5B | 单步/少步推理，实时生成 |
-| 2024.06 | **Stable Diffusion 3** | MMDiT (Multimodal Diffusion Transformer) | 2B / 4B / 8B | 彻底抛弃 U-Net，Flow Matching |
+| 2023.07 | **SDXL 1.0** | Base + Refiner 两级 U-Net | Base U-Net 2.6B；其余组件另计 | 1024x1024 原生分辨率，双文本编码器 |
+| 2023.11 | **SDXL Turbo** | SDXL + Adversarial Distillation | Base U-Net 2.6B | 单步/少步推理，实时生成 |
+| 2024.06 | **Stable Diffusion 3 Medium** | MMDiT | 2B | 公开权重发布；区别于论文研究规模 |
 | 2024.08 | **FLUX.1 [pro]** | Flow Matching Transformer | 12B | BFL 成立，最强文本渲染 |
-| 2024.08 | **FLUX.1 [dev]** | Flow Matching Transformer | 12B | 开源可商用，Apache 2.0 |
+| 2024.08 | **FLUX.1 [dev]** | 双流 + 单流 rectified-flow Transformer | 12B | 开放权重；模型为 Non-Commercial License，见 §3.5.4 |
 | 2024.08 | **FLUX.1 [schnell]** | Flow Matching Transformer | 12B | 本地极速版，1-4 步 |
 | 2024.10 | **FLUX.1.1 [pro]** | Flow Matching Transformer | 12B | 质量与速度双提升 |
-| 2024.10 | **FLUX.1 Tools** | 基于 FLUX 的编辑套件 | 12B | Fill、Canny、Depth、Redux |
-| 2025.01 | **SD3.5** | MMDiT 改进版 | 2B / 4B / 8B | Stability AI 后续迭代，社区适配 |
-| 2025.03 | **FLUX.2 [pro]** | Flow Matching Transformer | 未公开 | BFL 下一代，视频生成扩展 |
+| 2024.11 | **FLUX.1 Tools** | 基于 FLUX 的编辑套件 | 12B | Fill、Canny、Depth、Redux |
+| 2024.10 | **SD3.5** | MMDiT / MMDiT-X | Large / Turbo 8.1B；Medium 2.5B | 官方发布见 §3.6 |
+| 待核 | **FLUX.2 后续家族** | 本报告未核读完整发布材料 | 待核 | 原稿“2025.03、视频扩展”未建立来源，不计入已确认时间线 |
 
 ---
 
@@ -82,7 +82,7 @@ SD 1.x 的核心架构为 **Latent Diffusion Model**，将扩散过程从像素�
 │  └──────────────┘                     │                      │
 │                                       ▼                      │
 │  ┌──────────────────────────────────────────────────────┐   │
-│  │                    U-Net (890M)                       │   │
+│  │                    U-Net (860M)                       │   │
 │  │  ┌─────────┐    ┌─────────┐    ┌─────────┐         │   │
 │  │  │ Down    │───▶│ Mid     │───▶│ Up      │         │   │
 │  │  │ Blocks  │    │ Blocks  │    │ Blocks  │         │   │
@@ -114,7 +114,7 @@ SD 1.x 的核心架构为 **Latent Diffusion Model**，将扩散过程从像素�
 
 #### 3.1.3 U-Net：去噪核心网络
 
-U-Net 是 SD 1.x 的去噪骨干网络，参数量约 **890M**，结构特点：
+U-Net 是 SD 1.x 的去噪骨干网络，参数量约 **860M**（SDXL 论文表 1 的 SD1.4/1.5 口径），结构特点：
 
 **下采样路径（Encoder）**：
 - 4 个下采样阶段（64×64 → 32×32 → 16×16 → 8×8）
@@ -162,7 +162,7 @@ SD 2.x 并非 SD 1.x 的增量更新，而是**完全重新训练**的模型，�
 |------|--------|--------|
 | 文本编码器 | CLIP ViT-L/14 | **OpenCLIP ViT-H/14** |
 | 文本维度 | 768 | **1024** |
-| U-Net 参数量 | ~890M | ~865M |
+| U-Net 参数量 | ~860M | ~865M |
 | 原生分辨率 | 512×512 | **512×512 / 768×768** |
 | 训练数据 | LAION-2B-en | LAION-5B 过滤子集 |
 | NSFW 过滤 | 较弱 | **增强过滤** |
@@ -185,107 +185,17 @@ SD 2.x 的 U-Net 结构、VAE、扩散框架与 SD 1.x **基本一致**，无本
 
 ### 3.3 SDXL (2023)
 
-#### 3.3.1 整体架构：Base + Refiner 两级流水线
+SDXL 的扩容并非增加到“6 个下采样阶段”。[论文表 1 与 §2.1](https://arxiv.org/abs/2307.01952) 给出 **U-Net 2.6B** 参数（文本编码器另计 817M），channel multiplier 为 `[1,2,4]`，Transformer blocks 分布为 `[0,2,10]`；去掉旧 U-Net 最低的一个分辨率层，把更多 Transformer 计算放到较低分辨率特征上。
 
-SDXL 是 SD 系列首次重大架构升级，引入**两级模型流水线**和**多条件注入机制**：
+[官方 Base 配置](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/blob/main/unet/config.json) 的 `block_out_channels=[320,640,1280]`、三个 down blocks 与该解释相符。原报告的“3.5B U-Net、6 阶段、最大通道 2560、QK-Norm”没有该配置支持，已撤回。3.5B 级的整体打包口径不能被改称为 U-Net 参数量。
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                      SDXL 1.0 Pipeline                       │
-├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  Text Prompt ──▶ OpenCLIP ViT-bigG (1280d)                  │
-│              ──▶ CLIP ViT-L (768d)                           │
-│                      │                                       │
-│                      ▼                                       │
-│              ┌───────────────┐                               │
-│              │ Text Embed    │ (77+77, 2048)                 │
-│              │ Concatenation │                               │
-│              └───────┬───────┘                               │
-│                      │                                       │
-│                      ▼                                       │
-│  ┌──────────────────────────────────────────────────────┐    │
-│  │ SDXL Base (3.5B U-Net)                              │    │
-│  │  - 输出：1024×1024 潜空间 (128×128×4)                │    │
-│  │  - 去噪步数：20-40 步（主要去噪阶段）                │    │
-│  │  - Micro-Conditioning：原始尺寸、裁剪参数注入        │    │
-│  └────────────────────┬─────────────────────────────────┘    │
-│                       │                                      │
-│                       ▼                                      │
-│  ┌──────────────────────────────────────────────────────┐    │
-│  │ SDXL Refiner (1.3B U-Net)                           │    │
-│  │  - 输入：Base 输出潜变量（去噪后期，高噪声水平）     │    │
-│  │  - 专门优化细节：纹理、边缘、高频信息                │    │
-│  │  - 去噪步数：5-10 步（精细化阶段）                   │    │
-│  └────────────────────┬─────────────────────────────────┘    │
-│                       │                                      │
-│                       ▼                                      │
-│                  VAE Decoder                                 │
-│                       │                                      │
-│                       ▼                                      │
-│                 1024×1024 Image                              │
-│                                                              │
-└─────────────────────────────────────────────────────────────┘
-```
+两个文本编码器是 CLIP ViT-L 与 OpenCLIP ViT-bigG，将倒数第二层特征沿**通道维**拼接，得到 `(77,2048)` 而非 `(77+77,2048)`。此外还输入 pooled text embedding；原图尺寸、裁剪位置、目标尺寸作为 micro-conditioning。尺寸条件是在训练/生成接口中缓解分布不匹配的设计，不是人体重复等所有瑕疵的充分解法。[论文 §2.1–2.3、表 1]
 
-#### 3.3.2 SDXL Base：3.5B 参数 U-Net
+Refiner 是可选的低噪声细化阶段。论文 §2.5 描述在 Base 潜空间输出上进行 SDEdit 式加噪/去噪，并专门训练低噪声区间；实现流水线的步数切分依推理方案而定。不能把后期去噪写为“高噪声阶段”，也不能不经兼容性检查就宣称可用于任意其他模型。
 
-SDXL Base 的 U-Net 相比 SD 1.x 有显著扩大：
+**实验与边界**：论文 §2.5、图 1 的四选一用户研究中，SDXL+refiner、SDXL base、SD1.5、SD2.1 分别获得 48.44%、36.93%、7.91%、6.71% 的偏好选择份额。这不是两两对战胜率。作者同时指出 FID / CLIP score 没有反映同样的改善（附录 F），因此不能用单一指标替代人评结论。§3 列出两模型显存/速度成本、文字生成与增大的推理开销等未解决问题。
 
-- **参数量**：3.5B（约 4× SD 1.x）
-- **下采样阶段**：从 4 阶段增加到 **6 阶段**（128×128 → 64×64 → 32×32 → 16×16 → 8×8 → 4×4）
-- **通道数**：最大通道数从 1280 增加到 **2560**
-- **注意力机制**：
-  - Self-Attention 在 32×32 及以下分辨率插入
-  - Cross-Attention 保持每个 block 后插入
-  - 引入 **QK-Normalization** 稳定大模型训练
-- **输出分辨率**：1024×1024 原生（潜空间 128×128×4）
-
-#### 3.3.3 SDXL Refiner：1.3B 参数专用细化模型
-
-Refiner 是 SDXL 的创新设计，专门处理去噪**后期阶段**（高噪声水平 → 低噪声水平）：
-
-- **参数量**：1.3B，结构类似 SD 1.x U-Net 但更大
-- **输入**：Base 模型去噪后期的潜变量（约最后 20% 去噪步数）
-- **功能**：专门优化图像细节、纹理质量、边缘锐度
-- **可独立使用**：也可用于其他模型输出的图像细化
-- **设计动机**：大模型擅长整体结构，小模型擅长局部细节，分工协作
-
-#### 3.3.4 双文本编码器
-
-SDXL 引入**双文本编码器**机制，增强文本理解能力：
-
-| 编码器 | 模型 | 输出维度 | 最大 Token | 作用 |
-|--------|------|----------|------------|------|
-| 编码器 1 | OpenCLIP ViT-bigG | 1280 | 77 | 主要语义理解 |
-| 编码器 2 | CLIP ViT-L | 768 | 77 | 补充细节、风格 |
-| 融合 | Concatenation | 2048 | 77 | 拼接后输入 U-Net |
-
-- 两个编码器的输出在通道维度拼接（1280 + 768 = 2048）
-- 拼接后的 embedding 通过 Cross-Attention 注入 U-Net
-- 相比单编码器，对**复杂描述**、**多主体场景**、**风格修饰词**理解更强
-
-#### 3.3.5 Micro-Conditioning：元数据条件注入
-
-SDXL 引入 **Micro-Conditioning** 机制，将图像元数据作为额外条件注入：
-
-- **原始图像尺寸**：训练时记录原始图像的宽高，作为条件向量注入
-- **裁剪参数**：记录中心裁剪的偏移量，避免训练-推理的裁剪分布不一致
-- **目标分辨率**：指定生成图像的目标尺寸
-- **注入方式**：通过 AdaGN 或独立 MLP 映射为 embedding，与时间步 embedding 拼接
-
-这一设计解决了 SD 1.x/2.x 的**裁剪伪影**问题（如人物头部被截断、重复肢体等）。
-
-#### 3.3.6 SDXL Turbo：实时生成
-
-2023 年 11 月，Stability AI 发布 SDXL Turbo，通过 **Adversarial Diffusion Distillation (ADD)** 实现单步/少步推理：
-
-- **蒸馏目标**：学生网络（SDXL Turbo）在单步内匹配教师网络（SDXL Base）多步去噪结果
-- **对抗损失**：引入判别器区分真实图像和生成图像，提升单步质量
-- **推理速度**：A100 上约 0.2 秒生成 512×512 图像
-- **质量权衡**：相比 50 步 Base，单步质量有所下降，但可用性大幅提升
-
----
+SDXL Turbo 的 ADD 蒸馏见 [原论文](https://arxiv.org/abs/2311.17042)；其具体速度需附硬件、尺寸与步数。本轮尚未复核该论文的性能表，因此不保留原稿的裸延迟数字。
 
 ### 3.4 Stable Diffusion 3 (2024)
 
@@ -407,27 +317,21 @@ SD3 从 DDPM/LDM 框架迁移到 **Flow Matching**，这是生成模型领域的
 **Flow Matching 核心**：
 - 定义概率流 ODE：dx_t/dt = v_θ(x_t, t, c)
 - 训练目标：回归向量场 v_θ，使其匹配真实流
-- 采样：ODE 求解器（Euler、Heun、DPM-Solver++）直接积分
+- 采样：使用与对应 flow 参数化兼容的 ODE 求解器，不能直接照搬其他噪声参数化的采样器
 - 优势：
-  - 更稳定的训练（无需噪声调度设计）
+  - 训练仍需选择时间步分布、路径与损失加权；flow matching 不等于无需调度设计
   - 更少的采样步数（10-20 步即可高质量）
   - 与 Rectified Flow、Consistency Model 等理论统一
 
 **SD3 的具体实现**：
 - 使用 **Rectified Flow** 变体
 - 时间步 t ∈ [0, 1]，t=0 为噪声，t=1 为数据
-- 训练时采样 t ~ Uniform(0, 1)，计算 x_t = t·x_1 + (1-t)·x_0
+- 线性路径可写为 x_t = t·x_1 + (1-t)·x_0；该式不规定训练时间步必须均匀采样，具体分布需回查论文 recipe
 - 目标：v_θ(x_t, t, c) ≈ x_1 - x_0
 
-#### 3.4.5 多规格模型
+#### 3.4.5 论文规模与发布规格
 
-SD3 提供三种参数规模：
-
-| 模型 | 参数量 | MMDiT 层数 | 注意力头数 | 适用场景 |
-|------|--------|------------|------------|----------|
-| SD3 Small | 2B | 24 | 16 | 消费级 GPU，快速推理 |
-| SD3 Medium | 4B | 36 | 24 | 平衡质量与速度 |
-| SD3 Large | 8B | 48 | 32 | 最高质量，专业创作 |
+[Stable Diffusion 3 Medium 官方发布页](https://stability.ai/news-updates/stable-diffusion-3-medium) 明确对应 **2B** 模型。原稿把 Small/Medium/Large 排成 2B/4B/8B 并附带层数、头数，混淆了论文研究规模与正式发布名称，已撤回。不同权重和服务的参数应分别查模型卡，不能据论文的 scaling 实验补出产品矩阵。
 
 #### 3.4.6 VAE 改进
 
@@ -444,89 +348,39 @@ SD3 使用改进的 VAE：
 
 2024 年，原 Stability AI 核心研究团队出走，成立 **Black Forest Labs (BFL)**：
 
-- **创始人**：Robin Rombach（LDM/MMDiT 一作）、Andreas Blattmann、Dominik Lorenz、Patrick Esser 等
+- **创始人**：Robin Rombach、Andreas Blattmann、Patrick Esser 等；具体论文作者角色应分别核对，不能把 LDM 与 MMDiT 一作合并
 - **定位**：延续 Stability AI 的开源精神，但独立运营
-- **融资**：A 轮 3100 万美元，Andreessen Horowitz (a16z) 领投
+- **融资**：种子轮 3100 万美元（[官方成立公告](https://bfl.ai/blog/24-08-01-bfl)），Andreessen Horowitz (a16z) 领投
 - **使命**：推动开源多模态生成模型（图像 + 视频）
 
-#### 3.5.2 整体架构：Flow Matching + Transformer
+#### 3.5.2 整体架构：双流与单流混合
 
-FLUX 是 BFL 的首个模型系列，架构上延续并超越了 SD3 的 MMDiT：
+FLUX.1 并非全程“无模态边界的单流 Transformer”。[BFL 发布说明](https://bfl.ai/blog/24-08-01-bfl) 明确描述为 multimodal 与 parallel diffusion Transformer blocks 的混合结构；[官方实现 `Flux.forward`](https://github.com/black-forest-labs/flux/blob/802fb4713906133fcbd0d8dc5351620ca4773036/src/flux/model.py#L99) 先循环 `double_blocks` 更新图像与文本，再拼接序列送入 `single_blocks`，最终截取图像部分输出。
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    FLUX.1 Architecture                         │
-├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  Text Prompt ──▶ CLIP-L (768d)                               │
-│              ──▶ T5-XXL (4096d)  ──▶ 文本 Token (512, 4096) │
-│                      │                                       │
-│                      ▼                                       │
-│  ┌──────────────────────────────────────────────────────┐    │
-│  │           FLUX Transformer (12B, 约 50 层)            │    │
-│  │                                                      │    │
-│  │   文本流 + 图像流 ──▶ 统一 Transformer Block          │    │
-│  │                                                      │    │
-│  │   ┌─────────────────────────────────────────────┐    │    │
-│  │   │         FLUX Block × 50                      │    │    │
-│  │   │                                              │    │    │
-│  │   │   输入: 拼接 [文本 tokens; 图像 patches]     │    │    │
-│  │   │                                              │    │    │
-│  │   │   1. LayerNorm + AdaLN (时间步/条件注入)     │    │    │
-│  │   │                                              │    │    │
-│  │   │   2. 统一 Self-Attention                     │    │    │
-│  │   │      - 文本和图像在同一个序列中                │    │    │
-│  │   │      - 无显式 Cross-Attention                │    │    │
-│  │   │      - 通过位置编码区分模态                  │    │    │
-│  │   │                                              │    │    │
-│  │   │   3. FFN (SwiGLU, 大扩展比)                  │    │    │
-│  │   │                                              │    │    │
-│  │   │   4. 输出: 统一序列 [文本; 图像]             │    │    │
-│  │   │                                              │    │    │
-│  │   └─────────────────────────────────────────────┘    │    │
-│  │                                                      │    │
-│  │   关键设计: 文本和图像完全统一处理，无模态边界       │    │
-│  │                                                      │    │
-│  └──────────────────────────────────────────────────────┘    │
-│                                                              │
-│  图像部分 ──▶ VAE Decoder ──▶ 1024×1024 / 2048×2048 Image   │
-│                                                              │
-└─────────────────────────────────────────────────────────────┘
+```text
+图像 / 文本各自投影
+  → DoubleStreamBlock：保留各自表示并进行联合注意力
+  → 拼接文本与图像序列
+  → SingleStreamBlock
+  → 截取图像部分 → 输出层 → 后续潜变量解码
 ```
 
-#### 3.5.3 核心架构特点
+#### 3.5.3 可直接核对的配置
 
-**统一序列处理（Unified Sequence）**：
-- FLUX 将文本 token 和图像 patch **拼接为单一序列**
-- 通过**模态特定的位置编码**区分文本和图像
-- 无显式的模态间 Cross-Attention，所有交互通过 Self-Attention 自然发生
-- 相比 MMDiT 的"双流"设计，FLUX 的"单流"设计更简洁、交互更深度
+[固定提交的 `util.py`](https://github.com/black-forest-labs/flux/blob/802fb4713906133fcbd0d8dc5351620ca4773036/src/flux/util.py) 中 `flux-dev` / `flux-schnell` 的配置为 `depth=19`、`depth_single_blocks=38`、hidden size 3072、24 heads；因此不能把它简写为“约 50 层、全单流”。配置是当前固定代码快照的证据，未等同于训练历史审计。
 
-**12B 参数规模**：
-- 约 **12B 参数**，是开源图像生成模型中最大之一
-- 约 50 层 Transformer block
-- 隐藏维度大，FFN 扩展比高（SwiGLU 激活）
-- 训练数据量巨大（未公开具体规模，估计数十亿图文对）
-
-**文本编码器**：
-- CLIP-L + T5-XXL（与 SD3 类似，但 T5 序列长度扩展到 **512 token**）
-- 长文本理解能力显著增强，可处理复杂段落描述
-
-**Flow Matching + 改进采样**：
-- 基于 Flow Matching，但使用更先进的 ODE 求解器
-- 支持 **Guided Distillation**：在训练时引入 CFG（Classifier-Free Guidance）信号
-- 推理时可用少量步数（4-20 步）获得高质量结果
+FLUX.1-dev [模型卡](https://huggingface.co/black-forest-labs/FLUX.1-dev) 标示 12B rectified-flow Transformer，使用 guidance distillation；schnell 是另一个少步分支。论文/模型卡未给出可复查训练数据总量时，不估计“数十亿图文对”作为事实。文本到图像质量还受到提示词、步数、guidance 与分辨率影响，不能仅由“统一序列更简洁”推导更好性能。
 
 #### 3.5.4 三个版本
 
 | 版本 | 参数量 | 开源 | 许可证 | 定位 | 典型步数 |
 |------|--------|------|--------|------|----------|
 | FLUX.1 [pro] | 12B | 否 | API 商用 | 最高质量，API 服务 | 20-50 |
-| FLUX.1 [dev] | 12B | **是** | Apache 2.0 | 开源可商用，质量接近 pro | 20-50 |
+| FLUX.1 [dev] | 12B | 开放权重 | FLUX.1 [dev] Non-Commercial License | guidance-distilled；模型商用另查授权 | 依配置 |
 | FLUX.1 [schnell] | 12B | **是** | Apache 2.0 | 本地极速，1-4 步 | 1-4 |
 
 - **[pro]**：仅通过 API/BFL 平台提供，质量最高
-- **[dev]**：开源可下载，社区生态核心，**Apache 2.0 许可证**允许自由商用
+- **[dev]**：可下载权重，但模型受 [FLUX.1 [dev] Non-Commercial License](https://huggingface.co/black-forest-labs/FLUX.1-dev/blob/main/LICENSE.md) 约束；模型使用授权与生成输出的条款分开，不得用 schnell 的 Apache 2.0 推广到 dev
 - **[schnell]**：蒸馏版本，1-4 步即可生成可用图像，本地运行友好
 
 #### 3.5.5 文本渲染能力
@@ -542,7 +396,7 @@ FLUX 的文本渲染能力是**行业最强**（截至 2024 年底）：
   - 大规模训练数据中包含大量带文本的图像
   - 统一序列设计使文本和图像特征深度融合
 
-#### 3.5.6 FLUX.1 Tools (2024.10)
+#### 3.5.6 FLUX.1 Tools (2024.11)
 
 BFL 发布基于 FLUX 的图像编辑工具套件：
 
@@ -557,26 +411,20 @@ BFL 发布基于 FLUX 的图像编辑工具套件：
 
 ---
 
-### 3.6 SD3.5 / 后续迭代 (2025)
+### 3.6 SD3.5 / 后续迭代 (2024)
 
 #### 3.6.1 SD3.5 的发布
 
-2025 年初，Stability AI 发布 **SD3.5**，作为 SD3 的改进版本：
+[官方公告](https://stability.ai/news-updates/introducing-stable-diffusion-3-5) 在 **2024-10-22** 发布 Large / Large Turbo，Medium 于 **2024-10-29** 发布。规格分别为 Large 8.1B、同规模蒸馏 Turbo，以及 Medium 2.5B（MMDiT-X）；Turbo 给出的少步配置为 4 步。原稿的“2025 年初、2B/4B/8B”不成立。
 
-- **架构**：MMDiT 改进版，细节优化
-- **规格**：2B / 4B / 8B 多规格延续
-- **改进点**：
-  - 更好的**人体解剖**准确性
-  - 改进的**手部生成**
-  - 更强的**风格一致性**
-  - 优化的**推理效率**
+公告给出的具体训练设计包括 Query-Key Normalization；更多自定义空间伴随种子间风格/质量差异，模糊提示可能产生较不稳定的结果。作者性能图属于官方自评，本次没有独立复现，不把“更好的人体/手部”当成所有任务已成立的结论。
 
 #### 3.6.2 社区生态适配
 
 SD3.5 面临的主要挑战是**社区生态**：
 
 - SD3 的许可证争议（早期限制商用）导致社区信任受损
-- FLUX [dev] 的 Apache 2.0 许可证更具吸引力
+- FLUX dev 的权重可获取性与其非商业模型许可证是两个维度；schnell 才是 Apache 2.0
 - SD3.5 需要重建 LoRA、ControlNet 等插件生态
 - ComfyUI、Stable Diffusion WebUI 等工具已支持 SD3.5
 
@@ -586,7 +434,7 @@ SD3.5 面临的主要挑战是**社区生态**：
 |------|-------------|-------------------|
 | 核心团队 | 新团队 | 原 SD 核心团队 |
 | 最新架构 | MMDiT (SD3.5) | Flow Matching Transformer (FLUX) |
-| 开源策略 | 部分开源，许可证复杂 | 完全开源，Apache 2.0 |
+| 开放策略 | 权重开放，按 Community License 等具体版本核对 | schnell 为 Apache 2.0；dev 为非商业模型许可证；pro 为 API |
 | 社区生态 | 历史积累深厚，但信任受损 | 新兴，快速增长 |
 | 商业模式 | API + 企业授权 | API + 开源 |
 | 技术路线 | 延续 MMDiT | 统一序列 Transformer |
@@ -600,11 +448,11 @@ SD3.5 面临的主要挑战是**社区生态**：
 
 | 模型 | 骨干网络 | 参数量 | 核心设计 | 模态交互方式 |
 |------|----------|--------|----------|--------------|
-| SD 1.x | U-Net | 890M | ResNet + Self-Attn + Cross-Attn | Cross-Attention (Q/K text, V image) |
+| SD 1.x | U-Net | 860M（SDXL 论文表 1） | ResNet + Self-Attn + Cross-Attn | Q 为图像特征，K/V 为文本特征 |
 | SD 2.x | U-Net | 865M | 同 SD 1.x，更大 | 同 SD 1.x |
-| SDXL | U-Net (Base+Refiner) | 3.5B+1.3B | 6 阶段下采样，双编码器 | Cross-Attention + Micro-Conditioning |
-| SD3 | MMDiT | 2B/4B/8B | 双流 Transformer，Joint Attention | Joint Self-Attention (文本+图像 QKV 融合) |
-| FLUX | Flow Matching Transformer | 12B | 统一序列 Transformer | 统一 Self-Attention (单流，无显式模态边界) |
+| SDXL | Base U-Net + 可选 Refiner | Base U-Net 2.6B | 三个尺度层级，双文本编码器 | Cross-Attention + Micro-Conditioning |
+| SD3 Medium | MMDiT | 2B | 双流 Transformer，Joint Attention | Joint Self-Attention (文本+图像 QKV 融合) |
+| FLUX.1 | rectified-flow Transformer | 12B | 双流 blocks 后接单流 blocks | 先保留模态表示，再拼接序列 |
 
 ### 4.2 条件注入机制演进
 
@@ -691,7 +539,7 @@ SD3.5 面临的主要挑战是**社区生态**：
 - 生态规模小于 SD 1.5 和 SDXL
 
 **FLUX 生态**：
-- 快速增长，Apache 2.0 许可证吸引开发者
+- dev 与 schnell 权重可获取，但两者许可证不同，不能全家族统称 Apache 2.0
 - LoRA、ControlNet、IP-Adapter 适配迅速
 - ComfyUI 工作流丰富
 - 成为 2024-2025 年开源社区的新焦点
@@ -704,7 +552,7 @@ SD3.5 面临的主要挑战是**社区生态**：
 
 | 维度 | FLUX [dev] | SD3.5 | Midjourney v6 | DALL-E 3 | Ideogram | Imagen 3 |
 |------|------------|-------|---------------|----------|----------|----------|
-| **开源** | ✅ Apache 2.0 | ✅ 部分 | ❌ | ❌ | ❌ | ❌ |
+| **权重/许可** | 开放权重；非商业模型许可证 | Community License | 闭源 | 闭源 | 闭源 | 闭源 |
 | **可本地部署** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
 | **参数量** | 12B | 8B | 未知 | 未知 | 未知 | 未知 |
 | **文本渲染** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
@@ -767,7 +615,7 @@ SD3.5 面临的主要挑战是**社区生态**：
 ### 7.2 未来方向
 
 **视频生成扩展**：
-- BFL 已预告 FLUX 视频扩展（2025）
+- BFL 在 [2024-08-01 成立公告](https://bfl.ai/blog/24-08-01-bfl) 中预告后续 text-to-video 研究；不能由此推导某个图像型号就是视频模型
 - Stability AI 的 Stable Video Diffusion 是现有基础
 - 3D 一致性、时序连贯性是视频生成的核心挑战
 
@@ -786,13 +634,19 @@ SD3.5 面临的主要挑战是**社区生态**：
 - 长上下文理解（生成系列图像、故事板）
 
 **开源生态演进**：
-- FLUX 的 Apache 2.0 模式可能成为开源生成模型的新标准
+- FLUX schnell 的 Apache 2.0 与 dev 的非商业模型许可证并存；生态影响要区分可获取性与授权范围
 - 社区驱动的模型改进（如 LLM 领域的 Llama 生态）
 - 去中心化训练和模型共享
 
 ---
 
 ## 8. 参考链接
+
+本轮（2026-10-22）实质复核范围为 SDXL 主干/Refiner、FLUX.1 许可与双流/单流结构，以及 SD3 Medium 和 SD3.5 的发布规格。SDXL 原文用 `paper-fetcher` 下载于仓库外 `paper-cache/research-audit-2026-10-22/models/sdxl/`，实读 §2.1、§2.5、§3、表 1。FLUX 源码固定为 `802fb4713906133fcbd0d8dc5351620ca4773036`，实读 `Flux.forward` 与 `util.py` 模型配置；没有运行权重推理。
+
+新增一手来源：[BFL 成立公告](https://bfl.ai/blog/24-08-01-bfl)、[FLUX.1-dev 许可证](https://huggingface.co/black-forest-labs/FLUX.1-dev/blob/main/LICENSE.md)、[SD3 Medium 发布](https://stability.ai/news-updates/stable-diffusion-3-medium)、[SD3.5 发布](https://stability.ai/news-updates/introducing-stable-diffusion-3-5)、[SD3.5 代码发布记录](https://github.com/Stability-AI/sd3.5)、[FLUX Tools 公告](https://bfl.ai/blog/24-11-21-tools)。
+
+仍待复核：SD1.x 训练配置的统一口径、SD3 目标函数与三编码器具体张量路径、工具支持版本及竞品星级表。后者未附固定提示集或盲评样本，不能当作量化性能证据。
 
 ### 8.1 论文与技术报告
 

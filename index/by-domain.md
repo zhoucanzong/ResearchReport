@@ -11,16 +11,16 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 模型量化与边缘部署研究报告 | — | — | — |
-| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-17 | completed |
-| [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 大模型训练基础设施与分布式训练研究报告 | — | — | — |
+| [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 模型量化与边缘部署研究报告 | topic-research | 2026-10-22 | needs-review |
+| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-22 | needs-review |
+| [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 大模型训练基础设施与分布式训练研究报告 | topic-research | 2026-10-22 | needs-review |
 
 ## LLM (8)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [LLM/Agent/report.md](<../LLM/Agent/report.md>) | LLM Agent 架构与工具使用研究报告 | — | — | — |
-| [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) | 模型对齐（Alignment）与后训练（Post-Training）研究报告 | — | — | — |
+| [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) | 模型对齐与后训练：方法、目标与证据边界 | — | — | — |
 | [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | Decision Models（System One / Typed Decision Model）技术专题调研 | — | — | — |
 | [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 长上下文（Long Context）技术研究报告 | — | — | — |
 | [LLM/MoE/report.md](<../LLM/MoE/report.md>) | 混合专家模型（Mixture of Experts, MoE）架构演进研究报告 | — | — | — |
@@ -32,7 +32,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) | 阿里巴巴通义万相（Wan）视频/图像生成模型系列研究报告 | — | — | — |
+| [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) | 阿里巴巴通义万相（Wan）视频生成模型研究报告 | — | — | — |
 | [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) | 字节跳动生成模型系列研究报告 | — | — | — |
 | [Models/Claude/report.md](<../Models/Claude/report.md>) | Anthropic Claude 系列模型深度调研报告 | — | — | — |
 | [Models/DeepSeek/report.md](<../Models/DeepSeek/report.md>) | DeepSeek 系列模型深度调研报告 | — | — | — |
@@ -47,19 +47,20 @@
 | [Models/Kling/report.md](<../Models/Kling/report.md>) | 快手可灵（Kling）视频生成模型系列研究报告 | — | — | — |
 | [Models/LLaMA/report.md](<../Models/LLaMA/report.md>) | Meta LLaMA 系列大模型完整研究报告 | — | — | — |
 | [Models/MiMo/report.md](<../Models/MiMo/report.md>) | 小米 MiMo 系列模型深度调研报告 | — | — | — |
-| [Models/Midjourney/report.md](<../Models/Midjourney/report.md>) | Midjourney 图像生成模型系列研究报告 | — | — | — |
+| [Models/Midjourney/report.md](<../Models/Midjourney/report.md>) | Midjourney 模型与产品演进研究报告 | — | — | — |
 | [Models/MiniMax/report.md](<../Models/MiniMax/report.md>) | MiniMax 系列模型研究报告：以 Lightning Attention 重写 Transformer 的扩展曲线 | — | — | — |
 | [Models/Mistral/report.md](<../Models/Mistral/report.md>) | Mistral AI 系列模型深度调研报告 | — | — | — |
 | [Models/Nemotron/report.md](<../Models/Nemotron/report.md>) | NVIDIA Nemotron 系列研究脉络 | — | — | — |
 | [Models/OpenAI-Gen/report.md](<../Models/OpenAI-Gen/report.md>) | OpenAI 生成模型系列研究报告 | — | — | — |
 | [Models/Qwen/report.md](<../Models/Qwen/report.md>) | Qwen系列模型深度调研报告 | — | — | — |
-| [Models/Runway/report.md](<../Models/Runway/report.md>) | Runway 视频生成与编辑模型系列研究报告 | — | — | — |
+| [Models/Runway/report.md](<../Models/Runway/report.md>) | Runway 视频生成与编辑模型研究报告 | — | — | — |
 | [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>) | Stability AI / Black Forest Labs 图像生成模型系列研究报告 | — | — | — |
 
-## OpenSource (1)
+## OpenSource (2)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
+| [OpenSource/DeepInfer/report.md](<../OpenSource/DeepInfer/report.md>) | DeepInfer：离线推理内核、异步调度与状态契约 | repo-research | 2026-10-22 | completed |
 | [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | Nemotron-Labs-Diffusion 阅读报告 | — | — | — |
 
 ## Repo-Research (4)
@@ -89,4 +90,4 @@
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | EmbodiedVLA 技术专题调研 | — | — | — |
-| [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | WorldModels 技术专题调研 | topic-research | 2026-10-17 | completed |
+| [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | WorldModels 技术专题调研 | topic-research | 2026-10-22 | needs-review |

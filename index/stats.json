@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "29f20ff25e295a2265c7febdcddfc33d9d5145c64a2c1ad204bf30b1141773f8",
+  "content_fingerprint": "e29695520bf6d87fa470244679072c416f6354c8becda60fe649cebd3d7eada1",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -14,22 +14,22 @@
     "repo_root": "相对运行目录的仓库根（按 `--repo-root .` 运行时为 `.`）：不写机器相关绝对路径，保证同一内容在不同目录下产出逐字节一致"
   },
   "entries": {
-    "total": 49,
-    "with_front_matter": 6,
-    "without_front_matter": 43,
-    "with_date": 6,
-    "lines": 32738,
-    "bytes": 2051147,
-    "children": 95
+    "total": 50,
+    "with_front_matter": 9,
+    "without_front_matter": 41,
+    "with_date": 9,
+    "lines": 27539,
+    "bytes": 1889945,
+    "children": 104
   },
   "documents": {
-    "md_total": 158,
-    "md_libraries": 151,
-    "with_front_matter": 19,
-    "named_report_md": 49,
+    "md_total": 170,
+    "md_libraries": 162,
+    "with_front_matter": 22,
+    "named_report_md": 50,
     "named_readme_md": 8,
-    "lines": 57242,
-    "bytes": 4066484
+    "lines": 52219,
+    "bytes": 3943586
   },
   "libraries": {
     "Models": {
@@ -51,13 +51,13 @@
         "Infra": 0,
         "OpenSource": 0
       },
-      "lines": 16005,
-      "bytes": 1021801,
-      "lines_raw": 16005,
+      "lines": 12899,
+      "bytes": 900894,
+      "lines_raw": 12899,
       "dir_files": 33,
       "dir_md": 33,
-      "dir_bytes": 1273353,
-      "du_sk": 1308
+      "dir_bytes": 1153815,
+      "du_sk": 1188
     },
     "LLM": {
       "entries": 8,
@@ -78,13 +78,13 @@
         "Infra": 0,
         "OpenSource": 0
       },
-      "lines": 5217,
-      "bytes": 341168,
-      "lines_raw": 5217,
+      "lines": 4136,
+      "bytes": 299102,
+      "lines_raw": 4136,
       "dir_files": 27,
       "dir_md": 27,
-      "dir_bytes": 774419,
-      "du_sk": 808
+      "dir_bytes": 702015,
+      "du_sk": 736
     },
     "VisualGen": {
       "entries": 8,
@@ -105,12 +105,12 @@
         "Infra": 0,
         "OpenSource": 0
       },
-      "lines": 6807,
-      "bytes": 319099,
-      "lines_raw": 6807,
+      "lines": 6758,
+      "bytes": 320420,
+      "lines_raw": 6758,
       "dir_files": 9,
       "dir_md": 9,
-      "dir_bytes": 320715,
+      "dir_bytes": 322036,
       "du_sk": 332
     },
     "WorldModel": {
@@ -132,13 +132,13 @@
         "Infra": 0,
         "OpenSource": 0
       },
-      "lines": 1207,
-      "bytes": 129145,
-      "lines_raw": 1215,
+      "lines": 1213,
+      "bytes": 130531,
+      "lines_raw": 1221,
       "dir_files": 31,
       "dir_md": 31,
-      "dir_bytes": 602024,
-      "du_sk": 644
+      "dir_bytes": 600750,
+      "du_sk": 640
     },
     "Infra": {
       "entries": 3,
@@ -159,24 +159,24 @@
         "Infra": 3,
         "OpenSource": 0
       },
-      "lines": 2098,
-      "bytes": 108615,
-      "lines_raw": 2106,
+      "lines": 972,
+      "bytes": 71984,
+      "lines_raw": 996,
       "dir_files": 29,
       "dir_md": 29,
-      "dir_bytes": 476840,
-      "du_sk": 508
+      "dir_bytes": 437903,
+      "du_sk": 468
     },
     "OpenSource": {
-      "entries": 5,
-      "documents_md": 22,
+      "entries": 6,
+      "documents_md": 33,
       "md_by_category": {
         "Models": 0,
         "LLM": 0,
         "VisualGen": 0,
         "WorldModel": 0,
         "Infra": 0,
-        "OpenSource": 22
+        "OpenSource": 33
       },
       "dirs_by_category": {
         "Models": 0,
@@ -184,34 +184,34 @@
         "VisualGen": 0,
         "WorldModel": 0,
         "Infra": 0,
-        "OpenSource": 5
+        "OpenSource": 6
       },
-      "lines": 1404,
-      "bytes": 131319,
-      "lines_raw": 1440,
-      "dir_files": 23,
-      "dir_md": 22,
-      "dir_bytes": 554686,
-      "du_sk": 584
+      "lines": 1561,
+      "bytes": 167014,
+      "lines_raw": 1612,
+      "dir_files": 36,
+      "dir_md": 33,
+      "dir_bytes": 668448,
+      "du_sk": 720
     }
   },
   "totals": {
     "libraries": 6,
-    "library_entries": 49,
-    "library_documents_md": 151,
-    "library_dir_files": 152,
-    "library_dir_bytes": 4002037,
-    "library_du_sk": 4184,
-    "library_entry_lines": 32738,
-    "library_entry_bytes": 2051147
+    "library_entries": 50,
+    "library_documents_md": 162,
+    "library_dir_files": 165,
+    "library_dir_bytes": 3884967,
+    "library_du_sk": 4084,
+    "library_entry_lines": 27539,
+    "library_entry_bytes": 1889945
   },
   "version_control": {
-    "tracked_total": 178,
-    "tracked_md": 166,
-    "tracked_report_md": 49,
-    "tracked_libraries": 152,
+    "tracked_total": 194,
+    "tracked_md": 178,
+    "tracked_report_md": 50,
+    "tracked_libraries": 165,
     "tracked_repo_root": 4,
-    "tracked_docs": 5,
+    "tracked_docs": 6,
     "tracked_scripts": 4
   },
   "doc_stats": {
@@ -219,16 +219,16 @@
       "Models": {
         "report_md": {
           "files": 23,
-          "lines": 16005,
-          "lines_raw": 16005,
-          "bytes": 1021801
+          "lines": 12899,
+          "lines_raw": 12899,
+          "bytes": 900894
         },
         "report_md_by_category": {
           "Models": {
             "files": 23,
-            "lines": 16005,
-            "lines_raw": 16005,
-            "bytes": 1021801
+            "lines": 12899,
+            "lines_raw": 12899,
+            "bytes": 900894
           },
           "LLM": {
             "files": 0,
@@ -263,23 +263,23 @@
         },
         "other_md": {
           "files": 10,
-          "lines": 3614,
-          "lines_raw": 3614,
-          "bytes": 251552
+          "lines": 3618,
+          "lines_raw": 3618,
+          "bytes": 252921
         },
         "dir_md": {
           "files": 33,
-          "lines": 19619,
-          "lines_raw": 19619,
-          "bytes": 1273353
+          "lines": 16517,
+          "lines_raw": 16517,
+          "bytes": 1153815
         }
       },
       "LLM": {
         "report_md": {
           "files": 8,
-          "lines": 5217,
-          "lines_raw": 5217,
-          "bytes": 341168
+          "lines": 4136,
+          "lines_raw": 4136,
+          "bytes": 299102
         },
         "report_md_by_category": {
           "Models": {
@@ -290,9 +290,9 @@
           },
           "LLM": {
             "files": 8,
-            "lines": 5217,
-            "lines_raw": 5217,
-            "bytes": 341168
+            "lines": 4136,
+            "lines_raw": 4136,
+            "bytes": 299102
           },
           "VisualGen": {
             "files": 0,
@@ -321,23 +321,23 @@
         },
         "other_md": {
           "files": 19,
-          "lines": 4140,
-          "lines_raw": 4280,
-          "bytes": 433251
+          "lines": 3957,
+          "lines_raw": 4097,
+          "bytes": 402913
         },
         "dir_md": {
           "files": 27,
-          "lines": 9357,
-          "lines_raw": 9497,
-          "bytes": 774419
+          "lines": 8093,
+          "lines_raw": 8233,
+          "bytes": 702015
         }
       },
       "VisualGen": {
         "report_md": {
           "files": 8,
-          "lines": 6807,
-          "lines_raw": 6807,
-          "bytes": 319099
+          "lines": 6758,
+          "lines_raw": 6758,
+          "bytes": 320420
         },
         "report_md_by_category": {
           "Models": {
@@ -354,9 +354,9 @@
           },
           "VisualGen": {
             "files": 8,
-            "lines": 6807,
-            "lines_raw": 6807,
-            "bytes": 319099
+            "lines": 6758,
+            "lines_raw": 6758,
+            "bytes": 320420
           },
           "WorldModel": {
             "files": 0,
@@ -385,17 +385,17 @@
         },
         "dir_md": {
           "files": 9,
-          "lines": 6838,
-          "lines_raw": 6838,
-          "bytes": 320715
+          "lines": 6789,
+          "lines_raw": 6789,
+          "bytes": 322036
         }
       },
       "WorldModel": {
         "report_md": {
           "files": 2,
-          "lines": 1207,
-          "lines_raw": 1215,
-          "bytes": 129145
+          "lines": 1213,
+          "lines_raw": 1221,
+          "bytes": 130531
         },
         "report_md_by_category": {
           "Models": {
@@ -418,9 +418,9 @@
           },
           "WorldModel": {
             "files": 2,
-            "lines": 1207,
-            "lines_raw": 1215,
-            "bytes": 129145
+            "lines": 1213,
+            "lines_raw": 1221,
+            "bytes": 130531
           },
           "Infra": {
             "files": 0,
@@ -437,23 +437,23 @@
         },
         "other_md": {
           "files": 29,
-          "lines": 5322,
-          "lines_raw": 5322,
-          "bytes": 472879
+          "lines": 5228,
+          "lines_raw": 5228,
+          "bytes": 470219
         },
         "dir_md": {
           "files": 31,
-          "lines": 6529,
-          "lines_raw": 6537,
-          "bytes": 602024
+          "lines": 6441,
+          "lines_raw": 6449,
+          "bytes": 600750
         }
       },
       "Infra": {
         "report_md": {
           "files": 3,
-          "lines": 2098,
-          "lines_raw": 2106,
-          "bytes": 108615
+          "lines": 972,
+          "lines_raw": 996,
+          "bytes": 71984
         },
         "report_md_by_category": {
           "Models": {
@@ -482,9 +482,9 @@
           },
           "Infra": {
             "files": 3,
-            "lines": 2098,
-            "lines_raw": 2106,
-            "bytes": 108615
+            "lines": 972,
+            "lines_raw": 996,
+            "bytes": 71984
           },
           "OpenSource": {
             "files": 0,
@@ -495,23 +495,23 @@
         },
         "other_md": {
           "files": 26,
-          "lines": 4447,
-          "lines_raw": 4447,
-          "bytes": 368225
+          "lines": 4395,
+          "lines_raw": 4395,
+          "bytes": 365919
         },
         "dir_md": {
           "files": 29,
-          "lines": 6545,
-          "lines_raw": 6553,
-          "bytes": 476840
+          "lines": 5367,
+          "lines_raw": 5391,
+          "bytes": 437903
         }
       },
       "OpenSource": {
         "report_md": {
-          "files": 5,
-          "lines": 1404,
-          "lines_raw": 1440,
-          "bytes": 131319
+          "files": 6,
+          "lines": 1561,
+          "lines_raw": 1612,
+          "bytes": 167014
         },
         "report_md_by_category": {
           "Models": {
@@ -545,55 +545,55 @@
             "bytes": 0
           },
           "OpenSource": {
-            "files": 5,
-            "lines": 1404,
-            "lines_raw": 1440,
-            "bytes": 131319
+            "files": 6,
+            "lines": 1561,
+            "lines_raw": 1612,
+            "bytes": 167014
           }
         },
         "other_md": {
-          "files": 17,
-          "lines": 5821,
-          "lines_raw": 5821,
-          "bytes": 407073
+          "files": 27,
+          "lines": 6208,
+          "lines_raw": 6208,
+          "bytes": 473184
         },
         "dir_md": {
-          "files": 22,
-          "lines": 7225,
-          "lines_raw": 7261,
-          "bytes": 538392
+          "files": 33,
+          "lines": 7769,
+          "lines_raw": 7820,
+          "bytes": 640198
         }
       }
     },
     "repo_md": {
-      "files": 158,
-      "lines": 57242,
-      "lines_raw": 57434,
-      "bytes": 4066484
+      "files": 170,
+      "lines": 52219,
+      "lines_raw": 52442,
+      "bytes": 3943586
     },
     "library_md": {
-      "files": 151,
-      "lines": 56113,
-      "lines_raw": 56305,
-      "bytes": 3985743
+      "files": 162,
+      "lines": 50976,
+      "lines_raw": 51199,
+      "bytes": 3856717
     },
     "root_readme": {
       "files": 1,
-      "lines": 105,
-      "lines_raw": 105,
-      "bytes": 7808
+      "lines": 166,
+      "lines_raw": 166,
+      "bytes": 9280
     },
     "docs_md": {
-      "files": 5,
-      "lines": 925,
-      "lines_raw": 925,
-      "bytes": 68344
+      "files": 6,
+      "lines": 976,
+      "lines_raw": 976,
+      "bytes": 72686
     },
     "scripts_md": {
       "files": 1,
-      "lines": 99,
-      "lines_raw": 99,
-      "bytes": 4589
+      "lines": 101,
+      "lines_raw": 101,
+      "bytes": 4903
     },
     "tracked_root_non_md": [
       ".gitignore",
@@ -601,7 +601,7 @@
     ]
   },
   "storage": {
-    "tracked_bytes": 9172589,
+    "tracked_bytes": 9086903,
     "definition": "纳入版本控制的文件字节合计（`git ls-files` 跟踪路径逐个 getsize 求和）；刻意**不**用 du 量工作树——工作树含 site/site-docs/构建产物、别人的未提交草稿、虚拟环境等「车间地面」，会让数字每个 clone 一个样、生成物不可复现。本字段与提交树同源，任意 clone 重跑一致。"
   }
 }

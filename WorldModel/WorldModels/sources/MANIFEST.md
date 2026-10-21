@@ -7,7 +7,7 @@
 | --: | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
 | 1 | [`papers/1803.10122-world-models.md`](<../papers/1803.10122-world-models.md>) | 1803.10122 | v1 | 2018-03-27 | World Models（通称 World Models） | Ha, David | 未核实 | https://arxiv.org/abs/1803.10122 |
 | 2 | [`papers/1811.04551-planet.md`](<../papers/1811.04551-planet.md>) | 1811.04551 | v1 | 2018-11-12 | Learning Latent Dynamics for Planning from Pixels（通称 PlaNet） | Hafner, Danijar | 未核实 | https://arxiv.org/abs/1811.04551 |
-| 3 | [`papers/1911.08265-muzero.md`](<../papers/1911.08265-muzero.md>) | 1911.08265 | v1 | 2019-11-19 | Mastering Atari, Go, Chess and Shogi by Planning with a Learned Model（通称 MuZero） | Schrittwieser, Julian | 未核实 | https://arxiv.org/abs/1911.08265 |
+| 3 | [`papers/1911.08265-muzero.md`](<../papers/1911.08265-muzero.md>) | 1911.08265 | v2 | 2020-02-21（v1 2019-11-19） | Mastering Atari, Go, Chess and Shogi by Planning with a Learned Model（通称 MuZero） | Schrittwieser, Julian | 未核实 | https://arxiv.org/html/1911.08265v2 |
 | 4 | [`papers/1912.01603-dreamer.md`](<../papers/1912.01603-dreamer.md>) | 1912.01603 | v1 | 2019-12-03 | Dream to Control: Learning Behaviors by Latent Imagination（通称 Dreamer） | Hafner, Danijar | 未核实 | https://arxiv.org/abs/1912.01603 |
 | 5 | [`papers/2301.04104-dreamerv3.md`](<../papers/2301.04104-dreamerv3.md>) | 2301.04104 | v1 | 2023-01-10 | Mastering Diverse Domains through World Models（通称 DreamerV3） | Hafner, Danijar | 未核实 | https://arxiv.org/abs/2301.04104 |
 | 6 | [`papers/2310.06114-unisim.md`](<../papers/2310.06114-unisim.md>) | 2310.06114 | v1 | 2023-10-09 | Learning Interactive Real-World Simulators（通称 UniSim） | Yang, Sherry | 未核实 | https://arxiv.org/abs/2310.06114 |

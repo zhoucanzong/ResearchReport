@@ -30,17 +30,16 @@ Qwen（通义千问）是阿里巴巴云推出的全栈大模型系列，自2023
 ├── 02月  Qwen1.5 系列           统一32K上下文 + 首个MoE + HF transformers原生集成
 ├── 03月  CodeQwen1.5            首个代码专用模型
 ├── 06月  Qwen2 系列             GQA全面应用 + 7T数据 + DCA/YARN支持128K
-├── 06月  Qwen2-VL               Naive Dynamic Resolution + M-RoPE
 ├── 07月  Qwen2-Audio            DPO对齐 + 双模式音频交互
 ├── 08月  Qwen2-Math             数学专用模型
+├── 08-29 Qwen2-VL              发布公告；Naive Dynamic Resolution + M-RoPE
 ├── 09月  Qwen2.5 系列           18T数据 + 128K原生 + 100万SFT + 多阶段RL
 ├── 09月  Qwen2.5-Coder          5.5T代码token专精训练
 ├── 09月  Qwen2.5-Math           CoT+PoT+TIR三范式数学推理
-├── 10月  Qwen2.5-VL             Window/Full混合注意力 + 绝对时间编码 + 从头训练ViT
 └── 11月  QwQ-32B-Preview        首个推理专用模型预览版
 
 2025年 ── 推理革命与全模态统一
-├── 01月  Qwen2.5-VL 正式版      72B旗舰对标GPT-4o，新增DPO后训练阶段
+├── 01-26 Qwen2.5-VL            发布公告；Window/Full混合注意力与时间对齐，训练细项另按原论文核对
 ├── 03月  QwQ-32B                正式版推理模型（32B≈DeepSeek-R1 671B性能）
 ├── 03月  Qwen2.5-Omni           首个端到端全模态模型（Thinker-Talker + TMRoPE）
 ├── 04月  Qwen3 LLM 系列         Thinking/Non-Thinking双模式 + 36T数据 + GRPO + QK-Norm
@@ -107,7 +106,7 @@ Qwen（通义千问）是阿里巴巴云推出的全栈大模型系列，自2023
 **演进读法**：从左到右扫描每一行，可以看到清晰的"演进事件"——
 - **注意力机制**经历三次大跃迁：MHA→GQA（Qwen2）→QK-Norm（Qwen3）→Hybrid Attention（Qwen3-Next起）
 - **MoE架构**经历四次重塑：无→Qwen1.5首试→Qwen2细粒度+共享专家→Qwen3移除共享专家+global-batch balance→Qwen3.5重新引入1个共享专家+256路由专家
-- **上下文长度**呈指数级增长：8K→32K→128K→262K→1M，五个数量级跨越
+- **上下文长度**呈指数级增长：8K→32K→128K→262K→1M；若以8K与1M比较约为125倍，不能称五个数量级
 - **数据规模**几乎每代翻倍：3T→3T→7T→18T→36T
 
 ### 2.2 各代关键突破（演进叙事）
@@ -292,7 +291,7 @@ VL方向经历了从"借用OpenCLIP外部组件"到"端到端自研架构"再到
 ### 3.1 VL架构演进脉络
 
 ```
-Qwen-VL (2023)              Qwen2-VL (2024.06)          Qwen2.5-VL (2024.10)        Qwen3-VL (2025.05/11)       Qwen3.7-Plus (2026.06)
+Qwen-VL (2023)              Qwen2-VL (2024.08)          Qwen2.5-VL (2025.01)        Qwen3-VL (2025.05/11)       Qwen3.7-Plus (2026.06)
 ┌──────────────┐          ┌─────────────────┐          ┌──────────────────┐        ┌──────────────────┐         ┌──────────────────┐
 │ OpenCLIP      │          │ 自定义ViT 675M   │          │ 从头训练ViT       │        │ Qwen3-VL ViT      │         │ 统一多模态编码器   │
 │ ViT-bigG      │          │ + 2D-RoPE        │          │ + Window/Full Attn│        │ + Interleaved-MRoPE│         │ (图像/视频/屏幕/网页)│
@@ -750,7 +749,7 @@ LLM基座升级自动带动所有模态能力提升。
 
 **影响**：Qwen3-VL-8B-Thinking将推理范式扩展到VL；Qwen3.7-Max的35小时长程Agent执行从根本上依赖于Thinking能力。
 
-### 7.4 M-RoPE / TMRoPE / Interleaved-MRoPE（Qwen2-VL起, 2024.06）— ★★★★★
+### 7.4 M-RoPE / TMRoPE / Interleaved-MRoPE（Qwen2-VL起, 2024.08）— ★★★★★
 
 **技术意义**：将RoPE频率维度均分为三个独立子空间（Temporal/Height/Width），实现文本/图像/视频位置编码的统一。TMRoPE进一步实现音频-视频时间对齐，Interleaved-MRoPE支持原生交错长序列。
 
@@ -762,7 +761,7 @@ LLM基座升级自动带动所有模态能力提升。
 
 **影响**：成为后续Qwen3.5/3.6/3.7的标准对齐方法；R1-Zero风格RLHF继承并放大该路线；Qwen3.7-Max的Agent自监控reward hacking是该路线的极致延伸。
 
-### 7.6 Naive Dynamic Resolution（Qwen2-VL, 2024.06）— ★★★★
+### 7.6 Naive Dynamic Resolution（Qwen2-VL, 2024.08）— ★★★★
 
 **技术意义**：业界首创"零归一化"动态分辨率方案。移除ViT绝对位置嵌入，改用2D-RoPE使ViT能处理任意尺寸输入。视觉token数与图像尺寸严格成正比，保留原始纵横比。
 
@@ -774,13 +773,13 @@ LLM基座升级自动带动所有模态能力提升。
 
 **影响**：使Qwen3小模型矩阵（0.6B/1.7B/4B/8B/14B/32B）能够快速跟随基座升级；为后续Qwen3.5/3.6小尺寸变体提供方法论基础。
 
-### 7.8 Window Attention混合ViT（Qwen2.5-VL, 2024.10）— ★★★★
+### 7.8 Window Attention混合ViT（Qwen2.5-VL, 2025.01）— ★★★★
 
 **技术意义**：ViT大部分层使用窗口≤8×8的Window Attention，仅4层使用Full Attention，将复杂度从O(n²)降至接近O(n)。
 
 **影响**：使高分辨率原生图像处理在工程上可行；ViT与LLM的归一化（RMSNorm）和激活函数（SwiGLU）统一，简化了多模态模型的工程栈。
 
-### 7.9 Naive Dynamic Resolution → 绝对时间编码（Qwen2.5-VL, 2024.10）— ★★★★
+### 7.9 Naive Dynamic Resolution → 绝对时间编码（Qwen2.5-VL, 2025.01）— ★★★★
 
 **技术意义**：M-RoPE的temporal维度ID从帧索引升级为真实秒数，配合动态FPS训练，使模型真正理解视频中的时间流逝；Bbox采用绝对像素坐标。
 
@@ -848,11 +847,14 @@ LLM基座升级自动带动所有模态能力提升。
 
 ### 8.2 视觉语言模型
 
+**2026-10-22 时间口径复核**：已实读 [Qwen2-VL发布公告](https://qwenlm.github.io/blog/qwen2-vl/)（2024-08-29）和 [Qwen2.5-VL发布公告](https://qwenlm.github.io/blog/qwen2.5-vl/)（2025-01-26）。arXiv元数据分别为2024-09-18（2-VL v1）和2025-02-19（2.5-VL v1）。产品公告日期与论文存档日期分开；原稿2024.06 / 2024.10的VL发布时间已纠正。本轮全文读过此主报告，但对其他代次的架构、训练和数值未作全量原文复核，不以本次日期修正为其背书。
+
+
 | # | 论文 | arXiv | 时间 |
 |---|------|-------|------|
 | 9 | Qwen-VL: A Versatile Vision-Language Model for Understanding, Localization, Text Reading, and Beyond | arXiv:2308.12966 | 2023.08 |
 | 10 | Qwen2-VL: Enhancing Vision-Language Model's Perception of the World at Any Resolution | arXiv:2409.12191 | 2024.09 |
-| 11 | Qwen2.5-VL Technical Report | arXiv:2502.13923 | 2025.01 |
+| 11 | Qwen2.5-VL Technical Report | arXiv:2502.13923 | 2025.02（论文存档；不同于1月产品公告） |
 | 12 | Qwen3-VL Technical Report | arXiv:2511.21631 | 2025.11 |
 | 13 | Qwen3.7-Plus Blog | qwen.ai/blog?id=qwen3.7-plus | 2026.06 |
 
@@ -1071,7 +1073,7 @@ LLM基座升级自动带动所有模态能力提升。
 | 7 | 定价 | 输入/输出/缓存三档 |
 | 8 | 失败边界 | 至少一条官方承认的限制 |
 
-**纪律**：这 8 项**缺任何 3 项以上**，就不升为 `[精读原文]`，仍标 `[摘要级]`。
+**证据等级**按实际阅读材料确定，而非填了多少字段：只读摘要记摘要级，仅读媒体仍记二手；真正读取正文/模型卡后记录具体覆盖范围。架构、许可等字段未公开可明确留空，不以缺项数替代阅读证据。
 
 ### 9.6b 本节来源表
 
@@ -1098,7 +1100,7 @@ LLM基座升级自动带动所有模态能力提升。
 
 | 触发 | 动作 |
 |---|---|
-| 官方发布 **Qwen4 模型卡/技术报告** | 立刻升为 `[精读原文]`，补架构/评测/定价，重写 §9.2 |
+| 官方发布 **Qwen4 模型卡/技术报告** | 实际读取并核对正文、版本和实验条件后再更新证据等级；未读到的字段继续标未确证 |
 | 官方发布 **Qwen3.8-Max 模型卡** | 补参数/上下文/定价，替换 §9.1 的"未确证"行 |
 | Qwen 官方博客更新（`qwen.ai/blog`）| 每有发布即复核 §9.1 与 §9.2 |
 | AA/CodeArena 公开榜单快照 | 把"第一"从厂商口径降级为"榜单可查口径" |

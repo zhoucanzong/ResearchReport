@@ -1,18 +1,18 @@
 # 来源索引 (Sources Index)
 
-> 最后更新: 2026-05-27
+> 最后更新: 2026-10-22；原文版本、失效Zotero路径和重取PDF哈希见 [sources/MANIFEST.md](sources/MANIFEST.md)。
 > 总条目: 1（单论文深度阅读）
 
 ## 主要论文（本次研究对象）
 
 | ID | 标题 | 作者 | 日期 | 来源 | 提取文件 |
 |----|------|------|------|------|----------|
-| nld-2026 | Nemotron-Labs-Diffusion: A Tri-Mode Language Model Unifying Autoregressive, Diffusion, and Self-Speculation Decoding | Yonggan Fu et al. (NVIDIA + Georgia Tech + HKU + MIT) | 2026-05-19 | 本地 PDF (Zotero) | [全文提取](raw-extracts/nemotron-tri-mode-fulltext.md) |
+| nld-2026 | Nemotron-Labs-Diffusion: A Tri-Mode Language Model Unifying Autoregressive, Diffusion, and Self-Speculation Decoding | Yonggan Fu et al. (NVIDIA + Georgia Tech + HKU + MIT) | 2026-05-19 | NVIDIA官方2026-05-19 v1 PDF（旧Zotero路径当前不存在） | [全文提取](raw-extracts/nemotron-tri-mode-fulltext.md) |
 
 - **页数**: 21
 - **原始路径**: `/Users/zhoucanzong/Zotero/storage/VZ5BMRZW/Fu 等 - Nemotron-Labs-Diffusion A Tri-Mode Language Model Unifying Autoregressive, Diffusion, and Self-Spec.pdf`
 - **模型开源**: Hugging Face — Nemotron-Labs-Diffusion 模型家族（3B/8B/14B base/instruct/VLM）
-- **训练框架**: Megatron Bridge（NVIDIA 已 release training/inference pipeline）
+- **训练框架**: Megatron Bridge（作者宣称发布training/inference pipeline；本轮未审计完整训练实现）
 
 ## PDF（脚本自动生成的占位）
 

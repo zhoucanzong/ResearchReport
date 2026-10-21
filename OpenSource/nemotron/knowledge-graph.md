@@ -43,7 +43,7 @@
 ### Two-stage Training
 - **定义**：Stage 1 纯 AR（α=0，1T tokens）→ Stage 2 联合（α=0.3，300B tokens）。
 - **直观理解**：先把左到右先验打牢、再让 diffusion 在此基础上添加并行能力；从已 pretrained 的 AR 模型（Ministral3）出发更高效。
-- **消融收益**：+5.74%（第二大单项）。
+- **累计消融增量**：57.06→62.80，+5.74个百分点；依赖前面的技巧组合。
 - **关联概念**：[[joint-ar-diffusion-training]]
 
 ### Global Loss Averaging
@@ -83,7 +83,7 @@
 
 ### Quadratic Self-Speculation
 - **定义**：单 forward 版 SS——通过结构化 attention mask 同时做 draft + verify，每步固定产出 k 个候选。
-- **直观理解**：理论 TPF 更高（6.38 vs 5.99），但 FlexAttention kernel 未充分优化，wall-clock 反而慢于 Linear。
+- **直观理解**：论文设置下 TPF 更高（6.38 vs 5.99），但 FlexAttention kernel 未充分优化，wall-clock 反而慢于 Linear。
 - **关联概念**：[[linear-self-speculation]]
 
 ### LoRA Drafter
@@ -113,7 +113,7 @@
 - **构造**：
   1. **Serial denoising oracle**：每步只 commit 当前最高 peak prob 位置 → 得到收敛 target $\mathbf{t}$。
   2. **Recursive Dynamic Compaction**：并行 commit 时对匹配位置按 confidence 排序，二分搜索能"safely commit"的最大前缀。Safety check 通过递归 simulate（greedy acceptance）验证。
-- **关键发现**：Diffusion SOL acceptance 7.60× vs Linear SS real TPF 3.41× → **+76.5% headroom**。
+- **关键发现**：Diffusion SOL acceptance 7.60× vs Linear SS real TPF 3.41× → **以 Linear SS 为分母高约76.5%；反向以SOL为分母差约43.4%**。
 - **意义**：为社区设定 "north star"——清晰告诉我们当前 sampler 离最优有多远。
 - **关联概念**：[[trained-sampler]]、[[self-speculation-decoding]]
 

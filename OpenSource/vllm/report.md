@@ -6,6 +6,8 @@ upstream: https://github.com/vllm-project/vllm@fa75d3456d60a5ffe923818c4b4952956
 date: 2026-10-16
 evidence: 精读原文
 status: completed
+> **2026-10-22 语义复核**：固定源码、已核调用链和未覆盖项见 [sources/MANIFEST.md](sources/MANIFEST.md)；本轮核验限定在列明的行为切面。
+
 ---
 
 # vLLM 仓库代码分析报告
@@ -27,27 +29,27 @@ status: completed
 
 vLLM 是一个面向 LLM 的高吞吐推理与服务框架。本报告只覆盖它的**推理引擎内核纵切面**：`vllm/v1/` 下的 **块池（block pool）→ 调度器（scheduler）→ 投机解码验证（rejection sampling）** 链路，外加它与语法约束（structured output）的交互。[精读原文（vLLM 源码 @ 本报告 SHA）]
 
-代码规模（`scan_repo.py` 扫描本 commit 工作树）：Python 1,902,738 行、Rust 140,024 行、Markdown 52,509 行、C++ 51,651 行、Shell 23,684 行。`git ls-files` 层面这是一个**多语言单体仓库**：Python 引擎（`vllm/`）+ C++/CUDA 内核（`csrc/`）+ Rust 侧工具链（`rust/`，含独立 workspace 的 `server` / `engine-core-client` / `bench` 等 crate）。注意：本 commit 里 **KV 缓存与调度逻辑全部在 Python 侧**（`vllm/v1/core/`），Rust 目录承担的是服务端/客户端与基准工具，**不参与 PagedAttention 或前缀缓存的数据路径**。[精读原文（vLLM 源码 @ 本报告 SHA）]
+代码规模（`scan_repo.py` 扫描本 commit 工作树）：Python 1,902,738 行、Rust 140,024 行、Markdown 52,509 行、C++ 51,651 行、Shell 23,684 行。`git ls-files` 层面这是一个**多语言单体仓库**：Python 引擎（`vllm/`）+ C++/CUDA 内核（`csrc/`）+ Rust 侧工具链（`rust/`，含独立 workspace 的 `server` / `engine-core-client` / `bench` 等 crate）。注意：本 commit 里 **KV 缓存与调度逻辑全部在 Python 侧**（`vllm/v1/core/`），本报告只快速了解Rust服务/客户端/基准工具，**没有充分证据排除Rust参与其他部署的数据路径**。[精读原文（vLLM 源码 @ 本报告 SHA）]
 
 ### 1.2 中心架构思路
 
 用一句话概括本报告读到的三段设计：
 
 1. **PagedAttention 在 V1 里被拆成"先查哈希、后拿物理块"两步，且块表是 append-only 的**。前缀复用不再靠树，而是靠**逐块链式哈希 + 精确查表**：`[kv_cache_utils.py:1003](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_utils.py>)` 的 `hash_block_tokens(caching_hash_fn, prev_block_hash_value, block_tokens, extra_keys)` 把**父块哈希**作为输入，于是"命中第 i 块"蕴含"前 i 块全部相同"；`[single_type_kv_cache_manager.py:786](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/single_type_kv_cache_manager.py>)` 从块 0 起逐块 `get_cached_block`，**第一个 miss 即 break**。**[精读原文]**
-2. **调度器没有 prefill/decode 两相**。`[scheduler.py:623-632](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py>)`（NOTE 注释段；实体代码自 `:634` 起）的注释原文写明 "There's no 'decoding phase' nor 'prefill phase' in the scheduler"，每一步只回答"哪些请求的 `num_computed_tokens` 能向 `num_tokens_with_spec` 追多少"；chunked prefill、prefix caching、投机解码都只是这个统一口径的特例。抢占则是**全量重算**：`[scheduler.py:1671](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py>)` 把 `request.num_computed_tokens = 0` 并 `prepend_request` 回 waiting 队列，V1 没有 swap-out 路径。**[精读原文]**
-3. **投机解码的默认草稿是 one-hot，"真实草稿概率"是需要显式打开的旁路，且它对语法约束场景并不精确**。`[speculative.py:604](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/config/speculative.py>)` 的 `draft_sample_method: DraftSampleMethod = "greedy"` 文档原文即 "the draft probabilities are treated as one-hot during rejection sampling"；kernel 侧面在 `[rejection_sampler.py:872](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/sample/rejection_sampler.py>)` 以 `draft_prob = 1` 落地。**[精读原文]**
+2. **调度器没有 prefill/decode 两相**。`[scheduler.py:623-632](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py>)`（NOTE 注释段；实体代码自 `:634` 起）的注释原文写明 "There's no 'decoding phase' nor 'prefill phase' in the scheduler"，每一步只回答"哪些请求的 `num_computed_tokens` 能向 `num_tokens_with_spec` 追多少"；chunked prefill、prefix caching、投机解码都只是这个统一口径的特例。抢占则是**重新准入并重算未命中部分**：`[scheduler.py:1671](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py>)` 把 `request.num_computed_tokens = 0` 并 `prepend_request` 回 waiting 队列，V1 没有 swap-out 路径。**[精读原文]**
+3. **投机解码的默认草稿是 one-hot，"真实草稿概率"是需要显式打开的旁路，不能仅据 one-hot 判定随机输出有偏**。`[speculative.py:604](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/config/speculative.py>)` 的 `draft_sample_method: DraftSampleMethod = "greedy"` 文档原文即 "the draft probabilities are treated as one-hot during rejection sampling"；kernel 侧面在 `[rejection_sampler.py:872](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/sample/rejection_sampler.py>)` 以 `draft_prob = 1` 落地。**[精读原文]**
 
 ### 1.3 最重要的三个判断
 
 | # | 判断 | 类型 |
 |---|---|---|
-| 1 | **vLLM 的前缀复用是"哈希精确匹配"而不是"最长前缀树匹配"**，语义上只能命中**块对齐**的前缀；`[single_type_kv_cache_manager.py:786-792](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/single_type_kv_cache_manager.py>)` 的 phase-1 循环是这条语义的唯一实现处。与 SGLang 的 radix 树路径对照见 §7.1。 | 代码事实 |
-| 2 | **抢占的恢复机制是 recompute-from-zero，且它事实上退化为"前缀缓存命中零块"**——`_free_request_blocks` 在 `num_computed_tokens = 0` **之前**执行（`[scheduler.py:1664-1671](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py>)`），块回到 free 队列尾（可淘汰位），本轮 request 自己活着的 `block_hashes` 只到**已写入 token 数**为止，因此被打回的请求在下一轮会因**块基数**而对不齐。这是"重算"而非"换出后换入"。 | 代码事实 + 研究推断（基数对齐部分为推断） |
-| 3 | **在开启 structured output 时，投机解码的验证判据是"对未归一化目标分布做的比值检验"，不是严格拒绝采样**。`[model_runner.py:1636-1641](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/worker/gpu/model_runner.py>)` 在采样**之前**就地把非法 token 的 logits 置为 `-inf`，而 `[rejection_sampler.py:487](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/sample/rejection_sampler.py>)` 的判据用的是 `target_logits.softmax()`——**掩码已经生效，但分布没有重新归一化**。 | 代码事实 |
+| 1 | **vLLM 的前缀复用使用链式哈希**；默认按物理块匹配，`--prefix-match-unit` 调小时可按较细哈希边界命中；`[single_type_kv_cache_manager.py:786-792](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/single_type_kv_cache_manager.py>)` 的 phase-1 查满块，`:796-815` 的 phase-2 补查块内哈希边界。与 SGLang 的 radix 树路径对照见 §7.1。 | 代码事实 |
+| 2 | **抢占归零不等于必然从零计算**。`scheduler.py:1664-1692` 释放请求引用并重入 waiting；再次准入通过 `scheduler.py:1014-1022,588-596` 的 `get_computed_blocks` 查尚存哈希。释放引用与淘汰哈希是不同操作（`block_pool.py:776-804` / `:729-741`），因此命中多少取决于中间的复用、淘汰和配置。 | 代码事实；性能未测 |
+| 3 | **grammar 掩码之后的 softmax 已重新归一化**，不能据此断言验证有偏。旧 runner 的真实路径是 `gpu_model_runner.py:4329-4335` → `_sample` → `:3455` → `vllm/v1/sample/rejection_sampler.py:487`；新 runner 在 `worker/gpu/model_runner.py:1662` 进入另一套验证器，不能把两套路径拼成一条。 | 代码事实 + 数学解释 |
 
 ### 1.4 最值得关注的风险
 
-- **"one-hot 草稿"这一默认行为只在配置的 docstring 里被承认，启动时不告警**。`[speculative.py:604](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/config/speculative.py>)` 写得很清楚，但 `greedy` 是默认值，且**没有任何启动期日志**提示"你现在跑的不是无偏拒绝采样"。与 structured output 叠加后，偏差来源又多一层（见 §6.4）。 **[精读原文]**
+- **需要同时核对草稿生成与拒绝后的残差**。`speculative.py:604-609` 说明 greedy 草稿实际是确定性 argmax；旧验证器在 `rejection_sampler.py:1044-1049` 排除被拒候选后采样。one-hot 是该提议分布的正确表示，不能把“没有完整草稿概率张量”直接写成“不是无偏拒绝采样”。随机草稿若未保留实际生成分布才需要另证。
 - **同一份"草稿概率"语义在仓库里有两套并行实现**：旧路径把完整 `draft_probs` 张量搬进 kernel（`[rejection_sampler.py:106](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/sample/rejection_sampler.py>)` 的 `draft_probs: torch.Tensor | None`），新路径搬的是 `draft_logits`（`[rejection_sampler_utils.py:1024](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/worker/gpu/spec_decode/rejection_sampler_utils.py>)` 的 `[max_num_reqs, num_speculative_steps, V]`）。两者共享 `draft_sample_method` 这一个开关。 **[精读原文]**
 - **语法约束下的草稿必须"因果合法"，这是一个比"掩码"更强的要求**。`[structured_output/utils.py:48](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/structured_output/utils.py>)` 的 `strip_speculative_padding` 只按 `-1` 哨兵截断；真正的合法性检查在 `[structured_output/__init__.py:346](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/structured_output/__init__.py>)` 的 `validate_tokens`，不合格的草稿**被打回 GPU worker 之前就被删掉**。也就是说：**"给草稿也加语法掩码"这件事在 vLLM 里没有实现**，实现的是"事后丢弃非法草稿"。 **[精读原文]**
 
@@ -66,8 +68,8 @@ vLLM 的目标场景在 `[README.md](<https://github.com/vllm-project/vllm/blob/
 ### 2.2 与更简单做法的取舍
 
 - **不做"每条请求各自持有 KV"**：所有物理块来自同一个 `BlockPool`（`[block_pool.py:136](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)`），跨请求共享靠引用计数（`ref_cnt`）。代价是"块的生命周期"成为全局不变式：`[block_pool.py:689](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)` 直接断言 `assert block.ref_cnt == 0`。**[精读原文]**
-- **不做"树形最长前缀"**：改为哈希精确匹配后，**任何前缀命中都必须块对齐**，亚块级别的共享前缀无法被复用（SGLang 的 radix 树可以命中任意 token 长度）。这是"实现简单 / 哈希可跨进程传递"换来的代价。**[研究推断，依据见 §7.1]**
-- **不做"抢占时换出到 CPU"**：V1 只有 recompute 一条路（见 §5.3），因此**抢占成本随序列长度线性上升**。**[代码事实 + 研究推断]**
+- **不做"树形最长前缀"**：改为哈希精确匹配后，**默认匹配按物理块对齐**；显式启用细粒度匹配时可命中物理块内部的哈希边界；vLLM 的 fine-grained 路径是例外（`single_type_kv_cache_manager.py:796-815`）。SGLang 也受 `page_size` 对齐约束，见姊妹条目。这是"实现简单 / 哈希可跨进程传递"换来的代价。**[研究推断，依据见 §7.1]**
+- **不做"抢占时换出到 CPU"**：V1 只有 recompute 一条路（见 §5.3），因此没有完整 CPU 换入恢复；**实际重算量需扣除重新命中的缓存，不能只按序列长度判断成本**。**[代码事实 + 研究推断]**
 
 ---
 
@@ -93,8 +95,8 @@ vLLM 的目标场景在 `[README.md](<https://github.com/vllm-project/vllm/blob/
 
 ### 3.3 低信号 / 元数据区
 
-- `csrc/`（C++/CUDA 内核）：本 commit 里 PagedAttention 的**数据路径不在这里**——`docs/design/paged_attention.md:3` 明确标注该文档 "is a historical document ... It no longer describes the code used in vLLM today"。**[精读原文（vLLM 仓库文档 @ 本报告 SHA）]**
-- `rust/`：服务端、客户端与基准工具，不参与 KV 数据路径。**[精读原文]**
+- `csrc/`（C++/CUDA 内核）：本报告**未追踪 attention kernel 的数据计算路径**；`docs/design/paged_attention.md:3` 明确标注该文档 "is a historical document ... It no longer describes the code used in vLLM today"。**[精读原文（vLLM 仓库文档 @ 本报告 SHA）]**
+- `rust/`：本报告快速阅读到服务端、客户端与基准工具；其余职责未逐模块追踪。**[精读原文]**
 - `vllm/v1/worker/gpu_model_runner.py`（7,223 行）：与 `vllm/v1/worker/gpu/model_runner.py` 并存的两套 runner。本报告只读前者与 spec/structured 相关的段落，**不判断哪一套是默认**（未确证，见 §9）。**[精读原文，覆盖受限]**
 
 ---
@@ -117,11 +119,11 @@ flowchart TB
         FBQ["FreeKVCacheBlockQueue<br/>kv_cache_utils.py:258"]
         H2B["BlockHashToBlockMap<br/>block_pool.py:35"]
     end
-    subgraph WORKER["执行层 vllm/v1/worker/gpu"]
+    subgraph WORKER["本图执行层：旧 gpu_model_runner.py 路径"]
         BT["BlockTable<br/>block_table.py:49"]
         MR["ModelRunner 前向"]
-        BW["apply_grammar_bitmask<br/>structured_outputs.py:173 -> -inf"]
-        RS["RejectionSampler<br/>rejection_sampler.py:45"]
+        BW["apply_grammar_bitmask<br/>gpu_model_runner.py:4329-4332"]
+        RS["RejectionSampler<br/>v1/sample/rejection_sampler.py:45"]
     end
     SCH -->|"allocate_slots() :833"| COORD
     SCH -->|"get_computed_blocks() :264"| COORD
@@ -138,9 +140,9 @@ flowchart TB
 
 ### 4.2 关键边界
 
-- **调度器不知道"物理块号"**：它只通过 `KVCacheBlocks` 与 `allocate_slots` 的返回值打交道；块号到 GPU tensor 的搬运在 worker 侧（`[block_table.py:114](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/worker/block_table.py>)` 的 `append_row`）。**[精读原文]**
-- **哈希只覆盖 full block**：`[kv_cache_utils.py:993](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_utils.py>)` 的 `if start_token_idx + hash_block_size > num_tokens: return []`，注释原文 "Early stop when there no new full blocks created"。**[精读原文]**
-- **`allocate_slots` 是唯一可能返回 `None` 的分配点**，`None` 就是"KV 不够"的信号，调度器据此触发抢占（`[scheduler.py:833-861](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py>)`）。**[精读原文]**
+- **调度器通过 KV 管理器处理块分配**：它通过 `KVCacheBlocks` 与 `allocate_slots` 的返回值打交道；块号到 GPU tensor 的搬运在 worker 侧（`[block_table.py:114](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/worker/block_table.py>)` 的 `append_row`）。**[精读原文]**
+- **哈希只覆盖完整 hash 单元**：`[kv_cache_utils.py:993](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/kv_cache_utils.py>)` 的 `if start_token_idx + hash_block_size > num_tokens: return []`，注释原文 "Early stop when there no new full blocks created"。**[精读原文]**
+- **本调度路径用 `allocate_slots` 的 `None` 返回判断本次分配失败**，`None` 就是"KV 不够"的信号，调度器据此触发抢占（`[scheduler.py:833-861](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py>)`）。**[精读原文]**
 
 ---
 
@@ -173,7 +175,7 @@ sequenceDiagram
     S->>S: :1184 waiting 队列：num_new_tokens = num_tokens - num_computed_tokens
     S->>C: :316 find_longest_cache_hit -> FullAttentionManager:786 逐块查表
     S-->>W: SchedulerOutput（含 num_scheduled_tokens / spec tokens）
-    W->>W: 前向 -> grammar bitmask 就地 -inf（structured_outputs.py:173）
+    W->>W: 前向 -> grammar bitmask（gpu_model_runner.py:4329）
     W->>R: rejection_sampler(...) :3455
     R->>R: :472 greedy 判据 / :872 draft_prob = 1
     R-->>S: SamplerOutput
@@ -194,7 +196,7 @@ sequenceDiagram
 
 ### 6.1 块池与前缀缓存
 
-- **淘汰序是"两条队列"而不是一棵树**：`free_blocks` 把**无哈希**的块 `prepend` 到队首（LIFO 复用、GPU 局部性好），把**有哈希**的块 `append` 到队尾（FIFO，实现 LRU 淘汰）。源码注释原文即 "LIFO reuse of non-cached blocks for better GPU locality" / "FIFO reuse of cached blocks for LRU eviction behavior"（`[block_pool.py:791-799](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)`）。**[精读原文]**
+- **空闲块在同一队列中按有无哈希分流**：`free_blocks` 把**无哈希**的块 `prepend` 到队首（LIFO 复用、GPU 局部性好），把**有哈希**的块 `append` 到队尾（FIFO，实现 LRU 淘汰）。源码注释原文即 "LIFO reuse of non-cached blocks for better GPU locality" / "FIFO reuse of cached blocks for LRU eviction behavior"（`[block_pool.py:791-799](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)`）。**[精读原文]**
 - **淘汰是"被动 evict-on-allocate"**：`get_new_blocks` 拿到块后立刻调 `_maybe_evict_cached_block` 清掉它的哈希（`[block_pool.py:689](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)`）。也就是说**没有独立的淘汰线程/触发器**，分配路径本身承担淘汰职责。**[精读原文 + 研究推断]**
 - **"同前缀多份物理块"是设计后果而非 bug**：`[docs/design/prefix_caching.md:194](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/docs/design/prefix_caching.md>)` 明确写 v1 的 block table **append-only**，因此重复块要等到请求释放才合并。**[精读原文（vLLM 仓库文档 @ 本报告 SHA）]**
 
@@ -220,7 +222,7 @@ sequenceDiagram
 4. 采样前掩码**就地**生效：非法 token 的 logits 被写成 `-inf`（`[structured_outputs.py:195-198](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/worker/gpu/structured_outputs.py>)`，`-float("inf")` 在 `:197`），且发生在 `self.sampler(...)` **之前**（`[model_runner.py:1636](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/worker/gpu/model_runner.py>)` 调用 `apply_grammar_bitmask` vs `:1655` 的 sampler）。**[精读原文]**
 5. 验证 kernel 用的 `target_probs` 是 **step 4 之后**那些 logits 的 softmax（`[rejection_sampler.py:487](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/sample/rejection_sampler.py>)`；掩码在 `:472` 的 greedy 分支与 `:492` 的残差采样之前已生效）。**[精读原文]**
 
-**研究推断**：step 1–3 保证了"**模型真正当作候选来采样的那个分布**"满足语法约束；step 4–5 的比值检验因此是在"**掩码后但未重新归一化**"的目标分布上做的（掩码行列和为 1）。严格意义上的无偏性要求检验用的目标分布与"会被采样的分布"逐点成比例，这里两者相差一个与 grammar state 有关的常数因子。**我不把这条写成"错误"**——是否存在补偿（例如 `max_rollback_tokens` 或其他后端对 logits 做过重归一化），我**没有找到证据**，也不排除我对 kernel 语义的理解有偏移。**[研究推断，需后续核验]** 涉及锚点：[`vllm/v1/worker/gpu/model_runner.py:1636`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/worker/gpu/model_runner.py#L1636>)（掩码施加）、[`vllm/v1/sample/rejection_sampler.py:487`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/sample/rejection_sampler.py#L487>)（softmax 取值点）、[`vllm/v1/worker/gpu/structured_outputs.py:197`](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/worker/gpu/structured_outputs.py#L197>)（`-inf` 写入）。
+**归一化与正确性的边界**：对合法集 $A$，掩码后再 softmax 得到 $p_A(y)=e^{z_y}/\sum_{v\in A}e^{z_v}$（$y\in A$），行和是 1；不存在“掩码后未归一化”的缺口。旧 runner 在 `gpu_model_runner.py:4329-4335` 施加 grammar 后进入 `_sample`，旧验证器才在 `rejection_sampler.py:487` 形成 `target_probs`。新 runner 的 `model_runner.py:1662-1666` 调的是 `worker/gpu/spec_decode/rejection_sampler.py`，并传入 `invalid_drafts`；该验证器在 `:427-433` 单独屏蔽非法草稿。本文没有对两套实现做逐分布对拍，不能宣称所有 structured-output 组合无偏，也不能用归一化误读判其有偏。
 
 ---
 
@@ -233,23 +235,23 @@ sequenceDiagram
 | 维度 | 条件 | vLLM @ `fa75d345` | SGLang @ `2a08e261` |
 |---|---|---|---|
 | 前缀键结构 | 一般情况 | **链式块哈希**：`hash(parent_hash, block_tokens, extra_keys)`，逐块精确查表（`vllm/v1/core/kv_cache_utils.py:1003`） | **radix 树**：`RadixKey` 承载 token 序列 + `extra_key`；节点可持有任意长度段（[scheduler-and-prefix-cache.md §2.4](../sglang/scheduler-and-prefix-cache.md)） |
-| 命中粒度 | 默认（无 `--prefix-match-unit`） | **块对齐**：块内不对齐前缀不可复用（`single_type_kv_cache_manager.py:786`） | **token 级**：命中段可与节点段不等长（命中时 `_split_node`） |
-| 命中粒度 | 显式调小 `--prefix-match-unit` | vLLM 有 fine-grained 探测路径，但**仍按 hash 粒度对齐**（`single_type_kv_cache_manager.py:796-815` 的 phase 2） | 天然 token 级 |
-| 匹配是否改写结构 | 一般情况 | **否**：查表是只读的；块表 append-only（[prefix_caching.md:194](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/docs/design/prefix_caching.md>)） | **是**：`match_prefix` 会 `_split_node`，只读探测须改用 `touch_prefix` |
-| 淘汰序 | 一般情况 | **块级两条队列**：无哈希 LIFO 复用、有哈希 FIFO（LRU）（`block_pool.py:791-799`） | **叶优先逐层塌缩**：`evictable_leaves` 建堆，父节点变叶后一并入堆（[scheduler-and-prefix-cache.md §3.3](../sglang/scheduler-and-prefix-cache.md)） |
+| 命中粒度 | 默认（无 `--prefix-match-unit`） | **块对齐**：块内不对齐前缀不可复用（`single_type_kv_cache_manager.py:786`） | **按 page_size 对齐**：`page_size=1` 才是 token 级；节点段可以拆分 |
+| 命中粒度 | 显式调小 `--prefix-match-unit` | vLLM 有 fine-grained 探测路径，但**仍按 hash 粒度对齐**（`single_type_kv_cache_manager.py:796-815` 的 phase 2） | 仍需声明 `page_size`；不能由树结构推得任意 token 粒度 |
+| 匹配是否改写结构 | 一般情况 | **否**：查表是只读的；块表 append-only（[prefix_caching.md:194](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/docs/design/prefix_caching.md>)） | **是**：`match_prefix` 会 `_split_node`，`touch_prefix` 同样可能改树，不能当无副作用替代 |
+| 淘汰序 | 一般情况 | **一条空闲队列的两端分流**：无哈希 LIFO 复用、有哈希 FIFO（LRU）（`block_pool.py:791-799`） | 遗留 RadixCache 用叶集合/堆；默认 UnifiedRadixCache 用 component LRU，不能混用实现证据（[scheduler-and-prefix-cache.md §3.3](../sglang/scheduler-and-prefix-cache.md)） |
 | 保护机制 | 一般情况 | 块级 `ref_cnt`（`block_pool.py:689`） | 节点级 `lock_ref`，沿 parent 链上行（[scheduler-and-prefix-cache.md §3.2](../sglang/scheduler-and-prefix-cache.md)） |
-| 抢占恢复 | 一般情况 | **recompute-from-zero**：`num_computed_tokens = 0` 并回 waiting（`scheduler.py:1671`），无 swap-out | （本报告未核验 SGLang 侧抢占实现，不填） |
+| 抢占恢复 | 一般情况 | **计数归零后重新准入（可复用尚存前缀）**：`num_computed_tokens = 0` 并回 waiting（`scheduler.py:1671`），本报告未找到 CPU swap-out；不排除外部 connector | （本报告未核验 SGLang 侧抢占实现，不填） |
 | 调度重叠 | 一般情况 | 本报告**未核验** vLLM 是否有 overlap scheduler 对应物（未确证，见 §9） | 有 `event_loop_overlap` 双流重叠（[scheduler-and-prefix-cache.md §4](../sglang/scheduler-and-prefix-cache.md)） |
 | 草稿概率 | `draft_sample_method="greedy"`（**vLLM 默认**） | **one-hot**：kernel 内 `draft_prob = 1`（`rejection_sampler.py:872`） | 默认路径 `draft_probs = torch.zeros_like(target_probs)`，top-1 概率硬写 1.0（[speculative-decoding-path.md §3.1](../sglang/speculative-decoding-path.md)） |
 | 草稿概率 | `draft_sample_method="probabilistic"`（opt-in） | 搬完整 `draft_probs` / `draft_logits` 进 kernel，判据 `target_prob / draft_prob >= uniform_prob` | `--speculative-use-rejection-sampling` 下 `coin * q < p`（[speculative-decoding-path.md §4.3](../sglang/speculative-decoding-path.md)） |
 | 语法约束下的草稿 | 开启 structured output | **事后丢弃**非法草稿 + 下一步逐位置补 bitmask（`scheduler.py:2679`，`structured_output/__init__.py:458`） | 本报告未核验 SGLang 侧对应机制，不填 |
-| 验证所用目标分布 | 开启 structured output | **掩码后未重归一化**的 softmax（`model_runner.py:1636` → `rejection_sampler.py:487`） | 未核验 |
+| 验证所用目标分布 | 开启 structured output | **对掩码后 logits 重新归一化**的 softmax（旧 `gpu_model_runner.py:4329-4335` → `:3455` → `v1/sample/rejection_sampler.py:487`） | 未核验 |
 
 **[精读原文：vLLM 列均来自 vLLM @ `fa75d345`；SGLang 列转引本仓库既有条目]**。空白格是刻意的：**不填没读过的格子**。
 
 ### 7.2 两边的取舍不冲突
 
-**研究推断**：vLLM 选哈希表 + 块对齐，换来"键可以脱离树结构传递"（跨进程、跨连接器、可指纹化）；SGLang 选 radix 树 + token 级，换来"任意长度前缀可复用"，代价是匹配会改写结构、且需要按 component 维护锁与 LRU。**这不是谁更优的问题**：`docs/design/prefix_caching.md:9` 的原文按语 "vLLM chooses a hash-based approach" 就是一次显式路线选择。**[精读原文（vLLM 仓库文档）+ 研究推断]**
+**研究推断**：vLLM 选哈希表 + 块对齐，换来"键可以脱离树结构传递"（跨进程、跨连接器、可指纹化）；SGLang 用 radix 树组织前缀，并受 `page_size` 对齐约束，代价是匹配会改写结构、且需要按 component 维护锁与 LRU。**这不是谁更优的问题**：`docs/design/prefix_caching.md:9` 的原文按语 "vLLM chooses a hash-based approach" 就是一次显式路线选择。**[精读原文（vLLM 仓库文档）+ 研究推断]**
 
 ---
 
@@ -257,7 +259,7 @@ sequenceDiagram
 
 1. **统一的"追进度"调度 vs 双相调度**：`[scheduler.py:623-641](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py>)`（`:623-632` 为 NOTE 注释段，实体代码自 `:634` 起，预算赋值在 `:641`） 把 prefill / chunked prefill / prefix cache / spec decode 统一成"`num_computed_tokens` 追 `num_tokens_with_spec`"。好处是**新特性只需要定义"这一步能算多少 token"**；代价是这条路径的分支数量极大（本文件 3,520 行）。**[精读原文 + 研究推断]**
 2. **append-only 块表 vs 就地去重**：v1 选择追加而非重写（`[prefix_caching.md:194](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/docs/design/prefix_caching.md>)`），代价是**同前缀的 KV 可能同时存在多份**，直到请求释放才合并。**[精读原文（vLLM 仓库文档）]**
-3. **one-hot 默认 vs 无偏默认**：vLLM 把"完整草稿分布"做成 opt-in（`[speculative.py:604](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/config/speculative.py>)`），注释直接写明代价是 "additional GPU memory usage"。与 SGLang 的取舍**方向一致、默认值也一致**。**[精读原文]**
+3. **确定性草稿默认 vs 概率草稿可选**：vLLM 把"完整草稿分布"做成 opt-in（`[speculative.py:604](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/config/speculative.py>)`），注释直接写明代价是 "additional GPU memory usage"。与 SGLang 的取舍**方向一致、默认值也一致**。**[精读原文]**
 
 ---
 
@@ -275,7 +277,7 @@ sequenceDiagram
 1. **先读 `block_pool.py` 的 35–200 行**，`BlockHashToBlockMap` + `cached_block_hashes_by_block` + `FreeKVCacheBlockQueue` 三个结构定义了整条 KV 路径的不变式。
 2. **改调度之前先确认预算口径**：`token_budget` 与 `input_budget` 是两个独立预算，spec decode 的 `draft_slots` 只从后者扣（`[scheduler.py:643](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py>)`）。任何"为什么这条请求没被排上"的问题，先问是哪一档预算耗尽。
 3. **动 structured output + spec decode 的组合前，先读 §6.4 的 5 步因果链**：改任何一步都会改变"验证用的目标分布"。
-4. **别信名字找主线**：`docs/design/paged_attention.md` 自称历史文档，PagedAttention 的实际数据路径在 `vllm/v1/core/` 而不在 `csrc/`。**[精读原文（vLLM 仓库文档 @ 本报告 SHA）]**
+4. **别信名字找主线**：`docs/design/paged_attention.md` 自称历史文档，本报告在 `vllm/v1/core/` 追踪的是 KV 管理；attention kernel 路径需要另行追踪，历史文档失效不能证明 `csrc/` 没有参与计算。**[精读原文（vLLM 仓库文档 @ 本报告 SHA）]**
 
 ---
 
@@ -283,13 +285,13 @@ sequenceDiagram
 
 | # | 结论 | 主证据 |
 |---|---|---|
-| 1 | 前缀命中是链式哈希逐块匹配，首 miss 即停 | `kv_cache_utils.py:1003`；`single_type_kv_cache_manager.py:786-792` |
-| 2 | 哈希只覆盖 full block | `kv_cache_utils.py:993` |
-| 3 | 淘汰按"有无哈希"分两条队列序（LIFO/FIFO-LRU） | `block_pool.py:791-799` |
+| 1 | 前缀命中先查满块，细粒度模式补查首个未命中物理块内部的哈希边界 | `kv_cache_utils.py:1003`；`single_type_kv_cache_manager.py:786-792` |
+| 2 | 哈希只覆盖完整 hash 单元；可小于物理块 | `kv_cache_utils.py:993` |
+| 3 | 淘汰在同一空闲队列中按有无哈希分流（LIFO/FIFO-LRU） | `block_pool.py:791-799` |
 | 4 | 无独立淘汰器：分配即淘汰 | `block_pool.py:689`（调用）；`block_pool.py:729`（定义） |
 | 5 | 块表 append-only，重复块延迟合并 | `prefix_caching.md:194` |
 | 6 | 调度无 prefill/decode 两相 | `scheduler.py:623-641` |
-| 7 | 抢占 = 全量重算并回 waiting 队列 | `scheduler.py:1664-1671`；`scheduler.py:1692` |
+| 7 | 抢占计数归零并回 waiting；重算量取决于再次命中 | `scheduler.py:1664-1671`；`scheduler.py:1692` |
 | 8 | 两个独立预算，spec slots 只扣 input budget | `scheduler.py:641-644`；`scheduler.py:716` |
 | 9 | 草稿默认 argmax 且不留分布 | `llm_base_proposer.py:454`；`speculative.py:604` |
 | 10 | 随机验证判据 `p/q >= uniform`，无草稿分布时 `q = 1` | `rejection_sampler.py:871-872`（`q = 1`）；`:884`（判据） |

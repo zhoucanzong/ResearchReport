@@ -858,7 +858,7 @@ AnimationBench 是专门针对动画质量的评测基准：
 
 ### 技术博客与综述
 
-19. **Video Generation Survey**: [arXiv, 2024](https://arxiv.org/abs/2405.XXXXX) — 视频生成技术综述（请替换为实际链接）
+19. 视频生成综述：原稿该项是未填写的arXiv占位符，已撤下，不作为任何正文主张的证据；后续按候选筛选流程补真实题录。
 20. **Sora 技术解析**: [Various Blogs, 2024] — 社区对 Sora 架构的逆向分析
 21. **3D VAE 技术详解**: [Various Blogs, 2024] — 时空联合压缩技术
 22. **DiT 原理详解**: [Various Blogs, 2023-2024] — Diffusion Transformer 原理

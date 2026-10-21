@@ -1,777 +1,196 @@
+---
+type: topic-research
+domain: Infra
+subject: QuantizationEdge
+date: 2026-10-22
+evidence: 一手论文方法与实验条件核验
+status: needs-review
+---
+
 # 模型量化与边缘部署研究报告
 
-> 报告日期：2026年6月6日
-> 研究范围：LLM 量化技术、边缘推理引擎、端侧部署实践
-> 适用对象：AI 基础设施工程师、边缘计算架构师、模型部署团队
-
----
-
-## 目录
-
-1. [概述](#1-概述)
-2. [发展时间线](#2-发展时间线)
-3. [量化方法详解](#3-量化方法详解)
-4. [推理引擎对比](#4-推理引擎对比)
-5. [边缘硬件与部署案例](#5-边缘硬件与部署案例)
-6. [量化效果与性能对比](#6-量化效果与性能对比)
-7. [部署实践与排障](#7-部署实践与排障)
-8. [挑战与未来方向](#8-挑战与未来方向)
-9. [参考链接](#9-参考链接)
-
----
+> 范围：权重量化、权重与激活联合量化，以及低位宽格式在真实推理系统中的边界。方法与数字以文中固定论文版本为准；没有运行本地吞吐、质量或端侧功耗实验。
 
 ## 1. 概述
 
-### 1.1 研究背景
+量化首先改变参数或激活的表示精度，然后才可能通过匹配的算子降低运行成本。模型文件变小、推理峰值内存下降、首 token 延迟降低和稳态生成加速是不同结果，不能互相代替。
 
-随着 Large Language Model (LLM) 参数规模从数十亿增长到数千亿，模型推理的显存占用与计算成本呈指数级上升。以 FP16 (2 字节/参数) 存储的 70B 模型为例，仅权重加载就需要约 140 GB 显存，远超单张消费级 GPU 的容量上限。模型量化 (Quantization) 技术通过将浮点权重转换为低精度整数表示，成为降低部署成本、实现边缘推理的核心手段。
+本报告的主要判断是：
 
-2026 年，量化技术已进入成熟阶段。主流开源模型普遍提供 AWQ、GPTQ、GGUF 三种量化格式，INT4 量化后的模型在 MMLU、HumanEval 等基准上的质量损失已控制在 2% 以内，达到生产可用水平。与此同时，边缘硬件算力持续提升——NVIDIA Jetson AGX Orin 系列提供 275 TOPS (INT8) 算力，配合 TensorRT-LLM 等优化引擎，可在 60W 功耗下运行 7B 级量化模型。
+- AWQ、GPTQ 是权重量化方法；GGUF 是容器格式，不能直接并列为三种算法。
+- AWQ 的激活感知缩放用于保护重要通道，最终方法不要求把这些通道一直保留为 FP16。
+- GPTQ 以校准输入下的层输出重构误差为目标，使用近似二阶信息补偿逐步量化误差；它不是追加一次模型微调。
+- SmoothQuant 把部分量化难度从激活迁移到权重，以支持 W8A8；它没有证明任意模型的 INT8/INT4 都能无损。
+- 端侧部署要同时核对模型、内核、设备和工作负载。TOPS、权重位宽和模型参数量均不能单独预测 tok/s。
 
-### 1.2 核心概念
+上述机制分别见 [AWQ §3–§4](https://arxiv.org/html/2306.00978v5)、[GPTQ §3–§4](https://arxiv.org/html/2210.17323v2) 和 [SmoothQuant §4–§5](https://arxiv.org/html/2211.10438v5)。
 
-| 术语 | 说明 | 存储占用 |
-|------|------|----------|
-| FP32 | 单精度浮点，32 bit | 4 字节/参数 |
-| FP16 / BF16 | 半精度浮点，16 bit | 2 字节/参数 |
-| FP8 | 8 位浮点 (E4M3/E5M2) | 1 字节/参数 |
-| INT8 | 8 位有符号整数 | 1 字节/参数 |
-| INT4 | 4 位有符号整数 | 0.5 字节/参数 |
-| INT2 | 2 位有符号整数 | 0.25 字节/参数 |
+### 1.1 三种“大小”必须分开
 
-量化带来的收益是显著的：INT4 量化可将显存占用降低 75%，推理速度提升 2 倍以上。对于边缘设备而言，这意味着原本需要服务器级 GPU 才能运行的模型，现在可以在消费级显卡甚至个人电脑上流畅执行。
+若参数量为 \(P\)，仅存储每个参数的 \(b\) 位数值，则理想载荷为：
 
-### 1.3 报告结构
+\[
+M_{\mathrm{payload}}=Pb/8.
+\]
 
-本报告系统梳理 2026 年量化技术全景：从 AWQ、GPTQ、GGUF 等主流方法，到 PrismaQuant、FlatQuant 等前沿方案；从 vLLM、Ollama 等推理引擎的量化支持矩阵，到 Jetson 等边缘硬件的部署实测数据；最后总结企业落地中的典型挑战与 2026 年技术趋势。
+例如取 \(P=7\times10^9\)，FP16 载荷为 14 GB、4-bit 载荷为 3.5 GB，均为十进制 GB。这是直接代入上式的理论值，不是某个模型的实测显存。
 
----
+实际文件还包含 scale、zero point、分组信息、非量化层与对齐开销；运行内存另外包含 KV cache、激活、反量化工作区及运行时分配。只有权重载荷的理想比例是 1/4，不能据此宣称总显存必降 75%。
+
+### 1.2 W 与 A 的含义
+
+| 记号 | 量化对象 | 仍需核对 |
+|---|---|---|
+| W4A16 | 低位宽权重、16 位激活 | 是否有适配布局和分组的高效 kernel |
+| W8A8 | 权重与激活均为 8 位 | 激活离群值、静态/动态 scale、累加精度 |
+| KV 量化 | 注意力历史缓存 | 缓存 dtype、长上下文质量、读取与反量化开销 |
+| 混合精度 | 不同层/张量采用不同精度 | 哪些层保留高精度、实际平均位宽 |
+
+AWQ 论文研究低位宽 weight-only 路线，SmoothQuant 研究 W8A8 路线；两者解决的瓶颈与校准目标不同，不能仅凭“4 比 8 更小”决定选型。
 
 ## 2. 发展时间线
 
-### 2.1 量化技术演进
+以下只列能由原论文固定版本复核的节点，不列未经核实的软件版本、star 数与“生产默认”判断。
 
-| 时间 | 事件 | 技术意义 |
-|------|------|----------|
-| 2019 | INT8 量化在 CNN 中普及 | 奠定神经网络低精度推理基础 |
-| 2020 | ONNX Runtime 量化工具链成熟 | 跨平台部署成为可能 |
-| 2021 | GPTQ 论文发表 (Frantar et al.) | 首次实现 LLM 逐层 INT4 量化 |
-| 2022 | llama.cpp 发布，GGML 格式诞生 | 开启消费级硬件运行 LLM 时代 |
-| 2022.11 | GPTQ-for-LLaMa 开源 | 社区首次大规模应用 GPTQ |
-| 2023.06 | AWQ 论文发表 (Lin et al., MIT) | Activation-aware 保护关键权重通道 |
-| 2023.09 | GGUF 格式取代 GGML | Georgi Gerganov 设计，元数据自包含 |
-| 2023.10 | SmoothQuant 推广 W8A8 | 权重-激活联合量化，KV Cache 保持 FP16 |
-| 2024.03 | Marlin Kernels v1 发布 | 针对 Ampere/Ada GPU 的量化 GEMM 优化 |
-| 2024.09 | FP8 在 Hopper 架构普及 | H100/H200 原生支持，推理吞吐量翻倍 |
-| 2025.01 | QQQ、HQQ、AQLM 百花齐放 | 非均匀量化、异常值感知方案涌现 |
-| 2025.06 | FlatQuant 提出 W4A4KV4 | 全链路 4-bit，KV Cache 也量化 |
-| 2025.09 | bitsandbytes 集成 4-bit NF4 | HuggingFace 生态默认量化后端 |
-| 2026.01 | PrismaQuant (Neural Magic) 发布 | 混合精度 4.75 bits，质量与 BF16 不可区分 |
-| 2026.03 | Marlin Kernels v2 支持 Blackwell | SM_100 (B200, GB10) 适配 |
-| 2026.04 | vLLM v0.19.0 发布 | 量化支持最全面的生产级推理引擎 |
-| 2026.05 | Ollama v0.6.8 发布 | 172K stars，端侧部署事实标准 |
+| 首次提交时间 | 对象 | 方法变化 | 一手来源 |
+|---|---|---|---|
+| 2022-10 | GPTQ | 将二阶误差补偿组织为可扩展的逐层后训练量化 | [2210.17323，使用 v2](https://arxiv.org/abs/2210.17323v2) |
+| 2022-11 | SmoothQuant | 用等价通道缩放缓解激活离群值，支持 W8A8 | [2211.10438，使用 v5](https://arxiv.org/abs/2211.10438v5) |
+| 2023-06 | AWQ | 激活感知的显著通道保护与低位宽系统实现 | [2306.00978，使用 v5](https://arxiv.org/abs/2306.00978v5) |
 
-### 2.2 边缘硬件算力演进
-
-| 时间 | 硬件 | 算力 (INT8) | 内存 | 功耗 | 定位 |
-|------|------|-------------|------|------|------|
-| 2020 | Jetson Xavier NX | 21 TOPS | 8 GB | 15W | 入门级边缘 |
-| 2022 | Jetson AGX Orin 64GB | 275 TOPS | 64 GB | 60W | 高性能边缘 |
-| 2023 | Jetson Orin Nano 8GB | 67 TOPS | 8 GB | 25W | 低成本边缘 |
-| 2024 | Jetson Orin Nano Super | 67 TOPS | 8 GB | 25W | 性价比优化 |
-| 2025 | RTX 4090 (桌面) | ~330 TOPS | 24 GB | 450W | 工作站级 |
-| 2026 | JetPack 6.1 发布 | CUDA 12.6, cuDNN 9, TensorRT 10 | — | — | 软件栈升级 |
-
-### 2.3 推理引擎量化支持里程碑
-
-| 时间 | 引擎 | 关键更新 |
-|------|------|----------|
-| 2022.12 | llama.cpp | 首版 GGUF 支持，ARM NEON 优化 |
-| 2023.06 | vLLM | 首版发布，PagedAttention 架构 |
-| 2023.09 | Ollama | 基于 llama.cpp，一键运行 GGUF |
-| 2024.03 | TensorRT-LLM | NVIDIA 官方 LLM 推理 SDK |
-| 2024.06 | TGI | HuggingFace 生产推理服务 |
-| 2025.01 | vLLM | 集成 AWQ、GPTQ、Marlin |
-| 2025.09 | vLLM | 支持 FP8、AQLM、QQQ、HQQ |
-| 2026.04 | vLLM v0.19.0 | 支持 bitsandbytes、GGUF、Machete，多硬件后端 |
-| 2026.05 | Ollama v0.6.8 | 多平台稳定版，OLLAMA_SCHED_SPREAD 多 GPU |
-
----
+首次提交日说明工作的出现时间，使用版本说明具体实验依据；两者不能混为同一个“发布日期”。
 
 ## 3. 量化方法详解
 
-### 3.1 AWQ (Activation-aware Weight Quantization)
+### 3.1 AWQ：保护显著通道，而非长期混存 FP16 权重
 
-**技术原理**
+AWQ §3.1 先用实验说明，按激活幅值挑选少量重要通道并保留高精度能改善困惑度。但这种混合数据类型不利于硬件实现，因此 §3.2 改用等价缩放：
 
-AWQ 由 MIT 韩松团队于 2023 年提出，核心洞察是：并非所有权重通道对模型输出同等重要。通过分析激活值分布，AWQ 识别出对精度敏感的"重要通道"，在量化过程中对这些通道保持更高精度 (通常 FP16)，而对其余通道执行 INT4/INT3 量化。
+\[
+XW=(XS^{-1})(SW).
+\]
 
-**关键特性**
+这里按输入通道选取对角缩放矩阵 \(S\)，量化缩放后的权重，并在相邻算子中吸收逆缩放。目的在于降低重要通道的相对量化误差，而不是推理时重新载入整份原始 FP16 权重。[AWQ §3.1–§3.2](https://arxiv.org/html/2306.00978v5#S3)
 
-- 保护重要权重通道，显著降低量化误差
-- 无需反向传播，属于 Post-Training Quantization (PTQ)
-- 量化后效果损失 < 1% (以 MMLU 等指标衡量)
-- 推理时需加载原始 FP16 权重进行在线反量化，对内存带宽要求较高
+**数据与消融。** Table 1 比较按激活、按权重大小和随机挑选通道的效果；Table 2 则固定 OPT-6.7B、INT3、group size 128，改变通道缩放强度。该设置下 WikiText perplexity 从不缩放时的 23.54 降为缩放系数 2 时的 11.92。继续增大缩放不一定更好，因为其他通道的误差可能上升。这支持“尺度需要搜索”，不能扩展为所有模型统一采用系数 2。[AWQ Table 1–2、§3.2](https://arxiv.org/html/2306.00978v5#S3)
 
-**适用场景**
+**系统代价。** TinyChat 在读取压缩权重后于算子内反量化，并使用权重打包和 kernel fusion；性能收益依赖这些实现。论文 Figure 3 对 Llama-2-7B / RTX 4090 的分析指出其生成阶段受带宽限制，不能把旧稿中“prefill 总受带宽限制、decode 总受计算限制”的顺序泛化到所有负载。[AWQ §4、Figure 3](https://arxiv.org/html/2306.00978v5#S4)
 
-| 场景 | 建议 | 原因 |
-|------|------|------|
-| 服务器端部署 | 首选 AWQ | 精度损失最小，适合高并发 API 服务 |
-| 边缘设备 | 次选 | 内存带宽瓶颈可能抵消速度优势 |
-| 实时性要求极高 | 需评估 | 反量化开销需实测验证 |
+**边界。** 校准分布、group size、模型结构和算子支持都会影响结果。论文的量化比较不等于目标业务的质量验证，也没有证明 AWQ 在所有任务上优于 GPTQ。
 
-**2026 年状态**
+### 3.2 GPTQ：层输出误差与二阶补偿
 
-AWQ 已成为 HuggingFace Transformers 和 vLLM 的默认量化选项之一。主流模型 (Llama、Qwen、Gemma、Phi 系列) 均提供官方 AWQ 权重。社区工具链 (AutoAWQ) 支持一键转换，兼容 CUDA 和 ROCm 后端。
+GPTQ 用校准输入构造局部重构目标，寻找低位宽权重，使量化层的输出接近原浮点层。算法量化一批权重后，利用近似逆 Hessian 向尚未量化的权重分配误差补偿。任意顺序处理、延迟批量更新和 Cholesky 重写使其能扩展到大模型。[GPTQ §3–§4、Algorithm 1](https://arxiv.org/html/2210.17323v2#S4)
 
-### 3.2 GPTQ (General-purpose Post-Training Quantization)
+“训练自由”不代表没有数据或计算成本：论文实验用 128 段 C4 文本，每段 2048 token，作为校准数据；量化时按 Transformer block 装入 GPU，完成当前块后再产生后续块输入。原文使用一张 A100 80GB 做量化，不要求把完整浮点大模型一次装入显存。[GPTQ §5 Setup](https://arxiv.org/html/2210.17323v2#S5)
 
-**技术原理**
+**实验解释。** 原文同时报告困惑度、zero-shot 任务、量化耗时与生成性能，这些不是同一种质量指标。其特定 OPT/BLOOM 实验不能自动推广到后续 Llama/Qwen 架构，更不能填入没有同一评测脚本的跨算法百分比排行榜。
 
-GPTQ 基于 Optimal Brain Surgeon (OBS) 框架，采用逐层量化策略：对每一层权重矩阵，先计算量化误差对输出的影响 (Hessian 矩阵近似)，然后按重要性排序依次量化权重，并对剩余未量化权重进行补偿更新。这种"二次微调"机制使得 INT4 量化后的精度损失可控。
+**边界。** 低到 2-bit 时，论文使用更细分组并承认更明显的质量代价；其低位宽稀疏矩阵/向量乘 kernel 与一般高 batch 矩阵乘不是同一个性能场景。[GPTQ §5 Extreme Quantization、§6 Limitations](https://arxiv.org/html/2210.17323v2)
 
-**关键特性**
+### 3.3 SmoothQuant：把激活量化难度迁移到权重
 
-- 逐层量化 + 误差补偿，精度优于简单 round-to-nearest
-- 支持 INT4/INT3/INT2 多种位宽
-- 量化过程计算密集 (需处理 Hessian)，但一次性完成
-- 推理时权重静态存储为 INT4，通过 lookup table 反量化
+SmoothQuant 观察到激活离群值在部分通道上持续出现，直接采用统一激活 scale 会挤压大多数值的有效表示范围。它用校准数据生成通道缩放，通过等价变换平滑激活，同时允许权重承受更大的取值范围，再做 W8A8 量化。[SmoothQuant §3–§4](https://arxiv.org/html/2211.10438v5#S4)
 
-**适用场景**
+迁移强度 \(\alpha\) 控制激活与权重之间的难度分配。原文 §5.5 比较量化方案和迁移强度，表明只平滑激活或过度放大权重都可能损伤精度。这里的结论是“联合平衡两端”，不是“任何激活都可以免费变成 INT8”。
 
-| 场景 | 建议 | 原因 |
-|------|------|------|
-| 服务器端大模型 | 推荐 | 70B+ 模型 INT4 量化后单卡可运行 |
-| 显存受限环境 | 推荐 | 相比 AWQ 内存占用更低 |
-| 精度敏感任务 | 需对比 AWQ | 部分任务 GPTQ 损失略大于 AWQ |
+论文将 context 与 decoding 分开测量，并区分 PyTorch 与 FasterTransformer 实现。其“最高加速”必须连模型、GPU 数、batch、输入输出长度和基线实现一起引用；本报告不把这些不同设置合并成单一收益。[SmoothQuant §5.3–§5.5](https://arxiv.org/html/2211.10438v5#S5)
 
-**2026 年状态**
+### 3.4 GGUF：存储契约与运行时支持分开核对
 
-GPTQ 社区生态成熟，AutoGPTQ 和 GPTQModel 是主流实现。vLLM 对 GPTQ 的支持完善，支持 ExLlamaV2、Marlin 等加速内核。需要注意的是，GPTQ 量化后的模型对 GPU 架构有一定依赖——旧版 GPTQ 内核在 Ampere (SM_80) 上表现最佳，而 Marlin 内核进一步扩展了 Ada Lovelace (SM_89) 和 Hopper (SM_90) 的支持。
+GGUF 的作用是封装张量、类型、元数据和 tokenizer 信息。文件中的 Q4、Q5 等张量类型可以采用不同块布局或混合策略，文件名里的近似位宽不等于所有参数采用同一位数。
 
-### 3.3 GGUF (Georgi Gerganov Universal Format)
-
-**技术原理**
-
-GGUF 是 llama.cpp 项目的原生模型格式，由 Georgi Gerganov 设计。与 AWQ/GPTQ 不同，GGUF 不是量化算法，而是容器格式 + 量化实现：它将模型权重、词汇表、超参数、提示模板等元数据打包为单一文件，并内置多种量化方案 (Q2_K 到 Q8_0，以及 F16、F32)。
-
-**量化级别详解**
-
-| 级别 | 位宽 | 说明 | 适用场景 |
-|------|------|------|----------|
-| Q2_K | ~2.1 bits | 极致压缩，质量损失明显 | 极低内存设备 |
-| Q3_K_S / Q3_K_M / Q3_K_L | ~3 bits | 小/中/大三种变体 | 内存 < 8GB |
-| Q4_K_S / Q4_K_M | ~4.5 bits | 平衡压缩与质量 | 消费级 GPU |
-| Q5_K_S / Q5_K_M | ~5.5 bits | 接近 FP16 质量 | 质量敏感 |
-| Q6_K | ~6 bits | 高质量 | 大内存设备 |
-| Q8_0 | 8 bits | 几乎无损 | 精度优先 |
-| F16 | 16 bits | 原始半精度 | 无压缩需求 |
-| F32 | 32 bits | 原始单精度 | 训练/调试 |
-
-**关键特性**
-
-- 单文件自包含，无需额外配置文件
-- 跨平台：x86、ARM (NEON)、Apple Silicon (Metal)、CUDA、ROCm
-- 消费级显卡甚至个人电脑可流畅运行 7B/13B 模型
-- Q4_K_M 是社区默认推荐，质量与速度的平衡点
-
-**适用场景**
-
-| 场景 | 建议 | 原因 |
-|------|------|------|
-| 端侧/本地部署 | 首选 GGUF | Ollama、llama.cpp 原生支持 |
-| macOS/Apple Silicon | 首选 GGUF | Metal GPU 后端优化最佳 |
-| 离线环境 | 首选 GGUF | 单文件，无依赖 |
-| 服务器高并发 | 次选 | 批处理性能不如 vLLM + AWQ/GPTQ |
-
-**2026 年状态**
-
-GGUF 是端侧部署的事实标准。Ollama 默认拉取 Q4_K_M 量化版本，单二进制仅 ~120MB，支持 macOS、Linux、Windows 三平台。llama.cpp 持续优化 ARM NEON 和 CUDA GGML 内核，在 Jetson Orin 上运行 3B 模型可达实时交互速度。
-
-### 3.4 FP8 (8-bit Floating Point)
-
-**技术原理**
-
-FP8 是 NVIDIA Hopper 架构引入的 8 位浮点格式，包含两种变体：
-- **E4M3**：1 位符号 + 4 位指数 + 3 位尾数，适合权重
-- **E5M2**：1 位符号 + 5 位指数 + 2 位尾数，适合梯度/激活
-
-相比 INT8，FP8 保留了浮点数的动态范围，对异常值 (outliers) 更鲁棒，无需复杂的校准流程。
-
-**硬件支持矩阵**
-
-| GPU 架构 | 代表型号 | FP8 Tensor Cores | 支持状态 |
-|----------|----------|------------------|----------|
-| Volta (SM_70) | V100 | 不支持 | 仅 FP16 |
-| Turing (SM_75) | T4, RTX 20xx | 不支持 | 仅 FP16/INT8 |
-| Ampere (SM_80) | A100, A30 | 不支持 | 仅 FP16/INT8/TF32 |
-| Ada Lovelace (SM_89) | RTX 4090, L40S | 支持 | 原生 FP8 |
-| Hopper (SM_90) | H100, H200 | 支持 | 原生 FP8，吞吐量最优 |
-| Blackwell (SM_100) | B200, GB10 | 支持 | 下一代 FP8 优化 |
-
-**关键特性**
-
-- 1 字节/参数，显存占用与 INT8 相同
-- 动态范围优于 INT8，量化校准更简单
-- 需硬件 FP8 Tensor Cores 支持，A100 等旧卡无法使用
-- 2026 年主流训练框架 (PyTorch、TensorFlow) 已原生支持 FP8 训练与推理
-
-**适用场景**
-
-| 场景 | 建议 | 原因 |
-|------|------|------|
-| H100/H200 数据中心 | 强烈推荐 | 原生支持，吞吐量翻倍 |
-| RTX 4090/L40S 工作站 | 推荐 | 支持 FP8，性价比优秀 |
-| A100/V100 环境 | 不可用 | 硬件不支持，需回退 INT8/FP16 |
-| 边缘设备 (Jetson) | 待观察 | Jetson 目前以 INT8 为主 |
-
-### 3.5 PrismaQuant (Neural Magic, 2026)
-
-**技术原理**
-
-PrismaQuant 是 Neural Magic 于 2026 年初发布的混合精度量化方案，代表了当前 PTQ 技术的最前沿。其核心创新是：
-
-1. **异常值感知混合精度**：95% 的权重使用 INT4，5% 的异常值通道使用 INT8
-2. **有效位宽 4.75 bits**：在 INT4 的存储效率与 INT8 的精度之间取得最优平衡
-3. **SmoothQuant 校准集成**：对激活值进行 per-channel 缩放，减少量化误差
-
-**关键特性**
-
-- 质量指标 (MMLU、HumanEval) 与 BF16 基线不可区分
-- 比 FP8 推理快 37% (在相同硬件上)
-- 无需训练数据，纯 PTQ 流程
-- 支持 vLLM 集成，生产就绪
-
-**性能对比**
-
-| 指标 | BF16 基线 | PrismaQuant | FP8 | 传统 INT4 (GPTQ) |
-|------|-----------|-------------|-----|------------------|
-| MMLU | 100% | 99.8% | 99.2% | 97.5% |
-| HumanEval | 100% | 99.9% | 99.0% | 96.0% |
-| 推理速度 | 1x | 1.37x | 1.0x | 1.2x |
-| 显存占用 | 100% | 29.7% | 50% | 25% |
-
-**适用场景**
-
-| 场景 | 建议 | 原因 |
-|------|------|------|
-| 生产级高精度服务 | 强烈推荐 | 质量无损，速度超越 FP8 |
-| 成本敏感型部署 | 推荐 | 显存降低 70%，速度提升 37% |
-| 已有 FP8 基础设施 | 可迁移 | vLLM 插件式集成 |
-
-### 3.6 FlatQuant
-
-**技术原理**
-
-FlatQuant 提出全链路低精度量化，不仅量化权重 (W) 和激活 (A)，还将 KV Cache 纳入量化范围：
-- W8A8KV8：权重 INT8、激活 INT8、KV Cache INT8
-- W4A4KV4：权重 INT4、激活 INT4、KV Cache INT4
-
-KV Cache 量化对长上下文场景尤为重要——在 128K 上下文下，KV Cache 可能占用数十 GB 显存，将其压缩至 INT4 可释放大量空间。
-
-**关键特性**
-
-- 全链路量化，最大化显存节省
-- KV Cache INT4 对长上下文支持至关重要
-- 需定制 CUDA 内核，生态支持尚不如 AWQ/GPTQ 成熟
-- 质量损失在长序列下需仔细评估
-
-### 3.7 其他量化方案
-
-| 方案 | 机构/作者 | 核心特点 | 2026 年状态 |
-|------|-----------|----------|-------------|
-| QQQ | 社区 | 异常值感知 INT4 | vLLM 支持，实验性 |
-| HQQ | 社区 | Half-Quadratic Quantization，非均匀量化 | vLLM 支持，精度优秀 |
-| AQLM | 社区 | Additive Quantization of Language Models，向量量化 | vLLM 支持，压缩率高 |
-| bitsandbytes | HuggingFace | NF4/FP4 量化，QLoRA 训练配套 | vLLM 集成，训练-推理一体化 |
-| SmoothQuant | MIT | W8A8，per-channel 激活缩放 | 成熟方案，常与 GPTQ 结合 |
-| Marlin Kernels | 社区 | GPU 量化 GEMM 优化内核 | vLLM 核心后端 |
-
-### 3.8 量化方法选择决策树
-
-```
-部署环境?
-├── 服务器/数据中心
-│   ├── GPU = H100/H200/RTX 4090/L40S
-│   │   └── 首选 FP8 (原生支持，最简单)
-│   ├── 追求极致精度
-│   │   └── 首选 PrismaQuant (4.75 bits，质量无损)
-│   ├── 追求极致速度
-│   │   └── 首选 Marlin + GPTQ/AWQ (内核优化最佳)
-│   └── 通用场景
-│       └── AWQ (精度) 或 GPTQ (速度)
-├── 边缘设备 (Jetson/嵌入式)
-│   ├── 使用 TensorRT-LLM
-│   │   └── INT8 (W8A8) 或 FP16
-│   └── 使用 llama.cpp
-│       └── GGUF Q4_K_M 或 Q5_K_M
-├── 本地/个人电脑
-│   ├── macOS/Apple Silicon
-│   │   └── GGUF (Metal 后端)
-│   ├── Windows/Linux + NVIDIA GPU
-│   │   └── Ollama + GGUF Q4_K_M
-│   └── CPU  only
-│       └── GGUF Q4_K_M (llama.cpp AVX/NEON)
-└── 手机/移动端
-    └── GGUF Q2_K / Q3_K (极致压缩)
-```
-
----
+部署应核对实际文件元数据、目标 llama.cpp 版本支持的张量类型以及后端实现，而不是把“GGUF”当作一个固定的量化目标函数或准确率承诺。格式的具体类型与扩展以 [GGUF 官方规范](https://github.com/ggml-org/ggml/blob/master/docs/gguf.md) 为入口；本报告没有逐项复核当前所有类型，不能据此列出完整兼容矩阵。
 
 ## 4. 推理引擎对比
 
-### 4.1 引擎概览
+这里比较需要验证的能力，避免把随版本变化的支持表写成永久事实。
 
-| 引擎 | 维护方 | GitHub Stars (2026.05) | 核心定位 | 量化支持 |
-|------|--------|------------------------|----------|----------|
-| vLLM | 伯克利/社区 | 32,600+ | 生产级高吞吐推理 | FP8, INT8, GPTQ, AWQ, Marlin, Machete, AQLM, QQQ, HQQ, bitsandbytes, GGUF |
-| Ollama | Ollama 团队 | 172,000 | 端侧一键部署 | GGUF 原生 (Q2_K ~ Q8_0) |
-| TensorRT-LLM | NVIDIA | — | NVIDIA 硬件最优 | INT8, FP8, FP16 (需编译) |
-| llama.cpp | Georgi Gerganov | 80,000+ | 跨平台轻量推理 | GGUF 原生 |
-| ONNX Runtime | Microsoft | — | 跨平台标准化 | INT8, FP16 (QDQ 格式) |
-| TGI | HuggingFace | — | 生产推理服务 | GPTQ, AWQ, bitsandbytes |
+| 候选系统 | 应核对的能力 | 失败边界 |
+|---|---|---|
+| vLLM | 模型架构、量化后端、GPU 架构、连续批处理和 KV dtype 的具体组合 | 支持某种文件不等于支持每种分组或高效 kernel |
+| llama.cpp / Ollama | 文件中的张量类型、CPU/GPU offload、选中的后端和实际内存 | 封装工具不能绕过底层硬件或算子限制 |
+| TensorRT / TensorRT-LLM | 目标平台、软件版本、模型转换与构建限制 | 序列化 engine 的兼容性有明确条件 |
+| ONNX Runtime | 具体 execution provider、量化算子覆盖与图转换结果 | 一部分算子回退可能抵消加速收益 |
 
-### 4.2 vLLM (v0.19.0, 2026.04)
+本表是选型检查框架，不是这些系统已经在同一硬件上横评的结果。仓库内代码分析可从 [vLLM](../../OpenSource/vllm/report.md) 继续，但其固定 SHA 的结论也不能代替目标版本测试。
 
-**架构特点**
+### 4.1 TensorRT engine 的可移植性
 
-vLLM 的核心创新是 **PagedAttention**，将 KV Cache 划分为固定大小的 block (类似 OS 虚拟内存)，实现：
-- 动态内存分配，消除内存碎片
-- 连续批处理 (Continuous Batching)，提高 GPU 利用率
-- Prefix Caching，共享系统提示词的 KV Cache
+不能将“在任意 x86 GPU 上编译，再复制到 Jetson”写成通用部署流程。TensorRT 默认对序列化 engine 的操作系统、CPU 架构、GPU 和版本有兼容条件；兼容标志也不等于覆盖任意目标设备。应按对应版本文档，在受支持目标或兼容配置下构建并验证。[NVIDIA Engine Compatibility](https://docs.nvidia.com/deeplearning/tensorrt/latest/inference-library/engine-compatibility.html)
 
-**量化支持矩阵**
-
-| 量化格式 | 支持状态 | 加速内核 | 备注 |
-|----------|----------|----------|------|
-| FP8 | 稳定 | CUDA/ROCm | 需 Hopper+ 或 Ada GPU |
-| INT8 (W8A8) | 稳定 | CUTLASS | 通用方案 |
-| GPTQ (INT4) | 稳定 | ExLlamaV2, Marlin | 推荐 Marlin 内核 |
-| AWQ (INT4) | 稳定 | Marlin, Machete | 保护重要通道 |
-| Marlin | 稳定 | 专用内核 | SM_80/86/89/90/100 |
-| Machete | 稳定 | 专用内核 | 混合精度 GEMM |
-| AQLM | 实验性 | 社区内核 | 高压缩率 |
-| QQQ | 实验性 | 社区内核 | 异常值感知 |
-| HQQ | 实验性 | 社区内核 | 非均匀量化 |
-| bitsandbytes | 稳定 | 集成内核 | NF4/FP4 |
-| GGUF | 稳定 | GGML 后端 | 兼容 llama.cpp 格式 |
-
-**多硬件后端**
-
-| 后端 | 状态 | 量化支持 |
-|------|------|----------|
-| NVIDIA CUDA | 稳定 | 全部 |
-| AMD ROCm | 稳定 | INT8, FP16, 部分 INT4 |
-| Intel Gaudi | 实验性 | FP16, BF16 |
-| AWS Trainium/Inferentia | 实验性 | INT8 |
-| CPU (x86) | 稳定 | INT8, GGUF |
-| IBM Z | 实验性 | 有限 |
-
-**部署特性**
-
-- OpenAI-compatible API，无缝替换 OpenAI 服务
-- Tensor Parallel + Pipeline Parallel，支持多卡大模型
-- Disaggregated Prefill，分离预填充与解码阶段
-- Docker 镜像 ~6GB，包含全部依赖
-
-**适用场景**：数据中心高并发 API 服务、多租户 LLM 平台、需要连续批处理的生产环境。
-
-### 4.3 Ollama (v0.6.8, 2026.05)
-
-**架构特点**
-
-Ollama 基于 llama.cpp 构建，定位为"Docker for LLM"：
-- 单二进制 ~120MB，零依赖
-- 一条命令拉取并运行模型：`ollama run llama3.2`
-- 自动选择最佳量化级别 (默认 Q4_K_M)
-- Modelfile 自定义系统提示、参数、适配器
-
-**平台支持**
-
-| 平台 | 状态 | GPU 后端 |
-|------|------|----------|
-| macOS | 稳定 | Metal (Apple Silicon), CPU |
-| Linux | 稳定 | CUDA, ROCm, CPU |
-| Windows | 稳定 | CUDA, CPU |
-
-**多 GPU 支持**
-
-Ollama 默认单 GPU 运行，可通过环境变量启用多 GPU：
-```bash
-OLLAMA_SCHED_SPREAD=1 ollama run llama3.1:70b
-```
-
-此模式将层均匀分布到多张 GPU，适合显存不足但有多卡的场景。注意：多 GPU 会带来 PCIe 传输开销，速度可能不如单张大显存 GPU。
-
-**量化支持**
-
-Ollama 原生支持 GGUF 格式全部量化级别。拉取模型时自动选择：
-- 默认：`Q4_K_M` (4.5 bits，质量与速度平衡)
-- 显存充足：`Q8_0` 或 `F16`
-- 显存紧张：`Q3_K_M` 或 `Q2_K`
-
-**适用场景**：本地开发、个人助手、边缘设备、快速原型验证、教育演示。
-
-### 4.4 TensorRT-LLM (NVIDIA)
-
-**架构特点**
-
-TensorRT-LLM 是 NVIDIA 官方 LLM 推理 SDK，基于 TensorRT 构建：
-- 针对 NVIDIA GPU 深度优化 (特别是 Hopper/Blackwell)
-- 原生 Jetson 支持 (JetPack 6.1)
-- 需将模型编译为 TensorRT engine (耗时但一次性)
-- 支持 FP8、INT8、FP16 量化
-
-**Jetson 部署流程**
-
-1. 在 x86 主机上使用 TensorRT-LLM 编译模型为 engine
-2. 将 engine 文件传输至 Jetson 设备
-3. 使用 TensorRT-LLM runtime 加载执行
-
-**量化支持**
-
-| 格式 | Jetson 支持 | 说明 |
-|------|-------------|------|
-| FP16 | 是 | 默认，质量最佳 |
-| INT8 (W8A8) | 是 | 推荐量化方案 |
-| FP8 | 部分 | 需新一代 Jetson (若支持) |
-| GPTQ/AWQ | 否 | 需通过 ONNX 转换 |
-
-**适用场景**：NVIDIA 硬件专属优化、Jetson 边缘部署、需要极致延迟优化的场景。
-
-### 4.5 llama.cpp
-
-**架构特点**
-
-llama.cpp 是 GGUF 格式的参考实现：
-- C/C++ 编写，无 Python 依赖
-- 多后端：x86 (AVX/AVX2/AVX512)、ARM (NEON)、CUDA、Metal、ROCm、Vulkan、OpenCL
-- 支持推测解码 (Speculative Decoding)、并行解码
-- 社区驱动，更新频繁
-
-**量化支持**
-
-原生支持全部 GGUF 量化级别，Q4_K_M 是社区验证的最佳平衡点。
-
-**适用场景**：嵌入式系统、无 Python 环境、需要最小依赖的部署、自定义后端开发。
-
-### 4.6 引擎选择决策
-
-| 需求 | 推荐引擎 | 次选 |
-|------|----------|------|
-| 数据中心高吞吐 API | vLLM | TGI |
-| 本地开发/个人使用 | Ollama | llama.cpp |
-| NVIDIA Jetson 边缘 | TensorRT-LLM | llama.cpp |
-| 跨平台标准化 | ONNX Runtime | vLLM |
-| Apple Silicon | Ollama | llama.cpp (Metal) |
-| 多硬件兼容 (AMD/Intel) | vLLM | llama.cpp |
-| 最小二进制体积 | Ollama (~120MB) | llama.cpp |
-
----
+这是一项运行环境约束；它与 AWQ/GPTQ 的数值误差目标无关。模型可导出不意味着构建产物可跨设备运行。
 
 ## 5. 边缘硬件与部署案例
 
-### 5.1 NVIDIA Jetson 系列
+### 5.1 硬件规格不能替代模型测试
 
-| 型号 | INT8 TOPS | 内存 | 功耗 | 价格区间 | 典型负载 |
-|------|-------------|------|------|----------|----------|
-| Jetson AGX Orin 64GB | 275 | 64 GB LPDDR5X | 60W | $1,500+ | 7B-13B 量化模型 |
-| Jetson AGX Orin 32GB | 275 | 32 GB LPDDR5X | 60W | $1,000+ | 7B 量化模型 |
-| Jetson Orin Nano Super 8GB | 67 | 8 GB LPDDR5 | 25W | $300+ | 1B-3B 量化模型 |
-| Jetson Orin NX 16GB | 157 | 16 GB LPDDR5 | 25W | $600+ | 3B-7B 量化模型 |
+TOPS 必须同时说明数值类型、稀疏性、功耗模式和计算单元，不能把不同厂商或不同精度的峰值并列成 LLM 性能排名。
 
-**JetPack 6.1 软件栈**
+共享内存设备还要为系统、显示和其他进程留空间。权重能装入只回答容量的一部分，不回答长上下文或并发时是否 OOM。
 
-| 组件 | 版本 | 量化相关特性 |
-|------|------|--------------|
-| CUDA | 12.6 | FP8 支持 (若硬件支持) |
-| cuDNN | 9 | INT8 卷积/矩阵乘优化 |
-| TensorRT | 10 | INT8/FP8 量化推理 |
-| TensorRT-LLM | 集成 | LLM 专用优化 |
+### 5.2 可以引用的端侧证据
 
-### 5.2 边缘模型评测 (2026.04)
+AWQ v5 的 Figure 3 和 §4–§5 给出 TinyChat 的系统分析；其摘要列出的 13B 模型在 RTX 4070 Laptop 8GB 上约 30 tok/s，是作者实现与特定模型/设置的结果。该摘要未在同一句给全工作负载条件，本报告仅登记为作者结果入口，不把它扩展为所有 13B 模型或通用端侧 SLA。[AWQ v5](https://arxiv.org/html/2306.00978v5)
 
-测试配置：128 token prefill + 256 token decode，Jetson AGX Orin 64GB
-
-| 模型 | 参数量 | FP16 速度 | INT8 速度 | INT4-AWQ 速度 | FP16 显存 | INT4 显存 |
-|------|--------|-----------|-----------|---------------|-----------|-----------|
-| Llama 3.2 | 1B | 120 tok/s | 180 tok/s | 240 tok/s | 2.1 GB | 0.6 GB |
-| Llama 3.2 | 3B | 45 tok/s | 70 tok/s | 95 tok/s | 6.3 GB | 1.8 GB |
-| Phi-3.5-mini | 3.8B | 38 tok/s | 60 tok/s | 82 tok/s | 7.9 GB | 2.3 GB |
-| Qwen2.5 | 1.5B | 95 tok/s | 145 tok/s | 190 tok/s | 3.2 GB | 0.9 GB |
-| Qwen2.5 | 3B | 42 tok/s | 65 tok/s | 88 tok/s | 6.4 GB | 1.9 GB |
-| Gemma 2 | 2B | 75 tok/s | 115 tok/s | 150 tok/s | 4.2 GB | 1.2 GB |
-
-**关键发现**
-
-1. INT4-AWQ 相比 FP16 速度提升 2.0-2.2 倍，显存降低 70-72%
-2. 1B-3B 模型在 Jetson AGX Orin 上可达交互级速度 (>30 tok/s)
-3. 3B 级 INT4 模型在 Orin Nano 8GB 上可运行，但速度降至 15-20 tok/s
-4. Prefill 阶段瓶颈在内存带宽，Decode 阶段瓶颈在计算单元利用率
-
-### 5.3 手机端部署
-
-2026 年，端侧量化模型已能在手机上实时运行：
-
-| 设备 | 模型 | 量化 | 速度 | 场景 |
-|------|------|------|------|------|
-| iPhone 16 Pro | Qwen2.5 3B | INT4 | 25 tok/s | 本地助手 |
-| Pixel 9 Pro | Gemma 2 2B | INT4 | 30 tok/s | 实时翻译 |
-| 骁龙 8 Gen 4 | Llama 3.2 1B | INT4 | 45 tok/s | 语音交互 |
-
-**技术要点**
-
-- 手机 NPU (Hexagon、Neural Engine) 对 INT4/INT8 有硬件加速
-- 模型需转换为 TFLite、CoreML 或厂商专用格式
-- 内存限制严格，通常只加载 1B-3B 模型
-- 30 fps 运行 2B/7B 量化模型已成为旗舰手机宣传卖点
-
-### 5.4 部署案例：智能零售边缘网关
-
-**场景**：连锁便利店在 1000 家门店部署智能客服 + 库存查询 LLM
-
-**硬件选型**
-
-| 组件 | 选型 | 数量/店 | 成本 |
-|------|------|---------|------|
-| 边缘网关 | Jetson AGX Orin 32GB | 1 | $1,000 |
-| 模型 | Qwen2.5 3B INT4-AWQ | 1 | 免费 (开源) |
-| 推理引擎 | TensorRT-LLM | 1 | 免费 |
-| 总成本 | — | — | ~$100 万 (1000 店) |
-
-**性能指标**
-
-- 并发：单网关支持 4 路并发查询
-- 延迟：P95 < 2s (含网络)
-- 准确率：库存查询准确率 98.5% (对比云端 BF16 基线 99.0%)
-- 离线能力：断网时仍可运行基础问答
-
-**收益**
-
-- 相比云端 API 调用，年节省推理成本 $300 万+
-- 数据不出店，满足隐私合规要求
-- 响应延迟从 800ms (云端) 降至 200ms (本地)
-
----
+本报告没有独立复现 Jetson、手机或零售网关案例。没有设备型号、软件提交、功耗、温控、prompt 分布和原始测试记录的“实测表”不能作为采购或部署依据。
 
 ## 6. 量化效果与性能对比
 
-### 6.1 质量损失对比表
+### 6.1 质量比较需要同一基线
 
-以 Llama 3.1 8B 为基线 (BF16 = 100%)：
+| 项目 | 必须固定或报告 | 否则无法解释 |
+|---|---|---|
+| 模型 | 权重 revision、tokenizer、chat template | 差异可能来自模型或提示格式 |
+| 量化 | 算法、group size、scale/zero point、未量化层 | 同为 4-bit 仍可能完全不同 |
+| 校准 | 数据来源、样本数、长度与随机种子 | 特定领域收益可能来自数据适配 |
+| 评测 | harness 版本、shots、采样设置、任务分数 | “质量保留率”没有统一分母 |
+| 指标 | PPL、准确率、pass@k、业务成功率分别列出 | 无法将它们混成统一百分比 |
 
-| 量化方案 | 位宽 | MMLU | HumanEval | GSM8K | 显存占用 | 速度提升 |
-|----------|------|------|-----------|-------|----------|----------|
-| BF16 基线 | 16 | 100% | 100% | 100% | 100% | 1.0x |
-| FP8 | 8 | 99.2% | 99.0% | 98.8% | 50% | 1.8x |
-| INT8 (W8A8) | 8 | 98.5% | 97.5% | 97.0% | 50% | 1.5x |
-| PrismaQuant | 4.75 | 99.8% | 99.9% | 99.5% | 29.7% | 1.37x |
-| AWQ (INT4) | 4 | 99.1% | 98.2% | 97.5% | 25% | 2.1x |
-| GPTQ (INT4) | 4 | 97.5% | 96.0% | 95.0% | 25% | 2.2x |
-| GGUF Q5_K_M | 5.5 | 98.8% | 98.0% | 97.8% | 34% | 1.9x |
-| GGUF Q4_K_M | 4.5 | 97.0% | 95.5% | 94.5% | 28% | 2.3x |
-| GGUF Q3_K_M | 3 | 92.0% | 88.0% | 85.0% | 19% | 2.8x |
-| GGUF Q2_K | 2.1 | 78.0% | 70.0% | 65.0% | 13% | 3.5x |
+准确率从 80% 到 78% 是下降 2 个百分点、相对下降 2.5%；数字必须说明采用哪一种口径。这是指标算术，不是任何量化算法的经验定律。
 
-**结论**
+### 6.2 性能比较分阶段
 
-- **生产级无损**：PrismaQuant (4.75 bits) 质量与 BF16 不可区分，显存降低 70%
-- **生产级可接受**：AWQ INT4、GGUF Q5_K_M 质量损失 < 2%，显存降低 65-75%
-- **开发/演示级**：GGUF Q4_K_M 质量损失 3-5%，适合本地开发
-- **极限压缩**：Q2_K 仅适合极低内存设备，质量损失显著
+- TTFT：区分排队、tokenization 和 prefill，声明是否包含网络。
+- TPOT / decode tok/s：报告 batch 与并发、输出长度，以及是否采用投机解码。
+- 总吞吐：包含完成请求的数量、拒绝/失败率及延迟约束。
+- 内存：区分权重文件大小、加载后的常驻量和峰值分配。
+- 端侧功耗：固定电源模式、预热、温控及测试时长。
 
-### 6.2 推理引擎吞吐量对比
-
-测试环境：单节点 H100 80GB，Llama 3.1 70B，输入 1024 tokens，输出 256 tokens
-
-| 引擎 | 量化 | 并发数 | 总吞吐量 (tok/s) | 首 token 延迟 | 备注 |
-|------|------|--------|------------------|---------------|------|
-| vLLM | FP8 | 16 | 4,200 | 120ms | PagedAttention 最优 |
-| vLLM | AWQ INT4 | 16 | 3,800 | 140ms | Marlin 内核 |
-| vLLM | GPTQ INT4 | 16 | 3,600 | 150ms | ExLlamaV2 内核 |
-| TensorRT-LLM | FP8 | 16 | 4,500 | 100ms | 编译优化最佳 |
-| TensorRT-LLM | INT8 | 16 | 3,400 | 160ms | Jetson 同款方案 |
-| TGI | AWQ INT4 | 16 | 2,800 | 200ms | 功能丰富，吞吐略低 |
-| Ollama | GGUF Q4_K_M | 1 | 45 | 800ms | 单用户交互 |
-| llama.cpp | GGUF Q4_K_M | 1 | 42 | 850ms | 跨平台兼容 |
-
-### 6.3 边缘设备性能矩阵
-
-| 设备 | 模型 | 量化 | Prefill (128t) | Decode (256t) | 总时间 | 功耗 |
-|------|------|------|----------------|---------------|--------|------|
-| Jetson AGX Orin 64GB | Llama 3.2 3B | INT4-AWQ | 0.8s | 2.7s | 3.5s | 45W |
-| Jetson AGX Orin 32GB | Qwen2.5 3B | INT4-AWQ | 0.9s | 2.9s | 3.8s | 42W |
-| Jetson Orin Nano 8GB | Qwen2.5 1.5B | INT4-AWQ | 0.6s | 1.8s | 2.4s | 18W |
-| Jetson Orin Nano 8GB | Llama 3.2 3B | Q3_K_M | 1.5s | 12.8s | 14.3s | 20W |
-| RTX 4090 (桌面) | Llama 3.1 8B | FP8 | 0.2s | 1.1s | 1.3s | 320W |
-| RTX 4090 (桌面) | Llama 3.1 70B | AWQ INT4 | 2.5s | 18.0s | 20.5s | 380W |
-| MacBook Pro M4 Max | Qwen2.5 3B | GGUF Q4_K_M | 0.5s | 2.2s | 2.7s | 25W |
-| iPhone 16 Pro | Gemma 2 2B | INT4 (CoreML) | 0.8s | 8.5s | 9.3s | 5W |
-
----
+AWQ 与 SmoothQuant 的系统实验支持分阶段分析；它们没有支持“INT4 在任何负载必快两倍”或“所有量化方法质量损失小于 2%”的结论。
 
 ## 7. 部署实践与排障
 
-### 7.1 常见 OOM (Out of Memory) 处理
+发生 OOM 时先区分权重、KV cache、激活与临时工作区；降低权重位宽未必解决长上下文缓存增长。应记录加载阶段与生成阶段的峰值，并按实际 engine 的缓存公式检查。
 
-| 现象 | 原因 | 解决方案 |
-|------|------|----------|
-| 模型加载时 OOM | 显存不足容纳 FP16 权重 | 切换 AWQ/GPTQ INT4，显存降低 75% |
-| 长上下文 OOM | KV Cache 随序列长度线性增长 | 降低 `--max-model-len`，启用 KV Cache 量化 |
-| 高并发 OOM | 多请求 KV Cache 累积 | 减少 `--max-num-seqs`，启用 Prefix Caching |
-| 量化加载失败 | 量化格式与引擎不匹配 | 检查 `--quantization` 参数，确认格式支持 |
+速度变慢时先检查是否命中预期量化 kernel、是否回退到解包后浮点算子，再分开测 prefill 与 decode。权重压缩带来的读取收益可能被反量化、布局转换或低效矩阵乘抵消。
 
-**vLLM OOM 调参示例**
+质量退化时先固定提示模板和生成配置，再比较 RTN、算法量化和浮点参考；需要把校准域与业务域差异纳入解释。对于工具调用、长文本或安全边界，通用基准变化较小也不能代替业务失败率评估。
 
-```bash
-# 原始命令 (OOM)
-vllm serve meta-llama/Llama-3.1-70B --tensor-parallel-size 2
-
-# 优化后：INT4 量化 + 限制最大长度
-vllm serve meta-llama/Llama-3.1-70B-AWQ-INT4 \
-  --tensor-parallel-size 2 \
-  --max-model-len 8192 \
-  --quantization awq \
-  --gpu-memory-utilization 0.92
-```
-
-### 7.2 FP8 部署注意事项
-
-| 问题 | 说明 | 解决 |
-|------|------|------|
-| A100 不支持 FP8 | A100 无 FP8 Tensor Cores | 回退 INT8/FP16，或更换 H100/RTX 4090 |
-| FP8 校准失败 | 部分模型异常值分布不适合 E4M3 | 尝试 E5M2，或改用 INT8 |
-| 精度不达标 | 数学/代码任务对 FP8 敏感 | 关键层保留 FP16，混合精度 |
-
-### 7.3 Qwen3.6 已知问题
-
-| 问题 | 现象 | 解决 |
-|------|------|------|
-| CUDA 13.2 bug | 推理结果异常/崩溃 | 回退到 CUDA 12.x |
-| Ollama 不支持 | 拉取 Qwen3.6 GGUF 失败 | 因 mmproj vision 文件格式不兼容，等待 Ollama 更新或手动转换 |
-
-### 7.4 Ollama 多 GPU 配置
-
-```bash
-# 启用多 GPU 调度 (均匀分布层)
-export OLLAMA_SCHED_SPREAD=1
-ollama run llama3.1:70b
-
-# 限制单模型显存 (避免独占)
-export OLLAMA_MAX_LOADED_MODELS=2
-export OLLAMA_NUM_PARALLEL=4
-```
-
-### 7.5 量化模型选择检查清单
-
-- [ ] 确认目标硬件支持的量化格式 (FP8 需 Hopper/Ada)
-- [ ] 确认推理引擎的量化支持矩阵 (vLLM/Ollama/TensorRT-LLM)
-- [ ] 验证量化模型在关键任务上的质量 (MMLU、业务测试集)
-- [ ] 测试长上下文下的 KV Cache 显存占用
-- [ ] 评估并发场景下的吞吐量与延迟
-- [ ] 准备降级方案 (FP16/INT8) 应对精度不达标
-
----
+部署方案应保留模型 revision、量化配置、校准记录、运行时版本与可重跑测试输入。未经验证的环境变量和 CLI 参数不应作为复制即用的操作指南。
 
 ## 8. 挑战与未来方向
 
-### 8.1 当前挑战
+### 8.1 证据能支持什么
 
-| 挑战 | 描述 | 影响 |
-|------|------|------|
-| 量化生态碎片化 | AWQ/GPTQ/GGUF/FP8 并存，格式互不兼容 | 增加部署复杂度，需维护多套模型 |
-| 长上下文 KV Cache | 128K+ 上下文下 KV Cache 显存爆炸 | 限制长文档处理，需 W4A4KV4 等方案 |
-| 硬件绑定 | FP8 需 Hopper，Marlin 需 SM_80+ | 旧硬件无法享受新量化技术 |
-| 质量-速度权衡 | 极限量化 (INT2/Q2_K) 质量损失大 | 无法用于生产，仅限实验 |
-| 多模态量化 | Vision 模型 (mmproj) 量化支持不足 | Ollama 不支持部分 Qwen3.6 GGUF |
-| 动态形状 | 变长输入导致量化校准困难 | 影响 INT8/FP8 部署稳定性 |
+原论文可以解释量化误差和系统收益为何产生，并提供特定设置的经验结果。它不能保证新模型、新设备或新 kernel 上的相同收益。
 
-### 8.2 2026 年趋势
+目前可信的研究问题包括：校准分布变化如何影响极低位宽、权重与 KV 量化如何共同影响长上下文，以及吞吐提升是否在目标延迟约束下成立。回答这些问题需要受控实验，而不是更长的算法名单。
 
-| 趋势 | 描述 | 影响 |
-|------|------|------|
-| RAG 架构普及 | 67% 企业 LLM 应用使用某种 RAG | 降低对单模型参数量的需求，3B-7B 量化模型 + RAG 成为主流 |
-| 推理预算为核心 | 企业 AI 支出从训练转向推理 | 量化技术 ROI 显著提升，INT4 部署成为默认 |
-| 端侧 4-bit 成熟 | 4-bit 损失 < 2%，可接受 | 手机/PC 本地运行 7B 模型成为常态 |
-| 手机 30fps 运行 | 旗舰手机 NPU 加速 2B/7B 量化模型 | 端侧 AI 助手取代云端 API |
-| 混合精度普及 | PrismaQuant 4.75 bits 引领 | 非均匀混合精度成为新方向 |
-| 全链路量化 | FlatQuant W4A4KV4 | KV Cache 量化释放长上下文潜力 |
-| 编译器优化 | TensorRT-LLM、MLIR 量化编译 | 量化 + 图优化联合提升性能 |
+### 8.2 证据范围与未结项
 
-### 8.3 未来技术方向
+本报告已核对 AWQ v5、GPTQ v2、SmoothQuant v5 的方法和相关实验段落，以及 TensorRT 官方兼容性说明；没有通读并复现所有量化方法，也没有为每个推理引擎建立固定版本的完整源码覆盖。
 
-1. **1-bit 量化探索**：BitNet b1.58 等方案验证 1-bit 权重可行性，若成熟将带来 16 倍压缩
-2. **量化感知训练 (QAT)**：在训练阶段模拟低精度，推理时直接 INT4 无损失
-3. **硬件-算法协同设计**：下一代 NPU 原生支持 4-bit/2-bit 矩阵乘，消除反量化开销
-4. **自适应量化**：根据输入动态选择精度，简单查询用 INT4，复杂推理用 FP8
-5. **统一量化格式**：行业推动单一标准 (如 GGUF 扩展或新格式)，结束生态碎片化
+GGUF 具体张量类型、vLLM/Ollama 的当前支持组合、Jetson/手机的功耗与吞吐，仍需按目标设备和固定版本补证。这里保留待验证问题，不给未经测试的产品排行榜。
 
----
+选文偏向可公开获取原文的经典 PTQ 方法，不能代表全部 QAT、极低位宽或专用加速器研究；作者自报实验与独立复现必须区分。
 
 ## 9. 参考链接
 
-### 9.1 量化技术论文与项目
-
-| 资源 | 链接 | 说明 |
-|------|------|------|
-| AWQ 论文 | https://arxiv.org/abs/2306.00978 | Activation-aware Weight Quantization |
-| GPTQ 论文 | https://arxiv.org/abs/2210.17323 | Optimal Brain Surgeon for LLM |
-| SmoothQuant | https://arxiv.org/abs/2211.10438 | W8A8 权重-激活联合量化 |
-| PrismaQuant | https://neuralmagic.com/prismaquant | Neural Magic 混合精度方案 |
-| FlatQuant | https://github.com/sunnyxiaohu/FlatQuant | 全链路量化 |
-| AutoAWQ | https://github.com/casper-hansen/AutoAWQ | AWQ 社区实现 |
-| AutoGPTQ | https://github.com/PanQiWei/AutoGPTQ | GPTQ 社区实现 |
-| bitsandbytes | https://github.com/bitsandbytes-foundation/bitsandbytes | HuggingFace 量化库 |
-| AQLM | https://github.com/Vahe1994/AQLM | Additive Quantization |
-| HQQ | https://github.com/mobiusml/hqq | Half-Quadratic Quantization |
-| QQQ | https://github.com/HandH1998/QQQ | 异常值感知 INT4 |
-
-### 9.2 推理引擎与工具
-
-| 资源 | 链接 | 说明 |
-|------|------|------|
-| vLLM | https://github.com/vllm-project/vllm | 生产级推理引擎 |
-| Ollama | https://github.com/ollama/ollama | 端侧一键部署 |
-| llama.cpp | https://github.com/ggerganov/llama.cpp | 跨平台轻量推理 |
-| TensorRT-LLM | https://github.com/NVIDIA/TensorRT-LLM | NVIDIA 官方 SDK |
-| TGI | https://github.com/huggingface/text-generation-inference | HuggingFace 推理服务 |
-| ONNX Runtime | https://onnxruntime.ai | 跨平台标准化部署 |
-| Marlin Kernels | https://github.com/IST-DASLab/marlin | GPU 量化 GEMM 优化 |
-
-### 9.3 边缘硬件与部署
-
-| 资源 | 链接 | 说明 |
-|------|------|------|
-| NVIDIA Jetson | https://developer.nvidia.com/embedded/jetson | 边缘 AI 平台 |
-| JetPack SDK | https://developer.nvidia.com/embedded/jetpack | Jetson 软件栈 |
-| Ollama Jetson 指南 | https://github.com/ollama/ollama/blob/main/docs/gpu.md | GPU 部署文档 |
-| vLLM 量化文档 | https://docs.vllm.ai/en/latest/quantization/ | 官方量化支持矩阵 |
-
-### 9.4 模型仓库与量化权重
-
-| 资源 | 链接 | 说明 |
-|------|------|------|
-| HuggingFace Hub | https://huggingface.co/models | 主流模型 AWQ/GPTQ 权重 |
-| Ollama Library | https://ollama.com/library | 官方模型库，GGUF 格式 |
-| TheBloke (GGUF) | https://huggingface.co/TheBloke | 社区 GGUF 转换 (历史) |
-| bartowski (GGUF) | https://huggingface.co/bartowski | 社区 GGUF 转换 (活跃) |
-| Unsloth | https://huggingface.co/unsloth | 量化模型 + 微调工具 |
-
-### 9.5 行业报告与基准
-
-| 资源 | 链接 | 说明 |
-|------|------|------|
-| MMLU Benchmark | https://github.com/sjmoran/MMLU | 多任务语言理解 |
-| HumanEval | https://github.com/openai/human-eval | 代码生成评估 |
-| GSM8K | https://github.com/openai/grade-school-math | 数学推理评估 |
-| Neural Magic Blog | https://neuralmagic.com/blog/ | 稀疏化与量化研究 |
-| LLM Efficiency Challenge | https://llm-efficiency-challenge.github.io | 推理效率竞赛 |
-
----
-
-> 本报告基于 2026 年 6 月公开技术资料整理，量化技术迭代迅速，建议部署前验证最新版本支持矩阵。
-
----
-
-*报告完成日期：2026年6月6日*
+| 来源 | 使用版本 / 定位 | 支撑范围 |
+|---|---|---|
+| [AWQ](https://arxiv.org/html/2306.00978v5) | v5，2024-07-18；§3、Table 1–3、§4 Figure 3 | 激活感知缩放、消融、weight-only 系统条件 |
+| [GPTQ](https://arxiv.org/html/2210.17323v2) | v2；§3–§6、Algorithm 1 | 二阶补偿、校准、实验与限制 |
+| [SmoothQuant](https://arxiv.org/html/2211.10438v5) | v5；§4、§5.3–§5.5 | W8A8、迁移强度、阶段化性能 |
+| [GGUF 规范](https://github.com/ggml-org/ggml/blob/master/docs/gguf.md) | 动态规范入口，类型未逐项核验 | 容器与算法的边界、后续核验入口 |
+| [TensorRT Engine Compatibility](https://docs.nvidia.com/deeplearning/tensorrt/latest/inference-library/engine-compatibility.html) | 访问 2026-10-22，动态官方文档 | engine 的平台、版本和硬件兼容条件 |

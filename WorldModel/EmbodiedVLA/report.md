@@ -9,6 +9,8 @@
 
 ---
 
+> **补充核验（2026-10-22）**：已读取缓存原文，抽核八篇分册的关键数字；OpenVLA 的 16.5 改为成功率百分点差，Diffusion Policy 的 46.9% 明确为逐任务相对指标增益平均，DROID 标定记录与物理场景计数分开。此范围不包含训练/评测代码复现，也不代表所有数字已逐项通过。
+
 ## 深度阅读导航
 
 ### 精读分册（`papers/`，8 篇，均 `[精读原文]`）
@@ -157,7 +159,7 @@
 | RDT-1B 用 DDPM 训练 + DPM-Solver 多步采样 | `thu-ml/RoboticsDiffusionTransformer@cd79363a1387e8f81c7724d070ef7e45fd23150f:models/rdt_runner.py:59-73`（`DDPMScheduler` / `DPMSolverMultistepScheduler` / `num_inference_timesteps`）、`:119-163`（`conditional_sample` 迭代） |
 | LeRobot 的 DiffusionPolicy 用 1D UNet + DDPM/DDIM 调度器 | `huggingface/lerobot@297774fca4e3ad0aa34e7425fbf937111637e77b:src/lerobot/policies/diffusion/modeling_diffusion.py:56-63`、`:201-244`（`DiffusionModel`、`self.unet = DiffusionConditionalUnet1d(...)`、`_make_noise_scheduler`） |
 
-**研究推断** `[推断]`：token 路线的推理延迟随"token 数"（∝ 动作维 × 频率 ÷ 压缩率）增长，故 **FAST 一类压缩 tokenizer 是 token 路线能否用于高频灵巧任务的先决条件**；flow matching 与 diffusion head 的取舍主要在**步数与稳定性**（π0 代码默认 10 步 vs Diffusion Policy 典型 100 步训练 / 多步采样），此推断需以论文消融表核对。
+**研究推断** `[推断]`：token 路线的推理延迟随"token 数"（∝ 动作维 × 频率 ÷ 压缩率）增长，故 **FAST 一类压缩 tokenizer 可以缓解特定自回归 token 配方的高频瓶颈**；flow matching 与 diffusion head 的取舍主要在**步数与稳定性**（π0 代码默认 10 步 vs Diffusion Policy 典型 100 步训练 / 多步采样），此推断需以论文消融表核对。
 
 ### 2.4 路线分界的可判定表述
 

@@ -6,6 +6,21 @@
 > **分析对象**：`sgl-project/sglang` @ `2a08e261ecd4cdfb04ec354f9005f18b88108b7d`
 > **主文档**：[report.md](report.md) ｜ [speculative-decoding-path.md](speculative-decoding-path.md) ｜ [scheduler-and-prefix-cache.md](scheduler-and-prefix-cache.md)
 
+## 0. 2026-10-22 语义复核（优先于下方历史机械审计）
+
+本轮重取同一固定SHA源码并运行skill扫描器，回到入口、交接与输出检查强结论。下方2026-10-16的零告警、锚点次数与表格是历史记录，**不是改后当前计数或语义通过证明**；本轮没有为了清零去给标题堆路径。
+
+| 复核问题 | 结论与直接证据 |
+|---|---|
+| 目标-only残差 | `sampling.cuh:81,93,104-123`在topk=1和阈值均为1时排除已拒候选；全零draft_probs是工作缓冲，不能解释成q=0 |
+| 默认与遗留实现 | `registry.py:146,191`是默认Unified；遗留RadixCache的叶堆不能代指默认component LRU |
+| touch_prefix | `radix_cache.py:419-426`走同一helper；`unified_radix_cache.py:609-615`也走TreeCore并应用actions，二者都不保证无副作用 |
+| root计数 | `radix_cache.py:345-351`根value为空且protected_size_初始化0，不是根永远占protected_size_ |
+| 未覆盖 | EAGLE拒绝分支、Rust/Python行为对拍、阈值修改和多分支树的完整分布证明未做；不再宣称跨仓库完整同构 |
+
+
+来源、覆盖与版本见 [sources/MANIFEST.md](sources/MANIFEST.md)。机器检查只用于找线索，当前结果另记本地审查账；本页保留历史锚点表供定位，不将其“命中”符号等同于结论成立。
+
 ---
 
 ## 1. 方法学执行记录
@@ -129,7 +144,7 @@
 | SGLang 运行 / 性能 | ❌ 完全未涉及 |
 | SGLang issue #10308 是否被修复 | ⚠️ 未确证；只主张"功能对应路径存在" |
 | EAGLE @ `cb7e0841…` | ⚠️ 转引本仓库既有专题 §5.1 ①，未重新 clone |
-| 「EAGLE 与 SGLang 默认路径同构」 | ✅ topk=1 上成立（由代码事实推出）；❌ topk>1 上未论证 |
+| 「EAGLE 与 SGLang 默认路径同构」 | 仅核实SGLang条件化单步残差；EAGLE拒绝路径未复核，不能判定完整等价 |
 | Rust TreeCore 与 Python TreeCore 行为等价性 | ❌ 未做对拍 |
 | 是否向仓库提交了任何源码 | ✅ **没有**。clone 在 `/tmp/sglang-clone`，报告内只有 ≤15 行的短引用（本报告实际最长引用为 `sampling.cuh` 与 `reject_sampling.py` 各 2–4 行） |
 

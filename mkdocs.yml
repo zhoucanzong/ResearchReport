@@ -62,7 +62,9 @@ theme:
 plugins:
   - search:
       lang: en
-      # 中文搜索：把每个 CJK 字切成独立 token（零宽断言），查询「注意力」= 注+意+力 全命中
+      # 型号与项目名保持原词，避免英文词干化把 DeepInfer 等标识符截短。
+      pipeline: []
+      # 中文搜索：把每个 CJK 字切成独立 token（零宽断言），避免整段中文无法切分；匹配与排序仍由搜索实现决定
       separator: '[\s\-\.,:;!?()\[\]{}/"''«»“”‘’、。，；：！？（）【】《》〈〉]+|(?=[一-鿿])'
 
 markdown_extensions:
@@ -253,13 +255,20 @@ nav:
         - "systems-throughput-latency": "Infra/SpeculativeDecoding/topics/systems-throughput-latency.md"
         - "verification-acceptance": "Infra/SpeculativeDecoding/topics/verification-acceptance.md"
     - "TrainingInfra": "Infra/TrainingInfra/report.md"
-  - "🔧 OpenSource · 5":
+  - "🔧 OpenSource · 6":
     - "OpenSource/README.md"
+    - "DeepInfer":
+        - "总报告": "OpenSource/DeepInfer/report.md"
+        - "claim-audit": "OpenSource/DeepInfer/claim-audit.md"
+        - "runtime-and-lifetimes": "OpenSource/DeepInfer/runtime-and-lifetimes.md"
+        - "MANIFEST": "OpenSource/DeepInfer/sources/MANIFEST.md"
+        - "speculation-cache-and-so": "OpenSource/DeepInfer/speculation-cache-and-so.md"
     - "DeepSeekHarness":
         - "总报告": "OpenSource/DeepSeekHarness/report.md"
         - "compaction-and-bundles": "OpenSource/DeepSeekHarness/compaction-and-bundles.md"
         - "gateway-projection": "OpenSource/DeepSeekHarness/gateway-projection.md"
         - "ptc": "OpenSource/DeepSeekHarness/ptc.md"
+        - "MANIFEST": "OpenSource/DeepSeekHarness/sources/MANIFEST.md"
     - "nemotron":
         - "总报告": "OpenSource/nemotron/report.md"
         - "knowledge-graph": "OpenSource/nemotron/knowledge-graph.md"
@@ -268,19 +277,25 @@ nav:
         - "nemotron-tri-mode-fulltext": "OpenSource/nemotron/raw-extracts/nemotron-tri-mode-fulltext.md"
         - "pdf-fu_等__nemotronlabsdiffusion_a_trimode_language_model_unifying_autoregressive_dif": "OpenSource/nemotron/raw-extracts/pdf-fu_等__nemotronlabsdiffusion_a_trimode_language_model_unifying_autoregressive_dif.md"
         - "sources-index": "OpenSource/nemotron/sources-index.md"
+        - "MANIFEST": "OpenSource/nemotron/sources/MANIFEST.md"
     - "sglang":
         - "总报告": "OpenSource/sglang/report.md"
         - "claim-audit": "OpenSource/sglang/claim-audit.md"
         - "scheduler-and-prefix-cache": "OpenSource/sglang/scheduler-and-prefix-cache.md"
+        - "MANIFEST": "OpenSource/sglang/sources/MANIFEST.md"
         - "speculative-decoding-path": "OpenSource/sglang/speculative-decoding-path.md"
-    - "this-that-model": "OpenSource/this-that-model/report.md"
+    - "this-that-model":
+        - "总报告": "OpenSource/this-that-model/report.md"
+        - "MANIFEST": "OpenSource/this-that-model/sources/MANIFEST.md"
     - "vllm":
         - "总报告": "OpenSource/vllm/report.md"
         - "claim-audit": "OpenSource/vllm/claim-audit.md"
         - "kv-cache-and-prefix-reuse": "OpenSource/vllm/kv-cache-and-prefix-reuse.md"
         - "scheduling-and-spec-decode": "OpenSource/vllm/scheduling-and-spec-decode.md"
+        - "MANIFEST": "OpenSource/vllm/sources/MANIFEST.md"
     - "mini-swe-agent":
         - "mini-swe-agent-deep-report": "OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md"
+        - "MANIFEST": "OpenSource/mini-swe-agent/sources/MANIFEST.md"
   - "📇 索引":
       - "完整索引": "INDEX.md"
       - "按条目平铺": "index/by-report.md"
@@ -293,6 +308,7 @@ nav:
   - "📖 文档":
       - "DSH Harness 反馈清单（2026-10-18，来自一次真实事故）": "docs/harness-feedback.md"
       - "🛠 维护指南 · Maintenance": "docs/maintenance.md"
+      - "阅读与证据说明": "docs/research-method.md"
       - "📊 统计明细 · Statistics": "docs/statistics.md"
       - "Team · 技术研究": "docs/team.md"
       - "🔍 校验记录 · Verification Log": "docs/verification.md"

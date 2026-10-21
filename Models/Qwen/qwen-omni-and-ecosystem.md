@@ -413,16 +413,16 @@ QwQ是Qwen系列的**推理专用模型**，通过大规模强化学习（RL）�
 2024年
 ├── 03月  CodeQwen1.5
 ├── 06月  Qwen2 系列（0.5B~72B）
-├── 06月  Qwen2-VL
 ├── 07月  Qwen2-Audio
 ├── 08月  Qwen2-Math
+├── 08-29 Qwen2-VL（官方发布日，2026-10-22核对）
 ├── 09月  Qwen2.5 系列（0.5B~72B）
 ├── 09月  Qwen2.5-Coder（0.5B~32B）
 ├── 09月  Qwen2.5-Math（1.5B~72B）
-├── 10月  Qwen2.5-VL
 ├── 11月  QwQ-32B-Preview（首个推理模型）
 
 2025年
+├── 01-26 Qwen2.5-VL（官方发布日，非论文提交日）
 ├── 03月  QwQ-32B（正式版推理模型）
 ├── 03月  Qwen2.5-Omni（首个全模态模型）
 ├── 05月  Qwen3 LLM 系列
@@ -561,3 +561,5 @@ Qwen3.5-Omni是Qwen-Omni系列的最新版本，相比Qwen3-Omni实现三大新�
 ---
 
 *报告完*
+
+> 2026-10-22局部日期修订来源：[Qwen2-VL公告](https://qwenlm.github.io/blog/qwen2-vl/) 与 [Qwen2.5-VL公告](https://qwenlm.github.io/blog/qwen2.5-vl/)。本轮只核对本分册时间线这两项，不表示音频/Omni主体已经逐事实复核。

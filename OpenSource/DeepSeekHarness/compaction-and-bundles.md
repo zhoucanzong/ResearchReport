@@ -1,5 +1,7 @@
 # DeepSeek Harness 深读：compaction 后端与 base 插件清单（只读）
 
+> **2026-10-22 源码复核**：当前无 Git 身份的快照、文件指纹及已核范围见 [sources/MANIFEST.md](sources/MANIFEST.md)；版本字符串不等于 commit。
+
 > **版本依据**：`package.json:3` 的 `"version": "0.2.1-rc.2"`。快照 `/tmp/dsh-src` **没有 git 元数据**（无 `.git`），所以本文不引 commit SHA，所有引用写成 `packages/...#行`（行号对应上述快照）。
 > **纪律**：源码只读（不改 `/tmp/dsh-src`、不动正在运行的 App）；行为结论一律落到代码行，"推断"单独标注。
 > **范围**：任务 1 = `packages/compaction/` 下 5 个目录（`compaction`、`compaction-basic`、`compaction-image-offload`、`compaction-tool-result-pruner`、`command-compact`）；任务 2 = `packages/bundle/base/cordis.patch.yml`（529 行）。
@@ -74,7 +76,7 @@
 
 1. 后端提交替换时，用 `surfaceOp: { op: 'replace', startSeq, endSeq }`，并把 `[startEvent.seq, summaryEvent.seq, ...shadowedSeqs]` 全部写进 `sourceEventSeqs`（`packages/compaction/compaction-basic/src/region.ts:505-509`）；
 2. 会话在 append 时校验：`sourceEventSeqs` 必须**覆盖每一个被遮蔽表面节点**，否则抛 `surface replace: sourceEventSeqs must include every shadowed surface node`（`packages/core/session/src/surface.ts:330-364`，判定在 `:361-364`）；
-3. 表面折叠只 splice 模型可见节点列表 `state.nodes`（`packages/core/session/src/surface.ts:563-585`，替换分支在 `:570`），而日志本身只是 `this.log.push(event)`（`packages/core/session/src/index.ts:886`）——**没有任何删除日志的路径**；
+3. 表面折叠只 splice 模型可见节点列表 `state.nodes`（`packages/core/session/src/surface.ts:563-585`，替换分支在 `:570`），而日志本身只是 `this.log.push(event)`（`packages/core/session/src/index.ts:886`）——所追踪的替换路径没有删除旧日志；不能据此保证所有插件/持久化/外部维护行为；
 4. 同一校验还限制"改内容"的边界：`tool/result` 替换只允许改 `content`（`packages/core/session/src/surface.ts:455-485`，比对在 `:481-483`），所以被遮蔽事件的其余字段一定原样留在日志；
 5. 元数据侧再留一份清单：`compaction/summary` 自述 `shadowedRange`/`shadowedSeqs`/`shadowedTokenCount`（`packages/compaction/compaction/src/types.ts:34-53`），`compaction/start` 与 `compaction/end` 成对标注 `turn`（`:24`、`:72`），失败重放可从日志重建那次事务。
 
@@ -212,7 +214,7 @@ rows with config 33 / row keys ['config','disabled','id','name']
 
 **三种方法结论一致：96 条 = 87 必挂 + 1 默认关 + 8 条件挂载**，因此不需要"以原始行号清单为准"的仲裁；为可复核仍把全量清单贴在下一节。两处容易数错的地方：① `- id:` 在文件里全是 4 空格缩进（无嵌套行），所以 `grep -c -- '- id:'`=96 与 `grep -c '^    - id: '`=96 相同；② `!!js` 共 16 次但只有 8 次是 `disabled:` 行，另 8 次是 config 表达式（见下表）。
 
-### `config` 里出现 `!!js` 的 6 行（**不是**挂载条件）
+### `config` 里出现 `!!js` 的 8 处（分布于 6 个插件）（**不是**挂载条件）
 
 | 行号 | 插件 | 用在哪 | 表达式用途 |
 |---|---|---|---|
@@ -223,7 +225,7 @@ rows with config 33 / row keys ['config','disabled','id','name']
 | `:246` / `:247` | `sandbox-policy` | `config.mode` / `config.workspaceRoot` | `DSH_PERMISSION_MODE` 默认 `workspace-write` / `process.cwd()` |
 | `:262` | `approval` | `config.policy` | `danger-full-access` 时把审批设为 `never`，否则 `ask` |
 
-结论：若把"含 `!!js` 的行"当条件挂载，会得到 14 条，与真实的 8 条差 6——这 6 行插件的挂载状态是**必挂**。
+结论：若把"含 `!!js` 的行"当条件挂载，会得到 16 处，与 8 条 disabled 条件相差 8 处配置表达式——表中的 6 个插件的挂载状态是**必挂**。
 
 ### 全量行号清单（96 条，原始行号为准）
 

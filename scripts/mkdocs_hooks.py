@@ -19,6 +19,7 @@ from __future__ import annotations
 import os
 import re
 import urllib.parse
+import hashlib
 
 # GitHub slugger 保留：Unicode 字母/数字（\w 含 CJK）、下划线、连字符、空格；
 # 其余（标点、符号、箭头 →、全角括号等）一律删除。
@@ -43,6 +44,17 @@ def on_config(config):
     mdx_configs = config.setdefault("mdx_configs", {})
     toc = mdx_configs.setdefault("toc", {})
     toc["slugify"] = github_slugify
+    # CSS 与门户 HTML 同步更新；浏览器可缓存旧的无版本 URL，导致新布局失去样式。
+    # 只给自己的静态样式添加内容指纹，不改第三方或远程资源。
+    css_path = os.path.join(config["docs_dir"], "assets", "site.css")
+    if os.path.isfile(css_path):
+        with open(css_path, "rb") as source:
+            version = hashlib.sha256(source.read()).hexdigest()[:12]
+        config["extra_css"] = [
+            f"assets/site.css?v={version}"
+            if str(item).split("?", 1)[0] == "assets/site.css" else item
+            for item in config.get("extra_css", [])
+        ]
     return config
 
 

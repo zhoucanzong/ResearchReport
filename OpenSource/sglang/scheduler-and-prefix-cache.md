@@ -32,15 +32,15 @@ scheduler.get_new_batch_prefill (scheduler.py:3969)
 
 ### 2.1 默认：`UnifiedRadixCache`
 
-**代码事实**：`[registry.py:136](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/registry.py>)` 在常规情况下返回 `create_unified_radix_cache(ctx)`；该工厂在 `:191` 构造 `UnifiedRadixCache(params)`。 **[精读原文（SGLang 源码 @ 本报告 SHA）]**
+**代码事实**：`[registry.py:146](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/registry.py>)` 在常规情况下返回 `create_unified_radix_cache(ctx)`；该工厂在 `:191` 构造 `UnifiedRadixCache(params)`。 **[精读原文（SGLang 源码 @ 本报告 SHA）]**
 
 ### 2.2 ⚠️ 一个必须说明的冲突
 
 **本节结论在两次阅读间发生了反转，记录在此以免误导读者。**
 
 - **第一遍（按名字检索）**：我在 `python/sglang/srt/mem_cache/radix_cache.py` 读到完整的 `RadixCache` 实现（`TreeNode` / `match_prefix` / `_split_node` / `evict` / `inc_lock_ref`），并在 `test/registered/unit/mem_cache/` 下看到对应测试，初步判断它是主线实现。
-- **第二遍（追 registry 调用者）**：`[registry.py:136](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/registry.py>)` 在非 pure-SWA、非 FlexKV 场景下返回 **`UnifiedRadixCache`**；`RadixCache` 只被 `pure_swa_radix_cache.py:9`、`flexkv_radix_cache.py:44` 继承/导入，以及 `schedule_policy.py:71` 导入其 `RadixKey`/`TreeNode` 类型。
-- **最终结论**：**默认是 `UnifiedRadixCache`，`radix_cache.py` 是遗留实现**。`[registry.py:136](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/registry.py>)` + `[schedule_policy.py:71](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/managers/schedule_policy.py>)` **[精读原文（SGLang 源码 @ 本报告 SHA）]**
+- **第二遍（追 registry 调用者）**：`[registry.py:146](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/registry.py>)` 在非 pure-SWA、非 FlexKV 场景下返回 **`UnifiedRadixCache`**；`RadixCache` 只被 `pure_swa_radix_cache.py:9`、`flexkv_radix_cache.py:44` 继承/导入，以及 `schedule_policy.py:71` 导入其 `RadixKey`/`TreeNode` 类型。
+- **最终结论**：**默认是 `UnifiedRadixCache`，`radix_cache.py` 是遗留实现**。`[registry.py:146](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/registry.py>)` + `[schedule_policy.py:71](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/managers/schedule_policy.py>)` **[精读原文（SGLang 源码 @ 本报告 SHA）]**
 
 **为什么保留这段**：这正是"只靠名字和文件大小找主线"会踩的坑。仓库 README（`mem_cache/README.md`）确实写了"per-model variants (`radix_cache.py`, `pure_swa_radix_cache.py`) are **converging onto** the Unified Radix Cache"，但只有追到 registry 的 return 语句才能确认收敛已经发生。
 
@@ -66,19 +66,19 @@ scheduler.get_new_batch_prefill (scheduler.py:3969)
 
 ---
 
-## 3. 前缀匹配的运行时细节
+## 3. 遗留 RadixCache 的运行时细节（不能直接代指默认 UnifiedRadixCache）
 
 ### 3.1 `match_prefix` 会改树
 
 **代码事实**：`_match_prefix_helper` 在命中段**短于**子节点持有段时调用 `_split_node` 并 `break`（`[radix_cache.py:662](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/radix_cache.py>)`）。`_split_node` 把子节点切成两段：新节点继承前缀（`value = child.value[:split_len].clone()`），原节点保留后缀（`[radix_cache.py:677](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/radix_cache.py>)` 起）。 **[精读原文（SGLang 源码 @ 本报告 SHA）]**
 
-**研究推断**：把一个**只读语义**的操作（查最长前缀）做成**结构性写操作**，是为了让后续匹配的边界更精确（docstring 原文："this structural refinement improves subsequent match efficiency and does not duplicate data"）。代价是：`match_prefix` 不是幂等的无副作用查询，任何"只读探测"都必须用 `touch_prefix`（`[radix_cache.py:419](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/radix_cache.py>)`）而非 `match_prefix`，否则会意外分裂节点。
+**研究推断**：把一个**只读语义**的操作（查最长前缀）做成**结构性写操作**，是为了让后续匹配的边界更精确（docstring 原文："this structural refinement improves subsequent match efficiency and does not duplicate data"）。代价是：`match_prefix` 不是幂等的无副作用查询，`touch_prefix` 也不是只读保证：它在 `radix_cache.py:426` 调同一个 `_match_prefix_helper`，仍可分裂节点。该 API 跳过 MatchResult 等处理，不能把它当无副作用查询（`[radix_cache.py:419](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/radix_cache.py>)`）。
 
 ### 3.2 引用计数与可淘汰空间
 
 **代码事实**：`inc_lock_ref` 沿 parent 链上行，把 `lock_ref` 从 0 变 1 的节点从 `evictable_size_` 挪到 `protected_size_`（`[radix_cache.py:582](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/radix_cache.py>)`）；`dec_lock_ref` 做反向操作，并在 `node.parent is None` 时断言"该请求持有的是另一棵树"（`[radix_cache.py:611](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/radix_cache.py>)`）。 **[精读原文（SGLang 源码 @ 本报告 SHA）]**
 
-**研究推断**：`root_node.lock_ref = 1`（`[radix_cache.py:348](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/radix_cache.py>)`）让根永不被淘汰，同时使 `while node != self.root_node` 的上行循环天然终止。这是一个把"终止条件"编码进"保护条件"的紧凑写法，但也意味着**根节点会永远出现在 `protected_size_` 里**。
+**研究推断**：`root_node.lock_ref = 1`（`[radix_cache.py:348](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/radix_cache.py>)`）让根永不被淘汰，同时使 `while node != self.root_node` 的上行循环天然终止。这是一个把"终止条件"编码进"保护条件"的紧凑写法，但这**不表示根占用 protected_size_**：`radix_cache.py:345-351` 的 root value 为空，计数初始化为零，上行循环也跳过 root。
 
 ### 3.3 淘汰：叶优先
 
@@ -93,6 +93,10 @@ scheduler.get_new_batch_prefill (scheduler.py:3969)
 **研究推断**：这解释了为什么 KV 池的 free 与 radix 树的 insert 必须**成对**出现在同一函数里——它们共享同一个不变式："树上每个被复用的前缀，在池子里只被引用一份"。
 
 ---
+
+### 3.5 默认 UnifiedRadixCache 的对应路径
+
+`unified_radix_cache.py:585-604` 的 `match_prefix` 先试 session shortcut，再调 TreeCore 并应用 cache actions、component finalizer 与 linker；`touch_prefix:609-615` 仍调用 TreeCore 并应用 actions，同样不能保证只读。`insert:623-644` 用 begin/resume/end 的步进接口在 barrier 应用 actions，异常清理在 `finally`；`evict:647-659` 委托 component-aware 的 `_evict`。这与遗留实现的单份 `lock_ref`、叶堆不同，默认实现的淘汰维护不能只引用上面的 `radix_cache.py`。
 
 ## 4. continuous batching 与重叠调度
 

@@ -81,9 +81,9 @@
         "OpenSource/*"
       ],
       "representatives": [
+        "OpenSource/DeepInfer",
         "OpenSource/vllm",
-        "OpenSource/sglang",
-        "OpenSource/nemotron"
+        "OpenSource/sglang"
       ],
       "entries": [
         "OpenSource/DeepSeekHarness"
@@ -96,6 +96,6 @@
     "VisualGen/VideoGen",
     "WorldModel/WorldModels",
     "Infra/SpeculativeDecoding",
-    "OpenSource/vllm"
+    "OpenSource/DeepInfer"
   ]
 }

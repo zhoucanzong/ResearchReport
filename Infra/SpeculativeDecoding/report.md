@@ -2,9 +2,9 @@
 type: topic-research
 domain: Infra
 subject: SpeculativeDecoding
-date: 2026-10-17
+date: 2026-10-22
 evidence: 精读原文
-status: completed
+status: needs-review
 ---
 
 # 投机解码（Speculative Decoding）技术专题 · 深度调研
@@ -26,6 +26,8 @@ status: completed
 
 ---
 
+> **补充核验（2026-10-22）**：已重新核对有限分布拒绝采样、截断的接受率反例，以及固定 vLLM 源码中的 point-mass 恢复分支；其余论文实验和 legacy 素材尚未逐项重验，不能将此记录解释为整篇验收通过。
+
 ## 深度阅读导航
 
 本条目采用三层结构：本页 = 入口 + 结论 + 谱系 + 总表；`papers/` = 逐篇精读；`topics/` = 横切专题。
@@ -34,7 +36,7 @@ status: completed
 
 | # | 分册 | 系统 | 在谱系中的位置 | 行数 |
 | --: | :-- | :-- | :-- | --: |
-| 1 | [2401.15077-eagle-series.md](papers/2401.15077-eagle-series.md) | EAGLE / EAGLE-2 / EAGLE-3 | 自投机·特征级自回归（工业默认） | 244 |
+| 1 | [2401.15077-eagle-series.md](papers/2401.15077-eagle-series.md) | EAGLE / EAGLE-2 / EAGLE-3 | 自投机·特征级自回归（工程实现代表） | 244 |
 | 2 | [2401.10774-medusa.md](papers/2401.10774-medusa.md) | Medusa | 自投机·并行头（轻量插件） | 204 |
 | 3 | [2402.02057-lookahead.md](papers/2402.02057-lookahead.md) | Lookahead Decoding | 免训练·Jacobi 轨迹 | 202 |
 | 4 | [2305.09781-specinfer.md](papers/2305.09781-specinfer.md) | SpecInfer | 独立 draft·树验证系统 | 201 |
@@ -64,8 +66,8 @@ status: completed
 ## 0. 一页结论
 
 1. **投机解码的收益不是“算法属性”，而是“算法 × 负载 × 硬件”的联合属性**。EAGLE 在 SGLang batch=24 就跌破 1.0×（0.93×），EAGLE-3 在 batch=64 仍有 1.38×；同一族、不同版本，拐点不同。`[精读原文]`
-2. **“无损”至少要分三档**：严格分布等价（经典单链 / 静态树 / RheoSampling / Traversal Verification）、序列级等价、有界风险（ARC-Decode / Medusa typical acceptance）。混档比较不成立。`[精读原文]`
-3. **T>0 是动态树的真实边界**：EAGLE-2/3 的“动态树更优”只在 greedy 下成立；T>0 时按 `q` 建树会塌缩为 one-hot，直接“改成采样”还会破坏无损性。RheoSampling 用 proxy/真实概率双身份修复，但**默认 EAGLE 配置并未启用**。`[精读原文]`
+2. **“无损”须按保证与算法形式区分**：严格分布保持与贪心等价需要各自证明；逐 token / 序列级是验证形式，不能另当正确性等级；typical acceptance 的经验质量也不能直接升级为分布偏移有界。详见 [验证专题 §6](topics/verification-acceptance.md#6-无损需要区分保证与经验)。`[精读原文]`
+3. **T>0 的动态树必须分析候选选择条件**：不能从贪心 benchmark 推出所有采样配置的收益。对按 `q` 排序/剪枝的随机候选，需核对存活条件和实际提议分布；RheoSampling 给出一种特定构造。未核版本的默认配置不在此断言。`[精读原文]`
 4. **top-K 改变的是接受率，不是无偏性**：单链拒绝采样的 α* = Σ min(p,q) = 1 − TV；top-K 截断只要验证端用同一分布、残差用完整 p，输出仍严格等于 p。把“top-K 有偏”当结论是错的。`[精读原文]`
 5. **草稿来源的四族不是代际，而是并存选项**：独立 draft（SpecInfer）、自投机（EAGLE/Medusa）、免训练（Lookahead）、块/扩散（DFlash 一类）。选族先看“有没有 draft / 能不能训 / 输出是否模板化”。`[精读原文]`
 6. **高 batch 的结论要加第三维：序列长度**。短序列 + 大 batch 亏（SpecInfer/Medusa/vLLM 口径一致）；长序列 + 大 batch 可能赚（MagicDec：S≥4000 时加速随 batch 上升，最高 2.51×）。`[精读原文]`
@@ -95,7 +97,7 @@ status: completed
 | 类别 | 是否纳入 | 理由 |
 | :-- | :-- | :-- |
 | 经典 draft-then-verify（Leviathan/Chen） | ✅ | 范式源头 |
-| 自投机（Medusa / EAGLE / MTP / 层跳过） | ✅ | 当前工业默认 |
+| 自投机（Medusa / EAGLE / MTP / 层跳过） | ✅ | 当前工程实现代表 |
 | 免训练（Lookahead / PLD / REST / 字典） | ✅ | 独立一族，端侧/低资源重要 |
 | 树验证系统（SpecInfer / Sequoia） | ✅ | 验证侧的基础设施 |
 | 块/扩散草稿（DFlash / DSpark / BASTION） | ✅（谱系） | 2026 新方向；本轮未设分册，数字不入表 |
@@ -217,7 +219,7 @@ flowchart LR
 - 动态树按 `q` 排序建树；T>0 时接受取决于 `p/q` 比值，`q` 不再预测接受 → 树塌缩。
 - 直接“改成采样”会破坏无损性（存活依赖取值）。
 - RheoSampling：前 m 个确定性 + 第 m+1 个残差采样；采样 token 用 proxy 参与排序/剪枝、用真实 `q̃` 验证；OT 重分配残差。
-- 修复的代价：每步多一次采样 + OT 验证；**默认 EAGLE 未启用**，线上 T>0 仍需自行标定。
+- 修复的代价：每步多一次采样 + OT 验证；默认值必须按具体版本核对，线上 T>0 应同时核正确性和效率。
 
 ### 3.6 系统调度：从静态到自适应
 
@@ -339,7 +341,7 @@ flowchart LR
 
 ### 6.1 算法边界
 
-1. **T>0 动态树塌缩**（EAGLE-2/3；RheoSampling 修复但未默认启用）。
+1. **T>0 动态树塌缩**（EAGLE-2/3；RheoSampling 给出特定构造，是否启用需查具体配置）。
 2. **top-K 的接受率上限**：即使 q=p，纯 top-K 也到不了 100%（缺随机 token）。
 3. **草稿质量上限**：独立 draft 的容量差（100–1000×）；Medusa 头无前缀依赖；EAGLE-1/2 的特征约束限制数据 scaling。
 4. **有界风险不是无损**：Medusa typical acceptance、ARC-Decode、CDSL。
@@ -421,7 +423,7 @@ flowchart LR
 - 官方 **tree / EA 评估路径**把草稿概率按 **1.0** 处理：`eagle/model/utils.py:398` 为 `qx = 1.0`，`:399` 为 `acp = px / qx`；即接受概率退化为 `p(x)`，草稿分布被当作 one-hot。
 - 调用点：`eagle/model/ea_model.py:270`、`:452`；`eagle/evaluation/gen_ea_alpha_llama2chat.py:87`、`gen_ea_alpha_vicuna.py:93`（本轮按文件行号复核）。
 - **边界（不夸大）**：同仓库另有 HF 风格实现 `eagle/modeling_eagle.py`，其 `evaluate_posterior` 在 `:1427` 使用 `qx = cart_candidates_prob[batch, j, i]`，即**保留真实草稿概率**。因此“置 1”是**官方 tree/EA 评估路径**的事实，**不是仓库内所有路径**的共性。
-- **影响**：这为“T>0 下按 q 建树 + one-hot 验证导致接受率下降”提供了实现层证据；也说明“无损≠高效”——one-hot 提议仍可无损，但接受率低。
+- **影响**：这为“T>0 下按 q 建树 + one-hot 验证导致接受率下降”提供了实现层证据；也说明“无损≠高效”——one-hot 提议仍可无损，其接受率为 p(候选)，是否更低须按实际分布比较。
 
 **证据等级**：`[精读原文]`（代码级，仓库 @ commit + 文件:行）。
 
@@ -466,7 +468,7 @@ flowchart LR
 
 | 入选 | 理由（一句话） |
 | :-- | :-- |
-| EAGLE 系列 | 工业默认；三代演进把“特征级/动态树/TTT”这条主线讲全 |
+| EAGLE 系列 | 工程实现代表；三代演进把“特征级/动态树/TTT”这条主线讲全 |
 | Medusa | 并行头代表；typical acceptance 是“有界风险”的早期样本 |
 | Lookahead | 免训练代表；one-hot 草稿无损性的关键论据 |
 | SpecInfer | 树验证系统源头；多 SSM/树宽/batch 依赖 |

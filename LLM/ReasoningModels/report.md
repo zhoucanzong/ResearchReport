@@ -117,7 +117,7 @@ Long CoT 的涌现通常需要大规模 RL 训练，让模型学会"如何思考
 - **循环反思**：陷入无意义的反思循环，无法收敛到答案
 - **成本膨胀**：推理 token 数量远超实际需要，大幅增加 API 调用成本
 
-Overthinking 的本质是模型未能学会根据问题难度自适应地调整推理深度。研究表明，在某些基准测试中，过度思考可以使推理成本增加 5-10 倍，而准确率提升微乎其微。
+Overthinking 的本质是模型未能学会根据问题难度自适应地调整推理深度。是否过度应在固定题集上比较计算—准确率曲线；不能只凭链长判断推理无效。
 
 ### 3.4 过程监督 vs 结果监督
 
@@ -288,7 +288,7 @@ GRPO 由 DeepSeekMath 提出，是 DeepSeek-R1 的核心训练算法：
 - **相对优势**：用组内奖励的均值和标准差计算相对优势，替代绝对价值估计
 
 **优势**：
-- 训练内存需求降低约 50%
+- 去掉独立价值模型；内存变化依实现、精度与rollout预算，不给固定50%
 - 实现更简单，超参数更少
 - 适合长序列 RL 训练
 
@@ -412,13 +412,14 @@ Google DeepMind 的研究提出了以下最优分配策略：
 
 ### 6.3 实际应用中的 Scaling 策略
 
-| 策略 | 适用场景 | 成本 | 性能增益 |
-|------|---------|------|---------|
-| Long CoT | 数学、代码、逻辑推理 | 高（5-20x token） | 显著（+20-40%） |
-| Self-Consistency (n=5) | 多选、分类、简单推理 | 中（5x token） | 中等（+5-15%） |
-| Self-Consistency (n=40) | 竞赛级数学 | 很高（40x token） | 显著（+25-35%） |
-| Tree Search + PRM | 组合优化、游戏 | 极高 | 显著（+30-50%） |
-| Budget-Forcing | 通用场景 | 可控 | 中等（+10-20%） |
+| 策略 | 额外计算来源 | 应如何比较 |
+|---|---|---|
+| Long CoT | 更长解码 | 按实际生成token和正确率曲线，不承诺固定20–40%增益 |
+| Self-Consistency | 同题多次采样与聚合 | n=5/40只限定样本数；长度不同时费用并非精确5/40倍 |
+| Tree Search + verifier | 分支生成、验证与回溯 | 把验证器和全部候选都计入同一预算 |
+| Budget-Forcing | 终止/继续控制改变输出长度 | 固定模型和题集，给预算—准确率曲线 |
+
+原稿的5–50%性能增益区间没有对应任务、模型、指标单位和原始表格，撤下；不能由策略名推算效果。
 
 ---
 
@@ -428,9 +429,7 @@ Google DeepMind 的研究提出了以下最优分配策略：
 
 过度思考（Overthinking）是推理模型部署中的关键效率问题。研究表明：
 
-- **发生率**：在简单问题上，过度思考发生率可达 60-80%
-- **成本影响**：平均推理 token 数量增加 3-10 倍
-- **性能影响**：在简单问题上，过度思考几乎不带来准确率提升（<1%），但显著增加延迟
+“过度”需要先定义：可比较正确答案已经出现后的额外token、强制截断后的准确率变化或相同准确率所需预算。原稿发生率60–80%、token 3–10倍与<1%准确率增益未绑定具体实验，不保留为通用统计。
 
 #### 典型案例
 
@@ -505,8 +504,6 @@ Google DeepMind 的研究提出了以下最优分配策略：
 | **上下文长度** | 未公开 | 128K | 128K | 200K |
 | **多模态** | 支持 | 文本为主 | 支持 | 支持 |
 | **开源** | 否 | 是（MIT） | 部分开放 | 否 |
-| **AIME 2024** | ~95% | ~79% | ~80% | ~75% |
-| **MATH-500** | ~98% | ~97% | ~96% | ~94% |
 | **SWE-bench** | 领先 | 中等 | 中等 | 中等 |
 | **Codeforces** | 领先 | 良好 | 良好 | 良好 |
 | **API 可用性** | 是 | 是 | 是 | 是 |
@@ -521,8 +518,9 @@ Google DeepMind 的研究提出了以下最优分配策略：
 | **训练方法** | RL + SFT | RL | Budget-Forcing | 蒸馏 (SFT) | 短长轨迹联合 RL |
 | **开源** | 是 | 是 | 是 | 是 | 是 |
 | **目标** | 匹配 o1-preview | 匹配 o1-preview | 简单 Test-Time Scaling | 降低训练门槛 | 缓解过度思考 |
-| **AIME 2024** | ~50% | ~45% | ~40% | ~35% | ~45% |
 | **特色** | 高效训练 | 极致压缩 | 极简控制 | 无 RL 训练 | 自适应推理 |
+
+> 原稿两张表中的AIME/MATH近似分数缺少固定checkpoint、采样次数与题集协议，已撤下；其余产品/训练信息仍待逐项官方来源对账，不能据此生成性能排名。
 
 ### 8.3 训练方法对比
 
@@ -639,7 +637,7 @@ Google DeepMind 的研究提出了以下最优分配策略：
 7. DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning (DeepSeek-AI, 2025) - [arXiv:2501.12948](https://arxiv.org/abs/2501.12948)
 8. Kimi k1.5: Scaling Reinforcement Learning with LLMs (Moonshot AI, 2025) - [技术报告](https://moonshot-ai.github.io/)
 9. GRPO: Group Relative Policy Optimization (DeepSeek-AI, 2024) - [DeepSeekMath 论文](https://arxiv.org/abs/2402.03300)
-10. DAPO: Decoupled Clip and Dynamic Sampling Policy Optimization (ByteDance, 2025) - [arXiv](https://arxiv.org/)
+10. DAPO: Decoupled Clip and Dynamic Sampling Policy Optimization (ByteDance, 2025) - [DAPO原文](https://arxiv.org/html/2503.14476v1)
 11. s1: Simple Test-Time Scaling (Berkeley, 2025) - [arXiv:2501.19393](https://arxiv.org/abs/2501.19393)
 12. LIMO: Less is More for Reasoning (2025) - [arXiv](https://arxiv.org/)
 13. OpenThoughts: 1000+ Controlled Experiments (2025) - [项目页面](https://openthoughts.ai/)

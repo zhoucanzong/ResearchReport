@@ -23,13 +23,13 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) | 阿里巴巴通义万相（Wan）视频/图像生成模型系列研究报告 | — | — | — |
+| [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) | 阿里巴巴通义万相（Wan）视频生成模型研究报告 | — | — | — |
 
 ## Alignment (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) | 模型对齐（Alignment）与后训练（Post-Training）研究报告 | — | — | — |
+| [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) | 模型对齐与后训练：方法、目标与证据边界 | — | — | — |
 
 ## AudioGen (1)
 
@@ -66,6 +66,12 @@
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | Decision Models（System One / Typed Decision Model）技术专题调研 | — | — | — |
+
+## DeepInfer (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [OpenSource/DeepInfer/report.md](<../OpenSource/DeepInfer/report.md>) | DeepInfer：离线推理内核、异步调度与状态契约 | repo-research | 2026-10-22 | completed |
 
 ## DeepSeek (1)
 
@@ -179,7 +185,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Models/Midjourney/report.md](<../Models/Midjourney/report.md>) | Midjourney 图像生成模型系列研究报告 | — | — | — |
+| [Models/Midjourney/report.md](<../Models/Midjourney/report.md>) | Midjourney 模型与产品演进研究报告 | — | — | — |
 
 ## MiniMax (1)
 
@@ -215,7 +221,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 模型量化与边缘部署研究报告 | — | — | — |
+| [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 模型量化与边缘部署研究报告 | topic-research | 2026-10-22 | needs-review |
 
 ## Qwen (1)
 
@@ -239,13 +245,13 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Models/Runway/report.md](<../Models/Runway/report.md>) | Runway 视频生成与编辑模型系列研究报告 | — | — | — |
+| [Models/Runway/report.md](<../Models/Runway/report.md>) | Runway 视频生成与编辑模型研究报告 | — | — | — |
 
 ## SpeculativeDecoding (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-17 | completed |
+| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-22 | needs-review |
 
 ## StabilityAI (1)
 
@@ -257,7 +263,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 大模型训练基础设施与分布式训练研究报告 | — | — | — |
+| [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 大模型训练基础设施与分布式训练研究报告 | topic-research | 2026-10-22 | needs-review |
 
 ## VLM (1)
 
@@ -275,7 +281,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | WorldModels 技术专题调研 | topic-research | 2026-10-17 | completed |
+| [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | WorldModels 技术专题调研 | topic-research | 2026-10-22 | needs-review |
 
 ## nemotron (1)
 

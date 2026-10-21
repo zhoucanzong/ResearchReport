@@ -15,9 +15,9 @@
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
-| **Alibaba-Gen** | [阿里巴巴通义万相（Wan）视频/图像生成模型系列研究报告](<Alibaba-Gen/report.md>) | 803 行 |
-| **ByteDance-Gen** | [字节跳动生成模型系列研究报告](<ByteDance-Gen/report.md>) | 711 行 |
-| **Claude** | [Anthropic Claude 系列模型深度调研报告](<Claude/report.md>) | 611 行 |
+| **Alibaba-Gen** | [阿里巴巴通义万相（Wan）视频生成模型研究报告](<Alibaba-Gen/report.md>) | 95 行 |
+| **ByteDance-Gen** | [字节跳动生成模型系列研究报告](<ByteDance-Gen/report.md>) | 336 行 |
+| **Claude** | [Anthropic Claude 系列模型深度调研报告](<Claude/report.md>) | 580 行 |
 | **DeepSeek** | [DeepSeek 系列模型深度调研报告](<DeepSeek/report.md>) | 751 行 |
 | **Doubao-Seed** | [Doubao/Seed系列模型深度调研报告](<Doubao-Seed/report.md>) | 643 行 |
 | **GLM** | [GLM 系列模型深度调研报告](<GLM/report.md>) | 737 行 |
@@ -30,14 +30,14 @@
 | **Kling** | [快手可灵（Kling）视频生成模型系列研究报告](<Kling/report.md>) | 537 行 |
 | **LLaMA** | [Meta LLaMA 系列大模型完整研究报告](<LLaMA/report.md>) | 483 行 |
 | **MiMo** | [小米 MiMo 系列模型深度调研报告](<MiMo/report.md>) | 749 行 |
-| **Midjourney** | [Midjourney 图像生成模型系列研究报告](<Midjourney/report.md>) | 587 行 |
+| **Midjourney** | [Midjourney 模型与产品演进研究报告](<Midjourney/report.md>) | 85 行 |
 | **MiniMax** | [MiniMax 系列模型研究报告：以 Lightning Attention 重写 Transformer 的扩展曲线](<MiniMax/report.md>) | 517 行 |
 | **Mistral** | [Mistral AI 系列模型深度调研报告](<Mistral/report.md>) | 495 行 |
-| **Nemotron** | [NVIDIA Nemotron 系列研究脉络](<Nemotron/report.md>) | 465 行 |
-| **OpenAI-Gen** | [OpenAI 生成模型系列研究报告](<OpenAI-Gen/report.md>) | 859 行 |
-| **Qwen** | [Qwen系列模型深度调研报告](<Qwen/report.md>) | 1,111 行 |
-| **Runway** | [Runway 视频生成与编辑模型系列研究报告](<Runway/report.md>) | 732 行 |
-| **StabilityAI** | [Stability AI / Black Forest Labs 图像生成模型系列研究报告](<StabilityAI/report.md>) | 873 行 |
+| **Nemotron** | [NVIDIA Nemotron 系列研究脉络](<Nemotron/report.md>) | 231 行 |
+| **OpenAI-Gen** | [OpenAI 生成模型系列研究报告](<OpenAI-Gen/report.md>) | 385 行 |
+| **Qwen** | [Qwen系列模型深度调研报告](<Qwen/report.md>) | 1,113 行 |
+| **Runway** | [Runway 视频生成与编辑模型研究报告](<Runway/report.md>) | 94 行 |
+| **StabilityAI** | [Stability AI / Black Forest Labs 图像生成模型系列研究报告](<StabilityAI/report.md>) | 727 行 |
 
 ## 📎 子文档
 
@@ -52,7 +52,7 @@
 <details>
 <summary><b>Google-Gen</b>（1 份）</summary>
 
-* [papers/2604.20329-vision-banana.md](<Google-Gen/papers/2604.20329-vision-banana.md>) — 423 行 / 54,321 B
+* [papers/2604.20329-vision-banana.md](<Google-Gen/papers/2604.20329-vision-banana.md>) — 425 行 / 55,019 B
 
 </details>
 
@@ -74,9 +74,9 @@
 <details>
 <summary><b>Qwen</b>（3 份）</summary>
 
-* [qwen-omni-and-ecosystem.md](<Qwen/qwen-omni-and-ecosystem.md>) — 563 行 / 22,446 B
+* [qwen-omni-and-ecosystem.md](<Qwen/qwen-omni-and-ecosystem.md>) — 565 行 / 22,788 B
 * [qwen-text-models.md](<Qwen/qwen-text-models.md>) — 489 行 / 20,718 B
-* [qwen-vl-models.md](<Qwen/qwen-vl-models.md>) — 543 行 / 21,664 B
+* [qwen-vl-models.md](<Qwen/qwen-vl-models.md>) — 543 行 / 22,018 B
 
 </details>
 

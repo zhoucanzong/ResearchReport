@@ -46,7 +46,7 @@ RAG = Neural Retrieval + LLM Generation
 | **时效性（Freshness）** | 预训练数据存在截止日期，无法回答最新事件 | 实时检索最新文档，动态更新知识库 |
 | **私有数据（Private Data）** | 模型无法访问企业内部文档、个人笔记等 | 将私有数据构建为可检索的知识库 |
 
-根据 Anyscale 2026 年调查，**67% 的企业 LLM 应用**已经采用某种形式的 RAG 架构。RAG 已成为企业级 LLM 落地的默认选择。
+RAG适用于需要接入外部、可更新或可引用知识的场景；本报告未定位原稿所称Anyscale 2026调查的样本与原始结果，因此不据此给出企业采用比例。
 
 ### 1.3 RAG vs 长上下文（Long Context）
 
@@ -57,7 +57,7 @@ RAG = Neural Retrieval + LLM Generation
 | 语料规模 | > 2M tokens 时优势明显 | 适合 < 200K tokens 的完整文档 |
 | 时效性 | 可实时更新索引 | 依赖模型重新训练或微调 |
 | 来源归因 | 可精确追溯引用来源 | 难以区分训练数据与输入上下文 |
-| 成本 | 检索成本固定，与语料规模弱相关 | 推理成本随上下文长度指数增长（贵 8-82 倍） |
+| 成本 | 检索成本固定，与语料规模弱相关 | prefill与解码成本随长度、注意力实现、缓存和计费而变；不能笼统称指数增长 |
 | 隐私 | 数据不出域，本地索引 | 需将完整数据上传至模型服务商 |
 
 **结论**：长上下文与 RAG 并非替代关系，而是互补关系。对于超大规模语料、高时效性需求、严格来源归因的场景，RAG 仍是不可替代的方案。
@@ -109,7 +109,7 @@ Naive RAG 的局限性在实践中迅速暴露：检索召回率低、无关文�
 - **Query Rewrite**：利用 LLM 改写用户查询，消除歧义、扩展同义词、对齐文档语义。
 - **Context Compression**：压缩冗余检索结果，减少上下文窗口占用和成本。
 
-实验数据表明，Hybrid Search + Re-ranking 的组合可将召回率从 ~0.72 提升到 ~0.91，提升幅度达 15-30%。
+混合检索与重排分别处理召回覆盖和候选排序；收益需要在相同语料、查询集、k及重排预算下测量。原稿0.72→0.91没有可定位实验，撤下数值。
 
 #### RAG 2.0（2024）：结构化检索时代
 
@@ -119,7 +119,7 @@ Naive RAG 的局限性在实践中迅速暴露：检索召回率低、无关文�
 - **Corrective RAG（CRAG）**：引入自我校正机制，当检索结果置信度低时，自动触发补充检索或知识修正。
 - **ColPali**：消除 OCR 依赖，直接对文档图像进行视觉-语言检索，解决 PDF/扫描件的结构化理解问题。
 - **Modular RAG**：将检索、重排、生成、验证等环节模块化，支持灵活组合和动态路由。
-- **Anthropic Contextual Retrieval**：通过上下文增强的嵌入技术，将检索失败率降低 67%。
+- **Anthropic Contextual Retrieval**：官方自测中，contextual embeddings+contextual BM25+重排使top-20检索失败率从5.7%降至1.9%（相对约67%，不是只加embedding的效果）[官方实验](https://www.anthropic.com/research/contextual-retrieval)。
 
 #### RAG 3.0（2025）：Agentic 检索时代
 
@@ -127,7 +127,7 @@ Naive RAG 的局限性在实践中迅速暴露：检索召回率低、无关文�
 
 - **Search-R1 / ReSearch**：使用 PPO/GRPO 强化学习训练 LLM，使其学会联合推理和搜索，在需要时自主调用检索工具。
 - **OpenAI Deep Research**：端到端研究智能体，在 Humanity's Last Exam 上达到 **26.6%** 的准确率，展示了多步检索-推理-整合的强大能力。
-- **LazyGraphRAG**：通过延迟图遍历策略，将 GraphRAG 的成本降低至传统方案的 **0.1%**，同时保持竞争力。
+- **LazyGraphRAG**：省去预先LLM总结；官方自测的**索引成本**为full GraphRAG的0.1%，不是全流程或每次查询费用[官方实验](https://www.microsoft.com/en-us/research/blog/lazygraphrag-setting-a-new-standard-for-quality-and-cost/)。
 - **DeepResearcher**：开源复刻 Deep Research 能力，支持本地部署和自定义知识源。
 
 #### RAG 4.0（2026）：认知检索系统
@@ -185,9 +185,8 @@ Advanced RAG 在 Naive RAG 基础上增加了多个优化模块：
 
 **性能提升**：
 
-- Hybrid Search 相比纯 Dense Retrieval，召回率提升 15-30%。
-- Cross-Encoder Re-ranking 在检索 50 篇后取 top 5，可增加 5-15% 的端到端准确率。
-- Anthropic Contextual Retrieval 将检索失败率降低 67%。
+- 混合检索与重排没有可跨任务套用的固定提升区间，应分别测Recall@k、重排后覆盖率与最终答案质量。
+- [Anthropic官方自测](https://www.anthropic.com/research/contextual-retrieval)：Gemini Text 004为展示配置、跨code/fiction/arXiv/science领域汇总，先召回150再重排到20；contextual embedding+BM25+重排使1−recall@20从5.7%到1.9%，约67%的相对下降。仅contextual embeddings为5.7%→3.7%，不能合并归因。
 
 ### 3.3 Agentic RAG（智能体架构）
 
@@ -275,15 +274,7 @@ RRF_score(d) = Σ 1 / (k + rank_i(d))
 
 其中 `rank_i(d)` 是文档 d 在第 i 个检索列表中的排名，k 为常数（通常取 60）。
 
-**性能对比**：
-
-| 检索方式 | 召回率（Recall@10） | 相对提升 |
-|---------|-------------------|---------|
-| Dense Retrieval | ~0.72 | 基准 |
-| Sparse Retrieval (BM25) | ~0.68 | -5.6% |
-| Hybrid Search (RRF) | ~0.91 | +26.4% |
-
-**结论**：Hybrid Search 在绝大多数场景下优于单一检索方式，是 2026 年生产系统的默认配置。
+**比较方式**：使用相同查询、语料和top-k，对Dense、BM25和RRF分别报告Recall@k；再在相同候选预算下增加reranker。原稿0.72/0.68/0.91表没有可复核的数据集、模型与运行记录，不保留为实测结果。Hybrid能补互补召回，但也可能引入噪声或额外延迟，应与单路检索作受控比较。
 
 ### 4.4 Graph Retrieval（图检索）
 
@@ -294,15 +285,7 @@ RRF_score(d) = Σ 1 / (k + rank_i(d))
 - **关系推理**：利用实体间的关系路径进行推理。
 - **全局视图**：支持对整个知识库的宏观摘要和趋势分析。
 
-**性能数据（GraphRAG-Bench, ICLR 2026）**：
-
-| 指标 | Vanilla RAG | GraphRAG | 变化 |
-|------|------------|----------|------|
-| 事实查询准确率 | 基准 | -13.4% | 下降 |
-| 多跳推理准确率 | 基准 | +4.5% | 提升 |
-| 延迟 | 1x | 2.3x | 增加 |
-
-**结论**：GraphRAG 在简单事实查询上反而可能不如 Vanilla RAG（因引入噪声），但在复杂推理场景优势明显。需根据查询类型动态选择检索策略。
+**证据范围**：Microsoft原始GraphRAG工作的目标是query-focused全局总结；图结构的用途不等于所有多跳题都更准。原稿“事实−13.4%、多跳+4.5%、延迟2.3x”未能对应明确版本、任务和表格，撤下。应将实体查询、关系查询与全局总结分开测量。[原始论文](https://arxiv.org/abs/2404.16130)
 
 ### 4.5 检索技术综合对比表
 
@@ -466,10 +449,10 @@ GraphRAG 是 2024 年由 Microsoft 提出的结构化检索范式，代表了 RA
 
 | 变体 | 特点 | 性能数据 |
 |------|------|---------|
-| **Microsoft GraphRAG** | 官方实现，支持全局和局部查询 | 多跳推理提升 4.5%（GraphRAG-Bench） |
+| **Microsoft GraphRAG** | 官方实现，支持全局和局部查询 | 原始工作聚焦全局总结；不保留未对账的4.5% |
 | **LightRAG** | 图结构 + 向量表示双索引 | 法律数据集全面性胜率 83.6% vs NaiveRAG |
 | **StepChain GraphRAG (2025.10)** | 查询分解 + BFS 遍历 | MuSiQue/2WikiMultiHopQA/HotpotQA SOTA |
-| **LazyGraphRAG** | 延迟图遍历，按需触发 | 成本降至传统 GraphRAG 的 0.1% |
+| **LazyGraphRAG** | 延迟图遍历，按需触发 | 官方自测索引成本为full GraphRAG的0.1%；查询成本另算 |
 
 ### 6.4 GraphRAG 的适用与不适用
 
@@ -480,7 +463,7 @@ GraphRAG 是 2024 年由 Microsoft 提出的结构化检索范式，代表了 RA
 
 **不适用场景**：
 - 简单事实查询（单跳即可回答，GraphRAG 引入额外噪声）。
-- 延迟敏感场景（GraphRAG 延迟是 Vanilla RAG 的 2.3 倍）。
+- 延迟敏感场景（额外图检索/汇总可能增加延迟，取决于索引、检索模式与缓存；不采用无协议的2.3倍）。
 - 成本敏感场景（图构建和遍历成本高）。
 
 ---
@@ -535,7 +518,7 @@ Agentic RAG 是 RAG 3.0-4.0 的核心方向，将 LLM 从"生成器"升级为"�
 解决 GraphRAG 成本高的问题：
 
 - **延迟图遍历**：仅在向量检索结果不充分时触发图遍历。
-- **成本优化**：将 GraphRAG 的成本降至传统方案的 **0.1%**。
+- **成本优化**：官方自测**索引成本**为full GraphRAG的0.1%；5,590篇AP新闻、100条合成local/global查询与LLM成对评价，结果不是所有语料的保证[来源](https://www.microsoft.com/en-us/research/blog/lazygraphrag-setting-a-new-standard-for-quality-and-cost/)。
 - **动态策略**：根据查询复杂度自动选择检索深度。
 
 ### 7.3 Agentic RAG 的优势
@@ -633,7 +616,7 @@ TPA 利用**下一 token 概率归因**检测幻觉：
 |------|------|------|
 | **精确引用** | 要求模型为每个论断提供段落级引用 | 可验证性提升 |
 | **来源归因** | 明确标注信息来源（文档名、页码、URL） | 可信度提升 |
-| **引用对齐** | 自动验证引用是否支持对应论断 | 幻觉率降低 30-50% |
+| **引用对齐** | 自动验证引用是否支持对应论断 | 需测引用支持率与错误归因；无固定降幅 |
 | **多源交叉验证** | 同一论断需多个独立来源支持 | 准确性提升 |
 
 ### 8.3 幻觉缓解综合策略
@@ -790,8 +773,8 @@ TPA 利用**下一 token 概率归因**检测幻觉：
 5. Yu, S., et al. (2024). "Corrective Retrieval Augmented Generation." https://arxiv.org/abs/2401.15884
 6. Edge, D., et al. (2024). "From Local to Global: A Graph RAG Approach to Query-Focused Summarization." *Microsoft Research*. https://arxiv.org/abs/2404.16130
 7. Asai, A., et al. (2024). "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection." https://arxiv.org/abs/2310.11511
-8. Guo, Z., et al. (2025). "Search-R1: Training LLMs to Reason and Search via Reinforcement Learning." https://arxiv.org/abs/2501.0xxxx
-9. Chen, J., et al. (2025). "ReSearch: Learning to Reason with Search for LLMs via Reinforcement Learning." https://arxiv.org/abs/2501.0xxxx
+8. Jin, B., et al. (2025). "Search-R1: Training LLMs to Reason and Leverage Search Engines with Reinforcement Learning." https://arxiv.org/abs/2503.09516v5（本轮核题录/摘要，未以其数字补全实验）
+9. Chen, J., et al. (2025). "ReSearch: Learning to Reason with Search for LLMs via Reinforcement Learning." https://arxiv.org/abs/2503.19470v3（本轮核题录/摘要）
 10. OpenAI. (2025). "Deep Research System Card." https://openai.com/index/deep-research-system-card/
 11. FACTUM Team. (2026). "Mechanistic Citation Hallucination Detection in RAG Systems." *ICLR 2026*.
 12. TPA Team. (2025). "Token Probability Attribution for Hallucination Detection in LLMs." *NeurIPS 2025*.

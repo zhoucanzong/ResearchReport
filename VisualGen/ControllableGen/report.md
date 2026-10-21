@@ -38,12 +38,12 @@
 | 2022.06 | LoRA | Hu et al. (Microsoft) | 低秩适配，W' = W + BA | 0.1% - 1% |
 | 2022.10 | LyCORIS | KohakuBlueleaf | LoRA 扩展，支持更多分解形式 | 0.1% - 5% |
 | 2023.02 | **ControlNet** | Zhang et al. (Stanford) | 冻结 U-Net + 可训练旁路 U-Net | ~50% (旁路) |
-| 2023.04 | T2I-Adapter | Tencent ARC Lab | 轻量级卷积适配器，1% 参数量 | ~1% |
+| 2023.02 | T2I-Adapter | Tencent ARC Lab | 轻量级卷积适配器，论文约77M参数 | 不采用未固定分母的1% |
 | 2023.08 | IP-Adapter | Tencent ARC Lab | 解耦 Cross-Attention，图像提示适配 | ~5% |
 | 2023.10 | Multi-ControlNet | SD WebUI 社区 | 多个 ControlNet 并行组合 | N × ~50% |
 | 2023.12 | Reference-Only | SD WebUI 社区 | 参考图像通过 attention 注入 | 无额外参数 |
 | 2024.01 | ReferenceNet | Alibaba (AnimateAnyone) | 独立 Reference Encoder 提取参考特征 | ~30% |
-| 2024.03 | Uni-ControlNet | 多机构联合 | 统一多条件控制框架 | ~15% |
+| 2023.05 | Uni-ControlNet | Zhao等 | 两个adapter分别处理local/global | 不引用未固定分母的15% |
 | 2024.06 | ControlNet++ | 后续改进工作 | 更高效的控制注入机制 | ~25% |
 | 2024.12 | ControlNeXt | 后续改进工作 | 轻量化控制，适配视频生成 | ~5% |
 | 2025.03 | DiT-Control | 社区/研究界 | ControlNet 适配到 DiT 架构 | ~20% |
@@ -173,14 +173,14 @@ T2I-Adapter 的核心思想是：**不需要复制整个 U-Net Encoder，只需�
 
 **Adapter Network**
 - 结构：4 个下采样卷积块（每个块包含 2-3 个卷积层 + ReLU）
-- 参数量：约原 U-Net 的 1%（约 70M 参数 vs SD 1.5 的 860M）
+- 参数量：原文报告约77M参数；若仅作77M/860M的算术比较约为9.0%，不是1%（分母需固定为对应SD U-Net）[T2I-Adapter v2 §1](https://arxiv.org/html/2302.08453v2)
 - 输入：条件图（与目标图相同分辨率）
 - 输出：4 个尺度的特征图
 
 **特征注入**
 - 通过简单的 1×1 卷积对齐通道数
 - 与 U-Net 对应层输入相加
-- 不需要 zero convolution，因为 Adapter 网络从头训练，不会干扰预训练权重
+- 主干权重冻结不等于注入特征不会扰动输出；训练仍需通过去噪目标学习有效的控制特征。是否采用零初始化要看具体实现，不能由“从头训练”推出
 
 #### 3.2.4 多 Adapter 组合
 
@@ -201,9 +201,9 @@ T2I-Adapter 的一个重要特性是**可组合性**：
 
 | 维度 | ControlNet | T2I-Adapter |
 |------|------------|-------------|
-| 参数量 | ~50% 原模型 | ~1% 原模型 |
+| 参数量 | ~50% 原模型 | 约77M；相对比例依分母 |
 | 结构 | 复制 U-Net Encoder | 小型卷积网络 |
-| 训练目标 | 预测噪声 | 特征对齐 |
+| 训练目标 | 条件扩散去噪损失 | 注入特征后以扩散去噪损失训练Adapter（不是直接匹配某个目标特征） |
 | 多条件组合 | 多个模型并行 | 特征相加 |
 | 控制精度 | 高 | 中等 |
 | 推理速度 | 慢（大模型） | 快（小模型） |
@@ -489,16 +489,9 @@ ReferenceNet 是阿里巴巴在 AnimateAnyone 工作中提出的参考图像编�
   统一注入 U-Net
 ```
 
-**关键设计**：
-- **共享 Encoder**：所有条件类型共享大部分卷积层
-- **条件类型 Embedding**：类似位置编码，区分不同条件类型
-- **轻量分支**：每种条件类型有少量专属参数
-- **特征融合**：使用注意力机制自动学习条件间的权重
+**原文机制**：[Uni-ControlNet v3 §3.2](https://arxiv.org/html/2305.16322v3)设置local与global两个adapter。local路径以多尺度特征去归一化注入局部条件；global路径将图像条件映射为额外token并与文本条件一起注入。不同条件数不需要逐一新增整套ControlNet。原稿“每类轻量分支+统一注意力融合”不能准确对应这两个路径。
 
-**优势**：
-- 参数量远低于 N 个独立 ControlNet（约 15% vs N×50%）
-- 条件间融合更自然
-- 支持训练时未见过的条件组合
+**比较边界**：条件组合的效果由论文的实验和消融支持；原稿15% vs N×50%未固定主干与参数统计范围，撤下这一数量比较。参数和质量比较需使用同一backbone、控制组合与评价集。
 
 ---
 
@@ -508,12 +501,12 @@ ReferenceNet 是阿里巴巴在 AnimateAnyone 工作中提出的参考图像编�
 
 | 维度 | ControlNet | T2I-Adapter | IP-Adapter | LoRA | ReferenceNet | Uni-ControlNet |
 |------|------------|-------------|------------|------|--------------|----------------|
-| **提出时间** | 2023.02 | 2023.04 | 2023.08 | 2022.06 | 2023.12 | 2024.03 |
+| **提出时间** | 2023.02 | 2023.02 | 2023.08 | 2021预印本/2022会议 | 2023.12 | 2023.05 |
 | **机构** | Stanford | Tencent ARC | Tencent ARC | Microsoft | Alibaba | 多机构 |
 | **控制目标** | 空间结构 | 空间结构 | 风格/内容/角色 | 风格/角色/概念 | 外观一致性 | 多条件统一 |
 | **架构类型** | 旁路 U-Net | 轻量卷积 | 解耦 Attention | 低秩权重修改 | 独立 Encoder | 统一多分支 |
 | **注入位置** | U-Net Encoder | U-Net 各层 | Cross-Attention | 全模型 | U-Net/Attention | U-Net Encoder |
-| **参数量占比** | ~50% | ~1% | ~5% | 0.1%-5% | ~30% | ~15% |
+| **参数量占比** | ~50%（版本待核） | 77M；比例依分母 | ~5% | 0.1%-5% | ~30%（版本待核） | 以原文两个adapter和主干分别计数，不给无依据百分比 |
 | **是否冻结原模型** | 是 | 是 | 是（部分） | 否（权重修改） | 是 | 是 |
 | **训练数据需求** | 条件-图像对 | 条件-图像对 | 图像-文本对 | 目标域图像 | 参考-目标对 | 多条件-图像对 |
 | **多条件组合** | 多模型并行 | 特征相加 | 与 ControlNet 联用 | 权重相加 | 单一参考 | 原生支持 |
@@ -534,7 +527,7 @@ ReferenceNet 是阿里巴巴在 AnimateAnyone 工作中提出的参考图像编�
      │       │
      │       ├──→ Multi-ControlNet (多模型并行)
      │       │
-     │       └──→ T2I-Adapter (轻量卷积, 1% 参数)
+     │       └──→ T2I-Adapter (轻量卷积, 约77M参数)
      │              │
      │              └──→ 更高效的单条件控制
      │
@@ -554,7 +547,7 @@ ReferenceNet 是阿里巴巴在 AnimateAnyone 工作中提出的参考图像编�
 
   2024 ─────────────────────────────────────────────────────────────────────►
 
-     Uni-ControlNet (统一多条件, ~15% 参数)
+     Uni-ControlNet (local/global 两个adapter)
         │
         ├──→ 多条件原生融合
         │
@@ -848,7 +841,7 @@ ComfyUI 是可控生成技术最重要的开源应用平台之一，其节点式
 | LyCORIS: A Generalized LoRA | KohakuBlueleaf | 2023 | https://github.com/KohakuBlueleaf/LyCORIS |
 | AnimateAnyone: Consistent and Controllable Image-to-Video Synthesis for Character Animation | Li Hu et al. | 2023 | https://arxiv.org/abs/2311.17117 |
 | MagicAnimate: Temporally Consistent Human Image Animation Using Diffusion Model | Zhongcong Xu et al. | 2023 | https://arxiv.org/abs/2311.16498 |
-| Uni-ControlNet: All-in-One Control to Text-to-Image Diffusion Models | Yaxian Xia et al. | 2024 | https://arxiv.org/abs/2401.04771 |
+| Uni-ControlNet: All-in-One Control to Text-to-Image Diffusion Models | Shihao Zhao et al. | 2023 | https://arxiv.org/html/2305.16322v3 |
 | Scalable Diffusion Models with Transformers (DiT) | William Peebles, Saining Xie | 2023 | https://arxiv.org/abs/2212.09748 |
 | Flow Matching for Generative Modeling | Yaron Lipman et al. | 2023 | https://arxiv.org/abs/2210.02747 |
 | Stable Diffusion 3: Scaling Rectified Flow Transformers for High-Resolution Image Synthesis | Stability AI | 2024 | https://arxiv.org/abs/2403.03206 |

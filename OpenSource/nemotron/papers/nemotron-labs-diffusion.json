@@ -8,8 +8,18 @@
     "citations": "[不确定]（2026 年新发布报告，引用尚未稳定）"
   },
   "内容摘要": {
-    "abstract": "提出 Nemotron-Labs-Diffusion (NLD)，一个在单一架构内同时支持 AR、Diffusion 和 Self-Speculation 三种解码模式的语言模型家族。通过联合 AR + block-wise diffusion 训练目标，模型可以按部署场景在三种模式间切换。研究证明：(1) AR 与 Diffusion 目标互补——diffusion 提升前瞻规划能力，AR 提供从左到右的语言学先验；(2) Self-Speculation 模式下 diffusion 起草、AR 验证的方案在接受率和真实设备效率上超过 MTP（multi-token prediction）；(3) 在 Speed-of-Light (SOL) 分析下，diffusion 解码在最优采样器下每个 forward 比 self-speculation 多预测 76.5% 的 token。模型规模扩展到 3B/8B/14B（含 base、instruct、VLM），全面超过现有开源 AR 和 Diffusion LM。例如 NLD-8B 比 Qwen3-8B 每 forward 多解码 6× 的 token，在 SPEED-Bench + SGLang + GB200 GPU 上吞吐提升 4×。",
-    "keywords": ["Diffusion Language Model", "Autoregressive Language Model", "Self-Speculation Decoding", "Multi-Token Prediction (MTP)", "Block-wise Diffusion", "Speculative Decoding", "Speed-of-Light Analysis", "Tri-Mode Inference", "LoRA Drafter"],
+    "abstract": "提出 Nemotron-Labs-Diffusion (NLD)，一个在单一架构内同时支持 AR、Diffusion 和 Self-Speculation 三种解码模式的语言模型家族。通过联合 AR + block-wise diffusion 训练目标，模型可以按部署场景在三种模式间切换。研究证明：(1) AR 与 Diffusion 目标互补——diffusion 提升前瞻规划能力，AR 提供从左到右的语言学先验；(2) Self-Speculation 模式下 diffusion 起草、AR 验证的方案在接受率和本文指定设备/量化/并发设置的效率上超过所比较MTP基线（multi-token prediction）；(3) 在 Speed-of-Light (SOL) 分析下，diffusion 解码在最优采样器下每个 forward 比 self-speculation 多预测 76.5% 的 token。模型规模扩展到 3B/8B/14B（含 base、instruct、VLM），全面超过现有开源 AR 和 Diffusion LM。例如 NLD-8B 比 Qwen3-8B 每 forward 多解码 6× 的 token，在 SPEED-Bench + SGLang + GB200 GPU 上吞吐提升 4×。",
+    "keywords": [
+      "Diffusion Language Model",
+      "Autoregressive Language Model",
+      "Self-Speculation Decoding",
+      "Multi-Token Prediction (MTP)",
+      "Block-wise Diffusion",
+      "Speculative Decoding",
+      "Speed-of-Light Analysis",
+      "Tri-Mode Inference",
+      "LoRA Drafter"
+    ],
     "tl_dr": "在同一模型里联合训练 AR + Block-wise Diffusion 损失，使其同时获得 AR 精度、Diffusion 并行解码能力和 Self-Speculation 加速能力——尤其证明 diffusion 起草 + AR 验证比 Eagle3 这类 MTP 方法更有效，且 diffusion 解码本身在 SOL 上仍有大量未释放的并行潜力。"
   },
   "研究背景": {
@@ -26,22 +36,30 @@
     "datasets": "训练: [22] 的预训练数据 1T tokens(Stage1) + 300B tokens(Stage2)；SFT 用 [24] 的 45B tokens；VLM 用 [25] 的多模态指令数据。评估: SPEED-Bench [1] (11 类别 / 713 样本)、HumanEval(+)、MBPP(+)、LiveCodeBench-CPP、GSM8K、Math500、AIME24/25、GPQA、IFEval、MMLU、Minerva Math、ARC-E/C、Hellaswag、PIQA、Winogrande；VLM: AI2D、ChartQA、DocVQA、MMMU、MMMU-Pro-V、MathVista、RealWorldQA。",
     "baselines": "AR: Qwen2.5-7B、Qwen3-1.7B/4B/8B/14B、Ministral3-3B/8B/14B Instruct、Llama-3.1-8B、Llama-3.2-3B、Phi-4-mini/Phi-4-14B、Phi-3-Medium、Gemma-3-12B；Diffusion: LLaDA-8B、Dream-7B、SDAR-8B；MTP/SD: Qwen3-8B-Eagle3、Qwen3-9B-MTP；Diffusion VLM: MMaDA、LaViDa、Dimple、LLaDA-V-8B。",
     "main_results": "NLD-8B Instruct 在 10 个 benchmark 上平均: AR 63.61% / Diff 63.18% / Linear SS 62.81% / Quad SS 64.04%（TPF 1.00/2.57/5.99/6.38），全部超过 Qwen3-8B 的 62.75%。NLD-8B 在 SPEED-Bench + SGLang + GB200 上 Linear SS 比 AR 加速 3.3×（CUDA 优化后 3.97×，1015 tok/sec），比 Qwen3-8B-Eagle3 在 GB200/RTX Pro 6000/DGX Spark 上分别 2.4×/2.3×/1.8×。NLD-3B 在 LoRA-tuned Linear SS 下 4.36× TPF，14B 达 5.96× TPF。SOL 分析: 在 BL=32 时 diffusion SOL acceptance rate 7.60× vs Linear SS 6.82×（接受率仅差 10.3%），但 real TPF 6.02× vs 3.41×（+76.5%），因 Linear SS 双倍 forward 且只 commit 前缀。Diffusion mode 在 multilingual/coding 最高 11.26×/10.24× acceptance。VLM-8B 在 LLaDA-V-8B 之上 +1.3% 平均精度，Linear SS 长回答场景下 TPF 达 7.45×。",
-    "ablation": "Tab.1（25B token CPT 消融，累计 +16.05%）: block-wise attention 54.23 → +global loss avg +2.12 → +DP-rank varying masking +0.71 → +two-stage training +5.74 → +AR loss +7.48 = 70.28%。最大贡献者: AR loss 与 two-stage training。Tab.2: α 在 [0.1, 0.5] 内 AR 和 Diff 模式同升同降，α=0.3 时 AR 70.62% / Diff 69.77% 均最优。Tab.3: 加 diffusion loss 后 AR 精度 base +0.14% / instruct +0.43%，coding/math 上升、IFEval 略降（指令遵循略受影响）。Tab.6: LoRA drafter 在 3B/8B/14B 给出 +14.4%/+32.5%/+27.6% TPF 提升，精度几乎不变。Tab.10: NLD 平均接受长度 5.46（Native）/6.82（LoRA） vs Eagle3 2.75 / MTP 4.24，diffusion-friendly 4 类目（coding/math/reasoning/multilingual）差距进一步拉大到 6.75/8.69 vs 2.81/4.73。"
+    "ablation": "Tab.1（25B token CPT 消融，累计+16.05个百分点）: block-wise attention 54.23 → +global loss avg +2.12 → +DP-rank varying masking +0.71 → +two-stage training +5.74 → +AR loss +7.48 = 70.28%。最大贡献者: AR loss 与 two-stage training。Tab.2: α 在 [0.1, 0.5] 内 AR 和 Diff 模式同升同降，α=0.3 时 AR 70.62% / Diff 69.77% 均最优。Tab.3: 加 diffusion loss 后 AR 精度 base +0.14% / instruct +0.43%，coding/math 上升、IFEval 略降（指令遵循略受影响）。Tab.6: LoRA drafter 在 3B/8B/14B 给出 +14.4%/+32.5%/+27.6% TPF 提升，精度几乎不变。Tab.10: NLD 平均接受长度 5.46（Native）/6.82（LoRA） vs Eagle3 2.75 / MTP 4.24，diffusion-friendly 4 类目（coding/math/reasoning/multilingual）差距进一步拉大到 6.75/8.69 vs 2.81/4.73。"
   },
   "分析与讨论": {
-    "contributions": "1) 提出 Nemotron-Labs-Diffusion 这一首个真正意义上的 tri-mode LM 家族（base/instruct/VLM × 3B/8B/14B），且 SOTA。\n2) 系统证明 AR 和 Diffusion 损失互补、同一 α 同时为两者最优——为'统一 AR-Diffusion'提供了清晰的训练秘方（global loss avg + DP-rank varying masking + two-stage + α=0.3）。\n3) 提出 Self-Speculation 作为 MTP 的替代方案：diffusion 起草、AR 验证，且通过 LoRA-Drafter 可进一步加强 alignment，单模型加速 + 比 Eagle3 高的 acceptance length。\n4) 通过 Speed-of-Light 分析首次给出 diffusion 解码的 oracle 上限，量化了 76.5% 的剩余 headroom，为 future sampler 工作设定明确的 benchmark。\n5) 将统一框架自然扩展到 VLM 并提出 asymmetric dual-stream，减少 vision token 引入的多余 FLOPs。\n6) 开源完整训练/推理 pipeline（Megatron Bridge）与模型权重（HF），降低复现门槛。",
-    "limitations": "1) **基础起点依赖**: 强依赖于已有 Ministral3 base 模型；未从头训练，无法回答'从零开始联合训练'的最优配方。\n2) **采样器仍远低于 SOL**: confidence-based sampling 和训练采样器距 SOL 仍有大 gap（仅约 3× vs 7.6×），论文未给出更激进的弥合方案。\n3) **Quadratic SS 真实设备效率受限**: 因 FlexAttention kernel 未充分优化，Quad SS 在 wall-clock 上不如 Linear SS，默认仍用 Linear。\n4) **Linear SS 只能 commit 前缀**: 这是当前最大效率瓶颈——会丢弃 first rejection 之后的高置信 token；论文坦言这是未来方向。\n5) **指令遵循略受影响**: 加 diffusion loss 后 IFEval -3.01%、HumanEval -2.44%（instruct 设置），说明严格 instruction-following 与 diffusion 训练存在轻微张力。\n6) **Roleplay 等开放式任务 SOL 低**: 仅 3.49× acceptance（vs 多语 11.26×），说明 diffusion 并行优势对'开放式生成'帮助有限——本质受 token entropy 限制。\n7) **生成顺序仍偏左到右**: 论文承认 diffusion 解码当前仍是 token 级并行，未实现 segment/paragraph 级并行。\n8) **训练成本高**: 1T+300B token 的 CPT + 45B SFT，256× H100，对非大厂团队复现门槛高。",
+    "contributions": "1) 提出 Nemotron-Labs-Diffusion 这一首个tri-mode LM家族；文本覆盖3B/8B/14B，论文VLM研究为8B，不能按规格相乘推断发布数量。\n2) 系统证明 AR 和 Diffusion 损失互补、同一 α 同时为两者最优——为'统一 AR-Diffusion'提供了清晰的训练秘方（global loss avg + DP-rank varying masking + two-stage + α=0.3）。\n3) 提出 Self-Speculation 作为 MTP 的替代方案：diffusion 起草、AR 验证，且通过 LoRA-Drafter 可进一步加强 alignment，单模型加速 + 比 Eagle3 高的 acceptance length。\n4) 通过 Speed-of-Light 分析首次给出 diffusion 解码的 oracle 上限，量化了 76.5% 的剩余 headroom，为 future sampler 工作设定明确的 benchmark。\n5) 将统一框架自然扩展到 VLM 并提出 asymmetric dual-stream，减少 vision token 引入的多余 FLOPs。\n6) 作者宣称发布训练/推理pipeline与权重；本轮只确认官方推理仓库与模型页面，未审计完整训练实现的可复现性。",
+    "limitations": "1) **基础起点依赖**: 强依赖于已有 Ministral3 base 模型；未从头训练，无法回答'从零开始联合训练'的最优配方。\n2) **采样器仍远低于 SOL**: confidence-based sampling 和训练采样器距 SOL 仍有大 gap（仅约 3× vs 7.6×），论文未给出更激进的弥合方案。\n3) **Quadratic SS 真实设备效率受限**: 因 FlexAttention kernel 未充分优化，Quad SS 在 wall-clock 上不如 Linear SS，默认仍用 Linear。\n4) **Linear SS 只能 commit 前缀**: 这是当前最大效率瓶颈——会丢弃 first rejection 之后的高置信 token；论文坦言这是未来方向。\n5) **指令遵循略受影响**: 加 diffusion loss 后 IFEval -3.01个百分点、HumanEval -2.44个百分点（instruct 设置），说明严格 instruction-following 与 diffusion 训练存在轻微张力。\n6) **Roleplay 等开放式任务 SOL 低**: 仅 3.49× acceptance（vs 多语 11.26×），说明 diffusion 并行优势对'开放式生成'帮助有限——本质受 token entropy 限制。\n7) **生成顺序仍偏左到右**: 论文承认 diffusion 解码当前仍是 token 级并行，未实现 segment/paragraph 级并行。\n8) **训练成本高**: 1T+300B token 的 CPT + 45B SFT，256× H100，对非大厂团队复现门槛高。",
     "future_work": "1) **缩小 sampler 与 SOL 的 gap**: 设计能更可靠识别 conditionally independent token 的训练方案或采样器。\n2) **改进 Self-Speculation 的 drafter-verifier alignment**: 通过 nested subnets / 权重共享 sub-model 降低 draft 成本。\n3) **超越 prefix-only AR 验证**: 探索 diffusion-mode verifier 验证非连续 drafted token，进一步提高真实 acceptance。\n4) **更高粒度并行**: 训练算法鼓励 segment/paragraph 级并行，发挥 diffusion 的全局规划潜力。"
   },
   "个人评价": {
     "relevance": 10,
     "quality": 9,
-    "insights": "对'AR + Diffusion 应该融合而非替代'这一立场，本文给了迄今为止最完整、最有数据支撑的论证：从消融（每个 trick 单独可量化）、α 扫描（两种模式同 sweet spot）、SOL 分析（理论上限明确）到真实硬件吞吐（GB200/RTX Pro 6000/DGX Spark 多硬件验证）形成了闭环。特别值得借鉴的 4 点：\n\n(1) **'accepted+1' loss mask** 是个工程上很巧妙的细节——避免训练时学到 'rejection 之后' 的反事实分布。这种'对 inference 时实际数据分布建模'的思路在做 drafter / verifier 类工作时普遍可借用。\n\n(2) **Global Loss Averaging 的方差分析** 把 RL 中 GRPO vs DAPO 的 aggregation 选择类比到了 diffusion 训练，揭示了'sequence-wise 平均会放大小 t 样本影响'的隐藏陷阱——这对所有训练目标含可变 token 数权重的方法都有借鉴。\n\n(3) **Speed-of-Light 框架** 是一个非常好的方法学贡献——它把'我们离最优有多远'量化下来，给社区一个明确的 north star。Recursive dynamic compaction 的设计也优雅（safety check 通过递归 simulate 解决并行 commit 后分布漂移问题）。\n\n(4) **Asymmetric Dual-Stream** 启示了一类'按 token 是否参与目标计算分配 attention 资源'的优化空间——这在未来多模态/工具调用混合训练里都有借鉴价值。\n\n值得思考的开放问题：\n- 若不从 Ministral3 起步，从零联合训练，最优 α 是否仍为 0.3？两阶段是否仍必要？\n- SOL 上限本身依赖 'serial denoising 的 oracle 收敛序列'——若改变 diffusion 训练 schedule，SOL 上限会变化吗？是否存在'更高 SOL 的训练方案'？\n- Linear SS 的 prefix-only 限制能否被 'diffusion verifier' 完全打破？若 verifier 也并行，acceptance/forward 的边界会被刷新到哪里？\n\n本文的 'tri-mode 一站式部署' 范式如果工程化稳定（即对工程团队也能复现），可能会成为下一代 LM 推理基础设施的默认形态。"
+    "insights": "对'AR + Diffusion 应该融合而非替代'这一立场，本文给了迄今为止最完整、最有数据支撑的论证：从消融（逐项累加技巧的增量可量化（不是独立因果贡献））、α 扫描（两种模式同 sweet spot）、SOL 分析（理论上限明确）到真实硬件吞吐（GB200/RTX Pro 6000/DGX Spark 多硬件验证）形成了闭环。特别值得借鉴的 4 点：\n\n(1) **'accepted+1' loss mask** 是个工程上很巧妙的细节——避免训练时学到 'rejection 之后' 的反事实分布。这种'对 inference 时实际数据分布建模'的思路在做 drafter / verifier 类工作时普遍可借用。\n\n(2) **Global Loss Averaging 的方差分析** 把 RL 中 GRPO vs DAPO 的 aggregation 选择类比到了 diffusion 训练，揭示了'sequence-wise 平均会放大小 t 样本影响'的隐藏陷阱——这对所有训练目标含可变 token 数权重的方法都有借鉴。\n\n(3) **Speed-of-Light 框架** 是一个非常好的方法学贡献——它把'我们离最优有多远'量化下来，给社区一个明确的 north star。Recursive dynamic compaction 的设计也优雅（safety check 通过递归 simulate 解决并行 commit 后分布漂移问题）。\n\n(4) **Asymmetric Dual-Stream** 启示了一类'按 token 是否参与目标计算分配 attention 资源'的优化空间——这在未来多模态/工具调用混合训练里都有借鉴价值。\n\n值得思考的开放问题：\n- 若不从 Ministral3 起步，从零联合训练，最优 α 是否仍为 0.3？两阶段是否仍必要？\n- SOL 上限本身依赖 'serial denoising 的 oracle 收敛序列'——若改变 diffusion 训练 schedule，SOL 上限会变化吗？是否存在'更高 SOL 的训练方案'？\n- Linear SS 的 prefix-only 限制能否被 'diffusion verifier' 完全打破？若 verifier 也并行，acceptance/forward 的边界会被刷新到哪里？\n\n本文的 'tri-mode 一站式部署' 范式如果工程化稳定（即对工程团队也能复现），可能会成为下一代 LM 推理基础设施的默认形态。"
   },
   "uncertain": [
     "venue 字段：目前 PDF 内未明确标注发表会议，仅有 '©2026 NVIDIA' 字样，按 NVIDIA 官方研究报告处理。后续可能会投稿至 NeurIPS/ICLR/ICML。",
     "citations 字段：2026-05-19 发布，引用数尚未稳定，暂标 [不确定]。",
     "代码仓库具体 URL：论文提到 'release training/inference pipeline through Megatron Bridge' 和 HF 模型，但 PDF 未给出具体 URL；需读者自行搜索 NVIDIA Megatron Bridge 仓库与 HF 'Nemotron-Labs-Diffusion' collection。",
     "[22]/[24]/[25] 等数据集论文未在主体明确，仅列在 references 中——具体数据规模、来源细节需查附录或 references。"
-  ]
+  ],
+  "来源复核": {
+    "reviewed": "2026-10-22",
+    "basis": "NVIDIA 2026-05-19 v1 PDF",
+    "sha256": "da7243d3a0db640732bb33f4c929c47ebc2ee7f9745fdb2cce1e5c899ac28edd",
+    "later_arxiv": "2607.05722 (first submitted 2026-07-07; not conflated with May PDF)",
+    "evidence": "sources/MANIFEST.md",
+    "limits": "No training/performance rerun; sequential ablation is not independent causal attribution; SOL and SS use different correctness references."
+  }
 }

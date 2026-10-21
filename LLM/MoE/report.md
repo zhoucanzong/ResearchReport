@@ -32,7 +32,7 @@
 
 混合专家模型（Mixture of Experts, MoE）是一种通过条件计算（conditional computation）实现模型容量扩展的神经网络架构范式。其核心思想是：用固定数量的"专家"（Experts）网络加上一个可学习的"路由"（Router/Gating）机制，替代传统的密集前馈（Dense Feed-Forward）层。对于每个输入token，路由网络仅激活稀疏子集的专家进行计算，从而在保持推理成本相对可控的前提下，显著增加模型的总参数量。
 
-MoE架构的吸引力在于它提供了一条与模型缩放定律（Scaling Laws）相契合的路径：总参数量可以扩展到万亿级别，而每次前向传播实际激活的参数仅占总量的5%-15%。这种"稀疏激活"特性使得MoE成为构建超大规模语言模型的主流选择之一。
+MoE架构的吸引力在于它提供了一条与模型缩放定律（Scaling Laws）相契合的路径：总参数量可以扩展到万亿级别，而每个token只激活部分专家；激活占比随共享参数、专家数与top-k而变，例如Mixtral 13B/47B约28%，DeepSeek-V3 37B/671B约5.5%，不能统一为5%–15%。这种"稀疏激活"特性使得MoE成为构建超大规模语言模型的主流选择之一。
 
 然而，MoE的实践之路并非一帆风顺。从2017年Shazeer等人提出稀疏门控MoE层以来，研究社区围绕以下几个核心挑战展开了持续攻关：
 
@@ -58,7 +58,7 @@ MoE架构的吸引力在于它提供了一条与模型缩放定律（Scaling Law
 | 2024.01 | DeepSeek - DeepSeekMoE | 细粒度专家划分（fine-grained expert segmentation），共享专家分离 | 16B/145B参数，64+2专家 |
 | 2024.05 | Qwen - Qwen1.5-MoE | 用1/3激活参数匹配7B密集模型性能 | 14.3B总参数，2.2B激活 |
 | 2024.06 | DeepSeek - DeepSeek-V2 | MLA注意力+MoE，经济高效的推理 | 236B总参数，21B激活 |
-| 2024.09 | DeepSeek - DeepSeek-V3 | 无辅助损失负载均衡，sigmoid评分+Top-K+per-expert bias | 671B总参数，37B激活，2048专家 |
+| 2024.12 | DeepSeek - DeepSeek-V3 | 主batch均衡用动态bias，保留小sequence-wise辅助项 | 671B总参数，37B激活；每MoE层256路由+1共享专家 |
 | 2024.10 | Google - PEER | 百万级专家（million-scale experts），product key路由 | 1M+专家，极端稀疏 |
 | 2025.01 | Kimi - Kimi-K2 | 1000B参数规模，384专家，长上下文MoE | 1T+参数，384专家 |
 | 2025.02 | Qwen - Qwen3-Next | 512专家配置，进一步扩展专家数量 | 512专家 |
@@ -95,7 +95,7 @@ Google的Fedus等人提出Switch Transformers，将MoE简化为每个token仅路
 
 - Top-1路由在预训练效率上显著优于密集模型
 - 简化了路由计算和通信模式
-- 1.6T参数的Switch-C模型在T5架构上实现了4倍预训练加速
+- [Switch原文v3 §5.6](https://arxiv.org/html/2101.03961v3)将万亿级稀疏模型与T5-XXL比较，报告4倍到达目标质量的速度；这是指定模型/硬件与训练目标的time-to-quality比较，不是任意MoE的加速保证
 
 Switch Transformers的设计选择表明，MoE的有效性不一定依赖于复杂的多专家聚合，稀疏性本身就能带来收益。该工作还系统研究了专家数量、容量因子（capacity factor）、精度（bfloat16）等工程细节，为后续MoE实践提供了重要参考。
 
@@ -114,10 +114,10 @@ GShard在100种语言的多语言翻译任务上验证了MoE的扩展性，证�
 Mistral AI发布的Mixtral 8x7B是MoE发展史上的里程碑，因为它是首个在开源社区广泛采用且性能卓越的MoE模型。其架构特点：
 
 - **8个专家，Top-2激活**：总参数47B，激活参数约12.9B
-- **滑动窗口注意力（Sliding Window Attention）**：结合MoE降低推理内存
+- **32K上下文**：Mixtral论文按32K训练并评估长程检索；不能仅因它沿用Mistral结构就把滑动窗口当作该检查点的已证内存优化[原文v1 §2–3](https://arxiv.org/html/2401.04088v1)
 - **性能超越LLaMA 2 70B**：以远低于后者的激活参数量实现更好的下游任务表现
 
-Mixtral的成功证明了MoE在消费级硬件上的可行性，并催生了开源MoE生态的繁荣，包括后续的Mixtral 8x22B等变体。
+Mixtral展示了开源稀疏模型的能力；消费级硬件可运行性仍取决于全量权重显存、量化与卸载，不能由每token激活参数量直接推出，并催生了开源MoE生态的繁荣，包括后续的Mixtral 8x22B等变体。
 
 ### 3.5 细粒度革命：DeepSeekMoE（2024）
 
@@ -138,7 +138,7 @@ DeepSeek-V3是MoE架构演进的重要节点，其路由机制实现了**无辅�
 - **Per-expert bias terms**：为每个专家引入可学习的偏置项，在训练过程中自动调节专家负载
 - **动态偏置更新**：根据专家的负载统计动态调整偏置，使负载趋向均衡
 
-这一设计的革命性在于：传统MoE依赖辅助损失（auxiliary loss）强制负载均衡，但辅助损失会与主任务损失竞争梯度，影响模型性能。DeepSeek-V3通过偏置项机制将负载均衡从损失函数中解耦，实现了"免费的"负载均衡。
+[DeepSeek-V3 v2 §2.1.2](https://arxiv.org/html/2412.19437v2)将主要的batch级均衡交给动态bias，但仍保留小系数的sequence-wise auxiliary loss抑制单序列极端失衡。因此“auxiliary-loss-free”不能读成整个训练目标没有任何均衡辅助项。bias按负载规则更新，不是随语言损失反向传播学习。
 
 DeepSeek-V3的其他关键参数：
 - 总参数：671B
@@ -207,7 +207,7 @@ PEER代表了MoE向"超大规模、超稀疏"方向发展的探索，其动机�
 | 辅助损失（Auxiliary Loss） | Shazeer 2017, Switch 2021, GShard 2020 | 惩罚专家负载不均衡和路由偏好集中 | 是 | 基本有效，但影响主任务 |
 | 容量限制（Capacity Factor） | GShard 2020 | 设置专家处理token数量上限 | 否（硬限制） | 防止过载，但导致token丢弃 |
 | Expert Choice | Zhou 2022 | 反向路由，专家固定选择token数 | 否 | 天然均衡，实现复杂 |
-| 无辅助损失偏置 | DeepSeek-V3 2024 | Per-expert可学习偏置动态调节 | 否 | 均衡效果好，无性能损失 |
+| 动态路由偏置 | DeepSeek-V3 2024 | 按batch负载规则增减bias；bias只影响Top-K选择 | 主均衡不靠辅助损失，但仍有sequence-wise小辅助项 | 需连对应消融与batch/sequence范围理解 |
 | 专家丢弃（Expert Dropout） | 多种实现 | 随机禁用部分专家强制分散 | 否 | 训练正则化，推理无影响 |
 | 负载感知调度 | FinDEP 2025 | 运行时根据负载动态调度专家 | 否 | 推理优化，非训练 |
 
@@ -215,12 +215,12 @@ PEER代表了MoE向"超大规模、超稀疏"方向发展的探索，其动机�
 
 DeepSeek-V3的负载均衡机制是其最重要的创新之一。具体实现如下：
 
-1. **Sigmoid评分**：对每个专家e，计算独立得分 s_e = sigmoid(w_e · x + b_e)，其中x是token表示
-2. **偏置调节**：在Top-K选择时，使用调节后的得分 s'_e = s_e + α_e，其中α_e是每个专家的可学习偏置项
+1. **Sigmoid评分**：对每个专家e，计算独立得分 s_e = sigmoid(w_e · x)（示意：原文是token与expert centroid的内积），其中x是token表示
+2. **偏置调节**：在Top-K选择时，使用调节后的得分 s'_e = s_e + α_e，其中α_e是按batch负载规则更新的路由偏置（并非梯度学习参数）
 3. **动态更新**：根据每个step的专家负载统计，更新偏置α_e——负载高的专家降低α_e，负载低的专家提高α_e
 4. **Top-K选择**：基于s'_e选择Top-K专家
 
-这一机制将负载均衡从损失函数中完全移除，避免了辅助损失对主任务优化的干扰。实验表明，DeepSeek-V3在保持优异负载均衡的同时，下游任务性能显著优于使用辅助损失的基线。
+bias仅用于选择专家；输出聚合的gating weight仍来自原始affinity，不把bias加进贡献权重。小系数sequence-wise辅助项仍存在。原文§4.5.2表5在15.7B/228.7B、相同activated参数与训练tokens条件下，多数任务有改善但并非逐项占优；§4.5.3的batch-wise辅助损失对照也能达到相近validation loss，不能把收益只归因于“完全没有辅助损失”。
 
 ---
 
@@ -276,7 +276,7 @@ EP的通信开销与batch size、序列长度、隐藏维度以及专家数量�
 | Qwen1.5-MoE | 2024 | 14.3B | 2.2B | 64 | 8 | Top-K Softmax | 辅助损失 | 32K | 高效小MoE |
 | DeepSeekMoE | 2024 | 145B | 22B | 64+2 | 6+1 | Top-K Softmax | 辅助损失 | 128K | 细粒度+共享专家 |
 | DeepSeek-V2 | 2024 | 236B | 21B | 64+2 | 6+1 | Top-K Softmax | 辅助损失 | 128K | MLA注意力 |
-| DeepSeek-V3 | 2024 | 671B | 37B | 256+1 | 8+1 | Sigmoid+Bias Top-K | 无辅助损失 | 128K | 无辅助损失均衡 |
+| DeepSeek-V3 | 2024 | 671B | 37B | 256+1 | 8+1 | Sigmoid+Bias Top-K | 主bias+小sequence辅助项 | 128K | 无辅助损失均衡 |
 | Kimi-K2 | 2025 | 1000B+ | ~80B | 384 | 8 | Top-K | 偏置调节 | 256K | 超长上下文 |
 | Qwen3-Next | 2025 | - | - | 512 | - | Top-K | - | 128K+ | 更多专家 |
 | PEER | 2024 | - | - | 1M+ | 1-2 | Product Key | 辅助损失 | - | 百万级专家 |
@@ -285,7 +285,7 @@ EP的通信开销与batch size、序列长度、隐藏维度以及专家数量�
 
 从对比表可以看出几个趋势：
 
-1. **激活参数占比持续下降**：从Switch-C的约12.5%（200B/1.6T）到DeepSeek-V3的约5.5%（37B/671B），说明MoE的稀疏性在不断提高
+1. **激活比例因设计而异**：Mixtral 13/47约28%，DeepSeek-V3 37/671约5.5%；两点不足以证明单调趋势，且共享参数与activated口径需一致。原稿Switch-C的200B activated未定位原始定义，撤下该比值
 2. **专家数量大幅增加**：从早期的8-2048到Kimi-K2的384、Qwen3-Next的512，再到PEER的百万级
 3. **上下文长度扩展**：从早期的512-2K扩展到128K-256K，MoE与长上下文技术的结合成为趋势
 4. **路由机制精细化**：从简单softmax到sigmoid+偏置，再到product key和反向路由

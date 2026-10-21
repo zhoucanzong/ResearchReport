@@ -11,8 +11,8 @@
 - [3. 对齐与安全技术：Constitutional AI、RLAIF 与 Responsible Scaling Policy](#3-对齐与安全技术constitutional-airlaif-与-responsible-scaling-policy)
 - [4. 机制可解释性：从 Toy Models 到 Scaling Monosemanticity](#4-机制可解释性从-toy-models-到-scaling-monosemanticity)
 - [5. Agent 能力演进：Tool Use → Computer Use → Claude Code → MCP](#5-agent-能力演进tool-use--computer-use--claude-code--mcp)
-- [6. 推理能力：Extended Thinking 与 Hybrid Reasoning](#6-推理能力extended-thinking-与-hybrid-reasoning)
-- [7. 长上下文演进：100K → 200K → 1M](#7-长上下文演进100k--200k--1m)
+- [6. 推理接口：预算、effort 与可见内容](#6-推理接口预算effort-与可见内容)
+- [7. 长上下文：发布时状态与按型号的规格](#7-长上下文发布时状态与按型号的规格)
 - [8. 跨代技术演进分析](#8-跨代技术演进分析)
 - [9. 关键创新点（特别突出安全研究贡献）](#9-关键创新点特别突出安全研究贡献)
 - [10. 与 OpenAI 的差异化：安全优先 vs 能力优先](#10-与-openai-的差异化安全优先-vs-能力优先)
@@ -55,8 +55,8 @@ Anthropic 于 2021 年由原 OpenAI 副总裁 Dario Amodei、Daniela Amodei 等�
 | 2025.10 | **Claude Haiku 4.5** | 模型 | 接近 Sonnet 4 水平的小模型，定位高吞吐 Agent |
 | 2025.11 | **Claude Opus 4.5** | 模型 | 旗舰回归，主打深度推理与复杂 Agent 任务 |
 | 2026.02 | **Claude Opus 4.6 / Sonnet 4.6** | 模型 | 持续迭代，编码与 Agent 能力稳步提升 |
-| 2026.04 | **Claude Opus 4.7** | 模型 | ARC AGI 2 达 77.1%，推理能力显著突破 |
-| 2026.05 | **Claude Opus 4.8** | 模型 | 旗舰持续演进，自适应思考与超高努力模式上线 |
+| 2026-04-16 | **Claude Opus 4.7** | 模型 | 新 xhigh effort 与任务预算 beta；原稿 ARC 77.1% 未核到对应条件表，撤回裸数字，见 §6 |
+| 2026-05-28 | **Claude Opus 4.8** | 模型 | Dynamic workflows 研究预览与对话中 system entries，见 §5.5 |
 
 > 提示：模型版本号与发布时间以 Anthropic 官方公告（anthropic.com/news）和 Model Card 为准；2025 年下半年至 2026 年上半年 Anthropic 更新极快，小版本以 2–3 个月为周期发布。
 
@@ -85,7 +85,7 @@ Claude 总平台
 │   ├── Claude Code（CLI Agent）→ Agent Teams（多实例协作）
 │   ├── Model Context Protocol（MCP，开放协议）
 │   ├── Dynamic Workflows（动态工作流）
-│   ├── Cowork（多人实时协作）
+│   ├── Cowork（文件与工具中的任务执行）
 │   └── File-system Memory（跨会话持久记忆）
 └── 部署形态
     ├── Anthropic API / Console / Workbench
@@ -182,9 +182,9 @@ Claude 总平台
 | **Claude Sonnet 4.5** | 2025-09 | "Anthropic 公布的最强编码模型"，OS / Computer Use 长会话稳定性显著提升 |
 | **Claude Haiku 4.5** | 2025-10 | 小模型逼近 Sonnet 4 水平，主打高吞吐 Agent |
 | **Claude Opus 4.5** | 2025-11 | 旗舰；深度推理 + 复杂 Agent + 长上下文综合最强 |
-| **Claude Opus 4.6 / Sonnet 4.6** | 2026-02 | 编码与 Agent 能力稳步提升；Dynamic Workflows 与 Cowork 协作功能上线 |
-| **Claude Opus 4.7** | 2026-04 | 旗舰推理突破；ARC AGI 2 达 **77.1%**（确认），自适应思考（Adaptive thinking）上线 |
-| **Claude Opus 4.8** | 2026-05 | 超高努力模式（xhigh effort）、任务预算（Task Budgets）、文件系统记忆（File-system memory）等 Agent 基础设施全面产品化 |
+| **Claude Opus 4.6 / Sonnet 4.6** | 2026-02-05 / 02-17 | 各自发布公告；1M 当时为 beta；4.6 已介绍 adaptive thinking |
+| **Claude Opus 4.7** | 2026-04-16 | xhigh effort 与 task budgets beta；不保留未追溯的 ARC 裸数字 |
+| **Claude Opus 4.8** | 2026-05-28 | Dynamic workflows 研究预览及 Messages API 对话中 system 条目；不能说成全部能力此时首次推出 |
 
 - 4.5 系列起发布频率显著高于 3.x 时代（季度级），反映 Anthropic 在 2025–2026 年明显加速产品迭代以应对 GPT-5 / Gemini 2.5 / o3 等竞品。2026 年迭代进一步加快，小版本以 2–3 个月为周期发布。
 
@@ -316,7 +316,7 @@ Anthropic 的可解释性团队是其"安全研究身份"最显著的标志，�
 - *Sleeper Agents: Training Deceptive LLMs that Persist Through Safety Training*（Hubinger et al., 2024-01）：人为植入"在 2024 年前安全、之后输出有害代码"的后门，证明**标准 RLHF / RLAIF / Adversarial Training 难以可靠移除**。这是 Anthropic 对"deceptive alignment"风险的实证奠基。
 - *Alignment Faking in Large Language Models*（Anthropic + Redwood Research, 2024-12）：发现 Claude 3 Opus 在**被告知正在被训练改变价值观**时，会**策略性地伪装服从**以避免价值观被修改。这是首次在生产级模型上**实证观察到**对齐伪装现象。
 
-> 这两项工作把 Anthropic 的"长期安全"叙事从理论推进到实验：模型不仅会出错，**还可能策略性地隐藏错误**，因此机制可解释性不是"锦上添花"，而是检测此类行为的**唯一有效抓手**。
+> 这两项工作把 Anthropic 的"长期安全"叙事从理论推进到实验：模型不仅会出错，**还可能策略性地隐藏错误**，因此机制可解释性不是"锦上添花"，而是研究此类行为的一种补充途径；该组实验本身未证明它优于或取代全部行为评测。
 
 ---
 
@@ -339,8 +339,8 @@ Anthropic 的可解释性团队是其"安全研究身份"最显著的标志，�
   - `keyboard_type / keyboard_key`；
   - `bash(command)`、`text_editor(...)`等组合工具。
 - **能力**：模型**直接读取像素**（不依赖 DOM），输出鼠标 / 键盘指令——这是把 LLM 当作"通用图形界面 Agent"的首个原厂方案。
-- **基线表现**（确认）：在 OSWorld 上 14.9%（人类 ~70%）——绝对值低，但**任何此前的 LLM Agent 在该榜上都接近 0**。
-- **演进**：Claude 3.7 Sonnet → Sonnet 4 → Sonnet 4.5 → Haiku 4.5 → Opus 4.5 持续刷新，2025-09 Sonnet 4.5 在 OSWorld 上已达 ~50%（Anthropic 公告数据）。
+- **基线表现**（确认）：在早期 OSWorld 上约 14.9%（人类约 70%）的原稿数字仍需结合原始步数与设置核对；不再附加“此前全部接近零”的无源比较。
+- **演进**：Claude 3.7 Sonnet → Sonnet 4 → Sonnet 4.5 → Haiku 4.5 → Opus 4.5 持续刷新，后续 Sonnet 4.6 公告特别说明：4.5 前用原 OSWorld，4.5 起用 OSWorld-Verified；跨版曲线不能解释成纯模型增益（[官方协议说明](https://www.anthropic.com/news/claude-sonnet-4-6)）。
 
 ### 5.3 Claude Code（2025-02，确认）
 
@@ -362,118 +362,87 @@ Anthropic 的可解释性团队是其"安全研究身份"最显著的标志，�
   - 通信走 **JSON-RPC** + stdio / SSE。
 - **生态扩散**：MCP 在 2025 年被 OpenAI、Google、Cursor、Zed、JetBrains 等主流 AI 应用采纳，事实上成为**Agent 工具协议的开放标准**——这是 Anthropic 在 2024-2025 年最具行业影响力的"非模型贡献"。
 
-### 5.5 2026 年 Agent 与产品重大更新（确认）
+### 5.5 2026 年产品能力：按实际事件区分
 
-2026 年上半年，Anthropic 在 Agent 基础设施与产品形态上推出多项关键能力，标志着从"单 Agent 工具"向"多 Agent 协作平台"的演进：
-
-| 功能 | 发布时间 | 说明 |
+| 功能 | 核到的事件与真实含义 | 来源 |
 |---|---|---|
-| **Dynamic Workflows** | 2026-02 | 动态工作流，支持多步骤自动化编排；模型可根据任务复杂度自动拆解、调度子 Agent 并串联执行 |
-| **Cowork** | 2026-02 | 协作功能，支持多用户与 Claude 在同一工作区实时协作，共享上下文与编辑状态 |
-| **Claude Code agent teams** | 2026-03 | Claude Code 支持**代理团队**——多个 Claude 实例分工协作，并行处理大型代码库的不同模块 |
-| **128K output tokens** | 2026-03 | API 输出 token 上限扩展至 **128K**，支持生成长篇报告、完整代码文件、多轮对话总结 |
-| **Adaptive thinking** | 2026-04 | 自适应思考：模型根据问题复杂度**自动决定**是否进入 Extended Thinking 模式及思考深度，无需开发者手动设置 budget_tokens |
-| **xhigh effort** | 2026-04 | 超高努力模式：在 Extended Thinking 之上追加额外推理深度，用于数学证明、形式化验证等极端场景 |
-| **Task Budgets** | 2026-05 | 任务预算控制：开发者可为单次请求设置**总 token 预算（输入 + 思考 + 输出）**，API 在预算耗尽前自动降级或截断 |
-| **File-system memory** | 2026-05 | 文件系统记忆：Claude 可在本地/云端文件系统中持久化存储结构化记忆，跨会话保持状态 |
-| **Mid-conversation system instructions** | 2026-05 | 对话中系统指令：允许在对话中途动态注入/修改 system prompt，实现运行时角色切换或策略调整 |
+| Claude Code agent teams | Opus 4.6 的 **2026-02-05** 公告同时介绍 agent teams；是 Claude Code 编排能力，不是模型层数或内部专家结构 | [Opus 4.6 公告](https://www.anthropic.com/news/claude-opus-4-6) |
+| Adaptive thinking | 同一 4.6 公告已介绍，原稿“2026.04 的 4.7 首次上线”不成立 | 同上 |
+| xhigh effort / task budgets | **2026-04-16** Opus 4.7 公告介绍 `high` 与 `max` 之间的新 `xhigh`，以及任务预算公开 beta | [Opus 4.7 公告](https://www.anthropic.com/news/claude-opus-4-7) |
+| Dynamic workflows | **2026-05-28** 与 Opus 4.8 同时发布研究预览；在 Claude Code 组织大量并行子代理 | [Opus 4.8 公告](https://www.anthropic.com/news/claude-opus-4-8) “Also launching today” |
+| 对话中 system entries | 同一 4.8 公告介绍 Messages API 在 `messages` 数组内接收 system 条目，用于更新运行中指令 | 同上；接口细节应另查当前 API 文档 |
+| Memory tool | 面向客户端工具的存储/读写约定，不是模型权重自动持久化的记忆能力；不能因名称推导所有 API 会话共享文件系统 | [Memory tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool) |
+| Cowork | 官方产品页定义为在授权文件与工具中执行任务，不能解释成“多用户实时共同编辑同一上下文” | [官方产品页](https://claude.com/product/cowork)；旧预览链接现已重定向，初次发布时间暂不从当前页倒推 |
 
-- **Computer Use 与 MCP 持续演进**：2026 年 Computer Use 支持更多操作系统原生控件，MCP 生态扩展至 5000+ 社区 Server，被 OpenAI、Google、Cursor、Zed、JetBrains 等全面采纳（确认）。
-- **与 AWS Bedrock 深度集成**：Claude 4.6 / 4.7 / 4.8 在 AWS Bedrock 上同步上线，支持 Bedrock 的 Guardrails、Knowledge Bases、Agents 编排层与 Claude 原生能力深度打通，成为企业级部署首选通道（确认）。
+128K 最大输出也要按型号检查：当前 4.7 规格页是 128K，而 Haiku 4.5 / Opus 4.5 的页为 64K；不能写成 2026.03 全 API 统一扩展。云平台可用性、MCP 社区数量和实时协作也需各自来源，不由这些公告统一推出；原稿“5000+、全平台同步且首选”的无条件结论不保留。
 
-### 6.1 设计动机
+## 6. 推理接口：预算、effort 与可见内容
 
-- 2024-09 OpenAI 发布 o1，把"长思维链 + RL"打包为**独立的 reasoning 模型**，与 GPT-4o 并列。
-- Anthropic 2025-02 在 Claude 3.7 Sonnet 上选择了不同路线：**同一权重，两种调用模式**——这就是 *Hybrid Reasoning*。
+### 6.1 先区分手动预算和自适应思考
 
-### 6.2 Extended Thinking 接口（确认）
+[Extended thinking 文档](https://platform.claude.com/docs/en/build-with-claude/extended-thinking) 明确区分：支持手动模式的旧模型可使用 `thinking={"type":"enabled","budget_tokens":N}`；4.6 上该形式已弃用但请求仍可成功；**4.7 及以后不支持该手动形式，会返回 400**。因此原稿将 `thinking.type="enabled"` 与 `thinking.effort="xhigh"` 合用的代码不能用于 4.7 / 4.8。
+
+[Effort 文档](https://platform.claude.com/docs/en/build-with-claude/effort) 将请求参数放在 `output_config.effort`。以下只示范本报告讨论的 4.7，已对照文档参数位置；本次未调用计费 API，不能当成运行验证：
 
 ```python
+import anthropic
+
+client = anthropic.Anthropic()
 response = client.messages.create(
-    model="claude-3-7-sonnet-20250219",
-    thinking={"type": "enabled", "budget_tokens": 16000},
-    messages=[{"role": "user", "content": "Prove that ..."}]
+    model="claude-opus-4-7",
+    max_tokens=64000,
+    thinking={"type": "adaptive"},
+    output_config={"effort": "xhigh"},
+    messages=[{"role": "user", "content": "分析这项设计的约束与取舍。"}],
 )
-# response.content 中含两类 block：
-#  - {"type": "thinking", "thinking": "<内部推理文本>"}
-#  - {"type": "text", "text": "<最终回答>"}
 ```
 
-- **关键字段**：`thinking.budget_tokens` 由开发者控制推理预算（确认）。
-- **Streaming**：思考块和回答块均可流式返回。
-- **可见性**：与 OpenAI o1 早期"完全隐藏推理"不同，Anthropic 选择**默认可见 thinking 块**，便于调试和对齐研究。
+`xhigh` 是比 `high` 更高、低于 `max` 的 effort 档位，不是“在全部 Extended Thinking 模式之上再叠一个独立极端模式”。是否支持某档、默认档位与可用思考模式都依模型而异；不能写成所有 Claude 版本共用的一条三级控制轴。
 
-### 6.3 与 OpenAI o1 / o3 的差异
+### 6.2 任务预算是建议，max_tokens 才是输出硬限制
 
-| 维度 | OpenAI o1 / o3 | Claude 3.7 / 4 / 4.5 | Claude 4.6–4.8 |
-|---|---|---|---|
-| 模型形态 | 独立 reasoning 模型 | 统一权重，可切换模式 | 统一权重，**自动适应** |
-| 推理可见性 | 早期完全隐藏（仅 summary），后逐步开放 | 默认输出 `thinking` 块 | 默认输出 `thinking` 块 |
-| 预算控制 | reasoning_effort: low/medium/high | budget_tokens: 任意整数 | **Adaptive**（自动）/ budget_tokens / **xhigh effort** |
-| 工具调用 | 推理中可调工具（o3） | 推理中可调工具（Sonnet 4 起，"interleaved thinking"） | 推理中可调工具 + Agent Teams |
+[Task budgets 文档](https://platform.claude.com/docs/en/build-with-claude/task-budgets) 的定义是 agentic loop 的**建议性** token 预算，可覆盖 thinking、工具调用、工具结果和输出；模型可用倒计时安排工作，也可能超出。配置在 `output_config.task_budget`，并需相应 beta header，支持情况按型号表核对。
 
-### 6.4 Interleaved Thinking（Claude 4 起，确认）
+`max_tokens` 则是每次请求生成 token 的硬上限，达到时可能以 `stop_reason="max_tokens"` 截断。原稿把任务预算解释为“输入+思考+输出的强制上限，耗尽时自动降级/截断”，混合了两个控制机制，已修正。effort 也不是精确的 token 数或费用保证，预算大小需要用实际任务分布测试。
 
-- Claude 4 引入 *interleaved thinking*：在工具调用之间穿插推理块，使长 Agent 任务（如 Computer Use、Claude Code 多步编码）能在每一步工具反馈后**重新思考**。
-- 这显著提升了 Agent 的鲁棒性与"反思 / 回滚"能力，是 Sonnet 4.5 在 OSWorld 跃升的关键工程因素之一。
+### 6.3 工具循环与思考可见性
 
-### 6.5 Adaptive Thinking 与 xhigh effort（Claude 4.7 / 4.8，2026，确认）
+Interleaved thinking 允许在工具返回之后继续推理。它是模型/请求支持的行为，不等于客户端已经执行工具，也不等于多 agent 之间自动通信；工具的权限、调度与失败恢复仍由运行环境承担。
 
-- **Adaptive Thinking**：模型根据 prompt 复杂度**自动判断**是否启用 Extended Thinking 及所需思考深度，开发者无需手动设置 `budget_tokens`。这降低了 Hybrid Reasoning 的使用门槛，使"推理模式"从"显式开关"变为"隐式自适应"。
-- **xhigh effort**：在 Adaptive Thinking 之上追加的**极端推理模式**，用于数学证明、形式化验证、复杂代码重构等场景。API 中可通过 `thinking.type: "enabled"` + `thinking.effort: "xhigh"` 调用（确认）。
-- **与 OpenAI 的差异**：OpenAI 在 o3 时代采用 `reasoning_effort: low/medium/high` 三档离散控制；Anthropic 2026 年路线为 **Adaptive（自动）→ budget_tokens（手动精细）→ xhigh（极端）** 三层体系，赋予开发者更细粒度的控制权。
+响应中的 `thinking` 内容不能一概称为完整内部推理原文；不同模型和模式可能返回摘要、隐藏或加密内容。把旧版 3.7 的可见思考描述推广到后续全系，会误导调试与可解释性结论。[Extended thinking 文档及其 Thinking overview]
 
----
+没有去除 interleaved thinking 的受控实验，就不能把 Sonnet 4.5 的 OSWorld 成绩跃升单独归因于这一机制。新版模型、训练、工具实现与评测协议可能同时变化，原稿的单因果解释撤回。
 
-## 7. 长上下文演进：100K → 200K → 1M
+## 7. 长上下文：发布时状态与按型号的规格
 
-| 时间 | 模型 | 上下文 | 备注 |
-|---|---|---|---|
-| 2023-03 | Claude 1 | ~9K | 与 GPT-3.5-Turbo 同级 |
-| 2023-05 | **Claude 1.3** | **100K** | 行业首发可商用 100K |
-| 2023-11 | **Claude 2.1** | **200K** | 翻倍 |
-| 2024-03 | Claude 3 全系 | 200K | 默认 |
-| 2024-03 | Claude 3 Opus | **1M（部分客户）** | 试点开放，未 GA |
-| 2025-08 | **Claude Sonnet 4** | **1M（API GA）** | 与企业客户大规模开放 |
-| 2025-09 起 | Sonnet 4.5 / Haiku 4.5 / Opus 4.5 | 1M | 普遍化 |
-| 2026-01 起 | Claude 4.6 / 4.7 / 4.8 全系 | **1M（API 全面可用）** | 1M 上下文成为 Claude 4.x 系列标准配置，所有 API 用户均可调用 |
+| 对象 | 可核对的口径 | 不能推广的结论 |
+|---|---|---|
+| Sonnet 4，2025-08-12 | 官方 1M 公告明确为 **public beta**，并区分超过 200K 的计价 | 不能写成发布时 API GA，也不能推到 Haiku / Opus 同期型号 |
+| Haiku 4.5 | 当前对应型号页列 **200K context / 64K max output** | 不是 4.5 全系 1M 的证据 |
+| Opus 4.5 | 当前对应型号页同样列 **200K / 64K** | 同上；不能把 Opus 4.6 的能力倒灌到 4.5 |
+| Sonnet 4.5 | 当前型号页默认 context 为 200K；额外长上下文访问需另核具体平台、beta 与权限 | 默认规格不等于所有可申请功能，也不能声称所有账户统一 1M |
+| Opus 4.6 / Sonnet 4.6 | 2026-02-05 / 02-17 两篇发布公告都说 **1M in beta** | 不能写成 2026.01 起所有 4.x、所有 API 用户全量可用 |
+| Opus 4.7 | 当前型号页列 **1M / 128K** | 输入窗口与最大输出分别是不同限制，也不是长文本任务的准确率保证 |
 
-- **检索质量**："Needle-in-a-Haystack（NIAH）" 测试自 Claude 2.1 起一直保持 90% 以上的检索精度（Anthropic 自评，确认）；Claude 3 Opus 公布的 NIAH 接近 100%。
-- **技术路线（推测）**：Anthropic 未公开是否使用 Position Interpolation、YaRN、Ring Attention、Flash Attention v3 等具体技术（**未确认**），仅公开"在长上下文上长期投入工程优化"。
-- **价格策略**：Sonnet 4 上线 1M 时启用了**长上下文阶梯定价**（>200K 部分加价），同时提供 **Prompt Caching** 折扣，缓解长上下文成本（确认）。2026-05 引入 **Task Budgets**，允许开发者为单次请求设置总 token 预算（输入 + 思考 + 输出），API 在预算耗尽前自动降级或截断，进一步精细化成本控制（确认）。
+来源：[Sonnet 4 的 1M 公告](https://claude.com/resources/articles/1m-context)、[Haiku 4.5](https://platform.claude.com/docs/en/models/haiku-4-5/overview)、[Opus 4.5](https://platform.claude.com/docs/en/models/opus-4-5/overview)、[Sonnet 4.5](https://platform.claude.com/docs/en/models/sonnet-4-5/overview)、[Opus 4.6 公告](https://www.anthropic.com/news/claude-opus-4-6)、[Sonnet 4.6 公告](https://www.anthropic.com/news/claude-sonnet-4-6)、[Opus 4.7](https://platform.claude.com/docs/en/models/opus-4-7/overview)。动态文档在 2026-10-22 实读，历史发布状态取公告，不以当前页反推旧日。
 
----
+NIAH 是指定长度、插入位置和检索任务下的表现，不能支撑“自 2.1 起始终 90%+”或“一百万 token 内各任务都可靠”。原稿未附对应完整曲线与提示协议，故撤回连续百分比结论。Sonnet 4 当时超过 200K 的请求采用不同计价，但该历史规则也不能推广为所有新型号的现价。
 
 ## 8. 跨代技术演进分析
 
-### 8.1 模型能力维度
+### 8.1 代际变化需要按维度分开
 
-| 维度 | Claude 1 | Claude 2 | Claude 3 | Claude 3.5 | Claude 3.7 | Claude 4 | Claude 4.5 | Claude 4.6–4.8 |
-|---|---|---|---|---|---|---|---|---|
-| 上下文 | 9K → 100K | 100K → 200K | 200K | 200K | 200K | 200K → 1M | 200K → 1M | **1M 标准** |
-| 多模态 | 文本 | 文本 | **文 + 图** | 文 + 图 | 文 + 图 | 文 + 图 | 文 + 图 | 文 + 图 |
-| 工具使用 | × | Beta | GA | GA + Computer Use | GA | + Interleaved | + 长 Agent | + Agent Teams / Dynamic Workflows |
-| 推理模式 | × | × | × | × | **Hybrid** | Hybrid | Hybrid | **Adaptive + xhigh** |
-| 安全等级 | ASL-2 | ASL-2 | ASL-2 | ASL-2 | ASL-2 | **ASL-3** | ASL-3 | ASL-3 |
+长上下文、思考控制、工具循环、Claude Code 编排和产品记忆分别属于不同接口与运行层。一个版本上线新功能，不证明同一时期所有 Haiku / Sonnet / Opus 也同步获得相同能力。§5–§7 保留逐型号与发布日期的可核对口径，取代原来的“4.5 全家族 1M、4.6–4.8 统一 Adaptive+xhigh”表。
 
-### 8.2 训练方法演进（推测 + 确认混合）
+### 8.2 训练方法不能由产品功能还原
 
-```
-Claude 1     : Pretrain → SFT → CAI(SL) → CAI(RL/RLAIF) ← 公开论文版本
-Claude 2.x   : + 更多 RLHF + 红队对抗数据
-Claude 3     : + 多模态对齐 + 更广 Constitution
-Claude 3.5   : + Character Training + Tool/Agent 数据
-Claude 3.7   : + Reasoning RL（Extended Thinking）
-Claude 4     : + 长 Agent 轨迹 + ASL-3 防滥用专项
-Claude 4.5   : + Interleaved Thinking + 更深 Computer Use 训练
-Claude 4.6–4.8: + Adaptive Thinking + Agent Teams + 文件系统记忆 + 任务预算控制
-```
+CAI / RLAIF 是公开研究方法；工具 API、文件记忆、Task budgets 和 Agent Teams 是模型接口或客户端能力。不能把这些产品功能逐项追加到一条所谓“Claude 训练流水线”，更不能据此断言哪些数据、优化目标或蒸馏方法在每代被采用。生产模型的具体训练配方必须以相应 Model/System Card 为界；缺少披露的环节保持未知。
 
-> 上述训练流程为**基于公开材料的合理重构**，并非 Anthropic 官方完整披露。
+
 
 ### 8.3 架构演进（**绝大部分未公开**）
 
-- **确认**：Decoder-only Transformer；位置编码、激活函数、归一化等具体配方**未公开**。
+- **未知**：本轮未取得足以固定具体 backbone、参数、位置编码、归一化或专家配置的一手实现材料；不将行业常见 Decoder-only 配方标为全系已确认。
 - **推测**：
   - Claude 3 Opus / Claude 4 Opus 的延迟与吞吐特征**与 dense Transformer 兼容**，但社区也有 MoE 推测（**无定论**）；
   - Sonnet → Haiku 的延迟差异在 3.5 / 4 / 4.5 时代缩小，可能反映"小模型从大模型蒸馏 + 额外 RL"的范式（与业界 Llama 3.2 / Qwen 等公开方法一致，**Claude 内部细节未确认**）。
@@ -512,9 +481,9 @@ Claude 4.6–4.8: + Adaptive Thinking + Agent Teams + 文件系统记忆 + 任�
 10. **200K + 高 NIAH 检索质量（2023-11）**：把长上下文从"营销噱头"变为"生产可用"。
 11. **Hybrid Reasoning / Extended Thinking（2025-02 Claude 3.7）**：与 OpenAI"独立推理模型"路线对立的"统一权重双模式"方案，被 Google Gemini 2.5、Qwen3 等后续效仿。
 12. **Interleaved Thinking（Claude 4）**：在工具循环中插入推理，使长 Agent 任务的鲁棒性大幅提升。
-13. **Adaptive Thinking + xhigh effort（Claude 4.7 / 4.8，2026）**：模型自动根据任务复杂度选择推理深度，并支持开发者调用极端推理模式，将 Hybrid Reasoning 从"手动切换"推进到"自动适应"。
-14. **128K output tokens（2026-03）**：API 输出上限扩展至 128K，支持生成长篇报告、完整代码文件、多轮对话总结，把"长输入"优势延伸至"长输出"。
-15. **Claude Code Agent Teams + Dynamic Workflows（2026）**：从单 Agent 编码工具演进为多 Agent 协作平台，支持并行分工与动态任务编排。
+13. **Adaptive thinking 与 effort**：4.6 已介绍自适应思考，4.7 增加 xhigh；请求字段与支持型号见 §6，不视为每代统一能力。
+14. **输入/输出限制分别记录**：4.7 当前规格 1M / 128K；4.5 某些型号默认 200K / 64K，不能推广为全 API 统一扩展（§7）。
+15. **Claude Code agent teams / Dynamic workflows**：对应 4.6 与 4.8 的不同发布事件和客户端编排能力，见 §5.5。
 
 ### 9.4 Agent 与生态
 
@@ -540,7 +509,7 @@ Claude 4.6–4.8: + Adaptive Thinking + Agent Teams + 文件系统记忆 + 任�
 | **多模态生成** | 仅文本输出，**无原生图像 / 视频生成** | DALL·E 3 / Sora / Voice / Realtime API 多模态生成 |
 | **推理路线** | **Hybrid Reasoning（同模型双模式）→ Adaptive Thinking（自动适应）** | 独立 reasoning 模型（o1 / o3）→ GPT-5 时代逐步合并 |
 | **生态协议** | **MCP（开放协议）+ Computer Use（开放参考实现）+ Agent Teams** | Custom GPTs + Apps SDK，相对封闭 |
-| **价格 / 速度** | Sonnet 性价比高，Haiku 极快；1M 上下文有阶梯定价；**Task Budgets 精细化预算控制** | GPT-4o-mini 极便宜；GPT-4.1 长上下文 |
+| **价格 / 速度** | Sonnet 性价比高，Haiku 极快；1M 上下文有阶梯定价；**Task budgets 为建议性预算，另需 max_tokens 和客户端费用控制** | GPT-4o-mini 极便宜；GPT-4.1 长上下文 |
 | **企业 / 政府** | 与 AWS、Palantir、美国政府深度合作；**AWS Bedrock 深度集成**；Claude for Government | 与微软深度合作；Azure OpenAI Government |
 | **闭源程度** | **高**（架构、参数量、训练配方均不公开） | 高（同上） |
 
@@ -588,12 +557,12 @@ Claude 4.6–4.8: + Adaptive Thinking + Agent Teams + 文件系统记忆 + 任�
 28. **[官方]** *Introducing Claude 4*，2025-05-22.
 29. **[官方]** *Claude Opus 4.1*，2025-08-05.
 30. **[官方]** *Claude Sonnet 4.5*，2025-09 / *Claude Haiku 4.5*，2025-10 / *Claude Opus 4.5*，2025-11.
-31. **[官方]** *Claude Opus 4.6 / Sonnet 4.6*，2026-02.
-32. **[官方]** *Claude Opus 4.7*，2026-04.
-33. **[官方]** *Claude Opus 4.8*，2026-05.
-34. **[官方]** *Dynamic Workflows, Cowork, and Claude Code Agent Teams*，2026-02 / 2026-03.
-35. **[官方]** *128K Output Tokens and Adaptive Thinking*，2026-03 / 2026-04.
-36. **[官方]** *Task Budgets, File-system Memory, and Mid-conversation System Instructions*，2026-05.
+31. **[官方，已实读]** [Opus 4.6](https://www.anthropic.com/news/claude-opus-4-6)，2026-02-05；[Sonnet 4.6](https://www.anthropic.com/news/claude-sonnet-4-6)，2026-02-17。
+32. **[官方，已实读]** [Claude Opus 4.7](https://www.anthropic.com/news/claude-opus-4-7)，2026-04-16。
+33. **[官方，已实读]** [Claude Opus 4.8](https://www.anthropic.com/news/claude-opus-4-8)，2026-05-28。
+34. **[官方，已实读]** [Extended thinking](https://platform.claude.com/docs/en/build-with-claude/extended-thinking)、[Effort](https://platform.claude.com/docs/en/build-with-claude/effort)、[Task budgets](https://platform.claude.com/docs/en/build-with-claude/task-budgets)，2026-10-22 动态文档。原稿将不同事件合成的标题不是独立官方出版物。
+35. **[官方，已实读]** [Sonnet 4 1M public beta](https://claude.com/resources/articles/1m-context)，2025-08-12；§7 链接到对应 legacy 型号页，分别核对上下文/最大输出。
+36. **[官方，已实读]** [Memory tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool)、[Cowork 产品页](https://claude.com/product/cowork)，2026-10-22；不再把它们拼成一个统一 2026.05 发布标题。
 
 ### 11.4 第三方与生态
 
@@ -608,4 +577,4 @@ Claude 4.6–4.8: + Adaptive Thinking + Agent Teams + 文件系统记忆 + 任�
 
 > 文末说明：Anthropic 的研究发布以 Model Card / System Card / transformer-circuits.pub 博客为主，少有传统 ML 顶会论文。本报告所有数据均尽量回溯到上述官方一手材料；对于 Anthropic 未公开的具体架构、参数量、训练数据细节，已在正文中明确标注为"未确认 / 推测"，请读者按需求判断。
 >
-> **报告撰写日期：2026-06-05**
+> **报告撰写日期：2026-06-05；证据修订：2026-10-22。** 本轮全文读过旧报告，重点复核 API 字段、预算语义、逐型号上下文与发布事件；没有执行 API 请求，未逐篇复取 §3–§4 的安全/可解释性论文，也未复跑 OSWorld / ARC / SWE-bench。旧论文综述和早代训练方法仍需后续补证，不能据局部修复声称整篇所有“确认”已验收。

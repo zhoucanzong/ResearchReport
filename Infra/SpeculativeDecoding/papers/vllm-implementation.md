@@ -1,6 +1,7 @@
 # vLLM 实现核验：投机解码的 draft/verify 两条路径（仓库 @ 2b85d9cb）
 
 > **一手来源**：`vllm-project/vllm` @ **`2b85d9cb65c1f56c347cb7f56f1596a6b8b28373`**（2026-10-17，commit `2b85d9cb`，committed 2026-10-17T02:55:28−07:00），只读快照；license = **Apache-2.0**。｜ **主等级**：`[精读原文]`（代码路径）
+> **补充核验（2026-10-22）**：重新取得固定 commit 的五个列明源文件，核对配置、采样和恢复 kernel；未运行 GPU 或重新验证全部框架分支。
 > **核验范围**：`vllm/config/speculative.py`、`vllm/v1/spec_decode/llm_base_proposer.py`、`vllm/v1/sample/rejection_sampler.py`、`vllm/v1/spec_decode/metrics.py`、`vllm/v1/worker/gpu_model_runner.py` 的投机相关分支（非全仓库）。逐条锚点见 [sources/CODE-AUDIT.md](../sources/CODE-AUDIT.md)。
 > **一句话定位**：vLLM 把投机解码拆成「**draft 采样**（greedy / probabilistic）」×「**验证规则**（standard / synthetic / block）」两个正交开关；`greedy` 默认把草稿概率当 one-hot，`probabilistic` 才真正把 draft 分布传给拒绝采样。
 > **亮点与差异四行**
@@ -63,7 +64,7 @@
 - `draft_sample_method="greedy"`（`speculative.py:604`）时，`_sample_draft_tokens` 直接走 `_greedy_sample`（`llm_base_proposer.py:477–486`），返回 `(ids, None)`。
 - 配置注释写得很直白：**“greedy always picks the argmax token, and the draft probabilities are treated as one-hot during rejection sampling”**（`speculative.py:604` 的 docstring）。
 - 数学含义：草稿分布 `q` 退化为 one-hot（在该 token 上概率 1，其余 0）。这与 Lookahead 的“贪心草稿”是同一语义（见 [papers/2402.02057-lookahead.md](2402.02057-lookahead.md) §2.3）。
-- 代价：T>0 时 one-hot 提议的接受率低于真实分布提议；好处：不需要存整个词表的 `q`，显存与传输成本低。
+- 代价：T>0 时 one-hot 的接受率是 target 在候选处的概率；与其他提议谁高须比较概率重叠，不能无条件断言；好处：不需要存整个词表的 `q`，显存与传输成本低。
 
 ### 3.2 `probabilistic`
 
@@ -111,7 +112,7 @@
 | 随机采样 | `target_probs = target_logits.softmax(...)`；`draft_probs` 可为 `None` | `:487–520` |
 | `draft_probs is None` | Triton kernel 走 `NO_DRAFT_PROBS=True` 分支 | `:949`、`:1128` |
 
-**关键语义**：`draft_probs is None` 不等于“无损”——它表示 kernel 按 **one-hot 提议**处理（即假定草稿是 argmax，`vllm/v1/sample/rejection_sampler.py:949`）。这正是 `greedy` 默认路径的数学基础，也是“缺 draft_probs 时回退 legacy 行为”的原因（见 §5，`vllm/v1/worker/gpu_model_runner.py:4714–4741`）。
+**关键语义**：`draft_probs is None` 不等于“无损”——它表示 kernel 按 **one-hot 提议**处理（即将实际提议视作确定的 point mass；kernel 本身不验证它是哪个模型的 argmax，`vllm/v1/sample/rejection_sampler.py:949`）。这正是 `greedy` 默认路径的数学基础，也是“缺 draft_probs 时回退 legacy 行为”的原因（见 §5，`vllm/v1/worker/gpu_model_runner.py:4714–4741`）。
 
 ### 4.1 两条路径的接受判据（代码对照）
 
@@ -121,9 +122,15 @@
 | random + draft_probs | `u ≤ p(x)/q(x)` | 从 `norm(max(0, p−q))` 采恢复 token | `sample_recovered_tokens`（`:678`）、`_rejection_random_sample`（`:934`） |
 | random、无 draft_probs | 按 one-hot 提议的等价规则 | 同上，但 `q` 视为 one-hot | `NO_DRAFT_PROBS`（`:949`/`:1128`） |
 
-这张表解释了为什么“greedy 不需要 draft_probs 也能无损”：one-hot 提议下 `q(x)=1`，`p/q` 退化为 `p`，接受规则与 target argmax 一致。
+必须区分目标与草稿：目标贪心时比较 argmax；目标随机且草稿为 one-hot 时， `q(x)=1`，`p/q` 退化为 `p`，接受概率是 p(x)，不是与 target argmax 比较；拒绝残差排除该候选，再与接受分支混合恢复目标分布。
 
 ---
+
+### 4.2 拒绝残差不等于无条件 target
+
+在固定 commit 2b85d9cb 的 [恢复 kernel 第 1044–1061 行](https://github.com/vllm-project/vllm/blob/2b85d9cb65c1f56c347cb7f56f1596a6b8b28373/vllm/v1/sample/rejection_sampler.py#L1044-L1061)，没有 draft_probs 时将被拒的候选位置置零；有 draft_probs 时取 max(p-q,0)。前者对应 q 为该候选的 point mass，拒绝后其他 token 的相对质量仍按 p 分配。kernel 用指数随机数的 argmax 竞争采样，不需要显式将全部概率除以同一个归一化常数；不能据没有除法就判断“未归一化所以有偏”。数学证明见 [验证专题 §3.2](../topics/verification-acceptance.md#32-one-hot-草稿也是合法提议)。
+
+若候选实际来自随机分布，runner 因缓存缺失返回 None 并不自动证明回退仍保持原分布；需要把真实提议和条件概率一并检查。这是回退路径的待验证边界，不是“有 draft 模型必须保存全词表 q”的定律。
 
 ## 5. draft_probs 的生命周期与回退
 

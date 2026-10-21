@@ -15,7 +15,7 @@
 5. [PixArt-α/Σ：高效训练策略](#5-pixart-ασ高效训练策略)
 6. [SD3 / MMDiT：多模态 DiT](#6-sd3--mmdit多模态-dit)
 7. [FLUX：Flow Matching + Transformer](#7-fluxflow-matching--transformer)
-8. [SANA：Linear DiT 与实时生成](#8-sana-linear-dit-与实时生成)
+8. [SANA：Linear DiT 与实时生成](#8-sanalinear-dit-与实时生成)
 9. [视频 DiT：从图像到时空生成](#9-视频-dit从图像到时空生成)
 10. [架构对比总结](#10-架构对比总结)
 11. [Scaling Law 分析](#11-scaling-law-分析)
@@ -244,21 +244,15 @@ DiT 的一个显著特点是**完全摒弃 Cross-Attention**，所有条件信�
 
 DiT 论文的核心贡献不仅是架构本身，更是**验证了扩散模型中的 Scaling Law**：
 
-| 模型规模 | 参数量 | 配置 | FID↓ (ImageNet 256×256) |
-|----------|--------|------|------------------------|
-| DiT-S | 33M | depth=12, width=384, heads=6 | ~20 |
-| DiT-B | 130M | depth=12, width=768, heads=12 | ~15 |
-| DiT-L | 458M | depth=24, width=1024, heads=16 | ~12 |
-| DiT-XL | 675M | depth=28, width=1152, heads=16 | ~10 |
-| DiT-XL/2 | 675M | patch=2 (更多 token) | ~8 |
+原稿把不同patch、训练步数和CFG设置混成一张近似FID表。本次按[DiT v2 §5、表2及附录表4](https://arxiv.org/html/2212.09748v2)拆开：
 
-关键发现：
-1. **参数量↑ → 质量↑**：在固定计算预算下，更大的模型 consistently 获得更低的 FID
-2. **计算量↑ → 质量↑**：在固定模型大小下，更多的训练步数/数据量 consistently 提升质量
-3. **与 GAN 不同**：GAN 的扩展往往不稳定，而 DiT 的扩展呈现平滑的幂律关系
-4. **与 NLP 呼应**：DiT 的 Scaling 行为与 GPT 系列类似，暗示生成模型可能遵循统一的 Scaling Law
+| 模型与条件 | FID-50K↓ | 比较解释 |
+|---|---:|---|
+| DiT-XL/2，ImageNet 256²，adaLN-Zero，400K steps，无CFG | 19.47 | 模型约675M参数；不能与7M steps的结果直接比较架构 |
+| 同模型，7M steps，无CFG | 9.62 | 增加训练预算后的结果 |
+| 同模型，7M steps，CFG=1.50 | 2.27 | 表2的有引导结果；不应称为无引导FID |
 
-这一发现为后续 3B (SD3)、12B (FLUX) 甚至更大规模的扩散模型提供了理论信心。
+论文扫描深度/宽度与patch大小后，发现前向Gflops较大通常对应更低FID；**参数量并不是唯一解释变量**，减小patch也会在参数基本不变时增加计算与质量。这里是所测架构和预算中的经验关系，不是任意固定算力预算下“大模型必胜”的定理，也没有据此证明所有GAN都不能稳定扩展。
 
 ---
 

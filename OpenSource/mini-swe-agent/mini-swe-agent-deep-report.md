@@ -1,7 +1,8 @@
 # mini-swe-agent 深度架构报告
 
 > **分析日期**: 2026-06-06
-> **分析版本**: v2.3.0 (commit: main branch)
+> **分析版本**：本轮按 `v2.3.0` tag 复核，固定 commit [`adfe20233d456104c38c3129161b54f0fd39f2c7`](https://github.com/SWE-agent/mini-swe-agent/tree/adfe20233d456104c38c3129161b54f0fd39f2c7)。旧报告没有保存当时 main 的 SHA，不能将该 tag 反写为历史快照；下列修正只对应本轮固定 tag。
+> **复核日期**：2026-10-22；源码只读、未构建、未调用模型或执行 agent；来源与覆盖见 [sources/MANIFEST.md](sources/MANIFEST.md)。
 > **代码规模**: ~5,200 行 Python 源码 / ~9,100 行测试
 > **仓库地址**: https://github.com/SWE-agent/mini-swe-agent
 
@@ -27,7 +28,7 @@
 - **唯一工具是 bash** —— 不依赖 LLM 的 tool-calling 接口也能工作
 - **线性消息历史** —— 没有历史处理/压缩层，trajectory 就是 messages
 - **`subprocess.run` 执行每个动作** —— 无状态 shell session，每条命令独立执行
-- 在 SWE-bench verified 上达到 >74% 的解决率
+- `README.md:28` 自述 SWE-bench Verified >74%；`:9` 同时列了 Gemini 3 Pro 的 74% 新闻。本文没有追踪逐实例评测记录、预算和模型设置，不把该宣传数字当作 agent 单独可复现的性能结论
 
 ### 1.2 技术栈
 
@@ -59,7 +60,7 @@ mini-swe-agent/
 │   ├── __main__.py                # python -m minisweagent 入口
 │   ├── agents/
 │   │   ├── __init__.py            # get_agent() 工厂函数
-│   │   ├── default.py             # DefaultAgent — 核心 agent 循环 (~170行)
+│   │   ├── default.py             # DefaultAgent — 核心 agent 类（文件171行）
 │   │   └── interactive.py         # InteractiveAgent — 人机交互模式 (human/confirm/yolo)
 │   ├── environments/
 │   │   ├── __init__.py            # get_environment() 工厂函数
@@ -135,7 +136,7 @@ mini-swe-agent/
 ### 1.5 阅读路线建议
 
 1. **`src/minisweagent/__init__.py`** — 理解三大 Protocol（Agent/Model/Environment）和全局配置
-2. **`src/minisweagent/agents/default.py`** — 核心 agent 循环，不到 170 行
+2. **`src/minisweagent/agents/default.py`** — 核心 agent 循环，171 行（包括配置和序列化，非循环本身）
 3. **`src/minisweagent/environments/local.py`** — 最简单的环境实现
 4. **`src/minisweagent/models/litellm_model.py`** — 主力模型类
 5. **`src/minisweagent/run/hello_world.py`** — 端到端运行示例
@@ -171,7 +172,7 @@ config = recursive_merge(*configs)
 - `UNSET` 值被跳过（允许可选覆盖）
 - 嵌套字典递归合并（不覆盖整个子树）
 
-配置来源优先级：命令行 `-c` 参数 → 内置 YAML 配置文件 → 环境变量。
+配置优先级应分两层说明：`mini.py:72-92` 按 `-c` 列表从左到右合并，再叠加显式 CLI 字段；`-c` 的 Typer 默认值只有在未指定时才提供 `mini.yaml`（`:63`），不是永远自动追加一层内置配置。模型名另按显式参数 → config → `MSWEA_MODEL_NAME` 回退（`models/__init__.py:65-75`），不能推广成所有字段统一的环境变量优先级。
 
 #### 2.2 组件实例化
 
@@ -270,7 +271,7 @@ query(messages)
   │     └─ 更新 GLOBAL_MODEL_STATS（全局成本/调用计数，含 limit 检查）
   │
   └─ 5. _parse_actions() → 提取 tool_calls，验证只有 "bash" tool
-        └─ 失败时 FormatError 中持久化原始 response
+        └─ 解析失败向外抛异常；本 tag 未实现原始 response 的 FormatError fallback，见 §4.2
 ```
 
 #### 2.5 任务完成信号
@@ -389,11 +390,11 @@ result = subprocess.run(
 
 **为什么不用持久 shell session？**
 
-1. **状态隔离**：每个命令在独立子进程中运行，没有状态泄漏
+1. **状态隔离**：每个命令在独立子进程中运行，不继承前一个子 shell 的 cwd/export 状态；文件和已启动的外部进程仍可能留下效果
 2. **沙箱友好**：`subprocess.run` 可以轻松替换为 `docker exec`、`bwrap`、`singularity exec`
-3. **并行安全**：多实例评估时可以安全并行
-4. **错误恢复**：一个命令的失败不会污染后续命令的环境
-5. **超时控制**：每个命令有独立超时，不会被之前命令的残留进程影响
+3. **并行安全**：shell 局部状态不共享；若多实例使用同一工作目录、容器或外部服务，仍需独立资源和锁
+4. **错误恢复**：失败会以 returncode/exception_info 反馈；已写文件和其他外部副作用不会因此回滚
+5. **超时控制**：每个命令有独立超时，此处未设置进程组并显式清理整个后代树，不能据 `timeout` 保证残留进程不会影响后续命令
 
 **代价**：
 - `cd` 不持久（prompt 中明确告知 LLM：用 `cd /path && command` 模式）
@@ -452,14 +453,7 @@ mini-swe-agent 支持两种动作解析模式：
 
 ### 3.6 配置系统的分层设计
 
-配置通过 4 层合并（`src/minisweagent/run/mini.py:72-92`）：
-
-```
-Layer 1: 内置 YAML 配置文件 (mini.yaml / default.yaml)
-Layer 2: 用户指定的 -c config.yaml
-Layer 3: 键值对覆盖 (-c model.model_kwargs.temperature=0.5)
-Layer 4: 命令行参数 (-m model_name, -l cost_limit, etc.)
-```
+配置由 `mini.py:63,72-92` 的实际参数列表决定：未传 `-c` 时用默认 `mini.yaml`；显式传多个 `-c` 时按给定顺序合并 YAML 或 `key=value`，最后叠加显式 CLI 字段。文件和键值对没有独立固定优先级，谁在列表后面谁覆盖；环境变量主要由具体组件读取。
 
 **`recursive_merge()` 的关键设计** (`src/minisweagent/utils/serialize.py:6-29`):
 - `UNSET` sentinel 值允许可选覆盖——设为 UNSET 的参数会退回到上一层的值
@@ -501,7 +495,7 @@ Layer 4: 命令行参数 (-m model_name, -l cost_limit, etc.)
 
 ### 4.2 关键不变量
 
-1. **消息历史必须是线性的** —— `self.messages` 是纯 `list[dict]`，每个 step 只是 append。Trajectory = messages 的这个等式让调试和 fine-tuning 变得简单。**不要破坏这个等式**。
+1. **消息历史必须是线性的** —— `self.messages` 是纯 `list[dict]`，每个正常 step 追加；`run:88` 会为新任务重置 messages。trajectory 同时包含 messages 与配置/成本等元数据（`default.py:140-161`）；不能把整个文件等同于 messages。线性历史结构让调试和 fine-tuning 变得简单。扩展时需兼容该序列化契约。
 
 2. **每个 action 必须独立执行** —— 不维护跨 step 的 shell 状态。任何需要持久状态的操作必须通过文件系统。
 
@@ -509,7 +503,7 @@ Layer 4: 命令行参数 (-m model_name, -l cost_limit, etc.)
 
 4. **异常携带消息** —— `InterruptAgentFlow` 及其子类的构造函数接收 `*messages`。这些消息直接 append 到 history。不要绕过这个机制。
 
-5. **FormatError 必须持久化原始响应** —— `LitellmModel.query()` 中 (`litellm_model.py:89-97`)，即使 `model_dump()` 失败也要 `repr(response)` 作为 fallback。这是调试格式错误的关键数据。
+5. **格式错误的原始响应留存不能假定存在** —— 本次固定 tag 的 `LitellmModel.query`（`litellm_model.py:80-93`）在构造 `extra` 时先运行 `_parse_actions(response)`，没有捕获 FormatError 后写入 `repr(response)` 的 fallback。若此处抛错，agent 的 `handle_uncaught_exception`（`default.py:71-83`）只记录异常文本与 traceback；需要原始响应的诊断应另加验证。
 
 ### 4.3 风险与陷阱
 
@@ -517,7 +511,7 @@ Layer 4: 命令行参数 (-m model_name, -l cost_limit, etc.)
 |------|------|------|
 | Magic String 同步 | `COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT` 硬编码在 4+ 个文件中 | 考虑提取为常量 |
 | 配置合并复杂度 | `recursive_merge` + `UNSET` sentinel 的行为对新贡献者不直观 | 需要更好的文档 |
-| 环境变量泄漏 | `LocalEnvironment` 默认 `os.environ` 会暴露所有环境变量给 agent | Docker/sandbox 环境是安全的替代 |
+| 环境变量泄漏 | `LocalEnvironment` 默认 `os.environ` 会暴露所有环境变量给 agent | 容器可提供额外边界；实际保护还取决于挂载、网络、权限与 secrets 注入，不能仅凭类名视为安全 |
 | litellm 版本锁定 | `!= 1.82.7, != 1.82.8` 排除了被攻破的版本 | 需要持续监控供应链安全 |
 | 文本解析模式的脆弱性 | 正则表达式 `r"```mswea_bash_command\s*\n(.*?)\n```"` 对 LLM 输出格式敏感 | tool-calling 模式是推荐路径 |
 | `shell=True` | `subprocess.run(command, shell=True)` 有注入风险 | 沙箱环境缓解，本地环境依赖用户判断 |
@@ -680,7 +674,7 @@ graph LR
 
 | # | 关键声明 | 主要证据 | 置信度 |
 |---|---------|---------|--------|
-| 1 | Agent 循环不到 170 行 | `src/minisweagent/agents/default.py` — 整个文件 172 行 | 确认 |
+| 1 | Agent 循环171 行（包括配置和序列化，非循环本身） | `src/minisweagent/agents/default.py` — 整个文件 171 行；核心 run 在85-105行 | 确认 |
 | 2 | 唯一工具是 bash | `src/minisweagent/models/utils/actions_toolcall.py:11-27` — `BASH_TOOL` definition | 确认 |
 | 3 | 每个命令独立 subprocess | `src/minisweagent/environments/local.py:28-39` — `subprocess.run()` | 确认 |
 | 4 | 线性消息历史 | `src/minisweagent/agents/default.py:66-69` — `add_messages()` 只是 `extend` | 确认 |
@@ -691,7 +685,7 @@ graph LR
 | 9 | 全局成本/调用限制 | `src/minisweagent/models/__init__.py:13-41` — `GlobalModelStats` class | 确认 |
 | 10 | 用户交互三模式 | `src/minisweagent/agents/interactive.py:24-31` — `InteractiveAgentConfig.mode` | 确认 |
 | 11 | 测试使用确定性 Mock 模型 | `src/minisweagent/models/test_models.py` — `DeterministicModel` 等 | 确认 |
-| 12 | FormatError 持久化原始响应 | `src/minisweagent/models/litellm_model.py:89-97` | 确认 |
+| 12 | 本 tag 未实现格式错误时的原始响应 fallback；异常转为 exit 日志 | `src/minisweagent/models/litellm_model.py:80-93`；`agents/default.py:71-83,98-102` | 已核固定tag |
 | 13 | 配置递归合并 + UNSET sentinel | `src/minisweagent/utils/serialize.py:6-29` | 确认 |
 | 14 | Protocol 定义三大抽象 | `src/minisweagent/__init__.py:43-81` | 确认 |
 | 15 | 工厂函数支持简称和全路径 | `src/minisweagent/models/__init__.py:78-113` / `environments/__init__.py:8-33` / `agents/__init__.py:8-28` | 确认 |
@@ -706,30 +700,9 @@ graph LR
 
 ---
 
-## 附录 A: 对比 SWE-agent v1
+## 对比阅读边界
 
-| 维度 | SWE-agent v1 | mini-swe-agent v2 |
-|------|-------------|-------------------|
-| 工具数量 | 多个专用工具 | 仅 bash |
-| 历史处理 | 多层历史处理器 | 线性 append |
-| Shell 状态 | 持久 shell session | 每个命令独立 subprocess |
-| 代码规模 | ~数万行 | ~5,200 行 |
-| 模型兼容性 | 需要 tool-calling | 工具调用或纯文本解析 |
-| 沙箱支持 | 有限 | Docker/Podman/Singularity/Bubblewrap/Contree/Modal |
-| 用户交互 | 有限 | 三模式 CLI + trajectory 浏览器 |
-
-## 附录 B: 对比 Claude Code
-
-| 维度 | Claude Code | mini-swe-agent |
-|------|------------|----------------|
-| 定位 | 全功能 AI 编程助手 | 极简基线 agent |
-| 工具 | 丰富的内置工具集 | 仅 bash |
-| 交互 | 持久会话 | 独立任务执行 |
-| Shell | 持久状态 | 无状态子进程 |
-| 扩展性 | 通过 hooks/MCP | 通过 Protocol 实现 |
-| 代码规模 | 大 | ~5,200 行 |
-| 研究用途 | 不适用 | 专为研究设计（FT/RL baseline） |
-
+本轮只取了 mini-swe-agent 的固定 tag，没有对 SWE-agent v1 或 Claude Code 取固定版本并追踪运行路径。因而不保留“另一系统缺少沙箱/研究用途/模型兼容性”等横向结论。需要比较时，应独立使用 `code-researcher compare`，声明版本、同类场景、成本和未检查项。
 ---
 
 *报告由 code-researcher (deep mode) 生成。每条关键声明均标注了源码路径。*

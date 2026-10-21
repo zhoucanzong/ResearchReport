@@ -6,6 +6,8 @@ upstream: https://github.com/FLock-io/this-that-model@6af11c63c8bb260aa4bed2b771
 date: 2026-10-16
 evidence: 精读原文
 status: completed
+> **2026-10-22 语义复核**：固定源码、已核调用链和未覆盖项见 [sources/MANIFEST.md](sources/MANIFEST.md)；本轮核验限定在列明的行为切面。
+
 ---
 
 # this-that-model 仓库深读
@@ -21,10 +23,10 @@ status: completed
 ## 0. 本章结论
 
 1. **类型化决策头走「隐藏状态直读」，且没有独立分类头**：读数矩阵直接取 **LM head（与词嵌入 tied）中「声明标签 token」对应的行**做内积——不是新训练的 head，也不是全词表 softmax。`[精读原文]`（代码事实：`thisthat/backends/torch_backend.py:85`、`thisthat/backends/mlx_backend.py:112`；配置佐证：`config.json` 的 `tie_word_embeddings = True`）
-2. **归一化是「受限 softmax + 温度」**：越界选项先置 `-inf`，再在该行上归一化，因此分布的**支撑集恒等于选项集**。`[精读原文]`（代码事实：`thisthat/model.py:40`、`thisthat/model.py:47`、`thisthat/backends/torch_backend.py:88`）
-3. **单次前向读出全部答案**：一次 `slot_logits(...)` 调用取回该批**全部**答案 slot 的 logits，再逐题按选项宽度切片并 softmax——没有解码循环。`[精读原文]`（代码事实：`thisthat/model.py:132`、`thisthat/model.py:134`、`thisthat/model.py:137`）
-4. **训练目标 / 损失：本仓库不含训练代码**，因此「损失中是否含校准项」**未确证**；仓库只提供推理包与复现脚本（全仓 `loss` / `backward()` / `optimizer` 零命中）。`[精读原文]`（代码事实：`scripts/` 与 `thisthat/` 全目录无训练路径）
-5. **`confidence` 不是独立输出头**，而是「所选选项的概率」；校准是**事后测量**（benchmark 的 calibration 划分 + 回归测试），**不是损失项**。`[精读原文]`（代码事实：`thisthat/types.py:52`、`thisthat/types.py:53`、`tests/test_published_results.py:49`）
+2. **归一化是「受限 softmax + 温度」**：越界选项先置 `-inf`，再在该行上归一化，因此分布的输出位置**限制在声明选项内**（有限精度下可有零概率项）。`[精读原文]`（代码事实：`thisthat/model.py:40`、`thisthat/model.py:47`、`thisthat/backends/torch_backend.py:88`）
+3. **每个实际 batch 单次前向读出其全部答案 slot**：`model.py:118-132` 先按 `batch_size` 分 chunk，每个 chunk 的 `slot_logits(...)` 取回其全部 slot 的 logits，再 softmax 并按题切片——没有解码循环。`[精读原文]`（代码事实：`thisthat/model.py:132`、`thisthat/model.py:134`、`thisthat/model.py:137`）
+4. **训练目标 / 损失：本仓库不含训练代码**，因此「损失中是否含校准项」**未确证**；仓库只提供推理包与复现脚本（已读推理/复现入口未见训练过程；字面搜索只作为线索）。`[精读原文]`（代码事实：`scripts/` 与 `thisthat/` 全目录无训练路径）
+5. **`confidence` 不是独立输出头**，而是「所选选项的概率」；校准是**事后测量**（benchmark 的 calibration 划分 + 回归测试）；本仓库无训练实现，**不能据此排除仓外训练使用校准损失**。`[精读原文]`（代码事实：`thisthat/types.py:52`、`thisthat/types.py:53`、`tests/test_published_results.py:49`）
 6. **对 `DecisionModels` 条目的对账结论**：其「**不是 LM head 路径**」「**专用打分头**」的说法与代码不符，应修正为「**复用 tied LM head 的标签行做受限打分**」；「≤255 选项」「支撑集 = 选项表」「同 state 多问题同一次前向」三条与代码一致；「30.9 ms」在本仓库复现文件内**未确证**（仓库记录的是 MLX `mean 25.24 / p90 30.50 ms`）。`[精读原文]`（详见章 4）
 
 > 一句话定位：这是一套**限定在声明选项集上的单次前向打分器**——把「生成后解析」换成「在选项行上做一次受限内积 + softmax」。
@@ -42,7 +44,7 @@ status: completed
 | 权重 / 配置 | `flock-io/this-that-model-1.0`；`model_type=qwen3_5_text`，`num_hidden_layers=24`，`hidden_size=2048`，`vocab_size=248320`，`tie_word_embeddings=True`，`layer_types` = 18 × `linear_attention` + 6 × `full_attention` | `config.json`（HTTP 200）`[精读原文]` |
 | 包结构 | `thisthat/`（`model.py` 头部/归一化、`prompt.py` slot、`types.py` 类型、`server.py`、`systemone_protocol.py`、`backends/{torch,mlx}_backend.py`） | 目录树，`[精读原文]` |
 | 复现入口 | `scripts/reproduce_*.py`、`results_latency_{mps,mlx}.json` | 目录树 + 结果文件，`[精读原文]` |
-| 训练代码 | **不存在**（无 `loss` / `backward` / `optimizer` / 数据集加载路径） | 全仓 grep 零命中，`[精读原文]` |
+| 训练代码 | **已读发布包以推理/评测为主，未定位训练入口** | 推理包和复现脚本的静态阅读，`[精读原文]` |
 
 > 复现口径提醒：`README.md:215` 说明论文 headline latency「30.9 ± 16.6 ms」测于其**内部套件**（prompt 长度方差远大于本仓库 68 题队列），并提示「本地应更紧、中位数相近」；仓库结果文件与 README 口径**不可并表**。
 
@@ -130,16 +132,16 @@ thisthat/server.py:103                    "confidence": d.confidence, "latency_m
 | R2 | 「**不是**在全词表 LM head 上取字母 token 概率」+ 归入「**专用打分头**」（`open-implementations.md:32`、`:49`） | 读数矩阵**就是** LM head 的标签行（`torch_backend.py:85`；tied 见 `mlx_backend.py:112` + `config.json` `tie_word_embeddings=True`） | **需修正**：应写「复用 tied LM head 的标签行做受限打分；**无独立分类头**」 |
 | R3 | 「选项上限 255，≤10 用 (A)…(J)」（`taxonomy.md:99`、`open-implementations.md:51`） | `types.py:7`、`prompt.py:35` | **一致** |
 | R4 | 「支撑集 = 选项表，选项之外**不可表示**」（`taxonomy.md:99`、`report.md:152`） | `torch_backend.py:88`（越界项置 `-inf`，代码事实与文档自述相符） | **一致** |
-| R5 | 「同 state 多问题共享一次前向、条件独立」（`report.md:184`） | `model.py:132`（一次调用取全部 slot） | **一致** |
+| R5 | 「同 state 多问题共享一次前向、条件独立」（`report.md:184`） | `model.py:118-132` 每 chunk 统一取 slot | **部分支持**：共享一次前向成立；代码没有证明问题/输出在统计意义上条件独立，slot 还受同一构造 prompt 影响 |
 | R6 | 「31 ms / 30 ms（`open-implementations.md:79`：两份材料、条件未给出）」 | 仓库记录：`results_latency_mlx.json` `mean 25.24 / p90 30.50 ms`（n=100，68 题，mlx float16）；`results_latency_mps.json` `mean 113.34 ms`；**无 30.9** | **未确证 / 口径不可并表**：应记为「同一量级，条件不同」 |
 | R7 | 「`answer.confidence` 是 calibrated，阈值有意义」（`open-implementations.md:81`） | `types.py:52-53`（confidence = argmax 概率）；校准是事后测试（`test_published_results.py:49`） | **需修正口径**：非独立校准头 / 非损失项，属**自测主张** |
 | R8 | 「1.88B、24 层中 18 层 DeltaNet、MIT」（`report.md:416`） | `config.json`：24 层 = 18 `linear_attention` + 6 `full_attention`、`hidden_size=2048`；`LICENSE:1` MIT；`README.md:52` | **一致**（参数量 1.88B 由 README/权重规模自述，`[摘要级]`） |
 
-**拟提交给 `DecisionModels` 侧的一句话（不复制本文细节）**：
+**供 `DecisionModels` 条目引用的结论**：
 
 > `this-that-model` 的读数**复用 tied LM head 的标签行**（无独立分类头），实现细节见 [this-that-model-research/report.md](report.md) 章 2–3。
 
-> ⚠️ **写权协调**：`DecisionModels/` 由另一位同事在改（远端同时有 `research/decisionmodels-yanyan`、`research/decisionmodels-fix-yanyan`、`research/decisionmodels-papers-yanyan` 三条在途分支），**本轮未改动该条目任何文件**，R2/R6/R7 的修正交由该条目负责人落地，避免同路径并行写冲突。
+
 
 ---
 
@@ -207,9 +209,9 @@ thisthat/server.py:103                    "confidence": d.confidence, "latency_m
 3. 计算对称差 `P △ T` 与旧值残留（本条目首次建立，旧值集合为空 `∅`）。
 4. 对 `T` 中每条执行 `git show 6af11c6:<path> | sed -n '<行>p'`，判定是否落在代码行。
 
-**结果**
+**2026-10-16历史机械结果（不是当前改后锚点数）**
 
-| 检查 | 结果 |
+| 检查 | 历史结果 |
 | :-- | :-- |
 | `P △ T`（正文锚点集 vs 表内锚点集 对称差） | **0**（等式成立：正文出现的锚点 = 表内锚点 = 25 条） |
 | 旧值残留（历史锚点仍在正文） | **0**（首次建立，无旧值） |
@@ -229,7 +231,7 @@ thisthat/server.py:103                    "confidence": d.confidence, "latency_m
 | [FLock-io/this-that-model](https://github.com/FLock-io/this-that-model) | 外链 | HTTP 状态码 | **200** |
 | [钉住 commit 目录树](https://github.com/FLock-io/this-that-model/tree/6af11c63c8bb260aa4bed2b7717f33f25decd16e) | 外链 | HTTP 状态码 | **200** |
 | [flock-io/this-that-model-1.0](https://huggingface.co/flock-io/this-that-model-1.0) | 外链 | HTTP 状态码 | **200** |
-| [config.json](https://huggingface.co/flock-io/this-that-model-1.0/raw/main/config.json) | 外链 | HTTP 状态码 + 字段解析 | **200**（`tie_word_embeddings=True`、24 层、18 linear + 6 full 已解析） |
+| [config.json](https://huggingface.co/flock-io/this-that-model-1.0/raw/3d927195c4f9845efe66c5715883a7a0f42b1239/config.json) | 外链 | HTTP 状态码 + 字段解析 | **200**（`tie_word_embeddings=True`、24 层、18 linear + 6 full 已解析） |
 | [arXiv:2609.23886](https://arxiv.org/abs/2609.23886) | 外链 | arXiv Atom API 编号↔题名核对 | **通过** |
 | [DecisionModels report.md](../../LLM/DecisionModels/report.md) | 相对链接 | 仓库文件存在性 | **通过** |
 | [taxonomy.md](../../LLM/DecisionModels/taxonomy.md) | 相对链接 | 仓库文件存在性 | **通过** |
@@ -248,7 +250,7 @@ thisthat/server.py:103                    "confidence": d.confidence, "latency_m
 2. **时延口径**：仓库记录 MLX `mean 25.24 / p90 30.50 ms`（68 题、n=100）；模型卡「约 31 ms」、论文标题「30 ms」、论文正文「30.9 ± 16.6 ms（内部套件）」**条件互不相同** → 本条目按「同一量级、口径不可并表」处理。
 3. **参数量 1.88B**：来自 README/权重规模自述，未由 `config.json` 的完整参数清单复算（`hidden_size=2048`、24 层、`intermediate_size=6144`、`vocab_size=248320` 已核；细化复算列为待办）。`[摘要级]`
 4. **权重内部数值**：`tie_word_embeddings=True` 已由配置确证，但「标签行与嵌入行在权重层面完全一致」属配置声明；如需字节级确证须下载 safetensors。`[受限核验]`
-5. **对 `DecisionModels` 的修正落地**：R2 / R6 / R7 三条修正**本条目未代改**（写权在其负责人），需在那边以「一句 + 链接」落地（章 4 已给拟用句子）。
+5. **对 `DecisionModels` 的修正落地**：R2 / R5 / R6 / R7 需要在横向比较中按相同口径核验；代码证据见章4，不把其他条目的旧行号视为稳定标识。
 
 ---
 
