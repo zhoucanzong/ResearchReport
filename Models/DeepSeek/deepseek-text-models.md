@@ -15,7 +15,7 @@
 | 2024-06-28 | DeepSeek‑V2‑0628 | MoE | 编程、数学、推理能力增强 |
 | 2024-09-05 | **DeepSeek‑V2.5** | MoE | DeepSeek V2 Chat 与 DeepSeek‑Coder V2 合并 |
 | 2024-12-10 | DeepSeek‑V2.5‑1210 | MoE | 数学/代码进一步提升（MATH‑500 74.8→82.8） |
-| 2024-12-26 | **DeepSeek‑V3** | MoE | 671B/37B 激活；FP8 混合精度训练；MTP；auxiliary‑loss‑free 负载均衡；14.8T tokens；2.788M H800 GPU 小时（约 $5.576M） |
+| 2024-12-26 | **DeepSeek‑V3** | MoE | 671B/37B 激活；FP8 混合精度训练；MTP；auxiliary‑loss‑free 负载均衡；14.8T tokens；2.788M H800 GPU 小时 |
 | 2025-01-20 | DeepSeek‑R1 | 推理模型 | RLVR + GRPO，与 V3 同架构 |
 | 2025-03-24 | DeepSeek‑V3‑0324 | MoE | MMLU‑Pro/AIME/LiveCodeBench 均显著提升 |
 | 2025-05-28 | DeepSeek‑R1‑0528 | 推理模型 | AIME 2025 70→87.5 |
@@ -140,7 +140,7 @@ DeepSeek 纯文本模型主线演进可总结为四条主线：
 
 ---
 
-## 4. DeepSeek‑V3 (2024‑12)：FP8、MTP、Auxiliary‑Loss‑Free，5.576M 美元的极致性价比
+## 4. DeepSeek‑V3 (2024‑12)：FP8、MTP、Auxiliary‑Loss‑Free与系统效率
 
 ### 4.1 论文信息
 - **标题**：*DeepSeek‑V3 Technical Report*
@@ -169,12 +169,24 @@ DeepSeek 纯文本模型主线演进可总结为四条主线：
 - 这是大型 MoE 上首次将 MTP 工业级落地。
 
 #### 4.3.3 FP8 混合精度训练
-V3 是**首个在 671B 量级 LLM 上跑通 FP8 端到端训练**的开源模型。技术细节：
-- 大部分 GEMM（Wgrad/Dgrad/Fwd）使用 **FP8 E4M3**；BF16/FP32 仅保留在 norm、loss、master weight、optimizer state、attention softmax 等敏感部分。
-- **Tile‑wise / Block‑wise fine‑grained 量化**：对激活按 1×128 tile 量化、对权重按 128×128 block 量化，避免 tensor‑wise scaling 在 outlier 下溢出。
-- **高精度累加**：FP8 GEMM 的部分和按周期升级到 FP32 累加（修补了 Hopper 架构 FP8 累加器精度不足的问题）。
-- **统一 E4M3**：与 NVIDIA 默认配方（forward E4M3 + backward E5M2）不同，V3 全用 E4M3，简化框架并配合 fine‑grained 量化保证数值稳定。
-- 收益：相比 BF16 训练**显存减半 + GEMM 算力翻倍**，没有任何 loss spike 或回滚。
+
+本节固定 [DeepSeek-V3 技术报告 `2412.19437v2`](https://arxiv.org/abs/2412.19437v2)（2025-02-18 修订），依据 §3.3、图6–7 和附录B。V3 的 671B 训练采用**混合精度**；FP8 指主要 Linear GEMM 的输入格式，不表示所有权重、激活、算子与优化器状态都为8位。
+
+- **计算与量化**：Linear 的 Fprop、Dgrad、Wgrad 使用 FP8 E4M3 输入，输出为 BF16 或 FP32；激活按 1×128 tile、权重按 128×128 block 在线量化。H800 上每累计128个元素（4次WGMMA），将部分和提升到 CUDA Core 的 FP32 寄存器；缩放与提升精度也有开销，论文用两个 warpgroup 的重叠执行减轻影响。[§3.3.1–3.3.2，pp.15–17](https://arxiv.org/pdf/2412.19437v2#page=15)
+- **保留高精度的范围**：embedding、输出头、MoE gating、normalization 和 attention operators 保留原精度；master weights 与累积梯度为 FP32，AdamW 一、二阶矩为 BF16。attention 后 Linear 的部分缓存激活另用 E5M6，MoE 的 combine 保留 BF16。因此“统一E4M3”只适用于相应 FP8 操作数，不能扩展成全模型所有张量。[§3.3.1、§3.3.3，pp.15、18](https://arxiv.org/pdf/2412.19437v2#page=18)
+
+**存储、内核速度与完整训练应分别判断：**
+
+| 层次 | 可支持的结论与条件 | 不能由此推出 |
+|---|---|---|
+| 张量存储的理论字节数 | 相同元素数的权重或激活，FP8 数据载荷为1 byte/元素，BF16为2 bytes/元素；忽略缩放、对齐、额外副本时，载荷减半。这是格式计算，与硬件无关 | 整次训练峰值显存减半；FP32主权重/梯度、BF16状态和其他缓存仍占空间 |
+| FP8 GEMM | §3.3.1将相对原BF16方法的速度收益表述为**理论上2倍**；§3.3.2讨论的是H800上的精度与执行开销。该处未提供固定M/N/K、计时方法和BF16内核对照的2倍实测结果 | 任意GEMM形状、完整训练step或端到端推理均加速2倍 |
+| 训练质量对照 | 附录B.1用约16B MoE / 1.33T tokens、约230B MoE / 0.9T tokens比较FP8与BF16；图10以EMA 0.9平滑loss，作者报告相对loss误差低于0.25%。论文训练系统为H800，附录未单列两组对照的卡数/批量 | 这是loss相对误差，不能写成下游准确率差0.25个百分点，也不是671B全程BF16对照 |
+| 完整训练结果 | 作者报告在2048张H800的系统上完成V3训练；摘要称未发生**不可恢复的**loss spike、未回滚。Table 1的2.788M H800 GPU-hours合计预训练、上下文扩展和后训练；工程包含FP8、并行与通信等共同优化 | 没有匹配的671B BF16完整训练对照，不能将总耗时或成本归因成FP8单项收益，也不能改写为“没有任何loss spike” |
+
+以上训练结论见[摘要、§1/Table 1、§3.1、附录B.1](https://arxiv.org/pdf/2412.19437v2)。配方存在失效边界：附录B.2把 Dgrad 相关张量统一改为128×128 block量化后，约16B MoE 在约300B tokens时发散；作者将其与token相关离群值联系起来。这说明细粒度量化和累加方案是有效性的条件，不能把该结果推广为任意FP8配方都稳定。[附录B.2，pp.47–48](https://arxiv.org/pdf/2412.19437v2#page=47)
+
+**公开源码能核对到哪里**：官方仓库固定在 [`9b4e9788e4a3a731f7567338ed15d3ec549ce03b`](https://github.com/deepseek-ai/DeepSeek-V3/blob/9b4e9788e4a3a731f7567338ed15d3ec549ce03b/README.md#L231-L246)（2025-08-28），README将其称为 FP8/BF16 **推理demo**，不是原始训练框架。其调用链为 [`linear → act_quant → fp8_gemm`](https://github.com/deepseek-ai/DeepSeek-V3/blob/9b4e9788e4a3a731f7567338ed15d3ec549ce03b/inference/model.py#L153-L163)：[`act_quant`](https://github.com/deepseek-ai/DeepSeek-V3/blob/9b4e9788e4a3a731f7567338ed15d3ec549ce03b/inference/kernel.py#L38-L57)为每128个激活元素另分配一个FP32缩放值；仅算输出载荷，128个元素需128+4=132 bytes，对比BF16的256 bytes约为51.56%（静态字节推导，未计输入存活、分配器及工作区，非GPU峰值实测）。[`fp8_gemm_kernel`](https://github.com/deepseek-ai/DeepSeek-V3/blob/9b4e9788e4a3a731f7567338ed15d3ec549ce03b/inference/kernel.py#L156-L172)使用FP32累加并转换输出类型。它支持“8位载荷仍需缩放和高精度计算”的解释，**不验证训练Wgrad/Dgrad实现或端到端加速**；本次未运行GPU基准。
 
 #### 4.3.4 DualPipe 流水线并行
 - 自研 **DualPipe** 算法：让前向和反向同时双向流动，**几乎完全重叠 all‑to‑all 通信与计算**。
@@ -185,7 +197,6 @@ V3 是**首个在 671B 量级 LLM 上跑通 FP8 端到端训练**的开源模型
 - 后训练：SFT + RL（继续使用 GRPO，蒸馏部分知识来自 R1）。
 - **训练成本**（论文摘要原话）：
   - 总计 **2.788M H800 GPU‑hours**；
-  - 按 H800 租金 \$2/hour 折算 ≈ **\$5.576M**；
   - 全过程**未发生不可恢复的 loss spike，未做任何回滚**。
 - 该成本仅含主训练 GPU 算力，**不包含数据、消融实验、人力等成本**——这一点 DeepSeek 团队也在多个采访中澄清过。
 
@@ -339,7 +350,7 @@ DSA 由两部分构成：
 | 流水/通信 | 标准 ZeRO + PP | 16‑way zero‑bubble PP + 8‑way EP + ZeRO‑1 | **DualPipe** + 跨节点 all‑to‑all + ZeRO‑1 | 同 V3 | 同 V3.x |
 | 上下文 | 4K | 128K（YaRN） | 128K（V3.1 仍 128K） | 128K | **1M 默认** |
 | 预训练 tokens | 2T | 8.1T | 14.8T | 14.8T 之上继续训练 + sparse 训练阶段 | 未公开具体值 |
-| 训练成本 (主算力) | — | 每 1T tokens 172.8K H800h | **2.788M H800h ≈ \$5.576M** | 未单独披露 | 未单独披露 |
+| 训练计算量（论文报告） | — | 每 1T tokens 172.8K H800h | **2.788M H800h** | 未单独披露 | 未单独披露 |
 | 后训练 | SFT + DPO | SFT + GRPO | SFT + RL（含 R1 蒸馏） | RLVR + 生成式 reward + GRPO 升级；吸收 DeepSeekMath V2 自验证/自精炼 | RLVR + Agentic 任务合成 |
 | 推理形态 | Base + Chat | Base + Chat | Base + Chat（V3.1 起 hybrid thinking） | hybrid thinking + Speciale 扩展思考 | Pro/Flash + 双模式 |
 | 关键开源/API | HF + GitHub | HF + GitHub | HF + GitHub | HF + GitHub | HF + API |
@@ -400,7 +411,7 @@ DSA 由两部分构成：
 
 1. **"用 scaling laws 选定路线"**——V1 用自研 scaling laws 在 7B/67B 上锁定起跑点。
 2. **"在架构上抠成本"**——V2 同时引入 MLA（攻 KV cache）与 DeepSeekMoE（攻 FFN），把"低激活高总参"路线一次性确立。
-3. **"在训练栈上抠成本"**——V3 用 FP8、DualPipe、auxiliary‑loss‑free、MTP 把 671B 的训练压到 \$5.576M 的纸面成本，并第一次让开源 MoE 与闭源旗舰正面同场。
+3. **V3的系统联合优化**——FP8、DualPipe、auxiliary‑loss‑free与MTP协同用于671B训练。论文报告2.788M H800 GPU-hours总量，但没有对每项技术分别做完整系统成本归因。
 4. **"长上下文与混合推理常态化"**——V3.1 把推理与对话合并；V3.2 用 DSA 把长上下文 attention 复杂度从 $O(L^2)$ 降到 $O(Lk)$；DeepSeekMath V2 把自验证/自精炼方法回流。
 5. **"百万上下文成为默认"**——V4 用 *Token‑wise 压缩 + DSA* 把 1M 上下文做成所有官方服务的默认，并以 Pro/Flash 双模型同时覆盖最高端与高性价比段位。
 

@@ -1,8 +1,8 @@
 # DeepSeek 系列模型深度调研报告
 
-> 调研范围：DeepSeek 自 2023 年 11 月初代 DeepSeek-LLM 至 2026 年 4 月 DeepSeek-V4 的全部公开模型，覆盖通用基座（V 系列）、推理（R1 系列）、视觉语言（VL/OCR）、代码（Coder）、数学与形式化证明（Math/Prover）、多模态统一生成（Janus）六大主线。
-> 调研时点：2026-06。
-> 本报告基于两份子报告整合：[纯文本基座模型](deepseek-text-models.md) 与 [多模态与专业模型](deepseek-multimodal-and-specialized.md)，并提炼跨方向的整合性洞察。
+> 调研范围：DeepSeek 六条模型研究线；历史主体保留至 2026 年 4 月 V4 Preview，2026-10-22 本批补核 V4 正式版本至 V4.1-Flash-1017 的研究版本与技术变化，见 §2.8。此次补核不是六条研究线的全量新型号扫描。
+> 原调研时点：2026-06；本批更新截止：**2026-10-22（Asia/Shanghai）**。
+> 历史主体基于两份子报告整合：[纯文本基座模型](deepseek-text-models.md) 与 [多模态与专业模型](deepseek-multimodal-and-specialized.md)，并提炼跨方向的整合性洞察。
 
 ---
 
@@ -12,7 +12,7 @@
 
 DeepSeek（深度求索）由幻方量化（High-Flyer）于 2023 年 7 月孵化成立，自成立之初就在开源 LLM 赛道选择了一条与众不同的"工程纪律驱动"路线：
 
-1. **不与闭源比 GPU 数量，而是比"每美元/每 token 的智能输出"**——把成本而非参数量作为优化目标，这一思想贯穿 V1 → V4。
+1. **在给定计算预算下提高模型能力**——这一目标贯穿 V1 → V4，体现在架构选择、训练配方和推理优化中。
 2. **彻底开源（MIT/宽松商用许可）+ 完整技术报告**——从权重、tokenizer、训练日志细节到 RL 算法（GRPO）、训练框架（HAI-LLM）、并行算法（DualPipe），凡可公开者全部公开，使开源社区可以最大程度复现。
 3. **架构差异化为先**——在 Qwen / LLaMA / Mistral 普遍跟随业界主流（Dense + GQA + RoPE + cosine LR）时，DeepSeek 在 V2 阶段就以 **MLA + DeepSeekMoE** 双核心做出与友商根本不同的架构选择，并在 V3/V3.2/V4 阶段持续以 FP8、MTP、Auxiliary-Loss-Free、DSA 等系统级优化拉开差距。
 4. **专业方向多点开花、最终回流主线**——R1 推理、Coder 代码、Math 数学、Prover 证明、VL 视觉、Janus 生成均独立演进，但每条线的关键技术（GRPO、自验证、混合编码、动态切片）最终都被吸收回 V 系列主基座，形成"分叉—回流"的闭环开发模式。
@@ -22,7 +22,7 @@ DeepSeek（深度求索）由幻方量化（High-Flyer）于 2023 年 7 月孵�
 | 维度 | DeepSeek 路线 | Qwen 路线（参考） |
 | --- | --- | --- |
 | 架构 | MLA + DeepSeekMoE 一以贯之；强调"低激活高总参" | 主线 Dense（Qwen2/2.5/3）+ MoE 旗舰，更接近业界主流 |
-| 训练目标 | 极致成本（V3 \$5.576M 训完 671B/14.8T）+ MTP 训练信号增强 | 多尺寸覆盖优先，强调小模型可用性 |
+| 训练目标 | 提高给定计算预算下的能力（V3报告2.788M H800 GPU-hours，含整套训练流程）+ MTP训练信号 | 多尺寸覆盖优先，强调小模型可用性 |
 | 推理模型 | 纯 RL 路线（R1-Zero 无 SFT 冷启动）+ 规则化奖励 | 偏 SFT + RL 组合 |
 | 多模态生成 | 解耦视觉编码（Janus 系列） | Qwen-VL/Omni 单编码器+多模态对齐 |
 | 长上下文 | DSA 稀疏注意力 + Token-wise 压缩，目标 1M | YaRN/双块注意力等渐进式扩展 |
@@ -50,7 +50,7 @@ DeepSeek（深度求索）由幻方量化（High-Flyer）于 2023 年 7 月孵�
 2024-11    JanusFlow；R1-Lite-Preview（线上对标 o1-preview）
 2024-12-10  V2.5-1210（MATH-500 82.8）
 2024-12-13  DeepSeek-VL2（Tiny/Small/Base；动态切片 + DeepSeekMoE + MLA）
-2024-12-26  DeepSeek-V3（671B/37B；FP8 + MTP + ALF；14.8T；\$5.576M）
+2024-12-26  DeepSeek-V3（671B/37B；FP8 + MTP + ALF；14.8T；2.788M H800 GPU-hours）
 ─────────────────────────  2025  ─────────────────────────
 2025-01-20  DeepSeek-R1-Zero / R1（arXiv:2501.12948）— 纯 RL 涌现推理
 2025-01-22  R1-Distill × 6（Qwen 1.5/7/14/32B + Llama 8/70B）
@@ -67,7 +67,13 @@ DeepSeek（深度求索）由幻方量化（High-Flyer）于 2023 年 7 月孵�
 2025-12-31  mHC（研究）— Manifold-Constrained Hyper-Connections
 ─────────────────────────  2026  ─────────────────────────
 2026-01-04  R1 论文 v2（Nature 645:633-638 正式发表）
-2026-04-24  DeepSeek-V4-Pro / V4-Flash（1.6T/49B + 284B/13B；Token-wise 压缩 + DSA；1M 上下文默认；MIT 开源）
+2026-04-24  DeepSeek-V4 Preview（Pro/Flash；公告日、权重与论文存档分别记录）
+2026-07-31  V4-Flash-0731（V4 Flash正式版本；不是4.1）
+2026-08-13  V4-Pro-0813（Pro正式版本）
+2026-08-21  V4-Flash-Vision-Exp（视觉实验版；本报告不把它作为公开研究权重）
+2026-09-10  V4.1-Flash发布（原生图文输入）
+2026-09-17  V4.1-Flash论文2609.19969v1（论文提交日，不是模型首次发布日）
+2026-10-17  V4.1-Flash-1017（模型卡与权重更新；技术报告未更新）
 ```
 
 ---
@@ -78,7 +84,7 @@ DeepSeek 基座主线呈现一条**单向收敛**的路线：从 Dense 到 MoE�
 
 ### 2.1 DeepSeek-LLM (2024-01)：Dense 起跑点
 
-- 7B / 67B 双档 Dense Transformer（67B 上使用 GQA），BBPE 100K 词表（**这一 tokenizer 自此从未变过**），4K 上下文，2T tokens 预训练。
+- 7B / 67B 双档 Dense Transformer（67B 上使用 GQA），BBPE 100K 词表（初代口径，不能继承为后续各代词表不变；V4.1 固定配置另见来源清单），4K 上下文，2T tokens 预训练。
 - 唯一的"原创武器"是**自研 scaling laws**：基于 non-embedding FLOPs/token (M) 的最优分配公式，纠正了 Chinchilla 的部分系数；67B Chat 直接超越 LLaMA-2 70B 与 GPT-3.5。
 - 后训练 = SFT + DPO，对齐路线相对保守。
 
@@ -95,12 +101,12 @@ V2 是 DeepSeek 历史上**最关键的一次架构跃迁**，一次性在同一
 
 ### 2.3 DeepSeek-V3 (2024-12)：开源 LLM 的工程巅峰
 
-V3 在 V2 架构骨架上叠加了三项系统级创新，把 671B 的训练成本压到 **\$5.576M**——这是 2024 年最具冲击力的开源工程纪录：
+V3 在 V2 架构骨架上叠加了系统级创新；论文报告其完整训练流程使用 2.788M H800 GPU-hours。该总量涵盖多种训练和系统优化，不能归因于单项技术：
 
 - **671B 总 / 37B 激活**（256 routed + 1 shared，激活 8 routed），61 层中前几层为 dense FFN。
 - **Auxiliary-Loss-Free 负载均衡**：用不参与梯度的 per-expert bias 替代主要辅助损失，仅保留极小权重的 sequence-wise 保险损失，**负载均衡与主任务质量同时改进**。
 - **Multi-Token Prediction (MTP)**：在主 next-token loss 之外多预测 1 个 token，训练信号更密 + 推理时作为 speculative decoding 的 draft module，**第二 token 接受率 85–90%，端到端 TPS ×1.8**。
-- **FP8 混合精度训练**：首个在 671B 量级跑通的开源 FP8 端到端训练；统一 E4M3 + tile-wise/block-wise 量化 + FP32 高精度累加；显存减半 + GEMM 算力翻倍，**14.8T tokens 全程零 loss spike、零回滚**。
+- **FP8 混合精度训练**：671B V3 的主要 Linear GEMM 使用 E4M3 输入、细粒度量化与高精度累加；论文的“相对BF16理论2倍计算速度”不等于训练step实测2倍，8位张量载荷减半也不等于整机显存减半。作者报告14.8T tokens预训练未出现不可恢复的loss spike、未回滚；数字与证据边界见[§3.3](#33-fp8-训练与低成本策略)。
 - **DualPipe** 流水线 + 跨节点 all-to-all kernel：MoE 通信开销几乎被完全 overlap。
 - 14.8T tokens 预训练，后训练 SFT + RL 并蒸馏部分 R1 知识。
 - V3-0324（2025-03）继续推升：MMLU-Pro 75.9 → 81.2，AIME 39.6 → 59.4，LiveCodeBench 39.2 → 49.2。
@@ -117,7 +123,7 @@ V3 在 V2 架构骨架上叠加了三项系统级创新，把 671B 的训练成�
 - **V3.2（2025-12-01，arXiv:2512.02556）**：架构与 Exp 相同，但训练流程升级——可扩展 RL 框架（性能与 GPT-5 相当）、大规模 Agentic Task 合成 pipeline、GRPO 升级（按域调权 KL、修正 KL 估计、off-policy 序列掩码、MoE rollout 路由保持等）、可验证 / 不可验证域分别采用规则奖励 / 生成式奖励 + DeepSeekMath V2 数据。
 - **V3.2-Speciale**：仅推理数据 RL、放宽长度惩罚的"扩展思考"变体，IMO 2025 与 IOI 2025 双金。
 
-### 2.6 DeepSeek-V4 (2026-04)：百万上下文成为默认
+### 2.6 DeepSeek-V4 Preview (2026-04)：历史发布口径
 
 - **双模型策略**：
 
@@ -127,12 +133,10 @@ V3 在 V2 架构骨架上叠加了三项系统级创新，把 671B 的训练成�
   | **V4-Flash** | 284B / 13B | 高性价比；推理能力接近 Pro |
 
 - **新型注意力**：*Token-wise 压缩 + DSA*——在 DSA 之上再叠一层 token-wise 隐空间压缩；**1M 上下文成为所有官方服务的默认上限**。
-- 三档思考强度（Non-think / Think High / Think Max），与 Claude Code、OpenClaw、OpenCode 等 agent 生态无缝对接。
+- 预览发布材料区分思考 / 非思考模式；后来的思考强度配置需按模型版本与接口分别读取，不把客户端可配置误写成所有 Agent 运行结果已验证。
 - **开源协议**：V4-Pro 与 V4-Flash 均采用 **MIT License** 完全开源权重与技术报告，延续 DeepSeek 彻底开源路线。
-- **Legacy alias 退役计划**：自 2026-07-24 起 `deepseek-chat`/`deepseek-reasoner` 旧名将退役，分别路由至 V4-Flash 的非思考 / 思考模式。现有 API 用户需在退役前完成迁移。
-- **V3 系列维护状态**：V4 发布后，V3.2 系列仍维持维护更新，但主要新能力（1M 上下文、三档思考、Agentic 增强）仅在 V4 系列提供。V3 用户可通过无缝升级路径迁移至 V4-Flash（API 兼容）。
 
-### 2.7 跨代架构对比表
+### 2.7 历史架构对比表（至 V4 Preview）
 
 | 维度 | V1 (2024-01) | V2 (2024-05) | V3 / V3.1 (2024-12 / 2025-08) | V3.2 (2025-12) | V4 (2026-04) |
 | --- | --- | --- | --- | --- | --- |
@@ -145,11 +149,44 @@ V3 在 V2 架构骨架上叠加了三项系统级创新，把 671B 的训练成�
 | 训练精度 | BF16 | BF16 | **FP8 (E4M3) + 高精度累加 + tile/block 量化** | FP8 | FP8（推断） |
 | 流水/通信 | 标准 ZeRO + PP | 16-way zero-bubble PP + 8-way EP + ZeRO-1 | **DualPipe** + 跨节点 all-to-all | 同 V3 | 同 V3.x |
 | 上下文 | 4K | 128K（YaRN） | 128K | 128K | **1M 默认** |
-| 预训练 tokens | 2T | 8.1T | 14.8T | 14.8T 之上继续训练 | 未公开 |
-| 训练成本 (主算力) | — | 每 1T tokens 172.8K H800·h | **2.788M H800·h ≈ \$5.576M** | 未单独披露 | 未单独披露 |
+| 预训练 tokens | 2T | 8.1T | 14.8T | 14.8T 之上继续训练 | >32T（本批固定的预览模型卡口径） |
+| 训练计算量（论文报告） | — | 每 1T tokens 172.8K H800·h | **2.788M H800·h** | 未单独披露 | 未单独披露 |
 | 后训练 | SFT + DPO | SFT + GRPO | SFT + RL（含 R1 蒸馏） | RLVR + 生成式 reward + GRPO 升级 | RLVR + Agentic 任务合成 |
 | 推理形态 | Base + Chat | Base + Chat | Base + Chat（V3.1 起 hybrid） | hybrid + Speciale 扩展思考 | Pro/Flash + 三档思考 |
 | 开源协议 | MIT | MIT | MIT | MIT | **MIT** |
+
+---
+
+### 2.8 DeepSeek-V4.1-Flash：研究版本与技术证据
+
+#### 2.8.1 本批研究对象与论文时间
+
+| 模型/资料 | 时间 | 对研究的作用 |
+|---|---|---|
+| V4-Flash-0731、V4-Pro-0813 | 2026-07-31、2026-08-13 | V4正式版阶段的两个模型版本，和4月Preview分开 |
+| V4.1-Flash | 2026-09-10 | 本批技术分析的原始模型版本，支持图文输入 |
+| 技术报告 `2609.19969v1` | 2026-09-17提交 | 晚于模型发布；用于解释方法，不把论文提交日当模型首发日 |
+| V4.1-Flash-1017 | 2026-10-17更新 | 后续模型卡沿用同一技术报告，不是新论文 |
+
+固定模型卡与权重索引的具体版本、来源覆盖范围见[来源清单](sources/MANIFEST.md)。本批未下载权重或运行模型；静态配置相同不能证明权重或训练过程相同。
+
+#### 2.8.2 新架构的证据边界
+
+[4.1 原版技术报告 **2609.19969v1**](https://arxiv.org/abs/2609.19969v1) 的提交日是 **2026-09-17**，晚于 9 月 10 日模型公告；1017 模型卡引用这份既有研究，不代表 10 月 17 日发布了一篇新的独立技术报告。本批固定 arXiv PDF 与固定 HF revision 内 PDF，两者字节哈希不同，分别保留，不默认为同一文件版本。
+
+论文摘要、§2/§4.2.1 和固定的原版模型卡支持以下变化：**552B 是 backbone 参数口径**，另有 196B Engram 条件记忆参数；40 层 Causal Encoder-Decoder 把 prefill 与 decode 的激活参数分别记为 **8B / 16B**。不能把 HF 权重页面的整体规模、backbone 参数和单 token 激活参数放进同一列，也不能由小激活量推出整套权重可装进一张显卡。
+
+CSA2 的跨层 KV/索引复用与 FP4 KV 缓存把**全局 KV**记录为 890 bytes/token、约为旧 V4-Flash 的 1/4；SWA Bounded Replay 针对的是**持久缓存**，作者给出的比例约为 1/8。这两种缓存口径和固定长度下的比较不能改写为整机显存分别下降 4 倍/8 倍，或所有请求时延都同比下降。论文 §6 还承认 CSA2 选择错误、cache 恢复边界上的近似状态重建可能在未测极端条件下损害能力；本批没有独立验证这些边界。
+
+原版与 1017 两个固定仓库的 `config.json` 字节一致（同为 40 层、词表 129,280），权重索引列出的分片数与映射规模相同；这只确认公开静态配置一致，**不能证明权重相同，也不能证明训练变更全部已披露**。本批未下载分片或运行推理。
+
+#### 2.8.3 评测、harness 与推理强度不能跨版本继承
+
+1017 固定模型卡与更新日志列出 HLE 无工具 **42.6**（**44.0** 另指纯文本子集）、Terminal-Bench **4.0** 为 **42.3**、DeepSWE **v1.1** 为 **77.0**；后两项分别使用 **Claude Code** 与 **Mini-SWE-V2**。ZeroBench-main 的 **51.0** 是带工具 **Pass@5**。这些均为厂商报告，不是本批独立复跑。[1017 固定模型卡](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017/blob/1bae0e1088993b9b82de08f59de5be5a34e42170/README.md)；[官方脚注](https://api-docs.deepseek.com/updates/)
+
+原版 4.1 论文/卡片的代码评测通常用 DeepSeek Harness Minimal，DeepSWE 另用 mini-SWE；不能把旧表到 1017 新表的分差都归因于 checkpoint 更新。新增报告没有给足逐项采样重复、全部模型预算和失败分布，本批不据这些数字写全场景排名，也不将“更短输出、更快任务”变成缺硬件/任务条件的固定倍数。
+
+论文报告中的 reasoning-effort 设置属于该论文评测条件；它不代表所有托管产品都采用相同默认推理强度。输入窗口与输出预算也不能替代长上下文准确率评估。
 
 ---
 
@@ -233,13 +270,13 @@ V2 的辅助损失虽然有效，但**会损害模型主任务性能**——损�
 
 ### 3.3 FP8 训练与低成本策略
 
-V3 是**首个在 671B 量级 LLM 上跑通 FP8 端到端训练**的开源模型。技术细节：
+按固定版 [V3 技术报告 `2412.19437v2`](https://arxiv.org/abs/2412.19437v2)（2025-02-18）§3.3，Linear 的 Fprop/Dgrad/Wgrad 以 FP8 E4M3 为输入，输出为 BF16/FP32。激活1×128、权重128×128分组量化；H800上每128元素（4次WGMMA）提升部分和至FP32累加。embedding、输出头、gating、normalization、attention仍保留原精度；master weights/累积梯度用FP32，AdamW一、二阶矩用BF16，部分缓存激活另用E5M6。
 
-- 大部分 GEMM（Wgrad/Dgrad/Fwd）使用 **FP8 E4M3**；BF16/FP32 仅保留在 norm、loss、master weight、optimizer state、attention softmax 等敏感部分。
-- **Tile-wise / Block-wise fine-grained 量化**：对激活按 1×128 tile 量化、对权重按 128×128 block 量化，避免 tensor-wise scaling 在 outlier 下溢出。
-- **高精度累加**：FP8 GEMM 的部分和按周期升级到 FP32 累加（修补 Hopper 架构 FP8 累加器精度不足的问题）。
-- **统一 E4M3**：与 NVIDIA 默认配方（forward E4M3 + backward E5M2）不同，V3 全用 E4M3，简化框架并配合 fine-grained 量化保证数值稳定。
-- 收益：相比 BF16 训练**显存减半 + GEMM 算力翻倍**，没有任何 loss spike 或回滚。
+- **存储**：相同元素数的FP8权重/激活载荷为BF16的一半（1对2 bytes/元素，理论格式计算，忽略缩放与副本）；论文未据此给出完整训练峰值显存降低50%的对照。
+- **速度**：§3.3.1称相对原BF16方法的计算速度**理论上2倍**。这不是固定矩阵形状、计时方法下的内核实测，也不是完整step或端到端推理速度；量化、缩放、高精度累加、非GEMM与通信仍有开销。
+- **质量与完整训练**：附录B.1以约16B/1.33T tokens和约230B/0.9T tokens的MoE做FP8对BF16实验，图10以EMA 0.9平滑loss，作者报告相对loss误差<0.25%（H800训练系统；附录未单列各组卡数/批量）。这不是671B全程BF16对照。V3完整系统使用2048张H800，作者报告未发生**不可恢复的**loss spike、未回滚；总GPU-hours是FP8、并行、通信等联合优化的结果，不能隔离成FP8单项收益。[摘要、§1/Table 1、§3.1、附录B](https://arxiv.org/pdf/2412.19437v2)
+
+附录B.2还报告：将Dgrad相关张量全部改成128×128 block量化会使约16B MoE在约300B tokens时发散。公开仓库的固定revision只提供FP8/BF16推理demo，不能证明原始训练内核吞吐或完整训练显存；详见[文本子报告 §4.3.3](deepseek-text-models.md#433-fp8-混合精度训练)的源码调用链和存储推导。
 
 **配套低成本策略**：
 
@@ -247,14 +284,14 @@ V3 是**首个在 671B 量级 LLM 上跑通 FP8 端到端训练**的开源模型
 - **HAI-LLM 自研框架**：16-way zero-bubble 流水线 + 8-way 专家并行 + ZeRO-1，**未使用 tensor 并行**（因激活参数少 + 部分算子重计算），定制 CUDA kernel 与改造版 FlashAttention-2。
 - **训练成本拆解**（V3 论文摘要原话）：
 
-  | 阶段 | GPU 小时 (H800) | 折算 (\$2/h) |
+  | 阶段 | GPU 小时 (H800) |
   | --- | --- | --- |
-  | 预训练 | 2.664M | \$5.328M |
-  | 上下文扩展 | 0.119M | \$0.238M |
-  | 后训练 | 5K | \$10K |
-  | **总计** | **2.788M** | **≈ \$5.576M** |
+  | 预训练 | 2.664M |
+  | 上下文扩展 | 0.119M |
+  | 后训练 | 5K |
+  | **总计** | **2.788M** |
 
-- 该成本仅含主训练 GPU 算力，**不包含数据、消融实验、人力等成本**——这一点 DeepSeek 团队也在多个采访中澄清过，但即便如此，与同级闭源旗舰相比仍有数量级优势。
+- 该GPU小时为论文报告的计算用量，不包含数据、消融、人力等项目，也不能单独归因给FP8。
 
 ### 3.4 Multi-Token Prediction (MTP)
 
@@ -330,7 +367,6 @@ V3.2 首次引入，是 DeepSeek 把"长上下文成本"打下去的关键武器
 3. **拒绝采样 + SFT**：用阶段 2 收敛模型生成 ~600K 推理数据 + 200K 通用数据（写作、知识问答、自我认知）一起 SFT，让模型在保留推理能力的同时回归通用对齐。
 4. **全场景 RL**：最后再做一轮 RL，目标兼顾 helpfulness/harmlessness（用奖励模型）与 accuracy（用规则奖励），完成最终对齐。
 
-- **训练成本**：根据 Nature 补充材料披露，R1 仅花费约 **US\$294K**（不含 V3-Base 约 600 万美元的预训练）。
 - **性能**：AIME 2024 pass@1 ≈ 79.8%，MATH-500 97.3%，Codeforces 2029 ELO（96.3 percentile），与 OpenAI o1-1217 持平或超越。
 - **协议**：MIT License；首个面向 LLM 推理的"完全开源 + 完全可商用"前沿模型。
 
@@ -531,12 +567,12 @@ VL2（arXiv:2412.10302）围绕"高分辨率 + MoE 高吞吐"做两处重大升�
 
 **一、效率优先（Efficiency-First）**
 
-DeepSeek 几乎所有架构与训练决策都可以归约为一个目标函数：**在同等智能水平下，把训练与推理成本系统性降低一个数量级**。
+DeepSeek 的多代研究反复探索如何在给定训练与推理预算下提高能力；具体收益取决于模型、硬件和任务设置，不能把单项机制的理论节省直接外推到完整系统。
 
 - 架构层：MLA 攻 KV cache、DeepSeekMoE 攻 FFN 计算、DSA 攻长上下文 attention、Token-wise 压缩攻 1M 上下文。
 - 训练层：FP8（攻显存与 GEMM 算力）、DualPipe（攻流水线气泡）、ALF（攻"为均衡牺牲质量"）、MTP（攻训练信号密度）。
 - 后训练层：GRPO（攻 critic 显存）、规则奖励（攻奖励 hacking）、自验证（攻"对答案胡编"）。
-- 这种"全栈成本视角"使 DeepSeek 能用 \$5.576M 训出对标闭源旗舰的 671B MoE，是开源 LLM 工程史上最具纪律性的演化序列。
+- 这种全栈效率路线把架构、训练配方和推理系统一起优化；论文报告的总计算量不应归因给其中某一项。
 
 **二、开源开放（Open & Reproducible）**
 
@@ -572,12 +608,14 @@ DeepSeek 的演化模式具有清晰的"分叉—回流"特征：
 
 ### 8.2 关键架构决策演变线索
 
+下表保留至4月V4 Preview的历史脉络。9月4.1改为CED + CSA2、引入Engram，并按prefill/decode分别记激活规模；它不是把末格的旧Flash配置原样扩展，具体新增证据见§2.8。
+
 | 决策维度 | 演化轨迹 | 触发动机 |
 | --- | --- | --- |
 | 注意力 | MHA/GQA → **MLA** → MLA + **DSA** → **Token-wise + DSA** | KV cache 瓶颈 → 长上下文 attention 复杂度 → 1M 上下文 |
 | FFN | Dense SwiGLU → **DeepSeekMoE**（细粒度 + 共享专家） | "低激活高总参"性价比；专家专业化粒度 |
 | 负载均衡 | 三层辅助损失 → **Auxiliary-Loss-Free** | 辅助损失伤害主任务质量 |
-| 训练精度 | BF16 → **FP8 (E4M3)** + 高精度累加 | 显存与 GEMM 算力翻倍 |
+| 训练精度 | **FP8 E4M3 GEMM输入** + BF16/FP32混合精度 | FP8载荷字节数为BF16的一半；GEMM理论2倍速度不等于端到端实测（见§3.3） |
 | 训练目标 | next-token → **+ MTP** | 训练信号密度 + 推理 speculative decoding |
 | 流水线 | 标准 PP → **DualPipe** | 跨节点 MoE all-to-all 通信开销 |
 | 上下文 | 4K → 128K (YaRN) → **1M** (DSA + Token-wise) | 长文档、Agent、代码仓库 |
@@ -611,7 +649,7 @@ DeepSeek 的演化模式具有清晰的"分叉—回流"特征：
 
 4. **R1-Zero 的纯 RL 路线**——首次公开证明无需任何人类标注推理轨迹也能让 LLM 涌现自反思、验证、回溯等高阶推理行为。"Aha Moment"是开源 LLM 史上的标志性现象。
 
-5. **FP8 端到端训练（V3）**——首个在 671B 量级 LLM 上跑通的开源 FP8 训练，14.8T tokens **零 loss spike、零回滚**。统一 E4M3 + 1×128 tile / 128×128 block 量化 + FP32 高精度累加，是后续所有大型开源 MoE FP8 训练的参考实现。
+5. **FP8 混合精度训练（V3）**——671B训练结合E4M3 GEMM输入、细粒度量化和FP32累加，并保留敏感算子与状态的高精度。作者报告未发生不可恢复的loss spike、未回滚；小规模BF16对照与完整训练结果的适用范围见[§3.3](#33-fp8-训练与低成本策略)，公开推理demo不等于公开训练实现。
 
 6. **Multi-Token Prediction (MTP)**——大型 MoE 上首次将 MTP 工业级落地，训练信号增强 + 推理时 speculative decoding draft（接受率 85–90%，TPS ×1.8）。
 
@@ -619,7 +657,7 @@ DeepSeek 的演化模式具有清晰的"分叉—回流"特征：
 
 8. **Janus 解耦视觉编码**——理解（语义连续特征）与生成（像素离散 token）分离编码、共享 Transformer 主干。在统一多模态生成路径上提供了清晰的架构指引，Janus-Pro 一度超越 SDXL/DALL·E 3。
 
-9. **DualPipe 流水线 + 跨节点 all-to-all kernel**——让 H800 上的 MoE 通信开销几乎被完全 overlap，是 V3 \$5.576M 训练成本的工程基础。
+9. **DualPipe 流水线 + 跨节点 all-to-all kernel**——让 H800 上的 MoE 通信与计算重叠；V3总GPU-hours还包含FP8、数据处理、上下文扩展等环节，不能归因于DualPipe单项。
 
 10. **自验证 / 形式化奖励（DeepSeekMath-V2 + Prover-V2）**——把奖励从"答案匹配"搬到"证明合格"，把 generator / verifier / meta-verifier 三 LLM 链路工业化，为"reasoning 可验证化"路径提供了完整方法论。
 
@@ -635,50 +673,25 @@ DeepSeek 的演化模式具有清晰的"分叉—回流"特征：
 
 DeepSeek 的开源策略不仅体现在权重与技术报告上，还体现在与全球主流云平台和推理基础设施的深度集成。
 
-### 10.1 主流云平台集成状态
+### 10.1 平台集成信息的时间边界
 
-| 平台 | 接入模型 | 上线时间 | 备注 |
-| --- | --- | --- | --- |
-| **阿里云（Alibaba Cloud）** | V3 / R1 / V4-Pro / V4-Flash | 2025-01 | 百炼平台首批上架；支持按 token 计费与专属部署 |
-| **腾讯云** | V3 / R1 / V4-Flash | 2025-02 | TI-ONE 平台集成；支持 FP8 推理优化 |
-| **华为云** | V3 / R1 | 2025-03 | 昇腾 NPU 适配；MindSpore 框架支持 |
-| **AWS（Amazon Web Services）** | V3 / R1 / V4-Pro | 2025-04 | Bedrock 与 SageMaker 双通道；支持美国、欧洲区域 |
-| **Microsoft Azure** | V3 / R1 / V4-Pro / V4-Flash | 2025-05 | Azure AI Foundry 原生集成；与 GitHub Copilot 生态联动 |
-| **Google Cloud** | V3 / R1 / V4-Flash | 2025-06 | Vertex AI Model Garden 上架；TPU v5p 推理优化 |
-| **火山引擎（ByteDance）** | V3 / R1 / V4-Flash | 2025-07 | 豆包大模型平台接入；支持高并发推理 |
-| **Cloudflare Workers AI** | V4-Flash | 2025-10 | 边缘推理部署；全球 300+ 节点 |
-| **NVIDIA NIM** | V3 / R1 / V4-Pro / V4-Flash | 2025-11 | TensorRT-LLM 优化；支持 Hopper/Blackwell 架构 |
-| **Groq** | V3 / V4-Flash | 2025-12 | LPU 硬件加速；超低延迟推理 |
-| **Together AI** | V3 / R1 / V4-Pro / V4-Flash | 2026-01 | 开源推理 API；支持 speculative decoding |
-| **Fireworks AI** | V4-Pro / V4-Flash | 2026-02 | 快速推理优化；支持 1M 上下文 |
-| **Replicate** | V4-Flash | 2026-03 | 社区友好型 API；按需计费 |
+原稿把 V4 写进多个平台的早期上线表，但未提供各平台的原始接入公告，本批撤回这些未经证实的日期与统一支持表。上游权重公开不能证明第三方平台已完成适配。
+
+各第三方平台的支持情况仍需其原始说明；本报告不据上游公告推定其部署状态。
 
 ### 10.2 开源社区与下游生态
 
 - **框架适配**：vLLM、SGLang、TensorRT-LLM、llama.cpp 均已原生支持 DeepSeek-V3/V4 的 MLA + DeepSeekMoE 架构。vLLM 在 2025-12 版本中加入了对 DSA 稀疏注意力的初步支持。
-- **量化与压缩**：GGUF（Q4_K_M、Q8_0）、AWQ、GPTQ、FP8 等多种量化格式在社区快速普及。V4-Flash 的 284B/13B 配置使其可在单卡 H100 80GB 上以 FP8 运行 1M 上下文。
-- **Agent 框架集成**：LangChain、LlamaIndex、AutoGPT、CrewAI 等主流 Agent 框架均将 DeepSeek-R1/V4 作为默认推理后端选项。V4 的三档思考强度（Non-think / Think High / Think Max）被多个 Agent 框架用于动态控制推理深度。
+- **量化与部署**：本批读取了公开 V4.1 仓库的配置和权重索引，未下载权重或测试 GPU。激活参数不等于要存储的全部权重；原稿没有来源支撑的“V4-Flash 在单卡 H100 80GB 上以 FP8 运行1M”撤回，不用新模型的小激活量延续这一部署结论。
+- **Agent 集成**：1017 公告特别建议 DeepSeek Harness 0.2.1-rc.1 或更新版本，并点名 CodeBuddy / WorkBuddy 适配；这是官方建议，不等同于本批已在这些平台运行，也不支持原稿“所有主流框架默认后端”的结论。
 - **蒸馏生态**：R1-Distill 模式持续扩展，社区基于 V4-Flash 蒸馏出多个 7B–32B 级别的小模型，在数学与代码任务上保持接近原版的性能。
 
 ### 10.3 企业采用与行业落地
 
-- **编程助手**：GitHub Copilot、Cursor、Windsurf 等主流 IDE 插件在 2025 下半年陆续增加 DeepSeek-V4 作为可选后端，尤其在 Agentic Coding 场景（自动改 bug、跨文件重构）中表现突出。
+- **编程工具适配**：V4.1/1017 的官方适配说明见 §2.8；原稿将 V4 接入提前到2025下半年的无源叙述撤回。具体工具可配置为某个 API 后端，不证明已对每个模型版本的工程任务效果作独立验证。
 - **金融与投研**：幻方量化（DeepSeek 母公司）自身持续使用 DeepSeek 模型进行量化策略研究与报告生成，形成"自研自用"闭环。
 - **教育与科研**：多所高校将 R1/V4 用于数学证明辅助、代码教学、论文写作辅助；DeepSeek-Math-V2 的自验证能力被用于自动阅卷系统。
 - **政务与公共部门**：部分地方政府将 DeepSeek-V3/V4 部署于私有云，用于公文处理、政策问答与数据分析。
-
-### 10.4 V3 系列在 V4 时代的定位
-
-V4 发布后，V3 系列并未立即退役，而是形成**分层服务矩阵**：
-
-| 场景 | 推荐模型 | 理由 |
-| --- | --- | --- |
-| 极致性能 + 1M 上下文 | V4-Pro | 旗舰能力，Agentic Coding SOTA |
-| 高性价比 + 日常对话 | V4-Flash | 成本约为 V4-Pro 的 1/5，性能接近 |
-| 遗留系统兼容 | V3.2 / V3.2-Speciale | API 兼容，逐步迁移 |
-| 边缘/离线部署 | R1-Distill-Qwen3-8B 等 | 消费级硬件可运行 |
-
-DeepSeek 官方承诺 V3.2 API 至少维护至 2026-12-31，为现有用户提供充足迁移窗口。
 
 ---
 
@@ -728,11 +741,13 @@ DeepSeek 官方承诺 V3.2 API 至少维护至 2026-12-31，为现有用户提�
 
 ### 11.7 官方公告与 Changelog
 
-25. DeepSeek API Docs – Change Log. https://api-docs.deepseek.com/updates （2024-05 ~ 2026-04 全部 API 升级记录）。
+25. DeepSeek API Docs – [Change Log](https://api-docs.deepseek.com/updates/)，本批读取至2026-10-17条目；动态页面取证日期2026-10-22，内容哈希与快照见来源清单。
 26. DeepSeek API Docs – DeepSeek-V3.1 Release (2025-08-21). https://api-docs.deepseek.com/news/news250821
 27. DeepSeek API Docs – DeepSeek-V3.1-Terminus (2025-09-22). https://api-docs.deepseek.com/news/news250922
 28. DeepSeek API Docs – Introducing DeepSeek-V3.2-Exp (2025-09-29). https://api-docs.deepseek.com/news/news250929
 29. DeepSeek API Docs – DeepSeek-V4 Preview Release (2026-04-24). https://api-docs.deepseek.com/news/news260424
+
+本批更新的一手取证：[V4.1-Flash-1017公告](https://api-docs.deepseek.com/news/news261017/)、[V4.1原版论文2609.19969v1](https://arxiv.org/abs/2609.19969v1)、[1017固定模型卡](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017/blob/1bae0e1088993b9b82de08f59de5be5a34e42170/README.md)、[原版固定模型卡](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/314113f8a7dadb388215396ba5fbee2c610a04d6/README.md)、[Pro-0813固定模型卡](https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro-0813/blob/72e1d3230f6c080a530b0a1d46f8eb4602340597/README.md)。完整来源身份/论文与权重日期/未解决冲突见 [sources/MANIFEST.md](sources/MANIFEST.md)。
 
 ### 11.8 第三方综述与交叉验证
 
@@ -749,3 +764,5 @@ DeepSeek 官方承诺 V3.2 API 至少维护至 2026-12-31，为现有用户提�
 ---
 
 > *本报告基于 [deepseek-text-models.md](deepseek-text-models.md)（纯文本基座模型）与 [deepseek-multimodal-and-specialized.md](deepseek-multimodal-and-specialized.md)（多模态与专业模型）两份子报告整合提炼。如需查看某一方向的更详细技术细节（如训练超参、消融实验、benchmark 完整数值），请回到子报告。*
+
+> **本批范围（2026-10-22）**：只核 V4 正式版本→V4.1-Flash-1017 更新身份和受影响的主报告断言；原文实读范围、固定revision及未解决项在来源清单。两份历史子报告字节未改；不能用本批当前路由映射覆盖其历史论文证据，也不能将此记录称为DeepSeek整篇逐事实通过。

@@ -18,7 +18,7 @@
 <div align="center">
 
 <!-- SCRIPT:badges START -->
-[**50** 主报告](index/by-report.md) &nbsp; · &nbsp; [**104** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**21** 技术专题](index/by-topic.md) &nbsp; · &nbsp; [**6** 研究板块](#六个研究板块)
+[**50** 主报告](index/by-report.md) &nbsp; · &nbsp; [**106** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**21** 技术专题](index/by-topic.md) &nbsp; · &nbsp; [**6** 研究板块](#六个研究板块)
 <!-- SCRIPT:badges END -->
 
 </div>

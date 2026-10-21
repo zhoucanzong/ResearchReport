@@ -15,12 +15,12 @@
 | --- | --- |
 | **条目数**（`report.md`） | **50** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 6 |
-| 条目子文档数 | 104 |
-| 条目正文行数（剔除 front-matter） | 27,539 |
-| 条目字节 | 1,889,945 B |
+| 条目子文档数 | 106 |
+| 条目正文行数（剔除 front-matter） | 27,262 |
+| 条目字节 | 1,881,824 B |
 | 带 front-matter 的条目 | 9 |
 | 带合法 `date` 的条目 | 9 |
-| 文档（除生成物外的全部 `.md`） | 170 |
+| 文档（除生成物外的全部 `.md`） | 172 |
 | 其中文件名 `README.md` | 8 |
 | 纳入版本控制的文件 | 194 |
 | 纳入版本控制的 `.md` | 178 |
@@ -32,13 +32,13 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| Models | 23 | 33 | 12,899 | 900,894 B | [板块页 →](<Models/README.md>) |
+| Models | 23 | 35 | 12,622 | 892,773 B | [板块页 →](<Models/README.md>) |
 | LLM | 8 | 27 | 4,136 | 299,102 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,758 | 320,420 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 2 | 31 | 1,213 | 130,531 B | [板块页 →](<WorldModel/README.md>) |
 | Infra | 3 | 29 | 972 | 71,984 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 33 | 1,561 | 167,014 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **50** | **170** | **27,539** | **1,889,945 B** | — |
+| **合计** | **50** | **172** | **27,262** | **1,881,824 B** | — |
 
 ## 分面索引
 
@@ -54,10 +54,10 @@
 
 ## 条目索引（按板块目录折叠，可直达条目与子报告）
 
-### Models（23 条目 / 33 文档）
+### Models（23 条目 / 35 文档）
 
 <details>
-<summary><b>模型系列 Models（23 条目 / 9 子文档）</b></summary>
+<summary><b>模型系列 Models（23 条目 / 11 子文档）</b></summary>
 
   <details>
   <summary><b>Alibaba-Gen</b> · <code>Models/Alibaba-Gen/report.md</code> · 95 行 · —</summary>
@@ -96,15 +96,16 @@
   </details>
 
   <details>
-  <summary><b>DeepSeek</b> · <code>Models/DeepSeek/report.md</code> · 751 行 · —</summary>
+  <summary><b>DeepSeek</b> · <code>Models/DeepSeek/report.md</code> · 768 行 · —</summary>
 
 
-    * **条目**：[Models/DeepSeek/report.md](<Models/DeepSeek/report.md>)（751 行 / 58,512 B）
+    * **条目**：[Models/DeepSeek/report.md](<Models/DeepSeek/report.md>)（768 行 / 63,195 B）
     * **专题目录**：`Models/DeepSeek`
     * **元数据**：type=`—` · domain=`Models` · subject=`DeepSeek` · date=`—` · status=`—`
-    * **子文档（2）**
+    * **子文档（3）**
         * [deepseek-multimodal-and-specialized.md](<Models/DeepSeek/deepseek-multimodal-and-specialized.md>) — 367 行 / 24,706 B
-        * [deepseek-text-models.md](<Models/DeepSeek/deepseek-text-models.md>) — 407 行 / 33,119 B
+        * [deepseek-text-models.md](<Models/DeepSeek/deepseek-text-models.md>) — 418 行 / 36,554 B
+        * [sources/MANIFEST.md](<Models/DeepSeek/sources/MANIFEST.md>) — 99 行 / 12,400 B
 
   </details>
 
@@ -145,10 +146,10 @@
   </details>
 
   <details>
-  <summary><b>Gemini</b> · <code>Models/Gemini/report.md</code> · 1094 行 · —</summary>
+  <summary><b>Gemini</b> · <code>Models/Gemini/report.md</code> · 825 行 · —</summary>
 
 
-    * **条目**：[Models/Gemini/report.md](<Models/Gemini/report.md>)（1094 行 / 57,231 B）
+    * **条目**：[Models/Gemini/report.md](<Models/Gemini/report.md>)（825 行 / 43,389 B）
     * **专题目录**：`Models/Gemini`
     * **元数据**：type=`—` · domain=`Models` · subject=`Gemini` · date=`—` · status=`—`
     * **子文档（0）**
@@ -181,14 +182,14 @@
   </details>
 
   <details>
-  <summary><b>Hunyuan</b> · <code>Models/Hunyuan/report.md</code> · 525 行 · —</summary>
+  <summary><b>Hunyuan</b> · <code>Models/Hunyuan/report.md</code> · 500 行 · —</summary>
 
 
-    * **条目**：[Models/Hunyuan/report.md](<Models/Hunyuan/report.md>)（525 行 / 36,518 B）
+    * **条目**：[Models/Hunyuan/report.md](<Models/Hunyuan/report.md>)（500 行 / 37,556 B）
     * **专题目录**：`Models/Hunyuan`
     * **元数据**：type=`—` · domain=`Models` · subject=`Hunyuan` · date=`—` · status=`—`
-    * **子文档（0）**
-        * _该条目暂无子文档_
+    * **子文档（1）**
+        * [sources/MANIFEST.md](<Models/Hunyuan/sources/MANIFEST.md>) — 28 行 / 5,556 B
 
   </details>
 
@@ -793,7 +794,7 @@
 | --- | --- | --: | --: |
 | [Infra/README.md](<Infra/README.md>) | Infra | 59 | 4,166 B |
 | [LLM/README.md](<LLM/README.md>) | LLM | 57 | 3,746 B |
-| [Models/README.md](<Models/README.md>) | Models | 87 | 4,141 B |
+| [Models/README.md](<Models/README.md>) | Models | 95 | 4,362 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 91 | 3,889 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |

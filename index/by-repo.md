@@ -29,14 +29,14 @@
 * [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) — 95 行
 * [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) — 336 行
 * [Models/Claude/report.md](<../Models/Claude/report.md>) — 580 行
-* [Models/DeepSeek/report.md](<../Models/DeepSeek/report.md>) — 751 行
+* [Models/DeepSeek/report.md](<../Models/DeepSeek/report.md>) — 768 行
 * [Models/Doubao-Seed/report.md](<../Models/Doubao-Seed/report.md>) — 643 行
 * [Models/GLM/report.md](<../Models/GLM/report.md>) — 737 行
 * [Models/GPT/report.md](<../Models/GPT/report.md>) — 759 行
-* [Models/Gemini/report.md](<../Models/Gemini/report.md>) — 1,094 行
+* [Models/Gemini/report.md](<../Models/Gemini/report.md>) — 825 行
 * [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>) — 878 行
 * [Models/Grok/report.md](<../Models/Grok/report.md>) — 469 行
-* [Models/Hunyuan/report.md](<../Models/Hunyuan/report.md>) — 525 行
+* [Models/Hunyuan/report.md](<../Models/Hunyuan/report.md>) — 500 行
 * [Models/Kimi/report.md](<../Models/Kimi/report.md>) — 616 行
 * [Models/Kling/report.md](<../Models/Kling/report.md>) — 537 行
 * [Models/LLaMA/report.md](<../Models/LLaMA/report.md>) — 483 行

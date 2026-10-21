@@ -1,0 +1,28 @@
+# Hunyuan source manifest
+
+核查截止：2026-10-22（Asia/Shanghai）。本清单覆盖 Hunyuan-Large 的 KV/计算估算和 Hunyuan-A13B 的参数、上下文与部署证据；不代表全系列核验通过。
+
+| Source | Pinned identity | Evidence location | Scope / boundary |
+|---|---|---|---|
+| [Hunyuan-Large Technical Report](https://arxiv.org/abs/2411.02265v3) | arXiv `2411.02265v3`; first submitted 2024-11-04; v3 updated 2024-11-06; PDF SHA-256 `9b877b264b2aae23c08d9be68026b7bf20728eec079935a2c35bee60a935731b` | §2.2.2, Table 2, PDF p.5: BF16 KV-cache byte formulas and MHA comparison. §2.3.1, Eq. (2), PDF p.6; scaling experiments and extrapolated optimum in same section. | `C` is the authors’ compute-budget estimate; it is not a hardware-specific runtime estimate. “Nearly 95%” is KV tensor storage against MHA in the stated BF16 comparison, not total GPU memory. The 58.1B/5.6T optimum is an extrapolation from smaller scale experiments, not a direct full-scale sweep. |
+| Official checkpoint `tencent/Tencent-Hunyuan-Large` | Hugging Face revision `023bb217c7f4fdfabd7308a344994b0e9ac7359c` (`lastModified` 2025-01-19); official code repository `Tencent/Tencent-Hunyuan-Large` main at checked commit `cdc37358aa7ce74f4883ae639726804a63ea99f6` | Identity/version cross-check only; paper claims below are sourced to the fixed v3 report. | No checkpoint was downloaded or evaluated; the report does not map each score to this specific checkpoint hash. |
+| [Hunyuan-A13B Technical Report](https://arxiv.org/abs/2609.27284v1) | arXiv `2609.27284v1`; first submitted 2026-09-23; PDF SHA-256 `2a559bd51425ae183081085412487b6cfadc27f44563c388b9204d8a87f39396` | §2.2, PDF p.2 and Table 1: total/active parameter counts, shared/routed experts and configuration. §2.3, PDF p.3: training stages and context expansion. Table 4, PDF p.7: author-reported benchmark results. | The PDF cover says 2025-06-27. This is distinct from the arXiv submission date. Author-reported results are not independent reproduction. |
+| [Official Tencent-Hunyuan/Hunyuan-A13B repository](https://github.com/Tencent-Hunyuan/Hunyuan-A13B/tree/2798f3c8b6a69e0ce93950b0d2417203cf950fa0) | Git commit `2798f3c8b6a69e0ce93950b0d2417203cf950fa0`; commit date 2025-07-08 | `README_CN.md` lines 52–66: 2025-06-26 release, parameter and architecture summary. Lines 698–701: BF16 deployment and long-context TP guidance. `report/Hunyuan_A13B_Technical_Report.pdf`, cover date 2025-06-26; SHA-256 `fb65faa6ead1de01ee59c9cdc1545dc04c3057f0ffcb32fdc10844b0fc02fac0`. | README and PDF are pinned to this repository commit. Deployment guidance is Tencent's documented configuration, not a universal minimum. |
+| [Hunyuan-A13B-Instruct model card](https://huggingface.co/tencent/Hunyuan-A13B-Instruct/tree/290ddb9a56ed23c2c83a1c8081533e58925df952) | Model ID `tencent/Hunyuan-A13B-Instruct`; revision `290ddb9a56ed23c2c83a1c8081533e58925df952`; API `lastModified` 2025-08-21; README blob `50c823d10bf81573000a96165590f00590067eb3`; `config.json` blob `c22b9f34610031b2b5caa8a149e30650b64196ef` | README lines 41–44, 319–349: vendor claims max 262,144 context; config default is 32,768 and README gives a manual extension procedure and 4×H20 96GB BF16 recommendation. Config fields include 32 layers, 32 attention heads, 8 KV heads, 64 experts, and one shared expert per layer. | Current retrieved revision is not evidence that benchmark scores in the paper were produced by this exact revision; the report does not map every score to a checkpoint hash. Context support and deployment config are vendor documentation, not independent long-context validation. |
+
+## Claim decisions in this batch
+
+- Retain `80B total / 13B active per input`. The report explicitly says the shared expert remains active and 8 of 64 non-shared experts are active; it does not define a second `26.5B` active-parameter figure. Removed the community-derived alternative.
+- Replace the single-card deployment implication with the pinned repository's BF16 guidance: two GPUs above 80GB each; TP4 recommended for long context. This does not establish a universal minimum for quantized, offloaded, or other backends. The separate HF model card specifies a different 256K BF16 deployment setup (4×H20 96GB); its default config is 32K, and its README requires a manual config change for the full advertised window.
+- Removed claims that A13B shares Hunyuan-Large's architecture lineage and serves as a TurboS/T1 backbone; this A13B source set does not establish those relationships.
+- Distinguished the repository's 2025-06-26 release/report announcement, the repository PDF cover date 2025-06-26, the arXiv v1 PDF cover date 2025-06-27, and arXiv submission on 2026-09-23.
+
+## Still out of scope
+
+Cross-family superiority/exclusivity claims remain open. No full-series refresh or independent model reproduction was performed.
+
+## Hunyuan-Large claim decisions (2026-10-22 batch)
+
+- Verified the `nearly 95%` arithmetic from Table 2: for the paper settings, `(2 × n_g)/(4 × n_h) = (2 × 8)/(4 × 80) = 5%` of the MHA BF16 KV tensor bytes. Narrowed the wording to that tensor comparison and baseline.
+- Preserved Eq. (2) but defined `N` and `D`, and stated the paper’s scaling-fit range and extrapolated `58.1B / 5.6T` estimate separately from the selected `52B / ~7T` model. Do not treat the equation as a hardware-specific runtime estimate.
+- Paper/report source is fixed at arXiv v3; checkpoint/repository identities are recorded separately and were not used to validate benchmark scores.

@@ -42,7 +42,7 @@
 | 2025.05 | **Hunyuan-Voice** | 语音 | 语音通话模型 |
 | 2025.05 | HunyuanVideo-Avatar (arXiv:2505.20156)，HunyuanCustom，HunyuanPortrait | 视频 | 数字人/可控/肖像视频 |
 | 2025.06 | HunyuanGameCraft (arXiv:2506.17201) | 视频 | 交互式无限长游戏视频 |
-| 2025.06–07 | **Hunyuan-A13B** | 语言 | 80B 总参 / 13B 激活 MoE，轻量代偿 |
+| 2025-06-26 | **Hunyuan-A13B** 权重及技术报告开放 | 语言 | 官方仓库当日公告开放 Pretrain、Instruct、FP8、GPTQ-Int4；后续 arXiv v1 于 2026-09-23 提交 |
 | 2025.07 | HunyuanWorld 1.0 | 3D 世界 | 首个开源交互式 3D 世界生成 |
 | 2025.09 | **HunyuanImage-2.1** | 图像 | 17B DiT，原生 2K，单/双流混合，Glyph-Aware |
 | 2025.09 | **HunyuanImage-3.0** (arXiv:2509.23951) | 图像 | 80B 原生多模态自回归生图，全球开源最大 T2I |
@@ -51,11 +51,8 @@
 | 2025.11 | **HunyuanOCR** (arXiv:2511.19575) | VLM-OCR | 1B 商用级开源 OCR-VLM |
 | 2025.12 | **混元 2.0** | 语言 | 推理能力与效率国内领先 |
 | 2026.01 | HunyuanImage-3.0-Instruct | 图像 | 推理增强 Prompt 与 Image-to-Image |
-| 2026.03 | **混元 3.0** | 语言 | 内部测试中，预计4月发布 |
-| 2026.03 | **价格大幅上调** | 商业 | API价格上涨，HY 2.0 Instruct输入价涨幅463% |
 | 2026.04 | **HY 2.0 Think** | 语言推理 | 深度推理旗舰，128K上下文，分段定价 |
 | 2026.04 | **HY 2.0 Instruct** | 语言 | 指令遵循旗舰 |
-| 2026.06 | **旧模型退役** | 生命周期 | HY 2.0、hunyuan-turbos、hunyuan-t1等9个旧版本不再支持 |
 
 > 提示：阶段时间以 arXiv 提交或官方仓库 README 公示日期为准；部分模型存在多版本迭代（如 Hunyuan3D 2.0 → 2.1/2.5）。
 
@@ -105,27 +102,29 @@ Hunyuan 总平台
 
 ### 2.2 Hunyuan-Large：389B 总参 / 52B 激活
 
-> 论文：*Hunyuan-Large: An Open-Source MoE Model with 52 Billion Activated Parameters by Tencent*，arXiv:2411.02265，2024-11-04（v3）。
+> 论文：*Hunyuan-Large: An Open-Source MoE Model with 52 Billion Activated Parameters by Tencent*，[arXiv:2411.02265v3](https://arxiv.org/abs/2411.02265v3)。首次提交 2024-11-04，v3 更新于 2024-11-06。
 
 - **整体规模**：389B 总参数、52B 激活参数；64 层；hidden=6400；80 attention heads；KV heads=8（GQA）；词表 128K；7T tokens 预训练；上下文 256K。
 - **MoE 结构**：1 共享专家 + 16 路由（specialized）专家，每 token 激活 1 个共享 + 1 个路由专家。激活函数 SwiGLU，位置编码 RoPE。
 - **三大核心创新**：
-  1. **KV Cache 压缩（GQA + CLA）**：在 head 维度采用 8 组 GQA，在层维度采用 Cross-Layer Attention（每 2 层共享 KV），相对原 MHA 节省约 **95% KV cache**。
+  1. **KV Cache 压缩（GQA + CLA）**：Hunyuan-Large 使用 80 个 attention heads、8 个 KV groups，CLA 每 2 层共享 KV。技术报告 §2.2.2 的 Table 2 以 BF16 KV 张量字节数对比：MHA 为 `4 n_h d_h l`，GQA+CLA 为 `2 n_g d_h l`，据此比例是 `(2×8)/(4×80)=5%`，作者称相对原始 MHA 节省近 95%。这是给定 MHA 基线与 BF16 下的 KV-cache 张量估算，不代表整机显存或端到端推理内存必然下降 95%。
   2. **Recycle Routing（回收式路由）**：传统 Top-k 中超过专家容量的 token 会被丢弃；Hunyuan-Large 将这些"溢出"的 token 随机重路由到其他专家，避免丢 token 造成的信息损失，与共享专家协同提升训练效率。
   3. **Expert-Specific Learning Rate Scaling**：基于 Adam-style 最优学习率与 batch 之间的关系，对共享专家与路由专家分别匹配各自有效 batch 的最优学习率，缓解 MoE 中"专家梯度异质"的优化痛点。
-- **MoE Scaling Law 与训练**：使用修正后的 MoE 计算预算公式 *C ≈ 9.59ND + 2.3×10⁸ D*；通过 isoFLOPs 拟合得最优激活参数 ≈58.1B、训练 token ≈5.6T，最终选定 52B/7T。学习率采用 warmup → 长缓降 → 5% 退火三段式，退火期切换至最高质量子集；长上下文阶段渐进 32K→256K，将 RoPE base 频率扩至 1B。
+- **MoE Scaling Law 与训练**：技术报告 §2.3.1 式 (2) 给出作者的 MoE compute-budget 估算 `C ≈ 9.59ND + 2.3×10⁸D`，其中 `N` 为激活参数数、`D` 为训练 token 数；作者以 10M–1B 激活参数及 10B–100B token 范围的实验拟合 isoFLOPs 关系，外推最优点约 58.1B/5.6T，再基于曲线平缓等考虑选择 52B/约 7T。该外推不是在 52B、7T 附近直接穷举的实验，也不等同硬件实测吞吐或训练墙钟时间。学习率采用 warmup → 长缓降 → annealing 三阶段；长上下文阶段渐进 32K→256K，将 RoPE base 频率扩至 1B（均为论文设置）。
 - **数据**：约 **1.5T 高质量合成数据**（指令生成→指令进化→响应生成→响应过滤四步法），数学/代码/低资源场景占比显著提升。
 - **后训练**：≥1M 条 SFT 数据 + DPO（offline+online 单阶段融合，配 SFT loss 项与 EMA 防 reward hacking）。
 - **效果**：在 MMLU=88.4、CMMLU=90.2、C-Eval=91.9、MATH=69.8、HumanEval=71.4 等指标上全面超越 LLaMA3.1-70B，与 LLaMA3.1-405B 持平或在中文/数学/代码维度反超。
 
 ### 2.3 Hunyuan-A13B：轻量级 MoE 路线
 
-继 Hunyuan-Large 之后，腾讯于 2025 年中期开源更小但更激进的稀疏 MoE：
+腾讯于 2025-06-26 开放 Hunyuan-A13B-Pretrain、Instruct、Instruct-FP8 和 Instruct-GPTQ-Int4 权重，并发布技术报告与训练、推理说明。这里的版本范围是官方仓库在该发布中介绍的 Hunyuan-A13B；基准结果仅代表报告所列模型版本和实验设置。
 
-- **规模**：80B 总参 / **13B 激活**，单 token 激活比约 16%（≈26.5B 含共享层时约 33% 激活，依据社区分析）。
-- **设计目标**：在常用推理硬件（如单卡/双卡级别部署）下逼近 70B 级稠密模型与 deepseek-V2/V3 的性价比；上下文长度支持到 256K。
-- **架构**：精细化 MoE（fine-grained MoE）、GQA、RoPE，与 Hunyuan-Large 同源；提供 Instruct 版本，强调"双模式"——既可作为高吞吐通用 LLM，也作为 TurboS/T1 推理流程中的高效 backbone。
-- **意义**：与 Hunyuan-Large 一起构成"389B 旗舰 + 80B 性价比"两极，覆盖云上推理与本地化部署的不同场景。
+- **参数口径**：技术报告将模型定义为 **80B 总参数、每个输入激活 13B 参数**。报告 §2.2（PDF 第 2 页）说明每层含 1 个始终激活的共享专家和 64 个细粒度非共享专家，其中每次同时激活 8 个非共享专家；表 1 列出 32 层、32 个 attention heads、8 个 KV heads。报告没有给出“含共享专家时为 26.5B 激活”的第二套口径，故删除此前依据社区分析的推算。
+- **训练与上下文**：论文描述训练长度逐步扩至 256K。模型卡也宣称支持 256K，但默认配置是 32K；启用完整窗口要改配置，厂商给出的 BF16 部署建议为 4 张 H20 96GB。训练目标、默认设置和部署条件不能混为一谈，这些资料也不证明所有任务在 256K 下都保持稳定效果。
+- **部署边界**：13B 是每个输入的激活参数口径，不等同于 80B 权重占用或整机显存需求。不同官方部署说明给出的硬件条件不同，长上下文部署尤其依赖配置和显存；具体来源版本与条件见来源清单。
+- **当前可确认的架构**：fine-grained MoE、GQA、RoPE，以及快/慢思考两种模式见技术报告。该报告和模型卡未证明 A13B 是 Hunyuan-Large 的同一架构来源，也未证明它被 TurboS/T1 作为 backbone；这两项关系不在本节作事实陈述。
+
+**版本与日期**：权重及官方仓库技术报告于 2025-06-26 发布；arXiv v1 到 2026-09-23 才提交，PDF 首页标注 2025-06-27。发布日期和论文收录日分别记录；精确权重、仓库 revision 与核查范围见来源清单。
 
 ### 2.4 Hunyuan-TurboS：Mamba-Transformer Synergy + 自适应 CoT
 
@@ -157,13 +156,11 @@ Hunyuan 总平台
 **HY 2.0 Think**：
 - **定位**：深度推理旗舰
 - **上下文窗口**：128K
-- **定价策略**：分段定价（输入/输出按token区间差异化计价）
 - **能力**：继承并超越T1的深度推理能力，在数学、代码、逻辑推理等基准上达到新高度
 
 **HY 2.0 Instruct**：
 - **定位**：指令遵循旗舰
 - **能力**：在复杂指令遵循、长文本理解、多轮对话等场景优化
-- **价格**：API价格经历大幅上调（见第2.9节）
 
 ### 2.8 Hunyuan-T1-Vision / Voice（2025-05）
 
@@ -175,37 +172,13 @@ Hunyuan 总平台
 - **定位**：语音通话模型
 - **能力**：端到端语音交互，支持实时语音对话、语音指令遵循等场景
 
-### 2.9 商业动态：价格上调与旧模型退役
-
-**价格大幅上调（2026-03-04）**：
-- 腾讯混元API价格经历大幅调整
-- HY 2.0 Instruct输入价格涨幅达**463%**
-- 反映模型能力升级后的商业价值重估
-
-**旧模型退役（2026-06-26）**：
-- 以下9个旧版本模型将不再支持：
-  - 混元 2.0（旧版）
-  - hunyuan-turbos
-  - hunyuan-t1
-  - hunyuan-large-role
-  - hunyuan-translation
-  - hunyuan-vision-1.5
-  - hunyuan-lite
-  - 及其他早期版本
-- **迁移路径**：用户需迁移至HY 2.0 Think/Instruct等新模型
-
-**混元 3.0 内部测试（2026-03-19）**：
-- 下一代旗舰模型已进入内部测试阶段
-- 预计2026年4月正式发布
-- 预计将在推理能力、多模态统一、Agent能力等维度实现代际跃升
-
-### 2.10 语言模型对比表
+### 2.9 语言模型对比表
 
 | 模型 | 总参/激活 | 架构 | 上下文 | 训练 token | 主要场景 | 开源 |
 |---|---|---|---|---|---|---|
 | Hunyuan-LLM (2024.02) | trillion / – | MoE Transformer | – | – | 元宝助手 | ❌ |
 | Hunyuan-Large | 389B / 52B | MoE Transformer + GQA + CLA | 256K | 7T | 通用旗舰 | ✅ |
-| Hunyuan-A13B | 80B / 13B | Fine-grained MoE | 256K | – | 高性价比通用 | ✅ |
+| Hunyuan-A13B | 80B / 13B per input | Fine-grained MoE；1 shared + 8/64 routed experts | 256K | >20T | 通用/推理 | ✅ |
 | Hunyuan-TurboS | – | Mamba2 + Transformer Hybrid MoE | 长上下文 | – | 通用 + 自适应 CoT | API |
 | Hunyuan-T1 | – | Hybrid Mamba-Transformer MoE | 长上下文 | – | 深度推理 | API |
 | 混元 2.0 (2025.12) | – | – | – | – | 推理与效率旗舰 | API |
@@ -430,7 +403,7 @@ Hunyuan 总平台
 | Phase 1：闭源旗舰 | 2023–2024.04 | Hunyuan-LLM trillion MoE | 业务 LLM |
 | Phase 2：开源全栈爆发 | 2024.05–2025.06 | DiT/Large/3D/Video 同期开源 | "造各赛道开源 SOTA" |
 | Phase 3：架构融合 + 生态平台化 | 2025.05–2026.04 | TurboS/T1/Vision-1.5/Image-3.0/Video-1.5/HunyuanWorld | "Mamba-Transformer 混合 + 多模态统一 AR + 世界化" |
-| Phase 4：新旗舰换代 + 商业重构 | 2025.12–2026.06 | 混元 2.0 → HY 2.0 Think/Instruct + 价格上调 + 旧模型退役 + 混元 3.0 预告 | "旗舰升级、商业模型转型、代际更替" |
+| Phase 4：推理旗舰迭代 | 2025.12–2026.04 | 混元 2.0 → HY 2.0 Think/Instruct | 以推理和指令能力为主的产品迭代 |
 
 ### 8.3 与 LLM、生成线的相互增强
 
@@ -444,7 +417,7 @@ Hunyuan 总平台
 按"对中国/全球开源社区最具增量价值"维度归纳：
 
 1. **首个开源 trillion-级 Transformer-MoE（Hunyuan-Large）**
-   - 共享 + 路由专家、Recycle Routing、Expert-Specific LR、GQA+CLA（节省约 95% KV）、修正后的 MoE Scaling Law（C ≈ 9.59ND + 2.3×10⁸D）。
+   - 共享 + 路由专家、Recycle Routing、Expert-Specific LR；GQA+CLA 的“近95%”只指论文以 BF16、原始 MHA 为基线的 KV-cache 张量字节数（§2.2.2，Table 2）；MoE compute-budget 式 (2) 的定义、拟合区间与外推边界见 §2.3.1。
 
 2. **首个 Mamba-Transformer 超大 LLM（Hunyuan-T1 / TurboS）**
    - 把 SSM 引入 80B+ 级别推理 LLM，同时引入自适应 CoT，在"成本/质量/响应速度"三角上提供新解。
@@ -495,7 +468,7 @@ Hunyuan 总平台
 
 > 论文与官方资源（按出现顺序）
 
-1. Tencent Hunyuan Team. *Hunyuan-Large: An Open-Source MoE Model with 52 Billion Activated Parameters by Tencent.* arXiv:2411.02265, 2024. https://arxiv.org/abs/2411.02265
+1. Tencent Hunyuan Team. *Hunyuan-Large: An Open-Source MoE Model with 52 Billion Activated Parameters by Tencent.* [arXiv:2411.02265v3](https://arxiv.org/abs/2411.02265v3), first submitted 2024-11-04; v3 updated 2024-11-06.
 2. Tencent Hunyuan Team. *Hunyuan-DiT: A Powerful Multi-Resolution Diffusion Transformer with Fine-Grained Chinese Understanding.* arXiv:2405.08748, 2024. https://arxiv.org/abs/2405.08748
 3. Hunyuan Foundation Model Team. *HunyuanVideo: A Systematic Framework For Large Video Generative Models.* arXiv:2412.03603, 2024. https://arxiv.org/abs/2412.03603
 4. Tencent Hunyuan 3D Team. *Hunyuan3D 1.0: A Unified Framework for Text-to-3D and Image-to-3D Generation.* arXiv:2411.02293, 2024. https://arxiv.org/abs/2411.02293
@@ -508,18 +481,20 @@ Hunyuan 总平台
 11. Tencent Hunyuan Team. *Hunyuan-GameCraft: High-dynamic Interactive Game Video Generation.* arXiv:2506.17201, 2025.
 12. Tencent Hunyuan Team. *Hunyuan3D Studio: End-to-End AI Pipeline for Game-Ready 3D Generation.* arXiv:2509.12815, 2025.
 13. *Hunyuan-T1 Official Page.* https://tencent.github.io/llm.hunyuan.T1/README_EN.html
-14. *Tencent-Hunyuan/Hunyuan-A13B (GitHub).* https://github.com/Tencent-Hunyuan/Hunyuan-A13B
-15. *Tencent-Hunyuan/HunyuanDiT (GitHub).* https://github.com/Tencent-Hunyuan/HunyuanDiT
-16. *Tencent-Hunyuan/HunyuanVideo (GitHub).* https://github.com/Tencent-Hunyuan/HunyuanVideo
-17. *Tencent-Hunyuan/HunyuanVideo-I2V (GitHub).* https://github.com/Tencent-Hunyuan/HunyuanVideo-I2V
-18. *tencent/HunyuanVideo-1.5 (Hugging Face).* https://huggingface.co/tencent/HunyuanVideo-1.5
-19. *Tencent-Hunyuan/HunyuanImage-2.1 (GitHub).* https://github.com/Tencent-Hunyuan/HunyuanImage-2.1
-20. *tencent/HunyuanImage-3.0 (Hugging Face).* https://huggingface.co/tencent/HunyuanImage-3.0
-21. *Tencent-Hunyuan/HunyuanVision (GitHub).* https://github.com/Tencent-Hunyuan/HunyuanVision
-22. *Tencent-Hunyuan/Hunyuan3D-2 (GitHub).* https://github.com/Tencent-Hunyuan/Hunyuan3D-2
-23. *Tencent-Hunyuan/HY-WorldPlay (GitHub).* https://github.com/Tencent-Hunyuan/HY-WorldPlay
-24. *Tencent Hunyuan 3D 官网.* https://3d-models.hunyuan.tencent.com/
-25. *Hunyuan AI 视频项目官网.* https://aivideo.hunyuan.tencent.com/
-26. *Tencent Hy Research.* https://hy.tencent.com/
+14. *Tencent Hunyuan Team. Hunyuan-A13B Technical Report.* arXiv:2609.27284v1, submitted 2026-09-23; PDF cover date 2025-06-27. §2.2–2.3, Tables 1 and 4. https://arxiv.org/abs/2609.27284v1
+15. *Tencent-Hunyuan/Hunyuan-A13B (official repository).* https://github.com/Tencent-Hunyuan/Hunyuan-A13B
+16. *tencent/Hunyuan-A13B-Instruct model card.* https://huggingface.co/tencent/Hunyuan-A13B-Instruct
+17. *Tencent-Hunyuan/HunyuanDiT (GitHub).* https://github.com/Tencent-Hunyuan/HunyuanDiT
+18. *Tencent-Hunyuan/HunyuanVideo (GitHub).* https://github.com/Tencent-Hunyuan/HunyuanVideo
+19. *Tencent-Hunyuan/HunyuanVideo-I2V (GitHub).* https://github.com/Tencent-Hunyuan/HunyuanVideo-I2V
+20. *tencent/HunyuanVideo-1.5 (Hugging Face).* https://huggingface.co/tencent/HunyuanVideo-1.5
+21. *Tencent-Hunyuan/HunyuanImage-2.1 (GitHub).* https://github.com/Tencent-Hunyuan/HunyuanImage-2.1
+22. *tencent/HunyuanImage-3.0 (Hugging Face).* https://huggingface.co/tencent/HunyuanImage-3.0
+23. *Tencent-Hunyuan/HunyuanVision (GitHub).* https://github.com/Tencent-Hunyuan/HunyuanVision
+24. *Tencent-Hunyuan/Hunyuan3D-2 (GitHub).* https://github.com/Tencent-Hunyuan/Hunyuan3D-2
+25. *Tencent-Hunyuan/HY-WorldPlay (GitHub).* https://github.com/Tencent-Hunyuan/HY-WorldPlay
+26. *Tencent Hunyuan 3D 官网.* https://3d-models.hunyuan.tencent.com/
+27. *Hunyuan AI 视频项目官网.* https://aivideo.hunyuan.tencent.com/
+28. *Tencent Hy Research.* https://hy.tencent.com/
 
 > 报告完成时间：2026-06-05（基于截至该时间公开的论文与官方信息）。

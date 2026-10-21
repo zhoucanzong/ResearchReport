@@ -121,6 +121,7 @@ nav:
         - "总报告": "Models/DeepSeek/report.md"
         - "deepseek-multimodal-and-specialized": "Models/DeepSeek/deepseek-multimodal-and-specialized.md"
         - "deepseek-text-models": "Models/DeepSeek/deepseek-text-models.md"
+        - "MANIFEST": "Models/DeepSeek/sources/MANIFEST.md"
     - "Doubao-Seed": "Models/Doubao-Seed/report.md"
     - "GLM": "Models/GLM/report.md"
     - "GPT": "Models/GPT/report.md"
@@ -129,7 +130,9 @@ nav:
         - "总报告": "Models/Google-Gen/report.md"
         - "2604.20329-vision-banana": "Models/Google-Gen/papers/2604.20329-vision-banana.md"
     - "Grok": "Models/Grok/report.md"
-    - "Hunyuan": "Models/Hunyuan/report.md"
+    - "Hunyuan":
+        - "总报告": "Models/Hunyuan/report.md"
+        - "MANIFEST": "Models/Hunyuan/sources/MANIFEST.md"
     - "Kimi":
         - "总报告": "Models/Kimi/report.md"
         - "2607.24653-kimi-k3": "Models/Kimi/papers/2607.24653-kimi-k3.md"
