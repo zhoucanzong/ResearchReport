@@ -1,6 +1,6 @@
 # Google Gemini系列模型深度调研报告
 
-> 调研日期：2026年6月5日（2026-10-17 增补 §9：Gemini 4 Argon）
+> 调研日期：2026年6月5日；证据修订：2026-10-23（复核 §9 并补入 2026 年 7–10 月模型卡更新）
 > 覆盖范围：从PaLM（2022年）到**Gemini 4 Argon（2026 年 9–10 月）**的完整技术演进  
 > 写作原则：以**架构演进路径**为骨架，突出原生多模态、超长上下文、MoE与推理能力四大技术主线
 
@@ -53,6 +53,11 @@ Google的大语言模型系列经历了从PaLM到Gemini的重大战略转型。P
 ├── 05月  Gemini 3.5 Flash       Google I/O发布，编码和代理工作流优化，速度4倍快
 ├── 05月  Gemini Omni Flash      全模态模型，支持视频输出，集成YouTube Shorts
 └── 06月  Gemini 3.5 Pro         发布预告，新一代旗舰
+
+2026年下半年 ── Gemini 3.6–4更新
+├── 07–09月 Gemini 3.6 / 3.7 / 3.8 Flash  多轮迭代；3.8 Flash 模型卡将其描述为基于 3.7 Flash，支持多模态输入、最高 1M 上下文及可调 effort
+├── 09月  Gemini 3.8 Audio      Live、Live Extended Thinking、Flash TTS 与 Flash-Lite TTS 型号组
+└── 09–10月 Gemini 4 Argon      新一代前沿型号；官方模型卡披露多领域评测，但不披露权重规模或完整架构
 ```
 
 ### 1.3 技术代际划分
@@ -766,6 +771,17 @@ Google 的评测方法说明：除特别注明外，Argon 结果为 pass@1，并
 
 ---
 
+
+### 9.5 2026-07–10 更新：Flash 迭代与 Gemini 4 Argon 的披露边界
+
+截至 2026-10-23，Google DeepMind 的模型卡目录新增 Gemini 3.6、3.7、3.8 Flash 与 Gemini 3.8 Audio。Gemini 3.8 Flash 模型卡将其明确描述为基于 Gemini 3.7 Flash，支持文本、图像、音频和视频输入、最高 1M token 上下文与 64K 输出；卡片说明可调 effort 用于控制质量、成本与延迟。该卡提供若干 agentic coding、knowledge work、computer-use、长上下文等基准结果，但指出部分安全自动评估已更新、不可直接与旧卡分数比较。此证据支持产品级能力与评测口径，不能推出 3.8 的全新底层架构或训练配方。
+
+Gemini 4 Argon 的官方模型卡（2026-10-13）公布 2026 年 10 月多项软件工程、知识工作、科学、长上下文、计算机使用和多模态评测，并链接到单独的方法说明。其结果在同一张表中列出对手，但比较仍受各基准的工具、预算、版本和评分条件约束；不能简化为单一“总排名”。截至本轮核查，官方卡没有公开 Argon 参数规模、权重、专家数或完整训练流程。本节 §9.1–§9.4 的发布信息与架构限制仍适用。
+
+本条目所称“Gemini 系列”也包括本报告 §6 的 Gemma 开放模型支线。官方模型卡目录现列有 Gemma 4（2026-04）及 DiffusionGemma（2026-06）等较晚条目；它们与 Gemini 4 Argon 属不同发布线。本次仅记录其存在，不把 Gemma 模型卡外推为闭源 Gemini 的架构证据。
+
+一手材料：[Gemini 3.8 Flash 模型卡](https://deepmind.google/models/model-cards/gemini-3-8-flash/)、[Gemini 4 Argon 模型卡](https://deepmind.google/models/model-cards/gemini-4-argon/)、[Google DeepMind 模型卡目录](https://deepmind.google/models/model-cards/)。核查日期：2026-10-23。
+
 ## 10. 参考文献
 
 1. Chowdhery, A., et al. (2022). **PaLM: Scaling Language Modeling with Pathways.** arXiv:2204.02311. JMLR 2023.
@@ -809,6 +825,7 @@ Google 的评测方法说明：除特别注明外，Argon 结果为 pass@1，并
 20. Google AI for Developers (2026). *Gemini 4 Argon model documentation*, model ID `gemini-4-argon`, page last updated 2026-10-14.
 
 21. Google Blog (2026). *Gemini 4 Argon* (limited rollout, 2026-09-30; global availability, 2026-10-13).
+22. Google DeepMind (2026). *Gemini 3.8 Flash Model Card*, published 2026-09-02; *Gemini 4 Argon Model Card*, published 2026-10-13; model card catalogue checked 2026-10-23.
 
 19. Google Cloud Blog (2024). *Trillium TPU is GA.* cloud.google.com/blog, 2024.
 

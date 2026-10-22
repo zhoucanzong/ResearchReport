@@ -2,7 +2,7 @@
 
 # 💬 LLM
 
-**8 条** · 语言模型能力与技术专题，覆盖推理、对齐、Agent、RAG 等方向。
+**9 条** · 语言模型能力与技术专题，覆盖推理、对齐、Agent、RAG 等方向。
 
 [← 返回首页](<../README.md>) · [完整索引](<../INDEX.md>)
 
@@ -10,7 +10,7 @@
 
 <!-- SCRIPT:panel-readme START · 由 scripts/library_index.py 生成，勿手改 -->
 
-![Entries](https://img.shields.io/badge/Entries-8-3f51b5?style=flat-square)
+![Entries](https://img.shields.io/badge/Entries-9-3f51b5?style=flat-square)
 ![Panel](https://img.shields.io/badge/Panel-LLM-9e9e9e?style=flat-square)
 
 | 条目 | 报告 | 规模 |
@@ -22,6 +22,7 @@
 | **MoE** | [混合专家模型（Mixture of Experts, MoE）架构演进研究报告](<MoE/report.md>) | 405 行 |
 | **RAG** | [检索增强生成（Retrieval-Augmented Generation, RAG）技术研究报告](<RAG/report.md>) | 834 行 |
 | **ReasoningModels** | [推理模型（Reasoning Models）与 Test-Time Compute 研究报告](<ReasoningModels/report.md>) | 679 行 |
+| **ReinforcementLearning** | [LLM 后训练中的强化学习：轨迹从哪里来，策略何时更新](<ReinforcementLearning/report.md>) | 84 行 |
 | **VLM** | [多模态大模型（Vision-Language Models, VLM）研究报告](<VLM/report.md>) | 516 行 |
 
 ## 📎 子文档
@@ -47,6 +48,17 @@
 * [sources/CANDIDATES.md](<DecisionModels/sources/CANDIDATES.md>) — 70 行 / 8,181 B
 * [sources/MANIFEST.md](<DecisionModels/sources/MANIFEST.md>) — 62 行 / 8,116 B
 * [taxonomy.md](<DecisionModels/taxonomy.md>) — 254 行 / 25,036 B
+
+</details>
+
+<details>
+<summary><b>ReinforcementLearning</b>（5 份）</summary>
+
+* [papers/loop.md](<ReinforcementLearning/papers/loop.md>) — 28 行 / 4,539 B
+* [papers/online-preference.md](<ReinforcementLearning/papers/online-preference.md>) — 28 行 / 3,980 B
+* [papers/prime.md](<ReinforcementLearning/papers/prime.md>) — 30 行 / 4,636 B
+* [sources/CANDIDATES.md](<ReinforcementLearning/sources/CANDIDATES.md>) — 22 行 / 3,099 B
+* [sources/MANIFEST.md](<ReinforcementLearning/sources/MANIFEST.md>) — 31 行 / 5,776 B
 
 </details>
 

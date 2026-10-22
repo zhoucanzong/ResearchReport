@@ -508,6 +508,7 @@ abab 时代赌 MoE，MiniMax-01 时代赌 Linear Attention，配合 Talkie / 海
 ### 评测与外部基准
 
 31. Hugging Face Papers 讨论页. *MiniMax-01: Scaling Foundation Models with Lightning Attention*. <https://huggingface.co/papers/2501.08313>
+
 32. Hugging Face Papers. *MiniMax-M1*. <https://huggingface.co/papers/2506.13585>
 33. Artificial Analysis Intelligence Benchmark Methodology. <https://artificialanalysis.ai/methodology/intelligence-benchmarking>
 34. Artificial Analysis Text-to-Speech Arena. <https://artificialanalysis.ai/text-to-speech/arena>
@@ -515,3 +516,9 @@ abab 时代赌 MoE，MiniMax-01 时代赌 Linear Attention，配合 Talkie / 海
 ---
 
 > 本报告依据公开资料、官方技术报告、官方仓库 README 与第三方解读整理；基准数据均引自官方发布版本。MiniMax 系列后续可能持续迭代，最新动态请以 minimax.io / minimaxi.com 与官方 GitHub 为准。
+
+## 新鲜度补核（截至 2026-10-23）：MiniMax M3.1 Flash
+
+MiniMax 于 2026-10-19 发布 M3.1 Flash，官方称其为新一代 Agent / coding Flash 模型，并表示其推理稀疏性更激进。发布页报告 BankerToolBench 76.2、DeepSWE v1.1 73.7%、OSWorld V2 61.7、Agents' Last Exam 29.6 与 CyberGym 82%；官方集成指南另报 AutomationBench-AA 62.2。这些均为厂商自报结果；公开页面未提供足够的完整 harness、数据切分和复现细节，不能作为跨模型受控比较。官方发布页说明权重稍后发布，当前没有可读的 M3.1 Flash 技术报告，因而具体架构、训练配方和独立复现仍未核实。
+
+来源与锚点：MiniMax Research，[MiniMax M3.1 Flash: Redefining Agent Performance and Cost](https://www.minimax.io/blog/minimax-m31f)，2026-10-19，正文“Stronger Capabilities Across the Board”“Coding and Software Engineering”“Computer Use”“Cybersecurity”及末段权重说明；[MiniMax M3.1 Flash GA / integration guide](https://agent.minimax.io/tools/m3.1-flash)，FAQ benchmarks 段报告 AutomationBench-AA 62.2。仅据官方发布与集成页面，不推断未公开架构细节。PaperFetcher 本轮未返回适用的 M3.1 技术论文记录。

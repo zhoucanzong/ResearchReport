@@ -133,6 +133,12 @@
 | --- | --- | --- | --- | --- |
 | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | EmbodiedVLA 技术专题调研 | — | — | — |
 
+## EvaluationScience (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) | 评测科学：分数何时支持“模型更好”或“能力泛化” | research | 2026-10-23 | current |
+
 ## GLM (1)
 
 | 条目 | 标题 | type | date | status |
@@ -185,7 +191,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Models/Kling/report.md](<../Models/Kling/report.md>) | 快手可灵（Kling）视频生成模型系列研究报告 | — | — | — |
+| [Models/Kling/report.md](<../Models/Kling/report.md>) | 快手 Kling 视频生成研究报告 | — | — | — |
 
 ## LLaMA (1)
 
@@ -288,6 +294,12 @@
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) | 推理模型（Reasoning Models）与 Test-Time Compute 研究报告 | — | — | — |
+
+## ReinforcementLearning (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | LLM 后训练中的强化学习：轨迹从哪里来，策略何时更新 | research | 2026-10-23 | current |
 
 ## Runway (1)
 

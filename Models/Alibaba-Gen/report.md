@@ -1,10 +1,10 @@
 # 阿里巴巴通义万相（Wan）视频生成模型研究报告
 
-> 原报告日期：2026-06-06；证据修订：2026-10-22。研究主体保留 Wan 2.1 / 2.2 / 2.6，不把本次复核扩展为最新型号大全。
+> 原报告日期：2026-06-06；证据复核：2026-10-23。保留 Wan 2.1 / 2.2 / 2.6 主线，并加入两项有技术报告支撑的专项模型 Wan-Animate-2 与 Wan-Dancer。
 
 ## 1. 执行摘要
 
-Wan 的两条发布线需要分开理解：Wan 2.1 / 2.2 有公开权重与推理仓库，可以检查配置；Wan 2.6 在本次核读材料中是阿里云提供的音视频生成服务。服务接口中的时长、音频和分辨率不能证明同名模型开放了权重，更不能推出消费级显卡部署条件。[S1–S4]
+Wan 的模型主线与专项模型需要分开理解：Wan 2.1 / 2.2 有公开权重与推理仓库，可以检查配置；Wan 2.6 在本次核读材料中是阿里云提供的音视频生成服务。Wan-Animate-2 与 Wan-Dancer 则是分别面向角色动画和长时音乐舞蹈生成的技术报告。服务接口中的时长、音频和分辨率不能证明同名模型开放了权重，更不能推出消费级显卡部署条件。[S1–S6]
 
 在可解释的机制上，Wan 2.1 的关键组合是时空压缩、完整时空注意力、文本交叉注意力与 flow matching；文本编码器是 **umT5**，Qwen 在官方示例中还可承担提示词扩写，两者不能混为一个组件。Wan 2.2 的 A14B 分支进一步按去噪阶段使用两个专家，而 TI2V-5B 是另一条高压缩的稠密模型路线。[S1 §4.2；S2 Prompt Extension；S3 Introduction]
 
@@ -17,6 +17,8 @@ Wan 的两条发布线需要分开理解：Wan 2.1 / 2.2 有公开权重与推�
 | Wan 2.1 | 官方仓库记录 2025-02-25 公开推理代码和权重 | 原报告的“2025.01 开源”改正；论文见 2503.20314v2 [S1,S2] |
 | Wan 2.2 | 官方仓库记录 2025-07-28 公开代码和权重；含 T2V-A14B、I2V-A14B、TI2V-5B | 原报告的“2025.Q2 发布、14B/1.3B”混用了 2.1 规格 [S3] |
 | Wan 2.6 | 阿里云文档列出 `wan2.6-t2v`、`wan2.6-i2v` 等服务，支持音画同步和多镜头 | 这是 2026-10-22 复核到的接口能力；不能据此还原 2026-06 的接口快照，也不能证明权重开放 [S4] |
+| Wan-Animate-2 | Tongyi Lab 论文于 2026-08-08 提交 v2；提出无中间运动抽取器的驱动视频条件动画 DiT，并有 Lite 实时流式变体 | 专项角色动画模型，不能视为 Wan 通用 T2V 架构升级 [S5] |
+| Wan-Dancer | Tongyi Lab 论文 v3 日期 2026-07-17；研究超过一分钟的音乐条件舞蹈视频 | 基于 Wan-I2V 的专项层级系统，不代表 Wan 通用视频生成默认支持分钟级输出 [S6] |
 | 天马 Tianma | 尚未建立其为阿里 Wan 子系列的官方来源链 | 删除原报告中基于该归属推演的架构、显卡与应用推荐；名称归属仍待确认 |
 
 ## 3. Wan 2.1：机制与为什么这样设计
@@ -80,16 +82,36 @@ python generate.py --task t2v-1.3B --size '832*480' \
 
 目前核读的资料不足以确定 Wan 2.6 的权重许可、参数量、音频分支形式、位置编码和本地推理配置。原报告的“完全开源”“4070 Ti 可运行”“15–25 秒”“原生 ComfyUI 权重”和对应架构推演均撤回。API 可调用只证明服务存在，不能证明开放权重；2.1 / 2.2 的实现也不能未经证据继承给 2.6。
 
-## 8. 失效边界与后续研究
+## 8. Wan-Animate-2：直接以驱动视频作条件的角色动画
+
+Tongyi Lab 的 [Wan-Animate-2: Pushing the Application Boundaries of Character Animation](https://arxiv.org/abs/2608.06009)（arXiv v2，2026-08-08）把角色动画直接建模为视频条件 DiT 生成：参考视频与目标 latent 走双分支；时间对齐 RoPE 把两支帧位置对齐；Sparse-Ref Attention 让每个目标帧主要读取对应时刻的参考帧，保持目标流内部全注意力，将跨流注意力复杂度由全配对降为按帧对应。它不经过骨架或单独运动编码器，目标是减少抽取误差并保留细动作。[§3.1–3.4]
+
+视角控制是独立的 Viewpoint LoRA：用 Unreal Engine 合成 12 个方位角 × 4 个仰角的多视角样本，以自然语言标签监督 cross-attention LoRA，从而把输出镜头方向与驱动动作分开。[§2.2、§3.5]
+
+Wan-Animate-2-Lite 面向流式推理：teacher-forcing 将扩散过程改为分块因果生成；error-buffer 训练把预测残差注入上下文以降低 teacher forcing 与自回归推理的差距；Self-Forcing distillation 再压缩去噪步数，并以 chunk-wise 梯度累积限制峰值显存。作者在 4-GPU 流水线（VAE 编码 1 卡、2 卡序列并行跑 3 步 DiT、VAE 解码 1 卡）上报告 400×720 达 24 fps。[§4.1–4.3、§5.5]
+
+**结果边界**：论文盲评称对 Wan-Animate 的总体比较超过 70% 偏好，对 Dreamina 多数比较占优，与 Kling-MotionControl 大多相当；没有公布足够完整的评审人数、样本量与原始票数，故只能作为作者报告的人评趋势。实时数字限定于其四卡配置和 400×720。论文未给出跨身份/场景的独立重跑结果，仍需更完整身份保持测试。[§5.4–5.5]
+
+## 9. Wan-Dancer：全曲规划与局部动作细化
+
+[Wan-Dancer: A Hierarchical Framework for Minute-scale Coherent Music-to-Dance Generation](https://arxiv.org/abs/2607.09581)（arXiv v3，2026-07-17）基于 Wan-I2V，针对长片段舞蹈中节拍漂移、动作重复和身份退化。训练时同一 DiT 兼学全局与局部两相：输入将 keyframe mask 与视频 latent 拼接，全局阶段只固定首帧以学习整曲运动结构，局部阶段随机固定锚帧以学习锚点间细节；音乐编码特征进入 DiT 的 Music block。绝对时间写入 RoPE，使关键帧采样率可随音轨时长改变；训练目标另按光流 latent 加权，强化快速动作的边界和运动细节。[§3.1–3.2]
+
+推理先用 50 步生成 38 个全局关键帧，再以这些锚点切分整曲，针对每段约 149 帧/5 秒音频并行做 50 步局部细化，最后拼接片段。论文报告生成 720p、30 fps、最长约 160 秒。训练集约 200 小时、720p/30 fps 以上舞蹈视频；低分辨率预训练与 720p 微调各用 128 张 A100，分别 20K 和 4K 步。论文也用 16 个参考舞蹈视频、rank-32 LoRA、800 步做编舞定制。[§4.1–4.2]
+
+作者对比限于端到端视频基线 MusicInfuser 与 X-Dancer，输入模态并不完全相同（前者音频+文本、后者音频+图像、Wan-Dancer 三者都有）；表 1–3 是作者数据集上的评分，不能解释成严格同条件消融。组件消融（图 6–7）支持全局关键帧规划相较直接串联 5 秒片段能减轻漂移，光流损失改善快速运动清晰度；可变帧率和运动速度分层亦有相应作用。作者列出的未决问题包括长时身份一致性、多舞者互动和语义对齐，均未由“160 秒”单项结果解决。[§4.3、图 6–7、§5]
+
+## 10. 失效边界与后续研究
 
 - **作者明确的限制**：大运动下细节保真、14B 推理成本，以及教育、医学等专业局部场景的知识不足。[S1 §6]
 - **评价偏见**：主要实验取自作者技术报告，Wan-Bench 的权重与人评由作者组织；本次未做独立生成、盲评或跨推理引擎复现。VBench 与 Wan-Bench 衡量的维度也不同。
 - **中文能力**：论文展示中英文视觉文字生成，不足以证明其在所有中文提示或文化题材上优于同代模型。要比较中文优势，应固定双语提示、采样数和失败分类。
 - **下一批补证**：补 Wan 2.2 完整实验的训练条件和数据贡献对照；获取 Wan 2.6 发布时的官方公告与接口历史快照；确认 Tianma 名称归属。完成前不恢复相关硬件、模型身份或架构结论。
 
-## 9. 来源索引与本次读取范围
+## 11. 来源索引与本次读取范围
 
 - **S1** Wan Team. *Wan: Open and Advanced Large-Scale Video Generative Models*, [arXiv:2503.20314v2](https://arxiv.org/abs/2503.20314v2)，2025-04-19。本次通过 `paper-fetcher download` 获取 PDF，实读摘要、§4.2、§4.7、§6，并核对表 2 / 4 / 6、图 16 / 17。缓存位于仓库外 `paper-cache/research-audit-2026-10-22/models/wan/2503.20314.pdf`，不是全篇所有扩展任务均已复核。
 - **S2** [Wan2.1 官方 README（固定提交）](https://github.com/Wan-Video/Wan2.1/blob/9737cba9c1c3c4d04b33fcad41c111989865d315/README.md)：核对 Latest News、Key Features、Run Text-to-Video Generation、Prompt Extension、Computational Efficiency。
 - **S3** [Wan2.2 官方 README（固定提交）](https://github.com/Wan-Video/Wan2.2/blob/1ea34ff48f87168174e12956e200b1d908b1c5ff/README.md)：核对 Latest News、Introduction of Wan2.2、单卡运行要求。该材料是作者介绍与配置证据，未当作独立复现。
 - **S4** [阿里云 Model Studio：Video generation and editing](https://www.alibabacloud.com/help/en/model-studio/video-generate-edit-model/)：“Wan 2.6” 模型表；本次读取于 2026-10-22，页面更新时间为 2026-10-11。此链接是动态服务文档，不固定为原报告写作日的状态。
+- **S5** Tongyi Lab, [Wan-Animate-2: Pushing the Application Boundaries of Character Animation, arXiv:2608.06009v2](https://arxiv.org/abs/2608.06009)，2026-08-08。使用 `paper-fetcher fetch` 核对题录，实读 HTML 摘要、§2–§5.5、图 1–7；重点核对 §3 双分支/稀疏参考注意力、§4 Lite 训练和 §5.5 四卡实时评测。未下载 PDF，未运行模型。
+- **S6** Tongyi Lab, [Wan-Dancer: A Hierarchical Framework for Minute-scale Coherent Music-to-Dance Generation, arXiv:2607.09581v3](https://arxiv.org/abs/2607.09581)，2026-07-17。使用 `paper-fetcher fetch` 核对题录，实读 HTML §3–§5、表 1–3、图 6–7；核对数据规模、A100 训练条件、推理分段和消融。未下载 PDF，未运行模型或独立人评。

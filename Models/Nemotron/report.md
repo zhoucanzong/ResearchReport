@@ -222,6 +222,7 @@ NVIDIA 2026-03-16官方新闻稿确认Nemotron Coalition，列出8个创始成�
 | 7 | NVIDIA Nemotron 3 Ultra Review (BuildFastWithAI) | 2026-06 | https://www.buildfastwithai.com/blogs/nvidia-nemotron-3-ultra-review-2026 |
 | 8 | NVIDIA GTC Taipei 2026 解析 (AIPostHub) | 2026-06 | https://www.aiposthub.com/nvidia-gtc-taipei-2026-enterprise-ai-agent-nemotron-3-ultra/ |
 | 9 | NVIDIA Nemotron 3 Ultra Review (AIToolsRecap) | 2026-06 | https://aitoolsrecap.com/Blog/nvidia-nemotron-3-ultra-550b-computex-2026 |
+
 | 10 | Nemotron Coalition 宣布 (GetAIBook) | 2026-03 | https://getaibook.com/news/nvidia-launches-nemotron-coalition-at-gtc-2026/ |
 | 11 | NVIDIA Nemotron 官方页面 | — | https://research.nvidia.com/labs/nemotron/ |
 | 12 | Hugging Face Nemotron 模型集合 | — | https://huggingface.co/nvidia |
@@ -229,3 +230,9 @@ NVIDIA 2026-03-16官方新闻稿确认Nemotron Coalition，列出8个创始成�
 ---
 
 *报告由 AI Agent 自动调研生成，基于公开论文、技术博客、官方发布信息和第三方评测整理。数据截至 2026-06-06。*
+
+## 新鲜度补核（截至 2026-10-23）：Nemotron 3.5 Super 与 Lightning
+
+NVIDIA 于 **2026-10-14/15** 公布 **Nemotron 3.5 Super / Lightning** 模型及材料：Nemotron 项目页标注 10 月 14 日，项目目录标注 10 月 15 日；固定阅读的技术报告首页日期为 **2026-10-21**。这是 6 月版报告之后的实质性训练和推理更新。Super 为 120B 总 / 12B 激活的多模态模型，Lightning 为 30B / 3B 激活的文本模型。新机制主要包括：Super 先延伸至 1M 长上下文，再以 256K 的 agentic 软件工程 mid-training，并用 9B token recovery stage 恢复长上下文；SFT、RLVR、RLHF、专用教师与 MOPD 合并能力；递归 MTP speculative decoding，并对 Super 使用 hidden-state mixing 缓解训练—推理条件分布不匹配。论文报告 Super 在 SWE-bench Pro 为 51.78%；agentic mid-training 受控设置下 DeepSWE pass@1 从 6.4% 到 10.4%，Codex harness 上 SWE-bench Verified 从 48.4% 到 61.8%；并行 agent 执行加自验证则是 test-time scaling 组合设置，在 Terminal-Bench 2.1 从 62.7% 到 71.9%、DeepSWE 从 24.6% 到 34.5%。后两类增益来自不同实验，不能彼此混同或当作单组件消融。量化与服务数字也依赖具体 GPU、工作负载、采样和 harness，详见原文方法。
+
+来源与锚点：NVIDIA Nemotron Research，[Nemotron 3.5 Super and Lightning](https://research.nvidia.com/labs/nemotron/Nemotron-3.5-Super-and-Lightning/)，页面标注发布日 2026-10-14；[NVIDIA Nemotron 项目目录](https://research.nvidia.com/labs/nemotron/projects/)标注 2026-10-15；[技术报告 PDF](https://research.nvidia.com/labs/nemotron/files/NVIDIA-Nemotron-3.5-Super-and-Lightning-Technical-Report.pdf)，封面日期 2026-10-21，§2 预训练 / MTP / 长上下文，§3 后训练与评测（尤其表 10 及 parallel agent + self-verification 对照），§4 量化，§5 推理。PaperFetcher 本轮未能将该报告映射为 arXiv 论文；技术事实据 NVIDIA 官方 PDF 原文核对。

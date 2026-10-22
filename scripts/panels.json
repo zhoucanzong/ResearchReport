@@ -79,6 +79,19 @@
       ]
     },
     {
+      "id": "evaluation",
+      "title": "Evaluation",
+      "emoji": "📏",
+      "tagline": "跨领域 AI 评测与测量方法",
+      "topic_index": true,
+      "match": [
+        "Evaluation/*"
+      ],
+      "representatives": [
+        "Evaluation/EvaluationScience"
+      ]
+    },
+    {
       "id": "infra",
       "title": "Infra",
       "emoji": "⚙️",
@@ -118,6 +131,7 @@
     "VisualGen/VideoGen",
     "WorldModel/WorldModels",
     "AI4Science/ProteinDesign",
+    "Evaluation/EvaluationScience",
     "Infra/SpeculativeDecoding",
     "OpenSource/DeepInfer"
   ]

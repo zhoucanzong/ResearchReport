@@ -3,7 +3,7 @@
 > 报告日期：2026年6月6日  
 > 研究范围：Google / DeepMind 图像与视频生成模型（Imagen / Veo / VideoPoet 等）  
 > 核心主题：从级联扩散（Cascade Diffusion）到 DiT 视频生成的架构演进  
-> **增量更新：2026-10-17**——新增 [§9 Vision Banana](#9-vision-banana2026-04把图像生成器当视觉骨干)（arXiv:2604.20329 精读，指向 `papers/` 分册），并在时间线补一行 Nano Banana Pro 的产品事实；§1–§8 与附录原文未改动。
+> **证据修订：2026-10-23**——本轮核对至 Google DeepMind 模型卡目录，补充 §10 Nano Banana 2.1；截至该目录目前列出的 Veo 型号为 Veo 3 / Veo 3.1 Lite，未发现其后续型号的技术卡。
 
 ---
 
@@ -24,6 +24,7 @@
 7. [挑战与未来方向](#7-挑战与未来方向)
 8. [参考链接](#8-参考链接)
 9. [Vision Banana（2026-04）：把图像生成器当视觉骨干](#9-vision-banana2026-04把图像生成器当视觉骨干)
+10. [Nano Banana 2.1（2026-10）：生成与编辑型号更新](#10-nano-banana-212026-10生成与编辑型号更新)
 
 ---
 
@@ -56,6 +57,7 @@ Google / DeepMind 在生成式 AI 领域的布局横跨图像、视频、音频�
 | 2025.10 | **Veo 3.1** | 视频+音频 | DiT + 4K 支持 | 4K 输出，更长时长支持 |
 | 2025.11 | **Nano Banana Pro**（Gemini 3 Pro Image） | 图像生成/编辑 | 未公开（产品级模型，无技术报告） | 2025-11-20 官方博客发布；本报告新增 §9：它被 Google 自己用作「生成即理解」的基座（Vision Banana） |
 | 2026.03 | **Veo 3.1 Fast / Lite** | 视频+音频 | DiT 低成本变体 | 低成本版本，实时/近实时生成 |
+| 2026.10 | **Nano Banana 2.1** | 图像生成/编辑 | Gemini 3.6 Flash 衍生型号；公开模型卡不披露生成图像的内部解码架构 | Thinking / No Thinking 分项评测，图像质量与限制见 §10；不能据此替换 Imagen / Veo 架构描述 |
 
 > **注**：以上时间线基于公开论文、技术博客和产品发布信息整理。Google 部分模型的确切发布时间可能存在内部迭代与公开披露的时间差。
 
@@ -786,7 +788,12 @@ Veo 可能采用渐进式生成策略处理高分辨率长视频：
     https://aistudio.google.com/  
     https://cloud.google.com/vertex-ai
 
-11. **Adobe Firefly + Veo 集成**  
+11. **Nano Banana 2.1 Model Card**（Google DeepMind，2026-10-06；2026-10-23 核查）
+    https://deepmind.google/models/model-cards/nano-banana-2-1/
+12. **Google DeepMind Model Cards**（2026-10-23 核查；用于确认当前公开 Veo / Imagen 型号目录）
+    https://deepmind.google/models/model-cards/
+
+13. **Adobe Firefly + Veo 集成**
     https://www.adobe.com/products/firefly.html
 
 ### 相关综述与分析
@@ -874,5 +881,15 @@ Veo 可能采用渐进式生成策略处理高分辨率长视频：
 
 ---
 
-*报告完成日期：2026年6月6日*  
+*报告完成日期：2026年6月6日；证据修订：2026年10月23日*<br>
 *版本：v1.0*
+
+## 10. Nano Banana 2.1（2026-10）：生成与编辑型号更新
+
+Google DeepMind 于 2026-10-06 发布 Nano Banana 2.1 模型卡。卡片将其描述为 **Gemini 3.6 Flash 的衍生型号**，支持文本和图像输入，图像及文本输出；模型卡列出最高 1M 输入上下文。该归属是目前可确认的公开模型依赖关系，但卡片没有给出图像生成模块的具体网络结构、参数量、扩散/自回归机制或独立训练数据配方，因此不能把它的实现细节写成 Imagen 4 或 Veo 系列的架构证据。
+
+评测分 Thinking / No Thinking 两种设置，分别报告文本生成图像与图像编辑能力。模型卡使用成对人评 Elo 比较总体偏好、信息图设计和编辑能力，并以自动评分器评估信息图事实性；这些测试是 Google 公布的内部评测结果，模型卡没有提供独立复现。卡片指出的限制包括小字与长段落渲染、输入输出人物一致性、编辑指令遵循、姿态保留、左右定位以及高级世界知识、3D 推理和事实性。
+
+对本报告架构主线的影响有限：Nano Banana 2.1 扩展了 Gemini 派生图像生成与编辑的产品支线，但公开资料尚不足以解释其图像生成器如何构造、与 Imagen 4 有何模块关系，或是否继承 Vision Banana 论文的训练设计。Vision Banana（§9）是另一项研究工作，不能由相似命名推断为 Nano Banana 2.1 的实现说明。
+
+一手来源：[Nano Banana 2.1 模型卡](https://deepmind.google/models/model-cards/nano-banana-2-1/)，[Google DeepMind 模型卡目录](https://deepmind.google/models/model-cards/)，核查日期：2026-10-23。目录截至本次核对仍列 Veo 3（2026-01-13 更新）与 Veo 3.1 Lite（2026-04-08 更新）为该谱系的当前公开型号；这仅表示目录中可查到的模型卡范围，不证明其内部不存在未披露研发型号。

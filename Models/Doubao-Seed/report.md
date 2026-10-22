@@ -639,5 +639,13 @@ Seed1.8定位为"面向通用现实世界Agent能力"的基础模型。
 ---
 
 *报告撰写日期：2026年6月*
+
+## 新鲜度补核（截至 2026-10-23）：Seed2.1 与长上下文压缩评测
+
+Seed2.1 于 2026-06-23 正式发布，是本报告截至初稿日期后必须补入的通用模型更新。官方将其描述为 Pro / Turbo 两档，重点在跨工具、跨环境的任务交付、代码工程稳定性、视觉与长视频理解；Seed2.1 Pro 在官方所报 GDPVal 上居首，并在 Agents' Last Exam 进入领先组。此处只记录官方公开的能力方向和评测定位：发布文没有给出可复现的完整配置与数值表，且若干基准为厂商自建，故不把宣传用语升级成独立验证结论。Seed2.0 的模型卡为 [arXiv:2607.00248v1](https://arxiv.org/abs/2607.00248v1)，v1 2026-06-30；它提供评测设计背景，但不等同 Seed2.1 的报告。
+
+另一个与 Seed/豆包模型长上下文研究相关、值得纳入限制讨论的论文来自 Seed 团队，2026-09-28 发布 *Periodic Weak Spots: Phase Sensitivity from Chunked KV-Cache Compression*。论文首页列出的单位为 ByteDance Seed；三位首作者另列 Princeton、Stanford、UC Berkeley，注明核心贡献者工作在 ByteDance Seed 实习期间完成。固定版本 [arXiv:2609.36322v1](https://arxiv.org/abs/2609.36322v1) 报告：在 128K-token、16K 组键值对的 NIAH 检索中，DeepSeek-V4 家族受测检查点的准确率随目标位置相对压缩窗口的相位而变；最大 40.2 个百分点差异出现在 V4-Flash-Base，后训练模型的差异较小但仍存在。作者还从头训练多种压缩变体，并用因果干预分析相位特化。它研究的是分块 KV-cache 压缩机制，不是 Seed2.1 本身的模型评测，也不能据此推断 Seed2.1 使用该压缩机制。阅读锚点为论文摘要、§§2–4、图 1–2 和附录 C 的检索任务构造。
+
+来源：ByteDance Seed，[Seed2.1 Officially Released](https://seed.bytedance.com/en/blog/seed2-1-officially-released-advancing-ai-productivity)，2026-06-23，“general agent”“coding”“video understanding”及结论段；[Seed2.1 官方模型页](https://seed.bytedance.com/en/seed2_1)。Seed 团队，[Periodic Weak Spots](https://seed.bytedance.com/en/public_papers/periodic-weak-spots-phase-sensitivity-from-chunked-kv-cache-compression)，2026-09-28，摘要；[arXiv:2609.36322v1](https://arxiv.org/abs/2609.36322v1)。PaperFetcher `fetch 2607.00248` 核对了 Seed2.0 模型卡元数据；另以 `fetch 2609.36322` 核对了该论文题名、日期和摘要。
 *信息来源：公开论文、官方技术博客、GitHub仓库、新闻报道*
 *注：部分模型的具体参数规模和内部架构细节未完全公开，报告中已标注哪些为确认信息、哪些为基于公开信息的合理推断。*

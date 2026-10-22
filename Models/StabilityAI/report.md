@@ -1,8 +1,8 @@
 # Stability AI / Black Forest Labs 图像生成模型系列研究报告
 
-> 报告日期：2026年6月6日
+> 原报告日期：2026年6月6日；证据复核：2026年10月23日
 > 研究范围：Stable Diffusion 1.x → SDXL → SD3 → FLUX → SD3.5 全系列架构演进
-> 核心主线：U-Net → DiT → MMDiT → Flow Matching Transformer 的结构范式迁移
+> 核心主线：U-Net → DiT → MMDiT → Flow Matching Transformer，并补充 BFL 的跨模态 Self-Flow 训练机制
 
 ---
 
@@ -17,6 +17,7 @@
    - 3.4 Stable Diffusion 3 (2024)
    - 3.5 FLUX (2024, Black Forest Labs)
    - 3.6 SD3.5 / 后续迭代 (2024)
+   - 3.7 Self-Flow (2026)：流匹配中的自监督表征学习
 4. [架构演进对比](#4-架构演进对比)
 5. [开源生态与工具链](#5-开源生态与工具链)
 6. [与竞品对比](#6-与竞品对比)
@@ -56,7 +57,7 @@ Stability AI 是开源图像生成领域的奠基者之一。自 2022 年发布 
 | 2024.10 | **FLUX.1.1 [pro]** | Flow Matching Transformer | 12B | 质量与速度双提升 |
 | 2024.11 | **FLUX.1 Tools** | 基于 FLUX 的编辑套件 | 12B | Fill、Canny、Depth、Redux |
 | 2024.10 | **SD3.5** | MMDiT / MMDiT-X | Large / Turbo 8.1B；Medium 2.5B | 官方发布见 §3.6 |
-| 待核 | **FLUX.2 后续家族** | 本报告未核读完整发布材料 | 待核 | 原稿“2025.03、视频扩展”未建立来源，不计入已确认时间线 |
+| 2025.11 / 2026.03 | **FLUX.2 表征分析 / Self-Flow** | FLUX.2 表征比较研究；基于 FLUX 架构的多模态自监督流匹配 | 论文实验模型约 625M（另有 4B 定性样例） | Self-Flow 是训练方法研究，不等于 FLUX.2 产品结构或 FLUX 视频产品披露；详见 §3.7 |
 
 ---
 
@@ -438,7 +439,17 @@ SD3.5 面临的主要挑战是**社区生态**：
 | 社区生态 | 历史积累深厚，但信任受损 | 新兴，快速增长 |
 | 商业模式 | API + 企业授权 | API + 开源 |
 | 技术路线 | 延续 MMDiT | 统一序列 Transformer |
-| 视频生成 | Stable Video Diffusion | FLUX 视频扩展（预告） |
+| 视频生成研究 | Stable Video Diffusion | BFL 以 FLUX 架构开展 Self-Flow 的视频与联合模态实验；不据此推断 FLUX 产品已有视频版本 |
+
+#### 3.7 Self-Flow (2026)：流匹配中的自监督表征学习
+
+Chefer et al., [Self-Supervised Flow Matching for Scalable Multi-Modal Synthesis, arXiv:2603.06507v1](https://arxiv.org/abs/2603.06507)，2026-03-06，提出 **Dual-Timestep Scheduling + Self-Flow**。动机是外部表征对齐（如 REPA）在模型变大时可能出现反常缩放，而且迁移到视频、音频时可能不如 vanilla flow matching。它不是新的商业 FLUX 版本，而是 BFL 团队提出、以约 625M 参数 FLUX-2 风格 Transformer 为主实验骨干的训练方法。
+
+**机制**：对 token 序列抽取两个噪声时间步，将随机比例 token 加噪到较高时间步、其余 token 保持在较低时间步；学生需从混合噪声输入预测流场，同时匹配 EMA teacher 在较干净输入下的中间表征。联合目标是标准 flow-matching 生成损失与余弦表征匹配损失之和。作者把这种信息不对称视为迫使模型利用较干净上下文推断较噪 token 的方式，以同一生成模型的内部表征替代冻结外部编码器。[论文 §3.1–3.4、式 4–7]
+
+**作者实验与条件**：文本到图像实验使用 Stable Diffusion VAE、2,000 万图文对；视频实验使用 Wan 2.2 VAE、600 万视频；FLUX.2 骨干的单模态实验约 625M 参数，评测集来自相应训练集的 holdout。表 2（§4.1）同为 1M 步时，Self-Flow 的文本图像 FID 为 3.61，vanilla flow 为 4.08、REPA 为 3.92；作者称这一文本图像设置相对 REPA 约 2.8 倍收敛速度。表 3（600K 步）视频 FVD 为 47.81，vanilla flow 50.95，DINOv2 对照 49.59，使用 V-JEPA2 / Depth Anything 3 的对照更差。作者另报告 ImageNet 类条件设置中，4M 步 Self-Flow FID 5.70、REPA 5.89；这组 ImageNet 数字不能与前述 FLUX.2 骨干文本图像结果混为同一实验。多模态 §4.2 还在 RT-1 的 73.5K 轨迹上微调视频-动作模型，并于 SIMPLER 仿真中报告复杂多物体顺序任务的成功率优势。[表 1–4、图 6–8]
+
+**消融与边界**：图 11 显示移除表征损失带来最大退化（ImageNet FID 超过 4 点），移除 mask 或让第二时间步只略微更干净也显著变差；附录 H 显示 student / teacher 层位选择过浅或过深会伤害效果。代价是每步额外一次 teacher 前向，噪声时间步分布也需按任务调参。论文中的跨模态结论限于特定数据、编码器、模型规模和 holdout 评测；没有独立复现，也尚不能推出该目标在生产级 FLUX 权重上带来相同增益。论文附录给出学生/教师层配置、掩码率与推理评测条件，方便复核。[§4.4–5、附录 A.3–A.5、H]
 
 ---
 
@@ -642,9 +653,9 @@ SD3.5 面临的主要挑战是**社区生态**：
 
 ## 8. 参考链接
 
-本轮（2026-10-22）实质复核范围为 SDXL 主干/Refiner、FLUX.1 许可与双流/单流结构，以及 SD3 Medium 和 SD3.5 的发布规格。SDXL 原文用 `paper-fetcher` 下载于仓库外 `paper-cache/research-audit-2026-10-22/models/sdxl/`，实读 §2.1、§2.5、§3、表 1。FLUX 源码固定为 `802fb4713906133fcbd0d8dc5351620ca4773036`，实读 `Flux.forward` 与 `util.py` 模型配置；没有运行权重推理。
+本轮（2026-10-23）实质复核包括前次的 SDXL 主干/Refiner、FLUX.1 许可与双流/单流结构、SD3 Medium 和 SD3.5 规格，并新增 Self-Flow 原文核读。SDXL 原文用 `paper-fetcher` 下载于仓库外 `paper-cache/research-audit-2026-10-22/models/sdxl/`，实读 §2.1、§2.5、§3、表 1。FLUX 源码固定为 `802fb4713906133fcbd0d8dc5351620ca4773036`，实读 `Flux.forward` 与 `util.py` 模型配置；Self-Flow 论文通过 `paper-fetcher fetch` 核对元数据，并经 arXiv HTML 实读 §3–5、表 1–4、图 6–8 和附录 A.3–A.5 / H。本轮没有运行权重推理或独立复现实验。
 
-新增一手来源：[BFL 成立公告](https://bfl.ai/blog/24-08-01-bfl)、[FLUX.1-dev 许可证](https://huggingface.co/black-forest-labs/FLUX.1-dev/blob/main/LICENSE.md)、[SD3 Medium 发布](https://stability.ai/news-updates/stable-diffusion-3-medium)、[SD3.5 发布](https://stability.ai/news-updates/introducing-stable-diffusion-3-5)、[SD3.5 代码发布记录](https://github.com/Stability-AI/sd3.5)、[FLUX Tools 公告](https://bfl.ai/blog/24-11-21-tools)。
+新增一手来源：[BFL 成立公告](https://bfl.ai/blog/24-08-01-bfl)、[FLUX.1-dev 许可证](https://huggingface.co/black-forest-labs/FLUX.1-dev/blob/main/LICENSE.md)、[SD3 Medium 发布](https://stability.ai/news-updates/stable-diffusion-3-medium)、[SD3.5 发布](https://stability.ai/news-updates/introducing-stable-diffusion-3-5)、[SD3.5 代码发布记录](https://github.com/Stability-AI/sd3.5)、[FLUX Tools 公告](https://bfl.ai/blog/24-11-21-tools)、[BFL Self-Flow 研究页](https://bfl.ai/research/self-flow)。
 
 仍待复核：SD1.x 训练配置的统一口径、SD3 目标函数与三编码器具体张量路径、工具支持版本及竞品星级表。后者未附固定提示集或盲评样本，不能当作量化性能证据。
 
@@ -664,6 +675,7 @@ SD3.5 面临的主要挑战是**社区生态**：
 | FLUX.1 [dev] | Hugging Face Model Card | https://huggingface.co/black-forest-labs/FLUX.1-dev |
 | FLUX.1 [schnell] | Hugging Face Model Card | https://huggingface.co/black-forest-labs/FLUX.1-schnell |
 | FLUX.1 Tools | BFL Tools Announcement | https://blackforestlabs.ai/flux-1-tools/ |
+| Self-Flow | *Self-Supervised Flow Matching for Scalable Multi-Modal Synthesis*, arXiv:2603.06507v1 (2026-03-06) | https://arxiv.org/abs/2603.06507 |
 | T5 | *Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer* | https://arxiv.org/abs/1910.10683 |
 | CLIP | *Learning Transferable Visual Models From Natural Language Supervision* | https://arxiv.org/abs/2103.00020 |
 | LoRA | *LoRA: Low-Rank Adaptation of Large Language Models* (ICLR 2022) | https://arxiv.org/abs/2106.09685 |

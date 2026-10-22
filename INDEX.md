@@ -13,15 +13,15 @@
 
 | 指标 | 数量 |
 | --- | --- |
-| **条目数**（`report.md`） | **60** |
-| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · AI4Science 10 · Infra 3 · OpenSource 6 |
-| 条目子文档数 | 151 |
-| 条目正文行数（剔除 front-matter） | 28,010 |
-| 条目字节 | 2,016,956 B |
-| 带 front-matter 的条目 | 19 |
-| 带合法 `date` 的条目 | 19 |
-| 文档（除生成物外的全部 `.md`） | 228 |
-| 其中文件名 `README.md` | 9 |
+| **条目数**（`report.md`） | **62** |
+| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 9 · VisualGen 8 · WorldModel 2 · AI4Science 10 · Evaluation 1 · Infra 3 · OpenSource 6 |
+| 条目子文档数 | 163 |
+| 条目正文行数（剔除 front-matter） | 27,704 |
+| 条目字节 | 2,058,300 B |
+| 带 front-matter 的条目 | 21 |
+| 带合法 `date` 的条目 | 21 |
+| 文档（除生成物外的全部 `.md`） | 243 |
+| 其中文件名 `README.md` | 10 |
 | 纳入版本控制的文件 | 252 |
 | 纳入版本控制的 `.md` | 236 |
 
@@ -32,14 +32,15 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| Models | 23 | 35 | 12,626 | 897,565 B | [板块页 →](<Models/README.md>) |
-| LLM | 8 | 27 | 4,136 | 299,102 B | [板块页 →](<LLM/README.md>) |
+| Models | 23 | 36 | 12,133 | 903,530 B | [板块页 →](<Models/README.md>) |
+| LLM | 9 | 33 | 4,220 | 315,386 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,758 | 320,420 B | [板块页 →](<VisualGen/README.md>) |
-| WorldModel | 2 | 31 | 1,213 | 130,531 B | [板块页 →](<WorldModel/README.md>) |
+| WorldModel | 2 | 35 | 1,230 | 133,787 B | [板块页 →](<WorldModel/README.md>) |
 | AI4Science | 10 | 52 | 811 | 129,813 B | [板块页 →](<AI4Science/README.md>) |
+| Evaluation | 1 | 4 | 86 | 15,839 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 3 | 33 | 905 | 72,511 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 33 | 1,561 | 167,014 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **60** | **228** | **28,010** | **2,016,956 B** | — |
+| **合计** | **62** | **243** | **27,704** | **2,058,300 B** | — |
 
 ## 分面索引
 
@@ -55,16 +56,16 @@
 
 ## 条目索引（按板块目录折叠，可直达条目与子报告）
 
-### Models（23 条目 / 35 文档）
+### Models（23 条目 / 36 文档）
 
 <details>
-<summary><b>模型系列 Models（23 条目 / 11 子文档）</b></summary>
+<summary><b>模型系列 Models（23 条目 / 12 子文档）</b></summary>
 
   <details>
-  <summary><b>Alibaba-Gen</b> · <code>Models/Alibaba-Gen/report.md</code> · 95 行 · —</summary>
+  <summary><b>Alibaba-Gen</b> · <code>Models/Alibaba-Gen/report.md</code> · 117 行 · —</summary>
 
 
-    * **条目**：[Models/Alibaba-Gen/report.md](<Models/Alibaba-Gen/report.md>)（95 行 / 10,471 B）
+    * **条目**：[Models/Alibaba-Gen/report.md](<Models/Alibaba-Gen/report.md>)（117 行 / 15,414 B）
     * **专题目录**：`Models/Alibaba-Gen`
     * **元数据**：type=`—` · domain=`Models` · subject=`Alibaba-Gen` · date=`—` · status=`—`
     * **子文档（0）**
@@ -73,10 +74,10 @@
   </details>
 
   <details>
-  <summary><b>ByteDance-Gen</b> · <code>Models/ByteDance-Gen/report.md</code> · 336 行 · —</summary>
+  <summary><b>ByteDance-Gen</b> · <code>Models/ByteDance-Gen/report.md</code> · 347 行 · —</summary>
 
 
-    * **条目**：[Models/ByteDance-Gen/report.md](<Models/ByteDance-Gen/report.md>)（336 行 / 23,109 B）
+    * **条目**：[Models/ByteDance-Gen/report.md](<Models/ByteDance-Gen/report.md>)（347 行 / 26,232 B）
     * **专题目录**：`Models/ByteDance-Gen`
     * **元数据**：type=`—` · domain=`Models` · subject=`ByteDance-Gen` · date=`—` · status=`—`
     * **子文档（0）**
@@ -85,10 +86,10 @@
   </details>
 
   <details>
-  <summary><b>Claude</b> · <code>Models/Claude/report.md</code> · 580 行 · —</summary>
+  <summary><b>Claude</b> · <code>Models/Claude/report.md</code> · 594 行 · —</summary>
 
 
-    * **条目**：[Models/Claude/report.md](<Models/Claude/report.md>)（580 行 / 48,741 B）
+    * **条目**：[Models/Claude/report.md](<Models/Claude/report.md>)（594 行 / 51,228 B）
     * **专题目录**：`Models/Claude`
     * **元数据**：type=`—` · domain=`Models` · subject=`Claude` · date=`—` · status=`—`
     * **子文档（0）**
@@ -97,24 +98,25 @@
   </details>
 
   <details>
-  <summary><b>DeepSeek</b> · <code>Models/DeepSeek/report.md</code> · 768 行 · —</summary>
+  <summary><b>DeepSeek</b> · <code>Models/DeepSeek/report.md</code> · 774 行 · —</summary>
 
 
-    * **条目**：[Models/DeepSeek/report.md](<Models/DeepSeek/report.md>)（768 行 / 63,195 B）
+    * **条目**：[Models/DeepSeek/report.md](<Models/DeepSeek/report.md>)（774 行 / 65,386 B）
     * **专题目录**：`Models/DeepSeek`
     * **元数据**：type=`—` · domain=`Models` · subject=`DeepSeek` · date=`—` · status=`—`
-    * **子文档（3）**
+    * **子文档（4）**
         * [deepseek-multimodal-and-specialized.md](<Models/DeepSeek/deepseek-multimodal-and-specialized.md>) — 367 行 / 24,706 B
+        * [deepseek-phase-sensitivity.md](<Models/DeepSeek/deepseek-phase-sensitivity.md>) — 76 行 / 11,595 B
         * [deepseek-text-models.md](<Models/DeepSeek/deepseek-text-models.md>) — 418 行 / 36,554 B
-        * [sources/MANIFEST.md](<Models/DeepSeek/sources/MANIFEST.md>) — 99 行 / 12,400 B
+        * [sources/MANIFEST.md](<Models/DeepSeek/sources/MANIFEST.md>) — 111 行 / 15,221 B
 
   </details>
 
   <details>
-  <summary><b>Doubao-Seed</b> · <code>Models/Doubao-Seed/report.md</code> · 643 行 · —</summary>
+  <summary><b>Doubao-Seed</b> · <code>Models/Doubao-Seed/report.md</code> · 651 行 · —</summary>
 
 
-    * **条目**：[Models/Doubao-Seed/report.md](<Models/Doubao-Seed/report.md>)（643 行 / 27,470 B）
+    * **条目**：[Models/Doubao-Seed/report.md](<Models/Doubao-Seed/report.md>)（651 行 / 29,957 B）
     * **专题目录**：`Models/Doubao-Seed`
     * **元数据**：type=`—` · domain=`Models` · subject=`Doubao-Seed` · date=`—` · status=`—`
     * **子文档（0）**
@@ -135,10 +137,10 @@
   </details>
 
   <details>
-  <summary><b>GPT</b> · <code>Models/GPT/report.md</code> · 759 行 · —</summary>
+  <summary><b>GPT</b> · <code>Models/GPT/report.md</code> · 773 行 · —</summary>
 
 
-    * **条目**：[Models/GPT/report.md](<Models/GPT/report.md>)（759 行 / 57,281 B）
+    * **条目**：[Models/GPT/report.md](<Models/GPT/report.md>)（773 行 / 59,941 B）
     * **专题目录**：`Models/GPT`
     * **元数据**：type=`—` · domain=`Models` · subject=`GPT` · date=`—` · status=`—`
     * **子文档（0）**
@@ -147,10 +149,10 @@
   </details>
 
   <details>
-  <summary><b>Gemini</b> · <code>Models/Gemini/report.md</code> · 825 行 · —</summary>
+  <summary><b>Gemini</b> · <code>Models/Gemini/report.md</code> · 842 行 · —</summary>
 
 
-    * **条目**：[Models/Gemini/report.md](<Models/Gemini/report.md>)（825 行 / 43,389 B）
+    * **条目**：[Models/Gemini/report.md](<Models/Gemini/report.md>)（842 行 / 45,955 B）
     * **专题目录**：`Models/Gemini`
     * **元数据**：type=`—` · domain=`Models` · subject=`Gemini` · date=`—` · status=`—`
     * **子文档（0）**
@@ -159,10 +161,10 @@
   </details>
 
   <details>
-  <summary><b>Google-Gen</b> · <code>Models/Google-Gen/report.md</code> · 878 行 · —</summary>
+  <summary><b>Google-Gen</b> · <code>Models/Google-Gen/report.md</code> · 895 行 · —</summary>
 
 
-    * **条目**：[Models/Google-Gen/report.md](<Models/Google-Gen/report.md>)（878 行 / 40,233 B）
+    * **条目**：[Models/Google-Gen/report.md](<Models/Google-Gen/report.md>)（895 行 / 42,826 B）
     * **专题目录**：`Models/Google-Gen`
     * **元数据**：type=`—` · domain=`Models` · subject=`Google-Gen` · date=`—` · status=`—`
     * **子文档（1）**
@@ -171,10 +173,10 @@
   </details>
 
   <details>
-  <summary><b>Grok</b> · <code>Models/Grok/report.md</code> · 469 行 · —</summary>
+  <summary><b>Grok</b> · <code>Models/Grok/report.md</code> · 265 行 · —</summary>
 
 
-    * **条目**：[Models/Grok/report.md](<Models/Grok/report.md>)（469 行 / 32,693 B）
+    * **条目**：[Models/Grok/report.md](<Models/Grok/report.md>)（265 行 / 18,947 B）
     * **专题目录**：`Models/Grok`
     * **元数据**：type=`—` · domain=`Models` · subject=`Grok` · date=`—` · status=`—`
     * **子文档（0）**
@@ -208,10 +210,10 @@
   </details>
 
   <details>
-  <summary><b>Kling</b> · <code>Models/Kling/report.md</code> · 537 行 · —</summary>
+  <summary><b>Kling</b> · <code>Models/Kling/report.md</code> · 75 行 · —</summary>
 
 
-    * **条目**：[Models/Kling/report.md](<Models/Kling/report.md>)（537 行 / 28,134 B）
+    * **条目**：[Models/Kling/report.md](<Models/Kling/report.md>)（75 行 / 9,334 B）
     * **专题目录**：`Models/Kling`
     * **元数据**：type=`—` · domain=`Models` · subject=`Kling` · date=`—` · status=`—`
     * **子文档（0）**
@@ -232,10 +234,10 @@
   </details>
 
   <details>
-  <summary><b>MiMo</b> · <code>Models/MiMo/report.md</code> · 749 行 · —</summary>
+  <summary><b>MiMo</b> · <code>Models/MiMo/report.md</code> · 757 行 · —</summary>
 
 
-    * **条目**：[Models/MiMo/report.md](<Models/MiMo/report.md>)（749 行 / 63,156 B）
+    * **条目**：[Models/MiMo/report.md](<Models/MiMo/report.md>)（757 行 / 64,784 B）
     * **专题目录**：`Models/MiMo`
     * **元数据**：type=`—` · domain=`Models` · subject=`MiMo` · date=`—` · status=`—`
     * **子文档（1）**
@@ -256,10 +258,10 @@
   </details>
 
   <details>
-  <summary><b>MiniMax</b> · <code>Models/MiniMax/report.md</code> · 517 行 · —</summary>
+  <summary><b>MiniMax</b> · <code>Models/MiniMax/report.md</code> · 524 行 · —</summary>
 
 
-    * **条目**：[Models/MiniMax/report.md](<Models/MiniMax/report.md>)（517 行 / 41,294 B）
+    * **条目**：[Models/MiniMax/report.md](<Models/MiniMax/report.md>)（524 行 / 42,545 B）
     * **专题目录**：`Models/MiniMax`
     * **元数据**：type=`—` · domain=`Models` · subject=`MiniMax` · date=`—` · status=`—`
     * **子文档（0）**
@@ -268,10 +270,10 @@
   </details>
 
   <details>
-  <summary><b>Mistral</b> · <code>Models/Mistral/report.md</code> · 495 行 · —</summary>
+  <summary><b>Mistral</b> · <code>Models/Mistral/report.md</code> · 502 行 · —</summary>
 
 
-    * **条目**：[Models/Mistral/report.md](<Models/Mistral/report.md>)（495 行 / 29,315 B）
+    * **条目**：[Models/Mistral/report.md](<Models/Mistral/report.md>)（502 行 / 31,260 B）
     * **专题目录**：`Models/Mistral`
     * **元数据**：type=`—` · domain=`Models` · subject=`Mistral` · date=`—` · status=`—`
     * **子文档（0）**
@@ -280,10 +282,10 @@
   </details>
 
   <details>
-  <summary><b>Nemotron</b> · <code>Models/Nemotron/report.md</code> · 231 行 · —</summary>
+  <summary><b>Nemotron</b> · <code>Models/Nemotron/report.md</code> · 238 行 · —</summary>
 
 
-    * **条目**：[Models/Nemotron/report.md](<Models/Nemotron/report.md>)（231 行 / 20,815 B）
+    * **条目**：[Models/Nemotron/report.md](<Models/Nemotron/report.md>)（238 行 / 22,850 B）
     * **专题目录**：`Models/Nemotron`
     * **元数据**：type=`—` · domain=`Models` · subject=`Nemotron` · date=`—` · status=`—`
     * **子文档（0）**
@@ -292,10 +294,10 @@
   </details>
 
   <details>
-  <summary><b>OpenAI-Gen</b> · <code>Models/OpenAI-Gen/report.md</code> · 385 行 · —</summary>
+  <summary><b>OpenAI-Gen</b> · <code>Models/OpenAI-Gen/report.md</code> · 393 行 · —</summary>
 
 
-    * **条目**：[Models/OpenAI-Gen/report.md](<Models/OpenAI-Gen/report.md>)（385 行 / 23,619 B）
+    * **条目**：[Models/OpenAI-Gen/report.md](<Models/OpenAI-Gen/report.md>)（393 行 / 25,108 B）
     * **专题目录**：`Models/OpenAI-Gen`
     * **元数据**：type=`—` · domain=`Models` · subject=`OpenAI-Gen` · date=`—` · status=`—`
     * **子文档（0）**
@@ -304,10 +306,10 @@
   </details>
 
   <details>
-  <summary><b>Qwen</b> · <code>Models/Qwen/report.md</code> · 1113 行 · —</summary>
+  <summary><b>Qwen</b> · <code>Models/Qwen/report.md</code> · 1119 行 · —</summary>
 
 
-    * **条目**：[Models/Qwen/report.md](<Models/Qwen/report.md>)（1113 行 / 73,240 B）
+    * **条目**：[Models/Qwen/report.md](<Models/Qwen/report.md>)（1119 行 / 74,733 B）
     * **专题目录**：`Models/Qwen`
     * **元数据**：type=`—` · domain=`Models` · subject=`Qwen` · date=`—` · status=`—`
     * **子文档（3）**
@@ -318,10 +320,10 @@
   </details>
 
   <details>
-  <summary><b>Runway</b> · <code>Models/Runway/report.md</code> · 94 行 · —</summary>
+  <summary><b>Runway</b> · <code>Models/Runway/report.md</code> · 103 行 · —</summary>
 
 
-    * **条目**：[Models/Runway/report.md](<Models/Runway/report.md>)（94 行 / 10,526 B）
+    * **条目**：[Models/Runway/report.md](<Models/Runway/report.md>)（103 行 / 12,682 B）
     * **专题目录**：`Models/Runway`
     * **元数据**：type=`—` · domain=`Models` · subject=`Runway` · date=`—` · status=`—`
     * **子文档（0）**
@@ -330,10 +332,10 @@
   </details>
 
   <details>
-  <summary><b>StabilityAI</b> · <code>Models/StabilityAI/report.md</code> · 727 行 · —</summary>
+  <summary><b>StabilityAI</b> · <code>Models/StabilityAI/report.md</code> · 739 行 · —</summary>
 
 
-    * **条目**：[Models/StabilityAI/report.md](<Models/StabilityAI/report.md>)（727 行 / 43,095 B）
+    * **条目**：[Models/StabilityAI/report.md](<Models/StabilityAI/report.md>)（739 行 / 46,559 B）
     * **专题目录**：`Models/StabilityAI`
     * **元数据**：type=`—` · domain=`Models` · subject=`StabilityAI` · date=`—` · status=`—`
     * **子文档（0）**
@@ -343,10 +345,10 @@
 
 </details>
 
-### LLM（8 条目 / 27 文档）
+### LLM（9 条目 / 33 文档）
 
 <details>
-<summary><b>语言模型 LLM（8 条目 / 18 子文档）</b></summary>
+<summary><b>语言模型 LLM（9 条目 / 23 子文档）</b></summary>
 
   <details>
   <summary><b>Agent</b> · <code>LLM/Agent/report.md</code> · 105 行 · —</summary>
@@ -446,6 +448,22 @@
     * **元数据**：type=`—` · domain=`LLM` · subject=`ReasoningModels` · date=`—` · status=`—`
     * **子文档（0）**
         * _该条目暂无子文档_
+
+  </details>
+
+  <details>
+  <summary><b>ReinforcementLearning</b> · <code>LLM/ReinforcementLearning/report.md</code> · 84 行 · 2026-10-23</summary>
+
+
+    * **条目**：[LLM/ReinforcementLearning/report.md](<LLM/ReinforcementLearning/report.md>)（84 行 / 16,284 B）
+    * **专题目录**：`LLM/ReinforcementLearning`
+    * **元数据**：type=`research` · domain=`LLM` · subject=`ReinforcementLearning` · date=`2026-10-23` · status=`current`
+    * **子文档（5）**
+        * [papers/loop.md](<LLM/ReinforcementLearning/papers/loop.md>) — 28 行 / 4,539 B
+        * [papers/online-preference.md](<LLM/ReinforcementLearning/papers/online-preference.md>) — 28 行 / 3,980 B
+        * [papers/prime.md](<LLM/ReinforcementLearning/papers/prime.md>) — 30 行 / 4,636 B
+        * [sources/CANDIDATES.md](<LLM/ReinforcementLearning/sources/CANDIDATES.md>) — 22 行 / 3,099 B
+        * [sources/MANIFEST.md](<LLM/ReinforcementLearning/sources/MANIFEST.md>) — 31 行 / 5,776 B
 
   </details>
 
@@ -566,19 +584,19 @@
 
 </details>
 
-### WorldModel（2 条目 / 31 文档）
+### WorldModel（2 条目 / 35 文档）
 
 <details>
-<summary><b>世界模型 WorldModel（2 条目 / 28 子文档）</b></summary>
+<summary><b>世界模型 WorldModel（2 条目 / 32 子文档）</b></summary>
 
   <details>
-  <summary><b>EmbodiedVLA</b> · <code>WorldModel/EmbodiedVLA/report.md</code> · 611 行 · —</summary>
+  <summary><b>EmbodiedVLA</b> · <code>WorldModel/EmbodiedVLA/report.md</code> · 628 行 · —</summary>
 
 
-    * **条目**：[WorldModel/EmbodiedVLA/report.md](<WorldModel/EmbodiedVLA/report.md>)（611 行 / 69,205 B）
+    * **条目**：[WorldModel/EmbodiedVLA/report.md](<WorldModel/EmbodiedVLA/report.md>)（628 行 / 72,461 B）
     * **专题目录**：`WorldModel/EmbodiedVLA`
     * **元数据**：type=`—` · domain=`WorldModel` · subject=`EmbodiedVLA` · date=`—` · status=`—`
-    * **子文档（13）**
+    * **子文档（17）**
         * [papers/2303.04137-diffusion-policy.md](<WorldModel/EmbodiedVLA/papers/2303.04137-diffusion-policy.md>) — 246 行 / 38,592 B
         * [papers/2307.15818-rt2.md](<WorldModel/EmbodiedVLA/papers/2307.15818-rt2.md>) — 222 行 / 29,179 B
         * [papers/2310.08864-open-x-embodiment.md](<WorldModel/EmbodiedVLA/papers/2310.08864-open-x-embodiment.md>) — 243 行 / 26,572 B
@@ -587,10 +605,14 @@
         * [papers/2406.09246-openvla.md](<WorldModel/EmbodiedVLA/papers/2406.09246-openvla.md>) — 252 行 / 28,967 B
         * [papers/2410.24164-pi0.md](<WorldModel/EmbodiedVLA/papers/2410.24164-pi0.md>) — 239 行 / 24,171 B
         * [papers/2501.09747-fast.md](<WorldModel/EmbodiedVLA/papers/2501.09747-fast.md>) — 250 行 / 23,574 B
-        * [sources/CANDIDATES.md](<WorldModel/EmbodiedVLA/sources/CANDIDATES.md>) — 100 行 / 11,008 B
-        * [sources/MANIFEST.md](<WorldModel/EmbodiedVLA/sources/MANIFEST.md>) — 47 行 / 6,276 B
+        * [papers/2511.14759-pi-star-0.6-recap.md](<WorldModel/EmbodiedVLA/papers/2511.14759-pi-star-0.6-recap.md>) — 68 行 / 8,822 B
+        * [papers/2601.21998-lingbot-va.md](<WorldModel/EmbodiedVLA/papers/2601.21998-lingbot-va.md>) — 68 行 / 7,622 B
+        * [papers/2608.16978-vlcp.md](<WorldModel/EmbodiedVLA/papers/2608.16978-vlcp.md>) — 69 行 / 7,033 B
+        * [sources/CANDIDATES.md](<WorldModel/EmbodiedVLA/sources/CANDIDATES.md>) — 126 行 / 13,403 B
+        * [sources/MANIFEST.md](<WorldModel/EmbodiedVLA/sources/MANIFEST.md>) — 77 行 / 11,348 B
         * [topics/action-representation.md](<WorldModel/EmbodiedVLA/topics/action-representation.md>) — 175 行 / 14,305 B
-        * [topics/deployment-boundaries.md](<WorldModel/EmbodiedVLA/topics/deployment-boundaries.md>) — 154 行 / 11,387 B
+        * [topics/closed-loop-control.md](<WorldModel/EmbodiedVLA/topics/closed-loop-control.md>) — 82 行 / 9,955 B
+        * [topics/deployment-boundaries.md](<WorldModel/EmbodiedVLA/topics/deployment-boundaries.md>) — 154 行 / 12,115 B
         * [topics/evaluation-and-datasets.md](<WorldModel/EmbodiedVLA/topics/evaluation-and-datasets.md>) — 166 行 / 15,924 B
 
   </details>
@@ -781,6 +803,26 @@
 
 </details>
 
+### Evaluation（1 条目 / 4 文档）
+
+<details>
+<summary><b>评测科学 Evaluation（1 条目 / 2 子文档）</b></summary>
+
+  <details>
+  <summary><b>EvaluationScience</b> · <code>Evaluation/EvaluationScience/report.md</code> · 86 行 · 2026-10-23</summary>
+
+
+    * **条目**：[Evaluation/EvaluationScience/report.md](<Evaluation/EvaluationScience/report.md>)（86 行 / 15,839 B）
+    * **专题目录**：`Evaluation/EvaluationScience`
+    * **元数据**：type=`research` · domain=`Evaluation` · subject=`EvaluationScience` · date=`2026-10-23` · status=`current`
+    * **子文档（2）**
+        * [sources/CANDIDATES.md](<Evaluation/EvaluationScience/sources/CANDIDATES.md>) — 18 行 / 3,472 B
+        * [sources/MANIFEST.md](<Evaluation/EvaluationScience/sources/MANIFEST.md>) — 22 行 / 8,021 B
+
+  </details>
+
+</details>
+
 ### Infra（3 条目 / 33 文档）
 
 <details>
@@ -956,15 +998,16 @@
 | 文档 | 板块 | 行数 | 字节 |
 | --- | --- | --: | --: |
 | [AI4Science/README.md](<AI4Science/README.md>) | AI4Science | 136 | 6,656 B |
+| [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 34 | 1,167 B |
 | [Infra/README.md](<Infra/README.md>) | Infra | 63 | 4,596 B |
-| [LLM/README.md](<LLM/README.md>) | LLM | 57 | 3,746 B |
-| [Models/README.md](<Models/README.md>) | Models | 95 | 4,363 B |
+| [LLM/README.md](<LLM/README.md>) | LLM | 69 | 4,433 B |
+| [Models/README.md](<Models/README.md>) | Models | 96 | 4,441 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 91 | 3,889 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 177 | 10,826 B |
+| [README.md](<README.md>) |  | 186 | 11,624 B |
 | [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,616 B |
-| [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 67 | 3,895 B |
+| [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 71 | 4,310 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 86 | 6,458 B |
 | [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 11,050 B |
 | [docs/research-method.md](<docs/research-method.md>) | docs | 44 | 3,472 B |

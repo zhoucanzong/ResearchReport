@@ -892,6 +892,7 @@ def render_index(docs: list, orphans: list, stats: dict, out_root: str, dry_run:
             child_total = sum(len(d["children"]) for d in cat_entries)
             cat_cn = {"Models": "模型系列", "LLM": "语言模型", "VisualGen": "视觉生成",
                       "WorldModel": "世界模型", "AI4Science": "科学研究",
+                      "Evaluation": "评测科学",
                       "Infra": "基础设施", "OpenSource": "开源仓库"}.get(cat, cat)
             lines += [
                 f"<details>",
@@ -1368,6 +1369,7 @@ def render_panels_block(cfg: dict, mapping: dict, entries: list, label_limit: in
     captions = {
         "models": "模型系列", "llm": "语言模型方法", "visualgen": "视觉与多模态",
         "worldmodel": "世界模型与具身", "ai4science": "科学研究应用",
+        "evaluation": "跨领域评测科学",
         "infra": "训练与推理系统", "opensource": "开源代码深读",
     }
     cards = []
@@ -1502,6 +1504,7 @@ PANEL_ONE_LINERS = {
     "VisualGen": "视觉与多模态生成，含视频 / 图像 / 3D / 音频 / 数字人与扩散基础。",
     "WorldModel": "世界模型与具身 VLA，关注环境动力学与可部署动作策略。",
     "AI4Science": "科学问题中的 AI 方法与实验闭环，按具体领域和证据链深入。",
+    "Evaluation": "跨领域研究 AI 评测的构念效度、数据污染、评分可靠性与真实任务外推。",
     "Infra": "推理 / 训练基础设施，覆盖投机解码、量化边缘与训练基建。",
     "OpenSource": "开源仓库代码深读，源码不入口、只留报告与证据引用。",
 }
@@ -1836,6 +1839,7 @@ def _site_home_icon(panel_id: str) -> str:
         "visualgen": '<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 5-5 4 4 4-6 5 7"/>',
         "worldmodel": '<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/>',
         "ai4science": '<path d="M9 3h6m-5 0v7l-4.5 8.2A1.5 1.5 0 0 0 6 20.5h12a1.5 1.5 0 0 0 1.5-2.3L15 10V3"/><path d="M7 15h10"/>',
+        "evaluation": '<path d="M4 20h16M6 16V9m4 7V4m4 12v-5m4 5V7"/><path d="M4 4h2M18 4h2"/>',
         "infra": '<rect x="7" y="7" width="10" height="10" rx="2"/><path d="M9 2v5m6-5v5M9 17v5m6-5v5M2 9h5m-5 6h5m10-6h5m-5 6h5"/><path d="M10 10h4v4h-4z"/>',
         "opensource": '<path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18"/>',
     }
@@ -1864,6 +1868,7 @@ def render_site_home(cfg: dict, mapping: dict, entries: list,
     captions = {
         "models": "模型系列", "llm": "语言模型技术", "visualgen": "视觉与多模态",
         "worldmodel": "世界模型与具身", "ai4science": "科学研究应用",
+        "evaluation": "跨领域评测科学",
         "infra": "训练与推理系统", "opensource": "开源代码研究",
     }
 

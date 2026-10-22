@@ -120,6 +120,7 @@ nav:
     - "DeepSeek":
         - "总报告": "Models/DeepSeek/report.md"
         - "deepseek-multimodal-and-specialized": "Models/DeepSeek/deepseek-multimodal-and-specialized.md"
+        - "deepseek-phase-sensitivity": "Models/DeepSeek/deepseek-phase-sensitivity.md"
         - "deepseek-text-models": "Models/DeepSeek/deepseek-text-models.md"
         - "MANIFEST": "Models/DeepSeek/sources/MANIFEST.md"
     - "Doubao-Seed": "Models/Doubao-Seed/report.md"
@@ -154,7 +155,7 @@ nav:
         - "qwen-vl-models": "Models/Qwen/qwen-vl-models.md"
     - "Runway": "Models/Runway/report.md"
     - "StabilityAI": "Models/StabilityAI/report.md"
-  - "💬 LLM · 8":
+  - "💬 LLM · 9":
     - "LLM/README.md"
     - "Agent": "LLM/Agent/report.md"
     - "Alignment": "LLM/Alignment/report.md"
@@ -182,6 +183,13 @@ nav:
     - "MoE": "LLM/MoE/report.md"
     - "RAG": "LLM/RAG/report.md"
     - "ReasoningModels": "LLM/ReasoningModels/report.md"
+    - "ReinforcementLearning":
+        - "总报告": "LLM/ReinforcementLearning/report.md"
+        - "loop": "LLM/ReinforcementLearning/papers/loop.md"
+        - "online-preference": "LLM/ReinforcementLearning/papers/online-preference.md"
+        - "prime": "LLM/ReinforcementLearning/papers/prime.md"
+        - "CANDIDATES": "LLM/ReinforcementLearning/sources/CANDIDATES.md"
+        - "MANIFEST": "LLM/ReinforcementLearning/sources/MANIFEST.md"
     - "VLM": "LLM/VLM/report.md"
   - "🎨 VisualGen · 8":
     - "VisualGen/README.md"
@@ -205,9 +213,13 @@ nav:
         - "2406.09246-openvla": "WorldModel/EmbodiedVLA/papers/2406.09246-openvla.md"
         - "2410.24164-pi0": "WorldModel/EmbodiedVLA/papers/2410.24164-pi0.md"
         - "2501.09747-fast": "WorldModel/EmbodiedVLA/papers/2501.09747-fast.md"
+        - "2511.14759-pi-star-0.6-recap": "WorldModel/EmbodiedVLA/papers/2511.14759-pi-star-0.6-recap.md"
+        - "2601.21998-lingbot-va": "WorldModel/EmbodiedVLA/papers/2601.21998-lingbot-va.md"
+        - "2608.16978-vlcp": "WorldModel/EmbodiedVLA/papers/2608.16978-vlcp.md"
         - "CANDIDATES": "WorldModel/EmbodiedVLA/sources/CANDIDATES.md"
         - "MANIFEST": "WorldModel/EmbodiedVLA/sources/MANIFEST.md"
         - "action-representation": "WorldModel/EmbodiedVLA/topics/action-representation.md"
+        - "closed-loop-control": "WorldModel/EmbodiedVLA/topics/closed-loop-control.md"
         - "deployment-boundaries": "WorldModel/EmbodiedVLA/topics/deployment-boundaries.md"
         - "evaluation-and-datasets": "WorldModel/EmbodiedVLA/topics/evaluation-and-datasets.md"
     - "WorldModels":
@@ -290,6 +302,12 @@ nav:
         - "pbc-subseasonal": "AI4Science/WeatherClimate/papers/pbc-subseasonal.md"
         - "CANDIDATES": "AI4Science/WeatherClimate/sources/CANDIDATES.md"
         - "MANIFEST": "AI4Science/WeatherClimate/sources/MANIFEST.md"
+  - "📏 Evaluation · 1":
+    - "Evaluation/README.md"
+    - "EvaluationScience":
+        - "总报告": "Evaluation/EvaluationScience/report.md"
+        - "CANDIDATES": "Evaluation/EvaluationScience/sources/CANDIDATES.md"
+        - "MANIFEST": "Evaluation/EvaluationScience/sources/MANIFEST.md"
   - "⚙️ Infra · 3":
     - "Infra/README.md"
     - "QuantizationEdge": "Infra/QuantizationEdge/report.md"

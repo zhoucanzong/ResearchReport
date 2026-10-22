@@ -1,7 +1,7 @@
 # DeepSeek 系列模型深度调研报告
 
-> 调研范围：DeepSeek 六条模型研究线；历史主体保留至 2026 年 4 月 V4 Preview，2026-10-22 本批补核 V4 正式版本至 V4.1-Flash-1017 的研究版本与技术变化，见 §2.8。此次补核不是六条研究线的全量新型号扫描。
-> 原调研时点：2026-06；本批更新截止：**2026-10-22（Asia/Shanghai）**。
+> 调研范围：DeepSeek 六条模型研究线；历史主体保留至 2026 年 4 月 V4 Preview，近期分批补核到 2026-10-23，涉及 V4.1-Flash-1017 身份、训练/部署证据及分块 KV 压缩相位敏感性；见 §2.8、§11.10。各批只覆盖标明的范围，不代表六条研究线全量新型号扫描。
+> 原调研时点：2026-06；本批更新截止：**2026-10-23（Asia/Shanghai）**。
 > 历史主体基于两份子报告整合：[纯文本基座模型](deepseek-text-models.md) 与 [多模态与专业模型](deepseek-multimodal-and-specialized.md)，并提炼跨方向的整合性洞察。
 
 ---
@@ -759,6 +759,12 @@ DeepSeek 的开源策略不仅体现在权重与技术报告上，还体现在�
 - GitHub Org: https://github.com/deepseek-ai （34+ repositories）
 - Hugging Face Org: https://huggingface.co/deepseek-ai
 - 关键 repo：`DeepSeek-LLM`、`DeepSeek-MoE`、`DeepSeek-V2`、`DeepSeek-V3`、`DeepSeek-V3.2-Exp`、`DeepSeek-R1`、`DeepSeek-VL2`、`DeepSeek-Coder-V2`、`DeepSeek-Prover-V2`、`Janus`、`DeepSeek-OCR`。
+
+### 11.10 新鲜度补核：分块 KV 压缩的相位敏感性（2026-09）
+
+ByteDance Seed 团队于 2026-09-28 发布 [*Periodic Weak Spots: Phase Sensitivity from Chunked KV-Cache Compression*](https://seed.bytedance.com/en/public_papers/periodic-weak-spots-phase-sensitivity-from-chunked-kv-cache-compression) 对 V4 长上下文评测补上了重要限制：分块 KV 压缩会使检索表现依赖信息相对压缩 stride 的 phase。论文在 128K NIAH 设置中报告，DeepSeek-V4-Flash / Pro 基座检查点的最大相位差分别为 **40.23 / 34.77 个百分点**，后训练检查点仍有 **19.14 / 14.84 个百分点**差距；V4.1-Flash 为 **6.09 个百分点**。这些是 2,048 或 20,480 条固定合成 key-value 检索提示上的 residue 组间差，不是产品总体准确率。V4 的八个 modulo-8 residue 组覆盖两个 stride=4 周期，V4.1 覆盖四个 stride=2 周期；目标位置均值、方差及 query 位置配平，但外层 filler 同时移动了干扰记录。受控 Qwen3-0.6B 派生模型的压缩与 full-attention 对照支持压缩 stride 是周期性弱点的来源；KV-head knockout 机制证据来自这些受控模型，DeepSeek-V4 侧的干预是整层 attention 输出替换。该机制证据不等于完整重建 DeepSeek-V4。逐篇精读见[相位敏感性分册](deepseek-phase-sensitivity.md)。
+
+固定版本与锚点：Zhu et al., [arXiv:2609.36322v1](https://arxiv.org/abs/2609.36322v1)，arXiv 显示 v1 于 2026-09-28 21:54 UTC 提交，PDF 首页日期为 2026-09-30；arXiv 版本页链接 CC BY 4.0，本文为预印本。§2、图 1–2、Table 7 报告 V4/V4.1 的周期翻转与 NIAH residue 差；§3.2、图 3 和 Table 8 对比压缩/全注意力与窗口/stride 变体；§4、图 4 分别展示受控模型 KV-head knockout 和 V4 层级 attention-output intervention，图 5 是受控模型 gate 结果。附录 C.1 给出 128K NIAH 提示构造，且说明目标 phase 与干扰项 phase 未独立移动。逐篇证据与七问见[相位敏感性精读](deepseek-phase-sensitivity.md)；来源清单 §8 记录工具使用口径及可复核边界。
 - HuggingFace V4 集合：https://huggingface.co/collections/deepseek-ai/deepseek-v4
 
 ---

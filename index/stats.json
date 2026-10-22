@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "0bd400beda06416ae077207c63409c31522459fca822e025bcb61ad44483f945",
+  "content_fingerprint": "979eb9693780bd3d3c5a183c413b0162b8031d811e7eb6f1d22be8f6d4c0dd47",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -14,33 +14,34 @@
     "repo_root": "相对运行目录的仓库根（按 `--repo-root .` 运行时为 `.`）：不写机器相关绝对路径，保证同一内容在不同目录下产出逐字节一致"
   },
   "entries": {
-    "total": 60,
-    "with_front_matter": 19,
+    "total": 62,
+    "with_front_matter": 21,
     "without_front_matter": 41,
-    "with_date": 19,
-    "lines": 28010,
-    "bytes": 2016956,
-    "children": 151
+    "with_date": 21,
+    "lines": 27704,
+    "bytes": 2058300,
+    "children": 163
   },
   "documents": {
-    "md_total": 228,
-    "md_libraries": 220,
-    "with_front_matter": 32,
-    "named_report_md": 60,
-    "named_readme_md": 9,
-    "lines": 54869,
-    "bytes": 4383316
+    "md_total": 243,
+    "md_libraries": 235,
+    "with_front_matter": 34,
+    "named_report_md": 62,
+    "named_readme_md": 10,
+    "lines": 55233,
+    "bytes": 4517371
   },
   "libraries": {
     "Models": {
       "entries": 23,
-      "documents_md": 35,
+      "documents_md": 36,
       "md_by_category": {
-        "Models": 35,
+        "Models": 36,
         "LLM": 0,
         "VisualGen": 0,
         "WorldModel": 0,
         "AI4Science": 0,
+        "Evaluation": 0,
         "Infra": 0,
         "OpenSource": 0
       },
@@ -50,45 +51,48 @@
         "VisualGen": 0,
         "WorldModel": 0,
         "AI4Science": 0,
+        "Evaluation": 0,
         "Infra": 0,
         "OpenSource": 0
       },
-      "lines": 12626,
-      "bytes": 897565,
-      "lines_raw": 12626,
-      "dir_files": 35,
-      "dir_md": 35,
-      "dir_bytes": 1186065,
-      "du_sk": 1224
+      "lines": 12133,
+      "bytes": 903530,
+      "lines_raw": 12133,
+      "dir_files": 36,
+      "dir_md": 36,
+      "dir_bytes": 1206524,
+      "du_sk": 1252
     },
     "LLM": {
-      "entries": 8,
-      "documents_md": 27,
+      "entries": 9,
+      "documents_md": 33,
       "md_by_category": {
         "Models": 0,
-        "LLM": 27,
+        "LLM": 33,
         "VisualGen": 0,
         "WorldModel": 0,
         "AI4Science": 0,
+        "Evaluation": 0,
         "Infra": 0,
         "OpenSource": 0
       },
       "dirs_by_category": {
         "Models": 0,
-        "LLM": 8,
+        "LLM": 9,
         "VisualGen": 0,
         "WorldModel": 0,
         "AI4Science": 0,
+        "Evaluation": 0,
         "Infra": 0,
         "OpenSource": 0
       },
-      "lines": 4136,
-      "bytes": 299102,
-      "lines_raw": 4136,
-      "dir_files": 27,
-      "dir_md": 27,
-      "dir_bytes": 702015,
-      "du_sk": 736
+      "lines": 4220,
+      "bytes": 315386,
+      "lines_raw": 4229,
+      "dir_files": 33,
+      "dir_md": 33,
+      "dir_bytes": 741016,
+      "du_sk": 788
     },
     "VisualGen": {
       "entries": 8,
@@ -99,6 +103,7 @@
         "VisualGen": 9,
         "WorldModel": 0,
         "AI4Science": 0,
+        "Evaluation": 0,
         "Infra": 0,
         "OpenSource": 0
       },
@@ -108,6 +113,7 @@
         "VisualGen": 8,
         "WorldModel": 0,
         "AI4Science": 0,
+        "Evaluation": 0,
         "Infra": 0,
         "OpenSource": 0
       },
@@ -121,13 +127,14 @@
     },
     "WorldModel": {
       "entries": 2,
-      "documents_md": 31,
+      "documents_md": 35,
       "md_by_category": {
         "Models": 0,
         "LLM": 0,
         "VisualGen": 0,
-        "WorldModel": 31,
+        "WorldModel": 35,
         "AI4Science": 0,
+        "Evaluation": 0,
         "Infra": 0,
         "OpenSource": 0
       },
@@ -137,16 +144,17 @@
         "VisualGen": 0,
         "WorldModel": 2,
         "AI4Science": 0,
+        "Evaluation": 0,
         "Infra": 0,
         "OpenSource": 0
       },
-      "lines": 1213,
-      "bytes": 130531,
-      "lines_raw": 1221,
-      "dir_files": 31,
-      "dir_md": 31,
-      "dir_bytes": 600750,
-      "du_sk": 640
+      "lines": 1230,
+      "bytes": 133787,
+      "lines_raw": 1238,
+      "dir_files": 35,
+      "dir_md": 35,
+      "dir_bytes": 646048,
+      "du_sk": 696
     },
     "AI4Science": {
       "entries": 10,
@@ -157,6 +165,7 @@
         "VisualGen": 0,
         "WorldModel": 0,
         "AI4Science": 52,
+        "Evaluation": 0,
         "Infra": 0,
         "OpenSource": 0
       },
@@ -166,6 +175,7 @@
         "VisualGen": 0,
         "WorldModel": 0,
         "AI4Science": 10,
+        "Evaluation": 0,
         "Infra": 0,
         "OpenSource": 0
       },
@@ -177,6 +187,37 @@
       "dir_bytes": 377866,
       "du_sk": 468
     },
+    "Evaluation": {
+      "entries": 1,
+      "documents_md": 4,
+      "md_by_category": {
+        "Models": 0,
+        "LLM": 0,
+        "VisualGen": 0,
+        "WorldModel": 0,
+        "AI4Science": 0,
+        "Evaluation": 4,
+        "Infra": 0,
+        "OpenSource": 0
+      },
+      "dirs_by_category": {
+        "Models": 0,
+        "LLM": 0,
+        "VisualGen": 0,
+        "WorldModel": 0,
+        "AI4Science": 0,
+        "Evaluation": 1,
+        "Infra": 0,
+        "OpenSource": 0
+      },
+      "lines": 86,
+      "bytes": 15839,
+      "lines_raw": 94,
+      "dir_files": 4,
+      "dir_md": 4,
+      "dir_bytes": 28499,
+      "du_sk": 32
+    },
     "Infra": {
       "entries": 3,
       "documents_md": 33,
@@ -186,6 +227,7 @@
         "VisualGen": 0,
         "WorldModel": 0,
         "AI4Science": 0,
+        "Evaluation": 0,
         "Infra": 33,
         "OpenSource": 0
       },
@@ -195,6 +237,7 @@
         "VisualGen": 0,
         "WorldModel": 0,
         "AI4Science": 0,
+        "Evaluation": 0,
         "Infra": 3,
         "OpenSource": 0
       },
@@ -215,6 +258,7 @@
         "VisualGen": 0,
         "WorldModel": 0,
         "AI4Science": 0,
+        "Evaluation": 0,
         "Infra": 0,
         "OpenSource": 33
       },
@@ -224,6 +268,7 @@
         "VisualGen": 0,
         "WorldModel": 0,
         "AI4Science": 0,
+        "Evaluation": 0,
         "Infra": 0,
         "OpenSource": 6
       },
@@ -237,14 +282,14 @@
     }
   },
   "totals": {
-    "libraries": 7,
-    "library_entries": 60,
-    "library_documents_md": 220,
-    "library_dir_files": 223,
-    "library_dir_bytes": 4322986,
-    "library_du_sk": 4624,
-    "library_entry_lines": 28010,
-    "library_entry_bytes": 2016956
+    "libraries": 8,
+    "library_entries": 62,
+    "library_documents_md": 235,
+    "library_dir_files": 238,
+    "library_dir_bytes": 4456243,
+    "library_du_sk": 4792,
+    "library_entry_lines": 27704,
+    "library_entry_bytes": 2058300
   },
   "version_control": {
     "tracked_total": 252,
@@ -260,16 +305,16 @@
       "Models": {
         "report_md": {
           "files": 23,
-          "lines": 12626,
-          "lines_raw": 12626,
-          "bytes": 897565
+          "lines": 12133,
+          "lines_raw": 12133,
+          "bytes": 903530
         },
         "report_md_by_category": {
           "Models": {
             "files": 23,
-            "lines": 12626,
-            "lines_raw": 12626,
-            "bytes": 897565
+            "lines": 12133,
+            "lines_raw": 12133,
+            "bytes": 903530
           },
           "LLM": {
             "files": 0,
@@ -295,6 +340,12 @@
             "lines_raw": 0,
             "bytes": 0
           },
+          "Evaluation": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
           "Infra": {
             "files": 0,
             "lines": 0,
@@ -309,24 +360,24 @@
           }
         },
         "other_md": {
-          "files": 12,
-          "lines": 3814,
-          "lines_raw": 3814,
-          "bytes": 288500
+          "files": 13,
+          "lines": 3903,
+          "lines_raw": 3903,
+          "bytes": 302994
         },
         "dir_md": {
-          "files": 35,
-          "lines": 16440,
-          "lines_raw": 16440,
-          "bytes": 1186065
+          "files": 36,
+          "lines": 16036,
+          "lines_raw": 16036,
+          "bytes": 1206524
         }
       },
       "LLM": {
         "report_md": {
-          "files": 8,
-          "lines": 4136,
-          "lines_raw": 4136,
-          "bytes": 299102
+          "files": 9,
+          "lines": 4220,
+          "lines_raw": 4229,
+          "bytes": 315386
         },
         "report_md_by_category": {
           "Models": {
@@ -336,10 +387,10 @@
             "bytes": 0
           },
           "LLM": {
-            "files": 8,
-            "lines": 4136,
-            "lines_raw": 4136,
-            "bytes": 299102
+            "files": 9,
+            "lines": 4220,
+            "lines_raw": 4229,
+            "bytes": 315386
           },
           "VisualGen": {
             "files": 0,
@@ -359,6 +410,12 @@
             "lines_raw": 0,
             "bytes": 0
           },
+          "Evaluation": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
           "Infra": {
             "files": 0,
             "lines": 0,
@@ -373,16 +430,16 @@
           }
         },
         "other_md": {
-          "files": 19,
-          "lines": 3957,
-          "lines_raw": 4097,
-          "bytes": 402913
+          "files": 24,
+          "lines": 4108,
+          "lines_raw": 4248,
+          "bytes": 425630
         },
         "dir_md": {
-          "files": 27,
-          "lines": 8093,
-          "lines_raw": 8233,
-          "bytes": 702015
+          "files": 33,
+          "lines": 8328,
+          "lines_raw": 8477,
+          "bytes": 741016
         }
       },
       "VisualGen": {
@@ -423,6 +480,12 @@
             "lines_raw": 0,
             "bytes": 0
           },
+          "Evaluation": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
           "Infra": {
             "files": 0,
             "lines": 0,
@@ -452,9 +515,9 @@
       "WorldModel": {
         "report_md": {
           "files": 2,
-          "lines": 1213,
-          "lines_raw": 1221,
-          "bytes": 130531
+          "lines": 1230,
+          "lines_raw": 1238,
+          "bytes": 133787
         },
         "report_md_by_category": {
           "Models": {
@@ -477,11 +540,17 @@
           },
           "WorldModel": {
             "files": 2,
-            "lines": 1213,
-            "lines_raw": 1221,
-            "bytes": 130531
+            "lines": 1230,
+            "lines_raw": 1238,
+            "bytes": 133787
           },
           "AI4Science": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "Evaluation": {
             "files": 0,
             "lines": 0,
             "lines_raw": 0,
@@ -501,16 +570,16 @@
           }
         },
         "other_md": {
-          "files": 29,
-          "lines": 5228,
-          "lines_raw": 5228,
-          "bytes": 470219
+          "files": 33,
+          "lines": 5575,
+          "lines_raw": 5575,
+          "bytes": 512261
         },
         "dir_md": {
-          "files": 31,
-          "lines": 6441,
-          "lines_raw": 6449,
-          "bytes": 600750
+          "files": 35,
+          "lines": 6805,
+          "lines_raw": 6813,
+          "bytes": 646048
         }
       },
       "AI4Science": {
@@ -551,6 +620,12 @@
             "lines_raw": 891,
             "bytes": 129813
           },
+          "Evaluation": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
           "Infra": {
             "files": 0,
             "lines": 0,
@@ -575,6 +650,76 @@
           "lines": 2575,
           "lines_raw": 2655,
           "bytes": 377866
+        }
+      },
+      "Evaluation": {
+        "report_md": {
+          "files": 1,
+          "lines": 86,
+          "lines_raw": 94,
+          "bytes": 15839
+        },
+        "report_md_by_category": {
+          "Models": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "LLM": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "VisualGen": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "WorldModel": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "AI4Science": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "Evaluation": {
+            "files": 1,
+            "lines": 86,
+            "lines_raw": 94,
+            "bytes": 15839
+          },
+          "Infra": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "OpenSource": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          }
+        },
+        "other_md": {
+          "files": 3,
+          "lines": 74,
+          "lines_raw": 74,
+          "bytes": 12660
+        },
+        "dir_md": {
+          "files": 4,
+          "lines": 160,
+          "lines_raw": 168,
+          "bytes": 28499
         }
       },
       "Infra": {
@@ -610,6 +755,12 @@
             "bytes": 0
           },
           "AI4Science": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
+          "Evaluation": {
             "files": 0,
             "lines": 0,
             "lines_raw": 0,
@@ -679,6 +830,12 @@
             "lines_raw": 0,
             "bytes": 0
           },
+          "Evaluation": {
+            "files": 0,
+            "lines": 0,
+            "lines_raw": 0,
+            "bytes": 0
+          },
           "Infra": {
             "files": 0,
             "lines": 0,
@@ -707,22 +864,22 @@
       }
     },
     "repo_md": {
-      "files": 228,
-      "lines": 54869,
-      "lines_raw": 55172,
-      "bytes": 4383316
+      "files": 243,
+      "lines": 55233,
+      "lines_raw": 55553,
+      "bytes": 4517371
     },
     "library_md": {
-      "files": 220,
-      "lines": 53617,
-      "lines_raw": 53920,
-      "bytes": 4294736
+      "files": 235,
+      "lines": 53972,
+      "lines_raw": 54292,
+      "bytes": 4427993
     },
     "root_readme": {
       "files": 1,
-      "lines": 177,
-      "lines_raw": 177,
-      "bytes": 10826
+      "lines": 186,
+      "lines_raw": 186,
+      "bytes": 11624
     },
     "docs_md": {
       "files": 6,
@@ -742,7 +899,7 @@
     ]
   },
   "storage": {
-    "tracked_bytes": 9559717,
+    "tracked_bytes": 9592282,
     "definition": "纳入版本控制的文件字节合计（`git ls-files` 跟踪路径逐个 getsize 求和）；刻意**不**用 du 量工作树——工作树含 site/site-docs/构建产物、别人的未提交草稿、虚拟环境等「车间地面」，会让数字每个 clone 一个样、生成物不可复现。本字段与提交树同源，任意 clone 重跑一致。"
   }
 }

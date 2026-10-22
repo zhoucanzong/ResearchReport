@@ -1,6 +1,6 @@
-# DeepSeek 更新来源清单（2026-10-22 单批）
+# DeepSeek 更新来源清单（2026-10-22 起的分批更新）
 
-> 截止：2026-10-22（Asia/Shanghai）。本清单只支撑主报告 §2.8、受影响的服务生命周期与部署断言。两份历史子报告不在本批改写范围；未将当前 API alias 当作固定论文 checkpoint。
+> 核查截止：2026-10-23（Asia/Shanghai）。§1–7 记录 2026-10-22 的 V4/V4.1 身份与 FP8 复核；§8 记录 2026-10-23 加入的相位敏感性论文。两份历史子报告不在对应批次改写范围；未将当前 API alias 当作固定论文 checkpoint。
 
 ## 1. 事件、论文和服务身份分开
 
@@ -75,7 +75,6 @@
 
 Skill使用：按 `researcher` 的来源/数字条件/不确定值要求处理更新；论文用 `paper-fetcher download` 获取。未调用 `code-researcher` 做仓库行为深读，也不将配置读取称为源码执行链审查。
 
-
 ## 7. DeepSeek-V3 FP8 单切面复核（2026-10-22）
 
 本批仅重写[文本子报告 §4.3.3](../deepseek-text-models.md#433-fp8-混合精度训练)与[主报告 §3.3](../report.md#33-fp8-训练与低成本策略)及其直接重复摘要。§1–6是上一批更新的历史记录，其中子报告的前后哈希只指**上一批**；本批明确授权更改FP8小节，不把旧哈希当当前文件哈希。其余历史章节与多模态子报告未改。
@@ -97,3 +96,16 @@ Skill使用：按 `researcher` 的来源/数字条件/不确定值要求处理�
 未解决但不再当成确定收益：671B完整BF16控制实验、训练峰值显存拆账、原始训练内核固定M/N/K吞吐与计时方法、可归因FP8的完整step/端到端推理收益；本次未取得这些实测数据。附录B未单列两组小规模对照的卡数/批量，不假定其均使用2048卡。未扩大到新模型、其他历史技术争议或社区内核基准。
 
 本地缓存：`~/Documents/paper-cache/research-audit-2026-10-22/models/deepseek-v3-fp8/`，含固定PDF、文本抽取、官方源码checkout及`repo-scan.json`。精确输入/输出哈希与范围检查另记本地审计底账`.rehearsal/audit/goal-batches/deepseek-v3-fp8.json`。按`researcher`核对论文，按`code-researcher`追公开推理调用链，论文由`paper-fetcher`获取；三个skill未被脚本检查替代。
+
+## 8. 分块 KV 压缩相位敏感性（2026-10-23）
+
+本次定向选读该论文，是因为它提出并测试了与 V4/V4.1 分块 KV-cache 机制直接相关的 phase failure mode；不声称穷尽 2026 长上下文论文，也未把预印本当成独立复现结论。
+
+| 来源 | 固定身份 / 许可 | 精读范围与用途 |
+|---|---|---|
+| Zhu et al., [Periodic Weak Spots: Phase Sensitivity from Chunked KV-Cache Compression](https://arxiv.org/abs/2609.36322v1) | arXiv `2609.36322v1`，提交 2026-09-28 21:54 UTC；PDF 首页标 2026-09-30；arXiv 版本页链接 CC BY 4.0；预印本 | 官方 arXiv PDF：§§1–2、Fig. 1–2、Table 7、Appendix B–C；§3.2、Fig. 3、Table 8、Appendix F；§4.1–4.2、Figs. 4–5、Appendix E/G–H。结果支持压缩 stride 与周期敏感性相关；对生产 DeepSeek 模型的结果是作者报告，受控因果机制证据来自 Qwen3-0.6B 派生模型与有限 head/layer 干预。 |
+
+- ByteDance Seed 官方论文页确认题名、作者列表、2026-09-28 发布日期与摘要：[Seed publication page](https://seed.bytedance.com/en/public_papers/periodic-weak-spots-phase-sensitivity-from-chunked-kv-cache-compression)。作者单位脚注表明核心贡献者在 ByteDance Seed 实习；合作作者亦来自 Princeton、Stanford 与 UC Berkeley。
+- 工具使用记录：本文所在批次的过程说明报告调用了 Researcher deep 和 PaperFetcher `fetch 2609.36322 --citations`；但仓库没有保存二者的原始输出或调用日志，故工具执行本身无法由当前留档独立审计。本次定向复核直接查看官方 arXiv 版本页、PDF 与 Seed 页面，核实题名、作者、v1 提交时间、PDF 日期及许可证；这只能复核元数据和原文主张，不能充当 Researcher/PaperFetcher 的执行凭证。PaperFetcher 元数据一致性目前仍是过程记录中的报告结果。
+- `/Users/zhoucanzong/Documents/paper-cache` 未找到该 ID 对应文件；未复制论文全文进仓库。本文阅读了 PDF 的主文 §1–5 与相关附录 C、E、F、G、H；没有从头运行 100B-token 训练或重跑 DeepSeek/NIAH 评测。
+- Claim audit：人工逐项核对精读中的 **8 个数值主张簇**。取数方式是数 `deepseek-phase-sensitivity.md`「可复查锚点」表编号 1–8 的数据行（每行按一个 claim cluster 计；不把行内拆成多个 claim，也不把年份/型号编号计入）；8 行均指向固定 PDF 锚点。第 8 行区分 Fig. 3 所示 75.3 pp 与 Table 8 完整压缩扫描最高 78 pp；DeepSeek-V4 的干预锚点区分整层 attention-output replacement 与受控模型的逐 KV-head knockout。该数不是全文自动扫描统计。未运行作者训练或推理代码，也未独立复现实验。

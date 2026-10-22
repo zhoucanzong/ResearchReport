@@ -470,6 +470,7 @@ Mistral 在多语言支持上的投入是其区别于美国实验室的核心能
 | # | 来源 | 时间 | 内容 |
 |---|------|------|------|
 | 24 | Intuition Labs: Mistral Large 3 Explained | 2025-11 | 架构、训练、多模态深度分析 |
+
 | 25 | FutureAGI: Best LLMs March 2026 | 2026-05 | Small 4 效率分析 |
 | 26 | aimadetools: Devstral 2 Guide | 2026-04 | SWE-Bench 72.2%，Claude Opus 对比 |
 | 27 | ChatForest: Voxtral Review | 2026-05 | 语音理解基准，Whisper 对比 |
@@ -493,3 +494,9 @@ Mistral 在多语言支持上的投入是其区别于美国实验室的核心能
 ---
 
 > **报告说明**：本报告所有技术细节均来自 Mistral AI 公开发布的论文、官方博客、GitHub 仓库、HuggingFace 模型卡及 API 文档。2023–2024 年早期部分模型未公布完整技术报告，对应章节综合自官方公告、平台 API 文档与第三方权威分析。商业与融资数据综合自 Sacra、TechCrunch、VentureBeat、Reuters 等权威商业媒体。2025–2026 年部分新模型信息基于官方发布与第三方技术评测交叉验证。
+
+## 新鲜度补核（截至 2026-10-23）：Mistral Large 4 与 Voxtral 3
+
+报告原有模型时间线截至 2026 年中，现补入两项 10 月更新。**Mistral Large 4** 于 2026-10-06 进入公开预览，官方称其为原生多模态 MoE、总参数 1T / 激活 52B；后续完整架构、后训练方法及更多基准尚待权重发布时补充，因此不把现阶段发布页的比较结论当作独立复现。官方页面提供一些任务结果，例如 AutomationBench 657 项工作流上的 59.9% 及 AA-Briefcase 1,393 Elo；这些是厂商发布的评测结果，须与后续技术文档的评测设置一并阅读。**Voxtral 3** 的模型页标注 2026-10-20，包含离线/实时转写及 TTS 模型：实时转写模型页列出 80–2,400 ms 可配置延迟、端点检测、上下文偏置与说话人分离；但端点检测与说话人分离不能在同一个实时会话中同时启用。TTS 模型页列出 9 种语言、流式合成及约 90 ms 首音频延迟；这是该模型页的口径，Voxtral 3 发布页另将 TTS 支持范围概括为 35+ 种语言与 50+ 种方言。此处记录为厂商公布的模型能力与评测，不据此推导跨产品总体排名。
+
+来源与锚点：Mistral，[Introducing Mistral Large 4](https://mistral.ai/news/mistral-large-4/)，2026-10-06，“Capabilities deep-dive / Agentic Workflows”“we will share further details”段；[Mistral Large 4 Model Card](https://docs.mistral.ai/models/mistral-large-4)（后续更新应固定版本）。Mistral，[Voxtral 3](https://mistral.ai/news/voxtral-3/)，2026-10-20；官方文档 [Voxtral Mini Transcribe Realtime 3](https://docs.mistral.ai/models/voxtral-mini-transcribe-realtime-3-0) 与 [Voxtral Mini TTS 3](https://docs.mistral.ai/models/voxtral-mini-tts-3-0)，模型卡页面发布日期与相应功能段。技术报告是否公开、Large 4 权重发布后的最终结构与完整评测均未在本轮核实。

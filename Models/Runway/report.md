@@ -1,6 +1,6 @@
 # Runway 视频生成与编辑模型研究报告
 
-> 原报告日期：2026-06-06；证据修订：2026-10-22。范围保留 Gen-1 至 Gen-4.5；产品功能、论文方法和平台编排分别取证，不把版本号直接解释为网络架构。
+> 原报告日期：2026-06-06；证据复核：2026-10-23。范围保留 Gen-1 至 Gen-4.5，并补入 2026 年实时生成研究；产品功能、论文方法和平台编排分别取证，不把版本号直接解释为网络架构。
 
 ## 1. 执行摘要
 
@@ -61,29 +61,37 @@ Gen-4.5 发布页介绍预训练数据效率与后训练改进，并承认仍有
 
 **架构仍未知的部分**包括：Gen-2 具体初始化 checkpoint、Gen-3/4/4.5 去噪主干细节、VAE 时间压缩、条件调制、外部记忆与音频联合路径。平台存在音频工具不能证明某个 Gen-4.5 请求同时生成音频波形；本次所读模型说明不足以支撑原稿的多模态 DiT 架构图，相关实现保持未知。
 
-## 6. 历史榜单、当前规格与平台编排
+## 6. 2026 实时视频：把全注意力生成器后训练为因果流式模型
 
-### 6.1 1,247 Elo 是有时间的榜单结果
+Runway 2026-09-10 的研究说明 [Towards Instant Video Generation](https://runway.com/news/research/towards-instant-video-generation) 披露了一条不同于一次生成完整视频的训练路径。作者称其从 Gen-4.5 等基础模型出发，将生成改为逐帧因果自回归；每一步以首帧和起始 caption 为条件，并保留已生成 latent 作为后续上下文，视频与音频解码器因果运行以便流式输出。该说明没有披露基础生成器的内部细节，也没有给出公开的端到端质量/延迟基准，因此这应视为 Runway 对后训练方法的披露，而非可独立复核的产品成绩。
+
+核心难点是自回归误差累积。报告将蒸馏拆成两个阶段：先进行 off-policy distribution-matching distillation，让 student 根据真实上下文学习并由冻结的双向 teacher 与 critic 提供监督；再进行 on-policy rollouts，让 student 在训练中消费自己的生成 latent，减少训练与推理上下文不匹配造成的漂移。作者还称逐步增加序列长度的课程优于从一开始固定使用长序列；长序列起训会使轨迹迅速偏离 teacher，监督目标随之失配。以上是有方法细节的研究说明，但没有公开消融表、训练规模、逐帧延迟或序列稳定性量化结果，不能据此声称已普遍解决实时长视频质量问题。
+
+这一结果说明完整时空注意力模型可以被后训练改造成因果逐帧生成器，并以 on-policy 蒸馏应对视频中的误差传播。它把生成目标从“离线完成单个片段”转向“低首帧延迟、可持续响应的交互流”，与 Gen-4.5 的一次性片段生成在时序任务和评测目标上不同。
+
+## 7. 历史榜单、当前规格与平台编排
+
+### 7.1 1,247 Elo 是有时间的榜单结果
 
 Gen-4.5 官方发布页给出 **2025-11-30** 的 Artificial Analysis Text-to-Video 榜单快照：Gen-4.5 1,247 Elo。它描述盲测成对人类偏好，分数属于该次榜单的候选集合与评审样本；本次没有重取每条原始投票或置信区间，不将它称为 2026.06 / 10 的当前成绩。[S5 Introduction、Evolution、How Gen-4.5 Compares]
 
 原稿的竞品近似 Elo 和星级表没有统一的评审协议，而且混用了 Kling 3.0 等别的版本，本轮撤回。Elo 也不是物理准确率或某个功能的绝对分数。
 
-### 6.2 当前公开规格不能拿拼接长度代替
+### 7.2 当前公开规格不能拿拼接长度代替
 
 实读帮助页列出 Gen-4.5 文本/图像到视频，**2–10 秒、720p、24/25 fps**等配置。因此，原稿“10–20 秒”“长形式多镜头完整支持”不能无条件保留。外接时间线、多段延长或后处理组合是另一个工作流，不能改称单次生成上限。[S6 Gen-4.5 spec details；2026-10-22 读取]
 
-### 6.3 平台能选择第三方模型，不等于 Gen-4.5 包含它们
+### 7.3 平台能选择第三方模型，不等于 Gen-4.5 包含它们
 
 Runway Agent 的当前官方帮助页确认可规划项目、选择不同模型、编辑时间线，视频有没有原生音频取决于所选模型。[S7] 这支持“平台编排模型与素材”，不支持原稿把 Sora/Kling/Veo/Hailuo/Seedance 列成 Gen-4.5 的网络子组件，也不能用当前平台页证明原稿所写 2025/2026 初已上线的全部集成。
 
-## 7. 复现与后续研究
+## 8. 复现与后续研究
 
-本轮全文读过旧主报告，以 `researcher` 的原文、实验条件和失效边界规范修订；通过 `paper-fetcher` 下载 Gen-1 论文，实读 §3.2–3.4、§4.2–4.3、表 S1。模型未开源的部分不补造源码行号，也不拿 DiT / Stable Video Diffusion 背景论文当产品实现证据。
+本轮全文读过旧主报告，以 `researcher` 的原文、实验条件和失效边界规范修订；通过 `paper-fetcher` 下载 Gen-1 论文，实读 §3.2–3.4、§4.2–4.3、表 S1；另逐节阅读实时生成研究说明。模型未开源的部分不补造源码行号，也不拿 DiT / Stable Video Diffusion 背景论文当产品实现证据。
 
 没有调用视频生成、账户内工具或独立人评。后续优先补 Gen-1 的完整训练配置、Gen-3 各控制功能的实际发布记录，以及固定提示下的 Gen-4 参考保持与 Gen-4.5 因果失败分类。长视频、音频、费用与吞吐都要逐具体接口记录，避免从功能组合推导架构或从服务队列估模型大小。
 
-## 8. 来源索引
+## 9. 来源索引
 
 - **S1** Esser et al. [Structure and Content-Guided Video Synthesis with Diffusion Models, 2302.03011v1](https://arxiv.org/abs/2302.03011v1)，2023-02-06。PDF 缓存位于仓库外 `paper-cache/research-audit-2026-10-22/models/runway-gen1/`；对应 HTML [原文](https://arxiv.org/html/2302.03011v1)。
 - **S2** [Gen-2 官方研究页](https://runway.com/research/gen-2)：读取模式说明与人评数字；当前页有论文历史结果，不能把页名当作独立实验协议。
@@ -92,3 +100,4 @@ Runway Agent 的当前官方帮助页确认可规划项目、选择不同模型�
 - **S5** [Gen-4.5 发布与研究说明](https://runway.com/research/introducing-runway-gen-4.5)，2025-12-01；读取榜单日期、训练/部署概述和 Limitations。
 - **S6** [Creating with Gen-4.5](https://help.runwayml.com/hc/en-us/articles/46974685288467-Creating-with-Gen-4-5)：读取规格表及输入工作流，动态文档访问日期 2026-10-22。
 - **S7** [Creating with Runway Agent](https://help.runwayml.com/hc/en-us/articles/51601639579667-Creating-with-Runway-Agent)：读取编排、视频/音频分工及结果不保证的说明，访问日期同上。
+- **S8** [Towards Instant Video Generation](https://runway.com/news/research/towards-instant-video-generation)：Runway Research，2026-09-10；实读全页，覆盖因果自回归改造、off-policy/on-policy 蒸馏、递增长度课程与尚未公开的评测细节。

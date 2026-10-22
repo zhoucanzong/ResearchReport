@@ -1,9 +1,9 @@
 # OpenAI GPT 系列模型深度调研报告
 
 > 调研对象：OpenAI 自 2018 年至 2026 年发布的 Generative Pre-trained Transformer（GPT）系列与 o-Reasoning 系列模型
-> 时间跨度：2018 年 6 月 ~ 2026 年 6 月
+> 时间跨度：2018 年 6 月 ~ 2026 年 10 月 23 日（本轮增补 §2.16）
 > 资料来源：OpenAI 论文（arXiv）、OpenAI 官方研究页（openai.com/research）、官方博客（openai.com/blog）、System Card、API 文档、第三方逆向分析与学界综述
-> 撰写日期：2026 年 6 月 5 日
+> 撰写日期：2026 年 6 月 5 日；证据修订：2026 年 10 月 23 日
 > 重要说明：OpenAI 自 GPT-4 起几乎完全闭源，**模型规模、架构、训练数据组成、对齐细节大量未公开**。本报告对 **可确认（Confirmed）**、**官方暗示（Implied）**、**社区推测（Speculated）** 三类信息做明确标注；任何带 *推测* 标签的内容均不作为权威结论。
 
 ---
@@ -11,10 +11,10 @@
 ## 目录
 
 - [1. 概述与时间线](#1-概述与时间线)
-- [2. 基座模型演进：GPT-1 → 2 → 3 → 4 → 4o → 4.1 → 5 → 5.5](#2-基座模型演进gpt-1--2--3--4--4o--41--5--55)
+- [2. 基座模型演进：GPT-1 → 2 → 3 → 4 → 4o → 4.1 → 5 → 5.5 → 6](#2-基座模型演进gpt-1--2--3--4--4o--41--5--55--6)
 - [3. 对齐技术演进：从 SFT 到 RLHF 到推理对齐](#3-对齐技术演进从-sft-到-rlhf-到推理对齐)
 - [4. 推理模型演进：o1 → o3 → o4-mini → GPT-5.5](#4-推理模型演进o1--o3--o4-mini--gpt-55)
-- [5. 其他重要产品更新（2025-08 ~ 2026-06）](#5-其他重要产品更新2025-08--2026-06)
+- [5. 其他重要产品更新（2025-08 ~ 2026-10）](#5-其他重要产品更新2025-08--2026-10)
 - [6. 多模态演进：GPT-4V → GPT-4o → Realtime → Sora → GPT-5.5](#6-多模态演进gpt-4v--gpt-4o--realtime--sora--gpt-55)
 - [7. 跨代技术演进分析](#7-跨代技术演进分析)
 - [8. 模型退役计划](#8-模型退役计划)
@@ -80,7 +80,11 @@ OpenAI 的 GPT 家族是过去八年大模型行业的主轴线。从 2018 年 1
 | 2026-05-14 | **Personal Finance Experience** | 产品 | ChatGPT 个人财务管理功能 |
 | 2026-06-02 | **Codex Sites** | 产品 | 网站构建插件，自然语言生成完整站点 |
 | 2026-06-27 | **GPT-4.5 退役** | 公告 | GPT-4.5 正式停用（预告） |
+| 2026-07-09 | **GPT-5.6** | 模型 | Sol / Terra / Luna 三档；官方系统卡公开安全评估，未披露参数与完整训练配方 |
 | 2026-08-26 | **o3 退役** | 公告 | o3 系列正式停用（预告） |
+| 2026-09-03 | **GPT-6 Astra** | 模型 | 面向复杂编码、研究、计算机使用和多步工作；官方发布系统卡与安全评估 |
+| 2026-09-29 | **GPT-6.1 Sol** | 模型 | GPT-6 Astra 系统卡附录记录本次更新的安全评估与防护 |
+| 2026-10-07 | **GPT-6 Sol / Luna** | 模型 | 更新系统卡；ChatGPT 版结合 Intelligent UI，模型结构仍未公开 |
 
 > 注：2025 年下半年起 OpenAI 进入「**多模型并行 + 路由**」节奏，official changelog 不再把每个新版本作为「新一代模型」单独命名，而是通过日期戳（如 `gpt-5-2025-11-xx`）滚动迭代。2026 年 4 月 GPT-5.5 发布标志着自 GPT-4.5 以来首次全新预训练基础模型。
 
@@ -94,7 +98,7 @@ OpenAI 的特殊性在于：
 
 ---
 
-## 2. 基座模型演进：GPT-1 → 2 → 3 → 4 → 4o → 4.1 → 5 → 5.5
+## 2. 基座模型演进：GPT-1 → 2 → 3 → 4 → 4o → 4.1 → 5 → 5.5 → 6
 
 ### 2.1 GPT-1（2018）：预训练 + 微调范式的奠基
 
@@ -311,6 +315,14 @@ GPT-5.5 是自 GPT-4.5（2025-04）以来 OpenAI 发布的**首个全新预训�
 
 ### 2.15 Scaling 路径的总览
 
+### 2.16 GPT-5.6 → GPT-6（2026-07–10）：型号谱系更新，架构仍未公开
+
+OpenAI 于 2026-07-09 发布 GPT-5.6 系列系统卡，列出 Sol、Terra、Luna 三个版本；2026-09-03 发布 GPT-6 Astra，后续于 2026-09-29 发布 GPT-6.1 Sol 的系统卡附录，并在 2026-10-07 更新 GPT-6 Sol 与 Luna 的系统卡。官方材料把新一代能力定位在编码、研究、计算机使用、多步工作及安全评估上。ChatGPT 的 GPT-6 产品公告另介绍 Intelligent UI 与流式回答体验，这些属于产品交互能力，不能据此推断模型层的多模态架构。
+
+**可用于技术比较的证据**：GPT-6 Astra 系统卡及其附录提供部署前安全评估；GPT-6 Sol / Luna 更新记录安全评估与防护，GPT-5.6 系统卡则明确对应三档模型。当前公开材料没有给出参数量、专家数、预训练语料组成、完整后训练配方或统一底座/路由器实现，因此本报告不把这些内容外推为架构事实，也不以产品公告中的性能描述代替受控基准比较。
+
+**一手来源**：[GPT-5.6 系统卡](https://deploymentsafety.openai.com/gpt-5-6)、[GPT-6 Astra 系统卡](https://deploymentsafety.openai.com/gpt-6-astra)、[GPT-6.1 Sol 附录](https://deploymentsafety.openai.com/gpt-6-1-sol)、[GPT-6 Sol / Luna 更新](https://deploymentsafety.openai.com/gpt-6-october)、[GPT-6 产品公告](https://openai.com/index/gpt-6-for-everyone/)。本次核对日期：2026-10-23。
+
 把上述参数 / 数据 / 算力放在同一张表，能看到 OpenAI 公开 vs 不公开的清晰断裂：
 
 | 模型 | 年份 | 参数（M=百万，B=十亿） | 训练 token | 训练算力 (FLOPs) | 数据来源 | 公开级别 |
@@ -449,7 +461,7 @@ o3 在 o1 公开三个月后亮相，定位是 **next generation reasoning model
 
 ---
 
-## 5. 其他重要产品更新（2025-08 ~ 2026-06）
+## 5. 其他重要产品更新（2025-08 ~ 2026-10）
 
 ### 5.1 专用模型系列
 
@@ -753,6 +765,8 @@ OpenAI 于 2026 年 2 月 13 日公布首批大规模模型退役时间表，标
 52. Epoch AI Frontier Math 评测、ARC-AGI 公共榜单（2024-2025）。
 53. SWE-bench Verified、Aider Polyglot、GPQA Diamond 等学术 / 社区评测榜单（2023-2025）。
 54. SemiAnalysis (Dylan Patel) 关于 GPT-5.5 架构与定价分析（博客文章，2026-04）。
+55. OpenAI. [*GPT-5.6 System Card*](https://deploymentsafety.openai.com/gpt-5-6)，2026-07-09；[*GPT-6 Astra System Card*](https://deploymentsafety.openai.com/gpt-6-astra)，2026-09-03；[*GPT-6.1 Sol System Card Addendum*](https://deploymentsafety.openai.com/gpt-6-1-sol)，2026-09-29；[*GPT-6 Sol and GPT-6 Luna: October 2026 update*](https://deploymentsafety.openai.com/gpt-6-october)，2026-10-07；目录核查日 2026-10-23。
+56. OpenAI. *GPT-6 and Intelligent UI for everyone*，2026-10-07. [官方发布](https://openai.com/index/gpt-6-for-everyone/)。
 
 ---
 

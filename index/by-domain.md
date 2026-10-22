@@ -22,6 +22,12 @@
 | [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) | 单细胞扰动预测：从“配对细胞”转向“群体响应” | research | 2026-10-23 | completed |
 | [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) | AI 天气与气候预测：从天气状态外推到强迫响应 | research | 2026-10-23 | completed |
 
+## Evaluation (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) | 评测科学：分数何时支持“模型更好”或“能力泛化” | research | 2026-10-23 | current |
+
 ## Infra (3)
 
 | 条目 | 标题 | type | date | status |
@@ -30,7 +36,7 @@
 | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-22 | needs-review |
 | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 大模型训练基础设施与分布式训练研究报告 | topic-research | 2026-10-22 | needs-review |
 
-## LLM (8)
+## LLM (9)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
@@ -41,6 +47,7 @@
 | [LLM/MoE/report.md](<../LLM/MoE/report.md>) | 混合专家模型（Mixture of Experts, MoE）架构演进研究报告 | — | — | — |
 | [LLM/RAG/report.md](<../LLM/RAG/report.md>) | 检索增强生成（Retrieval-Augmented Generation, RAG）技术研究报告 | — | — | — |
 | [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) | 推理模型（Reasoning Models）与 Test-Time Compute 研究报告 | — | — | — |
+| [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | LLM 后训练中的强化学习：轨迹从哪里来，策略何时更新 | research | 2026-10-23 | current |
 | [LLM/VLM/report.md](<../LLM/VLM/report.md>) | 多模态大模型（Vision-Language Models, VLM）研究报告 | — | — | — |
 
 ## Models (23)
@@ -59,7 +66,7 @@
 | [Models/Grok/report.md](<../Models/Grok/report.md>) | xAI Grok 系列模型深度调研报告 | — | — | — |
 | [Models/Hunyuan/report.md](<../Models/Hunyuan/report.md>) | Hunyuan系列模型深度调研报告 | — | — | — |
 | [Models/Kimi/report.md](<../Models/Kimi/report.md>) | Kimi 系列模型深度调研报告 | — | — | — |
-| [Models/Kling/report.md](<../Models/Kling/report.md>) | 快手可灵（Kling）视频生成模型系列研究报告 | — | — | — |
+| [Models/Kling/report.md](<../Models/Kling/report.md>) | 快手 Kling 视频生成研究报告 | — | — | — |
 | [Models/LLaMA/report.md](<../Models/LLaMA/report.md>) | Meta LLaMA 系列大模型完整研究报告 | — | — | — |
 | [Models/MiMo/report.md](<../Models/MiMo/report.md>) | 小米 MiMo 系列模型深度调研报告 | — | — | — |
 | [Models/Midjourney/report.md](<../Models/Midjourney/report.md>) | Midjourney 模型与产品演进研究报告 | — | — | — |

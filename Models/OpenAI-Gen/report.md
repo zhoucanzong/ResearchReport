@@ -1,7 +1,7 @@
 # OpenAI 生成模型系列研究报告
 
-> **报告日期**：2026年6月6日  
-> **研究范围**：DALL-E → DALL-E 2 → DALL-E 3 → GPT-4o Image Generation → Sora → Sora 2  
+> **原报告日期**：2026年6月6日；**证据复核**：2026年10月23日
+> **研究范围**：DALL-E → DALL-E 2 → DALL-E 3 → GPT-4o Image Generation / ChatGPT Images 2.x → Sora → Sora 2
 > **核心主题**：架构演进 — 从自回归到扩散，再到原生图像能力与时空 diffusion Transformer
 
 ---
@@ -13,7 +13,7 @@
 3. [DALL-E](#3-dall-e-2021自回归图像生成)
 4. [DALL-E 2](#4-dall-e-2-2022clip--扩散模型)
 5. [DALL-E 3：caption 的证据](#5-dall-e-3-2023用详细-caption-改善提示遵循)
-6. [GPT-4o image 的公开边界](#6-gpt-4o-image-generation-2025原生图像生成与未知实现)
+6. [OpenAI 图像生成系统的后续边界](#6-gpt-4o-image-generation-2025原生图像生成与未知实现)
 7. [Sora 已披露的流程](#7-sora-2024已披露的表示与去噪流程)
 8. [Sora 2 与产品状态](#8-sora-2-2025能力发布与产品状态)
 9. [技术变量](#9-能比较与不能比较的技术变量)
@@ -247,6 +247,14 @@ GPT-4 的 prompt upsampling 是把用户/评测的简短提示扩写成详细文
 
 **失效边界**：同一发布页的 Limitations 包括裁剪、幻觉、密集对象的属性绑定、精确作图、多语言文字及编辑精度。这些是具体失败类别，不能把“可生成文字”扩大成“已解决文字渲染”。发布演示是作者选例，本次未进行独立固定提示集实验。
 
+### 6.1 ChatGPT Images 2.0 / 2.5：系统能力有进展，底层生成架构仍未公开
+
+OpenAI 的 [ChatGPT Images 2.0 System Card](https://deploymentsafety.openai.com/chatgpt-images-2-0/chatgpt-images-2-0.pdf)（2026-04-21）把 Thinking mode 描述为在图像生成流程中加入推理与工具调用，可整合实时网页搜索、一次提示生成多张图，并调用 reasoning stack。这说明产品系统能以工具与推理编排扩展生成工作流；它不等同于披露了图像模型的网络架构，也不能证明这些步骤是生成器内部的联合训练目标。
+
+[Images 2.5 System Card](https://deploymentsafety.openai.com/chatgpt-images-2-5/safety-evaluations)（2026-09-08）称 GPT-Image-2.5-Sunburst 与 Flare 使用公开网络、第三方合作及用户/研究人员提供或生成的数据，并描述数据过滤和图像安全评测；没有公开生成器结构、训练配方或可复现的图像质量对照。发布页所称编辑一致性和延迟改善属于产品方描述，本报告不把它们写成已验证的架构进步。
+
+因此，公开证据支持将 2.0 的 Thinking mode 视为**生成系统的推理/工具编排变化**，将 2.5 的模型内部机制继续标为未知。2.5 System Card 的对抗安全测试衡量的是安全栈拦截与残余风险，不是生成质量或模型能力的受控比较。
+
 ## 7. Sora (2024)：已披露的表示与去噪流程
 
 [2024-02-15 技术说明](https://openai.com/index/video-generation-models-as-world-simulators/) 明确披露：压缩网络降低视频时空维度，再切成 spacetime patches；Transformer diffusion model 在这些表示上去噪，支持不同分辨率、时长、宽高比，且能联合训练图像和视频。其压缩网络的细节与变分训练目标未公开，不能自动把它指定成某个 3D VAE 配方。
@@ -299,7 +307,7 @@ GPT-4 的 prompt upsampling 是把用户/评测的简短提示扩写成详细文
 
 ## 12. 局限性与来源偏见
 
-本报告以模型开发者论文、技术说明和公告为主要证据。本轮核读了 DALL-E 3 原文的 §1–§5 及关键表，Sora 的表示/条件/Discussion 章节，以及 GPT-4o image 和 Sora 2 公告；没有运行图像、视频或人评复现实验。作者选例与自建评测存在来源偏向，涉及第三方的跨产品断言仍应独立复查。
+本报告以模型开发者论文、技术说明和公告为主要证据。本轮核读了 DALL-E 3 原文的 §1–§5 及关键表，Sora 的表示/条件/Discussion 章节，GPT-4o image 与 Sora 2 材料，以及 Images 2.0 / 2.5 System Card 的相关范围；没有运行图像、视频或人评复现实验。作者选例与自建评测存在来源偏向，涉及第三方的跨产品断言仍应独立复查。
 
 不能由当前研究方向推导某年必然达到实时视频、统一 3D 或计算成本降低 10 倍；这些没有实验条件的数值预测不保留为技术结论。后续可验证的问题是：同一任务下，控制表示、数据质量和推理预算后，各因素如何改变提示遵循及失败分布。
 
