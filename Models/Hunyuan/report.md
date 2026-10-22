@@ -330,7 +330,7 @@ Hunyuan 总平台
   1. **Hunyuan3D-DiT（形状）**：基于可扩展 **flow-based diffusion transformer**，输入条件图像，输出与之严格对齐的几何形状（mesh）；底层用 **ShapeVAE** 把 3D 几何压到 latent。
   2. **Hunyuan3D-Paint（纹理）**：基于强几何先验和扩散先验的纹理合成模型，可对生成或手工 mesh 涂上高分辨率纹理图。
 - **配套 Hunyuan3D-Studio**：面向专业/业余用户的端到端 3D 创作平台（修改、动画化、回退编辑）。
-- **后续**：2025 年陆续推出 2.1、2.5 版本以及 **FlashVDM**（高效 3D 推理框架，将传统 3D 流程从数周压缩到分钟级），并集成到 *Hunyuan3D Studio: End-to-End AI Pipeline for Game-Ready 3D*（arXiv:2509.12815）面向游戏资产管线。
+- **后续**：Hunyuan3D 2.1/2.5 之后，Tencent 于 2025-09-16 提交了 *Hunyuan3D Studio* 技术报告（arXiv `2509.12815v1`）。该文描述从概念图到游戏可用资产的集成流程，包含可控图像生成、高保真几何、部件级生成、低多边形建模、Semantic UV、纹理和动画模块（§2）。该固定版本未提到 FlashVDM，也没有“数周到数分钟”的计时，因此不把该时间收益挂在这篇论文名下；见[来源清单](sources/MANIFEST.md)。
 
 ### 5.3 HunyuanWorld 1.0 / 1.5：3D 世界与可交互场景
 
@@ -436,7 +436,7 @@ Hunyuan 总平台
    - Selective and Sliding Tile Attention 在视频 DiT 中剪枝时空 KV 块，使 8.3B 模型即可达到原 13B 体验，是开源视频部署的工程拐点。
 
 7. **Hunyuan3D 2.0 的 "Shape-DiT + Texture-Paint" 解耦**
-   - 把"几何"与"纹理"作为两个独立可扩展的扩散问题分别训练，配合 ShapeVAE，使 3D 生成像 SD 一样可工业化迭代；FlashVDM 把生成时间从周→分钟。
+   - 把"几何"与"纹理"作为两个独立可扩展的扩散问题分别训练，配合 ShapeVAE；后续 Studio 报告扩展到从概念图到游戏资产的多个生产阶段，但本报告未核验端到端耗时。
 
 8. **HunyuanWorld：3D 世界 + 可交互**
    - 站在 Hunyuan3D + HunyuanVideo 的肩膀上，把生成内容从"图/视频/资产"推到"可游玩 3D 世界"。

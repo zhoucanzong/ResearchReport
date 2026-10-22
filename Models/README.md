@@ -60,7 +60,7 @@
 <details>
 <summary><b>Hunyuan</b>（1 份）</summary>
 
-* [sources/MANIFEST.md](<Hunyuan/sources/MANIFEST.md>) — 49 行 / 11,908 B
+* [sources/MANIFEST.md](<Hunyuan/sources/MANIFEST.md>) — 55 行 / 13,297 B
 
 </details>
 
