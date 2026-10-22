@@ -17,7 +17,7 @@
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 6 |
 | 条目子文档数 | 110 |
 | 条目正文行数（剔除 front-matter） | 27,196 |
-| 条目字节 | 1,885,157 B |
+| 条目字节 | 1,885,722 B |
 | 带 front-matter 的条目 | 9 |
 | 带合法 `date` 的条目 | 9 |
 | 文档（除生成物外的全部 `.md`） | 176 |
@@ -32,13 +32,13 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| Models | 23 | 35 | 12,623 | 895,579 B | [板块页 →](<Models/README.md>) |
+| Models | 23 | 35 | 12,623 | 896,144 B | [板块页 →](<Models/README.md>) |
 | LLM | 8 | 27 | 4,136 | 299,102 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,758 | 320,420 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 2 | 31 | 1,213 | 130,531 B | [板块页 →](<WorldModel/README.md>) |
 | Infra | 3 | 33 | 905 | 72,511 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 33 | 1,561 | 167,014 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **50** | **176** | **27,196** | **1,885,157 B** | — |
+| **合计** | **50** | **176** | **27,196** | **1,885,722 B** | — |
 
 ## 分面索引
 
@@ -185,11 +185,11 @@
   <summary><b>Hunyuan</b> · <code>Models/Hunyuan/report.md</code> · 501 行 · —</summary>
 
 
-    * **条目**：[Models/Hunyuan/report.md](<Models/Hunyuan/report.md>)（501 行 / 40,362 B）
+    * **条目**：[Models/Hunyuan/report.md](<Models/Hunyuan/report.md>)（501 行 / 40,927 B）
     * **专题目录**：`Models/Hunyuan`
     * **元数据**：type=`—` · domain=`Models` · subject=`Hunyuan` · date=`—` · status=`—`
     * **子文档（1）**
-        * [sources/MANIFEST.md](<Models/Hunyuan/sources/MANIFEST.md>) — 55 行 / 13,297 B
+        * [sources/MANIFEST.md](<Models/Hunyuan/sources/MANIFEST.md>) — 62 行 / 14,867 B
 
   </details>
 
@@ -802,7 +802,7 @@
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 91 | 3,889 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 166 | 9,280 B |
+| [README.md](<README.md>) |  | 166 | 9,264 B |
 | [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,616 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 67 | 3,895 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 86 | 6,458 B |

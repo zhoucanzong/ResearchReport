@@ -306,9 +306,9 @@ Hunyuan 总平台
 | **HunyuanPortrait** | 2025 | 隐式条件控制肖像动画，处理身份保真与表情同步 |
 | **HunyuanGameCraft** | arXiv:2506.17201 | 连续动作信号驱动的无限长游戏视频生成 |
 | **HunyuanVideo-Foley** | 2025.08 | 端到端视频→音效生成（Video-to-Audio） |
-| **HunyuanVideo-1.5** | 2025.11，HF | **8.3B 高效新基模**；引入 **SSTA（Selective and Sliding Tile Attention）** 剪枝冗余时空 KV 块，显著降部署门槛 |
+| **HunyuanVideo-1.5** | 2025.11，技术报告与 HF | **8.3B DiT**；SSTA 将动态选出的时空块与局部滑动窗口掩码结合，减少长序列注意力计算；作者在限定推理配置中报告了加速，见[技术报告 §3.1、§6](https://arxiv.org/abs/2511.18870v2) |
 
-> HunyuanVideo-1.5 把"通用视频生成"从 13B 时代压到 8B 级别，使消费级显存可用，成为腾讯视频家族新的"轻量主力"。
+> 技术报告的对照是 HunyuanVideo-1.5 自身启用与未启用稀疏注意力：10 秒、720p 文生视频、241 帧的 CFG 蒸馏模型，在 8 张 H800 上每步时间由 5.507 秒降至 2.9475 秒（约 1.87×，不含工程级加速；§6/Table 7）。这说明该设置下 SSTA 降低了推理时间；报告没有证明它与旧版 13B HunyuanVideo 达到相同生成质量，也不能把这组硬件结果直接外推为消费级 GPU 的速度。
 
 ---
 
@@ -433,7 +433,7 @@ Hunyuan 总平台
    - 文本 token 自回归、图像 latent 扩散；论文 v3 报告总参超过80B、每token激活13B。不同任务路径和 checkpoint revision 应分开核查，不据单个厂商自述给出跨模型规模排名。
 
 6. **HunyuanVideo-1.5 的 SSTA**
-   - Selective and Sliding Tile Attention 在视频 DiT 中剪枝时空 KV 块，使 8.3B 模型即可达到原 13B 体验，是开源视频部署的工程拐点。
+   - SSTA 把按块相似度/冗余度筛选出的注意力区域与局部滑动窗口结合；论文在 8×H800 的 10 秒 720p T2V 设置中报告相对 FlashAttention-3 约 1.87× 的端到端加速。它支持“特定配置下降低推理耗时”，不支持与旧版 13B 模型质量等同的结论。
 
 7. **Hunyuan3D 2.0 的 "Shape-DiT + Texture-Paint" 解耦**
    - 把"几何"与"纹理"作为两个独立可扩展的扩散问题分别训练，配合 ShapeVAE；后续 Studio 报告扩展到从概念图到游戏资产的多个生产阶段，但本报告未核验端到端耗时。

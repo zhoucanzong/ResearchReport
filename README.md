@@ -100,11 +100,11 @@
 <!-- SCRIPT:recent START · 报告日期优先，缺失时回退最近提交日 -->
 | 日期 | 阅读条目 | 板块 |
 | :-- | :-- | :-- |
+| 2026-10-23 | [Hunyuan](<Models/Hunyuan/report.md>) | Models |
 | 2026-10-22 | [QuantizationEdge](<Infra/QuantizationEdge/report.md>) | Infra |
 | 2026-10-22 | [SpeculativeDecoding](<Infra/SpeculativeDecoding/report.md>) | Infra |
 | 2026-10-22 | [TrainingInfra](<Infra/TrainingInfra/report.md>) | Infra |
 | 2026-10-22 | [DeepInfer](<OpenSource/DeepInfer/report.md>) | OpenSource |
-| 2026-10-22 | [WorldModels](<WorldModel/WorldModels/report.md>) | WorldModel |
 <!-- SCRIPT:recent END -->
 
 [查看全部更新 →](index/recent.md)
