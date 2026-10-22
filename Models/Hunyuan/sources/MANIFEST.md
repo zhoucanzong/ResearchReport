@@ -1,6 +1,6 @@
 # Hunyuan source manifest
 
-核查截止：2026-10-22（Asia/Shanghai）。本清单覆盖 Hunyuan-Large 的 KV/计算估算和 Hunyuan-A13B 的参数、上下文与部署证据；不代表全系列核验通过。
+核查截止：2026-10-22（Asia/Shanghai）。本清单覆盖 Hunyuan-Large 的 KV/计算估算、Hunyuan-A13B 的参数/上下文/部署证据，以及 Hunyuan-DiT 评测主张的一篇固定版本论文；不代表全系列核验通过。
 
 | Source | Pinned identity | Evidence location | Scope / boundary |
 |---|---|---|---|
@@ -9,6 +9,7 @@
 | [Hunyuan-A13B Technical Report](https://arxiv.org/abs/2609.27284v1) | arXiv `2609.27284v1`; first submitted 2026-09-23; PDF SHA-256 `2a559bd51425ae183081085412487b6cfadc27f44563c388b9204d8a87f39396` | §2.2, PDF p.2 and Table 1: total/active parameter counts, shared/routed experts and configuration. §2.3, PDF p.3: training stages and context expansion. Table 4, PDF p.7: author-reported benchmark results. | The PDF cover says 2025-06-27. This is distinct from the arXiv submission date. Author-reported results are not independent reproduction. |
 | [Official Tencent-Hunyuan/Hunyuan-A13B repository](https://github.com/Tencent-Hunyuan/Hunyuan-A13B/tree/2798f3c8b6a69e0ce93950b0d2417203cf950fa0) | Git commit `2798f3c8b6a69e0ce93950b0d2417203cf950fa0`; commit date 2025-07-08 | `README_CN.md` lines 52–66: 2025-06-26 release, parameter and architecture summary. Lines 698–701: BF16 deployment and long-context TP guidance. `report/Hunyuan_A13B_Technical_Report.pdf`, cover date 2025-06-26; SHA-256 `fb65faa6ead1de01ee59c9cdc1545dc04c3057f0ffcb32fdc10844b0fc02fac0`. | README and PDF are pinned to this repository commit. Deployment guidance is Tencent's documented configuration, not a universal minimum. |
 | [Hunyuan-A13B-Instruct model card](https://huggingface.co/tencent/Hunyuan-A13B-Instruct/tree/290ddb9a56ed23c2c83a1c8081533e58925df952) | Model ID `tencent/Hunyuan-A13B-Instruct`; revision `290ddb9a56ed23c2c83a1c8081533e58925df952`; API `lastModified` 2025-08-21; README blob `50c823d10bf81573000a96165590f00590067eb3`; `config.json` blob `c22b9f34610031b2b5caa8a149e30650b64196ef` | README lines 41–44, 319–349: vendor claims max 262,144 context; config default is 32,768 and README gives a manual extension procedure and 4×H20 96GB BF16 recommendation. Config fields include 32 layers, 32 attention heads, 8 KV heads, 64 experts, and one shared expert per layer. | Current retrieved revision is not evidence that benchmark scores in the paper were produced by this exact revision; the report does not map every score to a checkpoint hash. Context support and deployment config are vendor documentation, not independent long-context validation. |
+| [Hunyuan-DiT Technical Report](https://arxiv.org/abs/2405.08748v1) | arXiv `2405.08748v1`; submitted 2024-05-14 16:33:25 UTC; PDF transfer stalled at 0 bytes on 2026-10-22, so no PDF SHA is recorded | arXiv HTML v1, §3.1–3.3 and §4.1/Table 1; Appendix A/Table 2. | The paper reports >50 evaluators and >3,000 prompts. Table 1’s comparison open models are Playground 2.5, PixArt-α and SDXL; SD 3 is marked closed-source and Stable Cascade is absent. Hunyuan-DiT is best across the four rubric dimensions among the three listed open comparators, but its overall pass rate is 59.0%, third among seven table rows. Table 2 states the 10% multi-turn weight is reserved for internal evaluation and excluded from the cross-model SOTA comparison. Competitor weight/API revisions are not pinned; no independent evaluation. |
 
 ## Claim decisions in this batch
 
@@ -26,3 +27,11 @@ Cross-family superiority/exclusivity claims remain open. No full-series refresh 
 - Verified the `nearly 95%` arithmetic from Table 2: for the paper settings, `(2 × n_g)/(4 × n_h) = (2 × 8)/(4 × 80) = 5%` of the MHA BF16 KV tensor bytes. Narrowed the wording to that tensor comparison and baseline.
 - Preserved Eq. (2) but defined `N` and `D`, and stated the paper’s scaling-fit range and extrapolated `58.1B / 5.6T` estimate separately from the selected `52B / ~7T` model. Do not treat the equation as a hardware-specific runtime estimate.
 - Paper/report source is fixed at arXiv v3; checkpoint/repository identities are recorded separately and were not used to validate benchmark scores.
+
+## Hunyuan-DiT evaluation-claim correction (2026-10-22 batch)
+
+- Fixed source at arXiv `2405.08748v1` (submitted 2024-05-14); the source PDF download via paper-fetcher stalled at 0 bytes, so the review used the official arXiv HTML for the same fixed version. The paper metadata identifies the HunyuanDiT GitHub project, but this batch did not pin its code/weight revision.
+- Retained only the paper-bounded claim: on the authors' Chinese text-to-image human protocol, Hunyuan-DiT scores highest among the three listed open comparators (Playground 2.5, PixArt-α, SDXL) across the four reported dimensions. Table 1's overall pass rate is 59.0%, third among all seven table rows; DALL·E 3 and MidJourney v6 score higher.
+- Corrected prior wording that classified SD 3 as open-source and said Stable Cascade was included in this evaluation. Table 1 marks SD 3 closed and does not list Stable Cascade.
+- Added the comparison scope: >50 evaluators, >3,000 prompts, four rubric dimensions, per-prompt multi-rater pass rates with category aggregation; the comparison weights exclude the 10% multi-turn category reserved for internal evaluation.
+- The result remains author-reported. The paper does not pin competing weights/API revisions, and this batch did not reproduce the comparison. It does not establish current or universal T2I superiority.

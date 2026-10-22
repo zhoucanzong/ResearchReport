@@ -30,7 +30,7 @@
 |---|---|---|---|
 | 2023.09 | Hunyuan-LLM（闭源 1T MoE） | 语言 | 元宝/腾讯内部业务起家的旗舰 MoE LLM |
 | 2024.02 | Hunyuan trillion-parameter MoE 升级 | 语言 | Yuanbao 全面切换至 MoE 架构 |
-| 2024.05 | **Hunyuan-DiT** (arXiv:2405.08748) | 图像 | 中文原生 DiT 文生图，双语 CLIP+多语言 T5 |
+| 2024.05 | **Hunyuan-DiT** (arXiv:2405.08748v1) | 图像 | 中英文文本条件 DiT；多分辨率生成与多轮编辑 |
 | 2024.11 | **Hunyuan-Large** (arXiv:2411.02265) | 语言 | 389B 总参 / 52B 激活 MoE，开源最大 Transformer-MoE |
 | 2024.11 | Hunyuan3D 1.0 (arXiv:2411.02293) | 3D | 文/图到 3D 的统一两阶段框架 |
 | 2024.12 | **HunyuanVideo** (arXiv:2412.03603) | 视频 | 13B 双流→单流 DiT，3D Causal VAE，MLLM 文本编码 |
@@ -189,11 +189,11 @@ Hunyuan 总平台
 
 ## 3. 图像生成模型：Hunyuan-DiT 系列与 HunyuanImage
 
-### 3.1 Hunyuan-DiT：首个中文原生 DiT 文生图
+### 3.1 Hunyuan-DiT
 
-> 论文：*Hunyuan-DiT: A Powerful Multi-Resolution Diffusion Transformer with Fine-Grained Chinese Understanding*，arXiv:2405.08748，2024-05。
+> 论文：*Hunyuan-DiT: A Powerful Multi-Resolution Diffusion Transformer with Fine-Grained Chinese Understanding*，[arXiv 2405.08748v1](https://arxiv.org/abs/2405.08748v1)，首次提交 2024-05-14。模型权重/API revision 未在本批固定。
 
-- **定位**：首个开源、对中英双语都做精细理解的 Diffusion Transformer 文生图模型，是国内最早把 DiT（替代 UNet）的范式做成 SOTA 的中文 T2I。
+- **研究定位**：v1 提出面向中文与英文文本的多分辨率 Diffusion Transformer，并报告多轮对话编辑能力。论文支持“在其自建中文评测协议中领先所列开源对照”；不据此声称“首个双语开源 DiT”或“国内最早将 DiT 做成 SOTA”。
 - **架构骨架**：
   - **Backbone**：Diffusion Transformer，基于 SD3-style 设计但重写自适应层归一化与位置编码。
   - **VAE**：在潜空间压缩图像（沿用 SD-VAE 结构再训练）。
@@ -205,7 +205,7 @@ Hunyuan 总平台
   - 全自研图文数据管线，迭代清洗与重新生成 caption。
   - 训练专用 **多模态大模型 (MLLM) Captioner**：用于 caption refine，把短描述扩成层次化、多视角描述，显著提升细粒度语义对齐。
 - **多轮多模态对话**：在 Hunyuan-DiT 基础上加入 multi-turn dialog 微调，使模型能够基于上下文反复修改图像（"对话式生图"）。
-- **评估**：Tencent 组织的 50+ 专业评审 holistic evaluation，在中文文生图上设定了新 SOTA，超越 SD3、Stable Cascade、PixArt-α 等同期开源模型。
+- **评估协议与结果（作者报告）**：团队使用 50+ 名评审和 3,000+ 个提示词，按文本图像一致性、AI 瑕疵、主体清晰度、美学四维评分。按该文 Table 1 的所列开源对照（Playground 2.5、PixArt-α、SDXL），Hunyuan-DiT 四项分数均最高（74.2 / 74.3 / 95.4 / 86.6）；overall pass rate 为 59.0%，在表中全部七个模型里排第三，低于 DALL·E 3 的 71.0% 和 MidJourney v6 的 63.3%。用于“Comparison with SOTA”的权重仅覆盖表 2 中列出的类别（合计 90%）；多轮生成的 10% 权重只用于作者内部评测，不包含在该跨模型比较中。表 1 将 SD 3 归为闭源模型，Stable Cascade 未列入比较，因此不再写成“超越 SD3、Stable Cascade 等开源模型”。该结果受作者自建提示集、评审与聚合规则约束，且未将每个对照权重/API revision 固定到可复现身份。来源：[§3.1–3.3、§4.1 Table 1、Appendix A Table 2](https://arxiv.org/html/2405.08748v1)。
 - **开源生态**：GitHub 仓库 `Tencent-Hunyuan/HunyuanDiT`，集成至 Diffusers/ComfyUI/Replicate；后续社区在其基础上做 LoRA/ControlNet 等延伸。
 
 ### 3.2 HunyuanImage-2.1：高效 2K 文生图
@@ -456,8 +456,8 @@ Hunyuan 总平台
 | 3D | **Hunyuan3D 1/2/2.5 + Studio + World** | – | – | – | – |
 | VLM | Hunyuan-Vision-1.5（Mamba-T 混合）、HunyuanOCR | Qwen2.5-VL/Qwen3-VL | DeepSeek-VL2 | GLM-4V/4.5V | k1.5-vl |
 
-**差异化要点**：
-- **腾讯是国内开源全栈"宽度"最大**（语言 + 图 + 视频 + 3D + 世界 + OCR + V2A 全覆盖），在视频与 3D/世界两个维度上拥有最强的开源 SOTA。
+**差异化要点（研究归纳，非横评）**：
+- **当前报告覆盖语言、图像、视频、3D/世界、OCR 与 V2A**，体现了腾讯已公开研究方向的跨度；本报告没有对全市场覆盖率或各方向的同协议模型质量做完整盘点，故不据此声称“国内覆盖最宽”或“视频与 3D/世界最强 SOTA”。
 - **架构哲学上"押注 Mamba-Transformer 混合 + MoE"**，与 DeepSeek（纯 MoE+MLA）、Qwen（密集+MoE 双线）、Kimi（强 attention 注意力优化）形成路线分化。
 - **大量复用业务侧 LLM（Hunyuan-Large）当 caption/prompt rewriter**，把 LLM 的"语义先验"显式注入到生成模型，是其内容质量明显高于同等开源模型的工程秘密。
 - **腾讯把 3D 与世界生成单独立项**（Hunyuan3D Studio、HunyuanWorld、GameCraft），与游戏/广告/影视产业链高度绑定，这是其他几家暂未规模化覆盖的赛道。
@@ -469,7 +469,7 @@ Hunyuan 总平台
 > 论文与官方资源（按出现顺序）
 
 1. Tencent Hunyuan Team. *Hunyuan-Large: An Open-Source MoE Model with 52 Billion Activated Parameters by Tencent.* [arXiv:2411.02265v3](https://arxiv.org/abs/2411.02265v3), first submitted 2024-11-04; v3 updated 2024-11-06.
-2. Tencent Hunyuan Team. *Hunyuan-DiT: A Powerful Multi-Resolution Diffusion Transformer with Fine-Grained Chinese Understanding.* arXiv:2405.08748, 2024. https://arxiv.org/abs/2405.08748
+2. Tencent Hunyuan Team. *Hunyuan-DiT: A Powerful Multi-Resolution Diffusion Transformer with Fine-Grained Chinese Understanding.* arXiv:2405.08748v1, submitted 2024-05-14. https://arxiv.org/abs/2405.08748v1
 3. Hunyuan Foundation Model Team. *HunyuanVideo: A Systematic Framework For Large Video Generative Models.* arXiv:2412.03603, 2024. https://arxiv.org/abs/2412.03603
 4. Tencent Hunyuan 3D Team. *Hunyuan3D 1.0: A Unified Framework for Text-to-3D and Image-to-3D Generation.* arXiv:2411.02293, 2024. https://arxiv.org/abs/2411.02293
 5. Tencent Hunyuan 3D Team. *Hunyuan3D 2.0: Scaling Diffusion Models for High Resolution Textured 3D Assets Generation.* arXiv:2501.12202, 2025. https://arxiv.org/abs/2501.12202
