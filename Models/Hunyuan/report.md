@@ -45,12 +45,12 @@
 | 2025-06-26 | **Hunyuan-A13B** 权重及技术报告开放 | 语言 | 官方仓库当日公告开放 Pretrain、Instruct、FP8、GPTQ-Int4；后续 arXiv v1 于 2026-09-23 提交 |
 | 2025.07 | HunyuanWorld 1.0 | 3D 世界 | 首个开源交互式 3D 世界生成 |
 | 2025.09 | **HunyuanImage-2.1** | 图像 | 17B DiT，原生 2K，单/双流混合，Glyph-Aware |
-| 2025.09 | **HunyuanImage-3.0** (arXiv:2509.23951) | 图像 | 80B 原生多模态自回归生图，全球开源最大 T2I |
+| 2025-09-28 | **HunyuanImage-3.0**（base） | 图像 | 约 80B 总参 / 13B 每 token 激活；文本自回归、图像扩散的原生多模态混合架构 |
 | 2025.10 | **Hunyuan-Vision-1.5** | VLM | Mamba-Transformer 混合 VLM，A56B/4B，"Thinking on Image" |
 | 2025.11 | **HunyuanVideo-1.5** | 视频 | 8.3B 高效视频基模，SSTA 稀疏注意力 |
 | 2025.11 | **HunyuanOCR** (arXiv:2511.19575) | VLM-OCR | 1B 商用级开源 OCR-VLM |
 | 2025.12 | **混元 2.0** | 语言 | 推理能力与效率国内领先 |
-| 2026.01 | HunyuanImage-3.0-Instruct | 图像 | 推理增强 Prompt 与 Image-to-Image |
+| 2026-01-26 | HunyuanImage-3.0-Instruct / Instruct-Distil | 图像 | 独立衍生权重；推理增强与图像编辑 / 少步蒸馏 |
 | 2026.04 | **HY 2.0 Think** | 语言推理 | 深度推理旗舰，128K上下文，分段定价 |
 | 2026.04 | **HY 2.0 Instruct** | 语言 | 指令遵循旗舰 |
 
@@ -72,7 +72,7 @@ Hunyuan 总平台
 ├── 图像生成
 │   ├── Hunyuan-DiT (中文原生 DiT)
 │   ├── HunyuanImage-2.1 (17B DiT, 2K)
-│   └── HunyuanImage-3.0 (80B 多模态原生 AR)
+│   └── HunyuanImage-3.0 (约80B MoE；文本自回归 + 图像latent扩散)
 ├── 视频生成
 │   ├── HunyuanVideo (13B Dual→Single DiT)
 │   ├── HunyuanVideo-I2V / Avatar / Portrait / Custom / GameCraft / Foley
@@ -218,17 +218,18 @@ Hunyuan 总平台
   - **两阶段管线**：第 1 阶段 base T2I + 第 2 阶段 refine（双文本编码器联合）。
 - **意义**：是 Hunyuan-DiT 的工业级升级版，主打"高分辨率 + 文字 + 中文"三大刚需。
 
-### 3.3 HunyuanImage-3.0：首个开源 80B 原生多模态生图
+### 3.3 HunyuanImage-3.0：混合多模态生成架构
 
-> 技术报告：arXiv:2509.23951，2025-09。
+> 技术报告：arXiv `2509.23951v3`（v1 首次提交 2025-09-28；v3 更新 2026-06-26）。base 代码与权重于 2025-09-28 公布；Instruct 与 Instruct-Distil 分别于 2026-01-26 公告，具体 checkpoint 版本见[来源清单](sources/MANIFEST.md)。
 
-- **范式跃迁**：从扩散模型转向**原生多模态自回归（native multimodal autoregressive）**——把语言理解、图像理解、图像生成统一到一个 Decoder-only 的自回归框架内。
-- **规模**：800 亿（80B）参数，目前**全球最大开源、商用级原生多模态生图模型**。
+- **生成路径**：论文 v3 描述的是**混合离散—连续建模**：文本 token 采用自回归 next-token prediction，图像 latent 由扩散式预测生成，再与多模态序列交互。因此这是统一多模态架构中的混合生成，不是纯自回归图像生成。
+- **规模**：论文报告总参数**超过 80B**、推理时每 token 激活 **13B**；base 模型卡/代码仓库将总规模标作 80B。
+- **模型与版本**：base ID `tencent/HunyuanImage-3.0`，本次检查 HF revision `36f21fe74b65614451cc50ffd8a35a5f662dac70`（页面 `lastModified` 2026-01-28）；代码/README 固定到 `Tencent-Hunyuan/HunyuanImage-3.0@6e9113a692a27a0751d82aba3b2015a876646c03`（commit date 2026-06-23，2026-10-22 查询为 HEAD）。base 权重使用 Tencent Hunyuan Community License；Instruct 与 Instruct-Distil 是不同 checkpoint，官方公告日为 2026-01-26，HF revision 分别见来源清单。
 - **能力**：
   - 超长文本指令遵循（"长 prompt 不丢细节"）；
   - 与 HunyuanImage-3.0-Instruct（2026-01）扩展为推理增强提示与 Image-to-Image；
   - 自然支持图像理解 ↔ 生成的统一对话。
-- **意义**：与 Bagel、Janus-Pro、GPT-Image-1（闭源）一道，标志着 T2I 从"专用扩散"向"通用多模态 AR"的代际转换；HunyuanImage-3.0 是该转换的**最大开源代表**。
+- **研究解读**：它将理解与生成放入一个原生多模态模型序列，但图像生成模块仍使用扩散预测。arXiv v3 与官方仓库仍使用营销式体量/性能排名表述；本报告不把该排名当作独立结论，只保留可复核的结构、参数和版本信息。
 
 ### 3.4 图像生成模型对比
 
@@ -236,7 +237,7 @@ Hunyuan 总平台
 |---|---|---|---|---|
 | Hunyuan-DiT (2024.05) | Diffusion | DiT (UNet→Transformer) | 双语 CLIP + mT5-XXL | 中文原生、多分辨率、多轮对话生图 |
 | HunyuanImage-2.1 (2025.09) | Diffusion | Single+Dual Stream DiT | 多文本编码器 | 17B、2K 原生、Glyph-aware、高效 |
-| HunyuanImage-3.0 (2025.09) | Autoregressive | 80B Native MM AR | 内置 LLM | 统一理解+生成、超长 prompt |
+| HunyuanImage-3.0 (2025.09) | Hybrid native multimodal | 论文报告 >80B MoE；文本自回归 + 图像latent扩散 | 内置 Hunyuan-A13B base | 统一理解+生成 |
 
 ---
 
@@ -394,7 +395,7 @@ Hunyuan 总平台
 
 - **生成线（生成像素/几何）**：Hunyuan-DiT → HunyuanImage-2.1/3.0 → HunyuanVideo → Hunyuan3D → HunyuanWorld；
 - **理解线**：Hunyuan-VL → Hunyuan-Vision-1.5 → HunyuanOCR；
-- **理解 ↔ 生成 融合点**：HunyuanImage-3.0 把"生图"塞进自回归多模态 LLM 里，Hunyuan-Vision-1.5 把"生图编辑动作"作为推理工具，二者从两个方向收敛到统一多模态智能体。
+- **理解 ↔ 生成 融合点**：HunyuanImage-3.0 在原生多模态 backbone 中结合自回归文本与扩散图像生成；Hunyuan-Vision-1.5 则把“生图编辑动作”作为推理工具。两者是不同的多模态整合路径。
 
 ### 8.2 时间维度上的三个阶段
 
@@ -407,7 +408,7 @@ Hunyuan 总平台
 
 ### 8.3 与 LLM、生成线的相互增强
 
-- **LLM → 生成**：Hunyuan-Large 作为 caption/prompt 重写器、HunyuanImage-3.0 把 LLM 直接变 T2I 主体；
+- **LLM → 生成**：报告记录 Hunyuan-Large 用于 caption/prompt 重写；HunyuanImage-3.0 则将文本自回归建模与图像扩散预测整合进原生多模态序列；
 - **生成 → LLM**：HunyuanVideo 的多模态结构启发了 Vision-1.5 的"图像思考"行为；MLLM Captioner 在视频/图像数据上获得的细粒度对齐，又反哺 LLM 的视觉指令训练。
 
 ---
@@ -428,8 +429,8 @@ Hunyuan 总平台
 4. **HunyuanVideo 的"Dual→Single Stream DiT + Causal 3D VAE + MLLM 文本编码 + 3D RoPE + Full Attention"五件套**
    - 是开源视频生成最完整的工程报告之一，被广泛复用（HunyuanImage-2.1、社区微调如 SkyReels）。
 
-5. **HunyuanImage-3.0 的"原生多模态 AR 80B"**
-   - 全球首个开源 80B 原生多模态 T2I，标志着 T2I 从"扩散专用"向"多模态 LLM 一体化"的代际转换。
+5. **HunyuanImage-3.0 的原生多模态混合生成**
+   - 文本 token 自回归、图像 latent 扩散；论文 v3 报告总参超过80B、每token激活13B。不同任务路径和 checkpoint revision 应分开核查，不据单个厂商自述给出跨模型规模排名。
 
 6. **HunyuanVideo-1.5 的 SSTA**
    - Selective and Sliding Tile Attention 在视频 DiT 中剪枝时空 KV 块，使 8.3B 模型即可达到原 13B 体验，是开源视频部署的工程拐点。
@@ -451,7 +452,7 @@ Hunyuan 总平台
 |---|---|---|---|---|---|
 | LLM 旗舰路线 | Trillion MoE 起家 → Large/A13B 双开源 | Qwen2.5/3 + Qwen3-MoE | V2/V3/R1 强稀疏 MoE | GLM-4 / GLM-4.5 | K1.5 长上下文 |
 | 推理模型 | T1 + TurboS（**Mamba-Transformer 混合**） | QwQ / Qwen3-Thinking | R1 / R1-Distill | GLM-Z1 | k1.5/k2-thinking |
-| 文生图 | Hunyuan-DiT、HunyuanImage-2.1/3.0（**80B 原生 AR**） | Wan-Image、Qwen-Image | Janus-Pro | CogView-3 | – |
+| 文生图 | Hunyuan-DiT、HunyuanImage-2.1/3.0（3.0为文本自回归 + 图像latent扩散的多模态混合架构） | Wan-Image、Qwen-Image | Janus-Pro | CogView-3 | – |
 | 视频 | **HunyuanVideo（开源 13B）+ 1.5（8B 高效）+ Avatar/I2V/GameCraft** | Wan2.1/2.2 | – | CogVideoX | – |
 | 3D | **Hunyuan3D 1/2/2.5 + Studio + World** | – | – | – | – |
 | VLM | Hunyuan-Vision-1.5（Mamba-T 混合）、HunyuanOCR | Qwen2.5-VL/Qwen3-VL | DeepSeek-VL2 | GLM-4V/4.5V | k1.5-vl |
@@ -474,7 +475,7 @@ Hunyuan 总平台
 4. Tencent Hunyuan 3D Team. *Hunyuan3D 1.0: A Unified Framework for Text-to-3D and Image-to-3D Generation.* arXiv:2411.02293, 2024. https://arxiv.org/abs/2411.02293
 5. Tencent Hunyuan 3D Team. *Hunyuan3D 2.0: Scaling Diffusion Models for High Resolution Textured 3D Assets Generation.* arXiv:2501.12202, 2025. https://arxiv.org/abs/2501.12202
 6. Tencent Hunyuan Team. *Hunyuan-TurboS: Advancing Large Language Models through Mamba-Transformer Synergy and Adaptive Chain-of-Thought.* arXiv:2505.15431, 2025. https://arxiv.org/abs/2505.15431
-7. Tencent Hunyuan Team. *HunyuanImage 3.0 Technical Report.* arXiv:2509.23951, 2025. https://arxiv.org/abs/2509.23951
+7. Tencent Hunyuan Team. *HunyuanImage 3.0 Technical Report.* arXiv:2509.23951v3; v1 submitted 2025-09-28, v3 revised 2026-06-26. https://arxiv.org/abs/2509.23951v3
 8. Tencent Hunyuan Team. *HunyuanOCR Technical Report.* arXiv:2511.19575, 2025. https://arxiv.org/abs/2511.19575
 9. Tencent Hunyuan Team. *HunyuanVideo-Avatar: High-Fidelity Audio-Driven Human Video Generation.* arXiv:2505.20156, 2025.
 10. Tencent Hunyuan Team. *HunyuanCustom: A Multimodal-Driven Architecture for Customized Video Generation.* arXiv:2505.04512, 2025.
