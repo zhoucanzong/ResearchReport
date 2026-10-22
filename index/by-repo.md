@@ -7,6 +7,19 @@
 
 ---
 
+## AI4Science (10)
+
+* [AI4Science/AntibioticDiscovery/report.md](<../AI4Science/AntibioticDiscovery/report.md>) — 48 行
+* [AI4Science/Astronomy/report.md](<../AI4Science/Astronomy/report.md>) — 59 行
+* [AI4Science/AutonomousLabs/report.md](<../AI4Science/AutonomousLabs/report.md>) — 119 行
+* [AI4Science/Chemistry/report.md](<../AI4Science/Chemistry/report.md>) — 80 行
+* [AI4Science/MaterialsDiscovery/report.md](<../AI4Science/MaterialsDiscovery/report.md>) — 66 行
+* [AI4Science/MathematicalDiscovery/report.md](<../AI4Science/MathematicalDiscovery/report.md>) — 78 行
+* [AI4Science/Neuroscience/report.md](<../AI4Science/Neuroscience/report.md>) — 113 行
+* [AI4Science/ProteinDesign/report.md](<../AI4Science/ProteinDesign/report.md>) — 72 行
+* [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) — 87 行
+* [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) — 89 行
+
 ## Infra (3)
 
 * [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) — 188 行

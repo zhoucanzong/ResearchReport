@@ -7,6 +7,21 @@
 
 ---
 
+## AI4Science (10)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [AI4Science/AntibioticDiscovery/report.md](<../AI4Science/AntibioticDiscovery/report.md>) | AI 辅助小分子抗生素发现：从活性筛选到机制与动物模型 | research | 2026-10-23 | completed |
+| [AI4Science/Astronomy/report.md](<../AI4Science/Astronomy/report.md>) | 巡天星系图像中的 AI 异常发现：DECaLS 近 390 万目标案例 | research | 2026-10-23 | completed |
+| [AI4Science/AutonomousLabs/report.md](<../AI4Science/AutonomousLabs/report.md>) | 自主实验室：从自动化执行到科学闭环 | research | 2026-10-23 | completed |
+| [AI4Science/Chemistry/report.md](<../AI4Science/Chemistry/report.md>) | 化学反应条件优化：历史数据怎样帮助新底物少做实验 | research | 2026-10-23 | completed |
+| [AI4Science/MaterialsDiscovery/report.md](<../AI4Science/MaterialsDiscovery/report.md>) | 生成式材料设计：从晶体候选到实验验证 | research | 2026-10-23 | completed |
+| [AI4Science/MathematicalDiscovery/report.md](<../AI4Science/MathematicalDiscovery/report.md>) | 可验证的数学与算法发现：证明、程序搜索和方程恢复 | research | 2026-10-23 | completed |
+| [AI4Science/Neuroscience/report.md](<../AI4Science/Neuroscience/report.md>) | 神经活动到运动行为：跨记录会话的表征与解码 | research | 2026-10-23 | completed |
+| [AI4Science/ProteinDesign/report.md](<../AI4Science/ProteinDesign/report.md>) | 蛋白质 binder 发现：从复合物生成到候选筛选 | research | 2026-10-23 | completed |
+| [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) | 单细胞扰动预测：从“配对细胞”转向“群体响应” | research | 2026-10-23 | completed |
+| [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) | AI 天气与气候预测：从天气状态外推到强迫响应 | research | 2026-10-23 | completed |
+
 ## Infra (3)
 
 | 条目 | 标题 | type | date | status |

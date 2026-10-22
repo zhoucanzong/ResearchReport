@@ -98,10 +98,10 @@ ROOT_GROUP = "repository-root"
 ACTIVE_STATUSES = ("active", "current", "ok", "stable", "published")
 
 #: 资料库（含 `report.md` 条目的顶层目录）。顺序即展示顺序。
-#: 6 板块重排后：顶层目录即板块目录（Models / LLM / VisualGen / WorldModel / Infra / OpenSource）。
-PANEL_TOPS = ("Models", "LLM", "VisualGen", "WorldModel", "Infra", "OpenSource")
-#: 兼容旧名字（历史文案里仍叫「库」）。
-LIBRARIES = PANEL_TOPS
+#: 顶层板块目录在 ``main`` 中由 ``scripts/panels.json`` 推导，不在脚本中硬编码。
+PANEL_TOPS: tuple[str, ...] = ()
+#: 兼容旧字段名（历史文案里仍叫「库」）。
+LIBRARIES: tuple[str, ...] = ()
 
 
 def category_of(rel_path: str) -> str:
@@ -891,7 +891,8 @@ def render_index(docs: list, orphans: list, stats: dict, out_root: str, dry_run:
                 continue
             child_total = sum(len(d["children"]) for d in cat_entries)
             cat_cn = {"Models": "模型系列", "LLM": "语言模型", "VisualGen": "视觉生成",
-                      "WorldModel": "世界模型", "Infra": "基础设施", "OpenSource": "开源仓库"}.get(cat, cat)
+                      "WorldModel": "世界模型", "AI4Science": "科学研究",
+                      "Infra": "基础设施", "OpenSource": "开源仓库"}.get(cat, cat)
             lines += [
                 f"<details>",
                 f"<summary><b>{cat_cn} {cat}（{len(cat_entries)} 条目 / {child_total} 子文档）</b></summary>",
@@ -1124,6 +1125,8 @@ def load_panels(repo_root: str) -> dict:
         for key in ("match", "representatives"):
             if not isinstance(panel[key], list) or not panel[key]:
                 raise ConfigError(f"面板 {panel['id']} 的 `{key}` 必须是非空列表")
+        if "topic_index" in panel and not isinstance(panel["topic_index"], bool):
+            raise ConfigError(f"面板 {panel['id']} 的 `topic_index` 必须是布尔值")
 
     limit = cfg.get("recent_limit")
     if not isinstance(limit, int) or isinstance(limit, bool) or limit < 1:
@@ -1132,6 +1135,25 @@ def load_panels(repo_root: str) -> dict:
     if fallback not in ("none", "git"):
         raise ConfigError(f"date_fallback 只能是 `none` 或 `git`：{fallback!r}")
     return cfg
+
+
+def panel_top_dirs(cfg: dict) -> tuple[str, ...]:
+    """从板块匹配规则推导顶层目录，保证统计口径与 panels.json 同源。"""
+    roots = []
+    for panel in cfg["panels"]:
+        panel_roots = {pattern.replace(os.sep, "/").split("/", 1)[0]
+                       for pattern in panel["match"]}
+        if len(panel_roots) != 1:
+            raise ConfigError(
+                f"面板 {panel['id']} 的 match 必须落在同一个顶层目录：{sorted(panel_roots)}"
+            )
+        root = next(iter(panel_roots))
+        if any(ch in root for ch in "*?["):
+            raise ConfigError(f"面板 {panel['id']} 的顶层目录不能是 glob：{root}")
+        if root in roots:
+            raise ConfigError(f"多个面板映射到同一顶层目录：{root}")
+        roots.append(root)
+    return tuple(roots)
 
 
 def match_panels(entries: list, cfg: dict) -> tuple:
@@ -1272,13 +1294,15 @@ def last_commit_date(repo_root: str, fallback: _dt.date) -> _dt.date:
 
 
 
-def render_badges(stats: dict, topics: int, today: _dt.date, panels: int = 6) -> str:
+def render_badges(stats: dict, topics: int, today: _dt.date, panels: int | None = None) -> str:
     """GitHub 原生统计导航，不依赖远程徽章图片；保留旧调用签名。"""
+    if panels is None:
+        panels = stats.get("totals", {}).get("libraries", 0)
     items = [
         (stats["entries"]["total"], "主报告", "index/by-report.md"),
         (stats["entries"]["children"], "分册与子文档", "INDEX.md"),
         (topics, "技术专题", "index/by-topic.md"),
-        (panels, "研究板块", "#六个研究板块"),
+        (panels, "研究板块", "#研究板块"),
     ]
     return " &nbsp; · &nbsp; ".join(
         f"[**{count}** {label}]({target})" for count, label, target in items
@@ -1286,9 +1310,9 @@ def render_badges(stats: dict, topics: int, today: _dt.date, panels: int = 6) ->
 
 
 def render_structure_block(cfg: dict, mapping: dict, entries: list) -> str:
-    """图书馆结构树（代码块，GitHub 与站点都可读）：6 板块 + 计数 + 代表条目 + 生成管线。"""
-    topics = sum(1 for d in entries
-                 if d["top"] in ("LLM", "VisualGen", "WorldModel", "Infra"))
+    """图书馆结构树（代码块，GitHub 与站点都可读）：板块计数、代表条目与生成管线。"""
+    topic_ids = {p["id"] for p in cfg["panels"] if p.get("topic_index", False)}
+    topics = sum(1 for d in entries if mapping.get(d["path"], {}).get("id") in topic_ids)
     lines = [
         "```text",
         f"ResearchReport/    {len(entries)} 条目 · {topics} 专题 · {len(cfg['panels'])} 板块",
@@ -1343,7 +1367,8 @@ def render_panels_block(cfg: dict, mapping: dict, entries: list, label_limit: in
             by_panel.setdefault(panel["id"], []).append(doc)
     captions = {
         "models": "模型系列", "llm": "语言模型方法", "visualgen": "视觉与多模态",
-        "worldmodel": "世界模型与具身", "infra": "训练与推理系统", "opensource": "开源代码深读",
+        "worldmodel": "世界模型与具身", "ai4science": "科学研究应用",
+        "infra": "训练与推理系统", "opensource": "开源代码深读",
     }
     cards = []
     for number, panel in enumerate(cfg["panels"], 1):
@@ -1371,11 +1396,10 @@ def render_panels_block(cfg: dict, mapping: dict, entries: list, label_limit: in
 
 
 def render_topics_block(entries: list, mapping: dict, panels: list) -> str:
-    """按技术板块分组，让专题入口可扫描而非堆成一条标签云。"""
-    technical = {"LLM", "VisualGen", "WorldModel", "Infra"}
+    """按 panels.json 标记的专题 / 应用板块分组。"""
     lines = ["| 方向 | 专题入口 |", "| :-- | :-- |"]
     for panel in panels:
-        if panel["title"] not in technical:
+        if not panel.get("topic_index", False):
             continue
         members = sorted(
             (d for d in entries if mapping.get(d["path"], {}).get("id") == panel["id"]),
@@ -1417,8 +1441,8 @@ def render_index_block(entries: list, mapping: dict, panels: list) -> str:
 
 def render_readme_blocks(cfg: dict, entries: list, stats: dict, mapping: dict,
                          repo_root: str, today: _dt.date) -> dict:
-    topics = sum(1 for d in entries
-                 if d["top"] in ("LLM", "VisualGen", "WorldModel", "Infra"))
+    topic_ids = {p["id"] for p in cfg["panels"] if p.get("topic_index", False)}
+    topics = sum(1 for d in entries if mapping.get(d["path"], {}).get("id") in topic_ids)
     # 「更新日期」徽章取最后一次提交日，而非当天 wall-clock：跨零点不漂，任意一天重跑字节一致。
     badge_date = last_commit_date(repo_root, today)
     return {
@@ -1477,6 +1501,7 @@ PANEL_ONE_LINERS = {
     "LLM": "语言模型能力与技术专题，覆盖推理、对齐、Agent、RAG 等方向。",
     "VisualGen": "视觉与多模态生成，含视频 / 图像 / 3D / 音频 / 数字人与扩散基础。",
     "WorldModel": "世界模型与具身 VLA，关注环境动力学与可部署动作策略。",
+    "AI4Science": "科学问题中的 AI 方法与实验闭环，按具体领域和证据链深入。",
     "Infra": "推理 / 训练基础设施，覆盖投机解码、量化边缘与训练基建。",
     "OpenSource": "开源仓库代码深读，源码不入口、只留报告与证据引用。",
 }
@@ -1810,6 +1835,7 @@ def _site_home_icon(panel_id: str) -> str:
         "llm": '<path d="M5 4h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-6 4V6a2 2 0 0 1 2-2Z"/><path d="M7 9h10M7 13h6"/>',
         "visualgen": '<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 5-5 4 4 4-6 5 7"/>',
         "worldmodel": '<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/>',
+        "ai4science": '<path d="M9 3h6m-5 0v7l-4.5 8.2A1.5 1.5 0 0 0 6 20.5h12a1.5 1.5 0 0 0 1.5-2.3L15 10V3"/><path d="M7 15h10"/>',
         "infra": '<rect x="7" y="7" width="10" height="10" rx="2"/><path d="M9 2v5m6-5v5M9 17v5m6-5v5M2 9h5m-5 6h5m10-6h5m-5 6h5"/><path d="M10 10h4v4h-4z"/>',
         "opensource": '<path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18"/>',
     }
@@ -1829,14 +1855,16 @@ def render_site_home(cfg: dict, mapping: dict, entries: list,
         panel = mapping.get(doc["path"])
         if panel is not None:
             by_panel.setdefault(panel["id"], []).append(doc)
+    topic_ids = {p["id"] for p in cfg["panels"] if p.get("topic_index", False)}
     topics_entries = [d for d in entries
-                      if d["top"] in ("LLM", "VisualGen", "WorldModel", "Infra")]
+                      if mapping.get(d["path"], {}).get("id") in topic_ids]
     topic_names = {d["topic"] for d in topics_entries if d.get("topic")}
     child_count = stats.get("entries", {}).get(
         "children", sum(len(d.get("children", [])) for d in entries))
     captions = {
         "models": "模型系列", "llm": "语言模型技术", "visualgen": "视觉与多模态",
-        "worldmodel": "世界模型与具身", "infra": "训练与推理系统", "opensource": "开源代码研究",
+        "worldmodel": "世界模型与具身", "ai4science": "科学研究应用",
+        "infra": "训练与推理系统", "opensource": "开源代码研究",
     }
 
     def label(value):
@@ -1868,7 +1896,7 @@ def render_site_home(cfg: dict, mapping: dict, entries: list,
         '</div>', "", '</div>', "",
         '<section class="rr-section rr-collections" markdown="1">', "",
         '<div class="rr-section-heading" markdown="1">', "",
-        '## 六个入口，展开研究', "",
+        '## 研究板块', "",
         '<span>从一个方向开始，连接相关方法与实现。</span>', "",
         '</div>', "", '<div class="rr-panel-grid" markdown="1">', "",
     ]
@@ -2088,6 +2116,8 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv=None) -> int:
     args = build_parser().parse_args(argv)
 
+    global PANEL_TOPS, LIBRARIES
+
     repo_root = os.path.abspath(args.repo_root)
     out_root = os.path.abspath(args.out_root) if args.out_root else repo_root
 
@@ -2101,17 +2131,19 @@ def main(argv=None) -> int:
         print(f"[ERROR] --today 需要 YYYY-MM-DD 格式: {args.today}", file=sys.stderr)
         return 2
 
+    try:
+        cfg = load_panels(repo_root)
+        PANEL_TOPS = panel_top_dirs(cfg)
+        LIBRARIES = PANEL_TOPS
+    except ConfigError as exc:
+        print(f"[FAIL] {exc}", file=sys.stderr)
+        return 3
+
     skipped_paths = []
     docs, orphans = attach_children(
         scan(repo_root, today, args.include_generated, skipped_out=skipped_paths))
     entries = [d for d in docs if d["is_entry"]]
     stats = build_stats(repo_root, docs)
-
-    try:
-        cfg = load_panels(repo_root)
-    except ConfigError as exc:
-        print(f"[FAIL] {exc}", file=sys.stderr)
-        return 3
 
     mapping, problems = validate_panels(entries, cfg, repo_root)
     unassigned, duplicated, missing = problems

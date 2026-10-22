@@ -7,10 +7,20 @@
 
 ---
 
-共 **50** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter；「板块」列由 [`scripts/panels.json`](<../scripts/panels.json>) 驱动。
+共 **60** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter；「板块」列由 [`scripts/panels.json`](<../scripts/panels.json>) 驱动。
 
 | 条目 | 板块 | 路径 | 子报告数 | 行数 | 日期 |
 | --- | --- | --- | --: | --: | --- |
+| AntibioticDiscovery | AI4Science | [AI4Science/AntibioticDiscovery/report.md](<../AI4Science/AntibioticDiscovery/report.md>) | 6 | 48 | 2026-10-23 |
+| Astronomy | AI4Science | [AI4Science/Astronomy/report.md](<../AI4Science/Astronomy/report.md>) | 3 | 59 | 2026-10-23 |
+| AutonomousLabs | AI4Science | [AI4Science/AutonomousLabs/report.md](<../AI4Science/AutonomousLabs/report.md>) | 2 | 119 | 2026-10-23 |
+| Chemistry | AI4Science | [AI4Science/Chemistry/report.md](<../AI4Science/Chemistry/report.md>) | 2 | 80 | 2026-10-23 |
+| MaterialsDiscovery | AI4Science | [AI4Science/MaterialsDiscovery/report.md](<../AI4Science/MaterialsDiscovery/report.md>) | 4 | 66 | 2026-10-23 |
+| MathematicalDiscovery | AI4Science | [AI4Science/MathematicalDiscovery/report.md](<../AI4Science/MathematicalDiscovery/report.md>) | 6 | 78 | 2026-10-23 |
+| Neuroscience | AI4Science | [AI4Science/Neuroscience/report.md](<../AI4Science/Neuroscience/report.md>) | 2 | 113 | 2026-10-23 |
+| ProteinDesign | AI4Science | [AI4Science/ProteinDesign/report.md](<../AI4Science/ProteinDesign/report.md>) | 5 | 72 | 2026-10-23 |
+| SingleCellPerturbation | AI4Science | [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) | 4 | 87 | 2026-10-23 |
+| WeatherClimate | AI4Science | [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) | 7 | 89 | 2026-10-23 |
 | QuantizationEdge | Infra | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 0 | 188 | 2026-10-22 |
 | SpeculativeDecoding | Infra | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 29 | 536 | 2026-10-22 |
 | TrainingInfra | Infra | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 0 | 181 | 2026-10-22 |
@@ -61,4 +71,4 @@
 | VideoGen | VisualGen | [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) | 0 | 898 | — |
 | EmbodiedVLA | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 13 | 611 | — |
 | WorldModels | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 602 | 2026-10-22 |
-| **合计** | — | — | **110** | **27,199** | — |
+| **合计** | — | — | **151** | **28,010** | — |

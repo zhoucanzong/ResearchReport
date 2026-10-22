@@ -34,28 +34,28 @@ git remote -v
 
 ---
 
-## 2. 新增 / 修改报告（Models / LLM / VisualGen / WorldModel / Infra）
+## 2. 新增 / 修改报告（研究板块）
 
-这两个库沿用统一模板：`ModelSeries/` 放模型系列、`TechnicalTopics/` 放技术专题，主报告固定命名为 `report.md`。
+研究板块以顶层目录组织，主题目录下的主报告固定命名为 `report.md`。Models 可按模型系列拆目录；AI4Science 等领域专题按具体问题拆分。
 
 ```bash
-cd ResearchReport/LLM                             # 或 Models / VisualGen / WorldModel / Infra
+cd ResearchReport/AI4Science                      # 或任一现有板块目录
 
 mkdir -p NewTopic
 $EDITOR NewTopic/report.md
 
 cd ..                                              # 回到仓库根目录
 git add -A
-git commit -m "新增 NewTopic 技术专题调研"
+git commit -m "新增 NewTopic 研究报告"
 git push origin main
 ```
 
 **约定**
 
-1. 目录名用 `<Name>`（**不再带 `-research` 后缀**）：模型系列放 `Models/`，技术专题按板块放 `LLM/`、`VisualGen/`、`WorldModel/`、`Infra/`。
+1. 目录名用 `<Name>`（**不再带 `-research` 后缀**）：按 `scripts/panels.json` 将条目放入对应板块；科学研究专题归入 `AI4Science/`，按具体科学问题拆分，不建立泛化的 AI4Science 总报告。
 2. 主报告固定 `report.md`；需要深挖时在目录内新增 `<topic>-<sub>.md` 分册（全小写、连字符，例如 `speculative-eagle-series.md`）。
 3. 内容**中文为主、关键术语保留英文**，附来源索引 / 论文引用以便追溯。
-4. 沿用统一模板（架构时间线 → 结构详解 / 能力 → 竞品对比），便于跨库检索与对比。
+4. 按研究问题选择结构。领域研究优先解释问题、机制、实验条件、结果和失效边界；论文精读遵循 [team.md](team.md) 的四项亮点与七问证据标准，不套用模型产品/竞品模板，也不为篇幅扩写。
 
 ---
 
@@ -101,12 +101,12 @@ cd .. && git add -A && git commit -m "新增 XXX 深度阅读" && git push origi
 
 ## 5. 新增资料库
 
-若再加入第四个资料库：
+若新增研究板块：
 
-1. 在仓库根目录建立目录（普通目录即可，**不要**引入嵌套 `.git`、submodule 或 gitlink）。
-2. 在首页 `README.md` 的「一眼看懂」卡片、徽章计数（Collections / Reports / Markdown）、统计摘要表中同步登记。
-3. 在 [statistics.md](statistics.md) 增加按库汇总列与逐目录明细。
-4. ~~若该库有自己的 `README.md`~~（**历史**：`AIGC-Research/README.md`、`LLM-Research/README.md` 已随 6 板块重排退役删除）。
+1. 在仓库根目录建立板块目录（普通目录即可，**不要**引入嵌套 `.git`、submodule 或 gitlink）。
+2. 在 `scripts/panels.json` 登记板块的路径匹配规则、代表条目和展示配置；目录必须唯一映射到一个板块。
+3. 运行索引生成器更新首页、导航、统计与各索引，再按需补充板块入口 `README.md`。
+4. 在 [statistics.md](statistics.md) 更新当前板块汇总与明细；历史统计快照应明确标记历史口径。
 5. 若有嵌套 `.git`：先确认其全部对象在上游可按同一 SHA 找到，再删除（参考 [verification.md](verification.md) §3 的留证方式），否则 `git add` 只会记录一个 gitlink，推送后目录内容为空。
 
 ---
@@ -127,7 +127,7 @@ cd .. && git add -A && git commit -m "新增 XXX 深度阅读" && git push origi
 ```bash
 git ls-files | wc -l                                    # 跟踪文件数
 git ls-files '*.md' | wc -l                             # 全仓库 .md 数
-git ls-files 'Models/*.md' 'LLM/*.md' 'VisualGen/*.md' 'WorldModel/*.md' 'Infra/*.md' | grep -vc 'README\.md$'   # 报告数
+git ls-files 'Models/*.md' 'LLM/*.md' 'VisualGen/*.md' 'WorldModel/*.md' 'AI4Science/*.md' 'Infra/*.md' 'OpenSource/*.md' | grep -vc 'README\.md$'   # 报告数（精确值以索引统计为准）
 find <dir> -type f -exec stat -f '%z' {} + | awk '{s+=$1} END{print s}'          # 字节数
 du -sk <dir>                                            # 磁盘占用
 ```

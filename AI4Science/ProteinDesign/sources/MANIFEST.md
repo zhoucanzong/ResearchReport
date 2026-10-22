@@ -1,0 +1,16 @@
+# ProteinDesign source manifest
+
+核查截止：2026-10-23（Asia/Shanghai）。本条目是 AI4Science 首个专题，聚焦蛋白质/肽 binder 的复合物生成、序列生成和候选短名单；不代表蛋白质设计、药物发现或 AI4Science 全领域综述。
+
+| Source | Fixed identity / license | Evidence location | Scope and boundary |
+| :-- | :-- | :-- | :-- |
+| [An All-Atom Generative Model for Designing Protein Complexes](https://arxiv.org/abs/2504.13075v3) | arXiv `2504.13075v3`; v3 dated 2025-09-08; arXiv license CC BY-NC-ND 4.0; no matching local paper-cache file found | Official HTML v3: §§3.1–3.4, §4.1, §4.4, Tables 5–6, §5, Appendix D/F | Author-reported computational benchmarks for multi-chain modeling, antibody CDR-H3 and peptide design. The paper explicitly says actual effectiveness still requires wet-lab validation. Linked code repository was not code-reviewed or run. |
+| [PepEDiff: Zero-Shot Peptide Binder Design via Protein Embedding Diffusion](https://arxiv.org/abs/2601.13327v2) | arXiv `2601.13327v2`; v2 dated 2026-03-06 (v1 first submitted 2026-01-19); arXiv license CC BY 4.0; no matching local paper-cache file found | Official HTML v2: §§2.1–2.4, §§3.1–3.3, §4.2, Appendix 2 | Authors report sequence-space diffusion and a TIGIT computational case study. Structure prediction, Rosetta, MD and umbrella sampling are computational proxies; no wet-lab binding validation is reported. Linked code was not code-reviewed or run. |
+| [Natural-Language-Guided Generator-Agnostic Shortlisting for Protein Binder Design](https://arxiv.org/abs/2608.20755v2) | arXiv `2608.20755v2`; v2 dated 2026-09-05 (v1 submitted 2026-08-21); arXiv license CC BY 4.0; no matching local paper-cache file found | Official HTML v2: §§3–6, Tables 1–4, Appendices A–B | Retrospective shortlisting over experimentally labeled candidate pools. Main held-out split: 10 targets, 2,269 candidates and 251 verified binders; a separate 3-target subset is used for GPT-5.4 comparisons. No new binders were designed or tested in this study. |
+
+## Evidence handling
+
+- Papers were retrieved with PaperFetcher; analysis used the fixed-version official arXiv HTML. The current search found no matching local paper-cache artifacts; papers are not copied into the repository.
+- `[精读原文]` applies to the fixed paper versions listed above. It records source reading and claim location, not independent reproduction or wet-lab validation.
+- The 2026 shortlisting study's score panel includes AF2-Multimer, Boltz-2, Protenix/PXDesign and Rosetta descriptors. The 10-target and 3-target splits have different provenance and model cutoffs; their metrics are not merged.
+- No code repository was cloned, inspected or executed in this batch. Paper-linked code URLs are discovery pointers only, not verified implementation evidence.

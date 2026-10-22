@@ -18,7 +18,7 @@
 <div align="center">
 
 <!-- SCRIPT:badges START -->
-[**50** 主报告](index/by-report.md) &nbsp; · &nbsp; [**110** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**21** 技术专题](index/by-topic.md) &nbsp; · &nbsp; [**6** 研究板块](#六个研究板块)
+[**60** 主报告](index/by-report.md) &nbsp; · &nbsp; [**151** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**31** 技术专题](index/by-topic.md) &nbsp; · &nbsp; [**7** 研究板块](#研究板块)
 <!-- SCRIPT:badges END -->
 
 </div>
@@ -33,7 +33,7 @@
 | 一类方法解决了什么问题 | [技术专题](index/by-topic.md) → 方法对照 → 实验条件与失效边界 |
 | 开源系统究竟怎样运行 | [代码深读](OpenSource/README.md) → 运行路径 → 固定版本的源码证据 |
 
-## 六个研究板块
+## 研究板块
 
 <!-- SCRIPT:panels START · 来源 scripts/panels.json，配置驱动 -->
 <table>
@@ -65,13 +65,21 @@
 <p><a href="WorldModel/README.md"><strong>浏览板块 →</strong></a></p>
 </td>
 <td width="33%" valign="top">
-<h3>05 · <a href="Infra/README.md">Infra</a></h3>
+<h3>05 · <a href="AI4Science/README.md">AI4Science</a></h3>
+<p><strong>科学研究应用</strong><br><sub>10 篇主报告 · 科学问题中的 AI 方法与实验闭环</sub></p>
+<p><a href="AI4Science/ProteinDesign/report.md">ProteinDesign</a> · <a href="AI4Science/MaterialsDiscovery/report.md">MaterialsDiscovery</a> · <a href="AI4Science/WeatherClimate/report.md">WeatherClimate</a> · <a href="AI4Science/AutonomousLabs/report.md">AutonomousLabs</a></p>
+<p><a href="AI4Science/README.md"><strong>浏览板块 →</strong></a></p>
+</td>
+<td width="33%" valign="top">
+<h3>06 · <a href="Infra/README.md">Infra</a></h3>
 <p><strong>训练与推理系统</strong><br><sub>3 篇主报告 · 推理 / 训练基础设施</sub></p>
 <p><a href="Infra/SpeculativeDecoding/report.md">SpeculativeDecoding</a> · <a href="Infra/QuantizationEdge/report.md">QuantizationEdge</a> · <a href="Infra/TrainingInfra/report.md">TrainingInfra</a></p>
 <p><a href="Infra/README.md"><strong>浏览板块 →</strong></a></p>
 </td>
+</tr>
+<tr>
 <td width="33%" valign="top">
-<h3>06 · <a href="OpenSource/README.md">OpenSource</a></h3>
+<h3>07 · <a href="OpenSource/README.md">OpenSource</a></h3>
 <p><strong>开源代码深读</strong><br><sub>6 篇主报告 · 开源仓库代码深读</sub></p>
 <p><a href="OpenSource/DeepInfer/report.md">DeepInfer</a> · <a href="OpenSource/vllm/report.md">vllm</a> · <a href="OpenSource/sglang/report.md">sglang</a></p>
 <p><a href="OpenSource/README.md"><strong>浏览板块 →</strong></a></p>
@@ -91,6 +99,7 @@
 | **[ReasoningModels](<LLM/ReasoningModels/report.md>)**<br><sub>LLM</sub> | 推理模型（Reasoning Models）与 Test-Time Compute 研究报告 |
 | **[VideoGen](<VisualGen/VideoGen/report.md>)**<br><sub>VisualGen</sub> | 视频生成技术研究报告 |
 | **[WorldModels](<WorldModel/WorldModels/report.md>)**<br><sub>WorldModel</sub> | WorldModels 技术专题调研 |
+| **[ProteinDesign](<AI4Science/ProteinDesign/report.md>)**<br><sub>AI4Science</sub> | 蛋白质 binder 发现：从复合物生成到候选筛选 |
 | **[SpeculativeDecoding](<Infra/SpeculativeDecoding/report.md>)**<br><sub>Infra</sub> | 投机解码（Speculative Decoding）技术专题 · 深度调研 |
 | **[DeepInfer](<OpenSource/DeepInfer/report.md>)**<br><sub>OpenSource</sub> | DeepInfer：离线推理内核、异步调度与状态契约 |
 <!-- SCRIPT:highlights END -->
@@ -100,11 +109,11 @@
 <!-- SCRIPT:recent START · 报告日期优先，缺失时回退最近提交日 -->
 | 日期 | 阅读条目 | 板块 |
 | :-- | :-- | :-- |
-| 2026-10-23 | [Hunyuan](<Models/Hunyuan/report.md>) | Models |
-| 2026-10-22 | [QuantizationEdge](<Infra/QuantizationEdge/report.md>) | Infra |
-| 2026-10-22 | [SpeculativeDecoding](<Infra/SpeculativeDecoding/report.md>) | Infra |
-| 2026-10-22 | [TrainingInfra](<Infra/TrainingInfra/report.md>) | Infra |
-| 2026-10-22 | [DeepInfer](<OpenSource/DeepInfer/report.md>) | OpenSource |
+| 2026-10-23 | [AntibioticDiscovery](<AI4Science/AntibioticDiscovery/report.md>) | AI4Science |
+| 2026-10-23 | [Astronomy](<AI4Science/Astronomy/report.md>) | AI4Science |
+| 2026-10-23 | [AutonomousLabs](<AI4Science/AutonomousLabs/report.md>) | AI4Science |
+| 2026-10-23 | [Chemistry](<AI4Science/Chemistry/report.md>) | AI4Science |
+| 2026-10-23 | [MaterialsDiscovery](<AI4Science/MaterialsDiscovery/report.md>) | AI4Science |
 <!-- SCRIPT:recent END -->
 
 [查看全部更新 →](index/recent.md)
@@ -117,6 +126,7 @@
 | **LLM** | [Agent](<LLM/Agent/report.md>) · [Alignment](<LLM/Alignment/report.md>) · [DecisionModels](<LLM/DecisionModels/report.md>) · [LongContext](<LLM/LongContext/report.md>) · [MoE](<LLM/MoE/report.md>) · [RAG](<LLM/RAG/report.md>) · [ReasoningModels](<LLM/ReasoningModels/report.md>) · [VLM](<LLM/VLM/report.md>) |
 | **VisualGen** | [3DGen](<VisualGen/3DGen/report.md>) · [AudioGen](<VisualGen/AudioGen/report.md>) · [AvatarGen](<VisualGen/AvatarGen/report.md>) · [ControllableGen](<VisualGen/ControllableGen/report.md>) · [DiT](<VisualGen/DiT/report.md>) · [DiffusionModels](<VisualGen/DiffusionModels/report.md>) · [ImageEditing](<VisualGen/ImageEditing/report.md>) · [VideoGen](<VisualGen/VideoGen/report.md>) |
 | **WorldModel** | [EmbodiedVLA](<WorldModel/EmbodiedVLA/report.md>) · [WorldModels](<WorldModel/WorldModels/report.md>) |
+| **AI4Science** | [AntibioticDiscovery](<AI4Science/AntibioticDiscovery/report.md>) · [Astronomy](<AI4Science/Astronomy/report.md>) · [AutonomousLabs](<AI4Science/AutonomousLabs/report.md>) · [Chemistry](<AI4Science/Chemistry/report.md>) · [MaterialsDiscovery](<AI4Science/MaterialsDiscovery/report.md>) · [MathematicalDiscovery](<AI4Science/MathematicalDiscovery/report.md>) · [Neuroscience](<AI4Science/Neuroscience/report.md>) · [ProteinDesign](<AI4Science/ProteinDesign/report.md>) · [SingleCellPerturbation](<AI4Science/SingleCellPerturbation/report.md>) · [WeatherClimate](<AI4Science/WeatherClimate/report.md>) |
 | **Infra** | [QuantizationEdge](<Infra/QuantizationEdge/report.md>) · [SpeculativeDecoding](<Infra/SpeculativeDecoding/report.md>) · [TrainingInfra](<Infra/TrainingInfra/report.md>) |
 <!-- SCRIPT:topics END -->
 
@@ -134,20 +144,21 @@
 ### 完整索引
 
 <!-- SCRIPT:index START · 条目单一真值在 index/by-report.md -->
-共 **50** 条，分属 **6** 个板块：Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 6。
-完整 50 行（条目 | 板块 | 路径）见 **[index/by-report.md](<index/by-report.md>)**；按域 / 主题 / 来源分面见 [index/](<index/>)，总目录见 [INDEX.md](<INDEX.md>)。
+共 **60** 条，分属 **7** 个板块：Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · AI4Science 10 · Infra 3 · OpenSource 6。
+完整 60 行（条目 | 板块 | 路径）见 **[index/by-report.md](<index/by-report.md>)**；按域 / 主题 / 来源分面见 [index/](<index/>)，总目录见 [INDEX.md](<INDEX.md>)。
 <!-- SCRIPT:index END -->
 
 ### 目录结构
 
 <!-- SCRIPT:structure START · 来源 scripts/panels.json，配置驱动 -->
 ```text
-ResearchReport/    50 条目 · 21 专题 · 6 板块
+ResearchReport/    60 条目 · 31 专题 · 7 板块
 │
 ├─ 🧠 Models/        23 条 · 厂商模型 / 系列逐个精读（GPT · Qwen · Gemini …）
 ├─ 💬 LLM/            8 条 · 语言模型能力与技术专题（ReasoningModels · LongContext · MoE …）
 ├─ 🎨 VisualGen/      8 条 · 视觉与多模态生成（VideoGen · DiT · DiffusionModels …）
 ├─ 🌍 WorldModel/     2 条 · 世界模型与具身 VLA（WorldModels · EmbodiedVLA …）
+├─ 🧪 AI4Science/    10 条 · 科学问题中的 AI 方法与实验闭环（ProteinDesign · MaterialsDiscovery · WeatherClimate …）
 ├─ ⚙️ Infra/          3 条 · 推理 / 训练基础设施（SpeculativeDecoding · QuantizationEdge · TrainingInfra …）
 ├─ 🔧 OpenSource/     6 条 · 开源仓库代码深读（DeepInfer · vllm · sglang …）
 │

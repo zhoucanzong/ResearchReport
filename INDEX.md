@@ -13,17 +13,17 @@
 
 | 指标 | 数量 |
 | --- | --- |
-| **条目数**（`report.md`） | **50** |
-| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 6 |
-| 条目子文档数 | 110 |
-| 条目正文行数（剔除 front-matter） | 27,199 |
-| 条目字节 | 1,887,143 B |
-| 带 front-matter 的条目 | 9 |
-| 带合法 `date` 的条目 | 9 |
-| 文档（除生成物外的全部 `.md`） | 176 |
-| 其中文件名 `README.md` | 8 |
-| 纳入版本控制的文件 | 200 |
-| 纳入版本控制的 `.md` | 184 |
+| **条目数**（`report.md`） | **60** |
+| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · AI4Science 10 · Infra 3 · OpenSource 6 |
+| 条目子文档数 | 151 |
+| 条目正文行数（剔除 front-matter） | 28,010 |
+| 条目字节 | 2,016,956 B |
+| 带 front-matter 的条目 | 19 |
+| 带合法 `date` 的条目 | 19 |
+| 文档（除生成物外的全部 `.md`） | 228 |
+| 其中文件名 `README.md` | 9 |
+| 纳入版本控制的文件 | 252 |
+| 纳入版本控制的 `.md` | 236 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -36,9 +36,10 @@
 | LLM | 8 | 27 | 4,136 | 299,102 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,758 | 320,420 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 2 | 31 | 1,213 | 130,531 B | [板块页 →](<WorldModel/README.md>) |
+| AI4Science | 10 | 52 | 811 | 129,813 B | [板块页 →](<AI4Science/README.md>) |
 | Infra | 3 | 33 | 905 | 72,511 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 33 | 1,561 | 167,014 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **50** | **176** | **27,199** | **1,887,143 B** | — |
+| **合计** | **60** | **228** | **28,010** | **2,016,956 B** | — |
 
 ## 分面索引
 
@@ -622,6 +623,164 @@
 
 </details>
 
+### AI4Science（10 条目 / 52 文档）
+
+<details>
+<summary><b>科学研究 AI4Science（10 条目 / 41 子文档）</b></summary>
+
+  <details>
+  <summary><b>AntibioticDiscovery</b> · <code>AI4Science/AntibioticDiscovery/report.md</code> · 48 行 · 2026-10-23</summary>
+
+
+    * **条目**：[AI4Science/AntibioticDiscovery/report.md](<AI4Science/AntibioticDiscovery/report.md>)（48 行 / 10,713 B）
+    * **专题目录**：`AI4Science/AntibioticDiscovery`
+    * **元数据**：type=`research` · domain=`AI4Science` · subject=`AntibioticDiscovery` · date=`2026-10-23` · status=`completed`
+    * **子文档（6）**
+        * [papers/2024-synthemol-mcts.md](<AI4Science/AntibioticDiscovery/papers/2024-synthemol-mcts.md>) — 38 行 / 6,361 B
+        * [papers/2025-cell-de-novo.md](<AI4Science/AntibioticDiscovery/papers/2025-cell-de-novo.md>) — 47 行 / 7,076 B
+        * [papers/2026-synthemol-rl.md](<AI4Science/AntibioticDiscovery/papers/2026-synthemol-rl.md>) — 49 行 / 7,988 B
+        * [papers/abaucin-screen-to-mechanism.md](<AI4Science/AntibioticDiscovery/papers/abaucin-screen-to-mechanism.md>) — 63 行 / 9,379 B
+        * [sources/CANDIDATES.md](<AI4Science/AntibioticDiscovery/sources/CANDIDATES.md>) — 24 行 / 3,417 B
+        * [sources/MANIFEST.md](<AI4Science/AntibioticDiscovery/sources/MANIFEST.md>) — 19 行 / 7,017 B
+
+  </details>
+
+  <details>
+  <summary><b>Astronomy</b> · <code>AI4Science/Astronomy/report.md</code> · 59 行 · 2026-10-23</summary>
+
+
+    * **条目**：[AI4Science/Astronomy/report.md](<AI4Science/Astronomy/report.md>)（59 行 / 11,000 B）
+    * **专题目录**：`AI4Science/Astronomy`
+    * **元数据**：type=`research` · domain=`AI4Science` · subject=`Astronomy` · date=`2026-10-23` · status=`completed`
+    * **子文档（3）**
+        * [papers/2309.08660.md](<AI4Science/Astronomy/papers/2309.08660.md>) — 80 行 / 7,731 B
+        * [sources/CANDIDATES.md](<AI4Science/Astronomy/sources/CANDIDATES.md>) — 24 行 / 2,555 B
+        * [sources/MANIFEST.md](<AI4Science/Astronomy/sources/MANIFEST.md>) — 17 行 / 3,766 B
+
+  </details>
+
+  <details>
+  <summary><b>AutonomousLabs</b> · <code>AI4Science/AutonomousLabs/report.md</code> · 119 行 · 2026-10-23</summary>
+
+
+    * **条目**：[AI4Science/AutonomousLabs/report.md](<AI4Science/AutonomousLabs/report.md>)（119 行 / 19,135 B）
+    * **专题目录**：`AI4Science/AutonomousLabs`
+    * **元数据**：type=`research` · domain=`AI4Science` · subject=`AutonomousLabs` · date=`2026-10-23` · status=`completed`
+    * **子文档（2）**
+        * [sources/CANDIDATES.md](<AI4Science/AutonomousLabs/sources/CANDIDATES.md>) — 20 行 / 1,868 B
+        * [sources/MANIFEST.md](<AI4Science/AutonomousLabs/sources/MANIFEST.md>) — 28 行 / 7,787 B
+
+  </details>
+
+  <details>
+  <summary><b>Chemistry</b> · <code>AI4Science/Chemistry/report.md</code> · 80 行 · 2026-10-23</summary>
+
+
+    * **条目**：[AI4Science/Chemistry/report.md](<AI4Science/Chemistry/report.md>)（80 行 / 13,119 B）
+    * **专题目录**：`AI4Science/Chemistry`
+    * **元数据**：type=`research` · domain=`AI4Science` · subject=`Chemistry` · date=`2026-10-23` · status=`completed`
+    * **子文档（2）**
+        * [sources/CANDIDATES.md](<AI4Science/Chemistry/sources/CANDIDATES.md>) — 29 行 / 3,899 B
+        * [sources/MANIFEST.md](<AI4Science/Chemistry/sources/MANIFEST.md>) — 18 行 / 5,688 B
+
+  </details>
+
+  <details>
+  <summary><b>MaterialsDiscovery</b> · <code>AI4Science/MaterialsDiscovery/report.md</code> · 66 行 · 2026-10-23</summary>
+
+
+    * **条目**：[AI4Science/MaterialsDiscovery/report.md](<AI4Science/MaterialsDiscovery/report.md>)（66 行 / 9,275 B）
+    * **专题目录**：`AI4Science/MaterialsDiscovery`
+    * **元数据**：type=`research` · domain=`AI4Science` · subject=`MaterialsDiscovery` · date=`2026-10-23` · status=`completed`
+    * **子文档（4）**
+        * [papers/2312.03687-mattergen.md](<AI4Science/MaterialsDiscovery/papers/2312.03687-mattergen.md>) — 75 行 / 11,695 B
+        * [papers/2603.22748-gnome-experiment.md](<AI4Science/MaterialsDiscovery/papers/2603.22748-gnome-experiment.md>) — 45 行 / 4,637 B
+        * [sources/CANDIDATES.md](<AI4Science/MaterialsDiscovery/sources/CANDIDATES.md>) — 17 行 / 2,844 B
+        * [sources/MANIFEST.md](<AI4Science/MaterialsDiscovery/sources/MANIFEST.md>) — 20 行 / 7,243 B
+
+  </details>
+
+  <details>
+  <summary><b>MathematicalDiscovery</b> · <code>AI4Science/MathematicalDiscovery/report.md</code> · 78 行 · 2026-10-23</summary>
+
+
+    * **条目**：[AI4Science/MathematicalDiscovery/report.md](<AI4Science/MathematicalDiscovery/report.md>)（78 行 / 13,711 B）
+    * **专题目录**：`AI4Science/MathematicalDiscovery`
+    * **元数据**：type=`research` · domain=`AI4Science` · subject=`MathematicalDiscovery` · date=`2026-10-23` · status=`completed`
+    * **子文档（6）**
+        * [papers/ai-feynman.md](<AI4Science/MathematicalDiscovery/papers/ai-feynman.md>) — 73 行 / 8,398 B
+        * [papers/alphaproof.md](<AI4Science/MathematicalDiscovery/papers/alphaproof.md>) — 61 行 / 8,795 B
+        * [papers/funsearch-reproducibility.md](<AI4Science/MathematicalDiscovery/papers/funsearch-reproducibility.md>) — 65 行 / 7,952 B
+        * [papers/funsearch.md](<AI4Science/MathematicalDiscovery/papers/funsearch.md>) — 65 行 / 9,206 B
+        * [sources/CANDIDATES.md](<AI4Science/MathematicalDiscovery/sources/CANDIDATES.md>) — 18 行 / 2,521 B
+        * [sources/MANIFEST.md](<AI4Science/MathematicalDiscovery/sources/MANIFEST.md>) — 21 行 / 7,987 B
+
+  </details>
+
+  <details>
+  <summary><b>Neuroscience</b> · <code>AI4Science/Neuroscience/report.md</code> · 113 行 · 2026-10-23</summary>
+
+
+    * **条目**：[AI4Science/Neuroscience/report.md](<AI4Science/Neuroscience/report.md>)（113 行 / 18,430 B）
+    * **专题目录**：`AI4Science/Neuroscience`
+    * **元数据**：type=`research` · domain=`AI4Science` · subject=`Neuroscience` · date=`2026-10-23` · status=`completed`
+    * **子文档（2）**
+        * [sources/CANDIDATES.md](<AI4Science/Neuroscience/sources/CANDIDATES.md>) — 30 行 / 4,170 B
+        * [sources/MANIFEST.md](<AI4Science/Neuroscience/sources/MANIFEST.md>) — 17 行 / 6,089 B
+
+  </details>
+
+  <details>
+  <summary><b>ProteinDesign</b> · <code>AI4Science/ProteinDesign/report.md</code> · 72 行 · 2026-10-23</summary>
+
+
+    * **条目**：[AI4Science/ProteinDesign/report.md](<AI4Science/ProteinDesign/report.md>)（72 行 / 8,555 B）
+    * **专题目录**：`AI4Science/ProteinDesign`
+    * **元数据**：type=`research` · domain=`AI4Science` · subject=`ProteinDesign` · date=`2026-10-23` · status=`completed`
+    * **子文档（5）**
+        * [papers/2504.13075-apm.md](<AI4Science/ProteinDesign/papers/2504.13075-apm.md>) — 59 行 / 5,212 B
+        * [papers/2601.13327-pepediff.md](<AI4Science/ProteinDesign/papers/2601.13327-pepediff.md>) — 53 行 / 4,657 B
+        * [papers/2608.20755-shortlisting.md](<AI4Science/ProteinDesign/papers/2608.20755-shortlisting.md>) — 54 行 / 5,698 B
+        * [sources/CANDIDATES.md](<AI4Science/ProteinDesign/sources/CANDIDATES.md>) — 14 行 / 1,808 B
+        * [sources/MANIFEST.md](<AI4Science/ProteinDesign/sources/MANIFEST.md>) — 16 行 / 2,865 B
+
+  </details>
+
+  <details>
+  <summary><b>SingleCellPerturbation</b> · <code>AI4Science/SingleCellPerturbation/report.md</code> · 87 行 · 2026-10-23</summary>
+
+
+    * **条目**：[AI4Science/SingleCellPerturbation/report.md](<AI4Science/SingleCellPerturbation/report.md>)（87 行 / 12,157 B）
+    * **专题目录**：`AI4Science/SingleCellPerturbation`
+    * **元数据**：type=`research` · domain=`AI4Science` · subject=`SingleCellPerturbation` · date=`2026-10-23` · status=`completed`
+    * **子文档（4）**
+        * [papers/2609.34391-p2p.md](<AI4Science/SingleCellPerturbation/papers/2609.34391-p2p.md>) — 60 行 / 6,419 B
+        * [papers/2610.02232-scegflow.md](<AI4Science/SingleCellPerturbation/papers/2610.02232-scegflow.md>) — 61 行 / 6,685 B
+        * [sources/CANDIDATES.md](<AI4Science/SingleCellPerturbation/sources/CANDIDATES.md>) — 29 行 / 3,609 B
+        * [sources/MANIFEST.md](<AI4Science/SingleCellPerturbation/sources/MANIFEST.md>) — 17 行 / 4,569 B
+
+  </details>
+
+  <details>
+  <summary><b>WeatherClimate</b> · <code>AI4Science/WeatherClimate/report.md</code> · 89 行 · 2026-10-23</summary>
+
+
+    * **条目**：[AI4Science/WeatherClimate/report.md](<AI4Science/WeatherClimate/report.md>)（89 行 / 13,718 B）
+    * **专题目录**：`AI4Science/WeatherClimate`
+    * **元数据**：type=`research` · domain=`AI4Science` · subject=`WeatherClimate` · date=`2026-10-23` · status=`completed`
+    * **子文档（7）**
+        * [papers/aurora.md](<AI4Science/WeatherClimate/papers/aurora.md>) — 46 行 / 6,177 B
+        * [papers/gencast.md](<AI4Science/WeatherClimate/papers/gencast.md>) — 47 行 / 5,727 B
+        * [papers/graphcast.md](<AI4Science/WeatherClimate/papers/graphcast.md>) — 48 行 / 6,422 B
+        * [papers/neuralgcm.md](<AI4Science/WeatherClimate/papers/neuralgcm.md>) — 45 行 / 5,321 B
+        * [papers/pbc-subseasonal.md](<AI4Science/WeatherClimate/papers/pbc-subseasonal.md>) — 50 行 / 6,294 B
+        * [sources/CANDIDATES.md](<AI4Science/WeatherClimate/sources/CANDIDATES.md>) — 43 行 / 5,243 B
+        * [sources/MANIFEST.md](<AI4Science/WeatherClimate/sources/MANIFEST.md>) — 23 行 / 8,622 B
+
+  </details>
+
+</details>
+
 ### Infra（3 条目 / 33 文档）
 
 <details>
@@ -796,21 +955,22 @@
 
 | 文档 | 板块 | 行数 | 字节 |
 | --- | --- | --: | --: |
+| [AI4Science/README.md](<AI4Science/README.md>) | AI4Science | 136 | 6,656 B |
 | [Infra/README.md](<Infra/README.md>) | Infra | 63 | 4,596 B |
 | [LLM/README.md](<LLM/README.md>) | LLM | 57 | 3,746 B |
 | [Models/README.md](<Models/README.md>) | Models | 95 | 4,363 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 91 | 3,889 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 166 | 9,264 B |
+| [README.md](<README.md>) |  | 177 | 10,826 B |
 | [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,616 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 67 | 3,895 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 86 | 6,458 B |
-| [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 10,798 B |
+| [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 11,050 B |
 | [docs/research-method.md](<docs/research-method.md>) | docs | 44 | 3,472 B |
-| [docs/statistics.md](<docs/statistics.md>) | docs | 212 | 16,537 B |
+| [docs/statistics.md](<docs/statistics.md>) | docs | 214 | 15,521 B |
 | [docs/team.md](<docs/team.md>) | docs | 140 | 14,594 B |
-| [docs/verification.md](<docs/verification.md>) | docs | 307 | 20,827 B |
+| [docs/verification.md](<docs/verification.md>) | docs | 303 | 21,756 B |
 | [scripts/README.md](<scripts/README.md>) | scripts | 101 | 4,903 B |
 
 
