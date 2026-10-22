@@ -14,15 +14,15 @@
 - [6. 多模态理解：Hunyuan-VL / Hunyuan-Vision-1.5 / HunyuanOCR](#6-多模态理解hunyuan-vl--hunyuan-vision-15--hunyuanocr)
 - [7. 音频/语音相关模型](#7-音频语音相关模型)
 - [8. 跨方向技术演进分析](#8-跨方向技术演进分析)
-- [9. 关键创新点](#9-关键创新点)
-- [10. 与其他国产模型的差异化定位](#10-与其他国产模型的差异化定位)
+- [9. 技术阅读要点](#9-技术阅读要点)
+- [10. 研究范围与有限比较](#10-研究范围与有限比较)
 - [11. 参考文献](#11-参考文献)
 
 ---
 
 ## 1. 概述与时间线
 
-腾讯混元（Hunyuan）是腾讯自研的全栈式基础大模型矩阵，起步于内部支撑 Yuanbao（元宝）助手与微信、QQ、广告等业务的闭源 LLM，自 2024 年中起进入"高频开源 + 多模态"阶段。其特点是：**同时覆盖语言、图像、视频、3D、世界、OCR、视觉理解、音频** 全模态，形成纵向开源、横向统一的生态。
+腾讯混元（Hunyuan）是腾讯自研的基础模型系列，涵盖语言、图像、视频、3D/世界、OCR、视觉理解和音频等方向。自 2024 年起，团队陆续公开论文、代码或权重；不同项目的开放范围和技术体系并不相同，不能从产品覆盖面推断为统一架构或全部开源。
 
 ### 1.1 主要发布时间线（精选）
 
@@ -31,11 +31,11 @@
 | 2023.09 | Hunyuan-LLM（闭源 1T MoE） | 语言 | 元宝/腾讯内部业务起家的旗舰 MoE LLM |
 | 2024.02 | Hunyuan trillion-parameter MoE 升级 | 语言 | Yuanbao 全面切换至 MoE 架构 |
 | 2024.05 | **Hunyuan-DiT** (arXiv:2405.08748v1) | 图像 | 中英文文本条件 DiT；多分辨率生成与多轮编辑 |
-| 2024.11 | **Hunyuan-Large** (arXiv:2411.02265) | 语言 | 389B 总参 / 52B 激活 MoE，开源最大 Transformer-MoE |
+| 2024.11 | **Hunyuan-Large** (arXiv:2411.02265) | 语言 | 389B 总参 / 52B 激活 MoE |
 | 2024.11 | Hunyuan3D 1.0 (arXiv:2411.02293) | 3D | 文/图到 3D 的统一两阶段框架 |
 | 2024.12 | **HunyuanVideo** (arXiv:2412.03603) | 视频 | 13B 双流→单流 DiT，3D Causal VAE，MLLM 文本编码 |
 | 2025.01 | **Hunyuan3D 2.0** (arXiv:2501.12202) | 3D | Shape-VAE + Hunyuan3D-DiT + Hunyuan3D-Paint |
-| 2025.03 | **Hunyuan-T1** | 语言推理 | Mamba+Transformer Hybrid MoE，首个 Mamba 超大推理模型 |
+| 2025.03 | **Hunyuan-T1** | 语言推理 | Mamba+Transformer Hybrid MoE |
 | 2025.03 | HunyuanVideo-I2V | 视频 | 图生视频扩展 |
 | 2025.03 | **Hunyuan-TurboS** | 语言 | 快思考模型，Mamba2-Transformer Synergy + 自适应 CoT |
 | 2025.05 | **Hunyuan-T1-Vision** | 多模态推理 | 视觉深度推理模型 |
@@ -43,15 +43,15 @@
 | 2025.05 | HunyuanVideo-Avatar (arXiv:2505.20156)，HunyuanCustom，HunyuanPortrait | 视频 | 数字人/可控/肖像视频 |
 | 2025.06 | HunyuanGameCraft (arXiv:2506.17201) | 视频 | 交互式无限长游戏视频 |
 | 2025-06-26 | **Hunyuan-A13B** 权重及技术报告开放 | 语言 | 官方仓库当日公告开放 Pretrain、Instruct、FP8、GPTQ-Int4；后续 arXiv v1 于 2026-09-23 提交 |
-| 2025.07 | HunyuanWorld 1.0 | 3D 世界 | 首个开源交互式 3D 世界生成 |
+| 2025.07 | HunyuanWorld 1.0 | 3D 世界 | 交互式 3D 世界生成系统 |
 | 2025.09 | **HunyuanImage-2.1** | 图像 | 17B DiT，原生 2K，单/双流混合，Glyph-Aware |
 | 2025-09-28 | **HunyuanImage-3.0**（base） | 图像 | 约 80B 总参 / 13B 每 token 激活；文本自回归、图像扩散的原生多模态混合架构 |
 | 2025.10 | **Hunyuan-Vision-1.5** | VLM | Mamba-Transformer 混合 VLM，A56B/4B，"Thinking on Image" |
 | 2025.11 | **HunyuanVideo-1.5** | 视频 | 8.3B 高效视频基模，SSTA 稀疏注意力 |
-| 2025.11 | **HunyuanOCR** (arXiv:2511.19575) | VLM-OCR | 1B 商用级开源 OCR-VLM |
-| 2025.12 | **混元 2.0** | 语言 | 推理能力与效率国内领先 |
+| 2025.11 | **HunyuanOCR** (arXiv:2511.19575) | VLM-OCR | 1B OCR-VLM |
+| 2025.12 | **混元 2.0** | 语言 | 推理模型系列；具体能力比较需按评测设置核查 |
 | 2026-01-26 | HunyuanImage-3.0-Instruct / Instruct-Distil | 图像 | 独立衍生权重；推理增强与图像编辑 / 少步蒸馏 |
-| 2026.04 | **HY 2.0 Think** | 语言推理 | 深度推理旗舰，128K上下文，分段定价 |
+| 2026.04 | **HY 2.0 Think** | 语言推理 | 深度推理模型，128K上下文 |
 | 2026.04 | **HY 2.0 Instruct** | 语言 | 指令遵循旗舰 |
 
 > 提示：阶段时间以 arXiv 提交或官方仓库 README 公示日期为准；部分模型存在多版本迭代（如 Hunyuan3D 2.0 → 2.1/2.5）。
@@ -66,7 +66,7 @@ Hunyuan 总平台
 │   ├── Hunyuan-A13B (80B/13B MoE)
 │   ├── Hunyuan-TurboS (Mamba+Transformer Hybrid MoE)
 │   ├── Hunyuan-T1 (Hybrid MoE 推理强化)
-│   ├── 混元 2.0 (2025.12，推理能力与效率国内领先)
+│   ├── 混元 2.0 (2025.12，推理模型系列)
 │   ├── HY 2.0 Think (2026.04，深度推理旗舰)
 │   └── HY 2.0 Instruct (2026.04，指令遵循旗舰)
 ├── 图像生成
@@ -98,7 +98,7 @@ Hunyuan 总平台
 
 ### 2.1 Hunyuan-LLM（早期闭源 MoE 旗舰）
 
-最早披露于 2023 年下半年，作为支撑腾讯元宝助手的核心 LLM，于 **2024 年 2 月** 全面切换至 MoE 架构（trillion 级总参规模），驱动元宝在阅读、写作和搜索能力上的产品升级。该阶段为闭源，没有公开技术报告，但在后续 Hunyuan-Large 论文中作为系列前身被引用，奠定了"全员 MoE"的工程路线。
+最早披露于 2023 年下半年，作为支撑腾讯元宝助手的核心 LLM；腾讯于 **2024 年 2 月** 宣布产品切换至 trillion 级 MoE 架构。该阶段没有公开技术报告，因此无法据此还原训练细节、产品能力变化或后续各模型的架构沿革。
 
 ### 2.2 Hunyuan-Large：389B 总参 / 52B 激活
 
@@ -134,21 +134,21 @@ Hunyuan 总平台
   - 长序列亚二次复杂度下的低成本高吞吐（Mamba 优势）；
   - 强语义建模与精细推理（Transformer 优势）。
 - **自适应 CoT（Adaptive Chain-of-Thought）**：根据 prompt 难度动态决定是否进入"慢思考"模式，简单问题快速直答，复杂问题自动展开多步推理；通过 Hunyuan-T1 监督信号生成自适应思考的训练数据。
-- **效果**：在 MATH=81.4 等基准上保持与 Qwen3 等顶级模型可比，同时显著降低慢思考类模型的平均推理成本，落地 Tencent Cloud `hunyuan-turbo-*` 系列商用 API。
+- **效果（作者报告）**：论文列出 MATH=81.4 等结果。由于本报告未固定相关评测实现、提示集及对照检查点，暂不据此声称与 Qwen3 同档，也不推导平均推理成本优势。
 
-### 2.5 Hunyuan-T1：首个 Mamba 驱动的超大推理模型
+### 2.5 Hunyuan-T1：Mamba-Transformer 混合推理模型
 
 > 官方页：tencent.github.io/llm.hunyuan.T1。
 > 发布时间：2025-03-21
 
-- **架构**：超大规模 **Hybrid-Transformer-Mamba MoE**（在 TurboS 基础上加深推理优化层），公开为腾讯首个具备"深度推理"能力的旗舰模型。
-- **能力**：长文本理解（继承 TurboS 的长上下文捕获能力）+ 强化学习驱动的链式推理；与 DeepSeek-R1、OpenAI o1 同梯队对标。
+- **架构**：**Hybrid-Transformer-Mamba MoE**；官方材料将其定位为深度推理模型。
+- **能力**：结合长文本理解与强化学习驱动的链式推理。与其他推理模型的能力排序不在本节下结论。
 - **关系**：T1 在 TurboS 之上提供"思考型"推理；TurboS 反向用 T1 的推理输出做自适应 CoT 蒸馏。
 
 ### 2.6 混元 2.0（2025-12-08）
 
-- **定位**：推理能力与效率国内领先的基座模型
-- **能力**：在中文推理、数学、代码等维度达到国内第一梯队
+- **定位**：面向推理任务的基座模型系列。
+- **能力边界**：不同模型、基准和推理配置未在本报告中完成同条件横评，因此不对国内排名作判断。
 - **后续**：为2026年HY 2.0系列奠定基础
 
 ### 2.7 HY 2.0 Think / Instruct（2026-04-27）
@@ -249,7 +249,7 @@ Hunyuan 总平台
 
 #### 4.1.1 总体定位
 
-腾讯混元基础模型团队推出，**目标是缩小开源与闭源视频生成（Sora、Gen-3、Kling 等）的差距**，13B 参数规模，具备文生视频与（衍生）图生视频能力，单视频可达 720p × 129 帧（约 5 秒，且可外推），是 2024 年开源视频模型的最强代表之一。
+腾讯混元基础模型团队提出的 13B 视频生成模型，支持文生视频；后续版本扩展图生视频。技术报告描述 720p、129 帧（约 5 秒）的生成设置。这里记录模型规模与任务范围，不据未固定的跨系统设置作质量排序。
 
 #### 4.1.2 数据系统
 
@@ -346,18 +346,19 @@ Hunyuan 总平台
 
 腾讯云上 `hunyuan-vision-*` API（含 `hunyuan-t1-vision-*`）从 2024 年起提供视觉问答、OCR、图文检索、文档解析等能力，作为内部业务和云客户的多模态接口；该阶段未开源。
 
-### 6.2 Hunyuan-Vision-1.5（2025.10 公布、计划开源）
+### 6.2 Hunyuan-Vision-1.5（2025.10 公布）
 
-> GitHub：`Tencent-Hunyuan/HunyuanVision`。
+> GitHub：[`Tencent-Hunyuan/HunyuanVision`](https://github.com/Tencent-Hunyuan/HunyuanVision/tree/61895cecc18a2ede2c8f8c921b9bec26130625f8)。该固定 README 仍把论文、权重和推理支持列在“Open-source Plan”中。
 
-- **架构亮点**：业内首批 **Mamba-Transformer 混合 VLM**，原生兼具高吞吐与强语义；与 LLM 端的 TurboS/T1 共用混合骨干哲学。
+- **架构**：采用 **Mamba-Transformer 混合 VLM**。吞吐、理解质量和其与 TurboS/T1 的技术继承关系需由固定实现和同条件实验验证，本报告不推断共享骨干。
 - **规格**：MoE 版本 **A56B**（约 56B 激活）+ **4B** 轻量版；含 Hunyuan-ViT-V1 视觉编码器；将提供 TRT 推理与 vLLM 支持。
 - **关键能力**：
   - **"Thinking on Image"（图上思考）**：在推理过程中主动调用 crop/zoom-in、画点/线/框等"图像操作工具"，并可调用网络检索补充知识，类似 OpenAI o3 的 visual chain-of-thought；
   - **3D 空间推理**、视频理解、多语种鲁棒。
-- **成绩**：2025-10-06 在 LMArena 中 `hunyuan-vision-1.5-thinking` 排第 3，国内最佳 VLM。
 
-### 6.3 HunyuanOCR：1B 商用级开源 OCR-VLM
+> 本报告不列 LMArena 排名：该固定 README 只记录官方对 2025-10-06 排名的说法，未附榜单快照、任务类型和对照模型版本，也不是独立评测。
+
+### 6.3 HunyuanOCR：1B OCR-VLM
 
 > 报告：arXiv:2511.19575，2025-11。
 
@@ -372,24 +373,24 @@ Hunyuan 总平台
 
 - **HunyuanVideo-Foley**（2025.08）：端到端的 Video-to-Audio 模型，根据画面与文本生成与时间精准对齐的音效/环境声，并配合 HunyuanVideo 输出"带声"视频；
 - **HunyuanVideo-Avatar**：在视频侧支持音频驱动数字人语音口型同步（输入语音→驱动头像视频）。
-- **Hunyuan-MT-7B**（2025.09）：7B 翻译模型，在 WMT2025 拿下 30/31 语言 SOTA，Flores200 上与 GPT-4.1 持平，腾讯把翻译作为"语言侧"专项小模型补强。
+- **Hunyuan-MT-7B**（2025.09）：7B 翻译模型；本报告未核验其 WMT2025 与 Flores-200 的跨模型比较，暂不复述具体排名或平分结论。
 - 截至公开信息，腾讯尚未发布与 GPT-4o-Voice / CosyVoice / Step-Audio 同档位的端到端语音 LLM；其语音/TTS 能力主要内嵌于元宝助手与企业 API。
 
 ---
 
 ## 8. 跨方向技术演进分析
 
-### 8.1 从"独立模型"到"统一平台"的整合路径
+### 8.1 公开材料中的跨方向技术关系
 
-腾讯混元的发布并非各自孤立，而是呈现出**横向技术复用 + 纵向能力堆栈**的两条主线：
+本报告按**公开材料中可见的设计元素**和**任务方向**整理模型家族；相似模块本身不能证明跨项目复用或共同训练沿革。
 
-**(1) 横向：相同的"工程基线"在多模态间复用**
+**(1) 横向：不同项目中出现的设计元素**
 
-- **MoE 策略**：Hunyuan-Large 的"共享 + 路由专家 + recycle routing + KV 压缩"成为 Hunyuan-A13B、TurboS、Vision-1.5 的共同 backbone 设计语言。
-- **Mamba-Transformer 混合**：先在 LLM（TurboS、T1）验证，再迁移至 VLM（Hunyuan-Vision-1.5）。
-- **Dual-Stream → Single-Stream DiT**：HunyuanVideo 的范式直接被 HunyuanImage-2.1 借用做"高分辨率 T2I 主骨架"，证实视频→图像的反哺。
-- **3D RoPE / Flow Matching**：HunyuanVideo、Hunyuan3D-DiT 共享同一类 flow-based diffusion transformer 训练范式与 RoPE 扩展技巧。
-- **MLLM Captioner / Hunyuan-Large Prompt Rewriter**：Hunyuan-DiT、HunyuanVideo 都用自家 LLM 做 caption 重写与 prompt 改写——LLM 直接成为生成模型的"前端语义模块"。
+- **MoE 设计**：Hunyuan-Large、A13B、TurboS 与 Vision-1.5 的公开材料涉及 MoE，但具体专家配置和共享结构应逐篇核对；本报告不把它们称作同一 backbone。
+- **Mamba-Transformer 混合**：TurboS/T1 与 Vision-1.5 的材料都描述混合架构；当前证据只支持记录相似设计，不支持“先在 LLM 验证、再迁移到 VLM”的沿革叙述。
+- **Dual-Stream → Single-Stream DiT**：HunyuanVideo 与 HunyuanImage-2.1 的材料都描述了相关流式结构；缺少直接设计沿革证据时，不将相似性写成跨项目借用或反哺。
+- **3D RoPE / Flow Matching**：HunyuanVideo 与 Hunyuan3D-DiT 的材料都讨论 flow-based 训练和位置编码；其具体实现及参数化是否相同，需要逐篇核对。
+- **Caption 与 Prompt 处理**：相关论文分别描述了 Captioner 或 Prompt Rewriter 等组件；具体模型依赖和质量贡献以各论文的设置及消融为准。
 
 **(2) 纵向：从生成到理解再到世界**
 
@@ -402,32 +403,32 @@ Hunyuan 总平台
 | 阶段 | 时间 | 标志 | 主线 |
 |---|---|---|---|
 | Phase 1：闭源旗舰 | 2023–2024.04 | Hunyuan-LLM trillion MoE | 业务 LLM |
-| Phase 2：开源全栈爆发 | 2024.05–2025.06 | DiT/Large/3D/Video 同期开源 | "造各赛道开源 SOTA" |
-| Phase 3：架构融合 + 生态平台化 | 2025.05–2026.04 | TurboS/T1/Vision-1.5/Image-3.0/Video-1.5/HunyuanWorld | "Mamba-Transformer 混合 + 多模态统一 AR + 世界化" |
-| Phase 4：推理旗舰迭代 | 2025.12–2026.04 | 混元 2.0 → HY 2.0 Think/Instruct | 以推理和指令能力为主的产品迭代 |
+| Phase 2：多方向公开发布 | 2024.05–2025.06 | DiT/Large/3D/Video 论文、代码或权重陆续发布 | 语言与生成模型并行扩展 |
+| Phase 3：混合架构与多模态扩展 | 2025.05–2026.04 | TurboS/T1/Vision-1.5/Image-3.0/Video-1.5/HunyuanWorld | 混合序列建模、多模态生成与世界模型方向并行 |
+| Phase 4：推理与指令模型发布 | 2025.12–2026.04 | 混元 2.0 → HY 2.0 Think/Instruct | 推理与指令模型迭代 |
 
 ### 8.3 与 LLM、生成线的相互增强
 
 - **LLM → 生成**：报告记录 Hunyuan-Large 用于 caption/prompt 重写；HunyuanImage-3.0 则将文本自回归建模与图像扩散预测整合进原生多模态序列；
-- **生成 → LLM**：HunyuanVideo 的多模态结构启发了 Vision-1.5 的"图像思考"行为；MLLM Captioner 在视频/图像数据上获得的细粒度对齐，又反哺 LLM 的视觉指令训练。
+- **生成与视觉理解的潜在联系**：公开材料分别讨论了生成模型的多模态结构、图像推理和 Captioner 训练；在缺少直接设计沿革或消融证据时，不把它们写成单向因果或“反哺”关系。
 
 ---
 
-## 9. 关键创新点
+## 9. 技术阅读要点
 
-按"对中国/全球开源社区最具增量价值"维度归纳：
+以下归纳聚焦本报告已介绍、适合进一步阅读的技术设计，不构成创新性或行业排名：
 
-1. **首个开源 trillion-级 Transformer-MoE（Hunyuan-Large）**
+1. **Hunyuan-Large 的 MoE 与注意力设计**
    - 共享 + 路由专家、Recycle Routing、Expert-Specific LR；GQA+CLA 的“近95%”只指论文以 BF16、原始 MHA 为基线的 KV-cache 张量字节数（§2.2.2，Table 2）；MoE compute-budget 式 (2) 的定义、拟合区间与外推边界见 §2.3.1。
 
-2. **首个 Mamba-Transformer 超大 LLM（Hunyuan-T1 / TurboS）**
-   - 把 SSM 引入 80B+ 级别推理 LLM，同时引入自适应 CoT，在"成本/质量/响应速度"三角上提供新解。
+2. **TurboS / T1 的 Mamba-Transformer 混合路线**
+   - 相关技术报告描述了 Mamba 与 Transformer 的组合，并讨论自适应 CoT。该设计的质量、速度和成本收益需要按对应实验设置分别判断。
 
 3. **中文原生 DiT 文生图（Hunyuan-DiT）**
-   - 双语 CLIP + 多语 T5 + 2D RoPE + MLLM Captioner + 多轮多模态对话生图，成为开源中文 T2I 标杆。
+   - 双语 CLIP + 多语 T5 + 2D RoPE + MLLM Captioner + 多轮多模态对话生图；其作者报告的对照范围和评分结论见上文评测段落。
 
 4. **HunyuanVideo 的"Dual→Single Stream DiT + Causal 3D VAE + MLLM 文本编码 + 3D RoPE + Full Attention"五件套**
-   - 是开源视频生成最完整的工程报告之一，被广泛复用（HunyuanImage-2.1、社区微调如 SkyReels）。
+   - 这些组件构成该报告描述的视频生成架构；不同组件的独立贡献和社区采用范围需要分别验证。
 
 5. **HunyuanImage-3.0 的原生多模态混合生成**
    - 文本 token 自回归、图像 latent 扩散；论文 v3 报告总参超过80B、每token激活13B。不同任务路径和 checkpoint revision 应分开核查，不据单个厂商自述给出跨模型规模排名。
@@ -439,14 +440,14 @@ Hunyuan 总平台
    - 把"几何"与"纹理"作为两个独立可扩展的扩散问题分别训练，配合 ShapeVAE；后续 Studio 报告扩展到从概念图到游戏资产的多个生产阶段，但本报告未核验端到端耗时。
 
 8. **HunyuanWorld：3D 世界 + 可交互**
-   - 站在 Hunyuan3D + HunyuanVideo 的肩膀上，把生成内容从"图/视频/资产"推到"可游玩 3D 世界"。
+   - 将场景生成与交互式世界探索结合；具体输入条件、生成流程和可控性应以对应版本的技术材料为准。
 
 9. **Hunyuan-Vision-1.5 的 "Thinking on Image"**
-   - VLM 主动调用图像操作工具 + 网络检索做视觉链式推理，是国产开源 VLM 在 LMArena 的最佳成绩之一。
+   - 报告将其描述为结合视觉工具与检索的推理路线；不以未固定日期、版本和评测设置的榜单成绩作结论。
 
 ---
 
-## 10. 与其他国产模型的差异化定位
+## 10. 研究范围与有限比较
 
 | 维度 | Hunyuan | Qwen（阿里） | DeepSeek | GLM/智谱 | Kimi（月之暗面） |
 |---|---|---|---|---|---|
@@ -457,11 +458,11 @@ Hunyuan 总平台
 | 3D | **Hunyuan3D 1/2/2.5 + Studio + World** | – | – | – | – |
 | VLM | Hunyuan-Vision-1.5（Mamba-T 混合）、HunyuanOCR | Qwen2.5-VL/Qwen3-VL | DeepSeek-VL2 | GLM-4V/4.5V | k1.5-vl |
 
-**差异化要点（研究归纳，非横评）**：
+**范围观察（研究归纳，非横评）**：
 - **当前报告覆盖语言、图像、视频、3D/世界、OCR 与 V2A**，体现了腾讯已公开研究方向的跨度；本报告没有对全市场覆盖率或各方向的同协议模型质量做完整盘点，故不据此声称“国内覆盖最宽”或“视频与 3D/世界最强 SOTA”。
-- **架构哲学上"押注 Mamba-Transformer 混合 + MoE"**，与 DeepSeek（纯 MoE+MLA）、Qwen（密集+MoE 双线）、Kimi（强 attention 注意力优化）形成路线分化。
-- **大量复用业务侧 LLM（Hunyuan-Large）当 caption/prompt rewriter**，把 LLM 的"语义先验"显式注入到生成模型，是其内容质量明显高于同等开源模型的工程秘密。
-- **腾讯把 3D 与世界生成单独立项**（Hunyuan3D Studio、HunyuanWorld、GameCraft），与游戏/广告/影视产业链高度绑定，这是其他几家暂未规模化覆盖的赛道。
+- **本报告涉及的公开模型呈现多种架构尝试**：部分混元模型采用 Mamba-Transformer 混合或 MoE；与其他团队的路线差异应基于固定版本的技术材料比较，本报告不把厂商家族概括为单一架构哲学。
+- **公开材料中的跨模型协作**：部分生成线使用大模型进行 caption 或 prompt 处理；这体现了数据与条件构造的重要性，但单凭流程描述不能推断其带来了相对其他模型的质量优势。
+- **3D 与世界模型方向**：Hunyuan3D、Hunyuan3D Studio、HunyuanWorld 和 GameCraft 提供了不同粒度的资产、场景与交互生成研究材料；不据此推断其他团队未覆盖或商业产业链优势。
 
 ---
 
