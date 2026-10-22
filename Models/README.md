@@ -25,7 +25,7 @@
 | **Gemini** | [Google Gemini系列模型深度调研报告](<Gemini/report.md>) | 825 行 |
 | **Google-Gen** | [Google / DeepMind 生成模型系列研究报告](<Google-Gen/report.md>) | 878 行 |
 | **Grok** | [xAI Grok 系列模型深度调研报告](<Grok/report.md>) | 469 行 |
-| **Hunyuan** | [Hunyuan系列模型深度调研报告](<Hunyuan/report.md>) | 502 行 |
+| **Hunyuan** | [Hunyuan系列模型深度调研报告](<Hunyuan/report.md>) | 504 行 |
 | **Kimi** | [Kimi 系列模型深度调研报告](<Kimi/report.md>) | 616 行 |
 | **Kling** | [快手可灵（Kling）视频生成模型系列研究报告](<Kling/report.md>) | 537 行 |
 | **LLaMA** | [Meta LLaMA 系列大模型完整研究报告](<LLaMA/report.md>) | 483 行 |
@@ -60,7 +60,7 @@
 <details>
 <summary><b>Hunyuan</b>（1 份）</summary>
 
-* [sources/MANIFEST.md](<Hunyuan/sources/MANIFEST.md>) — 69 行 / 16,610 B
+* [sources/MANIFEST.md](<Hunyuan/sources/MANIFEST.md>) — 78 行 / 19,522 B
 
 </details>
 

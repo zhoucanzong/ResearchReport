@@ -12,7 +12,7 @@
 - [4. 视频生成模型：HunyuanVideo 与衍生家族](#4-视频生成模型hunyuanvideo-与衍生家族)
 - [5. 3D生成模型：Hunyuan3D 与 HunyuanWorld](#5-3d生成模型hunyuan3d-与-hunyuanworld)
 - [6. 多模态理解：Hunyuan-VL / Hunyuan-Vision-1.5 / HunyuanOCR](#6-多模态理解hunyuan-vl--hunyuan-vision-15--hunyuanocr)
-- [7. 音频/语音相关模型](#7-音频语音相关模型)
+- [7. 音频、语音与机器翻译](#7-音频语音与机器翻译)
 - [8. 跨方向技术演进分析](#8-跨方向技术演进分析)
 - [9. 技术阅读要点](#9-技术阅读要点)
 - [10. 研究范围与有限比较](#10-研究范围与有限比较)
@@ -367,13 +367,15 @@ Hunyuan 总平台
 
 ---
 
-## 7. 音频/语音相关模型
+## 7. 音频、语音与机器翻译
 
 腾讯混元在音频侧的开源更聚焦"视频生态闭环"，而非纯 TTS：
 
 - **HunyuanVideo-Foley**（2025.08）：端到端的 Video-to-Audio 模型，根据画面与文本生成与时间精准对齐的音效/环境声，并配合 HunyuanVideo 输出"带声"视频；
 - **HunyuanVideo-Avatar**：在视频侧支持音频驱动数字人语音口型同步（输入语音→驱动头像视频）。
-- **Hunyuan-MT-7B**（2025.09）：7B 翻译模型；本报告未核验其 WMT2025 与 Flores-200 的跨模型比较，暂不复述具体排名或平分结论。
+- **Hunyuan-MT-7B / Hunyuan-MT-Chimera-7B**（2025.09）：前者是 7B 翻译模型，后者把同一模型在不同设置下生成的多个译文融合为一个输出。技术报告分别使用 Flores-200、WMT24pp 开发集和普通话—少数民族语言测试集，并报告自动指标和专家评分；这些结果不应与 WMT25 竞赛排名混为一谈。见[技术报告 §4](https://arxiv.org/html/2509.05209v2)。
+
+  WMT25 中，Tencent 技术报告称其参赛系统在 31 个语言方向里有 30 个“排名第一”。组织方的结果论文将参赛系统标为 **Shy-hunyuan-MT**，并指出 30/31 是自动排名：该系统在人评中明显低于部分高排名系统，但仍是受限赛道表现最好的系统，在 11 个方向进入该赛道的胜出组；总体人评中 Gemini 2.5 Pro 在 14 个方向进入顶端组。因而 30/31 不能写成“人评赢 30 个语种”，也不能不加区分地归到基础 Hunyuan-MT-7B 检查点。来源：[WMT25 结果论文 §7.2](https://www2.statmt.org/wmt25/pdf/2025.wmt-1.22.pdf)、[Shy-hunyuan-MT 系统论文](https://aclanthology.org/2025.wmt-1.36.pdf)。
 - 截至公开信息，腾讯尚未发布与 GPT-4o-Voice / CosyVoice / Step-Audio 同档位的端到端语音 LLM；其语音/TTS 能力主要内嵌于元宝助手与企业 API。
 
 ---

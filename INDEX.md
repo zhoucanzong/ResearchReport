@@ -16,8 +16,8 @@
 | **条目数**（`report.md`） | **50** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 8 · VisualGen 8 · WorldModel 2 · Infra 3 · OpenSource 6 |
 | 条目子文档数 | 110 |
-| 条目正文行数（剔除 front-matter） | 27,197 |
-| 条目字节 | 1,886,155 B |
+| 条目正文行数（剔除 front-matter） | 27,199 |
+| 条目字节 | 1,887,143 B |
 | 带 front-matter 的条目 | 9 |
 | 带合法 `date` 的条目 | 9 |
 | 文档（除生成物外的全部 `.md`） | 176 |
@@ -32,13 +32,13 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| Models | 23 | 35 | 12,624 | 896,577 B | [板块页 →](<Models/README.md>) |
+| Models | 23 | 35 | 12,626 | 897,565 B | [板块页 →](<Models/README.md>) |
 | LLM | 8 | 27 | 4,136 | 299,102 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,758 | 320,420 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 2 | 31 | 1,213 | 130,531 B | [板块页 →](<WorldModel/README.md>) |
 | Infra | 3 | 33 | 905 | 72,511 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 33 | 1,561 | 167,014 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **50** | **176** | **27,197** | **1,886,155 B** | — |
+| **合计** | **50** | **176** | **27,199** | **1,887,143 B** | — |
 
 ## 分面索引
 
@@ -182,14 +182,14 @@
   </details>
 
   <details>
-  <summary><b>Hunyuan</b> · <code>Models/Hunyuan/report.md</code> · 502 行 · —</summary>
+  <summary><b>Hunyuan</b> · <code>Models/Hunyuan/report.md</code> · 504 行 · —</summary>
 
 
-    * **条目**：[Models/Hunyuan/report.md](<Models/Hunyuan/report.md>)（502 行 / 41,360 B）
+    * **条目**：[Models/Hunyuan/report.md](<Models/Hunyuan/report.md>)（504 行 / 42,348 B）
     * **专题目录**：`Models/Hunyuan`
     * **元数据**：type=`—` · domain=`Models` · subject=`Hunyuan` · date=`—` · status=`—`
     * **子文档（1）**
-        * [sources/MANIFEST.md](<Models/Hunyuan/sources/MANIFEST.md>) — 69 行 / 16,610 B
+        * [sources/MANIFEST.md](<Models/Hunyuan/sources/MANIFEST.md>) — 78 行 / 19,522 B
 
   </details>
 
