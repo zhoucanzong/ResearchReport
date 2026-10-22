@@ -4,7 +4,7 @@
 > 需要回看原文时：按下面的 arXiv 链接现取；本地缓存可选（`~/Documents/paper-cache/<id>@<版本>/`），缓存同样不入库。
 > **代码仓库**只记录 `仓库 @ commit` 与用到的 `文件:行`，**源码不入库**。
 
-## 1. 论文（10 个分册覆盖 12 篇论文）
+## 1. 论文（14 个分册覆盖 16 篇论文）
 
 | # | 分册（我们的精读） | arXiv ID | 版本 | 版本日期 | 标题（arXiv 元数据，逐条核实） | 第一作者（核实） | license | 去哪找原文 |
 | --: | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
@@ -20,16 +20,20 @@
 | 10 | [`papers/2608.13524-dartree.md`](<../papers/2608.13524-dartree.md>) | 2608.13524 | v1 | 2026-08-13 | DARTree: Speculative Diffusion Decoding with Autoregressive Draft Trees | Li, Tianyi | CC BY 4.0 | https://arxiv.org/abs/2608.13524v1 |
 | 11 | [`papers/2609.33184-specstream.md`](<../papers/2609.33184-specstream.md>) | 2609.33184 | v1 | 2026-09-27 | Resource-Efficient Speculative Decoding for Long-Context LLM Serving | Li, Fei | CC BY 4.0 | https://arxiv.org/abs/2609.33184v1 |
 | 12 | [`papers/2610.23787-dlite.md`](<../papers/2610.23787-dlite.md>) | 2610.23787 | v1 | 2026-10-16 | DLite: History-free Speculative Decoding for Agentic AI | Xu, Jiaming | CC BY 4.0 | https://arxiv.org/abs/2610.23787v1 |
+| 13 | [`papers/2601.05724-hsd.md`](<../papers/2601.05724-hsd.md>) | 2601.05724 | v2 | 2026-03-02 | Overcoming Joint Intractability with Lossless Hierarchical Speculative Decoding | Zhou | CC BY 4.0 | https://arxiv.org/abs/2601.05724v2 |
+| 14 | [`papers/2602.16994-delayed-tree.md`](<../papers/2602.16994-delayed-tree.md>) | 2602.16994 | v1 | 2026-02-19 | Dynamic Delayed Tree Expansion For Improved Multi-Path Speculative Decoding | Thomas | CC BY 4.0 | https://arxiv.org/abs/2602.16994v1 |
+| 15 | [`papers/2606.01813-caddtree.md`](<../papers/2606.01813-caddtree.md>) | 2606.01813 | v1 | 2026-06-01 | CaDDTree: Cost-Aware Diffusion Draft Trees for Speculative Decoding | Zhang, Shuai | CC BY 4.0 | https://arxiv.org/abs/2606.01813v1 |
+| 16 | [`papers/2610.07350-tlar.md`](<../papers/2610.07350-tlar.md>) | 2610.07350 | v1 | 2026-10-05 | Trajectory-Retrieval Speculative Decoding: When Does a Model’s Own History Help? | Dai, Yuyang | CC0 1.0 | https://arxiv.org/abs/2610.07350v1 |
 
 ## 2. 代码仓库（4 个实现/代码切面核验 + 1 个官方参考实现）
 
 | # | 分册/用途 | 仓库 | commit | 日期 | 用到的文件:行 | license |
 | --: | :-- | :-- | :-- | :-- | :-- | :-- |
-| 13 | [DARTree 精读](../papers/2608.13524-dartree.md) | `VILA-Lab/DARTree` | `5bb3240e806a9ccdc2c65e98d3bc40998a9845f1` | 2026-08-13 | `run_dartree.py:20–81`；`eval_dartree.py:586–760`（supertree）；`utils/draft_model.py:397–507`（draft/verify/commit） | 未核实（快照根目录未发现 LICENSE） |
-| 14 | [DLite 精读](../papers/2610.23787-dlite.md) | `SJTU-DAI-Sys/DLite` | `e0aa3d55d792fc9088231e13779678bcfdb3188f` | 2026-10-21 | `dlite/engine.py:67–106`；`dlite/modeling/dlite.py:345–461,503–735`；`dlite/modeling/sequential_head.py:72–87`；`dlite/utils/sampling.py:73–125` | MIT |
-| 15 | [vLLM 实现核验](../papers/vllm-implementation.md) | `vllm-project/vllm` | `2b85d9cb65c1f56c347cb7f56f1596a6b8b28373` | 2026-10-17 | `config/speculative.py:533,604`；`v1/spec_decode/llm_base_proposer.py:257–261,449–509`；`v1/sample/rejection_sampler.py:410–520,949,1128`；`v1/spec_decode/metrics.py:107–122`；`v1/worker/gpu_model_runner.py:4714–4741,4987–4990` | Apache-2.0 |
-| 16 | [SGLang 实现核验](../papers/sglang-implementation.md) | `sgl-project/sglang` | `2a08e261ecd4cdfb04ec354f9005f18b88108b7d` | 2026-10-16 | `speculative/eagle_worker_v2.py:178–180,181–182,648–657,671–684,727–733`；`speculative/eagle_utils.py:157,384,741,860–916,947,1000–1013,1032–1038`；`speculative/eagle_info.py:35,162` | Apache-2.0 |
-| 17 | [EAGLE 分册 §8.1 + report §8.1](../papers/2401.15077-eagle-series.md) | `SafeAILab/EAGLE` | `cb7e0841fe0c206c6ed74a197ad5e2a1f13f5a2b` | 2026-02-20 | `eagle/model/utils.py:398–399`（`qx=1.0`）；`eagle/model/ea_model.py:270,452`；`eagle/modeling_eagle.py:1427` | 未核实（仓库根有 LICENSE，未逐字读） |
+| 17 | [DARTree 精读](../papers/2608.13524-dartree.md) | `VILA-Lab/DARTree` | `5bb3240e806a9ccdc2c65e98d3bc40998a9845f1` | 2026-08-13 | `run_dartree.py:20–81`；`eval_dartree.py:586–760`（supertree）；`utils/draft_model.py:397–507`（draft/verify/commit） | 未核实（快照根目录未发现 LICENSE） |
+| 18 | [DLite 精读](../papers/2610.23787-dlite.md) | `SJTU-DAI-Sys/DLite` | `e0aa3d55d792fc9088231e13779678bcfdb3188f` | 2026-10-21 | `dlite/engine.py:67–106`；`dlite/modeling/dlite.py:345–461,503–735`；`dlite/modeling/sequential_head.py:72–87`；`dlite/utils/sampling.py:73–125` | MIT |
+| 19 | [vLLM 实现核验](../papers/vllm-implementation.md) | `vllm-project/vllm` | `2b85d9cb65c1f56c347cb7f56f1596a6b8b28373` | 2026-10-17 | `config/speculative.py:533,604`；`v1/spec_decode/llm_base_proposer.py:257–261,449–509`；`v1/sample/rejection_sampler.py:410–520,949,1128`；`v1/spec_decode/metrics.py:107–122`；`v1/worker/gpu_model_runner.py:4714–4741,4987–4990` | Apache-2.0 |
+| 20 | [SGLang 实现核验](../papers/sglang-implementation.md) | `sgl-project/sglang` | `2a08e261ecd4cdfb04ec354f9005f18b88108b7d` | 2026-10-16 | `speculative/eagle_worker_v2.py:178–180,181–182,648–657,671–684,727–733`；`speculative/eagle_utils.py:157,384,741,860–916,947,1000–1013,1032–1038`；`speculative/eagle_info.py:35,162` | Apache-2.0 |
+| 21 | [EAGLE 分册 §8.1 + report §8.1](../papers/2401.15077-eagle-series.md) | `SafeAILab/EAGLE` | `cb7e0841fe0c206c6ed74a197ad5e2a1f13f5a2b` | 2026-02-20 | `eagle/model/utils.py:398–399`（`qx=1.0`）；`eagle/model/ea_model.py:270,452`；`eagle/modeling_eagle.py:1427` | 未核实（仓库根有 LICENSE，未逐字读） |
 
 逐条锚点、支撑断言与行号更正历史见 [CODE-AUDIT.md](CODE-AUDIT.md)。
 

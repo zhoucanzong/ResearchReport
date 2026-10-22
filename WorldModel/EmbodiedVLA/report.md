@@ -1,8 +1,8 @@
 # EmbodiedVLA 技术专题调研
 
 > **声明**：本报告由 AI Agent 自动调研生成，未经官方确认；引用具体参数、日期或 benchmark 前请回溯原始来源。
-> **调研日期**：2026-10-16 起骨架 → 2026-10-17 第二轮深度精读升级 → **2026-10-23 闭环控制专题补核**。
-> **主要增量**：原有 8 篇基础精读和 3 篇横切专题之后，2026-10-23 新增 3 篇闭环机制分册及「机器人闭环控制与 VLA」专题。此批次按闭环作用层级选文，没有新增模型名列表式扩写；版本及全文核读方式见[来源清单](sources/MANIFEST.md)。
+> **调研日期**：2026-10-16 起骨架 → 2026-10-17 第二轮深度精读升级 → 2026-10-23 闭环控制与世界模型迁移两批论文补核。
+> **主要增量**：原有 8 篇基础精读后，先新增 3 篇机器人闭环机制分册及专题，再新增 5 篇“世界模型数据如何改善 VLA 真机表现”分册及横切专题。第二批按合成数据、想象 RL、物理验证三种角色选文；版本、候选取舍与精读范围见[来源清单](sources/MANIFEST.md)和[选文说明](sources/CANDIDATES.md)。
 > **定位**：本报告采用操作性定义：EmbodiedVLA（Vision-Language-Action）指**以自然语言指令 + 视觉观测为输入、直接输出机器人动作信号的可部署策略模型**；据此建立判据、动作表征架构谱系、代表系统、数据、评测与应用边界。**世界模型作为 VLA 的训练环境**是本专题与 `WorldModels` 的交叉点（见第 7 章）。
 
 **证据等级约定（单一主等级）**：`[精读原文]` 已通读一手正文（论文有 `papers/` 分册，或官方仓库已做固定 commit 代码核验）；`[摘要级]` 仅核验官方摘要 / 页面，**未通读正文，细节不得当作已成立事实**；`[二手]` 第三方转述；`[受限核验]` 一手对象只能经镜像 / API 间接确证。每条只给**一个主等级**；来源类型写在括号内。本报告代码类证据一律写成 `仓库@commit:文件:行`，并按第 2.3 节区分**代码事实**与**研究推断**。
@@ -13,9 +13,11 @@
 
 > **闭环控制补核（2026-10-23）**：新增 π*0.6/RECAP、VLCP、LingBot-VA 三篇逐篇分册，并将 VersualRL（[arXiv:2603.22169v3](https://arxiv.org/html/2603.22169v3)，原文题名拼作 VersualRL）作为真机任务层策略学习的边界案例登记。四项分别涉及跨 episode VLA 参数学习、同 episode 代码修订、世界模型滚动/接地、任务级 Behavior Tree 更新；成功率、吞吐与恢复率不互换，也不组成排行榜。见[闭环控制专题](topics/closed-loop-control.md)。
 
+> **世界模型迁移补核（2026-10-23）**：新增 SimVLA、Grounded-Dreamer、VLAW、World-VLA-Loop、WoVR 五篇全文精读，并比较其模型角色：程序化仿真数据源、视频生成和物理回放校验、真实 rollout 更新模拟器后合成监督、以及模型内 RL。跨论文结果不组成排行榜；特别区分 task progress / success rate、策略训练中的真机预算和独立物理评估。见[世界模型到 VLA 迁移专题](topics/world-model-to-vla-transfer.md)。
+
 ## 深度阅读导航
 
-### 精读分册（`papers/`，11 篇，均 `[精读原文]`）
+### 精读分册（`papers/`，16 篇，均 `[精读原文]`）
 
 | # | 分册 | 一句话定位 | 动作表征路线 |
 | --: | :-- | :-- | :-- |
@@ -30,8 +32,13 @@
 | 9 | [π*0.6 / RECAP（2511.14759）](papers/2511.14759-pi-star-0.6-recap.md) | 从真机 rollouts、回报与人工纠正中跨 episode 改进 VLA | **advantage-conditioned policy** |
 | 10 | [VLCP（2608.16978）](papers/2608.16978-vlcp.md) | 同一 episode 按观测改写失败的代码策略；证据目前限仿真 | **代码控制器重规划** |
 | 11 | [LingBot-VA（2601.21998）](papers/2601.21998-lingbot-va.md) | 预测视觉未来并输出动作，以异步执行和真实观测回灌滚动 | **world-model rollout** |
+| 12 | [SimVLA（2610.11248）](papers/2610.11248-simvla.md) | SimAction / SimVQA / SimDeploy 三种仿真监督，部署到移动操作真机 | **flow matching + tokenized action** |
+| 13 | [Grounded-Dreamer（2610.13164）](papers/2610.13164-grounded-dreamer.md) | 从真实初始图像重建场景，视频模型合成后用物理仿真 replay 筛轨迹 | **video WM + IDM** |
+| 14 | [VLAW（2602.12063）](papers/2602.12063-vlaw.md) | 真机 rollouts 校准世界模型，生成成功轨迹与真实成功样本混合微调 | **flow matching policy** |
+| 15 | [World-VLA-Loop（2602.06508）](papers/2602.06508-world-vla-loop.md) | 近成功数据 + 内生奖励，在学得的模拟器里做 VLA 强化学习并共同迭代 | **world-model RL** |
+| 16 | [WoVR（2602.13977）](papers/2602.13977-wovr.md) | KIR 缩短想象误差深度，PACE 跟踪策略引起的模型分布漂移 | **world-model RL** |
 
-### 横切专题（`topics/`，4 篇）
+### 横切专题（`topics/`，5 篇）
 
 | 专题 | 回答什么 | 何时读 |
 | :-- | :-- | :-- |
@@ -39,13 +46,14 @@
 | [动作表征三路线](topics/action-representation.md) | token / flow matching / diffusion head 的训练目标、超参、推理代价与边界 | 要判断某系统属哪条路线时 |
 | [失效边界与部署条件](topics/deployment-boundaries.md) | 六类可命名的失效机制 + 上线前自检清单 | 讨论"能不能部署"时 |
 | [机器人闭环控制与 VLA](topics/closed-loop-control.md) | chunk feedback、episode 内恢复、跨 episode 学习、世界模型 rollout 的机制与证据边界 | 讨论"闭环到底闭在哪里"时 |
+| [世界模型到 VLA 迁移](topics/world-model-to-vla-transfer.md) | 合成示范、想象 RL 与物理校验各自怎样带来真机增益，以及真机数据预算 | 要判断"模型预测是否真的改善机器人动作"时 |
 
 ### 选文与来源（`sources/`）
 
 | 文件 | 内容 |
 | :-- | :-- |
-| [CANDIDATES.md](sources/CANDIDATES.md) | 历史候选池 27 + 闭环专题 4 篇；入选 11，排除 20，并分别记录纳入标准与边界理由 |
-| [MANIFEST.md](sources/MANIFEST.md) | 11 篇的 arXiv ID / 版本 / 版本日期 / 标题 / 第一作者 / license / 来源 |
+| [CANDIDATES.md](sources/CANDIDATES.md) | 历史 27 篇 + 闭环 4 篇 + 世界模型迁移 20 篇；累计入选 16，排除/边界 35，并记录选择依据 |
+| [MANIFEST.md](sources/MANIFEST.md) | 16 篇的 arXiv ID / 版本 / 版本日期 / 标题 / 第一作者 / license / 来源 |
 
 > **全文不入库**：论文 PDF / 转出的 txt 一律不进入本仓库；缓存放在仓库外 `~/Documents/paper-cache/`，理由见 [MANIFEST.md](sources/MANIFEST.md) §3。
 
@@ -63,13 +71,13 @@
 8. **与相邻领域边界**：VLA 是**策略**，VLM 是**输入侧模型**，Agent 是**外层决策循环**，WorldModels 产出的是**环境/状态转移**而非动作；联合模型（WorldVLA 一类）按"交付物"拆分归属，避免重复劳动（第 7 章与 `WorldModels` 章显式互引）。`[摘要级]`（arXiv 摘要）
 9. **闭环要按修改对象与时间尺度拆开**：chunk 间重规划、episode 内控制代码修订、跨 episode VLA 参数学习、世界模型预测接地各自是不同机制；实验跨仿真与不同真机任务，指标不可合并为排行榜。`[精读原文]`（[闭环控制专题](topics/closed-loop-control.md)）
 
-> **口径变化**：第一轮骨架的 6 条结论全部为 `[摘要级]`；第二轮后，第 2–7 条由基础八篇分册支撑。2026-10-23 另为闭环控制新增三篇分册。第 1 条（术语无公认定义）与第 8 条（边界约定）**仍为 `[摘要级]`**——它们是本专题的操作性约定，而非文献结论。
+> **口径变化**：第一轮骨架的 6 条结论全部为 `[摘要级]`；第二轮后，第 2–7 条由基础八篇分册支撑。2026-10-23 先新增闭环控制三篇，再新增世界模型迁移五篇分册。第 1 条（术语无公认定义）与第 8 条（边界约定）**仍为 `[摘要级]`**——它们是本专题的操作性约定，而非文献结论。
 
 ### 0.1 本轮证据普查（可逐条核对）
 
 | 等级 | 条数 | 覆盖对象 | 能被用来支撑什么 |
 | :-- | --: | :-- | :-- |
-| `[精读原文]` | **16** | **11 篇论文分册**（新增 RECAP / VLCP / LingBot-VA）+ **5 个官方仓库**（均有固定 commit 代码核验） | 具体数字、超参、协议、规模——**但必须带分册给出的条件** |
+| `[精读原文]` | **21** | **16 篇论文分册**（基础八篇、闭环三篇、世界模型迁移五篇）+ **5 个官方仓库**（均有固定 commit 代码核验） | 具体数字、超参、协议、规模——**但必须带分册给出的条件** |
 | `[摘要级]` | **35** | RT-1、Octo、π0.5、π0.7、VersualRL（只作任务级边界参照）、RDT-1B、GR00T N1、TinyVLA、Mobile ALOHA、ALOHA Unleashed、Gemini Robotics、LIBERO、RoboCasa、Isaac Sim、ManiSkill、robosuite、V-JEPA 2、Dreamer 4、Cosmos WFM、WorldVLA、Magma、RT-H、OpenVLA-OFT、PaliGemma、BridgeData V2、RH20T、Humanoid-Gym、各官方项目页等 | **只能支撑"存在性"与"定位"**（某系统存在、它自述做什么）；**不得引用其数值** |
 | `[受限核验]` | **2** | VLA 综述（2505.04769）、VLA 设计要素分析（2412.14058） | 仅作术语与检索线索；**正文未读，不作事实来源** |
 | `[二手]` | **0** | — | — |
@@ -276,7 +284,7 @@
   - **WorldVLA** 为"自回归动作世界模型"，同时涉及动作与未来帧。`[摘要级]`（arXiv:2506.21539 v1 2025-06-26）
 - **归属规则**：上述四条**全部归属 `WorldModels`**，本专题只登记"可被 VLA 消费"的接口，**不重复展开其架构与评测**（见第 7 章）。
 
-**本章遗留**：①真机数据集许可与可下载性按 [MANIFEST.md](sources/MANIFEST.md) 分别核对；②"世界模型合成数据是否真的提升真机成功率"**本轮仍未确证**（列入第 15 章）。LingBot-VA 是部署时预测/动作闭环与真机表现证据，不能据此推出世界模型合成数据提高真机成功率。
+**本章遗留**：①真机数据集许可与可下载性按 [MANIFEST.md](sources/MANIFEST.md) 分别核对；②已有五篇直接研究世界模型数据、imagined RL 与 VLA 真机迁移（见[迁移专题](topics/world-model-to-vla-transfer.md)），但各论文的模型角色、真机预算和指标不同，仍无同任务同预算的跨方法对照；③LingBot-VA 是部署时预测/动作闭环与真机表现证据，不等于世界模型合成数据训练效果。
 
 ---
 
@@ -373,7 +381,7 @@
 
 1. **定义收敛**：VLA 是否需要"网络规模 VLM 初始化"作为必要条件？RT-1 一类如何表述才不引起误用？（第 1 章）
 2. **动作表征的量化取舍**：token / flow matching / diffusion head 的**推理延迟—成功率**曲线为何？现有对照均为各系统自报，**无共基准横评**。（第 2 章、[动作表征专题](topics/action-representation.md) §8）
-3. **世界模型是否真的提升 VLA 真机性能**：**本轮仍未确证任何"用世界模型合成数据训练 VLA 并提升真机成功率"的一手对照实验**。（第 4.3 章）
+3. **世界模型怎样影响 VLA 真机表现**：现有论文报告了合成示范、视频生成轨迹和模型内 RL 的真机结果；仍需在相同 backbone、任务协议和真实交互预算下比较三条路线。（[世界模型到 VLA 迁移专题](topics/world-model-to-vla-transfer.md)）
 4. **sim-real 相关性是否可复现**：SIMPLER 主张**排序**强相关、π0.5 主张真机泛化仍难；两者是否在同一本体 / 同一评测协议下可比，需要精读核对。（第 5 章）
 5. **双系统是否为必要架构**：GR00T N1 的 System 2 / System 1 分工是设计选择还是规模必需？（第 3.3 章，未精读）
 6. **安全问题**：VLA 的失败恢复、越界动作抑制、人在环路接管缺乏统一判据与报告项；新增工作在各自实验边界内研究恢复/策略更新，仍无通用协议（见[闭环控制专题](topics/closed-loop-control.md)）。
@@ -382,7 +390,7 @@
 
 ---
 
-## 9. 跨系统对比总表（本轮 8 篇精读汇总）
+## 9. 基线系统对比总表（基础批次 8 篇精读汇总）
 
 > **本表不是排行榜**：每列数值都来自各自的条件（本体 / 频率 / 任务数 / trial 数 / 协议），**列之间不可比**。用途是"一张表看清各系统的口径差异"。
 
@@ -476,14 +484,15 @@
 
 ## 14. 本轮方法学注记（证据是怎么处理的）
 
-1. **先筛选后精读**：`sources/CANDIDATES.md` 记录历史候选池 27 = 入选 8 + 排除 19；2026-10-23 增加 4 个闭环候选，当前合计 31 = 入选 11 + 排除 20。**类别性排除项不给 ID**（不编造）。
+1. **先筛选后精读**：`sources/CANDIDATES.md` 分批记录历史候选池 27、闭环控制批次 4、世界模型迁移批次 20；当前累计 **51 = 入选 16 + 排除/边界 35**。**类别性排除项不给 ID**（不编造）。
 2. **原文获取**：先查本地缓存 `~/Documents/paper-cache/`，**7 篇命中即用、不重复下载**；仅 DROID（2403.12945）未命中，用 `paper-fetcher` skill 抓取。
 3. **文本提取**：`pdftotext -layout` 提取为 txt（版本行、表锚点均可逐字核对）；**txt / PDF 一律不入库**。
-4. **等级纪律**：单一主等级；**`[精读原文]` 只授予有分册的 11 篇**（以及已做固定 commit 代码核验的官方仓库）；摘要支撑的**不升格**；未确证的进第 15 章。
+4. **等级纪律**：单一主等级；**`[精读原文]` 只授予有分册的 16 篇**（以及已做固定 commit 代码核验的官方仓库）；摘要支撑的**不升格**；未确证的进第 15 章。
 5. **推断分离**：每份分册的第 6 问把「论文自承」与「本文推断」分成 6.1 / 6.2；跨文档结论若混合来源，**按最弱等级读**。
 6. **闭环批次复核边界**：RECAP 按 arXiv v2 HTML 全文核对；VLCP 与 LingBot-VA 由 PaperFetcher PDF 抽取并对照 arXiv HTML 核验图表、数字与边界。**未做**评测代码复现、统计重算或统一硬件复现实验；图像曲线中未在正文列出的数字不估读。
 7. **生成物不改手**：`INDEX.md` / `index/*` / MkDocs nav / `docs/statistics.md` 全部由 `scripts/library_index.py` 产出。
 8. **本批次技能证据**：按 `researcher deep` 路径检索至 2026-10-23、通读选中工作并逐篇回答七问；使用 `paper-fetcher` 的 `fetch_paper.py download` 取 VLCP / LingBot-VA 并以 `pdftotext -layout` 抽取。RECAP 的 PDF 下载未完成，故全文改由 arXiv v2 HTML 核读并在分册标明；VersualRL 的真机实验只作任务层边界分析。
+9. **世界模型迁移论文批次**：按 `researcher deep` 以“合成示范训练 VLA”“世界模型中的 VLA-RL”“sim-to-real 与策略评测”分线检索；PaperFetcher 使用四组 `search_papers.py` 查询和 `fetch_paper.py batch … --citations` 核对题录及版本入口。五篇选中文章以固定 arXiv HTML 全文核读；没有把 WorldGym/GigaWorld 评测器、DreamZero/Cosmos Policy 直接控制器或普通 3D 仿真 RL 当成同一类训练证据。分册各自保留 4 行亮点、七问、具体原文锚点与 canonical claim-audit 计数；未下载 PDF、未复现训练，也未将作者结果写成独立验证。
 
 ---
 
@@ -494,13 +503,13 @@
 | 对象 | 当前状态 | 后续动作 |
 | :-- | :-- | :-- |
 | π0.7 的 arXiv / 技术报告 | 仅有官方博客（2026-04-16），**未找到 arXiv 条目** | 持续跟踪官方渠道；找到后核对是否与 π*0.6 为同系列 |
-| "世界模型合成数据训练 VLA → 真机成功率提升"的一手对照实验 | **未确证** | 检索 2025–2026 年 sim-to-real 对照文献 |
+| 同条件跨方法比较世界模型训练路线 | **未确证**：本轮找到合成示范、视频模型生成轨迹与 imagined RL 的直接真机证据，但模型角色、预训练数据、真实交互预算与指标不同 | 按[迁移专题](topics/world-model-to-vla-transfer.md)继续收敛同 backbone / 同任务 / 同交互预算的可比实验 |
 | 代码仓库中 `gr00t/model/gr00t_n1.py`（N1 论文对应实现） | 默认分支已演进为 `gr00t_n1d7/`，**旧路径 404** | 如需对齐 N1 论文，应取发布 tag 或历史 commit |
 | π0-FAST 在 GR00T / 其他系统的采用情况 | 未核验 | 检索官方仓库引用 |
 | 跨任务通用的 VLA 安全 / 失败恢复协议 | **本轮检索范围内仍未确证**；已有 episode 内恢复、跨 episode 策略学习与任务级 BT 改写的局部证据（见[闭环控制专题](topics/closed-loop-control.md)），不能据此推断通用协议不存在 | 继续专项检索，保持各自平台和指标边界 |
 | **DROID 小时数口径冲突** | DROID 原文 **350 h** vs GR00T N1 数据表 **428.3 h / 23.1M 帧**，**未裁决** | 回两篇原文对比计数口径 |
 | SIMPLER 的内部口径不一致（Table I "Drawer" vs Fig. 6） | **未裁决**（见分册 8 §9） | 回原文逐表核对 |
-| 各系统自报成功率、延迟、数据规模的**具体数值** | 11 篇精读对象**已入分册**；未精读对象**一律不引用** | 引用时带条件 |
+| 各系统自报成功率、延迟、数据规模的**具体数值** | 16 篇精读对象**已入分册**；未精读对象**一律不引用** | 引用时带条件 |
 | 「自动驾驶是否算 VLA」 | 语言条件化不满足时按 R2 排除，**判定未定稿** | 回一手文献定判定细则 |
 | 三类动作头的延迟—成功率共基准曲线 | **未确证**（无第三方横评） | 检索或自建同基准消融 |
 
@@ -509,8 +518,8 @@
 ## 参考文献
 
 > 体例：编号 + 标题 + 一手来源链接 + **单一主等级**（括号内为来源类型）+ 归属章节。
-> **本轮共 53 条**：`[精读原文]` **16 条**（11 篇分册论文 + 5 个已在分册内做固定 commit 代码核验的官方仓库）+ `[摘要级]` **35 条** + `[受限核验]` **2 条** + `[二手]` **0 条**（16 + 35 + 2 = 53）。
-> **口径变化**：原有基础批次含 8 篇分册论文与 5 个固定 commit 仓库；本次新增 RECAP、VLCP、LingBot-VA 三篇分册，并登记 VersualRL 为摘要级边界案例（版本与出处见[来源清单](sources/MANIFEST.md)）。凡未设分册的论文一律保持 `[摘要级]`，不因"读过摘要"升格。
+> **当前文献条目共 58 条**：`[精读原文]` **21 条**（16 篇分册论文 + 5 个已在分册内做固定 commit 代码核验的官方仓库）+ `[摘要级]` **35 条** + `[受限核验]` **2 条** + `[二手]` **0 条**（21 + 35 + 2 = 58）。
+> **口径变化**：原有基础批次含 8 篇分册论文与 5 个固定 commit 仓库；后续新增 RECAP、VLCP、LingBot-VA，再新增本报告列示的五篇世界模型迁移精读，并登记 VersualRL 为摘要级边界案例（版本与出处见[来源清单](sources/MANIFEST.md)）。凡未设分册的论文一律保持 `[摘要级]`，不因"读过摘要"升格。
 
 **判据与定义（章 1）**
 
@@ -584,6 +593,11 @@
 51. VLCP: Vision Language Control Policy Closed-Loop Code Replanning for Robot Manipulation — [arXiv:2608.16978](https://arxiv.org/abs/2608.16978) — **`[精读原文]`**（[分册](papers/2608.16978-vlcp.md)，v1 2026-08-17） — 章 3.3/闭环专题
 52. Causal World Modeling for Robot Control（LingBot-VA） — [arXiv:2601.21998](https://arxiv.org/abs/2601.21998) — **`[精读原文]`**（[分册](papers/2601.21998-lingbot-va.md)，v2 2026-03-22） — 章 3.3/4/闭环专题
 53. VersualRL: Closed-Loop Verbal Reinforcement Learning with Visual Execution Feedback for Task-Level Robot Planning — [arXiv:2603.22169](https://arxiv.org/abs/2603.22169) — `[摘要级]`（v3 2026-07-19；本轮仅核对其定位与实机设置；主张留在闭环专题的边界段） — 闭环专题
+54. SimVLA: Zero-Shot Sim-to-Real VLA Learning for Mobile Manipulation — [arXiv:2610.11248](https://arxiv.org/abs/2610.11248) — **`[精读原文]`**（[分册](papers/2610.11248-simvla.md)，v1 2026-10-08） — 世界模型迁移专题
+55. Grounded-Dreamer: Robot Learning from World Model Synthetic Data with Physical Grounding — [arXiv:2610.13164](https://arxiv.org/abs/2610.13164) — **`[精读原文]`**（[分册](papers/2610.13164-grounded-dreamer.md)，v1 2026-10-09） — 世界模型迁移专题
+56. VLAW: Iterative Co-Improvement of Vision-Language-Action Policy and World Model — [arXiv:2602.12063](https://arxiv.org/abs/2602.12063) — **`[精读原文]`**（[分册](papers/2602.12063-vlaw.md)，v2 2026-02-15） — 世界模型迁移专题
+57. World-VLA-Loop: Closed-Loop Learning of Video World Model and VLA Policy — [arXiv:2602.06508](https://arxiv.org/abs/2602.06508) — **`[精读原文]`**（[分册](papers/2602.06508-world-vla-loop.md)，v2 2026-05-25） — 世界模型迁移专题
+58. WoVR: World Models as Reliable Simulators for Post-Training VLA Policies with RL — [arXiv:2602.13977](https://arxiv.org/abs/2602.13977) — **`[精读原文]`**（[分册](papers/2602.13977-wovr.md)，v2 2026-06-27） — 世界模型迁移专题
 
 > **`[受限核验]` 的用法**：这两条的**题名、版本与日期已确证**（可作检索线索与术语定位），但**正文未读**，因此其**任何转述性结论都不得作为本报告的事实依据**。
 
@@ -625,4 +639,4 @@
 
 ---
 
-*截至 2026-10-23：11 篇分册（`papers/`，均 `[精读原文]`）+ 4 篇横切专题（`topics/`）+ 选文与来源清单（`sources/`）。证据按单一主等级标注；未确证项集中在第 15 章。*
+*截至 2026-10-23：16 篇分册（`papers/`，均 `[精读原文]`）+ 5 篇横切专题（`topics/`）+ 选文与来源清单（`sources/`）。证据按单一主等级标注；未确证项集中在第 15 章。*

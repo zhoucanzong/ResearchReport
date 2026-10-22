@@ -2,7 +2,7 @@
 
 # 💬 LLM
 
-**9 条** · 语言模型能力与技术专题，覆盖推理、对齐、Agent、RAG 等方向。
+**10 条** · 语言模型能力与技术专题，覆盖推理、对齐、Agent、RAG 等方向。
 
 [← 返回首页](<../README.md>) · [完整索引](<../INDEX.md>)
 
@@ -10,7 +10,7 @@
 
 <!-- SCRIPT:panel-readme START · 由 scripts/library_index.py 生成，勿手改 -->
 
-![Entries](https://img.shields.io/badge/Entries-9-3f51b5?style=flat-square)
+![Entries](https://img.shields.io/badge/Entries-10-3f51b5?style=flat-square)
 ![Panel](https://img.shields.io/badge/Panel-LLM-9e9e9e?style=flat-square)
 
 | 条目 | 报告 | 规模 |
@@ -18,6 +18,7 @@
 | **Agent** | [LLM Agent 架构与工具使用研究报告](<Agent/report.md>) | 105 行 |
 | **Alignment** | [模型对齐与后训练：方法、目标与证据边界](<Alignment/report.md>) | 114 行 |
 | **DecisionModels** | [Decision Models（System One / Typed Decision Model）技术专题调研](<DecisionModels/report.md>) | 874 行 |
+| **DiffusionLM** | [扩散语言模型：从随机遮盖到大规模并行生成](<DiffusionLM/report.md>) | 70 行 |
 | **LongContext** | [长上下文（Long Context）技术研究报告](<LongContext/report.md>) | 609 行 |
 | **MoE** | [混合专家模型（Mixture of Experts, MoE）架构演进研究报告](<MoE/report.md>) | 405 行 |
 | **RAG** | [检索增强生成（Retrieval-Augmented Generation, RAG）技术研究报告](<RAG/report.md>) | 834 行 |
@@ -48,6 +49,22 @@
 * [sources/CANDIDATES.md](<DecisionModels/sources/CANDIDATES.md>) — 70 行 / 8,181 B
 * [sources/MANIFEST.md](<DecisionModels/sources/MANIFEST.md>) — 62 行 / 8,116 B
 * [taxonomy.md](<DecisionModels/taxonomy.md>) — 254 行 / 25,036 B
+
+</details>
+
+<details>
+<summary><b>DiffusionLM</b>（10 份）</summary>
+
+* [papers/2502.09992-llada.md](<DiffusionLM/papers/2502.09992-llada.md>) — 86 行 / 12,921 B
+* [papers/2503.09573-block-diffusion.md](<DiffusionLM/papers/2503.09573-block-diffusion.md>) — 59 行 / 7,832 B
+* [papers/2505.19223-llada-1.5-vrpo.md](<DiffusionLM/papers/2505.19223-llada-1.5-vrpo.md>) — 105 行 / 12,891 B
+* [papers/2510.06303-sdar.md](<DiffusionLM/papers/2510.06303-sdar.md>) — 60 行 / 8,492 B
+* [papers/2601.22031-card.md](<DiffusionLM/papers/2601.22031-card.md>) — 63 行 / 8,800 B
+* [papers/LLaDA2.0-Scaling-to-100B.md](<DiffusionLM/papers/LLaDA2.0-Scaling-to-100B.md>) — 63 行 / 9,346 B
+* [papers/LLaDA2.1-Token-Editing.md](<DiffusionLM/papers/LLaDA2.1-Token-Editing.md>) — 65 行 / 9,366 B
+* [papers/LLaDA2.2-Levenshtein-Editing.md](<DiffusionLM/papers/LLaDA2.2-Levenshtein-Editing.md>) — 64 行 / 11,889 B
+* [sources/CANDIDATES.md](<DiffusionLM/sources/CANDIDATES.md>) — 29 行 / 3,474 B
+* [sources/MANIFEST.md](<DiffusionLM/sources/MANIFEST.md>) — 21 行 / 5,168 B
 
 </details>
 

@@ -52,6 +52,14 @@ Taylor 等人 2023 年的研究给出了清楚的证据分层。Suzuki–Miyaura
 
 作者将 Scheme 5 产物 22 标注为通向 linezolid 的关键中间体；该用途说明了药物化学相关性，不是 linezolid 的 AI 发现。类似地，“此前未通过此方法制备”是文献方法范围的陈述，并不等于分子本身此前未知。应把**条件优化成功**与**产物或药物发现**分开记录。
 
+### 补充案例：Flex-Cat 联合搜索配体与反应条件
+
+Bennett 等人的 Flex-Cat 将优化对象从 Taylor 等人的跨底物条件迁移扩展到**离散配体身份与连续工艺条件的联合搜索**。在丙烯的 Rh 催化氢甲酰化中，系统以 16 种磷配体、2 mL 并行批式反应器和共享的板级温度、压力、合成气比例运行；层级 BO 先选整板共享设定，再为每个反应孔选配体、Rh 浓度和配体浓度。GC-FID 测得周转频率与区域选择性后更新模型，再选下一批反应（Fig. 2、5；Results “Flex-Cat’s model initialization”及“AI-driven decision-making workflow”）。这个设计的关键，是让决策策略服从共享硬件约束，解决每孔参数不能完全独立变化的问题。
+
+680 次实验中，前 320 次是研究者设计的 Latin hypercube 初始化，后续闭环优化分为线性选择、支链选择和选择性可调三个 campaign；整体观察到最高 TOF 从初始化阶段的 2,900 h⁻¹ 提高到 7,500 h⁻¹，作者报告超过 2.5 倍提升（Fig. 6；Abstract）。Flex-Cat 还按两种条件下均能以 TOF >300 h⁻¹ 产出线性或支链偏好产物定义“flexible ligand”，并从该有限配体库中找到条件可切换选择性的候选。其设计知识来自**闭环实验响应面**，而非迁移旧底物数据或预训练配体描述符；之后把筛出的组合转到 20 mL 反应格式验证，体积扩大 10 倍，但观察到 TOF 下降，作者指出混合与气液传质等尺度因素仍需分析（Table 1；Discussion）。
+
+人类预先确定了反应、16 种配体、可行与安全边界，并设计 320 次初始化实验；高压 CO/H₂ 操作仍要求依照设施安全规程监督。论文的“autonomous”指受约束实验空间内的后续选点、执行、GC 分析和模型更新，不意味着系统自行选择化学问题或开放式提出分子结构。结果支持这套层级策略在一个压力气液催化平台中寻优和映射配体—条件关系；并未证明 16 种以外的配体、其他反应类别或独立实验室能得到相同的选择性—活性图谱（[Nature Communications 正文，Fig. 2–9、Table 1、Results、Methods “Flex-Cat’s automation”与“Reactor scale-up”](https://doi.org/10.1038/s41467-026-74425-x)）。
+
 ## 从前辈工作到这篇工作的贡献
 
 Shields 等人 2021 年先在钯催化直接芳基化的实验数据上搭建 BO 基准，以在线实验优化游戏比较专家和算法，再对 Mitsunobu 与脱氧氟化开展真实反应优化（Nature Fig. 1–5）。这支持 BO 可用于真实合成优化，但不使用同类反应之间的迁移。Taylor 等人的增量问题更窄：能否把既有优化 campaign 的数据作为辅助任务，为新底物提供较好的起点，并让目标任务新数据纠正偏差。
@@ -84,5 +92,6 @@ Retrosynthesis benchmark 属于第四种、且不同的问题：在给定目标�
 - [Taylor et al. 2023：多任务学习加速反应条件优化](https://doi.org/10.1021/acscentsci.3c00050)——主线精读；证据锚点为 Fig. 1–6、Schemes 1–6、Table 1、Methods “Bayesian Optimization”/“Flow Reactor Platform”、Supporting Information 的 literature benchmark 与 campaign 原始数据。
 - [Shields et al. 2021：BO 用于化学合成优化](https://doi.org/10.1038/s41586-021-03213-y)——前代对照；Fig. 1–5 及 Extended Data Table 1，区分人类比较基准和真实反应优化。
 - [Garrido-Torres et al. 2022：CASP 路线经人工筛选后做 sonidegib 流程优化](https://doi.org/10.1021/acscentsci.2c00207)——只作为“路线建议与实验开发不同”的边界案例；Scheme 1、Figs. 3–5。
+- [Bennett et al. 2026：Flex-Cat 数据驱动均相催化自主实验室](https://doi.org/10.1038/s41467-026-74425-x)——补充对照；Fig. 2–9、Table 1、Results “Flex-Cat’s model initialization”/“AI-driven decision-making workflow”/“Optimization campaigns”、Methods “Flex-Cat’s automation”/“Reactor scale-up”。
 
 版本、日期、许可证、原文去向和检索限制见[来源清单](sources/MANIFEST.md)；未将论文全文或补充材料复制进仓库。

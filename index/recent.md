@@ -12,6 +12,7 @@
 | 条目 | date | 板块 | 专题 |
 | --- | --- | --- | --- |
 | [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | 2026-10-23 | LLM | ReinforcementLearning |
+| [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 2026-10-23 | LLM | DiffusionLM |
 | [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) | 2026-10-23 | Evaluation | EvaluationScience |
 | [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) | 2026-10-23 | AI4Science | WeatherClimate |
 | [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) | 2026-10-23 | AI4Science | SingleCellPerturbation |
@@ -30,7 +31,6 @@
 | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 2026-10-22 | Infra | QuantizationEdge |
 | [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | 2026-10-20 | OpenSource | DeepSeekHarness |
 | [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | 2026-10-16 | OpenSource | vllm |
-| [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | 2026-10-16 | OpenSource | this-that-model |
 
 ## 无 date 元数据（41）
 

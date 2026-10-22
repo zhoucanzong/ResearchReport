@@ -182,7 +182,7 @@ status: needs-review
 
 ### 6.1 本章结论
 
-1. **世界模型在具身侧被消费为三类资源**：①想象中训练（RL in imagination）；②可交互练习环境；③评测环境（与 EmbodiedVLA 条目 §4.3 的接口定义一致，本轮由本专题展开其世界模型侧）。`[精读原文]`
+1. **世界模型在具身侧被消费为三类资源**：①想象中训练（RL in imagination）；②可交互练习环境；③评测环境（与 EmbodiedVLA 条目 §4.3 的接口定义一致）。VLA 侧关于合成数据、想象 RL 和真机迁移的论文比较见[世界模型到 VLA 迁移专题](../EmbodiedVLA/topics/world-model-to-vla-transfer.md)。`[精读原文]`
 2. **数据接口呈「少量真机 + 大规模无标注视频」组合**：V-JEPA 2-AC 用 **<62h** Droid 无标注数据；Cosmos 提供 curation 流水线与 tokenizer；游戏域 Matrix-Game-MC **>2,700h**（不可直接迁移到机器人）。`[摘要级]`
 3. **评测接口开始专门化**：**EWMBench**（视觉保真 / 物理一致性 / 指令-动作对齐）是机器人操作场景的专用套件；Genie Envisioner 同时提供 **GE-Sim** 作 action-conditioned 神经模拟器以支持闭环 rollout。`[精读原文]`
 4. **UniSim 与 Cosmos 代表两种平台化姿态**：前者主张「学一个真实世界交互的通用模拟器，使具身 agent 纯在模拟中训练后直接部署」；后者把世界模型做成 Physical AI 的**世界数字孪生**（digital twin of the world，与政策模型并列）。`[摘要级]`

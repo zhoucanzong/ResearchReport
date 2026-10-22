@@ -7,27 +7,28 @@
 
 ---
 
-共 **62** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter；「板块」列由 [`scripts/panels.json`](<../scripts/panels.json>) 驱动。
+共 **63** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter；「板块」列由 [`scripts/panels.json`](<../scripts/panels.json>) 驱动。
 
 | 条目 | 板块 | 路径 | 子报告数 | 行数 | 日期 |
 | --- | --- | --- | --: | --: | --- |
 | AntibioticDiscovery | AI4Science | [AI4Science/AntibioticDiscovery/report.md](<../AI4Science/AntibioticDiscovery/report.md>) | 6 | 48 | 2026-10-23 |
 | Astronomy | AI4Science | [AI4Science/Astronomy/report.md](<../AI4Science/Astronomy/report.md>) | 3 | 59 | 2026-10-23 |
-| AutonomousLabs | AI4Science | [AI4Science/AutonomousLabs/report.md](<../AI4Science/AutonomousLabs/report.md>) | 2 | 119 | 2026-10-23 |
-| Chemistry | AI4Science | [AI4Science/Chemistry/report.md](<../AI4Science/Chemistry/report.md>) | 2 | 80 | 2026-10-23 |
+| AutonomousLabs | AI4Science | [AI4Science/AutonomousLabs/report.md](<../AI4Science/AutonomousLabs/report.md>) | 2 | 127 | 2026-10-23 |
+| Chemistry | AI4Science | [AI4Science/Chemistry/report.md](<../AI4Science/Chemistry/report.md>) | 2 | 89 | 2026-10-23 |
 | MaterialsDiscovery | AI4Science | [AI4Science/MaterialsDiscovery/report.md](<../AI4Science/MaterialsDiscovery/report.md>) | 4 | 66 | 2026-10-23 |
 | MathematicalDiscovery | AI4Science | [AI4Science/MathematicalDiscovery/report.md](<../AI4Science/MathematicalDiscovery/report.md>) | 6 | 78 | 2026-10-23 |
 | Neuroscience | AI4Science | [AI4Science/Neuroscience/report.md](<../AI4Science/Neuroscience/report.md>) | 2 | 113 | 2026-10-23 |
-| ProteinDesign | AI4Science | [AI4Science/ProteinDesign/report.md](<../AI4Science/ProteinDesign/report.md>) | 5 | 72 | 2026-10-23 |
+| ProteinDesign | AI4Science | [AI4Science/ProteinDesign/report.md](<../AI4Science/ProteinDesign/report.md>) | 6 | 80 | 2026-10-23 |
 | SingleCellPerturbation | AI4Science | [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) | 4 | 87 | 2026-10-23 |
 | WeatherClimate | AI4Science | [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) | 7 | 89 | 2026-10-23 |
 | EvaluationScience | Evaluation | [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) | 2 | 86 | 2026-10-23 |
 | QuantizationEdge | Infra | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 0 | 188 | 2026-10-22 |
-| SpeculativeDecoding | Infra | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 29 | 536 | 2026-10-22 |
+| SpeculativeDecoding | Infra | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 33 | 549 | 2026-10-22 |
 | TrainingInfra | Infra | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 0 | 181 | 2026-10-22 |
 | Agent | LLM | [LLM/Agent/report.md](<../LLM/Agent/report.md>) | 0 | 105 | — |
 | Alignment | LLM | [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) | 0 | 114 | — |
 | DecisionModels | LLM | [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | 18 | 874 | — |
+| DiffusionLM | LLM | [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 10 | 70 | 2026-10-23 |
 | LongContext | LLM | [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 0 | 609 | — |
 | MoE | LLM | [LLM/MoE/report.md](<../LLM/MoE/report.md>) | 0 | 405 | — |
 | RAG | LLM | [LLM/RAG/report.md](<../LLM/RAG/report.md>) | 0 | 834 | — |
@@ -71,6 +72,6 @@
 | DiffusionModels | VisualGen | [VisualGen/DiffusionModels/report.md](<../VisualGen/DiffusionModels/report.md>) | 0 | 858 | — |
 | ImageEditing | VisualGen | [VisualGen/ImageEditing/report.md](<../VisualGen/ImageEditing/report.md>) | 0 | 834 | — |
 | VideoGen | VisualGen | [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) | 0 | 898 | — |
-| EmbodiedVLA | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 17 | 628 | — |
+| EmbodiedVLA | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 23 | 642 | — |
 | WorldModels | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 602 | 2026-10-22 |
-| **合计** | — | — | **163** | **27,704** | — |
+| **合计** | — | — | **184** | **27,826** | — |

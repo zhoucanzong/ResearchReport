@@ -10,7 +10,7 @@ status: needs-review
 # 投机解码（Speculative Decoding）技术专题 · 深度调研
 
 > **声明**：本报告由 AI Agent 自动调研生成，未经官方确认；引用具体参数、日期或 benchmark 前请回溯原始来源。
-> **资料核查**：截至 2026-10-22；本轮补入 [SecureSD](papers/2610.08678-secure-sd.md)、[SpecStream](papers/2609.33184-specstream.md)、[DARTree](papers/2608.13524-dartree.md) 与 [DLite](papers/2610.23787-dlite.md) 四篇新近工作，覆盖安全、长上下文 KV serving、扩散树校正、Agent 历史建模。论文与源码均固定到具体版本，证据范围见[来源清单](sources/MANIFEST.md)。
+> **资料核查**：截至 2026-10-23；新增 HSD、Delayed Tree Expansion、CaDDTree 与 TLAR 四篇精读，补齐严格无损序列验证、分支时机、树预算成本和轨迹检索价值四条机制线。论文与源码固定版本及证据范围见[来源清单](sources/MANIFEST.md)。
 > **定位**：投机解码 = **用低成本草稿换 target 的并行验证**，在**输出分布可证等价（或明示有界风险）**的前提下降低解码 wall-clock；定义与保证边界见[验证专题](topics/verification-acceptance.md)。本条目管的是“**算法 + 验证 + 系统条件**”这一整条链，不把“草稿模型训练”单独抽出去。
 
 **证据等级约定（单一主等级）**：
@@ -32,7 +32,7 @@ status: needs-review
 
 本条目采用三层结构：本页 = 入口 + 结论 + 谱系 + 总表；`papers/` = 逐篇精读；`topics/` = 横切专题。
 
-### 分册（`papers/`，10 篇论文笔记覆盖 12 篇论文，另有 2 份框架代码核验）
+### 分册（`papers/`，14 篇论文笔记覆盖 16 篇论文，另有 2 份框架代码核验）
 
 | # | 分册 | 系统 | 在谱系中的位置 | 行数 |
 | --: | :-- | :-- | :-- | --: |
@@ -46,8 +46,12 @@ status: needs-review
 | 8 | [2608.13524-dartree.md](papers/2608.13524-dartree.md) | DARTree | 扩散草稿 + 分支条件校正 + 延迟剪枝 | 31 |
 | 9 | [2609.33184-specstream.md](papers/2609.33184-specstream.md) | SpecStream | 历史 KV 流式 offload 与共卡草稿调度 | 44 |
 | 10 | [2610.23787-dlite.md](papers/2610.23787-dlite.md) | DLite | 复用 target hidden states 的无历史 draft KV | 48 |
-| 11 | [vllm-implementation.md](papers/vllm-implementation.md) | vLLM @ 2b85d9cb | 生产框架·draft/verify 两路径 | 220 |
-| 12 | [sglang-implementation.md](papers/sglang-implementation.md) | SGLang @ 2a08e261 | 生产框架·topk=1 拒绝采样 | 219 |
+| 11 | [2601.05724-hsd.md](papers/2601.05724-hsd.md) | HSD | 分层概率质量平衡的严格无损验证 | 84 |
+| 12 | [2602.16994-delayed-tree.md](papers/2602.16994-delayed-tree.md) | Delayed Tree Expansion | 选择分支时机，调整多路径草稿树拓扑 | 83 |
+| 13 | [2606.01813-caddtree.md](papers/2606.01813-caddtree.md) | CaDDTree | 按实测验证成本逐轮选择扩散草稿树预算 | 53 |
+| 14 | [2610.07350-tlar.md](papers/2610.07350-tlar.md) | TLAR | 复用当前生成轨迹，并按验证收益调度检索 | 54 |
+| 15 | [vllm-implementation.md](papers/vllm-implementation.md) | vLLM @ 2b85d9cb | 生产框架·draft/verify 两路径 | 220 |
+| 16 | [sglang-implementation.md](papers/sglang-implementation.md) | SGLang @ 2a08e261 | 生产框架·topk=1 拒绝采样 | 219 |
 
 ### 横切专题（`topics/`，3 篇）
 
@@ -78,8 +82,8 @@ status: needs-review
 7. **指标必须成对**：`draft_acceptance_rate`（分母=提议草稿数）与 `mean_acceptance_length`（分母=验证步数，含 bonus）会反向移动；只报一个会得出相反结论。`[精读原文（vLLM 代码）]`
 8. **工程落地已经分叉成两种语义**：vLLM 用 `draft_sample_method ∈ {greedy, probabilistic}`；SGLang 用 `speculative_use_rejection_sampling` + `assert topk == 1`。两者都能把真实 `draft_probs` 传给验证，但适用形状不同。`[精读原文（代码）]`
 9. **历史 issue #10308 的准确结论**：issue 于 2025-09-11 开立、2026-01-03 以 `state_reason=completed` 由 `github-actions[bot]` 关闭，timeline 无 linked PR/commit；但它请求的“topk=1 采样验证”能力已在 SGLang 主线以 `draft_probs` + 拒绝采样开关实现，且**硬限制 topk=1**；tree topk>1 仍走 target-only kernel。`[精读原文（代码）]`
-10. **新近工作开始解决不同瓶颈**：DARTree 改候选树构造，DLite 改草稿器的历史建模，SpecStream 改 KV 生命周期与传输调度；三者不是一条可直接按加速比排名的算法线，见 §2.4。
-11. **证据边界**：专题现含 [12 篇学术论文与 5 个固定版本代码快照](sources/MANIFEST.md)（含参考实现）；[SecureSD](papers/2610.08678-secure-sd.md)、[DARTree](papers/2608.13524-dartree.md)、[DLite](papers/2610.23787-dlite.md) 分册阅读范围各有说明，[SpecStream](papers/2609.33184-specstream.md) 未发现可固定的作者代码仓库。**没有独立复现**，性能数字均为作者或官方报告值。
+10. **新近工作解决不同瓶颈**：HSD 改严格无损的序列级概率恢复；Delayed Tree 改分支时机；CaDDTree 改树预算的成本目标；DARTree 改扩散候选树路径；DLite 改草稿历史表征；SpecStream 改 KV 生命周期与数据移动；TLAR 改候选来源和检索调度。它们不是一条能按单一加速比排名的算法线，见 §2.4。
+11. **证据边界**：专题现含 [16 篇学术论文与 5 个固定版本代码快照](sources/MANIFEST.md)（含参考实现）；各新分册均记录固定版本、阅读锚点与实验范围。没有独立复现实验，性能数字均为作者或官方报告值。
 
 ---
 
@@ -105,16 +109,16 @@ status: needs-review
 | 自投机（Medusa / EAGLE / MTP / 层跳过） | ✅ | 当前工程实现代表 |
 | 免训练（Lookahead / PLD / REST / 字典） | ✅ | 独立一族，端侧/低资源重要 |
 | 树验证系统（SpecInfer / Sequoia） | ✅ | 验证侧的基础设施 |
-| 块/扩散草稿（DFlash / DSpark / BASTION） | ✅（谱系） | 2026 新方向；本轮未设分册，数字不入表 |
+| 块/扩散草稿（DFlash / DSpark / BASTION） | ✅（谱系） | 扩散模型为自回归 target 生成待验证草稿；本专题只讨论该交叉机制，独立 diffusion LM 见 [LLM/DiffusionLM](../../LLM/DiffusionLM/report.md) |
 | 纯量化 / 纯剪枝 / 纯 KV eviction | ❌ | 不产生“候选-验证”结构；归 `Infra/QuantizationEdge` |
 | 纯 batch 调度 / continuous batching | ❌ | 系统优化但不含投机；归 `Infra/TrainingInfra` 或框架条目 |
-| 扩散语言模型（非投机范式） | ❌ | 竞争范式，不是本条目主体；只在谱系里对照 |
+| 扩散语言模型（非投机范式） | ❌ | 独立生成范式不是本条目主体；训练目标与去噪机制见 [LLM/DiffusionLM](../../LLM/DiffusionLM/report.md) |
 
 ### 1.3 无损性三档（引用时必须声明）
 
 | 档 | 定义 | 代表 | 可否写“严格无损” |
 | :-- | :-- | :-- | :-- |
-| **严格分布等价** | 对任意序列，输出概率 = p(Seq) | 经典单链；静态树；RheoSampling（Theorem 1）；Traversal Verification；HeteroSpec（ACL 2026，`[摘要级]`） | ✅ |
+| **严格分布等价** | 对任意序列，输出概率 = p(Seq) | 经典单链；静态树；HSD；RheoSampling（Theorem 1）；Traversal Verification；HeteroSpec（ACL 2026，`[摘要级]`） | ✅ |
 | **序列级等价** | 以整条序列概率判接受（而非逐 token） | Traversal Verification 的视角 | ✅（在其定义域） |
 | **有界风险** | 接受放宽到“分布偏移受控” | ARC-Decode（JS 上界，ICML 2026 会议页 `[摘要级]`）；Medusa typical acceptance（[papers/2401.10774-medusa.md](papers/2401.10774-medusa.md) §2.3）；CDSL（NAACL 2025，素材层） | ❌ 只能写“质量近乎不变” |
 
@@ -191,13 +195,17 @@ flowchart LR
 
 ### 2.4 投机解码方向的新近工作
 
-截至 2026-10-22，投机解码的进展不只是“更高接受率”。下面的判断来自 [DARTree](papers/2608.13524-dartree.md)、[SpecStream](papers/2609.33184-specstream.md) 与 [DLite](papers/2610.23787-dlite.md) 固定版本精读；三篇工作分别改变不同层：
+截至 2026-10-23，投机解码的进展不只是“更高接受率”。下面的判断来自近期固定版本精读；这些工作分别改变不同层：
 
 | 工作 | 它改变什么 | 读它时先问什么 |
 | :-- | :-- | :-- |
 | [DARTree](papers/2608.13524-dartree.md)（8 月） | 对扩散草稿沿多条候选分支分别做因果校正，并把建树与全局 top-B 剪枝分离 | 树验证预算与候选宽度固定时，批量建树是否在目标模型/硬件上减少真实 draft wall-clock？ |
 | [SpecStream](papers/2609.33184-specstream.md)（9 月） | 按 target commit 边界 offload 历史 KV、流式验证、共享 KV 读取，并在传输等待时共卡运行 draft | PCIe 数据搬运能否被 overlap 隐藏到足以补偿每轮全历史传输？它明确显示长输入仍慢于全驻 GPU。 |
 | [DLite](papers/2610.23787-dlite.md)（10 月） | 把 target 多层 hidden states 当作紧凑上下文，草稿器仅做局部预测，不保存 draft 历史 KV | 免去的是 draft KV 和重复历史建模；target KV 仍在，收益目前由 Qwen3-4B/8B 证据支撑。 |
+| [HSD](papers/2601.05724-hsd.md)（3 月） | 在可访问树分支间平衡概率过剩/不足，做严格分布保持的序列级验证 | EAGLE-3 等概率槽位实验不能单独证明 HSD 提升了接受率；其吞吐结果也受 verifier 实现路径影响。 |
+| [Delayed Tree Expansion](papers/2602.16994-delayed-tree.md)（2 月） | 先走 trunk，再由 selector 决定分支深度、宽度和数量 | 三模型平均吞吐略高于 Traversal，但 Llama 子项回退；selector 依赖离线轨迹与目标硬件延迟测量。 |
+| [CaDDTree](papers/2606.01813-caddtree.md)（6 月） | 将扩散草稿树目标从最大接受长度改为每轮时间归一化收益，按边际验证成本选节点预算 | 停止保证依赖单调凸验证成本；当前主证据仅覆盖 Qwen3-4B/8B + DFlash 与 8×A800。 |
+| [TLAR](papers/2610.07350-tlar.md)（10 月） | 检索当前生成轨迹，以此前 target 验证收益调节检索频率与宽度 | B200 上长代码输出有吞吐收益，512-token 短输出略亏；轨迹来源的价值随模型与任务而变。 |
 
 我的阅读判断：它们分别对应**候选覆盖效率、系统内存/数据移动、草稿表征与训练**三类问题；不能把 DARTree/DLite 的 `τ` 或 AR-relative speedup 与 SpecStream 的并发服务 throughput 横向排名。若继续扩展本专题，优先追 DLite 的其它 target/训练可迁移性、SpecStream 的真实源码与不同互联拓扑，再看 lossless 与高并发共存的条件。
 
@@ -227,6 +235,7 @@ flowchart LR
 - SpecInfer 的 tree mask + 树形 KV 是公共祖先；EAGLE/Medusa 的树验证复用了同一抽象。
 - 树宽不是越大越好：SpecInfer 在 **BS≥4** 时 2–3 最优；EAGLE-2 的动态树按 value 选点；CAST（`[二手]`）进一步把 GPU/batch 纳入成本。
 - 树验证的收益来自“一次前向验证多分支”，成本是“验证 token 数 × 每 token 成本”。
+- [Delayed Tree Expansion](papers/2602.16994-delayed-tree.md) 将分叉点延后并按硬件/模型代价选择；[CaDDTree](papers/2606.01813-caddtree.md) 则直接把每轮验证成本纳入树预算。前者改变**分支何时出现**，后者改变**每轮扩多少节点**；机制与 DARTree 的候选校正不同。
 
 ### 3.4 免训练：用已有轨迹
 
@@ -293,6 +302,10 @@ flowchart LR
 | **DARTree** | 2026 | IV+校正 | DFlash/扩散块 + Domino correction | 不重训 | 路径校正树 | GSM8K 9.73×；τ=12.97 | Qwen3-4B、T=0、batch=1、RTX 6000 Ada、B=64 | [分册](papers/2608.13524-dartree.md) |
 | **DLite** | 2026 | II/IV 交叉 | target hidden-state + 局部块草稿 | 两段蒸馏 | 块 + 顺序头 | SWE-Bench 2.74×；τ=3.19 | Qwen3-8B、H800、K=7、相对本地 AR | [分册](papers/2610.23787-dlite.md) |
 | **SpecStream** | 2026 | serving 系统 | Draft 与 Target 共卡 | 使用现成模型 | 流式多-query 验证 | vs TriForce 1.41×/1.32×；vs SD+Offload 1.44×/1.62× | 2×A800 PCIe、8 并发汇总；长输入仍逊于 GPU-resident SGLang | [分册](papers/2609.33184-specstream.md) |
+| **HSD** | 2026 | verifier | 现有 draft | 不改 draft | 分层序列验证 | 32.52 / 27.48 / 12.33 tokens/s | Qwen2.5-72B/0.5B、1×H20、T=1；GSM8K/HumanEval/CNN-DM；相对 tokenwise +3.3–4.4% | [分册](papers/2601.05724-hsd.md) |
+| **Delayed Tree Expansion** | 2026 | tree 拓扑 | 独立 i.i.d. draft | selector 需训练 | trunk 后动态分支 | 平均 16.69 vs 15.89 tokens/s | 三模型、五数据集、八采样设置；2×A100；Llama 子项回退 | [分册](papers/2602.16994-delayed-tree.md) |
+| **CaDDTree** | 2026 | 成本感知树预算 | DFlash 块草稿 | 不新增训练 | 每轮按成本选树大小 | 不报单一加速倍数；多数配置贴近/优于 DDTree 网格 oracle | Qwen3-4B/8B、8×A800；PyTorch tree attention 与快速 AR/DFlash kernel 条件不同 | [分册](papers/2606.01813-caddtree.md) |
+| **TLAR** | 2026 | 检索式候选来源 | 当前生成历史 + SmallDraft | 免训练控制器 | 匹配后缀并入 target 验证树 | Qwen B=1/32 +8.3%/+7.6%；Mistral +4.1%/+3.5% | 单张 B200、1024 输出 token、代码任务；Qwen 512-token 输出略慢 | [分册](papers/2610.07350-tlar.md) |
 | **vLLM** | 2026 | 框架 | EAGLE/MTP/DFlash/standalone | 取决 draft | 链/树 | 本分册不报 | commit 2b85d9cb | [分册](papers/vllm-implementation.md) |
 | **SGLang** | 2026 | 框架 | EAGLE/MTP/DFlash | 取决 draft | 链（topk=1）/树 | 本分册不报 | commit 2a08e261 | [分册](papers/sglang-implementation.md) |
 

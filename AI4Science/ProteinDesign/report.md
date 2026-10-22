@@ -13,13 +13,14 @@ status: completed
 
 ## 核心结论
 
-当前这组工作显示，AI 进入 binder 发现的环节正在从“生成更多序列”扩展为“同时生成复合物结构、在序列空间探索候选、按多种代理分数分配有限实验名额”。三篇论文各自研究的是流水线的不同阶段，数据、任务和指标不一致，不能合成一个模型排行榜。
+当前这组工作显示，AI 进入 binder 发现的环节正在从“生成更多序列”扩展为“同时生成复合物结构、在序列空间探索候选、按多种代理分数分配有限实验名额，并把功能测定接回评估”。四篇论文研究流水线的不同阶段，数据、任务和指标不一致，不能合成一个模型排行榜。
 
 1. **APM** 将多链复合物、序列、主链和侧链构象纳入统一生成框架；其抗体与肽设计结果是基准和计算能量证据。作者明确指出，实际有效性仍需湿实验确认。
 2. **PepEDiff** 在蛋白语言模型嵌入空间中直接生成肽序列，减少生成阶段对中间结构预测的依赖；但 TIGIT 案例的构象、能量和稳定性评估仍调用 Boltz-2、Rosetta 与分子动力学，不能称为实验确认的 binder。
 3. **自然语言引导的候选短名单**不训练新的 binder 生成器，而是在固定的候选池中组合 AF2-Multimer、Boltz-2、Protenix 和 Rosetta 的 17 个代理分数。对 10 个留出靶标，迭代 GPT-4o 策略的 Recall@10 为 0.589，单分数最强基线 Protenix binder ipTM 为 0.571；差距有限，且结果来自回顾性历史实验池（[arXiv 2608.20755v2, Table 3 / §6](https://arxiv.org/html/2608.20755v2)）。
+4. **Bits to Binders**把评估延伸到 CAR-T 功能：12,000 个针对 CD20 的 80-aa 设计经 pooled assay 筛出 707 个显著富集候选，但前十候选的单独测定显示，增殖、扩增和细胞因子读数并不保证特异杀伤；回顾性序列过滤提高了这组数据中的命中比例，仍需独立靶标和前瞻实验验证（[Mol Syst Biol 2026, Figs. 2–5 / Discussion](https://link.springer.com/article/10.1038/s44320-026-00246-1)）。
 
-所以阅读这条研究线时，应把证据拆成**候选生成、结构/界面代理、候选排序、实验测定**四层。前三层的提升有价值，但不能自动推出新靶点上的实验成功率或药物可开发性。
+所以阅读这条研究线时，应把证据拆成**候选生成、结构/界面代理、候选排序、实验测定**四层。代理分数的改善有价值，但只有在指定 assay、细胞背景与构建设计中直接测得的结果，才支持相应功能结论；也不能自动推出其他靶点上的成功率或临床可开发性。
 
 ## 从生成到实验：一条分层证据链
 
@@ -28,9 +29,9 @@ status: completed
 | 复合物生成 | APM 联合生成序列、主链和侧链构象 | 能否直接表示多链原子级相互作用？ | 生成结构是否真实结合、表达稳定或具备功能 |
 | 序列生成 | PepEDiff 在 ProtT5 嵌入空间做条件扩散 | 不先生成复合物结构，能否探索肽序列？ | 预测能量是否对应真实亲和力 |
 | 候选排序 | LLM 将多模型置信度和界面描述组合成排序规则 | 在已生成候选中，哪些值得优先实验？ | 新靶点、不同 assay 或未见生成流程上的性能 |
-| 实验确认 | 对候选做表达、结合和功能测定 | 候选是否在具体实验条件下有效？ | 对其他靶标、条件和生物体系的泛化 |
+| 实验确认 | Bits to Binders 将设计的短 binder 装入统一 CAR 架构，测量 CD20 依赖的增殖、扩增、细胞因子与杀伤 | 候选是否在具体构建、细胞背景和功能测定中有效？ | 其他 CAR 架构、供者、抗原或临床表现 |
 
-三个环节使用的 benchmark 和数据源不相同。APM 的 RAbD、PepBench/LNR 结果，PepEDiff 的 TIGIT 计算案例，以及短名单论文从公开实验结果汇总的 hit labels，均须按各自 split 和指标分别阅读。
+这些环节使用的 benchmark 和数据源不相同。APM 的 RAbD、PepBench/LNR 结果，PepEDiff 的 TIGIT 计算案例、短名单论文从公开实验结果汇总的 hit labels，以及 Bits to Binders 的单一靶标 CAR-T 实验，均须按各自 split、assay 和指标分别阅读。
 
 ## 代表工作
 
@@ -58,6 +59,12 @@ PepEDiff 接收目标受体序列与口袋残基 mask，将受体和 peptide 表
 
 这里的标签来自既有实验释放数据，论文回顾的是**已有候选池的筛选**，没有报告本研究重新设计并进行湿实验。作者进行模型知识截止时间与标签公开日期的审计，但这不等于对新靶点、新 assay 或未来实验流程完成前瞻验证（Appendix B）。
 
+### 4. Bits to Binders：从 binder 命中走向 CAR-T 功能
+
+这项竞赛用一个共同的 CAR scaffold 比较 28 个团队提交的 12,000 个、长度固定为 80 aa 的 CD20 minibinder。Pooled primary T-cell assay 在单一供者来源的细胞中测得 707 个设计相对无靶条件至少两倍、且统计显著富集；队伍命中率为 0.6%–38.4%（Fig. 2）。对排名前十的非冗余设计做单独测定后，7/10 高于阴性对照的 CD20 特异增殖、扩增和细胞因子响应，但只有 4/10 显示高于对照的 CD20 特异杀伤；定量结合信号也只见于少数候选（design 2383 的孤立 binder KD 为 643 nM；Fig. 3、EV1）。因此，“pool 中富集”“CAR-T 被激活”“靶细胞被特异杀伤”是不同终点，不能把 707/12,000 直接解读成治疗有效率。
+
+论文还将超过 400 个序列与结构特征用于回顾性分析：GC 含量、低序列熵、重复序列和富含 K/E 的螺旋等规则过滤后，数据集内 CD20 特异增殖比例提高；单独按结构预测的 ipTM 筛选却会误删有功能的候选（Fig. 5、Appendix Tables EV2–EV4）。作者指出，这些是对同一竞赛池的事后过滤，团队方法的关联也不能证明因果；该研究使用单一 CAR 架构，且主 pooled screen 来自一个供者，前十的单独功能实验同样只有技术重复。它最有力的启示是：合成、细胞恢复、受体表达、靶点依赖激活和杀伤都属于设计成功链条，单靠结构/界面分数无法替代功能读数。
+
 ## 阅读时应逐项核对的判据
 
 - **新靶点隔离**：train/dev/test 是否按靶点、序列同源性和 assay 来源分开，而非只随机切分候选？
@@ -77,4 +84,5 @@ PepEDiff 接收目标受体序列与口袋残基 mask，将受体和 peptide 表
 - [APM：An All-Atom Generative Model for Designing Protein Complexes](papers/2504.13075-apm.md)
 - [PepEDiff：Zero-Shot Peptide Binder Design via Protein Embedding Diffusion](papers/2601.13327-pepediff.md)
 - [候选短名单：Natural-Language-Guided Generator-Agnostic Shortlisting](papers/2608.20755-shortlisting.md)
+- [Bits to Binders：12,000 个 AI 驱动 CAR-T 设计的验证与分析](papers/2026-bits-to-binders.md)
 - 固定版本、许可与原文位置见 [sources/MANIFEST.md](sources/MANIFEST.md)；入选与暂缓候选见 [sources/CANDIDATES.md](sources/CANDIDATES.md)。

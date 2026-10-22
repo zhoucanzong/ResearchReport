@@ -11,12 +11,12 @@
 
 * [AI4Science/AntibioticDiscovery/report.md](<../AI4Science/AntibioticDiscovery/report.md>) — 48 行
 * [AI4Science/Astronomy/report.md](<../AI4Science/Astronomy/report.md>) — 59 行
-* [AI4Science/AutonomousLabs/report.md](<../AI4Science/AutonomousLabs/report.md>) — 119 行
-* [AI4Science/Chemistry/report.md](<../AI4Science/Chemistry/report.md>) — 80 行
+* [AI4Science/AutonomousLabs/report.md](<../AI4Science/AutonomousLabs/report.md>) — 127 行
+* [AI4Science/Chemistry/report.md](<../AI4Science/Chemistry/report.md>) — 89 行
 * [AI4Science/MaterialsDiscovery/report.md](<../AI4Science/MaterialsDiscovery/report.md>) — 66 行
 * [AI4Science/MathematicalDiscovery/report.md](<../AI4Science/MathematicalDiscovery/report.md>) — 78 行
 * [AI4Science/Neuroscience/report.md](<../AI4Science/Neuroscience/report.md>) — 113 行
-* [AI4Science/ProteinDesign/report.md](<../AI4Science/ProteinDesign/report.md>) — 72 行
+* [AI4Science/ProteinDesign/report.md](<../AI4Science/ProteinDesign/report.md>) — 80 行
 * [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) — 87 行
 * [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) — 89 行
 
@@ -27,14 +27,15 @@
 ## Infra (3)
 
 * [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) — 188 行
-* [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) — 536 行
+* [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) — 549 行
 * [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) — 181 行
 
-## LLM (8)
+## LLM (9)
 
 * [LLM/Agent/report.md](<../LLM/Agent/report.md>) — 105 行
 * [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) — 114 行
 * [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) — 874 行
+* [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) — 70 行
 * [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) — 609 行
 * [LLM/MoE/report.md](<../LLM/MoE/report.md>) — 405 行
 * [LLM/RAG/report.md](<../LLM/RAG/report.md>) — 834 行
@@ -84,7 +85,7 @@
 
 ## WorldModel (2)
 
-* [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) — 628 行
+* [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) — 642 行
 * [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) — 602 行
 
 ## https://github.com/FLock-io/this-that-model@6af11c63c8bb260aa4bed2b7717f33f25decd16e (1)

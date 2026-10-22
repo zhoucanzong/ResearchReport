@@ -15,13 +15,13 @@
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
-| **EmbodiedVLA** | [EmbodiedVLA 技术专题调研](<EmbodiedVLA/report.md>) | 628 行 |
+| **EmbodiedVLA** | [EmbodiedVLA 技术专题调研](<EmbodiedVLA/report.md>) | 642 行 |
 | **WorldModels** | [WorldModels 技术专题调研](<WorldModels/report.md>) | 602 行 |
 
 ## 📎 子文档
 
 <details>
-<summary><b>EmbodiedVLA</b>（17 份）</summary>
+<summary><b>EmbodiedVLA</b>（23 份）</summary>
 
 * [papers/2303.04137-diffusion-policy.md](<EmbodiedVLA/papers/2303.04137-diffusion-policy.md>) — 246 行 / 38,592 B
 * [papers/2307.15818-rt2.md](<EmbodiedVLA/papers/2307.15818-rt2.md>) — 222 行 / 29,179 B
@@ -31,15 +31,21 @@
 * [papers/2406.09246-openvla.md](<EmbodiedVLA/papers/2406.09246-openvla.md>) — 252 行 / 28,967 B
 * [papers/2410.24164-pi0.md](<EmbodiedVLA/papers/2410.24164-pi0.md>) — 239 行 / 24,171 B
 * [papers/2501.09747-fast.md](<EmbodiedVLA/papers/2501.09747-fast.md>) — 250 行 / 23,574 B
-* [papers/2511.14759-pi-star-0.6-recap.md](<EmbodiedVLA/papers/2511.14759-pi-star-0.6-recap.md>) — 68 行 / 8,822 B
-* [papers/2601.21998-lingbot-va.md](<EmbodiedVLA/papers/2601.21998-lingbot-va.md>) — 68 行 / 7,622 B
-* [papers/2608.16978-vlcp.md](<EmbodiedVLA/papers/2608.16978-vlcp.md>) — 69 行 / 7,033 B
-* [sources/CANDIDATES.md](<EmbodiedVLA/sources/CANDIDATES.md>) — 126 行 / 13,403 B
-* [sources/MANIFEST.md](<EmbodiedVLA/sources/MANIFEST.md>) — 77 行 / 11,348 B
+* [papers/2511.14759-pi-star-0.6-recap.md](<EmbodiedVLA/papers/2511.14759-pi-star-0.6-recap.md>) — 68 行 / 8,820 B
+* [papers/2601.21998-lingbot-va.md](<EmbodiedVLA/papers/2601.21998-lingbot-va.md>) — 68 行 / 7,620 B
+* [papers/2602.06508-world-vla-loop.md](<EmbodiedVLA/papers/2602.06508-world-vla-loop.md>) — 74 行 / 10,169 B
+* [papers/2602.12063-vlaw.md](<EmbodiedVLA/papers/2602.12063-vlaw.md>) — 69 行 / 9,444 B
+* [papers/2602.13977-wovr.md](<EmbodiedVLA/papers/2602.13977-wovr.md>) — 75 行 / 14,446 B
+* [papers/2608.16978-vlcp.md](<EmbodiedVLA/papers/2608.16978-vlcp.md>) — 69 行 / 7,029 B
+* [papers/2610.11248-simvla.md](<EmbodiedVLA/papers/2610.11248-simvla.md>) — 82 行 / 13,582 B
+* [papers/2610.13164-grounded-dreamer.md](<EmbodiedVLA/papers/2610.13164-grounded-dreamer.md>) — 45 行 / 5,945 B
+* [sources/CANDIDATES.md](<EmbodiedVLA/sources/CANDIDATES.md>) — 168 行 / 20,894 B
+* [sources/MANIFEST.md](<EmbodiedVLA/sources/MANIFEST.md>) — 90 行 / 15,606 B
 * [topics/action-representation.md](<EmbodiedVLA/topics/action-representation.md>) — 175 行 / 14,305 B
-* [topics/closed-loop-control.md](<EmbodiedVLA/topics/closed-loop-control.md>) — 82 行 / 9,955 B
+* [topics/closed-loop-control.md](<EmbodiedVLA/topics/closed-loop-control.md>) — 82 行 / 9,953 B
 * [topics/deployment-boundaries.md](<EmbodiedVLA/topics/deployment-boundaries.md>) — 154 行 / 12,115 B
 * [topics/evaluation-and-datasets.md](<EmbodiedVLA/topics/evaluation-and-datasets.md>) — 166 行 / 15,924 B
+* [topics/world-model-to-vla-transfer.md](<EmbodiedVLA/topics/world-model-to-vla-transfer.md>) — 50 行 / 10,098 B
 
 </details>
 

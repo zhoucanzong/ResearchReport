@@ -1,6 +1,6 @@
 # 选文说明与候选池 · EmbodiedVLA
 
-> 目的：**先筛选、后精读**。把"为什么精读这 8 篇、为什么其它只登记不设分册"写清楚，**以后不必重复筛**。
+> 目的：**先筛选、后精读**。本页保留原始 8 篇基线、2026-10-23 闭环控制批次与世界模型迁移批次的候选、入选理由和排除理由，便于后续只针对新增证据重新筛选。
 > 证据纪律：本页只做**选文判断**，不含未精读论文的结论。**下表出现的每一个 arXiv ID 与标题都已逐条回查 `arxiv.org/abs/<id>` 核实**（题名 + 版本 + `published` 日期）；**凡未核实的条目一律不给 ID**，只做类别性说明——**排除项不得编造 ID**。
 
 ## 1. 本条目要回答什么（决定了选文标准）
@@ -88,11 +88,11 @@
 | 18 | **2026 年新增的 VLA 增量工作**（多篇） | 多为在既有动作头上换主干/换数据的增量改进，**未提出可判定的新机制**；等形成新判据再按本页门槛重筛 |
 | 19 | **仅发布在项目页 / 预印本平台而无稳定标识的工程报告** | 无法给出可复核的 ID 与版本日期，违反引用纪律，不作为来源 |
 
-## 4. 统计口径（可逐条核对）
+## 4. 历史统计口径（原始批次 + 闭环控制批次）
 
-- **原始候选池 27 = 入选 8 + 排除 19**；2026-10-23 闭环控制补核新增 4 个候选，3 个设分册、1 个边界排除，故当前合计 **31 = 入选 11 + 排除 20**；
+- 原始批次 **27 = 入选 8 + 排除 19**；2026-10-23 闭环控制批次新增 4 个候选，3 个设分册、1 个边界排除，使当时合计为 **31 = 入选 11 + 排除 20**。世界模型迁移批次的累计数字见 §6.3；
 - **ID 纪律**：3.1 的 13 个 ID + 版本 + 日期 + 题名**已逐条回查 arXiv 元数据**；3.2 是类别性排除，**不给 ID、不编造 ID**；
-- **精度纪律**：入选 11 篇各有独立分册（`papers/*.md`），每篇开头含「亮点与差异」四行并展开七问；11 篇**主等级均为 `[精读原文]`**；
+- **精度纪律**：原始 + 闭环批次入选的 11 篇各有独立分册（`papers/*.md`），每篇开头含「亮点与差异」四行并展开七问；11 篇**主等级均为 `[精读原文]`**；
 - 本页与 [MANIFEST.md](MANIFEST.md) 配套：**清单一手核实、全文不入库**。
 
 ---
@@ -119,8 +119,50 @@
 
 - 本轮 4 个对象均回查 arXiv abs 页的题名、当前版本与日期；VersualRL 的原文题名为 **VersualRL**（不是 Verbal-RL）。
 - 新增三篇分册均含固定版本、四行「亮点与差异」、七问及原文图表锚点；详细数字和实验边界不得脱离分册条件引用。
-- 候选池累计 `27 + 4 = 31`；累计入选 `8 + 3 = 11`；累计排除 `19 + 1 = 20`。
+- 到闭环控制批次为止：候选池累计 `27 + 4 = 31`；累计入选 `8 + 3 = 11`；累计排除 `19 + 1 = 20`。后续世界模型迁移批次见 §6.3。
 
 ---
 
 *原筛选说明编制时间：2026-10-17 ｜ 补充批次核验时间：2026-10-23。arXiv 元数据逐条回查；全文由 PaperFetcher PDF 抽取或 arXiv 全文 HTML 核读。*
+
+---
+
+## 6. 2026-10-23 补充批次：世界模型数据与 VLA 真机迁移
+
+> **研究问题**：合成示范、世界模型中的 imagined RL、或经过物理验证的生成轨迹，分别在什么条件下改善真实机器人策略？本批候选池 **20 篇**；选择 5 篇精读，另 15 篇作为不同方法角色或证据边界排除出核心分册。筛选优先看真机结果、机制归属能否由消融/对照区分，以及完整原文是否足以回答七问。
+
+### 6.1 入选精读（5 篇）
+
+| # | 分册 | arXiv ID / 固定版本 | 入选理由 |
+| --: | :-- | :-- | :-- |
+| 1 | [`papers/2610.11248-simvla.md`](<../papers/2610.11248-simvla.md>) | `2610.11248v1`，2026-10-08 | **全仿真合成监督与移动操作真机迁移**：同一系统组合动作轨迹、特权视觉问答、策略部署轨迹，并做 2,120 次真机评估；能检验“simulation-only”具体排除了哪些真实采集。 |
+| 2 | [`papers/2610.13164-grounded-dreamer.md`](<../papers/2610.13164-grounded-dreamer.md>) | `2610.13164v1`，2026-10-09 | **用物理回放过滤视频世界模型伪动作**：直接对照真机与合成训练数据，区分视觉逼真、动作标签和物理可执行性。 |
+| 3 | [`papers/2602.12063-vlaw.md`](<../papers/2602.12063-vlaw.md>) | `2602.12063v2`，2026-02-15 | **合成 rollouts 是否增加真实策略能力**：真实失败轨迹校准模拟器、生成成功候选，再与真实成功轨迹混合微调；含数据量与真机 rollout 消融。 |
+| 4 | [`papers/2602.06508-world-vla-loop.md`](<../papers/2602.06508-world-vla-loop.md>) | `2602.06508v2`，2026-05-25 | **把 RL 放进视频世界模型**：SANS 近成功数据、生成器内生奖励和策略—模拟器共演化形成完整训练环；报告了两项真机任务，但真机样本规模有限。 |
+| 5 | [`papers/2602.13977-wovr.md`](<../papers/2602.13977-wovr.md>) | `2602.13977v2`，2026-06-27 | **显式控制 imagined RL 的模型幻觉**：关键帧初始化与策略对齐更新分别处理长 horizon 误差和分布漂移，并在两个机械臂平台上进行真机测试。 |
+
+### 6.2 相邻机制：不另设分册（15 篇）
+
+| # | arXiv ID / 当前版本与日期 | 论文 | 本批处理 |
+| --: | :-- | :-- | :-- |
+| 6 | `2511.09515v1`，2025-11-12 | [WMPO: World Model-based Policy Optimization for VLA Models](https://arxiv.org/abs/2511.09515) | 想象轨迹上的 VLA on-policy RL，留作 WoVR 比较基线；WoVR 对模型稳定性与 rollout 起点作了更直接的机制分解。 |
+| 7 | `2505.12705v2`，2025-06-17 | [DreamGen: Unlocking Generalization in Robot Learning through Video World Models](https://arxiv.org/abs/2505.12705) | 多本体的视频合成轨迹路线；与本批 Grounded-Dreamer 的伪动作和物理验证问题重叠，保留为历史对照，不在本批重复设册。 |
+| 8 | `2606.31101v1`，2026-06-30 | [Efficient Sim-to-Real Transfer of World-Action Models from Synthetic Priors](https://arxiv.org/abs/2606.31101) | 四任务、每任务约 800 仿真轨迹、Franka 真机平均成功率 35%；作者称早期结果且未做可归因于联合视频—动作目标的受控消融，登记为狭义可行性证据。 |
+| 9 | `2506.00613v3`，2025-09-30 | [WorldGym: World Model as an Environment for Policy Evaluation](https://arxiv.org/abs/2506.00613) | 世界模型作**评测器**而非训练源；其与真机的相关性进入本专题评测边界，技术报告仍见 Evaluation 交叉链接。 |
+| 10 | `2607.02642v1`，2026-07-02 | [GigaWorld-1: A Roadmap to Build World Models for Robot Policy Evaluation](https://arxiv.org/abs/2607.02642) | 以世界模型基准和评测设计为中心，不是策略训练/迁移证据；归入 Evaluation 的候选池。 |
+| 11 | `2601.16163v1`，2026-01-22 | [Cosmos Policy: Fine-Tuning Video Models for Visuomotor Control and Planning](https://arxiv.org/abs/2601.16163) | 视频模型直接生成动作并用于 test-time planning；属于候选规划器路线，非生成式模拟器扩充 VLA 训练数据。 |
+| 12 | `2602.15922v1`，2026-02-17 | [World Action Models are Zero-shot Policies](https://arxiv.org/abs/2602.15922) | DreamZero 将未来视频与动作联合建模为直接控制策略；不是本文所比的 learned simulator / synthetic-rollout training。 |
+| 13 | `2502.00622v4`，2026-03-11 | [Inference-Time Enhancement of Generative Robot Policies via Predictive World Modeling](https://arxiv.org/abs/2502.00622) | GPC 以预测未来重排/优化动作 chunk，偏 test-time MPC；不是训练数据或世界模型 RL 迁移路线。 |
+| 14 | `2606.01027v2`，2026-08-23 | [τ₀-WM: A Unified Video-Action World Model for Robotic Manipulation](https://arxiv.org/abs/2606.01027) | 将世界模型用于动作候选选择和不确定性下的重查询，偏在线规划；留待闭环控制专题处理。 |
+| 15 | `2609.39235v1`，2026-09-30 | [The Planning Limits of Latent World Models](https://arxiv.org/abs/2609.39235) | 研究 latent world-model planning horizon 与反馈限制，主要是模拟/离线轨迹层面的边界分析；不属于 VLA 合成数据训练。 |
+| 16 | `2610.10846v1`，2026-10-07 | [Cross-Embodiment Robot Foundation World Models with Latent Actions](https://arxiv.org/abs/2610.10846) | 跨本体动作条件世界模型与 LIBERO 规划，作者明确把 physical hardware validation 列为后续工作，故不计入真机迁移证据。 |
+| 17 | `2509.19080v2`，2026-03-19 | [World4RL: Diffusion World Models for Policy Refinement with Reinforcement Learning for Robotic Manipulation](https://arxiv.org/abs/2509.19080) | 有真机 World-Model-RL 结果，但控制器为高斯策略而非 VLA；作为相邻机器人 RL，不纳入 VLA 核心集合。 |
+| 18 | `2603.18532v4`，2026-09-29 | [Scaling Sim-to-Real VLA Reinforcement Learning with Generative 3D Worlds](https://arxiv.org/abs/2603.18532) | 生成可交互 3D 场景做仿真 RL；它是程序化/生成式物理环境而非视频世界模型，作相邻 sim-to-real 方法。 |
+| 19 | `2604.27792v5`，2026-07-15 | [Motubrain: An Advanced World Action Model for Robot Control](https://arxiv.org/abs/2604.27792) | 视频与动作联合模型直接部署，代表 WAM 控制器方向；本专题聚焦“世界模型怎样变成训练数据/模拟器”，暂不与数据闭环混列。 |
+| 20 | `2605.22882v4`，2026-08-03 | [GEM-4D: Geometry-Enhanced Video World Models for Robot Manipulation](https://arxiv.org/abs/2605.22882) | 几何一致的视频未来与 inverse dynamics 转成可执行轨迹，重点是预测后规划/轨迹生成，不是基于 imagined rollout 更新 VLA 策略。 |
+
+### 6.3 统计与筛选边界
+
+- 本批候选池 **20 = 入选精读 5 + 相邻机制 / 排除 15**；累计全页候选池 **51 = 入选分册 16 + 排除 / 边界候选 35**（历史 27、闭环控制批次 4、本批 20）。
+- 5 篇入选均可读固定版本全文；数字均按本表列示的 arXiv 版本回到原文核对。未下载论文全文入库；缓存如需使用，放仓库外。
+- “模型世界、仿真环境、real-world rollouts”在不同论文中代表不同数据来源。相邻候选保留其清楚的角色边界，不据标题或摘要将它们等同为 VLA 训练样本。

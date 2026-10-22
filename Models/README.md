@@ -47,7 +47,7 @@
 * [deepseek-multimodal-and-specialized.md](<DeepSeek/deepseek-multimodal-and-specialized.md>) — 367 行 / 24,706 B
 * [deepseek-phase-sensitivity.md](<DeepSeek/deepseek-phase-sensitivity.md>) — 76 行 / 11,595 B
 * [deepseek-text-models.md](<DeepSeek/deepseek-text-models.md>) — 418 行 / 36,554 B
-* [sources/MANIFEST.md](<DeepSeek/sources/MANIFEST.md>) — 111 行 / 15,221 B
+* [sources/MANIFEST.md](<DeepSeek/sources/MANIFEST.md>) — 111 行 / 15,504 B
 
 </details>
 

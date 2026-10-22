@@ -17,12 +17,12 @@
 | :-- | :-- | --: |
 | **AntibioticDiscovery** | [AI 辅助小分子抗生素发现：从活性筛选到机制与动物模型](<AntibioticDiscovery/report.md>) | 48 行 |
 | **Astronomy** | [巡天星系图像中的 AI 异常发现：DECaLS 近 390 万目标案例](<Astronomy/report.md>) | 59 行 |
-| **AutonomousLabs** | [自主实验室：从自动化执行到科学闭环](<AutonomousLabs/report.md>) | 119 行 |
-| **Chemistry** | [化学反应条件优化：历史数据怎样帮助新底物少做实验](<Chemistry/report.md>) | 80 行 |
+| **AutonomousLabs** | [自主实验室：从自动化执行到科学闭环](<AutonomousLabs/report.md>) | 127 行 |
+| **Chemistry** | [化学反应条件优化：历史数据怎样帮助新底物少做实验](<Chemistry/report.md>) | 89 行 |
 | **MaterialsDiscovery** | [生成式材料设计：从晶体候选到实验验证](<MaterialsDiscovery/report.md>) | 66 行 |
 | **MathematicalDiscovery** | [可验证的数学与算法发现：证明、程序搜索和方程恢复](<MathematicalDiscovery/report.md>) | 78 行 |
 | **Neuroscience** | [神经活动到运动行为：跨记录会话的表征与解码](<Neuroscience/report.md>) | 113 行 |
-| **ProteinDesign** | [蛋白质 binder 发现：从复合物生成到候选筛选](<ProteinDesign/report.md>) | 72 行 |
+| **ProteinDesign** | [蛋白质 binder 发现：从复合物生成到候选筛选](<ProteinDesign/report.md>) | 80 行 |
 | **SingleCellPerturbation** | [单细胞扰动预测：从“配对细胞”转向“群体响应”](<SingleCellPerturbation/report.md>) | 87 行 |
 | **WeatherClimate** | [AI 天气与气候预测：从天气状态外推到强迫响应](<WeatherClimate/report.md>) | 89 行 |
 
@@ -52,16 +52,16 @@
 <details>
 <summary><b>AutonomousLabs</b>（2 份）</summary>
 
-* [sources/CANDIDATES.md](<AutonomousLabs/sources/CANDIDATES.md>) — 20 行 / 1,868 B
-* [sources/MANIFEST.md](<AutonomousLabs/sources/MANIFEST.md>) — 28 行 / 7,787 B
+* [sources/CANDIDATES.md](<AutonomousLabs/sources/CANDIDATES.md>) — 21 行 / 2,110 B
+* [sources/MANIFEST.md](<AutonomousLabs/sources/MANIFEST.md>) — 29 行 / 9,443 B
 
 </details>
 
 <details>
 <summary><b>Chemistry</b>（2 份）</summary>
 
-* [sources/CANDIDATES.md](<Chemistry/sources/CANDIDATES.md>) — 29 行 / 3,899 B
-* [sources/MANIFEST.md](<Chemistry/sources/MANIFEST.md>) — 18 行 / 5,688 B
+* [sources/CANDIDATES.md](<Chemistry/sources/CANDIDATES.md>) — 30 行 / 4,195 B
+* [sources/MANIFEST.md](<Chemistry/sources/MANIFEST.md>) — 19 行 / 7,440 B
 
 </details>
 
@@ -96,13 +96,14 @@
 </details>
 
 <details>
-<summary><b>ProteinDesign</b>（5 份）</summary>
+<summary><b>ProteinDesign</b>（6 份）</summary>
 
+* [papers/2026-bits-to-binders.md](<ProteinDesign/papers/2026-bits-to-binders.md>) — 21 行 / 3,428 B
 * [papers/2504.13075-apm.md](<ProteinDesign/papers/2504.13075-apm.md>) — 59 行 / 5,212 B
 * [papers/2601.13327-pepediff.md](<ProteinDesign/papers/2601.13327-pepediff.md>) — 53 行 / 4,657 B
 * [papers/2608.20755-shortlisting.md](<ProteinDesign/papers/2608.20755-shortlisting.md>) — 54 行 / 5,698 B
-* [sources/CANDIDATES.md](<ProteinDesign/sources/CANDIDATES.md>) — 14 行 / 1,808 B
-* [sources/MANIFEST.md](<ProteinDesign/sources/MANIFEST.md>) — 16 行 / 2,865 B
+* [sources/CANDIDATES.md](<ProteinDesign/sources/CANDIDATES.md>) — 15 行 / 2,209 B
+* [sources/MANIFEST.md](<ProteinDesign/sources/MANIFEST.md>) — 17 行 / 4,013 B
 
 </details>
 

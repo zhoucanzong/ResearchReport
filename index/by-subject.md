@@ -115,6 +115,12 @@
 | --- | --- | --- | --- | --- |
 | [VisualGen/DiT/report.md](<../VisualGen/DiT/report.md>) | Diffusion Transformer (DiT) 架构演进研究报告 | — | — | — |
 
+## DiffusionLM (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 扩散语言模型：从随机遮盖到大规模并行生成 | topic-research | 2026-10-23 | current |
+
 ## DiffusionModels (1)
 
 | 条目 | 标题 | type | date | status |

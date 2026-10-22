@@ -36,13 +36,14 @@
 | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-22 | needs-review |
 | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 大模型训练基础设施与分布式训练研究报告 | topic-research | 2026-10-22 | needs-review |
 
-## LLM (9)
+## LLM (10)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [LLM/Agent/report.md](<../LLM/Agent/report.md>) | LLM Agent 架构与工具使用研究报告 | — | — | — |
 | [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) | 模型对齐与后训练：方法、目标与证据边界 | — | — | — |
 | [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | Decision Models（System One / Typed Decision Model）技术专题调研 | — | — | — |
+| [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 扩散语言模型：从随机遮盖到大规模并行生成 | topic-research | 2026-10-23 | current |
 | [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 长上下文（Long Context）技术研究报告 | — | — | — |
 | [LLM/MoE/report.md](<../LLM/MoE/report.md>) | 混合专家模型（Mixture of Experts, MoE）架构演进研究报告 | — | — | — |
 | [LLM/RAG/report.md](<../LLM/RAG/report.md>) | 检索增强生成（Retrieval-Augmented Generation, RAG）技术研究报告 | — | — | — |
