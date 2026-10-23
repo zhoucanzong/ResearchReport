@@ -22,7 +22,7 @@
       "id": "llm",
       "title": "LLM",
       "emoji": "💬",
-      "tagline": "语言模型能力与技术专题",
+      "tagline": "语言模型能力、训练数据与技术专题",
       "topic_index": true,
       "match": [
         "LLM/*"
@@ -30,7 +30,8 @@
       "representatives": [
         "LLM/ReasoningModels",
         "LLM/LongContext",
-        "LLM/MoE"
+        "LLM/MoE",
+        "LLM/TrainingData"
       ]
     },
     {

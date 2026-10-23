@@ -13,14 +13,14 @@
 
 | 指标 | 数量 |
 | --- | --- |
-| **条目数**（`report.md`） | **63** |
-| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 10 · VisualGen 8 · WorldModel 2 · AI4Science 10 · Evaluation 1 · Infra 3 · OpenSource 6 |
-| 条目子文档数 | 196 |
-| 条目正文行数（剔除 front-matter） | 27,853 |
-| 条目字节 | 2,100,770 B |
-| 带 front-matter 的条目 | 22 |
-| 带合法 `date` 的条目 | 22 |
-| 文档（除生成物外的全部 `.md`） | 277 |
+| **条目数**（`report.md`） | **64** |
+| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 11 · VisualGen 8 · WorldModel 2 · AI4Science 10 · Evaluation 1 · Infra 3 · OpenSource 6 |
+| 条目子文档数 | 201 |
+| 条目正文行数（剔除 front-matter） | 27,909 |
+| 条目字节 | 2,110,056 B |
+| 带 front-matter 的条目 | 23 |
+| 带合法 `date` 的条目 | 23 |
+| 文档（除生成物外的全部 `.md`） | 283 |
 | 其中文件名 `README.md` | 10 |
 | 纳入版本控制的文件 | 301 |
 | 纳入版本控制的 `.md` | 285 |
@@ -33,14 +33,14 @@
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
 | Models | 23 | 41 | 12,127 | 906,140 B | [板块页 →](<Models/README.md>) |
-| LLM | 10 | 46 | 4,300 | 330,316 B | [板块页 →](<LLM/README.md>) |
+| LLM | 11 | 52 | 4,356 | 339,602 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,758 | 320,420 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 2 | 41 | 1,244 | 139,523 B | [板块页 →](<WorldModel/README.md>) |
 | AI4Science | 10 | 53 | 836 | 138,955 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 1 | 7 | 101 | 21,992 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 3 | 37 | 918 | 75,497 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 35 | 1,569 | 167,927 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **63** | **277** | **27,853** | **2,100,770 B** | — |
+| **合计** | **64** | **283** | **27,909** | **2,110,056 B** | — |
 
 ## 分面索引
 
@@ -350,10 +350,10 @@
 
 </details>
 
-### LLM（10 条目 / 46 文档）
+### LLM（11 条目 / 52 文档）
 
 <details>
-<summary><b>语言模型 LLM（10 条目 / 35 子文档）</b></summary>
+<summary><b>语言模型 LLM（11 条目 / 40 子文档）</b></summary>
 
   <details>
   <summary><b>Agent</b> · <code>LLM/Agent/report.md</code> · 105 行 · —</summary>
@@ -492,6 +492,22 @@
         * [papers/prime.md](<LLM/ReinforcementLearning/papers/prime.md>) — 30 行 / 4,636 B
         * [sources/CANDIDATES.md](<LLM/ReinforcementLearning/sources/CANDIDATES.md>) — 24 行 / 3,877 B
         * [sources/MANIFEST.md](<LLM/ReinforcementLearning/sources/MANIFEST.md>) — 33 行 / 6,655 B
+
+  </details>
+
+  <details>
+  <summary><b>TrainingData</b> · <code>LLM/TrainingData/report.md</code> · 56 行 · 2026-10-23</summary>
+
+
+    * **条目**：[LLM/TrainingData/report.md](<LLM/TrainingData/report.md>)（56 行 / 9,286 B）
+    * **专题目录**：`LLM/TrainingData`
+    * **元数据**：type=`research` · domain=`LLM` · subject=`TrainingData` · date=`2026-10-23` · status=`current`
+    * **子文档（5）**
+        * [papers/2107.06499-deduplicating-training-data.md](<LLM/TrainingData/papers/2107.06499-deduplicating-training-data.md>) — 24 行 / 2,755 B
+        * [papers/2406.11794-datacomp-lm.md](<LLM/TrainingData/papers/2406.11794-datacomp-lm.md>) — 27 行 / 3,389 B
+        * [papers/2406.17557-fineweb.md](<LLM/TrainingData/papers/2406.17557-fineweb.md>) — 24 行 / 3,203 B
+        * [sources/CANDIDATES.md](<LLM/TrainingData/sources/CANDIDATES.md>) — 13 行 / 1,460 B
+        * [sources/MANIFEST.md](<LLM/TrainingData/sources/MANIFEST.md>) — 17 行 / 3,402 B
 
   </details>
 

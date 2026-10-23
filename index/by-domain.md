@@ -36,7 +36,7 @@
 | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-22 | needs-review |
 | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 大模型训练基础设施与分布式训练研究报告 | topic-research | 2026-10-22 | needs-review |
 
-## LLM (10)
+## LLM (11)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
@@ -49,6 +49,7 @@
 | [LLM/RAG/report.md](<../LLM/RAG/report.md>) | 检索增强生成（Retrieval-Augmented Generation, RAG）技术研究报告 | — | — | — |
 | [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) | 推理模型（Reasoning Models）与 Test-Time Compute 研究报告 | — | — | — |
 | [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | LLM 后训练中的强化学习：轨迹从哪里来，策略何时更新 | research | 2026-10-23 | current |
+| [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 训练数据策展：过滤、去重与预算如何改变模型测量 | research | 2026-10-23 | current |
 | [LLM/VLM/report.md](<../LLM/VLM/report.md>) | 多模态大模型（Vision-Language Models, VLM）研究报告 | — | — | — |
 
 ## Models (23)

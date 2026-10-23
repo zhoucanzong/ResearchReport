@@ -160,7 +160,7 @@ nav:
         - "MANIFEST": "Models/Qwen/sources/MANIFEST.md"
     - "Runway": "Models/Runway/report.md"
     - "StabilityAI": "Models/StabilityAI/report.md"
-  - "💬 LLM · 10":
+  - "💬 LLM · 11":
     - "LLM/README.md"
     - "Agent": "LLM/Agent/report.md"
     - "Alignment": "LLM/Alignment/report.md"
@@ -209,6 +209,13 @@ nav:
         - "prime": "LLM/ReinforcementLearning/papers/prime.md"
         - "CANDIDATES": "LLM/ReinforcementLearning/sources/CANDIDATES.md"
         - "MANIFEST": "LLM/ReinforcementLearning/sources/MANIFEST.md"
+    - "TrainingData":
+        - "总报告": "LLM/TrainingData/report.md"
+        - "2107.06499-deduplicating-training-data": "LLM/TrainingData/papers/2107.06499-deduplicating-training-data.md"
+        - "2406.11794-datacomp-lm": "LLM/TrainingData/papers/2406.11794-datacomp-lm.md"
+        - "2406.17557-fineweb": "LLM/TrainingData/papers/2406.17557-fineweb.md"
+        - "CANDIDATES": "LLM/TrainingData/sources/CANDIDATES.md"
+        - "MANIFEST": "LLM/TrainingData/sources/MANIFEST.md"
     - "VLM": "LLM/VLM/report.md"
   - "🎨 VisualGen · 8":
     - "VisualGen/README.md"

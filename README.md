@@ -18,7 +18,7 @@
 <div align="center">
 
 <!-- SCRIPT:badges START -->
-[**63** 主报告](index/by-report.md) &nbsp; · &nbsp; [**196** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**34** 技术专题](index/by-topic.md) &nbsp; · &nbsp; [**8** 研究板块](#研究板块)
+[**64** 主报告](index/by-report.md) &nbsp; · &nbsp; [**201** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**35** 技术专题](index/by-topic.md) &nbsp; · &nbsp; [**8** 研究板块](#研究板块)
 <!-- SCRIPT:badges END -->
 
 </div>
@@ -46,8 +46,8 @@
 </td>
 <td width="33%" valign="top">
 <h3>02 · <a href="LLM/README.md">LLM</a></h3>
-<p><strong>语言模型方法</strong><br><sub>10 篇主报告 · 语言模型能力与技术专题</sub></p>
-<p><a href="LLM/ReasoningModels/report.md">ReasoningModels</a> · <a href="LLM/LongContext/report.md">LongContext</a> · <a href="LLM/MoE/report.md">MoE</a></p>
+<p><strong>语言模型方法</strong><br><sub>11 篇主报告 · 语言模型能力、训练数据与技术专题</sub></p>
+<p><a href="LLM/ReasoningModels/report.md">ReasoningModels</a> · <a href="LLM/LongContext/report.md">LongContext</a> · <a href="LLM/MoE/report.md">MoE</a> · <a href="LLM/TrainingData/report.md">TrainingData</a></p>
 <p><a href="LLM/README.md"><strong>浏览板块 →</strong></a></p>
 </td>
 <td width="33%" valign="top">
@@ -130,7 +130,7 @@
 <!-- SCRIPT:topics START · 从条目目录生成 -->
 | 方向 | 专题入口 |
 | :-- | :-- |
-| **LLM** | [Agent](<LLM/Agent/report.md>) · [Alignment](<LLM/Alignment/report.md>) · [DecisionModels](<LLM/DecisionModels/report.md>) · [DiffusionLM](<LLM/DiffusionLM/report.md>) · [LongContext](<LLM/LongContext/report.md>) · [MoE](<LLM/MoE/report.md>) · [RAG](<LLM/RAG/report.md>) · [ReasoningModels](<LLM/ReasoningModels/report.md>) · [ReinforcementLearning](<LLM/ReinforcementLearning/report.md>) · [VLM](<LLM/VLM/report.md>) |
+| **LLM** | [Agent](<LLM/Agent/report.md>) · [Alignment](<LLM/Alignment/report.md>) · [DecisionModels](<LLM/DecisionModels/report.md>) · [DiffusionLM](<LLM/DiffusionLM/report.md>) · [LongContext](<LLM/LongContext/report.md>) · [MoE](<LLM/MoE/report.md>) · [RAG](<LLM/RAG/report.md>) · [ReasoningModels](<LLM/ReasoningModels/report.md>) · [ReinforcementLearning](<LLM/ReinforcementLearning/report.md>) · [TrainingData](<LLM/TrainingData/report.md>) · [VLM](<LLM/VLM/report.md>) |
 | **VisualGen** | [3DGen](<VisualGen/3DGen/report.md>) · [AudioGen](<VisualGen/AudioGen/report.md>) · [AvatarGen](<VisualGen/AvatarGen/report.md>) · [ControllableGen](<VisualGen/ControllableGen/report.md>) · [DiT](<VisualGen/DiT/report.md>) · [DiffusionModels](<VisualGen/DiffusionModels/report.md>) · [ImageEditing](<VisualGen/ImageEditing/report.md>) · [VideoGen](<VisualGen/VideoGen/report.md>) |
 | **WorldModel** | [EmbodiedVLA](<WorldModel/EmbodiedVLA/report.md>) · [WorldModels](<WorldModel/WorldModels/report.md>) |
 | **AI4Science** | [AntibioticDiscovery](<AI4Science/AntibioticDiscovery/report.md>) · [Astronomy](<AI4Science/Astronomy/report.md>) · [AutonomousLabs](<AI4Science/AutonomousLabs/report.md>) · [Chemistry](<AI4Science/Chemistry/report.md>) · [MaterialsDiscovery](<AI4Science/MaterialsDiscovery/report.md>) · [MathematicalDiscovery](<AI4Science/MathematicalDiscovery/report.md>) · [Neuroscience](<AI4Science/Neuroscience/report.md>) · [ProteinDesign](<AI4Science/ProteinDesign/report.md>) · [SingleCellPerturbation](<AI4Science/SingleCellPerturbation/report.md>) · [WeatherClimate](<AI4Science/WeatherClimate/report.md>) |
@@ -152,18 +152,18 @@
 ### 完整索引
 
 <!-- SCRIPT:index START · 条目单一真值在 index/by-report.md -->
-共 **63** 条，分属 **8** 个板块：Models 23 · LLM 10 · VisualGen 8 · WorldModel 2 · AI4Science 10 · Evaluation 1 · Infra 3 · OpenSource 6。
-完整 63 行（条目 | 板块 | 路径）见 **[index/by-report.md](<index/by-report.md>)**；按域 / 主题 / 来源分面见 [index/](<index/>)，总目录见 [INDEX.md](<INDEX.md>)。
+共 **64** 条，分属 **8** 个板块：Models 23 · LLM 11 · VisualGen 8 · WorldModel 2 · AI4Science 10 · Evaluation 1 · Infra 3 · OpenSource 6。
+完整 64 行（条目 | 板块 | 路径）见 **[index/by-report.md](<index/by-report.md>)**；按域 / 主题 / 来源分面见 [index/](<index/>)，总目录见 [INDEX.md](<INDEX.md>)。
 <!-- SCRIPT:index END -->
 
 ### 目录结构
 
 <!-- SCRIPT:structure START · 来源 scripts/panels.json，配置驱动 -->
 ```text
-ResearchReport/    63 条目 · 34 专题 · 8 板块
+ResearchReport/    64 条目 · 35 专题 · 8 板块
 │
 ├─ 🧠 Models/        23 条 · 厂商模型 / 系列逐个精读（GPT · Qwen · Gemini …）
-├─ 💬 LLM/           10 条 · 语言模型能力与技术专题（ReasoningModels · LongContext · MoE …）
+├─ 💬 LLM/           11 条 · 语言模型能力、训练数据与技术专题（ReasoningModels · LongContext · MoE …）
 ├─ 🎨 VisualGen/      8 条 · 视觉与多模态生成（VideoGen · DiT · DiffusionModels …）
 ├─ 🌍 WorldModel/     2 条 · 世界模型与具身 VLA（WorldModels · EmbodiedVLA …）
 ├─ 🧪 AI4Science/    10 条 · 科学问题中的 AI 方法与实验闭环（ProteinDesign · MaterialsDiscovery · WeatherClimate …）

@@ -2,7 +2,7 @@
 
 # 💬 LLM
 
-**10 条** · 语言模型能力与技术专题，覆盖推理、对齐、Agent、RAG 等方向。
+**11 条** · 语言模型能力与技术专题，覆盖推理、对齐、Agent、RAG 等方向。
 
 [← 返回首页](<../README.md>) · [完整索引](<../INDEX.md>)
 
@@ -10,7 +10,7 @@
 
 <!-- SCRIPT:panel-readme START · 由 scripts/library_index.py 生成，勿手改 -->
 
-![Entries](https://img.shields.io/badge/Entries-10-3f51b5?style=flat-square)
+![Entries](https://img.shields.io/badge/Entries-11-3f51b5?style=flat-square)
 ![Panel](https://img.shields.io/badge/Panel-LLM-9e9e9e?style=flat-square)
 
 | 条目 | 报告 | 规模 |
@@ -24,6 +24,7 @@
 | **RAG** | [检索增强生成（Retrieval-Augmented Generation, RAG）技术研究报告](<RAG/report.md>) | 834 行 |
 | **ReasoningModels** | [推理模型（Reasoning Models）与 Test-Time Compute 研究报告](<ReasoningModels/report.md>) | 679 行 |
 | **ReinforcementLearning** | [LLM 后训练中的强化学习：轨迹从哪里来，策略何时更新](<ReinforcementLearning/report.md>) | 94 行 |
+| **TrainingData** | [训练数据策展：过滤、去重与预算如何改变模型测量](<TrainingData/report.md>) | 56 行 |
 | **VLM** | [多模态大模型（Vision-Language Models, VLM）研究报告](<VLM/report.md>) | 516 行 |
 
 ## 📎 子文档
@@ -78,6 +79,17 @@
 * [papers/prime.md](<ReinforcementLearning/papers/prime.md>) — 30 行 / 4,636 B
 * [sources/CANDIDATES.md](<ReinforcementLearning/sources/CANDIDATES.md>) — 24 行 / 3,877 B
 * [sources/MANIFEST.md](<ReinforcementLearning/sources/MANIFEST.md>) — 33 行 / 6,655 B
+
+</details>
+
+<details>
+<summary><b>TrainingData</b>（5 份）</summary>
+
+* [papers/2107.06499-deduplicating-training-data.md](<TrainingData/papers/2107.06499-deduplicating-training-data.md>) — 24 行 / 2,755 B
+* [papers/2406.11794-datacomp-lm.md](<TrainingData/papers/2406.11794-datacomp-lm.md>) — 27 行 / 3,389 B
+* [papers/2406.17557-fineweb.md](<TrainingData/papers/2406.17557-fineweb.md>) — 24 行 / 3,203 B
+* [sources/CANDIDATES.md](<TrainingData/sources/CANDIDATES.md>) — 13 行 / 1,460 B
+* [sources/MANIFEST.md](<TrainingData/sources/MANIFEST.md>) — 17 行 / 3,402 B
 
 </details>
 

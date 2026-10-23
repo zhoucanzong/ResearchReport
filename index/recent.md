@@ -11,6 +11,7 @@
 
 | 条目 | date | 板块 | 专题 |
 | --- | --- | --- | --- |
+| [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 2026-10-23 | LLM | TrainingData |
 | [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | 2026-10-23 | LLM | ReinforcementLearning |
 | [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 2026-10-23 | LLM | DiffusionLM |
 | [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) | 2026-10-23 | Evaluation | EvaluationScience |
@@ -30,7 +31,6 @@
 | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 2026-10-22 | Infra | SpeculativeDecoding |
 | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 2026-10-22 | Infra | QuantizationEdge |
 | [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | 2026-10-20 | OpenSource | DeepSeekHarness |
-| [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | 2026-10-16 | OpenSource | vllm |
 
 ## 无 date 元数据（41）
 

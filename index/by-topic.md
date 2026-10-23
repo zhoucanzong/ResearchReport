@@ -331,6 +331,12 @@
 | --- | --- | --- | --- | --- |
 | [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>) | Stability AI / Black Forest Labs 图像生成模型系列研究报告 | — | — | — |
 
+## TrainingData (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 训练数据策展：过滤、去重与预算如何改变模型测量 | research | 2026-10-23 | current |
+
 ## TrainingInfra (1)
 
 | 条目 | 标题 | type | date | status |
