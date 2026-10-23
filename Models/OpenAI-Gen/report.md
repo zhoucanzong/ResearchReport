@@ -315,7 +315,7 @@ OpenAI 的 [ChatGPT Images 2.0 System Card](https://deploymentsafety.openai.com/
 
 ## 13. 参考链接
 
-本轮证据修订：2026-10-22。DALL-E 3 PDF 直接从官方 CDN 取回并提取正文，位于仓库外 `paper-cache/research-audit-2026-10-22/models/dalle3/`；DALL-E 2 用 `paper-fetcher download` 取回并核读 §2.1，位于相邻 `models/dalle2/`。其他实际阅读的一手来源已在相应段落给出。原始引用表不等同于每篇论文均已完整精读。
+本轮证据修订：2026-10-22。DALL-E 3 PDF 直接从官方 CDN 取回并提取正文，位于仓库外 `.paper-cache/research-audit-2026-10-22/models/dalle3/`；DALL-E 2 用 `paper-fetcher download` 取回并核读 §2.1，位于相邻 `models/dalle2/`。其他实际阅读的一手来源已在相应段落给出。原始引用表不等同于每篇论文均已完整精读。
 
 ### 官方资源
 

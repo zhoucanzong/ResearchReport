@@ -1,6 +1,6 @@
 # Sources Manifest — LLM Reinforcement Learning
 
-检索截止：2026-10-23。原文 HTML 或出版版入口优先；缓存 PDF 位于仓库外 `/Users/zhoucanzong/Documents/paper-cache/llm-rl-2026-10-23/`，未将论文全文加入仓库。PDF SHA-256 是缓存完整性信息，不表示独立复现。
+检索截止：2026-10-23。原文 HTML 或出版版入口优先；缓存 PDF 位于仓库外 `.paper-cache/llm-rl-2026-10-23/`，未将论文全文加入仓库。PDF SHA-256 是缓存完整性信息，不表示独立复现。
 
 | ID | 固定版本 / 日期 | 许可 | 来源与定位 | 使用范围 / 缓存 |
 |---|---|---|---|---|

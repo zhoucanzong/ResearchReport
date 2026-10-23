@@ -160,9 +160,8 @@ nav:
         - "MANIFEST": "Models/Qwen/sources/MANIFEST.md"
     - "Runway": "Models/Runway/report.md"
     - "StabilityAI": "Models/StabilityAI/report.md"
-  - "💬 LLM · 11":
+  - "💬 LLM · 10":
     - "LLM/README.md"
-    - "Agent": "LLM/Agent/report.md"
     - "Alignment": "LLM/Alignment/report.md"
     - "DecisionModels":
         - "总报告": "LLM/DecisionModels/report.md"
@@ -220,6 +219,15 @@ nav:
         - "CANDIDATES": "LLM/TrainingData/sources/CANDIDATES.md"
         - "MANIFEST": "LLM/TrainingData/sources/MANIFEST.md"
     - "VLM": "LLM/VLM/report.md"
+  - "🤖 Agents · 1":
+    - "Agents/README.md"
+    - "AgentSystems":
+        - "总报告": "Agents/AgentSystems/report.md"
+        - "2026-acl-long-1573-toolscope": "Agents/AgentSystems/papers/2026-acl-long-1573-toolscope.md"
+        - "2026-acl-long-370-mem2actbench": "Agents/AgentSystems/papers/2026-acl-long-370-mem2actbench.md"
+        - "2026-acl-long-981-agemem": "Agents/AgentSystems/papers/2026-acl-long-981-agemem.md"
+        - "2609.34385-jam": "Agents/AgentSystems/papers/2609.34385-jam.md"
+        - "MANIFEST": "Agents/AgentSystems/sources/MANIFEST.md"
   - "🎨 VisualGen · 8":
     - "VisualGen/README.md"
     - "3DGen": "VisualGen/3DGen/report.md"
@@ -446,12 +454,13 @@ nav:
       - "最近更新": "index/recent.md"
       - "待复核": "index/stale.md"
   - "📖 文档":
+      - "历史校验记录（截至 2026-10）": "docs/archive/verification-history-2026-10.md"
       - "DSH Harness 反馈清单（2026-10-18，来自一次真实事故）": "docs/harness-feedback.md"
       - "🛠 维护指南 · Maintenance": "docs/maintenance.md"
-      - "阅读与证据说明": "docs/research-method.md"
+      - "阅读与研究方法": "docs/research-method.md"
       - "📊 统计明细 · Statistics": "docs/statistics.md"
-      - "Team · 技术研究": "docs/team.md"
-      - "🔍 校验记录 · Verification Log": "docs/verification.md"
+      - "ResearchReport 项目规范": "docs/team.md"
+      - "证据与发布核验": "docs/verification.md"
       - "scripts/": "scripts/README.md"
   - "🐙 GitHub 仓库": "https://github.com/zhoucanzong/ResearchReport"
   # SCRIPT:nav END

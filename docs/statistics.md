@@ -51,14 +51,15 @@
 | 文件 | 行数 | 字节 |
 | :-- | --: | --: |
 | [harness-feedback.md](harness-feedback.md) | 86 | 6,458 |
-| [maintenance.md](maintenance.md) | 187 | 11,050 |
-| [research-method.md](research-method.md) | 44 | 3,472 |
-| [statistics.md](statistics.md)（本文自身） | 214 | 15,521 |
-| [team.md](team.md) | 140 | 14,594 |
-| [verification.md](verification.md) | 303 | 21,756 |
-| **合计** | **974** | **72,851** |
+| [maintenance.md](maintenance.md) | 187 | 11,079 |
+| [research-method.md](research-method.md) | 31 | 2,380 |
+| [statistics.md](statistics.md)（本文自身） | 215 | 15,662 |
+| [team.md](team.md) | 63 | 5,246 |
+| [verification.md](verification.md) | 23 | 2,285 |
+| [archive/verification-history-2026-10.md](archive/verification-history-2026-10.md)（历史档案） | 307 | 22,103 |
+| **合计** | **912** | **65,213** |
 
-> `docs/` 合计 = 六个文件之和（含本文自身）；本文每次更新都会改变这两行，故按写入后的实测值填写。
+> `docs/` 合计 = 七个 Markdown 文件之和（含本文自身与历史档案）；本文每次更新都会改变这两行，故按写入后的实测值填写。
 
 ---
 

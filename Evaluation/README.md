@@ -22,11 +22,11 @@
 <details>
 <summary><b>EvaluationScience</b>（5 份）</summary>
 
-* [papers/2307.13854-webarena.md](<EvaluationScience/papers/2307.13854-webarena.md>) — 22 行 / 2,837 B
-* [papers/2404.07972-osworld.md](<EvaluationScience/papers/2404.07972-osworld.md>) — 21 行 / 3,410 B
-* [papers/2406.12045-tau-bench.md](<EvaluationScience/papers/2406.12045-tau-bench.md>) — 27 行 / 4,034 B
+* [papers/2307.13854-webarena.md](<EvaluationScience/papers/2307.13854-webarena.md>) — 22 行 / 2,809 B
+* [papers/2404.07972-osworld.md](<EvaluationScience/papers/2404.07972-osworld.md>) — 21 行 / 3,382 B
+* [papers/2406.12045-tau-bench.md](<EvaluationScience/papers/2406.12045-tau-bench.md>) — 27 行 / 4,006 B
 * [sources/CANDIDATES.md](<EvaluationScience/sources/CANDIDATES.md>) — 24 行 / 6,023 B
-* [sources/MANIFEST.md](<EvaluationScience/sources/MANIFEST.md>) — 30 行 / 15,802 B
+* [sources/MANIFEST.md](<EvaluationScience/sources/MANIFEST.md>) — 30 行 / 15,774 B
 
 </details>
 

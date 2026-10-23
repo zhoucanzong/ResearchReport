@@ -1,20 +1,20 @@
 # 原文清单 · EmbodiedVLA
 
 > 本仓库**只存清单与本条目的精读分册**（`papers/*.md`），**不存论文全文**（PDF 或转出的 markdown / txt 都不入库）。
-> 需要回看原文时：按下面的 arXiv 链接现取。**本地缓存路径**：`~/Documents/paper-cache/<arXiv-ID>@latest/`（**仓库外、不入库**），内含 `<ID>.pdf`、`<ID>.txt`（`pdftotext -layout` 提取）与 `meta.json`（题名 / 版本 / 日期 / 第一作者 / SHA256）。**本清单不依赖缓存存在**。
+> 需要回看原文时：按下面的 arXiv 链接现取。**本地缓存路径**：`.paper-cache/<arXiv-ID>@latest/`（**仓库外、不入库**），内含 `<ID>.pdf`、`<ID>.txt`（`pdftotext -layout` 提取）与 `meta.json`（题名 / 版本 / 日期 / 第一作者 / SHA256）。**本清单不依赖缓存存在**。
 
 ## 1. 精读的 16 篇（主等级 `[精读原文]`）
 
 | # | 分册（我们的精读） | arXiv ID | 版本 | 版本日期（正文首页照抄） | 标题（arXiv 元数据，逐条核实） | 第一作者（核实） | license（`arxiv.org/abs` 页核验） | 出处 / 本地缓存 |
 | --: | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
-| 1 | [`papers/2303.04137-diffusion-policy.md`](<../papers/2303.04137-diffusion-policy.md>) | 2303.04137 | v5 | 2024-03-14（v1 2023-03-07，`published` 字段） | Diffusion Policy: Visuomotor Policy Learning via Action Diffusion | Chi, Cheng | arXiv 默认「永久非独占许可」（页内无 CC 标识） | https://arxiv.org/abs/2303.04137 ｜ 缓存命中 `~/Documents/paper-cache/2303.04137@latest/` |
-| 2 | [`papers/2307.15818-rt2.md`](<../papers/2307.15818-rt2.md>) | 2307.15818 | v1 | 2023-07-28 | RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control | Brohan, Anthony | arXiv 默认「永久非独占许可」（页内无 CC 标识） | https://arxiv.org/abs/2307.15818 ｜ 缓存命中 `~/Documents/paper-cache/2307.15818@latest/` |
-| 3 | [`papers/2310.08864-open-x-embodiment.md`](<../papers/2310.08864-open-x-embodiment.md>) | 2310.08864 | v9 | 2025-05-14（v1 2023-10-13） | Open X-Embodiment: Robotic Learning Datasets and RT-X Models | Open X-Embodiment Collaboration | CC BY 4.0 | https://arxiv.org/abs/2310.08864 ｜ 缓存命中 `~/Documents/paper-cache/2310.08864@latest/` |
-| 4 | [`papers/2406.09246-openvla.md`](<../papers/2406.09246-openvla.md>) | 2406.09246 | v3 | 2024-09-05（v1 2024-06-13） | OpenVLA: An Open-Source Vision-Language-Action Model | Kim, Moo Jin | CC BY 4.0 | https://arxiv.org/abs/2406.09246 ｜ 缓存命中 `~/Documents/paper-cache/2406.09246@latest/` |
-| 5 | [`papers/2410.24164-pi0.md`](<../papers/2410.24164-pi0.md>) | 2410.24164 | v4 | 2026-01-08（v1 2024-10-31） | π0: A Vision-Language-Action Flow Model for General Robot Control | Black, Kevin | arXiv 默认「永久非独占许可」（页内无 CC 标识） | https://arxiv.org/abs/2410.24164 ｜ 缓存命中 `~/Documents/paper-cache/2410.24164@latest/` |
-| 6 | [`papers/2501.09747-fast.md`](<../papers/2501.09747-fast.md>) | 2501.09747 | v1 | 2025-01-16 | FAST: Efficient Action Tokenization for Vision-Language-Action Models | Pertsch, Karl | CC BY 4.0 | https://arxiv.org/abs/2501.09747 ｜ 缓存命中 `~/Documents/paper-cache/2501.09747@latest/` |
-| 7 | [`papers/2403.12945-droid.md`](<../papers/2403.12945-droid.md>) | 2403.12945 | v2 | 2025-04-22（v1 2024-03-19） | DROID: A Large-Scale In-The-Wild Robot Manipulation Dataset | Khazatsky, Alexander | CC BY 4.0 | https://arxiv.org/abs/2403.12945 ｜ **本轮新抓**：`paper-fetcher` `download` + `pdftotext -layout`，缓存 `~/Documents/paper-cache/2403.12945@latest/` |
-| 8 | [`papers/2405.05941-simpler.md`](<../papers/2405.05941-simpler.md>) | 2405.05941 | v1 | 2024-05-09 | Evaluating Real-World Robot Manipulation Policies in Simulation | Li, Xuanlin | CC BY 4.0 | https://arxiv.org/abs/2405.05941 ｜ 缓存命中 `~/Documents/paper-cache/2405.05941@latest/` |
+| 1 | [`papers/2303.04137-diffusion-policy.md`](<../papers/2303.04137-diffusion-policy.md>) | 2303.04137 | v5 | 2024-03-14（v1 2023-03-07，`published` 字段） | Diffusion Policy: Visuomotor Policy Learning via Action Diffusion | Chi, Cheng | arXiv 默认「永久非独占许可」（页内无 CC 标识） | https://arxiv.org/abs/2303.04137 ｜ 缓存命中 `.paper-cache/2303.04137@latest/` |
+| 2 | [`papers/2307.15818-rt2.md`](<../papers/2307.15818-rt2.md>) | 2307.15818 | v1 | 2023-07-28 | RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control | Brohan, Anthony | arXiv 默认「永久非独占许可」（页内无 CC 标识） | https://arxiv.org/abs/2307.15818 ｜ 缓存命中 `.paper-cache/2307.15818@latest/` |
+| 3 | [`papers/2310.08864-open-x-embodiment.md`](<../papers/2310.08864-open-x-embodiment.md>) | 2310.08864 | v9 | 2025-05-14（v1 2023-10-13） | Open X-Embodiment: Robotic Learning Datasets and RT-X Models | Open X-Embodiment Collaboration | CC BY 4.0 | https://arxiv.org/abs/2310.08864 ｜ 缓存命中 `.paper-cache/2310.08864@latest/` |
+| 4 | [`papers/2406.09246-openvla.md`](<../papers/2406.09246-openvla.md>) | 2406.09246 | v3 | 2024-09-05（v1 2024-06-13） | OpenVLA: An Open-Source Vision-Language-Action Model | Kim, Moo Jin | CC BY 4.0 | https://arxiv.org/abs/2406.09246 ｜ 缓存命中 `.paper-cache/2406.09246@latest/` |
+| 5 | [`papers/2410.24164-pi0.md`](<../papers/2410.24164-pi0.md>) | 2410.24164 | v4 | 2026-01-08（v1 2024-10-31） | π0: A Vision-Language-Action Flow Model for General Robot Control | Black, Kevin | arXiv 默认「永久非独占许可」（页内无 CC 标识） | https://arxiv.org/abs/2410.24164 ｜ 缓存命中 `.paper-cache/2410.24164@latest/` |
+| 6 | [`papers/2501.09747-fast.md`](<../papers/2501.09747-fast.md>) | 2501.09747 | v1 | 2025-01-16 | FAST: Efficient Action Tokenization for Vision-Language-Action Models | Pertsch, Karl | CC BY 4.0 | https://arxiv.org/abs/2501.09747 ｜ 缓存命中 `.paper-cache/2501.09747@latest/` |
+| 7 | [`papers/2403.12945-droid.md`](<../papers/2403.12945-droid.md>) | 2403.12945 | v2 | 2025-04-22（v1 2024-03-19） | DROID: A Large-Scale In-The-Wild Robot Manipulation Dataset | Khazatsky, Alexander | CC BY 4.0 | https://arxiv.org/abs/2403.12945 ｜ **本轮新抓**：`paper-fetcher` `download` + `pdftotext -layout`，缓存 `.paper-cache/2403.12945@latest/` |
+| 8 | [`papers/2405.05941-simpler.md`](<../papers/2405.05941-simpler.md>) | 2405.05941 | v1 | 2024-05-09 | Evaluating Real-World Robot Manipulation Policies in Simulation | Li, Xuanlin | CC BY 4.0 | https://arxiv.org/abs/2405.05941 ｜ 缓存命中 `.paper-cache/2405.05941@latest/` |
 | 9 | [`papers/2511.14759-pi-star-0.6-recap.md`](<../papers/2511.14759-pi-star-0.6-recap.md>) | 2511.14759 | v2 | 2025-11-19 | $π^{*}_{0.6}$: a VLA That Learns From Experience | Physical Intelligence | arXiv 非独占分发许可 | [arXiv v2 HTML](https://arxiv.org/html/2511.14759v2) ｜ arXiv v2 全文 HTML 核读；PaperFetcher PDF 请求未完整结束 |
 | 10 | [`papers/2608.16978-vlcp.md`](<../papers/2608.16978-vlcp.md>) | 2608.16978 | v1 | 2026-08-17 | VLCP: Vision Language Control Policy Closed-Loop Code Replanning for Robot Manipulation | Naouali, Dhia | CC BY 4.0 | [arXiv v1 HTML](https://arxiv.org/html/2608.16978v1) ｜ PaperFetcher 下载 PDF + `pdftotext -layout`；临时提取物已读后清理，报告未收录全文 |
 | 11 | [`papers/2601.21998-lingbot-va.md`](<../papers/2601.21998-lingbot-va.md>) | 2601.21998 | v2 | 2026-03-22 | Causal World Modeling for Robot Control | Li, Lin | CC BY 4.0 | [arXiv v2 HTML](https://arxiv.org/html/2601.21998v2) ｜ PaperFetcher 下载 PDF + `pdftotext -layout`；临时提取物已读后清理，报告未收录全文 |
@@ -34,7 +34,7 @@
 
 | 环节 | 做法 | 证据 |
 | :-- | :-- | :-- |
-| 缓存优先 | 先查 `~/Documents/paper-cache/<ID>@latest/`，**命中即读、不重复下载** | 原 8 篇中 7 篇命中既有缓存；VLCP 与 LingBot-VA 经 PaperFetcher 临时下载 / 抽取，读完清理 |
+| 缓存优先 | 先查 `.paper-cache/<ID>@latest/`，**命中即读、不重复下载** | 原 8 篇中 7 篇命中既有缓存；VLCP 与 LingBot-VA 经 PaperFetcher 临时下载 / 抽取，读完清理 |
 | 未命中才抓 | 原 DROID 与本轮 VLCP / LingBot-VA 缓存未命中 → `paper-fetcher` skill 取原文 | `/Users/zhoucanzong/Documents/codes/paper-fetcher/skills/paper-fetcher/scripts/fetch_paper.py download` |
 | 文本提取 | 已下载论文用 `pdftotext -layout <ID>.pdf <ID>.txt`；RECAP 由 arXiv v2 全文 HTML 核读 | 新批次 VLCP / LingBot-VA 临时文本；RECAP PDF 请求未完成 |
 | 元数据核实 | arXiv abs 页逐条核对**题名 + 当前版本 + 版本日期**；RECAP 的 PDF 请求未完成，以 arXiv v2 HTML 版日期为准 | 本文表格第 4–6 列 |
@@ -77,8 +77,8 @@
 
 ### 2.4 2026-10-23 π0 与 FAST 原文缓存复核
 
-- **π0 固定原文**：arXiv `2410.24164v4`，2026-01-08；本地缓存 `/Users/zhoucanzong/Documents/paper-cache/2410.24164@latest/2410.24164.pdf`，SHA-256 `fbdfba56258bdbd220207ba63410c6c943e43a73e97a7a5a47ca0bc74204f821`。本次按 v4 PDF 与抽取文本复核首页作者拼写（Lachy Groom）、§IV flow-matching 目标/ H=50 / 10 步 Euler、§V-A 数据规模、§VI-A–F 实验口径及 Appendix B/D 的时间步与 runtime 条件；正文图内精确柱值仍未转录，权重开放状态也不从论文推断。
-- **FAST 固定原文**：arXiv `2501.09747v1`，2025-01-16，CC BY 4.0；缓存 `/Users/zhoucanzong/Documents/paper-cache/2501.09747@latest/2501.09747.pdf`，SHA-256 `3739b31f5fecdde371509ff5bb13619979734e894a255a9b264253f4cc53934a`。本次按 v1 PDF 与抽取文本复核 §III–VI、Table I–II、Appendix A–E；确认 naive per-timestep binning 在所测高频任务中无法推进，FAST 的 1 秒 chunk 在 20 Hz/50 Hz 条件下分别以 28/53 tokens 编码，而不是普遍“高频 token VLA 的必要条件”。保留 Fig. 6/8/9/11/15 图内具体数值、部分混合权重与权重开放状态为 `[待核]`。
+- **π0 固定原文**：arXiv `2410.24164v4`，2026-01-08；本地缓存 `.paper-cache/2410.24164@latest/2410.24164.pdf`，SHA-256 `fbdfba56258bdbd220207ba63410c6c943e43a73e97a7a5a47ca0bc74204f821`。本次按 v4 PDF 与抽取文本复核首页作者拼写（Lachy Groom）、§IV flow-matching 目标/ H=50 / 10 步 Euler、§V-A 数据规模、§VI-A–F 实验口径及 Appendix B/D 的时间步与 runtime 条件；正文图内精确柱值仍未转录，权重开放状态也不从论文推断。
+- **FAST 固定原文**：arXiv `2501.09747v1`，2025-01-16，CC BY 4.0；缓存 `.paper-cache/2501.09747@latest/2501.09747.pdf`，SHA-256 `3739b31f5fecdde371509ff5bb13619979734e894a255a9b264253f4cc53934a`。本次按 v1 PDF 与抽取文本复核 §III–VI、Table I–II、Appendix A–E；确认 naive per-timestep binning 在所测高频任务中无法推进，FAST 的 1 秒 chunk 在 20 Hz/50 Hz 条件下分别以 28/53 tokens 编码，而不是普遍“高频 token VLA 的必要条件”。保留 Fig. 6/8/9/11/15 图内具体数值、部分混合权重与权重开放状态为 `[待核]`。
 - **结论改写**：主报告 §0.6 已把“FAST 是 token 路线可用于高频的先决条件”收窄为“它在论文所测高频任务中解决了 naive binning 的失败”；将 π0 的连续 flow matching 作为另一种动作表征方案，不再说成修复 FAST 所针对的 tokenization 瓶颈。FAST 的实测推理时延约 750 ms/chunk、π0 约 73 ms/chunk 均附各自硬件和模型条件，不作无条件横向排名。
 - 两篇论文的 `[待核]` 图内数值仍以原文图表/表格为准；本次只重核上述关键机制与正文可读数据，没有重训模型、运行控制栈或复现真机结果。
 
@@ -96,7 +96,7 @@
 ## 3. 许可与「全文不入库」的合规说明
 
 1. **arXiv 默认许可是「永久非独占许可」，不授予第三方再分发权**；CC BY 4.0 虽允许再分发，但要求署名且本仓库定位是**研究报告而非论文镜像**。
-2. 因此本条目**只在仓库内保留自己的精读分册与来源清单**，PDF / txt / 转出的 markdown **一律不入库**（缓存放在 `~/Documents/paper-cache/`，仓库外）。
+2. 因此本条目**只在仓库内保留自己的精读分册与来源清单**，PDF / txt / 转出的 markdown **一律不入库**（缓存放在 `.paper-cache/`，仓库外）。
 3. 分册内引用采用**短引用 + `arXiv ID + 版本日期` + 章节锚点**，不整段转录原文。
 
 ## 4. 未入本清单的引用（说明）

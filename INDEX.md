@@ -14,16 +14,16 @@
 | 指标 | 数量 |
 | --- | --- |
 | **条目数**（`report.md`） | **65** |
-| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 11 · VisualGen 8 · WorldModel 2 · AI4Science 10 · Evaluation 1 · Infra 4 · OpenSource 6 |
-| 条目子文档数 | 209 |
-| 条目正文行数（剔除 front-matter） | 27,998 |
-| 条目字节 | 2,122,638 B |
+| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 10 · Agents 1 · VisualGen 8 · WorldModel 2 · AI4Science 10 · Evaluation 1 · Infra 4 · OpenSource 6 |
+| 条目子文档数 | 214 |
+| 条目正文行数（剔除 front-matter） | 27,953 |
+| 条目字节 | 2,120,215 B |
 | 带 front-matter 的条目 | 24 |
 | 带合法 `date` 的条目 | 24 |
-| 文档（除生成物外的全部 `.md`） | 292 |
-| 其中文件名 `README.md` | 10 |
-| 纳入版本控制的文件 | 310 |
-| 纳入版本控制的 `.md` | 294 |
+| 文档（除生成物外的全部 `.md`） | 300 |
+| 其中文件名 `README.md` | 11 |
+| 纳入版本控制的文件 | 316 |
+| 纳入版本控制的 `.md` | 300 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -32,15 +32,16 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| Models | 23 | 41 | 12,127 | 906,140 B | [板块页 →](<Models/README.md>) |
-| LLM | 11 | 55 | 4,365 | 343,808 B | [板块页 →](<LLM/README.md>) |
+| Models | 23 | 41 | 12,127 | 906,146 B | [板块页 →](<Models/README.md>) |
+| LLM | 10 | 54 | 4,260 | 334,154 B | [板块页 →](<LLM/README.md>) |
+| Agents | 1 | 7 | 60 | 7,265 B | [板块页 →](<Agents/README.md>) |
 | VisualGen | 8 | 9 | 6,758 | 320,420 B | [板块页 →](<VisualGen/README.md>) |
-| WorldModel | 2 | 41 | 1,244 | 139,523 B | [板块页 →](<WorldModel/README.md>) |
+| WorldModel | 2 | 41 | 1,244 | 139,511 B | [板块页 →](<WorldModel/README.md>) |
 | AI4Science | 10 | 53 | 836 | 138,955 B | [板块页 →](<AI4Science/README.md>) |
-| Evaluation | 1 | 7 | 101 | 21,992 B | [板块页 →](<Evaluation/README.md>) |
+| Evaluation | 1 | 7 | 101 | 21,964 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 4 | 43 | 998 | 83,873 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 35 | 1,569 | 167,927 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **65** | **292** | **27,998** | **2,122,638 B** | — |
+| **合计** | **65** | **300** | **27,953** | **2,120,215 B** | — |
 
 ## 分面索引
 
@@ -65,7 +66,7 @@
   <summary><b>Alibaba-Gen</b> · <code>Models/Alibaba-Gen/report.md</code> · 117 行 · —</summary>
 
 
-    * **条目**：[Models/Alibaba-Gen/report.md](<Models/Alibaba-Gen/report.md>)（117 行 / 15,414 B）
+    * **条目**：[Models/Alibaba-Gen/report.md](<Models/Alibaba-Gen/report.md>)（117 行 / 15,415 B）
     * **专题目录**：`Models/Alibaba-Gen`
     * **元数据**：type=`—` · domain=`Models` · subject=`Alibaba-Gen` · date=`—` · status=`—`
     * **子文档（0）**
@@ -77,7 +78,7 @@
   <summary><b>ByteDance-Gen</b> · <code>Models/ByteDance-Gen/report.md</code> · 347 行 · —</summary>
 
 
-    * **条目**：[Models/ByteDance-Gen/report.md](<Models/ByteDance-Gen/report.md>)（347 行 / 26,232 B）
+    * **条目**：[Models/ByteDance-Gen/report.md](<Models/ByteDance-Gen/report.md>)（347 行 / 26,233 B）
     * **专题目录**：`Models/ByteDance-Gen`
     * **元数据**：type=`—` · domain=`Models` · subject=`ByteDance-Gen` · date=`—` · status=`—`
     * **子文档（0）**
@@ -108,9 +109,9 @@
         * [deepseek-multimodal-and-specialized.md](<Models/DeepSeek/deepseek-multimodal-and-specialized.md>) — 367 行 / 24,706 B
         * [deepseek-phase-sensitivity.md](<Models/DeepSeek/deepseek-phase-sensitivity.md>) — 76 行 / 11,595 B
         * [deepseek-text-models.md](<Models/DeepSeek/deepseek-text-models.md>) — 418 行 / 36,554 B
-        * [papers/2610.06851-base-model-cues.md](<Models/DeepSeek/papers/2610.06851-base-model-cues.md>) — 55 行 / 5,163 B
+        * [papers/2610.06851-base-model-cues.md](<Models/DeepSeek/papers/2610.06851-base-model-cues.md>) — 55 行 / 5,135 B
         * [sources/CANDIDATES.md](<Models/DeepSeek/sources/CANDIDATES.md>) — 7 行 / 745 B
-        * [sources/MANIFEST.md](<Models/DeepSeek/sources/MANIFEST.md>) — 128 行 / 18,126 B
+        * [sources/MANIFEST.md](<Models/DeepSeek/sources/MANIFEST.md>) — 128 行 / 18,020 B
 
   </details>
 
@@ -207,7 +208,7 @@
     * **元数据**：type=`—` · domain=`Models` · subject=`Kimi` · date=`—` · status=`—`
     * **子文档（2）**
         * [papers/2607.24653-kimi-k3.md](<Models/Kimi/papers/2607.24653-kimi-k3.md>) — 247 行 / 28,554 B
-        * [sources/MANIFEST.md](<Models/Kimi/sources/MANIFEST.md>) — 56 行 / 6,030 B
+        * [sources/MANIFEST.md](<Models/Kimi/sources/MANIFEST.md>) — 56 行 / 6,019 B
 
   </details>
 
@@ -287,7 +288,7 @@
   <summary><b>Nemotron</b> · <code>Models/Nemotron/report.md</code> · 238 行 · —</summary>
 
 
-    * **条目**：[Models/Nemotron/report.md](<Models/Nemotron/report.md>)（238 行 / 22,850 B）
+    * **条目**：[Models/Nemotron/report.md](<Models/Nemotron/report.md>)（238 行 / 22,851 B）
     * **专题目录**：`Models/Nemotron`
     * **元数据**：type=`—` · domain=`Models` · subject=`Nemotron` · date=`—` · status=`—`
     * **子文档（0）**
@@ -299,7 +300,7 @@
   <summary><b>OpenAI-Gen</b> · <code>Models/OpenAI-Gen/report.md</code> · 393 行 · —</summary>
 
 
-    * **条目**：[Models/OpenAI-Gen/report.md](<Models/OpenAI-Gen/report.md>)（393 行 / 25,108 B）
+    * **条目**：[Models/OpenAI-Gen/report.md](<Models/OpenAI-Gen/report.md>)（393 行 / 25,109 B）
     * **专题目录**：`Models/OpenAI-Gen`
     * **元数据**：type=`—` · domain=`Models` · subject=`OpenAI-Gen` · date=`—` · status=`—`
     * **子文档（0）**
@@ -315,12 +316,12 @@
     * **专题目录**：`Models/Qwen`
     * **元数据**：type=`—` · domain=`Models` · subject=`Qwen` · date=`—` · status=`—`
     * **子文档（6）**
-        * [papers/2610.02819-text-centric-omni.md](<Models/Qwen/papers/2610.02819-text-centric-omni.md>) — 55 行 / 5,789 B
+        * [papers/2610.02819-text-centric-omni.md](<Models/Qwen/papers/2610.02819-text-centric-omni.md>) — 55 行 / 5,761 B
         * [qwen-omni-and-ecosystem.md](<Models/Qwen/qwen-omni-and-ecosystem.md>) — 565 行 / 22,788 B
         * [qwen-text-models.md](<Models/Qwen/qwen-text-models.md>) — 489 行 / 20,718 B
         * [qwen-vl-models.md](<Models/Qwen/qwen-vl-models.md>) — 543 行 / 22,018 B
         * [sources/CANDIDATES.md](<Models/Qwen/sources/CANDIDATES.md>) — 7 行 / 718 B
-        * [sources/MANIFEST.md](<Models/Qwen/sources/MANIFEST.md>) — 22 行 / 2,714 B
+        * [sources/MANIFEST.md](<Models/Qwen/sources/MANIFEST.md>) — 22 行 / 2,686 B
 
   </details>
 
@@ -328,7 +329,7 @@
   <summary><b>Runway</b> · <code>Models/Runway/report.md</code> · 103 行 · —</summary>
 
 
-    * **条目**：[Models/Runway/report.md](<Models/Runway/report.md>)（103 行 / 12,682 B）
+    * **条目**：[Models/Runway/report.md](<Models/Runway/report.md>)（103 行 / 12,683 B）
     * **专题目录**：`Models/Runway`
     * **元数据**：type=`—` · domain=`Models` · subject=`Runway` · date=`—` · status=`—`
     * **子文档（0）**
@@ -340,7 +341,7 @@
   <summary><b>StabilityAI</b> · <code>Models/StabilityAI/report.md</code> · 739 行 · —</summary>
 
 
-    * **条目**：[Models/StabilityAI/report.md](<Models/StabilityAI/report.md>)（739 行 / 46,559 B）
+    * **条目**：[Models/StabilityAI/report.md](<Models/StabilityAI/report.md>)（739 行 / 46,560 B）
     * **专题目录**：`Models/StabilityAI`
     * **元数据**：type=`—` · domain=`Models` · subject=`StabilityAI` · date=`—` · status=`—`
     * **子文档（0）**
@@ -350,28 +351,16 @@
 
 </details>
 
-### LLM（11 条目 / 55 文档）
+### LLM（10 条目 / 54 文档）
 
 <details>
-<summary><b>语言模型 LLM（11 条目 / 43 子文档）</b></summary>
-
-  <details>
-  <summary><b>Agent</b> · <code>LLM/Agent/report.md</code> · 105 行 · —</summary>
-
-
-    * **条目**：[LLM/Agent/report.md](<LLM/Agent/report.md>)（105 行 / 9,656 B）
-    * **专题目录**：`LLM/Agent`
-    * **元数据**：type=`—` · domain=`LLM` · subject=`Agent` · date=`—` · status=`—`
-    * **子文档（0）**
-        * _该条目暂无子文档_
-
-  </details>
+<summary><b>语言模型 LLM（10 条目 / 43 子文档）</b></summary>
 
   <details>
   <summary><b>Alignment</b> · <code>LLM/Alignment/report.md</code> · 114 行 · —</summary>
 
 
-    * **条目**：[LLM/Alignment/report.md](<LLM/Alignment/report.md>)（114 行 / 10,543 B）
+    * **条目**：[LLM/Alignment/report.md](<LLM/Alignment/report.md>)（114 行 / 10,544 B）
     * **专题目录**：`LLM/Alignment`
     * **元数据**：type=`—` · domain=`LLM` · subject=`Alignment` · date=`—` · status=`—`
     * **子文档（0）**
@@ -383,7 +372,7 @@
   <summary><b>DecisionModels</b> · <code>LLM/DecisionModels/report.md</code> · 874 行 · —</summary>
 
 
-    * **条目**：[LLM/DecisionModels/report.md](<LLM/DecisionModels/report.md>)（874 行 / 109,140 B）
+    * **条目**：[LLM/DecisionModels/report.md](<LLM/DecisionModels/report.md>)（874 行 / 109,141 B）
     * **专题目录**：`LLM/DecisionModels`
     * **元数据**：type=`—` · domain=`LLM` · subject=`DecisionModels` · date=`—` · status=`—`
     * **子文档（18）**
@@ -396,7 +385,7 @@
         * [papers/2609.24574-css-text-annotation.md](<LLM/DecisionModels/papers/2609.24574-css-text-annotation.md>) — 180 行 / 40,168 B
         * [papers/2609.25845-visual-jev.md](<LLM/DecisionModels/papers/2609.25845-visual-jev.md>) — 291 行 / 22,086 B
         * [papers/2609.26532-reflex-selective-control.md](<LLM/DecisionModels/papers/2609.26532-reflex-selective-control.md>) — 95 行 / 10,729 B
-        * [papers/2609.26550-jev-as-a-judge.md](<LLM/DecisionModels/papers/2609.26550-jev-as-a-judge.md>) — 60 行 / 5,511 B
+        * [papers/2609.26550-jev-as-a-judge.md](<LLM/DecisionModels/papers/2609.26550-jev-as-a-judge.md>) — 60 行 / 5,512 B
         * [papers/2609.26758-option-name-vs-definition.md](<LLM/DecisionModels/papers/2609.26758-option-name-vs-definition.md>) — 334 行 / 50,064 B
         * [papers/2609.28613-decision-hijacking.md](<LLM/DecisionModels/papers/2609.28613-decision-hijacking.md>) — 317 行 / 26,528 B
         * [papers/2609.30243-jevout-natural-context-flip.md](<LLM/DecisionModels/papers/2609.30243-jevout-natural-context-flip.md>) — 312 行 / 33,740 B
@@ -416,16 +405,16 @@
     * **专题目录**：`LLM/DiffusionLM`
     * **元数据**：type=`topic-research` · domain=`LLM` · subject=`DiffusionLM` · date=`2026-10-23` · status=`current`
     * **子文档（10）**
-        * [papers/2502.09992-llada.md](<LLM/DiffusionLM/papers/2502.09992-llada.md>) — 86 行 / 12,921 B
-        * [papers/2503.09573-block-diffusion.md](<LLM/DiffusionLM/papers/2503.09573-block-diffusion.md>) — 59 行 / 7,832 B
-        * [papers/2505.19223-llada-1.5-vrpo.md](<LLM/DiffusionLM/papers/2505.19223-llada-1.5-vrpo.md>) — 105 行 / 12,891 B
-        * [papers/2510.06303-sdar.md](<LLM/DiffusionLM/papers/2510.06303-sdar.md>) — 60 行 / 8,492 B
-        * [papers/2601.22031-card.md](<LLM/DiffusionLM/papers/2601.22031-card.md>) — 63 行 / 8,800 B
+        * [papers/2502.09992-llada.md](<LLM/DiffusionLM/papers/2502.09992-llada.md>) — 86 行 / 12,781 B
+        * [papers/2503.09573-block-diffusion.md](<LLM/DiffusionLM/papers/2503.09573-block-diffusion.md>) — 59 行 / 7,692 B
+        * [papers/2505.19223-llada-1.5-vrpo.md](<LLM/DiffusionLM/papers/2505.19223-llada-1.5-vrpo.md>) — 105 行 / 12,723 B
+        * [papers/2510.06303-sdar.md](<LLM/DiffusionLM/papers/2510.06303-sdar.md>) — 60 行 / 8,324 B
+        * [papers/2601.22031-card.md](<LLM/DiffusionLM/papers/2601.22031-card.md>) — 63 行 / 8,604 B
         * [papers/LLaDA2.0-Scaling-to-100B.md](<LLM/DiffusionLM/papers/LLaDA2.0-Scaling-to-100B.md>) — 63 行 / 9,346 B
         * [papers/LLaDA2.1-Token-Editing.md](<LLM/DiffusionLM/papers/LLaDA2.1-Token-Editing.md>) — 65 行 / 9,366 B
         * [papers/LLaDA2.2-Levenshtein-Editing.md](<LLM/DiffusionLM/papers/LLaDA2.2-Levenshtein-Editing.md>) — 64 行 / 11,889 B
         * [sources/CANDIDATES.md](<LLM/DiffusionLM/sources/CANDIDATES.md>) — 29 行 / 3,474 B
-        * [sources/MANIFEST.md](<LLM/DiffusionLM/sources/MANIFEST.md>) — 21 行 / 5,168 B
+        * [sources/MANIFEST.md](<LLM/DiffusionLM/sources/MANIFEST.md>) — 21 行 / 5,028 B
 
   </details>
 
@@ -488,13 +477,13 @@
         * [papers/2305.20050-prm800k.md](<LLM/ReinforcementLearning/papers/2305.20050-prm800k.md>) — 23 行 / 3,412 B
         * [papers/2501.07301-process-reward-model-lessons.md](<LLM/ReinforcementLearning/papers/2501.07301-process-reward-model-lessons.md>) — 26 行 / 3,807 B
         * [papers/2506.14245-rlvr-correct-reasoning.md](<LLM/ReinforcementLearning/papers/2506.14245-rlvr-correct-reasoning.md>) — 22 行 / 3,100 B
-        * [papers/2609.01354-category-level-verifier-audit.md](<LLM/ReinforcementLearning/papers/2609.01354-category-level-verifier-audit.md>) — 29 行 / 5,950 B
-        * [papers/2609.35677-verifier-errors-selective-control.md](<LLM/ReinforcementLearning/papers/2609.35677-verifier-errors-selective-control.md>) — 29 行 / 7,072 B
+        * [papers/2609.01354-category-level-verifier-audit.md](<LLM/ReinforcementLearning/papers/2609.01354-category-level-verifier-audit.md>) — 29 行 / 5,922 B
+        * [papers/2609.35677-verifier-errors-selective-control.md](<LLM/ReinforcementLearning/papers/2609.35677-verifier-errors-selective-control.md>) — 29 行 / 7,044 B
         * [papers/loop.md](<LLM/ReinforcementLearning/papers/loop.md>) — 28 行 / 4,539 B
         * [papers/online-preference.md](<LLM/ReinforcementLearning/papers/online-preference.md>) — 28 行 / 3,980 B
         * [papers/prime.md](<LLM/ReinforcementLearning/papers/prime.md>) — 30 行 / 4,636 B
         * [sources/CANDIDATES.md](<LLM/ReinforcementLearning/sources/CANDIDATES.md>) — 26 行 / 4,756 B
-        * [sources/MANIFEST.md](<LLM/ReinforcementLearning/sources/MANIFEST.md>) — 43 行 / 9,620 B
+        * [sources/MANIFEST.md](<LLM/ReinforcementLearning/sources/MANIFEST.md>) — 43 行 / 9,592 B
 
   </details>
 
@@ -508,7 +497,7 @@
     * **子文档（5）**
         * [papers/2107.06499-deduplicating-training-data.md](<LLM/TrainingData/papers/2107.06499-deduplicating-training-data.md>) — 24 行 / 2,755 B
         * [papers/2406.11794-datacomp-lm.md](<LLM/TrainingData/papers/2406.11794-datacomp-lm.md>) — 27 行 / 3,389 B
-        * [papers/2406.17557-fineweb.md](<LLM/TrainingData/papers/2406.17557-fineweb.md>) — 24 行 / 3,203 B
+        * [papers/2406.17557-fineweb.md](<LLM/TrainingData/papers/2406.17557-fineweb.md>) — 24 行 / 3,175 B
         * [sources/CANDIDATES.md](<LLM/TrainingData/sources/CANDIDATES.md>) — 13 行 / 1,460 B
         * [sources/MANIFEST.md](<LLM/TrainingData/sources/MANIFEST.md>) — 17 行 / 3,402 B
 
@@ -523,6 +512,29 @@
     * **元数据**：type=`—` · domain=`LLM` · subject=`VLM` · date=`—` · status=`—`
     * **子文档（0）**
         * _该条目暂无子文档_
+
+  </details>
+
+</details>
+
+### Agents（1 条目 / 7 文档）
+
+<details>
+<summary><b>Agents Agents（1 条目 / 5 子文档）</b></summary>
+
+  <details>
+  <summary><b>AgentSystems</b> · <code>Agents/AgentSystems/report.md</code> · 60 行 · —</summary>
+
+
+    * **条目**：[Agents/AgentSystems/report.md](<Agents/AgentSystems/report.md>)（60 行 / 7,265 B）
+    * **专题目录**：`Agents/AgentSystems`
+    * **元数据**：type=`—` · domain=`Agents` · subject=`AgentSystems` · date=`—` · status=`—`
+    * **子文档（5）**
+        * [papers/2026-acl-long-1573-toolscope.md](<Agents/AgentSystems/papers/2026-acl-long-1573-toolscope.md>) — 20 行 / 2,074 B
+        * [papers/2026-acl-long-370-mem2actbench.md](<Agents/AgentSystems/papers/2026-acl-long-370-mem2actbench.md>) — 21 行 / 2,530 B
+        * [papers/2026-acl-long-981-agemem.md](<Agents/AgentSystems/papers/2026-acl-long-981-agemem.md>) — 29 行 / 3,554 B
+        * [papers/2609.34385-jam.md](<Agents/AgentSystems/papers/2609.34385-jam.md>) — 29 行 / 3,639 B
+        * [sources/MANIFEST.md](<Agents/AgentSystems/sources/MANIFEST.md>) — 10 行 / 798 B
 
   </details>
 
@@ -640,18 +652,18 @@
   <summary><b>EmbodiedVLA</b> · <code>WorldModel/EmbodiedVLA/report.md</code> · 642 行 · —</summary>
 
 
-    * **条目**：[WorldModel/EmbodiedVLA/report.md](<WorldModel/EmbodiedVLA/report.md>)（642 行 / 77,578 B）
+    * **条目**：[WorldModel/EmbodiedVLA/report.md](<WorldModel/EmbodiedVLA/report.md>)（642 行 / 77,566 B）
     * **专题目录**：`WorldModel/EmbodiedVLA`
     * **元数据**：type=`—` · domain=`WorldModel` · subject=`EmbodiedVLA` · date=`—` · status=`—`
     * **子文档（23）**
         * [papers/2303.04137-diffusion-policy.md](<WorldModel/EmbodiedVLA/papers/2303.04137-diffusion-policy.md>) — 246 行 / 38,592 B
         * [papers/2307.15818-rt2.md](<WorldModel/EmbodiedVLA/papers/2307.15818-rt2.md>) — 222 行 / 29,179 B
-        * [papers/2310.08864-open-x-embodiment.md](<WorldModel/EmbodiedVLA/papers/2310.08864-open-x-embodiment.md>) — 243 行 / 26,572 B
+        * [papers/2310.08864-open-x-embodiment.md](<WorldModel/EmbodiedVLA/papers/2310.08864-open-x-embodiment.md>) — 243 行 / 26,574 B
         * [papers/2403.12945-droid.md](<WorldModel/EmbodiedVLA/papers/2403.12945-droid.md>) — 229 行 / 22,951 B
         * [papers/2405.05941-simpler.md](<WorldModel/EmbodiedVLA/papers/2405.05941-simpler.md>) — 289 行 / 37,844 B
-        * [papers/2406.09246-openvla.md](<WorldModel/EmbodiedVLA/papers/2406.09246-openvla.md>) — 252 行 / 28,967 B
-        * [papers/2410.24164-pi0.md](<WorldModel/EmbodiedVLA/papers/2410.24164-pi0.md>) — 234 行 / 24,341 B
-        * [papers/2501.09747-fast.md](<WorldModel/EmbodiedVLA/papers/2501.09747-fast.md>) — 246 行 / 23,992 B
+        * [papers/2406.09246-openvla.md](<WorldModel/EmbodiedVLA/papers/2406.09246-openvla.md>) — 252 行 / 28,969 B
+        * [papers/2410.24164-pi0.md](<WorldModel/EmbodiedVLA/papers/2410.24164-pi0.md>) — 234 行 / 24,313 B
+        * [papers/2501.09747-fast.md](<WorldModel/EmbodiedVLA/papers/2501.09747-fast.md>) — 246 行 / 23,964 B
         * [papers/2511.14759-pi-star-0.6-recap.md](<WorldModel/EmbodiedVLA/papers/2511.14759-pi-star-0.6-recap.md>) — 68 行 / 8,820 B
         * [papers/2601.21998-lingbot-va.md](<WorldModel/EmbodiedVLA/papers/2601.21998-lingbot-va.md>) — 68 行 / 7,620 B
         * [papers/2602.06508-world-vla-loop.md](<WorldModel/EmbodiedVLA/papers/2602.06508-world-vla-loop.md>) — 74 行 / 10,169 B
@@ -661,11 +673,11 @@
         * [papers/2610.11248-simvla.md](<WorldModel/EmbodiedVLA/papers/2610.11248-simvla.md>) — 82 行 / 13,582 B
         * [papers/2610.13164-grounded-dreamer.md](<WorldModel/EmbodiedVLA/papers/2610.13164-grounded-dreamer.md>) — 45 行 / 5,945 B
         * [sources/CANDIDATES.md](<WorldModel/EmbodiedVLA/sources/CANDIDATES.md>) — 182 行 / 22,830 B
-        * [sources/MANIFEST.md](<WorldModel/EmbodiedVLA/sources/MANIFEST.md>) — 108 行 / 20,111 B
+        * [sources/MANIFEST.md](<WorldModel/EmbodiedVLA/sources/MANIFEST.md>) — 108 行 / 19,934 B
         * [topics/action-representation.md](<WorldModel/EmbodiedVLA/topics/action-representation.md>) — 175 行 / 14,305 B
         * [topics/closed-loop-control.md](<WorldModel/EmbodiedVLA/topics/closed-loop-control.md>) — 105 行 / 16,293 B
         * [topics/deployment-boundaries.md](<WorldModel/EmbodiedVLA/topics/deployment-boundaries.md>) — 154 行 / 12,115 B
-        * [topics/evaluation-and-datasets.md](<WorldModel/EmbodiedVLA/topics/evaluation-and-datasets.md>) — 166 行 / 15,924 B
+        * [topics/evaluation-and-datasets.md](<WorldModel/EmbodiedVLA/topics/evaluation-and-datasets.md>) — 166 行 / 15,913 B
         * [topics/world-model-to-vla-transfer.md](<WorldModel/EmbodiedVLA/topics/world-model-to-vla-transfer.md>) — 50 行 / 10,098 B
 
   </details>
@@ -689,7 +701,7 @@
         * [papers/2501.09038-physics-iq.md](<WorldModel/WorldModels/papers/2501.09038-physics-iq.md>) — 206 行 / 12,991 B
         * [papers/2503.21755-vbench-2.md](<WorldModel/WorldModels/papers/2503.21755-vbench-2.md>) — 206 行 / 11,671 B
         * [sources/CANDIDATES.md](<WorldModel/WorldModels/sources/CANDIDATES.md>) — 63 行 / 6,676 B
-        * [sources/MANIFEST.md](<WorldModel/WorldModels/sources/MANIFEST.md>) — 24 行 / 3,920 B
+        * [sources/MANIFEST.md](<WorldModel/WorldModels/sources/MANIFEST.md>) — 24 行 / 3,898 B
         * [topics/dynamics-and-action-conditioning.md](<WorldModel/WorldModels/topics/dynamics-and-action-conditioning.md>) — 175 行 / 14,079 B
         * [topics/incomparability-checklist.md](<WorldModel/WorldModels/topics/incomparability-checklist.md>) — 174 行 / 13,264 B
         * [topics/world-model-as-env.md](<WorldModel/WorldModels/topics/world-model-as-env.md>) — 153 行 / 13,254 B
@@ -716,7 +728,7 @@
         * [papers/2026-synthemol-rl.md](<AI4Science/AntibioticDiscovery/papers/2026-synthemol-rl.md>) — 49 行 / 7,988 B
         * [papers/abaucin-screen-to-mechanism.md](<AI4Science/AntibioticDiscovery/papers/abaucin-screen-to-mechanism.md>) — 63 行 / 9,379 B
         * [sources/CANDIDATES.md](<AI4Science/AntibioticDiscovery/sources/CANDIDATES.md>) — 24 行 / 3,417 B
-        * [sources/MANIFEST.md](<AI4Science/AntibioticDiscovery/sources/MANIFEST.md>) — 19 行 / 7,017 B
+        * [sources/MANIFEST.md](<AI4Science/AntibioticDiscovery/sources/MANIFEST.md>) — 19 行 / 6,989 B
 
   </details>
 
@@ -743,7 +755,7 @@
     * **元数据**：type=`research` · domain=`AI4Science` · subject=`AutonomousLabs` · date=`2026-10-23` · status=`completed`
     * **子文档（2）**
         * [sources/CANDIDATES.md](<AI4Science/AutonomousLabs/sources/CANDIDATES.md>) — 21 行 / 2,110 B
-        * [sources/MANIFEST.md](<AI4Science/AutonomousLabs/sources/MANIFEST.md>) — 30 行 / 9,960 B
+        * [sources/MANIFEST.md](<AI4Science/AutonomousLabs/sources/MANIFEST.md>) — 30 行 / 9,932 B
 
   </details>
 
@@ -771,7 +783,7 @@
         * [papers/2312.03687-mattergen.md](<AI4Science/MaterialsDiscovery/papers/2312.03687-mattergen.md>) — 75 行 / 11,695 B
         * [papers/2603.22748-gnome-experiment.md](<AI4Science/MaterialsDiscovery/papers/2603.22748-gnome-experiment.md>) — 45 行 / 4,637 B
         * [sources/CANDIDATES.md](<AI4Science/MaterialsDiscovery/sources/CANDIDATES.md>) — 17 行 / 2,844 B
-        * [sources/MANIFEST.md](<AI4Science/MaterialsDiscovery/sources/MANIFEST.md>) — 20 行 / 7,243 B
+        * [sources/MANIFEST.md](<AI4Science/MaterialsDiscovery/sources/MANIFEST.md>) — 20 行 / 7,215 B
 
   </details>
 
@@ -788,7 +800,7 @@
         * [papers/funsearch-reproducibility.md](<AI4Science/MathematicalDiscovery/papers/funsearch-reproducibility.md>) — 65 行 / 7,952 B
         * [papers/funsearch.md](<AI4Science/MathematicalDiscovery/papers/funsearch.md>) — 65 行 / 9,206 B
         * [sources/CANDIDATES.md](<AI4Science/MathematicalDiscovery/sources/CANDIDATES.md>) — 18 行 / 2,521 B
-        * [sources/MANIFEST.md](<AI4Science/MathematicalDiscovery/sources/MANIFEST.md>) — 21 行 / 7,987 B
+        * [sources/MANIFEST.md](<AI4Science/MathematicalDiscovery/sources/MANIFEST.md>) — 21 行 / 7,959 B
 
   </details>
 
@@ -833,7 +845,7 @@
         * [papers/2609.34391-p2p.md](<AI4Science/SingleCellPerturbation/papers/2609.34391-p2p.md>) — 60 行 / 6,419 B
         * [papers/2610.02232-scegflow.md](<AI4Science/SingleCellPerturbation/papers/2610.02232-scegflow.md>) — 61 行 / 6,685 B
         * [sources/CANDIDATES.md](<AI4Science/SingleCellPerturbation/sources/CANDIDATES.md>) — 29 行 / 3,609 B
-        * [sources/MANIFEST.md](<AI4Science/SingleCellPerturbation/sources/MANIFEST.md>) — 17 行 / 4,569 B
+        * [sources/MANIFEST.md](<AI4Science/SingleCellPerturbation/sources/MANIFEST.md>) — 17 行 / 4,541 B
 
   </details>
 
@@ -851,7 +863,7 @@
         * [papers/neuralgcm.md](<AI4Science/WeatherClimate/papers/neuralgcm.md>) — 45 行 / 5,321 B
         * [papers/pbc-subseasonal.md](<AI4Science/WeatherClimate/papers/pbc-subseasonal.md>) — 50 行 / 6,294 B
         * [sources/CANDIDATES.md](<AI4Science/WeatherClimate/sources/CANDIDATES.md>) — 43 行 / 5,243 B
-        * [sources/MANIFEST.md](<AI4Science/WeatherClimate/sources/MANIFEST.md>) — 23 行 / 8,622 B
+        * [sources/MANIFEST.md](<AI4Science/WeatherClimate/sources/MANIFEST.md>) — 23 行 / 8,594 B
 
   </details>
 
@@ -866,15 +878,15 @@
   <summary><b>EvaluationScience</b> · <code>Evaluation/EvaluationScience/report.md</code> · 101 行 · 2026-10-23</summary>
 
 
-    * **条目**：[Evaluation/EvaluationScience/report.md](<Evaluation/EvaluationScience/report.md>)（101 行 / 21,992 B）
+    * **条目**：[Evaluation/EvaluationScience/report.md](<Evaluation/EvaluationScience/report.md>)（101 行 / 21,964 B）
     * **专题目录**：`Evaluation/EvaluationScience`
     * **元数据**：type=`research` · domain=`Evaluation` · subject=`EvaluationScience` · date=`2026-10-23` · status=`current`
     * **子文档（5）**
-        * [papers/2307.13854-webarena.md](<Evaluation/EvaluationScience/papers/2307.13854-webarena.md>) — 22 行 / 2,837 B
-        * [papers/2404.07972-osworld.md](<Evaluation/EvaluationScience/papers/2404.07972-osworld.md>) — 21 行 / 3,410 B
-        * [papers/2406.12045-tau-bench.md](<Evaluation/EvaluationScience/papers/2406.12045-tau-bench.md>) — 27 行 / 4,034 B
+        * [papers/2307.13854-webarena.md](<Evaluation/EvaluationScience/papers/2307.13854-webarena.md>) — 22 行 / 2,809 B
+        * [papers/2404.07972-osworld.md](<Evaluation/EvaluationScience/papers/2404.07972-osworld.md>) — 21 行 / 3,382 B
+        * [papers/2406.12045-tau-bench.md](<Evaluation/EvaluationScience/papers/2406.12045-tau-bench.md>) — 27 行 / 4,006 B
         * [sources/CANDIDATES.md](<Evaluation/EvaluationScience/sources/CANDIDATES.md>) — 24 行 / 6,023 B
-        * [sources/MANIFEST.md](<Evaluation/EvaluationScience/sources/MANIFEST.md>) — 30 行 / 15,802 B
+        * [sources/MANIFEST.md](<Evaluation/EvaluationScience/sources/MANIFEST.md>) — 30 行 / 15,774 B
 
   </details>
 
@@ -950,7 +962,7 @@
         * [papers/vllm-implementation.md](<Infra/SpeculativeDecoding/papers/vllm-implementation.md>) — 227 行 / 18,077 B
         * [sources/CANDIDATES.md](<Infra/SpeculativeDecoding/sources/CANDIDATES.md>) — 91 行 / 9,644 B
         * [sources/CODE-AUDIT.md](<Infra/SpeculativeDecoding/sources/CODE-AUDIT.md>) — 87 行 / 8,110 B
-        * [sources/MANIFEST.md](<Infra/SpeculativeDecoding/sources/MANIFEST.md>) — 65 行 / 9,894 B
+        * [sources/MANIFEST.md](<Infra/SpeculativeDecoding/sources/MANIFEST.md>) — 65 行 / 9,872 B
         * [topics/algorithm-families.md](<Infra/SpeculativeDecoding/topics/algorithm-families.md>) — 164 行 / 12,014 B
         * [topics/systems-throughput-latency.md](<Infra/SpeculativeDecoding/topics/systems-throughput-latency.md>) — 168 行 / 10,532 B
         * [topics/verification-acceptance.md](<Infra/SpeculativeDecoding/topics/verification-acceptance.md>) — 159 行 / 9,197 B
@@ -1076,23 +1088,26 @@
 
 | 文档 | 板块 | 行数 | 字节 |
 | --- | --- | --: | --: |
+| [AGENTS.md](<AGENTS.md>) |  | 9 | 908 B |
 | [AI4Science/README.md](<AI4Science/README.md>) | AI4Science | 137 | 6,760 B |
+| [Agents/README.md](<Agents/README.md>) | Agents | 37 | 1,430 B |
 | [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 37 | 1,487 B |
 | [Infra/README.md](<Infra/README.md>) | Infra | 79 | 5,682 B |
-| [LLM/README.md](<LLM/README.md>) | LLM | 103 | 7,059 B |
+| [LLM/README.md](<LLM/README.md>) | LLM | 102 | 6,968 B |
 | [Models/README.md](<Models/README.md>) | Models | 101 | 4,888 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 93 | 4,069 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 186 | 11,904 B |
+| [README.md](<README.md>) |  | 195 | 12,547 B |
 | [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,616 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 77 | 4,941 B |
+| [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 86 | 6,458 B |
-| [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 11,050 B |
-| [docs/research-method.md](<docs/research-method.md>) | docs | 44 | 3,472 B |
-| [docs/statistics.md](<docs/statistics.md>) | docs | 214 | 15,521 B |
-| [docs/team.md](<docs/team.md>) | docs | 140 | 14,594 B |
-| [docs/verification.md](<docs/verification.md>) | docs | 303 | 21,756 B |
+| [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 11,079 B |
+| [docs/research-method.md](<docs/research-method.md>) | docs | 31 | 2,380 B |
+| [docs/statistics.md](<docs/statistics.md>) | docs | 215 | 15,662 B |
+| [docs/team.md](<docs/team.md>) | docs | 63 | 5,246 B |
+| [docs/verification.md](<docs/verification.md>) | docs | 23 | 2,285 B |
 | [scripts/README.md](<scripts/README.md>) | scripts | 101 | 4,903 B |
 
 

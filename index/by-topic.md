@@ -13,11 +13,11 @@
 | --- | --- | --- | --- | --- |
 | [VisualGen/3DGen/report.md](<../VisualGen/3DGen/report.md>) | 3D 生成技术研究报告：从 DreamFusion SDS 蒸馏到 Tripo3D DiT 原生 3D 生成 | — | — | — |
 
-## Agent (1)
+## AgentSystems (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [LLM/Agent/report.md](<../LLM/Agent/report.md>) | LLM Agent 架构与工具使用研究报告 | — | — | — |
+| [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) | Agent 系统：让模型在环境中持续完成任务 | — | — | — |
 
 ## Alibaba-Gen (1)
 

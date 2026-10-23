@@ -2,7 +2,7 @@
 
 # 💬 LLM
 
-**11 条** · 语言模型能力与技术专题，覆盖推理、对齐、Agent、RAG 等方向。
+**10 条** · 语言模型能力与技术专题，覆盖推理、对齐、Agent、RAG 等方向。
 
 [← 返回首页](<../README.md>) · [完整索引](<../INDEX.md>)
 
@@ -10,12 +10,11 @@
 
 <!-- SCRIPT:panel-readme START · 由 scripts/library_index.py 生成，勿手改 -->
 
-![Entries](https://img.shields.io/badge/Entries-11-3f51b5?style=flat-square)
+![Entries](https://img.shields.io/badge/Entries-10-3f51b5?style=flat-square)
 ![Panel](https://img.shields.io/badge/Panel-LLM-9e9e9e?style=flat-square)
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
-| **Agent** | [LLM Agent 架构与工具使用研究报告](<Agent/report.md>) | 105 行 |
 | **Alignment** | [模型对齐与后训练：方法、目标与证据边界](<Alignment/report.md>) | 114 行 |
 | **DecisionModels** | [Decision Models（System One / Typed Decision Model）技术专题调研](<DecisionModels/report.md>) | 874 行 |
 | **DiffusionLM** | [扩散语言模型：从随机遮盖到大规模并行生成](<DiffusionLM/report.md>) | 70 行 |
@@ -41,7 +40,7 @@
 * [papers/2609.24574-css-text-annotation.md](<DecisionModels/papers/2609.24574-css-text-annotation.md>) — 180 行 / 40,168 B
 * [papers/2609.25845-visual-jev.md](<DecisionModels/papers/2609.25845-visual-jev.md>) — 291 行 / 22,086 B
 * [papers/2609.26532-reflex-selective-control.md](<DecisionModels/papers/2609.26532-reflex-selective-control.md>) — 95 行 / 10,729 B
-* [papers/2609.26550-jev-as-a-judge.md](<DecisionModels/papers/2609.26550-jev-as-a-judge.md>) — 60 行 / 5,511 B
+* [papers/2609.26550-jev-as-a-judge.md](<DecisionModels/papers/2609.26550-jev-as-a-judge.md>) — 60 行 / 5,512 B
 * [papers/2609.26758-option-name-vs-definition.md](<DecisionModels/papers/2609.26758-option-name-vs-definition.md>) — 334 行 / 50,064 B
 * [papers/2609.28613-decision-hijacking.md](<DecisionModels/papers/2609.28613-decision-hijacking.md>) — 317 行 / 26,528 B
 * [papers/2609.30243-jevout-natural-context-flip.md](<DecisionModels/papers/2609.30243-jevout-natural-context-flip.md>) — 312 行 / 33,740 B
@@ -56,16 +55,16 @@
 <details>
 <summary><b>DiffusionLM</b>（10 份）</summary>
 
-* [papers/2502.09992-llada.md](<DiffusionLM/papers/2502.09992-llada.md>) — 86 行 / 12,921 B
-* [papers/2503.09573-block-diffusion.md](<DiffusionLM/papers/2503.09573-block-diffusion.md>) — 59 行 / 7,832 B
-* [papers/2505.19223-llada-1.5-vrpo.md](<DiffusionLM/papers/2505.19223-llada-1.5-vrpo.md>) — 105 行 / 12,891 B
-* [papers/2510.06303-sdar.md](<DiffusionLM/papers/2510.06303-sdar.md>) — 60 行 / 8,492 B
-* [papers/2601.22031-card.md](<DiffusionLM/papers/2601.22031-card.md>) — 63 行 / 8,800 B
+* [papers/2502.09992-llada.md](<DiffusionLM/papers/2502.09992-llada.md>) — 86 行 / 12,781 B
+* [papers/2503.09573-block-diffusion.md](<DiffusionLM/papers/2503.09573-block-diffusion.md>) — 59 行 / 7,692 B
+* [papers/2505.19223-llada-1.5-vrpo.md](<DiffusionLM/papers/2505.19223-llada-1.5-vrpo.md>) — 105 行 / 12,723 B
+* [papers/2510.06303-sdar.md](<DiffusionLM/papers/2510.06303-sdar.md>) — 60 行 / 8,324 B
+* [papers/2601.22031-card.md](<DiffusionLM/papers/2601.22031-card.md>) — 63 行 / 8,604 B
 * [papers/LLaDA2.0-Scaling-to-100B.md](<DiffusionLM/papers/LLaDA2.0-Scaling-to-100B.md>) — 63 行 / 9,346 B
 * [papers/LLaDA2.1-Token-Editing.md](<DiffusionLM/papers/LLaDA2.1-Token-Editing.md>) — 65 行 / 9,366 B
 * [papers/LLaDA2.2-Levenshtein-Editing.md](<DiffusionLM/papers/LLaDA2.2-Levenshtein-Editing.md>) — 64 行 / 11,889 B
 * [sources/CANDIDATES.md](<DiffusionLM/sources/CANDIDATES.md>) — 29 行 / 3,474 B
-* [sources/MANIFEST.md](<DiffusionLM/sources/MANIFEST.md>) — 21 行 / 5,168 B
+* [sources/MANIFEST.md](<DiffusionLM/sources/MANIFEST.md>) — 21 行 / 5,028 B
 
 </details>
 
@@ -75,13 +74,13 @@
 * [papers/2305.20050-prm800k.md](<ReinforcementLearning/papers/2305.20050-prm800k.md>) — 23 行 / 3,412 B
 * [papers/2501.07301-process-reward-model-lessons.md](<ReinforcementLearning/papers/2501.07301-process-reward-model-lessons.md>) — 26 行 / 3,807 B
 * [papers/2506.14245-rlvr-correct-reasoning.md](<ReinforcementLearning/papers/2506.14245-rlvr-correct-reasoning.md>) — 22 行 / 3,100 B
-* [papers/2609.01354-category-level-verifier-audit.md](<ReinforcementLearning/papers/2609.01354-category-level-verifier-audit.md>) — 29 行 / 5,950 B
-* [papers/2609.35677-verifier-errors-selective-control.md](<ReinforcementLearning/papers/2609.35677-verifier-errors-selective-control.md>) — 29 行 / 7,072 B
+* [papers/2609.01354-category-level-verifier-audit.md](<ReinforcementLearning/papers/2609.01354-category-level-verifier-audit.md>) — 29 行 / 5,922 B
+* [papers/2609.35677-verifier-errors-selective-control.md](<ReinforcementLearning/papers/2609.35677-verifier-errors-selective-control.md>) — 29 行 / 7,044 B
 * [papers/loop.md](<ReinforcementLearning/papers/loop.md>) — 28 行 / 4,539 B
 * [papers/online-preference.md](<ReinforcementLearning/papers/online-preference.md>) — 28 行 / 3,980 B
 * [papers/prime.md](<ReinforcementLearning/papers/prime.md>) — 30 行 / 4,636 B
 * [sources/CANDIDATES.md](<ReinforcementLearning/sources/CANDIDATES.md>) — 26 行 / 4,756 B
-* [sources/MANIFEST.md](<ReinforcementLearning/sources/MANIFEST.md>) — 43 行 / 9,620 B
+* [sources/MANIFEST.md](<ReinforcementLearning/sources/MANIFEST.md>) — 43 行 / 9,592 B
 
 </details>
 
@@ -90,7 +89,7 @@
 
 * [papers/2107.06499-deduplicating-training-data.md](<TrainingData/papers/2107.06499-deduplicating-training-data.md>) — 24 行 / 2,755 B
 * [papers/2406.11794-datacomp-lm.md](<TrainingData/papers/2406.11794-datacomp-lm.md>) — 27 行 / 3,389 B
-* [papers/2406.17557-fineweb.md](<TrainingData/papers/2406.17557-fineweb.md>) — 24 行 / 3,203 B
+* [papers/2406.17557-fineweb.md](<TrainingData/papers/2406.17557-fineweb.md>) — 24 行 / 3,175 B
 * [sources/CANDIDATES.md](<TrainingData/sources/CANDIDATES.md>) — 13 行 / 1,460 B
 * [sources/MANIFEST.md](<TrainingData/sources/MANIFEST.md>) — 17 行 / 3,402 B
 

@@ -111,4 +111,4 @@ VAPO 的全称是 **Value-based Augmented Proximal Policy Optimization**；原�
 
 ## 10. 修订证据
 
-2026-10-22 按 `researcher` 的结构化阅读和报告生成规范重新核对；`paper-fetcher` 批量取回 DAPO、VAPO、IPO 的元数据与引用，然后按上述固定版本读正文和结果表。所取 HTML 与提取文本放在仓库外 `paper-cache/research-audit-2026-10-22/`，URL 和 SHA-256 见同目录 `manifest.json`。本轮修正方法与实验归属，没有运行训练，也未将链接可达或字符串命中视作“全篇已验证”。
+2026-10-22 按 `researcher` 的结构化阅读和报告生成规范重新核对；`paper-fetcher` 批量取回 DAPO、VAPO、IPO 的元数据与引用，然后按上述固定版本读正文和结果表。所取 HTML 与提取文本放在仓库外 `.paper-cache/research-audit-2026-10-22/`，URL 和 SHA-256 见同目录 `manifest.json`。本轮修正方法与实验归属，没有运行训练，也未将链接可达或字符串命中视作“全篇已验证”。

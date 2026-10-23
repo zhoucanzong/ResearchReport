@@ -36,7 +36,7 @@
 * [papers/2026-synthemol-rl.md](<AntibioticDiscovery/papers/2026-synthemol-rl.md>) — 49 行 / 7,988 B
 * [papers/abaucin-screen-to-mechanism.md](<AntibioticDiscovery/papers/abaucin-screen-to-mechanism.md>) — 63 行 / 9,379 B
 * [sources/CANDIDATES.md](<AntibioticDiscovery/sources/CANDIDATES.md>) — 24 行 / 3,417 B
-* [sources/MANIFEST.md](<AntibioticDiscovery/sources/MANIFEST.md>) — 19 行 / 7,017 B
+* [sources/MANIFEST.md](<AntibioticDiscovery/sources/MANIFEST.md>) — 19 行 / 6,989 B
 
 </details>
 
@@ -53,7 +53,7 @@
 <summary><b>AutonomousLabs</b>（2 份）</summary>
 
 * [sources/CANDIDATES.md](<AutonomousLabs/sources/CANDIDATES.md>) — 21 行 / 2,110 B
-* [sources/MANIFEST.md](<AutonomousLabs/sources/MANIFEST.md>) — 30 行 / 9,960 B
+* [sources/MANIFEST.md](<AutonomousLabs/sources/MANIFEST.md>) — 30 行 / 9,932 B
 
 </details>
 
@@ -71,7 +71,7 @@
 * [papers/2312.03687-mattergen.md](<MaterialsDiscovery/papers/2312.03687-mattergen.md>) — 75 行 / 11,695 B
 * [papers/2603.22748-gnome-experiment.md](<MaterialsDiscovery/papers/2603.22748-gnome-experiment.md>) — 45 行 / 4,637 B
 * [sources/CANDIDATES.md](<MaterialsDiscovery/sources/CANDIDATES.md>) — 17 行 / 2,844 B
-* [sources/MANIFEST.md](<MaterialsDiscovery/sources/MANIFEST.md>) — 20 行 / 7,243 B
+* [sources/MANIFEST.md](<MaterialsDiscovery/sources/MANIFEST.md>) — 20 行 / 7,215 B
 
 </details>
 
@@ -83,7 +83,7 @@
 * [papers/funsearch-reproducibility.md](<MathematicalDiscovery/papers/funsearch-reproducibility.md>) — 65 行 / 7,952 B
 * [papers/funsearch.md](<MathematicalDiscovery/papers/funsearch.md>) — 65 行 / 9,206 B
 * [sources/CANDIDATES.md](<MathematicalDiscovery/sources/CANDIDATES.md>) — 18 行 / 2,521 B
-* [sources/MANIFEST.md](<MathematicalDiscovery/sources/MANIFEST.md>) — 21 行 / 7,987 B
+* [sources/MANIFEST.md](<MathematicalDiscovery/sources/MANIFEST.md>) — 21 行 / 7,959 B
 
 </details>
 
@@ -113,7 +113,7 @@
 * [papers/2609.34391-p2p.md](<SingleCellPerturbation/papers/2609.34391-p2p.md>) — 60 行 / 6,419 B
 * [papers/2610.02232-scegflow.md](<SingleCellPerturbation/papers/2610.02232-scegflow.md>) — 61 行 / 6,685 B
 * [sources/CANDIDATES.md](<SingleCellPerturbation/sources/CANDIDATES.md>) — 29 行 / 3,609 B
-* [sources/MANIFEST.md](<SingleCellPerturbation/sources/MANIFEST.md>) — 17 行 / 4,569 B
+* [sources/MANIFEST.md](<SingleCellPerturbation/sources/MANIFEST.md>) — 17 行 / 4,541 B
 
 </details>
 
@@ -126,7 +126,7 @@
 * [papers/neuralgcm.md](<WeatherClimate/papers/neuralgcm.md>) — 45 行 / 5,321 B
 * [papers/pbc-subseasonal.md](<WeatherClimate/papers/pbc-subseasonal.md>) — 50 行 / 6,294 B
 * [sources/CANDIDATES.md](<WeatherClimate/sources/CANDIDATES.md>) — 43 行 / 5,243 B
-* [sources/MANIFEST.md](<WeatherClimate/sources/MANIFEST.md>) — 23 行 / 8,622 B
+* [sources/MANIFEST.md](<WeatherClimate/sources/MANIFEST.md>) — 23 行 / 8,594 B
 
 </details>
 

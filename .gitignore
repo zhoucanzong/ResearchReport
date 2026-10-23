@@ -20,4 +20,5 @@ site/
 .vla-tmp/
 .*-tmp/
 .papers-cache/
+.paper-cache/
 .rehearsal/

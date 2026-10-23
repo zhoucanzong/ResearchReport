@@ -199,7 +199,7 @@ NVIDIA 2026-03-16官方新闻稿确认Nemotron Coalition，列出8个创始成�
 
 ## 九、新增一手来源与读取锚点
 
-本轮按 `researcher` 的数字条件与消融边界规范修订；用 `paper-fetcher download` 取回三份原文，缓存于仓库外 `paper-cache/research-audit-2026-10-22/models/nemotron-*`。
+本轮按 `researcher` 的数字条件与消融边界规范修订；用 `paper-fetcher download` 取回三份原文，缓存于仓库外 `.paper-cache/research-audit-2026-10-22/models/nemotron-*`。
 
 - **N1** [Nemotron 3 家族页](https://research.nvidia.com/labs/nemotron/Nemotron-3/)，初发2025-12-15；及 [家族白皮书2512.20856v1](https://arxiv.org/abs/2512.20856v1)，2025-12-24。核对Abstract、§1、§2.2–2.4中两个大模型的组件归属。
 - **N2** [Nano技术报告2512.20848](https://arxiv.org/abs/2512.20848)：实读§1/图1计时协议、§4.3/表4/图11量化对照。下载版本身份以PDF首页和审计缓存记录为准，不与家族白皮书混同。

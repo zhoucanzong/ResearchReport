@@ -16,7 +16,7 @@
 ## Evidence handling
 
 - PaperFetcher was used to search and retrieve metadata/citation records for the arXiv papers GraphCast, GenCast and NeuralGCM. The official fixed-version arXiv HTML and journal primary sources were read directly for content and anchors.
-- PDF fetch attempts wrote zero-byte files to `/Users/zhoucanzong/Documents/paper-cache/AI4Science`; those unusable temporary artifacts were removed. No paper PDF or full text is stored in this repository. Analysis relied on full official HTML/article text, not summaries.
+- PDF fetch attempts wrote zero-byte files to `.paper-cache/AI4Science`; those unusable temporary artifacts were removed. No paper PDF or full text is stored in this repository. Analysis relied on full official HTML/article text, not summaries.
 - The report distinguishes paper claims from operational status pages. AIFS's versioned peer-reviewed 1.1.0 paper and ECMWF's current model-status page describe different dates/model versions.
 - No experiments, model inference, independent benchmark runs, source-code review or data download were performed. Hardware and runtime values are reported only where a primary source provides them.
 - Climate claims are limited to the exact configured experiment. A prescribed-SST/sea-ice AMIP-like atmospheric integration is not described as a coupled Earth-system projection.

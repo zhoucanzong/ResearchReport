@@ -35,6 +35,19 @@
       ]
     },
     {
+      "id": "agents",
+      "title": "Agents",
+      "emoji": "🤖",
+      "tagline": "智能体架构、记忆、工具使用与长期执行",
+      "topic_index": true,
+      "match": [
+        "Agents/*"
+      ],
+      "representatives": [
+        "Agents/AgentSystems"
+      ]
+    },
+    {
       "id": "visualgen",
       "title": "VisualGen",
       "emoji": "🎨",
@@ -130,6 +143,7 @@
   "highlights": [
     "Models/GPT",
     "LLM/ReasoningModels",
+    "Agents/AgentSystems",
     "VisualGen/VideoGen",
     "WorldModel/WorldModels",
     "AI4Science/ProteinDesign",

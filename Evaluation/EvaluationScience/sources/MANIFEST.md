@@ -23,7 +23,7 @@
 ## 技能及核验记录
 
 - 按 docs/team.md 实际读取本机 researcher 与 paper-fetcher SKILL.md。Researcher 使用 deep 路径：界定推断问题，检索候选，按机制价值筛选，回一手正文定位后综合；未运行交互式访谈，未使用可选的引文网络/图谱功能。
-- PaperFetcher 执行了 search_papers.py 五条主题查询（污染、饱和/动态、judge、长时程 agent、构念效度）；fetch_paper.py fetch 2605.10912；fetch_paper.py batch 对六篇论文取元数据与引用；对 arXiv 2211.09110、2306.05685、2406.07791、2406.19314、2407.08716 下载 PDF 到仓库外 /Users/zhoucanzong/Documents/paper-cache/EvaluationScience/。
+- PaperFetcher 执行了 search_papers.py 五条主题查询（污染、饱和/动态、judge、长时程 agent、构念效度）；fetch_paper.py fetch 2605.10912；fetch_paper.py batch 对六篇论文取元数据与引用；对 arXiv 2211.09110、2306.05685、2406.07791、2406.19314、2407.08716 下载 PDF 到仓库外 .paper-cache/EvaluationScience/。
 - WildClawBench PDF 下载请求在 HTTP 读取中卡住并被停止，留下的 0 字节文件已删除；该来源仍可由官方 HTML v1 完整访问，本报告按网页原文定位，不将下载失败说成读到 PDF。
 - 本轮按用户要求重核三个增补来源。PaperFetcher 的小样本主题检索收到 arXiv 429；pair-judge 检索结果噪声较大，agent 主题查询因请求迟滞中断，均未作为来源依据。`fetch_paper.py batch` 只用于 S9/S10 元数据与引文确认，并未缓存正文；S9/S10 的具体结论回到官方 HTML v3/v1 逐节核验。S11 无 arXiv ID，因此从 AAAI 官方出版页面读取题录和完整 PDF（9 页）。没有新增论文文件或 PDF 缓存。
 - 本报告所列 S1–S7 核对各自 MANIFEST 指定的章节/表图范围，并非逐句校对论文全部附录；S9–S11 在本轮按上项指定范围回到固定原文复核；S8 继承其他专题的分册定位，没有本轮重读或独立复现。论文结果均为作者报告值。

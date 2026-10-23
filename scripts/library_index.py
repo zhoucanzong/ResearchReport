@@ -321,7 +321,7 @@ SITE_BUILD_DIR = "site"
 SITE_SKIP_TOPS = frozenset({SITE_DOCS_DIR, SITE_BUILD_DIR})
 
 #: 构建产物 / 车间目录：**任意层级**跳过，不编目。
-#: 隐藏目录（`.*`，如 `.vla-tmp/`、`.papers-cache/`、`.rehearsal/`、`.preview/`）
+#: 隐藏目录（`.*`，如 `.paper-cache/`、`.vla-tmp/`、`.rehearsal/`、`.preview/`）
 #: 另有一律跳过的规则（见 ``_is_skipped_dir``）。这里是给「非隐藏」的构建目录兜底。
 BUILD_SKIP_DIRS = frozenset({"site", "site-docs", "node_modules", "__pycache__"})
 
@@ -329,7 +329,7 @@ BUILD_SKIP_DIRS = frozenset({"site", "site-docs", "node_modules", "__pycache__"}
 def _is_skipped_dir(name: str) -> bool:
     """临时 / 草稿 / 构建位置：**车间地面**，一律不编目。
 
-    - 隐藏目录（点开头）：`.git/`、`.vla-tmp/`、`.papers-cache/`、`.rehearsal/`、`.preview/` 等；
+    - 隐藏目录（点开头）：`.git/`、`.paper-cache/`、`.vla-tmp/`、`.rehearsal/`、`.preview/` 等；
     - 构建产物目录：`site/`、`site-docs/`、`node_modules/`、`__pycache__/`。
 
     刻意**不**改成 `git ls-files`（tracked-only）——未跟踪的真内容（新写的
@@ -368,7 +368,10 @@ def iter_markdown(repo_root: str, include_generated: bool = False,
         kept = []
         for d in sorted(dirnames):
             if _is_skipped_dir(d):
-                if skipped_out is not None:
+                # The local reading cache can contain full-text exports and
+                # large source snapshots. Exclude it without traversing or
+                # listing its contents in the ordinary scan report.
+                if skipped_out is not None and d != ".paper-cache":
                     skipped_out.extend(
                         _collect_md_under(
                             os.path.relpath(os.path.join(dirpath, d), root)
@@ -1367,7 +1370,8 @@ def render_panels_block(cfg: dict, mapping: dict, entries: list, label_limit: in
         if panel is not None:
             by_panel.setdefault(panel["id"], []).append(doc)
     captions = {
-        "models": "模型系列", "llm": "语言模型方法", "visualgen": "视觉与多模态",
+        "models": "模型系列", "llm": "语言模型方法", "agents": "智能体系统",
+        "visualgen": "视觉与多模态",
         "worldmodel": "世界模型与具身", "ai4science": "科学研究应用",
         "evaluation": "跨领域评测科学",
         "infra": "训练与推理系统", "opensource": "开源代码深读",
@@ -1836,6 +1840,7 @@ def _site_home_icon(panel_id: str) -> str:
     paths = {
         "models": '<path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/>',
         "llm": '<path d="M5 4h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-6 4V6a2 2 0 0 1 2-2Z"/><path d="M7 9h10M7 13h6"/>',
+        "agents": '<rect x="5" y="7" width="14" height="13" rx="4"/><path d="M12 3v4m-3 6h.01M15 13h.01M9 17h6"/><path d="M5 11H3m18 0h-2"/>',
         "visualgen": '<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 5-5 4 4 4-6 5 7"/>',
         "worldmodel": '<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/>',
         "ai4science": '<path d="M9 3h6m-5 0v7l-4.5 8.2A1.5 1.5 0 0 0 6 20.5h12a1.5 1.5 0 0 0 1.5-2.3L15 10V3"/><path d="M7 15h10"/>',
@@ -1866,7 +1871,8 @@ def render_site_home(cfg: dict, mapping: dict, entries: list,
     child_count = stats.get("entries", {}).get(
         "children", sum(len(d.get("children", [])) for d in entries))
     captions = {
-        "models": "模型系列", "llm": "语言模型技术", "visualgen": "视觉与多模态",
+        "models": "模型系列", "llm": "语言模型技术", "agents": "智能体系统",
+        "visualgen": "视觉与多模态",
         "worldmodel": "世界模型与具身", "ai4science": "科学研究应用",
         "evaluation": "跨领域评测科学",
         "infra": "训练与推理系统", "opensource": "开源代码研究",

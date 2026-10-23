@@ -109,7 +109,7 @@ Wan-Animate-2-Lite 面向流式推理：teacher-forcing 将扩散过程改为分
 
 ## 11. 来源索引与本次读取范围
 
-- **S1** Wan Team. *Wan: Open and Advanced Large-Scale Video Generative Models*, [arXiv:2503.20314v2](https://arxiv.org/abs/2503.20314v2)，2025-04-19。本次通过 `paper-fetcher download` 获取 PDF，实读摘要、§4.2、§4.7、§6，并核对表 2 / 4 / 6、图 16 / 17。缓存位于仓库外 `paper-cache/research-audit-2026-10-22/models/wan/2503.20314.pdf`，不是全篇所有扩展任务均已复核。
+- **S1** Wan Team. *Wan: Open and Advanced Large-Scale Video Generative Models*, [arXiv:2503.20314v2](https://arxiv.org/abs/2503.20314v2)，2025-04-19。本次通过 `paper-fetcher download` 获取 PDF，实读摘要、§4.2、§4.7、§6，并核对表 2 / 4 / 6、图 16 / 17。缓存位于仓库外 `.paper-cache/research-audit-2026-10-22/models/wan/2503.20314.pdf`，不是全篇所有扩展任务均已复核。
 - **S2** [Wan2.1 官方 README（固定提交）](https://github.com/Wan-Video/Wan2.1/blob/9737cba9c1c3c4d04b33fcad41c111989865d315/README.md)：核对 Latest News、Key Features、Run Text-to-Video Generation、Prompt Extension、Computational Efficiency。
 - **S3** [Wan2.2 官方 README（固定提交）](https://github.com/Wan-Video/Wan2.2/blob/1ea34ff48f87168174e12956e200b1d908b1c5ff/README.md)：核对 Latest News、Introduction of Wan2.2、单卡运行要求。该材料是作者介绍与配置证据，未当作独立复现。
 - **S4** [阿里云 Model Studio：Video generation and editing](https://www.alibabacloud.com/help/en/model-studio/video-generate-edit-model/)：“Wan 2.6” 模型表；本次读取于 2026-10-22，页面更新时间为 2026-10-11。此链接是动态服务文档，不固定为原报告写作日的状态。

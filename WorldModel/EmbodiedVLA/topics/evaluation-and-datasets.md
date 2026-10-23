@@ -91,7 +91,7 @@ SIMPLER 的"强相关"**不是**"仿真成功率 ≈ 真机成功率"。原文�
 | CC BY 4.0 | OXE、OpenVLA、FAST、DROID、SIMPLER | 允许再分发，**须署名** |
 | arXiv 默认「永久非独占许可」 | Diffusion Policy、RT-2、π0 | **不授予第三方再分发权** |
 
-**本条目据此采取的做法**：**论文全文（PDF / 转出的 txt / markdown）一律不入库**，只在仓库内保留自己的精读分册与来源清单；缓存放在仓库外 `~/Documents/paper-cache/`。详见 [MANIFEST.md](../sources/MANIFEST.md) §3。
+**本条目据此采取的做法**：**论文全文（PDF / 转出的 txt / markdown）一律不入库**，只在仓库内保留自己的精读分册与来源清单；缓存放在仓库外 `.paper-cache/`。详见 [MANIFEST.md](../sources/MANIFEST.md) §3。
 
 ---
 

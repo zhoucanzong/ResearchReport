@@ -36,7 +36,7 @@
 
 以下条目缺少可解析的 `date`，无法参与「最近更新」排序：
 
-* [LLM/Agent/report.md](<../LLM/Agent/report.md>)
+* [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>)
 * [LLM/Alignment/report.md](<../LLM/Alignment/report.md>)
 * [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>)
 * [LLM/LongContext/report.md](<../LLM/LongContext/report.md>)

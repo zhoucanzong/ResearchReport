@@ -311,7 +311,7 @@ ByteDance Seed 的 [Seedance 2.0 技术报告](https://arxiv.org/abs/2604.14148)
 
 ### 10.2 技术论文与参考
 
-- **本次实读**：Gao et al., [Seedance 1.0: Exploring the Boundaries of Video Generation Models, arXiv:2506.09113v2](https://arxiv.org/abs/2506.09113v2)，2025-06-28。通过 `paper-fetcher download` 获取于仓库外 `paper-cache/research-audit-2026-10-22/models/seedance/`；实读 §2.2–2.4、§5、§7.2 及图 10–13。本次没有运行模型或独立人评。
+- **本次实读**：Gao et al., [Seedance 1.0: Exploring the Boundaries of Video Generation Models, arXiv:2506.09113v2](https://arxiv.org/abs/2506.09113v2)，2025-06-28。通过 `paper-fetcher download` 获取于仓库外 `.paper-cache/research-audit-2026-10-22/models/seedance/`；实读 §2.2–2.4、§5、§7.2 及图 10–13。本次没有运行模型或独立人评。
 - **本次实读**：[Seedance 2.0: Advancing Video Generation for World Complexity, arXiv:2604.14148v1](https://arxiv.org/abs/2604.14148)，2026-04-15。使用 `paper-fetcher fetch` 核对版本元数据，阅读 PDF 的 §1、§2.2–2.4、表 1–3、表 11–12 及作者局限说明。`paper-fetcher download` 本轮请求未能完成；原文通过 arXiv PDF 页面阅读，未缓存到仓库或本地 paper-cache。没有运行模型或独立人评。
 - **本次实读**：[Seedance 1.0 官方模型页](https://seed.bytedance.com/en/seedance)，用于核对能力范围、榜单日期和 Kling Elo 版本替代说明。
 - DiT（Diffusion Transformer）原始论文：Peebles & Xie, "Scalable Diffusion Models with Transformers", ICCV 2023

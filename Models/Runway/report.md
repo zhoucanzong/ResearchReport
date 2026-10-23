@@ -93,7 +93,7 @@ Runway Agent 的当前官方帮助页确认可规划项目、选择不同模型�
 
 ## 9. 来源索引
 
-- **S1** Esser et al. [Structure and Content-Guided Video Synthesis with Diffusion Models, 2302.03011v1](https://arxiv.org/abs/2302.03011v1)，2023-02-06。PDF 缓存位于仓库外 `paper-cache/research-audit-2026-10-22/models/runway-gen1/`；对应 HTML [原文](https://arxiv.org/html/2302.03011v1)。
+- **S1** Esser et al. [Structure and Content-Guided Video Synthesis with Diffusion Models, 2302.03011v1](https://arxiv.org/abs/2302.03011v1)，2023-02-06。PDF 缓存位于仓库外 `.paper-cache/research-audit-2026-10-22/models/runway-gen1/`；对应 HTML [原文](https://arxiv.org/html/2302.03011v1)。
 - **S2** [Gen-2 官方研究页](https://runway.com/research/gen-2)：读取模式说明与人评数字；当前页有论文历史结果，不能把页名当作独立实验协议。
 - **S3** [Gen-3 Alpha 公告](https://runway.com/research/introducing-gen-3-alpha)，2024-06-17。
 - **S4** [Gen-4 官方页](https://runway.com/research/introducing-runway-gen-4)：读取参考图与跨场景保持说明；未据本页倒推未显示的准确发布日期。

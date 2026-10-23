@@ -39,7 +39,7 @@
 
 ## 4. 动态官方文档快照
 
-原始HTML与提取文字保存在仓库外 `~/Documents/paper-cache/research-audit-2026-10-22/models/deepseek-update/`。下表的哈希固定本次内容，HTTP Last-Modified只是站点构建头，**不是模型或论文发布时间**。
+原始HTML与提取文字保存在仓库外 `.paper-cache/research-audit-2026-10-22/models/deepseek-update/`。下表的哈希固定本次内容，HTTP Last-Modified只是站点构建头，**不是模型或论文发布时间**。
 
 | 来源 | 本次HTML SHA256 | 使用位置 |
 |---|---|---|
@@ -95,7 +95,7 @@ Skill使用：按 `researcher` 的来源/数字条件/不确定值要求处理�
 
 未解决但不再当成确定收益：671B完整BF16控制实验、训练峰值显存拆账、原始训练内核固定M/N/K吞吐与计时方法、可归因FP8的完整step/端到端推理收益；本次未取得这些实测数据。附录B未单列两组小规模对照的卡数/批量，不假定其均使用2048卡。未扩大到新模型、其他历史技术争议或社区内核基准。
 
-本地缓存：`~/Documents/paper-cache/research-audit-2026-10-22/models/deepseek-v3-fp8/`，含固定PDF、文本抽取、官方源码checkout及`repo-scan.json`。精确输入/输出哈希与范围检查另记本地审计底账`.rehearsal/audit/goal-batches/deepseek-v3-fp8.json`。按`researcher`核对论文，按`code-researcher`追公开推理调用链，论文由`paper-fetcher`获取；三个skill未被脚本检查替代。
+本地缓存：`.paper-cache/research-audit-2026-10-22/models/deepseek-v3-fp8/`，含固定PDF、文本抽取、官方源码checkout及`repo-scan.json`。精确输入/输出哈希与范围检查另记本地审计底账`.rehearsal/audit/goal-batches/deepseek-v3-fp8.json`。按`researcher`核对论文，按`code-researcher`追公开推理调用链，论文由`paper-fetcher`获取；三个skill未被脚本检查替代。
 
 ## 8. 分块 KV 压缩相位敏感性（2026-10-23）
 
@@ -106,8 +106,8 @@ Skill使用：按 `researcher` 的来源/数字条件/不确定值要求处理�
 | Zhu et al., [Periodic Weak Spots: Phase Sensitivity from Chunked KV-Cache Compression](https://arxiv.org/abs/2609.36322v1) | arXiv `2609.36322v1`，提交 2026-09-28 21:54 UTC；PDF 首页标 2026-09-30；arXiv 版本页链接 CC BY 4.0；预印本 | 官方 arXiv PDF：§§1–2、Fig. 1–2、Table 7、Appendix B–C；§3.2、Fig. 3、Table 8、Appendix F；§4.1–4.2、Figs. 4–5、Appendix E/G–H。结果支持压缩 stride 与周期敏感性相关；对生产 DeepSeek 模型的结果是作者报告，受控因果机制证据来自 Qwen3-0.6B 派生模型与有限 head/layer 干预。 |
 
 - ByteDance Seed 官方论文页确认题名、作者列表、2026-09-28 发布日期与摘要：[Seed publication page](https://seed.bytedance.com/en/public_papers/periodic-weak-spots-phase-sensitivity-from-chunked-kv-cache-compression)。作者单位脚注表明核心贡献者在 ByteDance Seed 实习；合作作者亦来自 Princeton、Stanford 与 UC Berkeley。
-- 工具使用记录：本文所在批次的过程说明报告调用了 Researcher deep 和 PaperFetcher `fetch 2609.36322 --citations`；对应的旧调用原始输出未留存，故不能据此独立审计。2026-10-23 的追加核验直接查看官方 arXiv 版本页、PDF 与 Seed 页面，PaperFetcher `fetch` 元数据输出另存于 `/Users/zhoucanzong/Documents/paper-cache/2609.36322-fetch.txt`。该次 fetch 的 HF 结果列出题名、作者、日期和项目页，但 arXiv 元数据请求返回 429；故版本、日期和许可仍以官方 arXiv 页面与 PDF 为准。
-- 2026-10-23 通过 PaperFetcher `download 2609.36322` 新增本地 PDF：`/Users/zhoucanzong/Documents/paper-cache/2609.36322.pdf`，2,449,493 bytes，SHA-256 `eb4904567a45586caf0ccfdc9b91c4a3ce087700a2784a2a43665d656bd4b5fa`。此前“缓存未找到”只描述上一轮搜索；本次新增文件尚未替代当时的源文件身份记录。未复制论文全文进仓库。本文阅读了 PDF 的主文 §1–5 与相关附录 C、E、F、G、H；没有从头运行 100B-token 训练或重跑 DeepSeek/NIAH 评测。
+- 工具使用记录：本文所在批次的过程说明报告调用了 Researcher deep 和 PaperFetcher `fetch 2609.36322 --citations`；对应的旧调用原始输出未留存，故不能据此独立审计。2026-10-23 的追加核验直接查看官方 arXiv 版本页、PDF 与 Seed 页面，PaperFetcher `fetch` 元数据输出另存于 `.paper-cache/2609.36322-fetch.txt`。该次 fetch 的 HF 结果列出题名、作者、日期和项目页，但 arXiv 元数据请求返回 429；故版本、日期和许可仍以官方 arXiv 页面与 PDF 为准。
+- 2026-10-23 通过 PaperFetcher `download 2609.36322` 新增本地 PDF：`.paper-cache/2609.36322.pdf`，2,449,493 bytes，SHA-256 `eb4904567a45586caf0ccfdc9b91c4a3ce087700a2784a2a43665d656bd4b5fa`。此前“缓存未找到”只描述上一轮搜索；本次新增文件尚未替代当时的源文件身份记录。未复制论文全文进仓库。本文阅读了 PDF 的主文 §1–5 与相关附录 C、E、F、G、H；没有从头运行 100B-token 训练或重跑 DeepSeek/NIAH 评测。
 - Claim audit：人工逐项核对精读中的 **8 个数值主张簇**。取数方式是数 `deepseek-phase-sensitivity.md`「可复查锚点」表编号 1–8 的数据行（每行按一个 claim cluster 计；不把行内拆成多个 claim，也不把年份/型号编号计入）；8 行均指向固定 PDF 锚点。第 8 行区分 Fig. 3 所示 75.3 pp 与 Table 8 完整压缩扫描最高 78 pp；DeepSeek-V4 的干预锚点区分整层 attention-output replacement 与受控模型的逐 KV-head knockout。该数不是全文自动扫描统计。未运行作者训练或推理代码，也未独立复现实验。
 
 ## 9. Base-Model Cue 比较论文（2026-10-23） {#9-base-model-cues-preprint-2026-10-23}
@@ -118,7 +118,7 @@ Skill使用：按 `researcher` 的来源/数字条件/不确定值要求处理�
 |---|---|---|
 | Wang et al., [Base Models Can Reason By Taking a Cue From Training Data](https://arxiv.org/abs/2610.06851v1) | arXiv `2610.06851v1`，2026-10-05 17:59:52 UTC 提交；版本页许可 CC BY 4.0；预印本 | 官方 v1 PDF 全文 56 页；重点核对 §2.1–2.4/Figs. 2–4，§3.1/Figs. 5–6，§4/Fig. 10，§6；补看 Appendix B、C、F、H 中评测、模型和数据编辑细节。 |
 
-PaperFetcher 记录：按精确题名运行 `search_papers.py ... -n 3 -s arxiv`，搜索结果未找到该标题（返回无关低相关条目）；随后 `fetch_paper.py fetch 2610.06851v1 --citations` 确认题名、6 位作者、提交时间、分类 `cs.LG, cs.AI, cs.CL` 和摘要。固定 PDF 从 arXiv v1 URL 获取，缓存 `/Users/zhoucanzong/Documents/paper-cache/research-audit-2026-10-23/models/methods/2610.06851v1.pdf`，56 页，3,734,099 bytes，SHA-256 `9ec14ad1bf5312d240bc0013a033196941034eb53a9c674c5586ca0e5b006b6b`；同目录保留 `2610.06851v1.html`。
+PaperFetcher 记录：按精确题名运行 `search_papers.py ... -n 3 -s arxiv`，搜索结果未找到该标题（返回无关低相关条目）；随后 `fetch_paper.py fetch 2610.06851v1 --citations` 确认题名、6 位作者、提交时间、分类 `cs.LG, cs.AI, cs.CL` 和摘要。固定 PDF 从 arXiv v1 URL 获取，缓存 `.paper-cache/research-audit-2026-10-23/models/methods/2610.06851v1.pdf`，56 页，3,734,099 bytes，SHA-256 `9ec14ad1bf5312d240bc0013a033196941034eb53a9c674c5586ca0e5b006b6b`；同目录保留 `2610.06851v1.html`。
 
 - Abstract、§2.2/Fig. 2：作者报告 Olmo-3-7B 的 `.\n\n Okay` 在 MATH-500 从 42% 到 78%（RL 对照 75%）；Qwen3-14B 的 `Alright ,` 从 72% 到 87% 并与其 GRPO 对照相当。§2.1 限定两模型提示、RL 配方与评测设置。
 - §2.3/Fig. 3：RL 提高所选开头 cue 的概率；cue-forced RL 学习曲线在所测设置下较早达到相似成绩。图中步数不是广泛训练成本优势证据。

@@ -47,9 +47,9 @@
 * [deepseek-multimodal-and-specialized.md](<DeepSeek/deepseek-multimodal-and-specialized.md>) — 367 行 / 24,706 B
 * [deepseek-phase-sensitivity.md](<DeepSeek/deepseek-phase-sensitivity.md>) — 76 行 / 11,595 B
 * [deepseek-text-models.md](<DeepSeek/deepseek-text-models.md>) — 418 行 / 36,554 B
-* [papers/2610.06851-base-model-cues.md](<DeepSeek/papers/2610.06851-base-model-cues.md>) — 55 行 / 5,163 B
+* [papers/2610.06851-base-model-cues.md](<DeepSeek/papers/2610.06851-base-model-cues.md>) — 55 行 / 5,135 B
 * [sources/CANDIDATES.md](<DeepSeek/sources/CANDIDATES.md>) — 7 行 / 745 B
-* [sources/MANIFEST.md](<DeepSeek/sources/MANIFEST.md>) — 128 行 / 18,126 B
+* [sources/MANIFEST.md](<DeepSeek/sources/MANIFEST.md>) — 128 行 / 18,020 B
 
 </details>
 
@@ -71,7 +71,7 @@
 <summary><b>Kimi</b>（2 份）</summary>
 
 * [papers/2607.24653-kimi-k3.md](<Kimi/papers/2607.24653-kimi-k3.md>) — 247 行 / 28,554 B
-* [sources/MANIFEST.md](<Kimi/sources/MANIFEST.md>) — 56 行 / 6,030 B
+* [sources/MANIFEST.md](<Kimi/sources/MANIFEST.md>) — 56 行 / 6,019 B
 
 </details>
 
@@ -85,12 +85,12 @@
 <details>
 <summary><b>Qwen</b>（6 份）</summary>
 
-* [papers/2610.02819-text-centric-omni.md](<Qwen/papers/2610.02819-text-centric-omni.md>) — 55 行 / 5,789 B
+* [papers/2610.02819-text-centric-omni.md](<Qwen/papers/2610.02819-text-centric-omni.md>) — 55 行 / 5,761 B
 * [qwen-omni-and-ecosystem.md](<Qwen/qwen-omni-and-ecosystem.md>) — 565 行 / 22,788 B
 * [qwen-text-models.md](<Qwen/qwen-text-models.md>) — 489 行 / 20,718 B
 * [qwen-vl-models.md](<Qwen/qwen-vl-models.md>) — 543 行 / 22,018 B
 * [sources/CANDIDATES.md](<Qwen/sources/CANDIDATES.md>) — 7 行 / 718 B
-* [sources/MANIFEST.md](<Qwen/sources/MANIFEST.md>) — 22 行 / 2,714 B
+* [sources/MANIFEST.md](<Qwen/sources/MANIFEST.md>) — 22 行 / 2,686 B
 
 </details>
 

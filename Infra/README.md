@@ -65,7 +65,7 @@
 * [papers/vllm-implementation.md](<SpeculativeDecoding/papers/vllm-implementation.md>) — 227 行 / 18,077 B
 * [sources/CANDIDATES.md](<SpeculativeDecoding/sources/CANDIDATES.md>) — 91 行 / 9,644 B
 * [sources/CODE-AUDIT.md](<SpeculativeDecoding/sources/CODE-AUDIT.md>) — 87 行 / 8,110 B
-* [sources/MANIFEST.md](<SpeculativeDecoding/sources/MANIFEST.md>) — 65 行 / 9,894 B
+* [sources/MANIFEST.md](<SpeculativeDecoding/sources/MANIFEST.md>) — 65 行 / 9,872 B
 * [topics/algorithm-families.md](<SpeculativeDecoding/topics/algorithm-families.md>) — 164 行 / 12,014 B
 * [topics/systems-throughput-latency.md](<SpeculativeDecoding/topics/systems-throughput-latency.md>) — 168 行 / 10,532 B
 * [topics/verification-acceptance.md](<SpeculativeDecoding/topics/verification-acceptance.md>) — 159 行 / 9,197 B

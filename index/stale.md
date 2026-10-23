@@ -37,7 +37,7 @@
 
 以下条目既没有 `date` 也没有 `status`，陈旧度无法评估（不算作已标记）：
 
-* [LLM/Agent/report.md](<../LLM/Agent/report.md>)
+* [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>)
 * [LLM/Alignment/report.md](<../LLM/Alignment/report.md>)
 * [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>)
 * [LLM/LongContext/report.md](<../LLM/LongContext/report.md>)

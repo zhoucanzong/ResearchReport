@@ -55,7 +55,7 @@
 | [CANDIDATES.md](sources/CANDIDATES.md) | 历史 27 篇 + 闭环批次 4 篇 + 世界模型迁移 20 篇 + UniIntervene++ 1 篇；累计候选 52（16 篇独立分册、1 个专题补充、35 条排除/边界） |
 | [MANIFEST.md](sources/MANIFEST.md) | 16 篇的 arXiv ID / 版本 / 版本日期 / 标题 / 第一作者 / license / 来源 |
 
-> **全文不入库**：论文 PDF / 转出的 txt 一律不进入本仓库；缓存放在仓库外 `~/Documents/paper-cache/`，理由见 [MANIFEST.md](sources/MANIFEST.md) §3。
+> **全文不入库**：论文 PDF / 转出的 txt 一律不进入本仓库；缓存放在仓库外 `.paper-cache/`，理由见 [MANIFEST.md](sources/MANIFEST.md) §3。
 
 ---
 
@@ -351,7 +351,7 @@
 | **本专题 EmbodiedVLA** | **动作信号 / 可部署策略** | 视觉 + 语言条件化 + 动作输出（R1–R3） | 本报告 |
 | **WorldModels** | **状态演化 / 可交互环境** | action 条件化 + 系统可调用 + 动力学自数据学得 | `WorldModel/WorldModels/report.md` 章 1 |
 | **VLM** | **文本 / 具身问答 / 空间指代** | 无动作输出 | `LLM/VLM/report.md` |
-| **Agent** | **外层决策循环 / 工具调用** | 编排与记忆，动作由下层策略执行 | `LLM/Agent/report.md` |
+| **Agent** | **外层决策循环 / 工具调用** | 编排与记忆，动作由下层策略执行 | `Agents/AgentSystems/report.md` |
 | **规则模拟器 / 数据集 / 基准** | 环境或数据（硬编码动力学 / 采集数据 / 评测协议） | 不满足 WorldModels 的 (c) 也不满足本专题的 (c)（R6） | 本专题仅作评测环境 / 数据引用 |
 
 ### 7.2 与 `WorldModels` 的显式互引（避免重复劳动）
@@ -485,7 +485,7 @@
 ## 14. 本轮方法学注记（证据是怎么处理的）
 
 1. **先筛选后精读**：`sources/CANDIDATES.md` 分批记录历史候选池 27、闭环控制批次 4、世界模型迁移批次 20，以及 UniIntervene++ 1 项；当前累计 **52 = 16 篇独立分册 + 1 个闭环专题补充 + 排除/边界 35**。**类别性排除项不给 ID**（不编造）。
-2. **原文获取**：先查本地缓存 `~/Documents/paper-cache/`，**7 篇命中即用、不重复下载**；仅 DROID（2403.12945）未命中，用 `paper-fetcher` skill 抓取。
+2. **原文获取**：先查本地缓存 `.paper-cache/`，**7 篇命中即用、不重复下载**；仅 DROID（2403.12945）未命中，用 `paper-fetcher` skill 抓取。
 3. **文本提取**：`pdftotext -layout` 提取为 txt（版本行、表锚点均可逐字核对）；**txt / PDF 一律不入库**。
 4. **等级纪律**：单一主等级；**`[精读原文]` 只授予有分册的 16 篇**（以及已做固定 commit 代码核验的官方仓库）；摘要支撑的**不升格**；未确证的进第 15 章。
 5. **推断分离**：每份分册的第 6 问把「论文自承」与「本文推断」分成 6.1 / 6.2；跨文档结论若混合来源，**按最弱等级读**。

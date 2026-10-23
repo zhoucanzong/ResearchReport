@@ -653,7 +653,7 @@ Chefer et al., [Self-Supervised Flow Matching for Scalable Multi-Modal Synthesis
 
 ## 8. 参考链接
 
-本轮（2026-10-23）实质复核包括前次的 SDXL 主干/Refiner、FLUX.1 许可与双流/单流结构、SD3 Medium 和 SD3.5 规格，并新增 Self-Flow 原文核读。SDXL 原文用 `paper-fetcher` 下载于仓库外 `paper-cache/research-audit-2026-10-22/models/sdxl/`，实读 §2.1、§2.5、§3、表 1。FLUX 源码固定为 `802fb4713906133fcbd0d8dc5351620ca4773036`，实读 `Flux.forward` 与 `util.py` 模型配置；Self-Flow 论文通过 `paper-fetcher fetch` 核对元数据，并经 arXiv HTML 实读 §3–5、表 1–4、图 6–8 和附录 A.3–A.5 / H。本轮没有运行权重推理或独立复现实验。
+本轮（2026-10-23）实质复核包括前次的 SDXL 主干/Refiner、FLUX.1 许可与双流/单流结构、SD3 Medium 和 SD3.5 规格，并新增 Self-Flow 原文核读。SDXL 原文用 `paper-fetcher` 下载于仓库外 `.paper-cache/research-audit-2026-10-22/models/sdxl/`，实读 §2.1、§2.5、§3、表 1。FLUX 源码固定为 `802fb4713906133fcbd0d8dc5351620ca4773036`，实读 `Flux.forward` 与 `util.py` 模型配置；Self-Flow 论文通过 `paper-fetcher fetch` 核对元数据，并经 arXiv HTML 实读 §3–5、表 1–4、图 6–8 和附录 A.3–A.5 / H。本轮没有运行权重推理或独立复现实验。
 
 新增一手来源：[BFL 成立公告](https://bfl.ai/blog/24-08-01-bfl)、[FLUX.1-dev 许可证](https://huggingface.co/black-forest-labs/FLUX.1-dev/blob/main/LICENSE.md)、[SD3 Medium 发布](https://stability.ai/news-updates/stable-diffusion-3-medium)、[SD3.5 发布](https://stability.ai/news-updates/introducing-stable-diffusion-3-5)、[SD3.5 代码发布记录](https://github.com/Stability-AI/sd3.5)、[FLUX Tools 公告](https://bfl.ai/blog/24-11-21-tools)、[BFL Self-Flow 研究页](https://bfl.ai/research/self-flow)。
 

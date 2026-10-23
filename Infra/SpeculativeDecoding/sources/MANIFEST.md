@@ -1,7 +1,7 @@
 # 原文清单 · SpeculativeDecoding
 
 > 本仓库**只存清单与我们的精读分册**（`papers/*.md`），**不存论文全文**（PDF 或转出的 markdown 都不入库）。
-> 需要回看原文时：按下面的 arXiv 链接现取；本地缓存可选（`~/Documents/paper-cache/<id>@<版本>/`），缓存同样不入库。
+> 需要回看原文时：按下面的 arXiv 链接现取；本地缓存可选（`.paper-cache/<id>@<版本>/`），缓存同样不入库。
 > **代码仓库**只记录 `仓库 @ commit` 与用到的 `文件:行`，**源码不入库**。
 
 ## 1. 论文（14 个分册覆盖 16 篇论文）
@@ -43,7 +43,7 @@
 2. **标题/第一作者**已于本轮逐条回查 `export.arxiv.org/api`；完整作者列表未逐字核对，正式引用请回查原文。
 3. **license** 来自论文 HTML 页脚（`License: ...`）；`arXiv.org perpetual non-exclusive` 不授予再分发权，因此本仓库不存全文。
 4. **代码引用**一律 `仓库@commit:文件:行`；换 commit 后行号可能漂移，引用时保留 SHA。
-5. **本地缓存（可选、不入库）**：`~/Documents/paper-cache/<arXiv-ID>@<版本>/`；本清单不依赖缓存存在。
+5. **本地缓存（可选、不入库）**：`.paper-cache/<arXiv-ID>@<版本>/`；本清单不依赖缓存存在。
 
 ## 4. 未入库/未设分册的候选
 
