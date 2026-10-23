@@ -25,10 +25,11 @@
 
 | # | 来源 | 创建/更新日期 | 用途 | 链接 |
 | --: | :-- | :-- | :-- | :-- |
-| 1 | HuggingFace 模型卡 `moonshotai/Kimi-K3` | createdAt 2026-06-13 / lastModified 2026-09-02 | K3 规格表、评测表与全部条件脚注、许可名称 | https://huggingface.co/moonshotai/Kimi-K3 |
+| 1 | HuggingFace 模型卡 `moonshotai/Kimi-K3` | lastModified 2026-09-02；API `createdAt=2026-06-13` 是仓库元数据，不代表权重当日公开 | K3 规格表、评测表与全部条件脚注、许可名称 | https://huggingface.co/moonshotai/Kimi-K3 |
+| 1a | HuggingFace 权重仓历史 | 首批权重/README 提交见 2026-07-27 | 辅助确定公开权重时间；不从仓库时间推断模型版本变化 | https://huggingface.co/moonshotai/Kimi-K3/commits/main |
 | 2 | HuggingFace 模型卡 `moonshotai/Kimi-K2.7-Code` | createdAt 2026-06-11 / lastModified 2026-06-15 | K2.7 Code 规格、评测与条件脚注 | https://huggingface.co/moonshotai/Kimi-K2.7-Code |
-| 3 | 官方博客 `kimi.com/blog/kimi-k3` | 研究博客索引标注 2026-07-16 | K3 发布信息、定价、限制声明 | https://www.kimi.com/blog/kimi-k3 |
-| 4 | 官方资源页 `kimi.com/resources/kimi-k2-7-code` | 页面标注「更新于 2026-10-08」 | K2.7 Code 定价、与 K2.6 的选型说明 | https://www.kimi.com/resources/kimi-k2-7-code |
+| 3 | 官方博客 `kimi.com/en/blog/kimi-k3` | 页面发布日 2026-07-16；2026-10-23 核验 | 产品/API 发布、完整权重发布时间说明、技术概述与限制；商业价格不纳入正文 | https://www.kimi.com/en/blog/kimi-k3 |
+| 4 | 官方资源页 `kimi.com/resources/kimi-k2-7-code` | 页面标注「更新于 2026-10-08」 | K2.7 Code 技术/产品说明；价格不纳入正文 | https://www.kimi.com/resources/kimi-k2-7-code |
 | 5 | Kimi API 平台文档 | 访问 2026-10-17 | `kimi-k3` 模型 ID 与调用方式 | https://platform.kimi.com/docs/guide/kimi-k3-quickstart |
 
 ## 3. 代码仓库（不入库）
@@ -45,3 +46,11 @@
 ## 4. 未入库/未确证的候选
 
 Kimi K3 License 条款、Artificial Analysis / Vals AI 原始评测页面、K3 的 low/high effort 档数字、K2.7 Code 的思考 token 绝对计数口径——以上均**未入库、未进正文**，处置理由见 [`../report.md`](../report.md) §4.6。
+
+## 5. Kimi K3 联合设计证据边界与 reader-first 修订（2026-10-23）
+
+- 固定论文仍为 [arXiv `2607.24653v2`](https://arxiv.org/html/2607.24653v2)，2026-08-07。§1/§3.2 说 KDA、AttnRes、Stable LatentMoE 与训练/数据改进合计带来约 2.5× scaling efficiency；没有找到六项架构/训练选择的全因子消融或逐项贡献实验。针对性证据分属 §2.1.1（KDA 下界衰减到 tiled Tensor Core 路径）、§2.3（LatentMoE 稳定化）、§2.4（MoonViT 初始化比较）、§2.5（Per-Head Muon），不能推出六项彼此必要。
+- 论文 §2 把 KDA、AttnRes、Stable LatentMoE 与 Per-Head Muon 等称为架构/训练组合；§4.1.4 的 MXFP4 QAT 属部署感知后训练，视觉从零初始化属多模态训练选择。精读分册已把“六项互为前提”改为联合设计，将“完整消融链”改成组件级证据边界。
+- 论文 Table 1 给出精确规模 **2.78T/104.2B**；摘要和模型卡写成四舍五入的 2.8T/104B。官方博客自我定位“first open 3T-class”未保留在读者正文。产品/API 日期 2026-07-16、权重公开窗口 7 月 27 日分别按[官方博客](https://www.kimi.com/en/blog/kimi-k3)及[Hugging Face 仓库历史](https://huggingface.co/moonshotai/Kimi-K3/commits/main)记录；模型卡 API 的 `createdAt=2026-06-13` 仅为仓库元数据，不作权重公开日期。
+- 主报告与分册移除 API 价格、成本效益与跨厂商排行榜数字；保留 K3 自身代表性结果及 max effort、harness、H20/H100、重复次数和上下文压缩条件。数值仍是作者报告，未独立复跑。
+- 本次修改是对固定论文的因果措辞校准与读者聚焦，不是整份 Kimi 报告逐主张重新审计。

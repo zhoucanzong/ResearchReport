@@ -55,7 +55,7 @@
 * [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>) — 895 行
 * [Models/Grok/report.md](<../Models/Grok/report.md>) — 265 行
 * [Models/Hunyuan/report.md](<../Models/Hunyuan/report.md>) — 504 行
-* [Models/Kimi/report.md](<../Models/Kimi/report.md>) — 616 行
+* [Models/Kimi/report.md](<../Models/Kimi/report.md>) — 585 行
 * [Models/Kling/report.md](<../Models/Kling/report.md>) — 75 行
 * [Models/LLaMA/report.md](<../Models/LLaMA/report.md>) — 483 行
 * [Models/MiMo/report.md](<../Models/MiMo/report.md>) — 757 行

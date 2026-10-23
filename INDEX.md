@@ -16,14 +16,14 @@
 | **条目数**（`report.md`） | **63** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 10 · VisualGen 8 · WorldModel 2 · AI4Science 10 · Evaluation 1 · Infra 3 · OpenSource 6 |
 | 条目子文档数 | 196 |
-| 条目正文行数（剔除 front-matter） | 27,884 |
-| 条目字节 | 2,103,751 B |
+| 条目正文行数（剔除 front-matter） | 27,853 |
+| 条目字节 | 2,100,770 B |
 | 带 front-matter 的条目 | 22 |
 | 带合法 `date` 的条目 | 22 |
 | 文档（除生成物外的全部 `.md`） | 277 |
 | 其中文件名 `README.md` | 10 |
-| 纳入版本控制的文件 | 298 |
-| 纳入版本控制的 `.md` | 282 |
+| 纳入版本控制的文件 | 301 |
+| 纳入版本控制的 `.md` | 285 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -32,7 +32,7 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| Models | 23 | 41 | 12,158 | 909,121 B | [板块页 →](<Models/README.md>) |
+| Models | 23 | 41 | 12,127 | 906,140 B | [板块页 →](<Models/README.md>) |
 | LLM | 10 | 46 | 4,300 | 330,316 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,758 | 320,420 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 2 | 41 | 1,244 | 139,523 B | [板块页 →](<WorldModel/README.md>) |
@@ -40,7 +40,7 @@
 | Evaluation | 1 | 7 | 101 | 21,992 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 3 | 37 | 918 | 75,497 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 35 | 1,569 | 167,927 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **63** | **277** | **27,884** | **2,103,751 B** | — |
+| **合计** | **63** | **277** | **27,853** | **2,100,770 B** | — |
 
 ## 分面索引
 
@@ -199,15 +199,15 @@
   </details>
 
   <details>
-  <summary><b>Kimi</b> · <code>Models/Kimi/report.md</code> · 616 行 · —</summary>
+  <summary><b>Kimi</b> · <code>Models/Kimi/report.md</code> · 585 行 · —</summary>
 
 
-    * **条目**：[Models/Kimi/report.md](<Models/Kimi/report.md>)（616 行 / 55,129 B）
+    * **条目**：[Models/Kimi/report.md](<Models/Kimi/report.md>)（585 行 / 52,148 B）
     * **专题目录**：`Models/Kimi`
     * **元数据**：type=`—` · domain=`Models` · subject=`Kimi` · date=`—` · status=`—`
     * **子文档（2）**
-        * [papers/2607.24653-kimi-k3.md](<Models/Kimi/papers/2607.24653-kimi-k3.md>) — 251 行 / 30,000 B
-        * [sources/MANIFEST.md](<Models/Kimi/sources/MANIFEST.md>) — 47 行 / 3,924 B
+        * [papers/2607.24653-kimi-k3.md](<Models/Kimi/papers/2607.24653-kimi-k3.md>) — 247 行 / 28,554 B
+        * [sources/MANIFEST.md](<Models/Kimi/sources/MANIFEST.md>) — 56 行 / 6,030 B
 
   </details>
 
@@ -1042,7 +1042,7 @@
 | 文档 | 板块 | 行数 | 字节 |
 | --- | --- | --: | --: |
 | [AI4Science/README.md](<AI4Science/README.md>) | AI4Science | 137 | 6,760 B |
-| [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 34 | 1,168 B |
+| [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 37 | 1,487 B |
 | [Infra/README.md](<Infra/README.md>) | Infra | 67 | 5,018 B |
 | [LLM/README.md](<LLM/README.md>) | LLM | 88 | 5,946 B |
 | [Models/README.md](<Models/README.md>) | Models | 101 | 4,888 B |

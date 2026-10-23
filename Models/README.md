@@ -26,7 +26,7 @@
 | **Google-Gen** | [Google / DeepMind 生成模型系列研究报告](<Google-Gen/report.md>) | 895 行 |
 | **Grok** | [xAI Grok 系列模型深度调研报告](<Grok/report.md>) | 265 行 |
 | **Hunyuan** | [Hunyuan系列模型深度调研报告](<Hunyuan/report.md>) | 504 行 |
-| **Kimi** | [Kimi 系列模型深度调研报告](<Kimi/report.md>) | 616 行 |
+| **Kimi** | [Kimi 系列模型深度调研报告](<Kimi/report.md>) | 585 行 |
 | **Kling** | [快手 Kling 视频生成研究报告](<Kling/report.md>) | 75 行 |
 | **LLaMA** | [Meta LLaMA 系列大模型完整研究报告](<LLaMA/report.md>) | 483 行 |
 | **MiMo** | [小米 MiMo 系列模型深度调研报告](<MiMo/report.md>) | 757 行 |
@@ -70,8 +70,8 @@
 <details>
 <summary><b>Kimi</b>（2 份）</summary>
 
-* [papers/2607.24653-kimi-k3.md](<Kimi/papers/2607.24653-kimi-k3.md>) — 251 行 / 30,000 B
-* [sources/MANIFEST.md](<Kimi/sources/MANIFEST.md>) — 47 行 / 3,924 B
+* [papers/2607.24653-kimi-k3.md](<Kimi/papers/2607.24653-kimi-k3.md>) — 247 行 / 28,554 B
+* [sources/MANIFEST.md](<Kimi/sources/MANIFEST.md>) — 56 行 / 6,030 B
 
 </details>
 

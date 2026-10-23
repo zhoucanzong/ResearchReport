@@ -3,7 +3,7 @@
 > 调研对象：Moonshot AI（月之暗面）的 Kimi 模型家族
 > 时间跨度：2023 年 10 月 ~ 2026 年 10 月
 > 资料来源：arXiv 论文、Moonshot AI 官方技术博客、HuggingFace 模型卡、GitHub 仓库
-> 撰写日期：2026 年 6 月 ｜ **最近更新：2026-10-17**（增量增补 Kimi K2.7 Code、Kimi K3 两个新版本，新增 §4.4、§4.5 与 [K3 精读分册](papers/2607.24653-kimi-k3.md)；既有结论未改动）
+> 撰写日期：2026 年 6 月 ｜ **最近更新：2026-10-23**（重核 Kimi K3 的联合设计因果表述和评测证据，删去宣传性级别称谓、API 价格及成本排名）
 
 ---
 
@@ -13,9 +13,9 @@ Moonshot AI（月之暗面，Beijing Yuezhi Technology Co., Ltd.）由清华大�
 
 1. **长上下文主线**：Moonshot-v1（200K）→ 2M 字符内测 → **MoBA**（块级稀疏注意力）→ **Kimi Linear / KDA**（线性注意力混合架构），系统性回答「如何让 Transformer 真正吃下百万 token」。
 2. **推理（Reasoning）主线**：**Kimi k1**（2024.11，多模态思考预览）→ **Kimi k1.5**（2025.01，对标 OpenAI o1）→ **Kimi K2 Thinking**（2025.11，对标 GPT-5、Claude Sonnet 4.5），形成「以长上下文 RL + Long2Short」为核心的独特路线。
-3. **基础模型与多模态主线**：**Moonlight 16B-A3B**（2025.02，首个用 Muon 优化器训练的 MoE）→ **Kimi-VL / Kimi-VL-Thinking**（2025.04）→ **Kimi-Audio**（2025.04）→ **Kimi K2 1T-A32B**（2025.07，开源「Open Agentic Intelligence」）→ **Kimi K2.5**（2026.01，原生多模态 Agent）→ **Kimi K2.6**（2026.04，开源编码/多 Agent 集群旗舰）→ **K2 系列退役**（2026.05）。
+3. **基础模型与多模态主线**：**Moonlight 16B-A3B**（2025.02，MoE 训练采用 Muon）→ **Kimi-VL / Kimi-VL-Thinking**（2025.04）→ **Kimi-Audio**（2025.04）→ **Kimi K2 1T-A32B**（2025.07，「Open Agentic Intelligence」）→ **Kimi K2.5**（2026.01，原生多模态 Agent）→ **Kimi K2.6**（2026.04，编码/多 Agent 集群）→ **K2 系列退役**（2026.05）。
 
-**2026 年中之后的两步（本轮新增，详见 §4.4 / §4.5）**：**Kimi K2.7 Code**（2026-06-11，1T-A32B 同架构续训、编程向）与 **Kimi K3**（2026-07-16 发布 / 2026-07-27 权重与技术报告，2.8T-A104B、原生多模态、1M 上下文）。K3 是 K2 之后**第一次同时改基座规模与注意力骨架**的版本：K2 / K2.5 是**全层 MLA + RoPE/YaRN**，K3 改为 **69 层 KDA + 24 层 Gated MLA（3:1）+ 全层 NoPE**——即 Kimi Linear（2025-10，48B 验证性模型）的 3:1 混合首次被搬到旗舰规模上，并取代了 K2 的纯 MLA 骨架。
+**2026 年中之后的两步（详见 §4.4 / §4.5）**：**Kimi K2.7 Code**（1T-A32B 同架构续训、编程向）与 **Kimi K3**（2.78T 总 / 104.2B 激活 MoE，原生多模态、1M 上下文）。K3 相较 K2 / K2.5 的**全层 MLA + RoPE/YaRN**，改用 **69 层 KDA + 24 层 Gated MLA（3:1）+ 全层 NoPE**，把此前 48B Kimi Linear 研究模型中的混合注意力路线带到更大规模。
 
 ### 1.1 关键时间线
 
@@ -23,9 +23,9 @@ Moonshot AI（月之暗面，Beijing Yuezhi Technology Co., Ltd.）由清华大�
 | --- | --- | --- |
 | 2023-03 | Moonshot AI 成立 | 杨植麟、周昕宇（Xinyu Zhou）、吴育昕（Yuxin Wu）创立 |
 | 2023-10-09 | Kimi Chat 上线 | 首发即支持 **20 万汉字**（约 200K characters）无损上下文 |
-| 2024-03 | 200 万汉字内测 | 全球首个开放 **2M Chinese characters** 长上下文的 C 端产品 |
+| 2024-03 | 200 万汉字内测 | 将长上下文扩展到 **2M Chinese characters** |
 | 2024-08 | Moonshot-v1 API（8K/32K/128K） | 三档上下文 API 商业化 |
-| 2024-11 | **Kimi k1 视觉思考模型**预览 | 中国首个开放多模态长思考模型 |
+| 2024-11 | **Kimi k1 视觉思考模型**预览 | 公开多模态长思考模型预览 |
 | 2025-01-22 | **Kimi k1.5** 技术报告（arXiv:2501.12599） | 与 DeepSeek-R1 同期，o1 级推理性能 |
 | 2025-02-21 | **Moonlight / Muon 论文**（arXiv:2502.16982） | 首次将 Muon 扩展到 16B MoE 规模 |
 | 2025-02-18 | **MoBA 论文**（arXiv:2502.13189） | 块级稀疏注意力，已用于 Kimi 线上长上下文 |
@@ -36,12 +36,12 @@ Moonshot AI（月之暗面，Beijing Yuezhi Technology Co., Ltd.）由清华大�
 | 2025-11-06 | **Kimi K2 Thinking** 发布 | 1T MoE + 256K 上下文 + 原生 INT4，HLE 44.9%（带工具） |
 | 2026-01-27 | **Kimi K2.5** | 在 K2 基础上继续预训练 ~15T 视觉-文本 token，原生多模态 Agent，Agent Swarm 100 子代理 |
 | 2026-04-13 | **Kimi Code K2.6** | 编码代理工具发布 |
-| 2026-04-20 | **Kimi K2.6** 开源 | 1T 参数 / 32B 激活 MoE，256K 上下文，SWE-Bench Verified 80.2%（开源模型第一），Modified MIT License，API \$0.95/\$4.00 per 1M tokens |
+| 2026-04-20 | **Kimi K2.6** 发布权重 | 1T 参数 / 32B 激活 MoE，256K 上下文，SWE-Bench Verified 80.2%（作者报告）；许可见来源 |
 | 2026-05-25 | **K2 系列退役** | K2 系列正式停止支持，仅 K2.6 继续维护 |
 | 2026-06 | **Claw Groups / 视频输入** | 异构代理集群研究预览；支持 mp4, mov, webm, avi 视频输入 |
 | 2026-06-11 | **Kimi K2.7 Code** 开源 | 1T 总 / 32B 激活 MoE（沿用 K2.6 架构），256K 上下文，强制思考；思考 token 较 K2.6 约 −30%（官方自报），详见 §4.4 |
-| 2026-07-16 | **Kimi K3** 发布（官方博客 + 产品上线） | 2.8T 总 / 104B 激活 MoE，原生多模态，1M 上下文；KDA + Attention Residuals + Stable LatentMoE，详见 §4.5 |
-| 2026-07-27 | **Kimi K3 权重开源 + 技术报告 v1**（arXiv:2607.24653） | 官方称「首个开源 3T 级模型」；技术报告 v2 于 2026-08-07 |
+| 2026-07-16 | **Kimi K3** 产品/API 上线 | 2.8T/104B MoE（论文精确表值 2.78T/104.2B），原生多模态，1M 上下文；技术分析见 §4.5 |
+| 2026-07-27 | **Kimi K3 权重仓库公开 + 技术报告 v1**（arXiv:2607.24653） | 官方博客称完整权重将于 7 月 27 日前发布；Hugging Face 仓库历史列有当日提交；技术报告 v2 于 2026-08-07 |
 
 > 注：本报告的「推理模型」与「基座模型」在 2025 年 11 月之后开始合流——K2 Thinking 起，Moonshot 选择**单一旗舰多形态**（base / instruct / thinking）的发布范式，与 DeepSeek 模式趋同。
 
@@ -49,7 +49,7 @@ Moonshot AI（月之暗面，Beijing Yuezhi Technology Co., Ltd.）由清华大�
 
 ## 2. 基座模型演进：以长上下文为主线
 
-### 2.1 第一代 Moonshot-v1（2023-2024）：注意力工程与基础设施驱动的 200K → 2M
+### 2.1 Moonshot-v1（2023-2024）：注意力工程与基础设施驱动的 200K → 2M
 
 Kimi 在 2023 年 10 月以「20 万汉字无损上下文」首次进入大众视野时，主流闭源模型仍停留在 GPT-4 的 8K~32K 区间（GPT-4 Turbo 128K 直到 2023 年 11 月才发布）。此时 Moonshot-v1 并未发布详细技术报告，从后续披露与官方开放平台信息可推断其技术路径：
 
@@ -58,24 +58,24 @@ Kimi 在 2023 年 10 月以「20 万汉字无损上下文」首次进入大众�
 - **基础设施**：自研分布式训练栈（Sequence/Context Parallelism + ZeRO + 重计算）以承载 200K+ 序列；KV-Cache 分页与持久化存储用于推理期长对话上下文复用。
 - **2024-03 的 2M 中文字符内测**：对外宣称「无损」（lossless），实际依赖大段文档的离线预处理与上下文压缩 / 检索增强；这是产品形态而非纯模型能力升级，但确立了 Kimi 在 C 端「长文本助手」的品牌定位。
 
-> **结论**：第一代 Kimi 的「长上下文领先」更多来自系统工程层面的胜利——通过基础设施换取上下文长度，而非根本性的注意力革新。这一阶段为后续真正的算法创新（MoBA、KDA）积累了工程基础和训练数据。
+> **结论**：这一阶段的长上下文扩展主要依赖系统工程与基础设施；之后的 MoBA、KDA 则尝试直接改变注意力计算路线。
 
 ### 2.2 MoBA：从 Dense Attention 到块级稀疏（2025-02）
 
-随着 1M token 级别上下文需求出现，标准 Softmax Attention 的 O(n²) 复杂度成为不可逾越的成本墙。Moonshot 给出的第一版算法答卷是 **MoBA（Mixture of Block Attention，arXiv:2502.13189）**：
+随着 1M token 级别上下文需求出现，标准 Softmax Attention 的 O(n²) 计算和缓存开销成为系统瓶颈。Moonshot 的一条探索路线是 **MoBA（Mixture of Block Attention，arXiv:2502.13189）**：
 
 - **核心思想**：将 MoE 路由思想搬到注意力层。把序列切成固定大小的 block，由可学习的 router 为每个 query 选择 top-k 个最相关 block 进行注意力计算，其余 block 完全跳过。
 - **「Less Structure」原则**：不像 sliding-window、StreamingLLM 那样硬编码注意力 pattern，让模型自行决定关注哪些块。
 - **可切换性**：MoBA 支持 full-attention 与 sparse-attention 之间无缝切换——预训练用 full，长上下文阶段切换到 MoBA；这一性质是 DeepSeek NSA、Native Sparse Attention 等同期工作所不具备的。
 - **工程价值**：论文明确指出 **MoBA 已部署于 Kimi 线上服务**，承担长上下文请求的实际推理流量。这意味着 Kimi 的 1M 上下文不是「能跑」而是「跑得起」。
 
-### 2.3 Kimi Linear / KDA：线性注意力首次「全面战胜」全注意力（2025-10）
+### 2.3 Kimi Linear / KDA：3:1 混合注意力与长上下文效率（2025-10）
 
-MoBA 解决了「能不能算」的问题，但仍是 Softmax 衍生品；KV Cache 仍随上下文线性增长，1M token 推理时显存压力巨大。**Kimi Linear（arXiv:2510.26692）**给出更激进的答案：
+MoBA 仍保留 Softmax attention，KV cache 随上下文增长；在 1M token 场景中，计算和缓存占用仍是系统瓶颈。**Kimi Linear（arXiv:2510.26692）**提出另一种路线：
 
 - **Kimi Delta Attention（KDA）**：在 Gated DeltaNet 之上引入更精细的**逐通道（fine-grained）门控**与改进的 delta-rule 状态更新规则，本质上是带有「遗忘门」的线性 RNN，状态尺寸恒定（不随序列长度增长）。
 - **3:1 混合架构**：每 4 层中 3 层 KDA + 1 层 **MLA（Multi-head Latent Attention，DeepSeek-V3 风格的全注意力）**，并对所有 MLA 层采用 **NoPE（No Positional Encoding）**——把位置编码「外包」给 KDA 的递归状态，全局层只负责语义聚合。
-- **指标**：在 1.4T token 公平对照预训练下，48B-A3B 的 Kimi-Linear-Base 在 MMLU-Pro 拿 51.0、RULER（128K）拿 84.3，**首次出现线性注意力混合架构在通用 + 长上下文 + RL 三条赛道全面优于全注意力**。
+- **作者对照**：在 1.4T token 的预训练对照下，48B-A3B 的 Kimi-Linear-Base 报告 MMLU-Pro 51.0、RULER（128K）84.3，并在论文列出的强化学习评测上高于其全注意力基线。这些结果限于论文的模型、数据与任务设置，不概括所有线性注意力方法。
 - **效率**：相比纯 MLA，**KV Cache 减少 75%、1M 上下文 TPOT（Time-Per-Output-Token）加速 6×**。
 - **意义**：这是 Moonshot 自 RoPE 之后在注意力机制上的第二次范式级别贡献，也是其后续 K2.x 系列模型的重要架构候选。
 
@@ -89,7 +89,7 @@ MoBA 解决了「能不能算」的问题，但仍是 Softmax 衍生品；KV Cac
 
 Moonshot 在 2025 年完整跑通了 MoE：
 
-- **Moonlight 16B-A3B（2025-02）**：Moonshot 首个 MoE 基座，3B 激活 / 16B 总参数，5.7T token 训练；架构沿用 DeepSeek-V3 family（细粒度专家 + 共享专家 + MLA）。**首次大规模应用 Muon 优化器**，相比 AdamW 在相同算力下达成 ~2× token 效率（详见 §6.1）。
+- **Moonlight 16B-A3B（2025-02）**：3B 激活 / 16B 总参数，5.7T token 训练；架构沿用 DeepSeek-V3 family（细粒度专家 + 共享专家 + MLA），训练采用 Muon 优化器。论文在匹配算力下报告相对 AdamW 约 2× token 效率，机制与条件见 §6.1。
 - **Kimi K2 1T-A32B（2025-07）**：61 层、384 路由专家 + 1 共享专家 + 64 注意力头 + MLA。沿 DeepSeek-V3 蓝图但做出三个关键差异化选择：
   1. **稀疏度提升至 48**（DeepSeek-V3 为 32）：8/384 激活，论文给出「sparsity scaling law」证明在固定 FLOPs 下稀疏度越高 loss 越低；
   2. **注意力头减半**（64 vs 128）：以略微 loss 退化（0.5–1.2%）换取长上下文推理速度；
@@ -109,7 +109,7 @@ Moonshot 在 2025 年完整跑通了 MoE：
 
 ## 3. 推理模型：Kimi k1 / k1.5 与 K2 Thinking
 
-### 3.1 Kimi k1（2024-11）：中国首个多模态长思考模型预览
+### 3.1 Kimi k1（2024-11）：多模态长思考模型预览
 
 Kimi k1 是 OpenAI o1 公布（2024-09）后业界最早的对标产品之一，与 DeepSeek-R1-Lite-Preview 同期。官方未发独立论文，从 k1.5 报告与博客可拼出技术骨架：
 
@@ -155,7 +155,7 @@ k1.5 不是「文本模型 + 视觉适配器」，而是**文本与视觉数据�
 
 ### 3.3 Kimi K2 Thinking（2025-11-06）：开源对标 GPT-5
 
-K2 Thinking 是在 Kimi K2（base / instruct）之上做进一步的「思考态 RL」得到，定位为 Moonshot 第一代「真正可作 Agent 大脑」的开源模型：
+K2 Thinking 是在 Kimi K2（base / instruct）之上做进一步的「思考态 RL」，并面向工具调用与多步任务使用：
 
 - **架构**：1T MoE / 32B 激活，**256K 上下文窗**（K2 base 是 128K，K2 Thinking 进一步扩展并配合 YaRN）；
 - **原生 INT4 推理**：在 post-training 阶段用 **Quantization-Aware Training（QAT）**对 MoE 部分做 INT4 weight-only 量化，所有公开 benchmark 均在 INT4 精度下报告，推理速度~2×；
@@ -186,7 +186,7 @@ K2 Thinking 是在 Kimi K2（base / instruct）之上做进一步的「思考态
 
 ### 4.1 Kimi-VL（2025-04）：高效 MoE 视觉语言模型
 
-Kimi-VL（arXiv:2504.07491）是 Moonshot 第一份正式的 VLM 技术报告，主打「**轻而强**」——2.8B+0.4B 激活参数对标 GPT-4o-mini / Qwen2.5-VL-7B / Gemma-3-12B-IT。
+Kimi-VL（arXiv:2504.07491）是 Moonshot 第一份正式的 VLM 技术报告，使用 2.8B+0.4B 激活参数的 MoE 结构，并报告与 GPT-4o-mini、Qwen2.5-VL-7B、Gemma-3-12B-IT 的比较结果。
 
 #### 4.1.1 架构三件套
 
@@ -227,11 +227,10 @@ Kimi-Audio（arXiv:2504.18425）是 Moonshot 的音频基础模型，7B 参数�
 
 - **Kimi K2.5（2026-01-27）**：在 K2（纯文本）基础上做约 **15T 视觉 + 文本混合 token 的 continual pretraining**，定义「Visual Agentic Intelligence」——同一个 1T MoE 同时承担文本推理、视觉理解、多步 Agent 执行；强调视觉编码（screenshots、UI、图表）下的 Agent 行为。支持 **Agent Swarm 100 子代理** 协同。
 - **Kimi K2.6（2026-04-20）**：开源发布，1T 参数 / 32B 激活 MoE，**256K 上下文**，采用 **Modified MIT License**。关键指标：
-  - **SWE-Bench Verified 80.2%**——开源模型第一；
+  - **SWE-Bench Verified 80.2%**（作者报告）；
   - **SWE-Bench Pro 58.6%**——与 GPT-5.5 持平；
   - **Agent Swarm 300 子代理 / 4000 步**——面向超长程软件工程任务；
   - 官方披露可**连续编码 13 小时**；
-  - **API 定价**：\$0.95 / \$4.00 per 1M tokens（输入/输出）。
 - **Kimi Code K2.6（2026-04-13）**：编码代理工具，面向 IDE 集成与自动化软件工程。
 - **视频输入支持**：新增 mp4、mov、webm、avi 格式视频输入能力。
 - **Claw Groups（研究预览）**：异构代理集群（Heterogeneous Agent Cluster），支持不同类型 Agent 协同完成复杂任务。
@@ -289,24 +288,15 @@ Kimi-Audio（arXiv:2504.18425）是 Moonshot 的音频基础模型，7B 参数�
 - **视频输入受限**：模型卡注明「Chat with video content is an experimental feature and is only supported in our official API for now」——第三方 vLLM/SGLang 部署下视频输入不可用（或仅实验）。
 - **无独立技术报告**：截至 2026-10-17，未检索到 K2.7 Code 的 arXiv 技术报告，架构层面的解释只能回落到 K2.6 的公开信息（见 §4.3）。
 
-**价格（官方产品页，2026-10-17 访问）**：`kimi-k2.7-code` API 为 ¥1.30（缓存命中输入）/ ¥6.50（未命中输入）/ ¥27.00（输出）每 1M tokens，上下文窗口 262,144 tokens。
+上下文窗口为 262,144 tokens。
 
-### 4.5 Kimi K3（2026-07）：首个开源 3T 级、原生多模态、1M 上下文旗舰
+### 4.5 Kimi K3：KDA、AttnRes 与 Stable LatentMoE 的旗舰级组合
 
 > **证据等级：精读原文（技术报告全文 + 官方模型卡 + 官方博客）**。arXiv:2607.24653 正文（HTML 全文 38 张表/图）已逐节读取；所有评测数字来自报告 §6/模型卡，属**厂商自报**，第三方结论单列为转引。
 
-**发布信息与时间线（三个可核验时间点）**
+技术报告固定引用 arXiv `2607.24653v2`；论文表格给出的精确规模是 **2.78T 总参数、104.2B/token 激活**，摘要与模型卡将其四舍五入为 2.8T/104B。产品/API 于 2026-07-16 上线，官方博客称完整权重于 7 月 27 日前发布；权重仓使用名为 **Kimi K3 License** 的许可，具体条款未逐条核验（见 §4.6）。[技术报告 v2](https://arxiv.org/abs/2607.24653v2) · [官方发布说明](https://www.kimi.com/en/blog/kimi-k3)
 
-| 时间 | 事件 | 来源 |
-| --- | --- | --- |
-| 2026-07-16 | 官方博客与产品上线（[kimi.com/blog/kimi-k3](https://www.kimi.com/blog/kimi-k3)，Kimi 研究博客索引标注日期） | 官方博客页 + 研究索引 |
-| 2026-07-27 | **权重开源 + 技术报告 v1**（arXiv:2607.24653v1，16:49 UTC） | arXiv API 元数据 |
-| 2026-08-07 | 技术报告 v2（当日 06:33 UTC 更新） | arXiv API 元数据 |
-
-- **命名**：`Kimi K3`；**开源权重**，许可为 **Kimi K3 License**（非标准 OSI 许可，条款未逐条核验 → 见 §4.6）。
-- **形态**：原生多模态 MoE；模型卡 `Modality` 字段列 **Text, Image**，官方博客则称「understands text, images, and video within the same model」——视频能力的落地范围（是否随 API 全量开放）**未在模型卡中确认**。
-- **API 定价**：\$0.30 / \$3.00 / \$15.00 per 1M tokens（缓存命中输入 / 缓存未命中输入 / 输出）。
-- **上下文**：1,048,576 tokens。
+模型卡列出的 modality 为 Text、Image；官方博客还称模型可处理 video，但本次来源未确认该能力在模型卡/API 的完整开放范围。论文报告的预训练上下文窗口为 **1,048,576 tokens**。
 
 **规格（K3 模型卡，与 K2 的官方对照见表内「K2」列，数据出自技术报告 Table 1）**
 
@@ -359,35 +349,16 @@ Kimi-Audio（arXiv:2504.18425）是 Moonshot 的音频基础模型，7B 参数�
 
 **部署侧**：MXFP4/MXFP8 QAT（从 SFT 起，rollout 与训练同量化，消除训练-推理失配）；把预训练的 MTP 层微调成 **EAGLE-3 draft**，直接用**接受率的负对数（LK loss）**优化而非 KL 代理；融合 1st / 4th / 末个 AttnRes block 的低/中/高层特征做 draft 输入。官方建议部署在 **64 卡以上的 supernode** 配置上。
 
-**评测（厂商自报；条件列必须随表读）**
+**评测（厂商自报；条件决定分数含义）**
 
-统一条件（模型卡脚注）：K3 全部结果取 **reasoning effort = max、`temperature = 1.0`**；单步任务（GPQA Diamond、HLE-Full、无工具的视觉基准）`top_p=0.95`，agentic 任务 `top_p=1.0`；harness 按基准在 **Kimi Code / Claude Code / Codex** 三者中指定（见各基准脚注）。下表只选与 K2.6→K3 代际判定相关的项：
-
-| 基准 | Kimi K3 (max) | 对照（同表，官方口径） | 备注（条件） |
-| --- | --- | --- | --- |
-| GPQA Diamond | 93.5 | GPT-5.6 Sol 94.1 / Claude Opus 4.8 91.0 | 单步，无工具 |
-| HLE-Full | 43.5 / 56.0 | Fable 5 53.3 / 63.0（无/带工具） | 两列分别为无工具/带通用工具 |
-| DeepSWE (v1.1) | 67.5 | Opus 4.8 59.0 / GPT-5.6 Sol 73.0 | Kimi Code harness；mini-SWE-agent 下 67.3 |
-| Terminal-Bench 2.1 | 88.3 | GPT-5.6 Sol 88.8 / Opus 4.8 84.6 | 各家取最优 harness |
-| SWE-Marathon | 42.0 | Fable 5 35.0 / Opus 4.8 40.0 | H20 校准分支；Fable 5 有 35% 任务命中 fallback |
-| MLS-Bench-Lite | 48.3 | Fable 5 49.9 / GPT-5.6 Sol 46.2 | H20 上 3 次平均（官方设定为 H100） |
-| Kimi Code Bench 2.0 | 72.9 | Fable 5 76.9 / GPT-5.5 69.0 | 内部基准；Claude Code harness 下 73.7 |
-| BrowseComp | 91.2 | Fable 5 88.0 / GPT-5.6 Sol 90.4 | 300K 触发上下文压缩；无压缩满 1M 时为 90.4 |
-| MCPMark-Verified | 94.5 | GPT-5.6 Sol 92.9 / Opus 4.8 76.4 | 公共 500 任务子集，100 轮 |
-| Video-MME (w. sub) | 90.0 | GPT-5.6 Sol 89.5 / Opus 4.8 86.0 | 3 次平均 |
-| ZeroBench (pass@5) | 23.0 / 41.0 | Fable 5 23.0 / 46.0 | 官方设定，5 次 |
-
-**成本-性能（官方 §6.4）**：Kimi Code Bench 2.0 上落后 Claude Fable 5 仅 4.0 分而成本为其 38%；BrowseComp 以 **\$2.03/任务**拿下同表最高分 91.2%；GDPval-AA v2 比 GPT-5.6 Sol 低 50 Elo 但成本低 13%，比 Fable 5 便宜 2.6×。
-
-**第三方评测（转引，二手）**：官方技术报告 §6.3 转述——Artificial Analysis **Intelligence Index v4.1 = 57.1**（580 个模型中第 4，若把 GPT-5.6 Sol 的多档 effort 合并计为一条则为第 3）；Vals AI **Vals Index 74.7%**（39 个模型中第 2）。**这两项本报告未直接访问 AA / Vals 原始页面复现**，仅作为「官方转述的第三方结果」记录（见 §4.6）。
+模型卡报告的 K3 结果统一使用 **max reasoning effort、`temperature = 1.0`**；单步任务 `top_p=0.95`，agentic 任务 `top_p=1.0`。各基准使用 Kimi Code、Claude Code 或 Codex 等不同 harness，因此数字反映模型、运行器和基准协议的组合，不是纯架构测量。代表性结果包括 GPQA Diamond 93.5、HLE-Full 无工具/带工具 43.5/56.0、DeepSWE 67.5（Kimi Code；mini-SWE-agent 下 67.3）和 SWE-Marathon 42.0（H20 校准分支）。MLS-Bench-Lite 的 48.3 来自 H20 上 3 次运行，而官方设定为 H100；Kimi Code Bench 2.0 是内部基准，换 Claude Code harness 后为 73.7。最能说明协议影响的是 BrowseComp：300K 触发上下文压缩时为 91.2，完整 1M 不压缩时为 90.4。其余主表、对照模型和成本比较不纳入本报告的技术结论；逐项条件见 [K3 精读分册](papers/2607.24653-kimi-k3.md)。
 
 **失效边界（官方明示 + 本报告判断）**
 
 1. **对 thinking history 高度敏感（官方明示）**：K3 在 *preserved thinking history* 模式下训练。harness 若未按要求回传全部历史思考内容，或把别的模型正在进行的会话中途切到 K3，**生成质量会高度不稳定**。官方建议只用已验证兼容的 harness（如 Kimi Code），且不要中途切换。
 2. **过度主动（excessive proactiveness，官方明示）**：长程任务训练导致模型遇到小问题/歧义意图时**替用户做决定**。需要边界严格的应用应在 system prompt / AGENTS.md 中显式约束。
-3. **与最强闭源仍有明显差距（官方承认）**：官方原文承认在用户体验上与 Claude Fable 5、GPT-5.6 Sol 存在「noticeable gap」；表内也能看到 CritPt（23.4 vs 32.3）、FrontierSWE（81.2 vs 86.6）、SWE-Marathon 之外的若干项落后。
-4. **本报告判断：2.8T 的可及性门槛**。权重「开源」但 2.8T 全量权重 + MXFP4 权重的部署成本远超 1T 级；官方推荐 ≥64 加速器 supernode。因此「开源 3T 级」在**研究可复现性**上的意义，显著大于**个人可部署性**。
-5. **effort 档位不完整**：发布时只有 max 档可用（low/high 待后续更新），因此所有官方数字都是 max 档口径，**不能**据此推断低成本档表现。
+3. **规模与复现门槛**：权重公开不等于个人可部署。技术报告推荐 ≥64 加速器 supernode 配置；完整 2.78T 参数规模与 MXFP4 权重仍带来很高的硬件门槛，复现实验需记录具体集群配置。
+4. **effort 档位不完整**：模型卡评测使用 max 档；这些数字不能外推到 low/high effort 或默认产品设置。
 
 ### 4.6 未确证与待跟踪（2026-06 以来）
 
@@ -546,10 +517,8 @@ K2 Thinking 在后训练阶段对 MoE 部分做 **INT4 weight-only QAT**，所�
 2. **算法创新围绕训练效率（token efficiency）展开**——Muon 把每 token 的学习信号最大化，MuonClip 把训练稳定到 1T MoE，K2 的数据 rephrasing 把每 token 利用率再翻倍。这与「scaling = data + flops」的暴力路线形成对照。
 3. **推理 / Agent 与基座共生**——k1.5 的多模态原生 RL、K2 的 Agentic 数据合成、K2 Thinking 的 interleaved tool-use、K2.5 的视觉 Agent，本质上是把「模型 = backbone + 工具 + 思维」当成一个联合对象去优化，而非先训基座再外挂能力。
 
-到 2026 年中，Moonshot 已经从「一家做长文本 ChatBot 的公司」演化为「在底层算法、注意力机制、优化器、Agent 系统四个维度都有原创贡献的开源大模型领先力量」。其 K2 系列已与 DeepSeek、Qwen 一起被国际社区视作开源模型「中国三强」。
+这条技术路线从长上下文产品工程扩展到稀疏注意力、KDA、Muon 系列优化器和 agentic 后训练。本报告将这些机制按其对应论文和模型实验分别讨论；跨论文出现相同组件，不单独证明其贡献可迁移或解释整代模型收益。
 
-**商业与融资动态**：
-- **Moonshot AI 估值**：约 **180 亿美元**（~\$18B），累计融资 **17.7 亿美元**（~\$1.77B），投资方包括红杉中国、阿里巴巴、腾讯等（确认）。
 - **K2 系列退役（2026-05-25）**：K2 系列正式停止支持，仅 K2.6 继续维护，标志着 Moonshot 从「多版本并行」转向「单一旗舰开源」策略。
 
 ---
@@ -582,8 +551,8 @@ K2 Thinking 在后训练阶段对 MoE 部分做 **INT4 weight-only QAT**，所�
 - Kimi K2 项目页：https://moonshotai.github.io/Kimi-K2/
 - Kimi K2 Thinking 项目页：https://moonshotai.github.io/Kimi-K2/thinking.html
 - Kimi K2.5 博客：https://www.kimi.com/blog/kimi-k2-5
-- **Kimi K3 技术博客**：https://www.kimi.com/blog/kimi-k3（2026-07-16 上线公告；访问日期 2026-10-17）
-- **Kimi K3 模型卡**：https://huggingface.co/moonshotai/Kimi-K3（repo created 2026-06-13，lastModified 2026-09-02）
+- **Kimi K3 技术博客**：https://www.kimi.com/en/blog/kimi-k3（2026-07-16 上线与权重发布时间说明；访问日期 2026-10-23）
+- **Kimi K3 模型卡与权重仓历史**：https://huggingface.co/moonshotai/Kimi-K3（模型卡 lastModified 2026-09-02；`createdAt` 不作为权重公开日期）
 - **Kimi K3 GitHub**：https://github.com/MoonshotAI/Kimi-K3
 - **Kimi K2.7 Code 模型卡**：https://huggingface.co/moonshotai/Kimi-K2.7-Code（createdAt 2026-06-11 / lastModified 2026-06-15）
 - **Kimi K2.7 Code 官方资源页**：https://www.kimi.com/resources/kimi-k2-7-code（页面标注「更新于 2026-10-08」）
