@@ -11,12 +11,12 @@
 | :-- | :-- | :-- | :-- | :-- |
 | **action chunk / receding-horizon feedback** | 一段动作执行完后再取观察、出下一段 | 当前观测上下文与下一段动作 | Diffusion Policy、π0 | 可让 chunk 之间重新观察；若 chunk 内无重推理，chunk 内仍是开环动作执行 |
 | **episode 内失败恢复** | 同一任务 episode 的多个控制 block | VLCP 的 Python 控制函数 | VLCP（仿真） | “恢复了失败抓取”是仿真测量；不能据此推断真机效果 |
-| **跨 episode 策略学习 / 修订** | 多轮数据收集与训练，或每次 episode 结束后更新 | π*0.6 / RECAP 更新 policy/value 参数；VersualRL 修改符号 BT | RECAP（真实双臂）；VersualRL（真实移动机器人、任务层） | RECAP 有真机策略吞吐与失败数据；VersualRL 的 BT 更新不等于 VLA 低层动作策略学习 |
+| **跨 episode 策略学习 / 修订** | 多轮数据收集与训练，或每次 episode 结束后更新 | RECAP 更新 policy/value 参数；UniIntervene++ 在线更新控制器分配器并把辅助数据回灌 RL；VersualRL 修改符号 BT | RECAP（真实双臂）；UniIntervene++（真实单臂、在线 RL 干预）；VersualRL（真实移动机器人、任务层） | 三者分别更新参数化 VLA、干预调度器/任务策略经验、符号 BT；不可统称为同一种“策略学习” |
 | **世界模型滚动与真实观测接地** | 模型预测 chunk 与动作执行并行，之后再用真实观测修正 | 预测 latent/history 与下个视频/动作 chunk | LingBot-VA | 物理任务与仿真均有结果；async 2×速度消融仅在 RoboTwin，且 naive async 对长 horizon 退化 |
 
-这些不是互斥“模型路线”：一个策略可以同时分 chunk 执行，也可以跨 chunk 接反馈；但只有显式更新 policy/BT/code 才能称作对应层级的策略学习或程序修订。
+这些不是互斥“模型路线”：一个策略可以同时分 chunk 执行，也可以跨 chunk 接反馈；需要把参数化策略更新、控制器分配策略学习、BT 修订与代码修订分开命名。
 
-## 1. 四个代表工作，四种闭环位置
+## 1. 代表机制按闭环位置区分
 
 ### 1.1 π0 与 Diffusion Policy：chunk 外重观察
 
@@ -48,12 +48,34 @@ arXiv:2603.22169 的准确题名是 *VersualRL: Closed-Loop Verbal Reinforcement
 
 它说明真实机器人上的语言化策略反馈与迭代执行有研究价值，但本专题操作性判据要求 VLA 直接输出动作；BT actor 本身不读原始感知或控制硬件，执行由固定节点库承担。故将其登记为边界参照，不列入 VLA 精读论文榜。详见 [CANDIDATES.md](../sources/CANDIDATES.md) §4.2 与 arXiv:2603.22169v3 §III–V。
 
+### 1.6 UniIntervene++：在线学习“何时帮、由谁帮、何时放手”
+
+**亮点与差异**
+
+- **一句话亮点**：在真实机器人在线 RL 期间，UniIntervene++ 把当前 RL policy、示范轨迹修正（Trajectory Correction, TC）和任务结构化 CodePolicy 作为有持续时间的 Options，由 availability-masked Double-DQN 在半马尔可夫决策过程（SMDP）中在线分配控制（v1 §III-A–B，Eq. 1–6）。
+- **新在哪**：相对 RECAP 的跨轮 policy/value 参数更新，它学习的是“当前让哪个控制器执行”；定期强制 RL-only 窗口（Adaptive RL Probe）评估自主能力，且把 TC、CodePolicy 与人工接管产生的 transitions 同时送入 online replay 和 demonstration replay，使策略成长反过来改变调度器的选择（§III-C–D，Eq. 7–8）。
+- **证据强度**：真实 UR7e + Robotiq 平行夹爪的五项任务；每任务训练后 3 轮、每轮 20 个评测 episode。平均成功率 89.67%，相对最佳 baseline 平均值 83.67% 高 6 个百分点；human intervention rate（HIR，人工控制步数占比）为 0.77%，但总 intervention rate（IR）仍为 56.04%（§IV-A–B，Table I，Fig. 5）。
+- **判定位置**：这是区别于既有主线的**在线 RL 干预调度机制**，值得作为真机闭环证据纳入；但它不是新 VLA backbone/动作头，也不等同于 RECAP 的 VLA 权重学习、VLCP 的单回合代码重写、LingBot-VA 的世界模型 rollout 或 VersualRL 的 episode 间 BT 编辑。
+
+**七问**
+
+1. **解决什么问题？** 在线 RL 早期需要帮助避免无效探索，后期又需要给策略自主执行机会；离线固定的恢复模块或固定干预规则无法随 policy 能力变化。UniIntervene++ 将何时介入、采用哪种辅助、何时返还控制统一为在线学习问题（v1 §I、§II-B）。
+2. **核心方法是什么？** Scheduler 在 Option 边界读取冻结的 RL 视觉编码器特征、最近 Option 的结果与可用性 mask，使用 Double-DQN 选 RL / TC / CodePolicy；SMDP target 使用持续时长折扣 `γ^k`，奖励含任务回报、辅助调用成本和持续时长成本。RL Option 执行有界当前 policy；TC 沿成功示范寻找可达参考点并反馈控制 TCP；CodePolicy 按估计物体位姿组合任务条件化的运动、夹爪和保持原语（§III-A–B，Eq. 1–6）。
+3. **数据、平台与条件是什么？** 所有实验在单台 UR7e 与 Robotiq 夹爪上完成；人工纠正和安全接管由 3Dconnexion SpaceMouse 执行。任务为 Ring Transfer、Tube Insertion、USB Insertion、Wipe Whiteboard、Towel Folding，分别覆盖抓取转移、接触丰富的插入/交互和可变形物体。各方法尽可能共享感知输入、任务奖励、动作限制、先验数据和机器人交互预算；训练 18,000–82,000 interaction steps（29–131 分钟）。最终 SR 在训练后 3 轮 × 每任务 20 episode 测量；HIR 统计训练中的人工控制步数（§IV-A，Table I）。TC / Probe 需要示范轨迹，CodePolicy 需要有效感知输入与可行任务计划；因此“无需 offline intervention learning”不表示无先验示范或无需任务结构（§III-A、§III-C）。
+4. **主要结果是什么？** 五任务平均 SR 为 89.67%，最佳 baseline（HIL-SERL 与 UniIntervene 并列）为 83.67%；UniIntervene++ 在 Ring、Tube、USB、Towel 四项领先所有 baseline，在 Wipe Whiteboard 为 86.67%，低于 UniIntervene 的 90%。平均 HIR 0.77%，低于 AutoSERL 的 baseline 最优 HIR 14.29%；但平均 IR 是 56.04%，其中 95.62%–100% 的 intervention steps 由自动 Option 执行。Ring Transfer 的 checkpoint 分析中，RL 控制份额从 35.78% 升到 90.51%，同期独立评测 SR 从 0 升到 88.33%（§IV-B，Table I，Fig. 5、7）。
+5. **消融支持什么？** Ring Transfer / Towel Folding 的相同训练时长下，完整法 SR 为 88.33% / 85%，固定概率调度器（RL/TC/CodePolicy = 0.3/0.5/0.2）为 75% / 80%；去掉 CodePolicy 后两项均为 0，去掉 TC 后为 50% / 47%（§IV-C，Table II）。这支持 learned allocation 相对固定 prior 的增益，也显示 CodePolicy 在所测预算中的大贡献；删 Option 同时改变执行控制与送入 RL 的训练经验，故属系统级而非纯模块因果消融。
+6. **限制在哪里？** 证据仅来自单一 UR7e、五个任务；干预组合依赖成功示范路径、物体位姿感知和任务结构化原语，跨任务扩展成本未知。人工干预下降不代表无需协助：平均总 IR 仍超过一半，安全接管保留给人。Wipe Whiteboard 未超过 UniIntervene；Adaptive RL Probe 在所有 scheduler ablation 中保留，其独立贡献没有被隔离；CodePolicy 移除实验也表明结果对该 Option 高度敏感（§III-A–C、§IV-A–C，Table I–II）。
+7. **与已有闭环路线如何区分？** RECAP 用真实交互更新参数化 VLA 的 policy/value；UniIntervene++ 用在线 Option 调度在训练期间分配控制，并回灌辅助 transitions。VLCP 在仿真 episode 内重写 Python 控制代码；LingBot-VA 预测动作 chunk 并用真实观测接地；VersualRL 在 episode 间编辑任务级 BT。故它补上“在线 RL 控制权分配与渐进式返还”的位置，不应作为 VLA policy 本身的直接成功率证据。
+
+**原文定位与核验边界**：方法见 v1 §III-A–D；平台、任务与指标见 §IV-A；五任务结果及控制份额见 §IV-B、Table I、Fig. 5–7；消融见 §IV-C、Table II；全文为 [arXiv:2610.03620v1](https://arxiv.org/html/2610.03620v1)（2026-10-02）。
+
 ## 2. 实验数字不可混榜
 
 | 工作 | 平台与回合单位 | 主要报告 | 可以支持 | 不可支持 |
 | :-- | :-- | :-- | :-- | :-- |
 | VLCP | MuJoCo/RoboVerse；57-task 主 sweep，每任务 1 episode | 35.1% vs matched open-loop 3.5%；另一 75 episode 子集恢复 15/55 失败抓取 | 在该仿真配置中重写代码可恢复一部分空抓 | 真实机器表现、与真机 VLA 排名 |
 | RECAP | 真实双臂；多任务 episode，时限按任务定 | 困难洗衣/咖啡吞吐 >2×，失败约减半；箱体 600 秒指标 | 真机经验和 advantage conditioning 可改进多个任务 | 与 VLCP/VA 的不同指标跨论文直接比值 |
+| UniIntervene++ | 真实 UR7e；五项任务，训练后每任务 3×20 个评测 episode | 平均 SR 89.67%；HIR 0.77%；平均 IR 56.04% | 在线学习 RL / 示范修正 / CodePolicy 的 Option 分配，并将自动辅助经验回灌 RL | 不代表 VLA backbone 提升；依赖任务示范与 CodePolicy，且 probe 的独立效应未隔离 |
 | LingBot-VA | 真机 6 项、每项 20 trials；另有 RoboTwin / LIBERO | 真机按任务 success/progress；仿真 async 2× speed ablation | 世界模型政策的 chunk 滚动可在真机任务评估，FDM 接地对 async 仿真重要 | 声称真机全任务 2×、真实 VLA RL |
 | VersualRL | 真实移动机器人；5 layouts × 10 sequential episodes/configuration | episode score、issue recall、critic confidence、human alarm | 任务树可由有地面约束的视觉反馈逐轮修改 | 低层 VLA 动作策略成功率 |
 
@@ -74,6 +96,7 @@ arXiv:2603.22169 的准确题名是 *VersualRL: Closed-Loop Verbal Reinforcement
 - 想了解 chunk 重规划、动作频率与延迟：先读 [动作表征三路线](action-representation.md)，再读 π0 与 Diffusion Policy 分册。
 - 想看失败后同回合能否纠错：读 VLCP 分册，特别核实其仿真边界。
 - 想看 VLA 如何从部署体验持续改进：读 RECAP 分册。
+- 想看在线 RL 如何随策略能力变化，在自主策略、示范轨迹纠正和任务原语间分配控制：读 UniIntervene++ 小节；区分人工接管 HIR 与包含自动辅助的总 intervention rate。
 - 想理解视频世界模型滚动、并行执行与闭环接地：读 LingBot-VA 分册。
 - 想看真机任务级语言/符号策略 refinement 的边缘案例：参阅 VersualRL 的 arXiv 全文；它不等价于 VLA 低层控制。
 

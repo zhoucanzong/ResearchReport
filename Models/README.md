@@ -18,7 +18,7 @@
 | **Alibaba-Gen** | [阿里巴巴通义万相（Wan）视频生成模型研究报告](<Alibaba-Gen/report.md>) | 117 行 |
 | **ByteDance-Gen** | [字节跳动生成模型系列研究报告](<ByteDance-Gen/report.md>) | 347 行 |
 | **Claude** | [Anthropic Claude 系列模型深度调研报告](<Claude/report.md>) | 594 行 |
-| **DeepSeek** | [DeepSeek 系列模型深度调研报告](<DeepSeek/report.md>) | 774 行 |
+| **DeepSeek** | [DeepSeek 系列模型深度调研报告](<DeepSeek/report.md>) | 776 行 |
 | **Doubao-Seed** | [Doubao/Seed系列模型深度调研报告](<Doubao-Seed/report.md>) | 651 行 |
 | **GLM** | [GLM 系列模型深度调研报告](<GLM/report.md>) | 737 行 |
 | **GPT** | [OpenAI GPT 系列模型深度调研报告](<GPT/report.md>) | 773 行 |
@@ -35,19 +35,21 @@
 | **Mistral** | [Mistral AI 系列模型深度调研报告](<Mistral/report.md>) | 502 行 |
 | **Nemotron** | [NVIDIA Nemotron 系列研究脉络](<Nemotron/report.md>) | 238 行 |
 | **OpenAI-Gen** | [OpenAI 生成模型系列研究报告](<OpenAI-Gen/report.md>) | 393 行 |
-| **Qwen** | [Qwen系列模型深度调研报告](<Qwen/report.md>) | 1,119 行 |
+| **Qwen** | [Qwen系列模型深度调研报告](<Qwen/report.md>) | 1,120 行 |
 | **Runway** | [Runway 视频生成与编辑模型研究报告](<Runway/report.md>) | 103 行 |
 | **StabilityAI** | [Stability AI / Black Forest Labs 图像生成模型系列研究报告](<StabilityAI/report.md>) | 739 行 |
 
 ## 📎 子文档
 
 <details>
-<summary><b>DeepSeek</b>（4 份）</summary>
+<summary><b>DeepSeek</b>（6 份）</summary>
 
 * [deepseek-multimodal-and-specialized.md](<DeepSeek/deepseek-multimodal-and-specialized.md>) — 367 行 / 24,706 B
 * [deepseek-phase-sensitivity.md](<DeepSeek/deepseek-phase-sensitivity.md>) — 76 行 / 11,595 B
 * [deepseek-text-models.md](<DeepSeek/deepseek-text-models.md>) — 418 行 / 36,554 B
-* [sources/MANIFEST.md](<DeepSeek/sources/MANIFEST.md>) — 111 行 / 15,504 B
+* [papers/2610.06851-base-model-cues.md](<DeepSeek/papers/2610.06851-base-model-cues.md>) — 55 行 / 5,163 B
+* [sources/CANDIDATES.md](<DeepSeek/sources/CANDIDATES.md>) — 7 行 / 745 B
+* [sources/MANIFEST.md](<DeepSeek/sources/MANIFEST.md>) — 128 行 / 18,126 B
 
 </details>
 
@@ -81,11 +83,14 @@
 </details>
 
 <details>
-<summary><b>Qwen</b>（3 份）</summary>
+<summary><b>Qwen</b>（6 份）</summary>
 
+* [papers/2610.02819-text-centric-omni.md](<Qwen/papers/2610.02819-text-centric-omni.md>) — 55 行 / 5,789 B
 * [qwen-omni-and-ecosystem.md](<Qwen/qwen-omni-and-ecosystem.md>) — 565 行 / 22,788 B
 * [qwen-text-models.md](<Qwen/qwen-text-models.md>) — 489 行 / 20,718 B
 * [qwen-vl-models.md](<Qwen/qwen-vl-models.md>) — 543 行 / 22,018 B
+* [sources/CANDIDATES.md](<Qwen/sources/CANDIDATES.md>) — 7 行 / 718 B
+* [sources/MANIFEST.md](<Qwen/sources/MANIFEST.md>) — 22 行 / 2,714 B
 
 </details>
 

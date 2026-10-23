@@ -15,15 +15,15 @@
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
-| **EvaluationScience** | [评测科学：分数何时支持“模型更好”或“能力泛化”](<EvaluationScience/report.md>) | 86 行 |
+| **EvaluationScience** | [评测科学：分数何时支持“模型更好”或“能力泛化”](<EvaluationScience/report.md>) | 94 行 |
 
 ## 📎 子文档
 
 <details>
 <summary><b>EvaluationScience</b>（2 份）</summary>
 
-* [sources/CANDIDATES.md](<EvaluationScience/sources/CANDIDATES.md>) — 18 行 / 3,472 B
-* [sources/MANIFEST.md](<EvaluationScience/sources/MANIFEST.md>) — 22 行 / 8,021 B
+* [sources/CANDIDATES.md](<EvaluationScience/sources/CANDIDATES.md>) — 21 行 / 5,014 B
+* [sources/MANIFEST.md](<EvaluationScience/sources/MANIFEST.md>) — 26 行 / 11,900 B
 
 </details>
 

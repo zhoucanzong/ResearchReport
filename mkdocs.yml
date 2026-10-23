@@ -122,6 +122,8 @@ nav:
         - "deepseek-multimodal-and-specialized": "Models/DeepSeek/deepseek-multimodal-and-specialized.md"
         - "deepseek-phase-sensitivity": "Models/DeepSeek/deepseek-phase-sensitivity.md"
         - "deepseek-text-models": "Models/DeepSeek/deepseek-text-models.md"
+        - "2610.06851-base-model-cues": "Models/DeepSeek/papers/2610.06851-base-model-cues.md"
+        - "CANDIDATES": "Models/DeepSeek/sources/CANDIDATES.md"
         - "MANIFEST": "Models/DeepSeek/sources/MANIFEST.md"
     - "Doubao-Seed": "Models/Doubao-Seed/report.md"
     - "GLM": "Models/GLM/report.md"
@@ -150,9 +152,12 @@ nav:
     - "OpenAI-Gen": "Models/OpenAI-Gen/report.md"
     - "Qwen":
         - "总报告": "Models/Qwen/report.md"
+        - "2610.02819-text-centric-omni": "Models/Qwen/papers/2610.02819-text-centric-omni.md"
         - "qwen-omni-and-ecosystem": "Models/Qwen/qwen-omni-and-ecosystem.md"
         - "qwen-text-models": "Models/Qwen/qwen-text-models.md"
         - "qwen-vl-models": "Models/Qwen/qwen-vl-models.md"
+        - "CANDIDATES": "Models/Qwen/sources/CANDIDATES.md"
+        - "MANIFEST": "Models/Qwen/sources/MANIFEST.md"
     - "Runway": "Models/Runway/report.md"
     - "StabilityAI": "Models/StabilityAI/report.md"
   - "💬 LLM · 10":
@@ -197,6 +202,8 @@ nav:
     - "ReasoningModels": "LLM/ReasoningModels/report.md"
     - "ReinforcementLearning":
         - "总报告": "LLM/ReinforcementLearning/report.md"
+        - "2609.01354-category-level-verifier-audit": "LLM/ReinforcementLearning/papers/2609.01354-category-level-verifier-audit.md"
+        - "2609.35677-verifier-errors-selective-control": "LLM/ReinforcementLearning/papers/2609.35677-verifier-errors-selective-control.md"
         - "loop": "LLM/ReinforcementLearning/papers/loop.md"
         - "online-preference": "LLM/ReinforcementLearning/papers/online-preference.md"
         - "prime": "LLM/ReinforcementLearning/papers/prime.md"

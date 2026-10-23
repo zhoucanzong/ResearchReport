@@ -73,7 +73,25 @@
 - **PaperFetcher 证据**：使用本机 `paper-fetcher` 的 `search_papers.py` 对 arXiv 与 Semantic Scholar 发起四组主题检索（部分 Semantic Scholar 请求受 429 限流），再用 `fetch_paper.py batch … --citations` 获取所选五篇及相邻候选的题录、版本入口与引用信息；主张事实均回到 arXiv 固定版本 HTML 核验。skill 入口：`/Users/zhoucanzong/Documents/codes/paper-fetcher/skills/paper-fetcher/SKILL.md`。候选来源、入选/排除理由见 [CANDIDATES.md](CANDIDATES.md)。
 - **原文核读**：五篇均以表中固定 arXiv HTML 版本为原文，按方法、数据、实验、消融、限制与可判定差异精读；未下载或收入完整 PDF。作者报告的结果没有独立复现。WorldGym 仅用于评测器有效性边界，不计入五篇精读集合。
 - **canonical claim_audit**：主报告与五篇分册均使用本机 `~/.dsh/skills/code-researcher/scripts/claim_audit.py --lang zh --format text`。该工具只搜索高影响 Markdown 行邻近的本地路径，不识别外部 arXiv 链接、章节/表图号或因果支撑。分册结果：SimVLA **6/4**、Grounded-Dreamer **5/2**、VLAW **8/7**、World-VLA-Loop **12/8**、WoVR **15/9**（高影响行 / 缺邻近本地路径提示）；topic **10/5**。逐条误报分流和限制见各分册与专题的审计说明；扫描数不是事实通过率。人工核验范围以本节固定版本与具体原文锚点为准。
-- **主报告扫描**：本批修改后对全文件重跑，计数 **58 项高影响行 / 16 项缺少邻近本地路径提示**。其中 16 条包含原报告早期章节、表格标题、旧版来源引用等全文件内容；本批 5 篇分册与 topic 的具体计数见上，不得把主报告全文件数解读为新批次 claim 数或事实错误数。扫描结果不是事实通过率。
+- **主报告扫描**：2026-10-23 在补入批次来源链接并更正 FAST 强断言后重跑，当前全文件计数 **56 项高影响行 / 12 项缺少邻近本地路径提示**。12 条均为章节标题、问题句或表头等扫描器结构误报；新批新增事实段有邻近分册/清单路径。该工具不识别章节/表图编号，故脚本提示数不等于事实错误数，也不代替人工锚点核对。
+
+### 2.4 2026-10-23 π0 与 FAST 原文缓存复核
+
+- **π0 固定原文**：arXiv `2410.24164v4`，2026-01-08；本地缓存 `/Users/zhoucanzong/Documents/paper-cache/2410.24164@latest/2410.24164.pdf`，SHA-256 `fbdfba56258bdbd220207ba63410c6c943e43a73e97a7a5a47ca0bc74204f821`。本次按 v4 PDF 与抽取文本复核首页作者拼写（Lachy Groom）、§IV flow-matching 目标/ H=50 / 10 步 Euler、§V-A 数据规模、§VI-A–F 实验口径及 Appendix B/D 的时间步与 runtime 条件；正文图内精确柱值仍未转录，权重开放状态也不从论文推断。
+- **FAST 固定原文**：arXiv `2501.09747v1`，2025-01-16，CC BY 4.0；缓存 `/Users/zhoucanzong/Documents/paper-cache/2501.09747@latest/2501.09747.pdf`，SHA-256 `3739b31f5fecdde371509ff5bb13619979734e894a255a9b264253f4cc53934a`。本次按 v1 PDF 与抽取文本复核 §III–VI、Table I–II、Appendix A–E；确认 naive per-timestep binning 在所测高频任务中无法推进，FAST 的 1 秒 chunk 在 20 Hz/50 Hz 条件下分别以 28/53 tokens 编码，而不是普遍“高频 token VLA 的必要条件”。保留 Fig. 6/8/9/11/15 图内具体数值、部分混合权重与权重开放状态为 `[待核]`。
+- **结论改写**：主报告 §0.6 已把“FAST 是 token 路线可用于高频的先决条件”收窄为“它在论文所测高频任务中解决了 naive binning 的失败”；将 π0 的连续 flow matching 作为另一种动作表征方案，不再说成修复 FAST 所针对的 tokenization 瓶颈。FAST 的实测推理时延约 750 ms/chunk、π0 约 73 ms/chunk 均附各自硬件和模型条件，不作无条件横向排名。
+- 两篇论文的 `[待核]` 图内数值仍以原文图表/表格为准；本次只重核上述关键机制与正文可读数据，没有重训模型、运行控制栈或复现真机结果。
+
+π0 与 FAST 原文身份、PDF SHA-256 与复核锚点见本清单 1.1 的第 5/6 项；未闭合的图内数字与权重状态仍留在分册 `[待核]` 清单，不能从这些摘录推成完整复现。
+
+### 2.5 2026-10-23 UniIntervene++ 闭环候选核读
+
+- **身份 / 版本**：*UniIntervene++: An Adaptive Intervention Agent for Efficient Real-World Reinforcement Learning*，arXiv `2610.03620v1`，首页日期 2026-10-02；第一作者 Yudong Lin。标题、作者、v1、日期由 arXiv abs 页和 Atom API 核对，并与 PDF 首页复核。
+- **正文缓存**：PaperFetcher `fetch_paper.py download` 已调用，但首个 PDF 结果为 0 bytes；随后从固定链接 `https://arxiv.org/pdf/2610.03620v1` 下载完整 PDF，并从 `https://arxiv.org/html/2610.03620v1` 下载完整 HTML，均仅缓存在仓库外 `/tmp/uniintervenepp-paper/`。PDF 经 `pdftotext -layout` 提取为 `full.txt` 后通读；PDF SHA-256 `92e587debd4a8c039667ab42fd8a5fef671322e52c4dd27226287959736b206e`，抽取文本 SHA-256 `ac90c3e5333eb9e0a40e1a58541845a0cd3947cd77ac08876111bb0b6f5d2bf1`。完整原文未纳入本仓库。
+- **License**：arXiv v1 页面标为 **arXiv.org perpetual non-exclusive license**（非 CC BY；授权 arXiv 分发，不表示第三方可再分发全文），故保留仓库外缓存和本专题原创摘要，不将 PDF / 全文文本复制进库。
+- **核验范围**：Option 定义、availability mask、Double-DQN SMDP 更新见 §III-A–B / Eq. 1–6；RL-only competence probe 与 demo/online replay 耦合见 §III-C–D / Eq. 7–8；UR7e、五任务、3×20 episode 评测及交互步数见 §IV-A；SR / HIR / IR 与控制份额见 §IV-B / Table I / Fig. 5–7；Option 和固定 prior 消融见 §IV-C / Table II。关键比值均直接按表格复算，如 `15` 个百分点与 `13.52` 个百分点在正文分别指 HIR 的相对百分比与绝对百分点，专题保留两种口径标签。
+- **claim audit**：对更新后的 `topics/closed-loop-control.md` 运行 canonical `claim_audit.py --lang zh`，得 **14 项高影响行 / 3 项缺少邻近本地路径提示**。三条分别是 VersualRL 小节标题、对照表表头与编制时间；实质性结果均带固定版本和原文锚点。扫描器不解析外部链接或章节号，提示数不是事实通过率。
+- **归档位置**：候选判断见 [CANDIDATES.md §7](CANDIDATES.md)；四亮点、七问、机制判读与限制写入 [闭环控制专题 §1.6](../topics/closed-loop-control.md)。本项是专题纳入的相邻在线 RL 干预机制，不计入本清单 1 节的 16 篇独立 VLA 精读分册。
 
 ## 3. 许可与「全文不入库」的合规说明
 

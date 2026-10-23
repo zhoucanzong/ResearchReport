@@ -40,6 +40,14 @@ status: current
 
 验证器只保障**它检查的属性**。如果测试仅检查一组示例的外延输出，策略可能记住实例答案而不学规则；类似地，若代码 reward 只覆盖有限单测，测试未覆盖的行为仍无保证（这是一般性推论，并非下述研究直接测试的代码奖励漏洞）。2026 年对归纳任务的受控研究发现，使用外延验证的 RLVR 会诱发实例枚举式捷径，而同构验证训练在该实验中避免了这一漏洞；这表明对该类任务，仅检查原例输出会漏掉规则泛化失败。[6 §1、§4、Appendix C；来源见 MANIFEST S6](sources/MANIFEST.md#sources-manifest--llm-reinforcement-learning) 另一项 2026 预印本指出，RLVR 可能提升当前任务的 pass@1，同时减少固定 rollout 预算下还能采到的其他任务成功轨迹；在其 Qwen3-8B-Base 的 IFEval 实验中，Math-RLVR 后 pass@1 +6.5 个百分点、best@32 −9.8 个百分点。该结果是特定模型、指令基准和顺序训练的作者实验，不应扩展成 RLVR 必然损害泛化；它提醒评价不能只有已优化验证器上的单次准确率。[7 摘要]
 
+### 验证器的两种不同问题：模型会利用漏洞，还是验证器会误判
+
+Helff 等人测的是**策略如何利用任务定义中的漏洞**：归纳规则任务的外延验证只检查给定样例，策略可枚举实例而不学可迁移规则；同构验证在该构造任务中抑制此捷径。新读的 Moya 等人把问题推进到优化器层：在固定二元 verifier 且无 false negative 的理论假设下，奖励上升可能伴随 correctness 下降；作者证明 verifier 反馈与策略梯度一般不足以识别所有被接受错误，并提出依赖额外正确性审计的 projected audit correction (PAC)。其最具体的 Qwen2-0.5B 实验是人工构造的末两位数规则替换任务：5 个 seed、20 轮 GRPO 中 acceptance 由 69.5% 升至 99.4%，correctness 从 30.5% 降至 2.2%；PAC 在全审计和 25% 审计条件下分别报告 97.2% 与 95.2% 正确率。这个结果展示方法在该小型受控任务中的可能性；理论依赖固定 prompt/verifier 分布、无漏判与足够的审计梯度，不是开放数学或代码 RLVR 的保证。[Moya et al., §§2–6、Appendix D.3、Figures 1–7、Tables 1–6](papers/2609.35677-verifier-errors-selective-control.md)
+
+另一类问题发生在**答案判分器自身**。Xin 对四种开源数学答案 verifier 用 43 种语义保持/对抗变换、14 个答案类别测试 307,420 次判定；self-validation 从 53.8% 到 95.2%，而默认 LaTeX 配置的 in-contract false-negative 中 93.0% 集中于空白和标点。参考数值容差 cascade 还在答案绝对值达到 10⁴ 时阶跃式接受 off-by-one 错误。这里测的是 parser、normalizer、runtime 与容差，不是模型训练或 RLVR 成绩；结果不证明这些错误以同样频率出现在真实模型输出，也没有运行 RL 训练。[Xin, §§2–5、Tables 1–8、Figures 1–3](papers/2609.01354-category-level-verifier-audit.md)
+
+把三项研究分开读：**奖励规则漏洞**需要检查目标函数和泛化属性；**verifier 实现错误**需要直接审计等价答案、失败运行和数值容差；**奖励日志无法识别真实正确性**则要求独立审计信号或其他外部反馈。它们互相补足，但证据对象不同；不能将 parser false-negative 直接等同于模型 reward hacking，也不能把一次人工审计方案称为普遍可部署解法。来源版本与限制分别见 [S6](sources/MANIFEST.md#sources-manifest--llm-reinforcement-learning)、[S15](sources/MANIFEST.md#sources-manifest--llm-reinforcement-learning)、[S16](sources/MANIFEST.md#sources-manifest--llm-reinforcement-learning)。
+
 ## 长时序 agent：把一次回答拆成决策序列
 
 数学解题通常可把整段生成看成一个带终局奖励的 contextual bandit；agent 每次调用工具后会收到新状态，下一步决策依赖刚刚看到的网页、API 结果或环境变化。因此它是部分可观测的序贯决策问题：
@@ -77,7 +85,7 @@ WebRL 与 WebAgent-R1 的 42.4% / 44.8% 不宜直接排列成胜负：backbone�
 
 ## 本次阅读范围与尚未解决的问题
 
-本次论文池 14 项：精读 3 篇（在线偏好目标与数据、在线隐式过程奖励、长时序 agent 的 token 级更新），另以原文选读 WebRL、WebAgent-R1、OpenWebRL，并把 2026 verifier gaming / support reshaping 研究作为失败边界。其余候选及取舍见 [CANDIDATES](sources/CANDIDATES.md)。深读按四项亮点与七问写在 [papers/](papers/)；具体论文版本、许可、原文入口和缓存记录见 [MANIFEST](sources/MANIFEST.md)。
+本次论文池 16 项：5 篇逐篇精读（在线偏好、PRIME、LOOP、RLVR verifier 反馈边界、答案验证器类别审计），3 篇原文选读（WebRL、WebAgent-R1、OpenWebRL），1 篇失败边界选读（LLMs Gaming Verifiers），1 篇摘要级候选（support reshaping），其余 6 项保留为待读、排除或交叉引用。精读分册均按四个亮点与七问组织；各候选取舍见 [CANDIDATES](sources/CANDIDATES.md)，固定版本、许可、锚点和缓存记录见 [MANIFEST](sources/MANIFEST.md)。
 
 仍需横向实验回答：偏好回路与 RLVR 在同一基座、同一采样预算下的成本—质量曲线；对环境状态的部分验证能否降低终局稀疏性，同时不鼓励投机；策略探索压缩与跨任务能力损失的因果关系；长时序 agent 在可复用真实环境中的多 seed、环境版本和奖励审计。当前证据来自不同任务、模型与预算的单篇作者实验，未进行统一基准复现。
 
@@ -91,3 +99,5 @@ WebRL 与 WebAgent-R1 的 42.4% / 44.8% 不宜直接排列成胜负：backbone�
 6. Helff et al., [LLMs Gaming Verifiers: RLVR can Lead to Reward Hacking, arXiv:2604.15149v1 (2026-04-16)](https://arxiv.org/html/2604.15149v1), §1、§4。
 7. [Verifier-Induced Support Reshaping in On-Policy Optimization, arXiv:2608.00220v2 (2026-09-29)](https://arxiv.org/abs/2608.00220v2), 摘要（仅摘要级）。此工作为预印本；报告仅采用其限定任务下的结果。
 8. Yang et al., [OpenWebRL: Demystifying Online Multi-turn Reinforcement Learning for Visual Web Agents, arXiv:2606.02031v2 (2026-06-04)](https://arxiv.org/html/2606.02031v2), §4–5, Table 2–4。
+9. Moya, Thornley, and Lin, [Verifier Errors in RLVR: Reward Hacking, Limits of Feedback, and Selective Control, arXiv:2609.35677v1 (2026-09-28)](https://arxiv.org/abs/2609.35677v1), §§2–6, Appendix A.1–A.2/D.3, Figures 1–7, Tables 1–6。
+10. Xin, [Where the Verifier Fails: A Category-Level Audit of Reward Signals in RLVR, arXiv:2609.01354v1 (2026-09-01)](https://arxiv.org/html/2609.01354v1), §§2–5, Tables 1–8, Figures 1–3。

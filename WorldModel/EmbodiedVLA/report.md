@@ -2,7 +2,7 @@
 
 > **声明**：本报告由 AI Agent 自动调研生成，未经官方确认；引用具体参数、日期或 benchmark 前请回溯原始来源。
 > **调研日期**：2026-10-16 起骨架 → 2026-10-17 第二轮深度精读升级 → 2026-10-23 闭环控制与世界模型迁移两批论文补核。
-> **主要增量**：原有 8 篇基础精读后，先新增 3 篇机器人闭环机制分册及专题，再新增 5 篇“世界模型数据如何改善 VLA 真机表现”分册及横切专题。第二批按合成数据、想象 RL、物理验证三种角色选文；版本、候选取舍与精读范围见[来源清单](sources/MANIFEST.md)和[选文说明](sources/CANDIDATES.md)。
+> **主要增量**：原有 8 篇基础精读后，新增 3 篇机器人闭环机制分册及专题，并在闭环专题补入 UniIntervene++ 在线 RL 干预调度案例；随后新增 5 篇“世界模型数据如何改善 VLA 真机表现”分册及横切专题。世界模型批次按合成数据、想象 RL、物理验证三种角色选文；版本、候选取舍与精读范围见[来源清单](sources/MANIFEST.md)和[选文说明](sources/CANDIDATES.md)。
 > **定位**：本报告采用操作性定义：EmbodiedVLA（Vision-Language-Action）指**以自然语言指令 + 视觉观测为输入、直接输出机器人动作信号的可部署策略模型**；据此建立判据、动作表征架构谱系、代表系统、数据、评测与应用边界。**世界模型作为 VLA 的训练环境**是本专题与 `WorldModels` 的交叉点（见第 7 章）。
 
 **证据等级约定（单一主等级）**：`[精读原文]` 已通读一手正文（论文有 `papers/` 分册，或官方仓库已做固定 commit 代码核验）；`[摘要级]` 仅核验官方摘要 / 页面，**未通读正文，细节不得当作已成立事实**；`[二手]` 第三方转述；`[受限核验]` 一手对象只能经镜像 / API 间接确证。每条只给**一个主等级**；来源类型写在括号内。本报告代码类证据一律写成 `仓库@commit:文件:行`，并按第 2.3 节区分**代码事实**与**研究推断**。
@@ -52,7 +52,7 @@
 
 | 文件 | 内容 |
 | :-- | :-- |
-| [CANDIDATES.md](sources/CANDIDATES.md) | 历史 27 篇 + 闭环 4 篇 + 世界模型迁移 20 篇；累计入选 16，排除/边界 35，并记录选择依据 |
+| [CANDIDATES.md](sources/CANDIDATES.md) | 历史 27 篇 + 闭环批次 4 篇 + 世界模型迁移 20 篇 + UniIntervene++ 1 篇；累计候选 52（16 篇独立分册、1 个专题补充、35 条排除/边界） |
 | [MANIFEST.md](sources/MANIFEST.md) | 16 篇的 arXiv ID / 版本 / 版本日期 / 标题 / 第一作者 / license / 来源 |
 
 > **全文不入库**：论文 PDF / 转出的 txt 一律不进入本仓库；缓存放在仓库外 `~/Documents/paper-cache/`，理由见 [MANIFEST.md](sources/MANIFEST.md) §3。
@@ -66,19 +66,19 @@
 3. **同一模型常同时提供两条路线**：π0 官方仓库同时给出 flow matching 头（`pi0`）与 FAST tokenizer 自回归头（`pi0_fast`），说明"路线之争"在工程上首先是**延迟 / 精度 / 复用性**的取舍，而非互斥范式。`[代码事实]`（第 2.3 节）
 4. **真机数据与仿真数据不可互相替代**：前者是 VLA 预训练的语义与灵巧度来源（Open X-Embodiment、DROID 等），后者是规模化与可复现评测的来源（Isaac Sim / ManiSkill / RoboCasa / LIBERO 等）。`[精读原文]`（分册 3/7）+ `[摘要级]`
 5. **评测是当前最大瓶颈**：真机成功率是事实标准但不具可复现性；仿真基准可复现但保真度受限。SIMPLER 主张 sim-real **相对排序**强相关（原文自承"仿真永远是不完美代理"），而 π0.5 指出仿真表现好的策略在真机泛化仍差——**仿真分数不能直接替代真机结论**。`[精读原文]`（分册 8）+ `[摘要级]`（π0.5）。**两条不矛盾：一个谈排序，一个谈绝对泛化。**
-6. **动作 token 化在高频灵巧任务上会撞墙**，压缩型 tokenizer（FAST 一类）是 token 路线可用于高频任务的**先决条件**；π0 的 flow matching 选择"固定 10 步积分 + H=50 的 chunk"正是为绕开这一瓶颈。`[精读原文]`（分册 5/6）
+6. **逐维离散化在论文所测高频动作任务上会失效，压缩 tokenization 是其中一种可行处理**：FAST 报告 naive binning 在所测 20 Hz/50 Hz 任务上无法推进，而 DCT+BPE 将 1 秒动作块从 140/700 个 token 降至 28/53 个；这不证明 FAST 是所有高频 VLA 的必要条件。π0 提供了不同路线：连续 flow matching 以 H=50 输出动作块，用 10 步 Euler 积分，不能简单概括为“绕开 tokenization”。`[精读原文]`（[FAST 分册](papers/2501.09747-fast.md) §VI-B、Table I；[π0 分册](papers/2410.24164-pi0.md) §IV）
 7. **规模不等于多样性**：DROID 的核心论点是场景与**交互位置**多样性（564 场景 / 52 建筑 / 86 任务），而非单纯堆轨迹数；这与 OXE 的"跨本体格式标准化"是**两个互补的数据命题**。`[精读原文]`（分册 3/7）
 8. **与相邻领域边界**：VLA 是**策略**，VLM 是**输入侧模型**，Agent 是**外层决策循环**，WorldModels 产出的是**环境/状态转移**而非动作；联合模型（WorldVLA 一类）按"交付物"拆分归属，避免重复劳动（第 7 章与 `WorldModels` 章显式互引）。`[摘要级]`（arXiv 摘要）
 9. **闭环要按修改对象与时间尺度拆开**：chunk 间重规划、episode 内控制代码修订、跨 episode VLA 参数学习、世界模型预测接地各自是不同机制；实验跨仿真与不同真机任务，指标不可合并为排行榜。`[精读原文]`（[闭环控制专题](topics/closed-loop-control.md)）
 
-> **口径变化**：第一轮骨架的 6 条结论全部为 `[摘要级]`；第二轮后，第 2–7 条由基础八篇分册支撑。2026-10-23 先新增闭环控制三篇，再新增世界模型迁移五篇分册。第 1 条（术语无公认定义）与第 8 条（边界约定）**仍为 `[摘要级]`**——它们是本专题的操作性约定，而非文献结论。
+> **口径变化**：第一轮骨架的 6 条结论全部为 `[摘要级]`；第二轮后，第 2–7 条由基础八篇分册支撑。2026-10-23 先新增闭环控制三篇，再新增世界模型迁移五篇分册。第 1 条（术语无公认定义）与第 8 条（边界约定）**仍为 `[摘要级]`**——它们是本专题的操作性约定，而非文献结论。版本与分册范围见 [MANIFEST](sources/MANIFEST.md)。
 
 ### 0.1 本轮证据普查（可逐条核对）
 
 | 等级 | 条数 | 覆盖对象 | 能被用来支撑什么 |
 | :-- | --: | :-- | :-- |
 | `[精读原文]` | **21** | **16 篇论文分册**（基础八篇、闭环三篇、世界模型迁移五篇）+ **5 个官方仓库**（均有固定 commit 代码核验） | 具体数字、超参、协议、规模——**但必须带分册给出的条件** |
-| `[摘要级]` | **35** | RT-1、Octo、π0.5、π0.7、VersualRL（只作任务级边界参照）、RDT-1B、GR00T N1、TinyVLA、Mobile ALOHA、ALOHA Unleashed、Gemini Robotics、LIBERO、RoboCasa、Isaac Sim、ManiSkill、robosuite、V-JEPA 2、Dreamer 4、Cosmos WFM、WorldVLA、Magma、RT-H、OpenVLA-OFT、PaliGemma、BridgeData V2、RH20T、Humanoid-Gym、各官方项目页等 | **只能支撑"存在性"与"定位"**（某系统存在、它自述做什么）；**不得引用其数值** |
+| `[摘要级]` | **35** | RT-1、Octo、π0.5、π0.7、VersualRL（只作任务级边界参照）、RDT-1B、GR00T N1、TinyVLA、Mobile ALOHA、ALOHA Unleashed、Gemini Robotics、LIBERO、RoboCasa、Isaac Sim、ManiSkill、robosuite、V-JEPA 2、Dreamer 4、Cosmos WFM、WorldVLA、Magma、RT-H、OpenVLA-OFT、PaliGemma、BridgeData V2、RH20T、Humanoid-Gym、各官方项目页等 | **只能支撑"存在性"与"定位"**（某系统存在、它自述做什么）；**不得引用其数值**。分项登记见 [来源清单](sources/MANIFEST.md) |
 | `[受限核验]` | **2** | VLA 综述（2505.04769）、VLA 设计要素分析（2412.14058） | 仅作术语与检索线索；**正文未读，不作事实来源** |
 | `[二手]` | **0** | — | — |
 
@@ -174,7 +174,7 @@
 | RDT-1B 用 DDPM 训练 + DPM-Solver 多步采样 | `thu-ml/RoboticsDiffusionTransformer@cd79363a1387e8f81c7724d070ef7e45fd23150f:models/rdt_runner.py:59-73`（`DDPMScheduler` / `DPMSolverMultistepScheduler` / `num_inference_timesteps`）、`:119-163`（`conditional_sample` 迭代） |
 | LeRobot 的 DiffusionPolicy 用 1D UNet + DDPM/DDIM 调度器 | `huggingface/lerobot@297774fca4e3ad0aa34e7425fbf937111637e77b:src/lerobot/policies/diffusion/modeling_diffusion.py:56-63`、`:201-244`（`DiffusionModel`、`self.unet = DiffusionConditionalUnet1d(...)`、`_make_noise_scheduler`） |
 
-**研究推断** `[推断]`：token 路线的推理延迟随"token 数"（∝ 动作维 × 频率 ÷ 压缩率）增长，故 **FAST 一类压缩 tokenizer 可以缓解特定自回归 token 配方的高频瓶颈**；flow matching 与 diffusion head 的取舍主要在**步数与稳定性**（π0 代码默认 10 步 vs Diffusion Policy 典型 100 步训练 / 多步采样），此推断需以论文消融表核对。
+**研究推断** `[推断]`：token 路线的推理延迟会受到待预测 token 数影响，因此 **FAST 压缩在论文所测高频自回归 VLA 配方中能减少逐步解码负担**；flow matching 与 diffusion head 在积分/采样步数及策略稳定性上存在取舍，但不同论文的默认步数不是同条件横评。此处是跨论文解释，需连同 [FAST](papers/2501.09747-fast.md)、[π0](papers/2410.24164-pi0.md) 与 [Diffusion Policy](papers/2303.04137-diffusion-policy.md) 的实验协议阅读。
 
 ### 2.4 路线分界的可判定表述
 
@@ -279,7 +279,7 @@
 - **接口定义**：世界模型在本专题中**不作为 VLA 本体**，而作为三类资源：①**合成训练数据**（生成轨迹 / 观测）；②**可交互练习环境**（策略在学得的环境里做 RL / 规划）；③**评测环境**（在与真机对齐的想象环境中打分）。
 - **已核验的一手接口对象**（本轮均只登记，**不重复展开**）：
   - V-JEPA 2 官方摘要称其视频模型可支持 **understanding / prediction / planning**。`[摘要级]`（arXiv:2506.09985）
-  - Dreamer 4 官方摘要题为 "Training Agents Inside of Scalable World Models"。`[摘要级]`（arXiv:2509.24527）
+  - Dreamer 4 官方摘要题为 "Training Agents Inside of Scalable World Models"。`[摘要级]`（[arXiv:2509.24527](https://arxiv.org/abs/2509.24527)；本库另见[WorldModels 章 4](../WorldModels/report.md#4-代表系统逐案)）
   - Cosmos World Foundation Model Platform 定位为 Physical AI 的**世界基础模型平台**。`[摘要级]`（arXiv:2501.03575）
   - **WorldVLA** 为"自回归动作世界模型"，同时涉及动作与未来帧。`[摘要级]`（arXiv:2506.21539 v1 2025-06-26）
 - **归属规则**：上述四条**全部归属 `WorldModels`**，本专题只登记"可被 VLA 消费"的接口，**不重复展开其架构与评测**（见第 7 章）。
@@ -484,7 +484,7 @@
 
 ## 14. 本轮方法学注记（证据是怎么处理的）
 
-1. **先筛选后精读**：`sources/CANDIDATES.md` 分批记录历史候选池 27、闭环控制批次 4、世界模型迁移批次 20；当前累计 **51 = 入选 16 + 排除/边界 35**。**类别性排除项不给 ID**（不编造）。
+1. **先筛选后精读**：`sources/CANDIDATES.md` 分批记录历史候选池 27、闭环控制批次 4、世界模型迁移批次 20，以及 UniIntervene++ 1 项；当前累计 **52 = 16 篇独立分册 + 1 个闭环专题补充 + 排除/边界 35**。**类别性排除项不给 ID**（不编造）。
 2. **原文获取**：先查本地缓存 `~/Documents/paper-cache/`，**7 篇命中即用、不重复下载**；仅 DROID（2403.12945）未命中，用 `paper-fetcher` skill 抓取。
 3. **文本提取**：`pdftotext -layout` 提取为 txt（版本行、表锚点均可逐字核对）；**txt / PDF 一律不入库**。
 4. **等级纪律**：单一主等级；**`[精读原文]` 只授予有分册的 16 篇**（以及已做固定 commit 代码核验的官方仓库）；摘要支撑的**不升格**；未确证的进第 15 章。

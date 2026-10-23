@@ -18,14 +18,16 @@
 | S12 | arXiv:2402.03300v3 / 2024-02-06 | arXiv 页面 | [DeepSeekMath](https://arxiv.org/html/2402.03300v3), §4.1 | GRPO 来源论文；报告避免重述已在 Alignment 涵盖的算法推导 |
 | S13 | arXiv:2503.14476v1 / 2025-03-18 | arXiv 页面 | [DAPO](https://arxiv.org/html/2503.14476v1), §3–4 | Alignment 已有 DAPO 四项设计、原文核对和消融，不再重复 |
 | S14 | arXiv:2504.05118v1 / 2025-04-07 | arXiv 页面 | [VAPO](https://arxiv.org/html/2504.05118v1), §4–5 | Alignment 已有长链 critic/GAE 和长度异质奖励阅读，不再重复 |
+| S15 | arXiv:2609.35677v1 / 2026-09-28 | CC BY 4.0 | [PDF v1](https://arxiv.org/pdf/2609.35677v1), §§2–6, Appendix A.1–A.2, D.3; Figures 1–7, Tables 1–6 | 固定 verifier 下的 reward/correctness 动力学、训练日志不可辨识性与 projected audit correction；Qwen2-0.5B 结果仅来自 12 位规则替换任务。缓存 `2609.35677v1.pdf`，SHA-256 `a3269d4b386b4c12268e861a91af7901a1f97cfddd4fb9e22825f993b9beef3b` |
+| S16 | arXiv:2609.01354v1 / 2026-09-01 | arXiv.org perpetual non-exclusive distribution license | [HTML v1](https://arxiv.org/html/2609.01354v1), §§2–5, Tables 1–8, Figures 1–3 | 四种开源答案 verifier、43 类变换、14 strata、307,420 verdicts；验证器实现审计，不包含 downstream RLVR training。缓存 `2609.01354v1.pdf`，SHA-256 `bec99c27b3efd0f88a4ee57ada0492370984cf6efe2afc27fd87910178657ce7` |
 
 ## 审计与限制
 
-- 2026-10-23 使用本机 canonical `claim_audit.py` 检查主报告及三篇精读：主报告 **14 项高影响结论 / 2 项未检出邻近本地路径**；`online-preference.md` **4/0**、`prime.md` **7/0**、`loop.md` **6/0**。主报告剩余两条提示分别是比较表的“主要风险”列标题和诊断清单的重复性建议，不是独立实验结论；其余主要事实段落具有近邻论文精读或来源清单路径。脚本只识别 Markdown 邻近行里的本地路径，不识别外部 URL、章节/表格定位，也不验证来源是否支持主张。该计数是导航/结构提示，不是事实通过数。主报告的逐篇版本和章节/表图定位见本清单各行；高影响数字按表中固定版本回到原文核对，未独立复现。
+- 2026-10-23 使用本机 canonical `claim_audit.py` 检查主报告及精读分册：主报告 **15 项高影响结论 / 2 项未检出邻近本地路径**；`online-preference.md` **4/0**、`prime.md` **7/0**、`loop.md` **6/0**；S15 `Verifier Errors in RLVR` **8/1**（唯一提示为论文标题行），S16 `Where the Verifier Fails` **5/0**。主报告剩余两条提示是比较表列头与诊断清单行，不是独立实验结论。脚本只识别 Markdown 邻近行里的本地路径，不识别外部 URL、章节/表格定位，也不验证来源是否支持主张。该计数是导航/结构提示，不是事实通过数。主报告的逐篇版本和章节/表图定位见本清单各行；高影响数字按固定版本回到原文核对，未独立复现。
 
 ## 获取与版本记录
 
 - `paper-fetcher` 搜索用于发现偏好学习、PRIME 和 agent RL 候选；批量元数据获取 S1–S5，论文原文后回到 arXiv HTML 固定版本阅读。
-- PaperFetcher PDF 成功缓存 S1–S5；网页 HTML 为主要核查入口，摘要字段不替代全文定位。
+- PaperFetcher PDF 成功缓存 S1–S5、S15–S16；网页 HTML/PDF 为主要核查入口，摘要字段不替代全文定位。
 - 本轮未训练/复现算法。所有结果数字都是论文作者报告；开放可下载代码不等于本轮运行过作者代码。
 - **技能使用证据**：本批次按本机 `researcher` skill 的 deep 路径进行研究问题界定、候选筛选、固定版本原文精读与跨论文综合；具体问题和筛选理由记于主报告与 [CANDIDATES](CANDIDATES.md)。使用 `paper-fetcher` 搜索并获取 S1–S5 元数据/PDF，之后回到固定 arXiv HTML 核对正文。技能入口分别为 `/Users/zhoucanzong/Documents/codes/researcher/skills/researcher/SKILL.md` 与 `/Users/zhoucanzong/Documents/codes/paper-fetcher/skills/paper-fetcher/SKILL.md`；没有保存完整命令日志，故这里是产出与方法的可查记录，不声称可独立重放每次调用。

@@ -77,7 +77,7 @@ AILA 把多代理范式带到 AFM：planner 负责拆解请求和路由，AFM Ha
 
 Robin 把文献代理 Crow/Falcon 与数据分析代理 Finch 接成反馈回路：给定干性年龄相关黄斑变性（dAMD），Robin 从 10 种候选疾病机制中选择视网膜色素上皮（RPE）吞噬作用，提出药物；实验后 Finch 分析流式数据，Robin 再据此提出 RNA-seq 和下一轮候选（Fig. 1–4；Results “Therapeutic hypothesis generation”, “Experimental data analysis”, “Automated RNA-seq analysis”, “A repurposed drug for dAMD”）。第一轮对 Y-27632 的分析促成 RNA-seq，Finch 的八条独立分析轨迹汇总出 ABCA1 上调三倍（adjusted *P* = 2.13 × 10⁻⁸³；Fig. 3）；第二轮又将 ripasudil 的吞噬增强测为 DMSO 对照的 1.89 倍，且在人类 RPE 细胞中复现体外效应；KL001 也在该细胞体系中成为命中（Fig. 4）。这展示了**实验结果如何改变后续问题和候选**，而不只是一次性生成药物清单。
 
-“自动化科学发现”仍需按论文实际的人机分工理解：科学家审阅排名后的候选、改用 ARPE-19 细胞和 pHrodo 微珠以加快初筛，并依据 Robin 提议的 assay 编写可执行实验方案；论文明确说 Robin 尚不能生成精确可执行 protocol。作者用老年供者来源的人 RPE 细胞和光感受器外节补做验证，但尚无体内效力或临床证据，作者也要求在合适疾病模型及随机对照试验中验证。系统的价值是将文献假设、体外测量和结果分析接成可迭代回路；科学目标、实验操作与临床判断仍由人把关（[Nature 正文，Fig. 1–4、Results、Discussion、Methods “Robin implementation”](https://doi.org/10.1038/s41586-026-10652-y)）。
+“自动化科学发现”仍需按论文实际的人机分工理解：科学家审阅排名后的候选、改用 ARPE-19 细胞和 pHrodo 微珠以加快初筛，并依据 Robin 提议的 assay 编写可执行实验方案；论文明确说 Robin 尚不能生成精确可执行 protocol。作者用老年供者来源的人 RPE 细胞和光感受器外节补做验证，但尚无体内效力或临床证据，作者也要求在合适疾病模型及随机对照试验中验证。系统的价值是将文献假设、体外测量和结果分析接成可迭代回路；科学目标、实验操作与临床判断仍由人把关（[Nature 正文，Fig. 1–4、Results、Discussion、Methods “Robin implementation”](https://doi.org/10.1038/s41586-026-10652-y)；[版本、许可与读取范围](sources/MANIFEST.md)）。
 
 ### 5. 研究前沿：可解释的假设生成与实验选择
 

@@ -54,9 +54,9 @@ Taylor 等人 2023 年的研究给出了清楚的证据分层。Suzuki–Miyaura
 
 ### 补充案例：Flex-Cat 联合搜索配体与反应条件
 
-Bennett 等人的 Flex-Cat 将优化对象从 Taylor 等人的跨底物条件迁移扩展到**离散配体身份与连续工艺条件的联合搜索**。在丙烯的 Rh 催化氢甲酰化中，系统以 16 种磷配体、2 mL 并行批式反应器和共享的板级温度、压力、合成气比例运行；层级 BO 先选整板共享设定，再为每个反应孔选配体、Rh 浓度和配体浓度。GC-FID 测得周转频率与区域选择性后更新模型，再选下一批反应（Fig. 2、5；Results “Flex-Cat’s model initialization”及“AI-driven decision-making workflow”）。这个设计的关键，是让决策策略服从共享硬件约束，解决每孔参数不能完全独立变化的问题。
+Bennett 等人的 Flex-Cat 将优化对象从 Taylor 等人的跨底物条件迁移扩展到**离散配体身份与连续工艺条件的联合搜索**。在丙烯的 Rh 催化氢甲酰化中，系统以 16 种磷配体、2 mL 并行批式反应器和共享的板级温度、压力、合成气比例运行；层级 BO 先选整板共享设定，再为每个反应孔选配体、Rh 浓度和配体浓度。GC-FID 测得周转频率与区域选择性后更新模型，再选下一批反应（Fig. 2、5；Results “Flex-Cat’s model initialization”及“AI-driven decision-making workflow”；[来源版本与全文获取记录](sources/MANIFEST.md)）。这个设计的关键，是让决策策略服从共享硬件约束，解决每孔参数不能完全独立变化的问题。
 
-680 次实验中，前 320 次是研究者设计的 Latin hypercube 初始化，后续闭环优化分为线性选择、支链选择和选择性可调三个 campaign；整体观察到最高 TOF 从初始化阶段的 2,900 h⁻¹ 提高到 7,500 h⁻¹，作者报告超过 2.5 倍提升（Fig. 6；Abstract）。Flex-Cat 还按两种条件下均能以 TOF >300 h⁻¹ 产出线性或支链偏好产物定义“flexible ligand”，并从该有限配体库中找到条件可切换选择性的候选。其设计知识来自**闭环实验响应面**，而非迁移旧底物数据或预训练配体描述符；之后把筛出的组合转到 20 mL 反应格式验证，体积扩大 10 倍，但观察到 TOF 下降，作者指出混合与气液传质等尺度因素仍需分析（Table 1；Discussion）。
+680 次实验中，前 320 次是研究者设计的 Latin hypercube 初始化，后续闭环优化分为线性选择、支链选择和选择性可调三个 campaign；整体观察到最高 TOF 从初始化阶段的 2,900 h⁻¹ 提高到 7,500 h⁻¹，作者报告超过 2.5 倍提升（Fig. 6；Abstract）。Flex-Cat 还按两种条件下均能以 TOF >300 h⁻¹ 产出线性或支链偏好产物定义“flexible ligand”，并从该有限配体库中找到条件可切换选择性的候选。其设计知识来自**闭环实验响应面**，而非迁移旧底物数据或预训练配体描述符。规模转换的体积标签在论文中并不完全一致：Abstract 将其称为从发现尺度到 20 mL 的 10× 转移，平台概述将筛选格式标为 2 mL；但 Table 1 配对结果列标为 1 mL MTP 与 20 mL MTP，脚注称 1 mL GC vial 与 20 mL glass vial，Methods 也称原有过程为 1 mL scale。论文未把这些格式标签换算为统一的实际反应液体积，因此本报告分别照录而不自行消解比率。Table 1 的四组 TOF（h⁻¹）均下降：Linear 357→91、Branched 301→192、Flex_L 321→54、Flex_B 938→526。作者提及混合、气液传质等尺度因素仍需研究；这只是同平台内的规模转换检查，不是工业规模验证（Table 1；Methods “Reactor scale-up”；Discussion；[原文定位与字段解释见 MANIFEST](sources/MANIFEST.md)）。
 
 人类预先确定了反应、16 种配体、可行与安全边界，并设计 320 次初始化实验；高压 CO/H₂ 操作仍要求依照设施安全规程监督。论文的“autonomous”指受约束实验空间内的后续选点、执行、GC 分析和模型更新，不意味着系统自行选择化学问题或开放式提出分子结构。结果支持这套层级策略在一个压力气液催化平台中寻优和映射配体—条件关系；并未证明 16 种以外的配体、其他反应类别或独立实验室能得到相同的选择性—活性图谱（[Nature Communications 正文，Fig. 2–9、Table 1、Results、Methods “Flex-Cat’s automation”与“Reactor scale-up”](https://doi.org/10.1038/s41467-026-74425-x)）。
 

@@ -166,3 +166,17 @@
 - 本批候选池 **20 = 入选精读 5 + 相邻机制 / 排除 15**；累计全页候选池 **51 = 入选分册 16 + 排除 / 边界候选 35**（历史 27、闭环控制批次 4、本批 20）。
 - 5 篇入选均可读固定版本全文；数字均按本表列示的 arXiv 版本回到原文核对。未下载论文全文入库；缓存如需使用，放仓库外。
 - “模型世界、仿真环境、real-world rollouts”在不同论文中代表不同数据来源。相邻候选保留其清楚的角色边界，不据标题或摘要将它们等同为 VLA 训练样本。
+
+---
+
+## 7. 2026-10-23 补充：在线 RL 干预调度机制
+
+> 本次只新增一项闭环机制候选，不扩充 VLA backbone / 动作头精读集。是否纳入按“是否比现有策略更新、episode 内恢复、世界模型 rollout、任务层 BT 修订增加一个闭环位置”判断。
+
+| arXiv ID / 固定版本 | 论文 | 处理与理由 |
+| :-- | :-- | :-- |
+| `2610.03620v1`，2026-10-02 | [UniIntervene++: An Adaptive Intervention Agent for Efficient Real-World Reinforcement Learning](https://arxiv.org/abs/2610.03620) | **纳入闭环专题，不另建 VLA 论文分册**：在线 Double-DQN 将演化中的 RL、示范轨迹修正与任务 CodePolicy 作为 SMDP Options 分配控制，并用 RL-only probes 追踪能力、回灌辅助经验；这区别于 RECAP 更新 VLA 参数、VLCP 重写 episode 内代码、LingBot-VA 的模型 rollout 与 VersualRL 的 BT refinement。真实 UR7e 五任务结果支持作为相邻在线 RL 机制讨论；它不是 VLA 模型成功率证据。 |
+
+- **固定版本与正文**：题名、作者、v1 与 2026-10-02 日期由 arXiv abs 页、Atom API 与 PDF 首页交叉核对；正文全文 PDF 及 `pdftotext -layout` 文本缓存在仓库外 `/tmp/uniintervenepp-paper/`，HTML 版也缓存用于章节定位。PDF SHA-256：`92e587debd4a8c039667ab42fd8a5fef671322e52c4dd27226287959736b206e`；仅保留摘要与分析，未复制全文入库。
+- **数量口径**：候选池累计 `51 + 1 = 52`；其中 17 项进入精读/专题证据（16 篇独立分册 + 本专题 1 个四亮点七问 section），35 项仍为排除 / 边界候选。原批次 §4–§6 数量保持其各自截点口径。
+- **证据边界**：平均 SR `89.67%`、HIR `0.77%`、IR `56.04%` 与五项任务的条件只按 v1 §IV-A–C、Table I–II、Fig. 5–7 写入闭环专题；不将低 HIR 表述为总辅助执行低，也不把系统级消融写成某单模块的独立因果结论。

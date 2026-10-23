@@ -109,3 +109,20 @@ Skill使用：按 `researcher` 的来源/数字条件/不确定值要求处理�
 - 工具使用记录：本文所在批次的过程说明报告调用了 Researcher deep 和 PaperFetcher `fetch 2609.36322 --citations`；对应的旧调用原始输出未留存，故不能据此独立审计。2026-10-23 的追加核验直接查看官方 arXiv 版本页、PDF 与 Seed 页面，PaperFetcher `fetch` 元数据输出另存于 `/Users/zhoucanzong/Documents/paper-cache/2609.36322-fetch.txt`。该次 fetch 的 HF 结果列出题名、作者、日期和项目页，但 arXiv 元数据请求返回 429；故版本、日期和许可仍以官方 arXiv 页面与 PDF 为准。
 - 2026-10-23 通过 PaperFetcher `download 2609.36322` 新增本地 PDF：`/Users/zhoucanzong/Documents/paper-cache/2609.36322.pdf`，2,449,493 bytes，SHA-256 `eb4904567a45586caf0ccfdc9b91c4a3ce087700a2784a2a43665d656bd4b5fa`。此前“缓存未找到”只描述上一轮搜索；本次新增文件尚未替代当时的源文件身份记录。未复制论文全文进仓库。本文阅读了 PDF 的主文 §1–5 与相关附录 C、E、F、G、H；没有从头运行 100B-token 训练或重跑 DeepSeek/NIAH 评测。
 - Claim audit：人工逐项核对精读中的 **8 个数值主张簇**。取数方式是数 `deepseek-phase-sensitivity.md`「可复查锚点」表编号 1–8 的数据行（每行按一个 claim cluster 计；不把行内拆成多个 claim，也不把年份/型号编号计入）；8 行均指向固定 PDF 锚点。第 8 行区分 Fig. 3 所示 75.3 pp 与 Table 8 完整压缩扫描最高 78 pp；DeepSeek-V4 的干预锚点区分整层 attention-output replacement 与受控模型的逐 KV-head knockout。该数不是全文自动扫描统计。未运行作者训练或推理代码，也未独立复现实验。
+
+## 9. Base-Model Cue 比较论文（2026-10-23） {#9-base-model-cues-preprint-2026-10-23}
+
+本次定向审阅由 DeepSeek-R1-Zero 的“基座直接 RL”讨论触发。论文只用于外部方法比较，没有 DeepSeek checkpoint 结果，不据此推断 DeepSeek 内部训练数据、响应 cue 或因果机制。
+
+| 来源 | 固定身份 / 许可 | 全文锚点 |
+|---|---|---|
+| Wang et al., [Base Models Can Reason By Taking a Cue From Training Data](https://arxiv.org/abs/2610.06851v1) | arXiv `2610.06851v1`，2026-10-05 17:59:52 UTC 提交；版本页许可 CC BY 4.0；预印本 | 官方 v1 PDF 全文 56 页；重点核对 §2.1–2.4/Figs. 2–4，§3.1/Figs. 5–6，§4/Fig. 10，§6；补看 Appendix B、C、F、H 中评测、模型和数据编辑细节。 |
+
+PaperFetcher 记录：按精确题名运行 `search_papers.py ... -n 3 -s arxiv`，搜索结果未找到该标题（返回无关低相关条目）；随后 `fetch_paper.py fetch 2610.06851v1 --citations` 确认题名、6 位作者、提交时间、分类 `cs.LG, cs.AI, cs.CL` 和摘要。固定 PDF 从 arXiv v1 URL 获取，缓存 `/Users/zhoucanzong/Documents/paper-cache/research-audit-2026-10-23/models/methods/2610.06851v1.pdf`，56 页，3,734,099 bytes，SHA-256 `9ec14ad1bf5312d240bc0013a033196941034eb53a9c674c5586ca0e5b006b6b`；同目录保留 `2610.06851v1.html`。
+
+- Abstract、§2.2/Fig. 2：作者报告 Olmo-3-7B 的 `.\n\n Okay` 在 MATH-500 从 42% 到 78%（RL 对照 75%）；Qwen3-14B 的 `Alright ,` 从 72% 到 87% 并与其 GRPO 对照相当。§2.1 限定两模型提示、RL 配方与评测设置。
+- §2.3/Fig. 3：RL 提高所选开头 cue 的概率；cue-forced RL 学习曲线在所测设置下较早达到相似成绩。图中步数不是广泛训练成本优势证据。
+- §3.1/Figs. 5–6：作者使用 Olmo 的 10B-token 中训练 mix 做 matched counterfactual edits；把 “okay” 换成 “chicken” 使 cue-conditioned MATH-500 从 2.4% 到 37.2%，GSM8K 从 2.2% 到 60.6%。这些数值属于该模型、数据和再训练干预。
+- §6：作者限制结论于直接对基座做 RL 的 R1-Zero 式设置，指出模型依赖性、所测 Llama-3.1-8B 无有效 cue，以及合成推理轨迹可能强化 cue 关联；多阶段后训练可能带来 cue 无法解释的能力。
+
+本报告只把该论文当作读 R1-Zero 的外部比较视角。没有 DeepSeek 模型评测、训练、检查点分析或独立复现；不得写成 DeepSeek cue 发现或 DeepSeek 内部训练解释。逐问论证与锚点见 [`../papers/2610.06851-base-model-cues.md`](../papers/2610.06851-base-model-cues.md)。

@@ -22,7 +22,7 @@
 
 ## Evaluation (1)
 
-* [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) — 86 行
+* [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) — 94 行
 
 ## Infra (3)
 
@@ -47,7 +47,7 @@
 * [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) — 117 行
 * [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) — 347 行
 * [Models/Claude/report.md](<../Models/Claude/report.md>) — 594 行
-* [Models/DeepSeek/report.md](<../Models/DeepSeek/report.md>) — 774 行
+* [Models/DeepSeek/report.md](<../Models/DeepSeek/report.md>) — 776 行
 * [Models/Doubao-Seed/report.md](<../Models/Doubao-Seed/report.md>) — 651 行
 * [Models/GLM/report.md](<../Models/GLM/report.md>) — 737 行
 * [Models/GPT/report.md](<../Models/GPT/report.md>) — 773 行
@@ -64,7 +64,7 @@
 * [Models/Mistral/report.md](<../Models/Mistral/report.md>) — 502 行
 * [Models/Nemotron/report.md](<../Models/Nemotron/report.md>) — 238 行
 * [Models/OpenAI-Gen/report.md](<../Models/OpenAI-Gen/report.md>) — 393 行
-* [Models/Qwen/report.md](<../Models/Qwen/report.md>) — 1,119 行
+* [Models/Qwen/report.md](<../Models/Qwen/report.md>) — 1,120 行
 * [Models/Runway/report.md](<../Models/Runway/report.md>) — 103 行
 * [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>) — 739 行
 
@@ -110,4 +110,4 @@
 
 ## null (1)
 
-* [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) — 84 行
+* [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) — 94 行

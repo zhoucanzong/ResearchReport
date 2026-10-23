@@ -29,8 +29,8 @@
 * [papers/2403.12945-droid.md](<EmbodiedVLA/papers/2403.12945-droid.md>) — 229 行 / 22,951 B
 * [papers/2405.05941-simpler.md](<EmbodiedVLA/papers/2405.05941-simpler.md>) — 289 行 / 37,844 B
 * [papers/2406.09246-openvla.md](<EmbodiedVLA/papers/2406.09246-openvla.md>) — 252 行 / 28,967 B
-* [papers/2410.24164-pi0.md](<EmbodiedVLA/papers/2410.24164-pi0.md>) — 239 行 / 24,171 B
-* [papers/2501.09747-fast.md](<EmbodiedVLA/papers/2501.09747-fast.md>) — 250 行 / 23,574 B
+* [papers/2410.24164-pi0.md](<EmbodiedVLA/papers/2410.24164-pi0.md>) — 234 行 / 24,341 B
+* [papers/2501.09747-fast.md](<EmbodiedVLA/papers/2501.09747-fast.md>) — 246 行 / 23,992 B
 * [papers/2511.14759-pi-star-0.6-recap.md](<EmbodiedVLA/papers/2511.14759-pi-star-0.6-recap.md>) — 68 行 / 8,820 B
 * [papers/2601.21998-lingbot-va.md](<EmbodiedVLA/papers/2601.21998-lingbot-va.md>) — 68 行 / 7,620 B
 * [papers/2602.06508-world-vla-loop.md](<EmbodiedVLA/papers/2602.06508-world-vla-loop.md>) — 74 行 / 10,169 B
@@ -39,10 +39,10 @@
 * [papers/2608.16978-vlcp.md](<EmbodiedVLA/papers/2608.16978-vlcp.md>) — 69 行 / 7,029 B
 * [papers/2610.11248-simvla.md](<EmbodiedVLA/papers/2610.11248-simvla.md>) — 82 行 / 13,582 B
 * [papers/2610.13164-grounded-dreamer.md](<EmbodiedVLA/papers/2610.13164-grounded-dreamer.md>) — 45 行 / 5,945 B
-* [sources/CANDIDATES.md](<EmbodiedVLA/sources/CANDIDATES.md>) — 168 行 / 20,894 B
-* [sources/MANIFEST.md](<EmbodiedVLA/sources/MANIFEST.md>) — 90 行 / 15,606 B
+* [sources/CANDIDATES.md](<EmbodiedVLA/sources/CANDIDATES.md>) — 182 行 / 22,830 B
+* [sources/MANIFEST.md](<EmbodiedVLA/sources/MANIFEST.md>) — 108 行 / 20,111 B
 * [topics/action-representation.md](<EmbodiedVLA/topics/action-representation.md>) — 175 行 / 14,305 B
-* [topics/closed-loop-control.md](<EmbodiedVLA/topics/closed-loop-control.md>) — 82 行 / 9,953 B
+* [topics/closed-loop-control.md](<EmbodiedVLA/topics/closed-loop-control.md>) — 105 行 / 16,293 B
 * [topics/deployment-boundaries.md](<EmbodiedVLA/topics/deployment-boundaries.md>) — 154 行 / 12,115 B
 * [topics/evaluation-and-datasets.md](<EmbodiedVLA/topics/evaluation-and-datasets.md>) — 166 行 / 15,924 B
 * [topics/world-model-to-vla-transfer.md](<EmbodiedVLA/topics/world-model-to-vla-transfer.md>) — 50 行 / 10,098 B

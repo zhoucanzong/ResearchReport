@@ -61,7 +61,7 @@
 <summary><b>Chemistry</b>（2 份）</summary>
 
 * [sources/CANDIDATES.md](<Chemistry/sources/CANDIDATES.md>) — 30 行 / 4,195 B
-* [sources/MANIFEST.md](<Chemistry/sources/MANIFEST.md>) — 19 行 / 7,440 B
+* [sources/MANIFEST.md](<Chemistry/sources/MANIFEST.md>) — 19 行 / 7,769 B
 
 </details>
 

@@ -1,6 +1,6 @@
 # Candidate Screening — LLM Reinforcement Learning
 
-截止 2026-10-23。**候选池 14 项，主报告深读 3 篇，原文选读 3 篇，失败边界选读 2 篇；其余 6 项保留为来源或待读。** 筛选标准是能否回答“轨迹来源、奖励可信度、策略更新与长时序探索”的教学问题；不是排行榜。
+截止 2026-10-23。**候选池 16 项；5 篇逐篇深读（其中两篇为 verifier 专题补充）、3 篇原文选读、1 篇失败边界选读、1 篇摘要级；其余 6 项保留为候选、排除或交叉引用。** 筛选标准是能否回答“轨迹来源、奖励可信度、策略更新、验证器信息边界与长时序探索”的教学问题；不是排行榜。
 
 | 来源 ID | 工作 | 决定 | 取舍理由 |
 |---|---|---|---|
@@ -18,5 +18,7 @@
 | S12 | DeepSeekMath / GRPO | **交叉参考** | Alignment 已覆盖 GRPO 的组内优势与来源；在此重写会造成机制重复。 |
 | S13 | DAPO | **排除重复** | Alignment 已有 DAPO 四项设计、原文核对和消融，不再重复。 |
 | S14 | VAPO | **排除重复** | Alignment 已有长链 critic/GAE 和长度异质奖励阅读，不再重复。 |
+| S15 | [Verifier Errors in RLVR](../papers/2609.35677-verifier-errors-selective-control.md) | **补充精读** | 用固定 verifier 下的可辨识性限制与审计控制分析 verifier reward 与 correctness 的分离；语言模型演示是构造的 0.5B 规则替换任务，不能推广到开放数学/代码训练。 |
+| S16 | [Where the Verifier Fails](../papers/2609.01354-category-level-verifier-audit.md) | **补充精读** | 对四种答案 verifier 做类别级 metamorphic audit，分开 false-negative、false-positive 与 runtime failure；不含模型训练，不证明解析错误已导致 RLVR 策略改变。 |
 
-**筛选结论**：主文有 3 篇逐篇深读、3 篇原文选读，候选池其余工作均有状态和理由。S6 的奖励利用例子不代表 agent 普遍会作弊，也不代表任何产品的私有训练方法；只支撑“评分器对未检查属性无法给保证”。
+**筛选结论**：核心机制深读仍为 S1–S3；S15–S16 是两篇互补的 verifier 专题分册，分别测“仅凭训练日志可否识别错误”与“答案验证器具体在哪些类别失败”。它们不取代 S6 的归纳任务捷径例子，也不代表 agent 普遍会作弊或任何产品的私有训练方法。
