@@ -1,0 +1,50 @@
+# LMCache V1 + vLLM：PD KV 的异步写入与读取状态
+
+## 固定源码与范围
+
+- Repository: [`LMCache/LMCache@ff9185d419e1ce55c9f4f1ad84a4f4f1f06af7be`](https://github.com/LMCache/LMCache/tree/ff9185d419e1ce55c9f4f1ad84a4f4f1f06af7be), 2026-10-23.
+- Slice: `LMCacheConnectorV1Dynamic` → `lmcache.inprocess.v1` → default `PDBackendAsync`; `pd_backend_mode` defaults to async ([config](https://github.com/LMCache/LMCache/blob/ff9185d419e1ce55c9f4f1ad84a4f4f1f06af7be/lmcache/v1/config.py#L297-L305), [factory](https://github.com/LMCache/LMCache/blob/ff9185d419e1ce55c9f4f1ad84a4f4f1f06af7be/lmcache/v1/storage_backend/__init__.py#L132-L143)).
+- Other MP integrations, sync backend, stores, model/layout compatibility, live service behavior and performance are outside this trace. Static source review only; no service/tests/GPU run.
+
+## Request path
+
+1. **Scheduler lookup.** vLLM calls `get_num_new_matched_tokens`; the connector delegates request tokens to LMCache and returns a prefix length, adjusted for the vLLM-computed prefix, full-hit final token, `min_retrieve_tokens`, and per-load cap (`lmcache_connector_v1.py:151–171`; `vllm_v1_adapter.py:1361–1536`). This proves a key/prefix lookup result, not local payload or GPU availability.
+2. **Allocation and metadata.** After vLLM allocates receiving blocks, `update_state_after_alloc` checks that requested external-token count matches the cache hit. `build_connector_meta` carries the load spec and block/token tracking into the worker (`vllm_v1_adapter.py:1538–1685`). No receiving blocks means no `can_load` path.
+3. **P-side save.** Worker `save_kv_layer` accumulates layer data; `wait_for_save` creates masks and calls `lmcache_engine.store` with transfer metadata (`lmcache_connector_v1.py:87–118`; `vllm_v1_adapter.py:1106–1238`). In the async backend, submitting this work does not mean P→D payload has completed.
+4. **Chunk creation and dispatch.** `CacheEngine.store` forms token/key ranges, allocates `MemoryObj`s, gathers paged GPU KV into them, and calls `StorageManager.batched_put` (`cache_engine.py:388–580`; `storage_manager.py:386–437`). Buffer location depends on PD buffer configuration; do not claim it always lands in host RAM.
+5. **Receiver allocation precedes payload.** Sender issues `AllocRequest`, receives remote addresses, then starts NIXL `async_batched_write` (`pd_backend_async.py:802–929`). Receiver reserves capacity, allocates each `MemoryObj`, and inserts its key into the local map before responding (`pd_backend_async.py:1294–1483`; `contains` reads that map at `:638–654`). Thus the key may be visible while the value is still being written.
+6. **Transfer completion and proxy gate.** NIXL write returns only after transfer state `DONE`; errors raise (`transfer_channel/nixl_channel.py:507–548`). Sender counts successful chunks and sends `ProxyNotif` only after the final batch and total request chunk count complete (`pd_backend_async.py:926–956,1003–1044`). The example proxy counts notifications by TP rank and waits before invoking decode (`examples/disagg_prefill/disagg_proxy_server.py:355–396,442–446,520–565`). `ProxyNotif` is one-way; sender gets no proxy ACK. If `pd_skip_proxy_notification` is set, an external orchestrator owns this gate (`config.py:307–315`, `pd_backend_async.py:671–689`).
+7. **D-side lookup and GPU load.** `CacheEngine.lookup` returns only the continuous matched prefix and stops at the first miss (`cache_engine.py:1152–1271`). D worker calls `retrieve`, which fetches objects via storage manager, runs `gpu_connector.batched_to_gpu`, and returns a `ret_mask`; layerwise mode waits for each layer before attention (`vllm_v1_adapter.py:758–900,974–999`; `cache_engine.py:801–997`; `storage_manager.py:484–518`). Only after this copy/layer-wait boundary should the KV be described as readable by the model.
+
+```text
+prefix key matched
+    → receive blocks allocated / metadata registered
+    → receiver key visible (payload may still be in flight)
+    → every required transfer chunk DONE
+    → proxy/orchestrator permits D request
+    → D retrieves and copies into engine GPU pages
+    → layer wait completes; KV is usable
+```
+
+## Partial hits, failures and cancellation
+
+- **Partial prefix:** `lookup` stops at the first missing chunk; the connector returns the continuous prefix length and the remaining suffix is scheduled normally. The exact compute/admission consequences depend on vLLM scheduling and the selected configuration.
+- **Lookup hit then data missing:** a failed `batched_get` stops at that chunk, clears `ret_mask` after the gap and records failed vLLM block IDs (`cache_engine.py:1732–1838`; `vllm_v1_adapter.py:872–972,1340–1349`). This trace does not follow the external vLLM scheduler’s recovery, so it does not claim that every failure automatically recomputes.
+- **Receiver capacity/allocation failure:** the async receiver rolls back keys and releases its reservation; sender aborts and does not issue a successful proxy notification (`pd_backend_async.py:1310–1365,1381–1483,896–913,969–987`).
+- **Abort:** `request_finished` on an aborted request calls storage cancellation; PD async sends `CancelNotif`, removes registered receiver keys and releases reservation (`vllm_v1_adapter.py:1858–1915`; `storage_manager.py:1380–1392`; `pd_backend_async.py:1107–1153,1222–1289`). The fixed source does not show a handle that cancels an already submitted NIXL coroutine. In-flight RDMA cancellation/races remain unverified.
+- **Normal release:** the PD receiver enables `remove_after_retrieve`; after GPU copy, retrieved receiver-side objects are removed/refcounts reduced (`cache_engine.py:190–199,948–965`; `pd_backend_async.py:1520–1568`). Storage lookup pin/unpin is a no-op for this backend, though engine-side lookup tracking is still cleaned (`pd_backend_async.py:1709–1729`; `cache_engine.py:1568–1579`).
+
+The state boundary is the practical lesson: metadata hit ≠ payload complete ≠ D GPU KV readable. This is one pinned path, not a universal LMCache, vLLM or Mooncake contract ([source scope](../sources/MANIFEST.md)).
+
+## Direct source map
+
+All links below pin the fixed commit in the header; the inline `file:line` references above are relative to this snapshot.
+
+| Responsibility | Fixed source and principal line ranges |
+| :-- | :-- |
+| vLLM connector hooks | [`lmcache_connector_v1.py`](https://github.com/LMCache/LMCache/blob/ff9185d419e1ce55c9f4f1ad84a4f4f1f06af7be/lmcache/inprocess/integration/vllm/lmcache_connector_v1.py#L52-L210) |
+| vLLM V1 adapter | [`vllm_v1_adapter.py`](https://github.com/LMCache/LMCache/blob/ff9185d419e1ce55c9f4f1ad84a4f4f1f06af7be/lmcache/inprocess/integration/vllm/vllm_v1_adapter.py#L758-L900) (load), [#L1106-L1238](https://github.com/LMCache/LMCache/blob/ff9185d419e1ce55c9f4f1ad84a4f4f1f06af7be/lmcache/inprocess/integration/vllm/vllm_v1_adapter.py#L1106-L1238) (save), [#L1361-L1685](https://github.com/LMCache/LMCache/blob/ff9185d419e1ce55c9f4f1ad84a4f4f1f06af7be/lmcache/inprocess/integration/vllm/vllm_v1_adapter.py#L1361-L1685) (lookup/allocation/meta), [#L1858-L1915](https://github.com/LMCache/LMCache/blob/ff9185d419e1ce55c9f4f1ad84a4f4f1f06af7be/lmcache/inprocess/integration/vllm/vllm_v1_adapter.py#L1858-L1915) (finish/abort) |
+| Engine chunk packing and retrieval | [`cache_engine.py`](https://github.com/LMCache/LMCache/blob/ff9185d419e1ce55c9f4f1ad84a4f4f1f06af7be/lmcache/inprocess/v1/cache_engine.py#L388-L580) (store), [#L801-L997](https://github.com/LMCache/LMCache/blob/ff9185d419e1ce55c9f4f1ad84a4f4f1f06af7be/lmcache/inprocess/v1/cache_engine.py#L801-L997) (retrieve), [#L1152-L1271](https://github.com/LMCache/LMCache/blob/ff9185d419e1ce55c9f4f1ad84a4f4f1f06af7be/lmcache/inprocess/v1/cache_engine.py#L1152-L1271) (prefix lookup), [#L1732-L1838](https://github.com/LMCache/LMCache/blob/ff9185d419e1ce55c9f4f1ad84a4f4f1f06af7be/lmcache/inprocess/v1/cache_engine.py#L1732-L1838) (partial retrieval failure) |
+| Storage manager | [`storage_manager.py`](https://github.com/LMCache/LMCache/blob/ff9185d419e1ce55c9f4f1ad84a4f4f1f06af7be/lmcache/v1/storage_backend/storage_manager.py#L386-L437) (put), [#L484-L518](https://github.com/LMCache/LMCache/blob/ff9185d419e1ce55c9f4f1ad84a4f4f1f06af7be/lmcache/v1/storage_backend/storage_manager.py#L484-L518) (get), [#L1380-L1392](https://github.com/LMCache/LMCache/blob/ff9185d419e1ce55c9f4f1f06af7be/lmcache/v1/storage_backend/storage_manager.py#L1380-L1392) (cancel dispatch) |
+| PD async sender/receiver | [`pd_backend_async.py`](https://github.com/LMCache/LMCache/blob/ff9185d419e1ce55c9f4f1f06af7be/lmcache/v1/storage_backend/pd_backend_async.py#L802-L929) (alloc then write), [#L926-L1044](https://github.com/LMCache/LMCache/blob/ff9185d419e1ce55c9f4f1f06af7be/lmcache/v1/storage_backend/pd_backend_async.py#L926-L1044) (completion/notification), [#L1107-L1153](https://github.com/LMCache/LMCache/blob/ff9185d419e1ce55c9f4f1f06af7be/lmcache/v1/storage_backend/pd_backend_async.py#L1107-L1153) (abort), [#L1222-L1483](https://github.com/LMCache/LMCache/blob/ff9185d419e1ce55c9f4f1f06af7be/lmcache/v1/storage_backend/pd_backend_async.py#L1222-L1483) (receiver allocation/rollback), [#L1502-L1568](https://github.com/LMCache/LMCache/blob/ff9185d419e1ce55c9f4f1f06af7be/lmcache/v1/storage_backend/pd_backend_async.py#L1502-L1568) (get/remove) |
+| NIXL completion and example gate | [`nixl_channel.py`](https://github.com/LMCache/LMCache/blob/ff9185d419e1ce55c9f4f1f06af7be/lmcache/inprocess/v1/transfer_channel/nixl_channel.py#L507-L548); [`disagg_proxy_server.py`](https://github.com/LMCache/LMCache/blob/ff9185d419e1ce55c9f4f1f06af7be/examples/disagg_prefill/disagg_proxy_server.py#L355-L396) and [#L520-L565](https://github.com/LMCache/LMCache/blob/ff9185d419e1ce55c9f4f1f06af7be/examples/disagg_prefill/disagg_proxy_server.py#L520-L565) |

@@ -28,10 +28,11 @@
 | --- | --- | --- | --- | --- |
 | [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) | 评测科学：分数何时支持“模型更好”或“能力泛化” | research | 2026-10-23 | current |
 
-## Infra (3)
+## Infra (4)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
+| [Infra/KVCachePD/report.md](<../Infra/KVCachePD/report.md>) | KV Cache 服务与 Prefill/Decode 分离：什么时候复用，什么时候传输 | research | 2026-10-23 | current |
 | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 模型量化与边缘部署研究报告 | topic-research | 2026-10-22 | needs-review |
 | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-22 | needs-review |
 | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 大模型训练基础设施与分布式训练研究报告 | topic-research | 2026-10-22 | needs-review |

@@ -187,6 +187,12 @@
 | --- | --- | --- | --- | --- |
 | [VisualGen/ImageEditing/report.md](<../VisualGen/ImageEditing/report.md>) | 图像编辑与修复技术研究报告 | — | — | — |
 
+## KVCachePD (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Infra/KVCachePD/report.md](<../Infra/KVCachePD/report.md>) | KV Cache 服务与 Prefill/Decode 分离：什么时候复用，什么时候传输 | research | 2026-10-23 | current |
+
 ## Kimi (1)
 
 | 条目 | 标题 | type | date | status |

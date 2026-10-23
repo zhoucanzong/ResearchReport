@@ -18,7 +18,7 @@
 <div align="center">
 
 <!-- SCRIPT:badges START -->
-[**64** 主报告](index/by-report.md) &nbsp; · &nbsp; [**204** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**35** 技术专题](index/by-topic.md) &nbsp; · &nbsp; [**8** 研究板块](#研究板块)
+[**65** 主报告](index/by-report.md) &nbsp; · &nbsp; [**209** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**36** 技术专题](index/by-topic.md) &nbsp; · &nbsp; [**8** 研究板块](#研究板块)
 <!-- SCRIPT:badges END -->
 
 </div>
@@ -80,8 +80,8 @@
 <tr>
 <td width="33%" valign="top">
 <h3>07 · <a href="Infra/README.md">Infra</a></h3>
-<p><strong>训练与推理系统</strong><br><sub>3 篇主报告 · 推理 / 训练基础设施</sub></p>
-<p><a href="Infra/SpeculativeDecoding/report.md">SpeculativeDecoding</a> · <a href="Infra/QuantizationEdge/report.md">QuantizationEdge</a> · <a href="Infra/TrainingInfra/report.md">TrainingInfra</a></p>
+<p><strong>训练与推理系统</strong><br><sub>4 篇主报告 · 推理 / 训练基础设施</sub></p>
+<p><a href="Infra/SpeculativeDecoding/report.md">SpeculativeDecoding</a> · <a href="Infra/QuantizationEdge/report.md">QuantizationEdge</a> · <a href="Infra/TrainingInfra/report.md">TrainingInfra</a> · <a href="Infra/KVCachePD/report.md">KVCachePD</a></p>
 <p><a href="Infra/README.md"><strong>浏览板块 →</strong></a></p>
 </td>
 <td width="33%" valign="top">
@@ -135,7 +135,7 @@
 | **WorldModel** | [EmbodiedVLA](<WorldModel/EmbodiedVLA/report.md>) · [WorldModels](<WorldModel/WorldModels/report.md>) |
 | **AI4Science** | [AntibioticDiscovery](<AI4Science/AntibioticDiscovery/report.md>) · [Astronomy](<AI4Science/Astronomy/report.md>) · [AutonomousLabs](<AI4Science/AutonomousLabs/report.md>) · [Chemistry](<AI4Science/Chemistry/report.md>) · [MaterialsDiscovery](<AI4Science/MaterialsDiscovery/report.md>) · [MathematicalDiscovery](<AI4Science/MathematicalDiscovery/report.md>) · [Neuroscience](<AI4Science/Neuroscience/report.md>) · [ProteinDesign](<AI4Science/ProteinDesign/report.md>) · [SingleCellPerturbation](<AI4Science/SingleCellPerturbation/report.md>) · [WeatherClimate](<AI4Science/WeatherClimate/report.md>) |
 | **Evaluation** | [EvaluationScience](<Evaluation/EvaluationScience/report.md>) |
-| **Infra** | [QuantizationEdge](<Infra/QuantizationEdge/report.md>) · [SpeculativeDecoding](<Infra/SpeculativeDecoding/report.md>) · [TrainingInfra](<Infra/TrainingInfra/report.md>) |
+| **Infra** | [KVCachePD](<Infra/KVCachePD/report.md>) · [QuantizationEdge](<Infra/QuantizationEdge/report.md>) · [SpeculativeDecoding](<Infra/SpeculativeDecoding/report.md>) · [TrainingInfra](<Infra/TrainingInfra/report.md>) |
 <!-- SCRIPT:topics END -->
 
 ## 阅读与引用
@@ -152,15 +152,15 @@
 ### 完整索引
 
 <!-- SCRIPT:index START · 条目单一真值在 index/by-report.md -->
-共 **64** 条，分属 **8** 个板块：Models 23 · LLM 11 · VisualGen 8 · WorldModel 2 · AI4Science 10 · Evaluation 1 · Infra 3 · OpenSource 6。
-完整 64 行（条目 | 板块 | 路径）见 **[index/by-report.md](<index/by-report.md>)**；按域 / 主题 / 来源分面见 [index/](<index/>)，总目录见 [INDEX.md](<INDEX.md>)。
+共 **65** 条，分属 **8** 个板块：Models 23 · LLM 11 · VisualGen 8 · WorldModel 2 · AI4Science 10 · Evaluation 1 · Infra 4 · OpenSource 6。
+完整 65 行（条目 | 板块 | 路径）见 **[index/by-report.md](<index/by-report.md>)**；按域 / 主题 / 来源分面见 [index/](<index/>)，总目录见 [INDEX.md](<INDEX.md>)。
 <!-- SCRIPT:index END -->
 
 ### 目录结构
 
 <!-- SCRIPT:structure START · 来源 scripts/panels.json，配置驱动 -->
 ```text
-ResearchReport/    64 条目 · 35 专题 · 8 板块
+ResearchReport/    65 条目 · 36 专题 · 8 板块
 │
 ├─ 🧠 Models/        23 条 · 厂商模型 / 系列逐个精读（GPT · Qwen · Gemini …）
 ├─ 💬 LLM/           11 条 · 语言模型能力、训练数据与技术专题（ReasoningModels · LongContext · MoE …）
@@ -168,7 +168,7 @@ ResearchReport/    64 条目 · 35 专题 · 8 板块
 ├─ 🌍 WorldModel/     2 条 · 世界模型与具身 VLA（WorldModels · EmbodiedVLA …）
 ├─ 🧪 AI4Science/    10 条 · 科学问题中的 AI 方法与实验闭环（ProteinDesign · MaterialsDiscovery · WeatherClimate …）
 ├─ 📏 Evaluation/     1 条 · 跨领域 AI 评测与测量方法（EvaluationScience …）
-├─ ⚙️ Infra/          3 条 · 推理 / 训练基础设施（SpeculativeDecoding · QuantizationEdge · TrainingInfra …）
+├─ ⚙️ Infra/          4 条 · 推理 / 训练基础设施（SpeculativeDecoding · QuantizationEdge · TrainingInfra …）
 ├─ 🔧 OpenSource/     6 条 · 开源仓库代码深读（DeepInfer · vllm · sglang …）
 │
 └─ ⚙ 生成管线：scripts/panels.json（单一真值）→ library_index.py

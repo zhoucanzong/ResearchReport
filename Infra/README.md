@@ -2,7 +2,7 @@
 
 # ⚙️ Infra
 
-**3 条** · 推理 / 训练基础设施，覆盖投机解码、量化边缘与训练基建。
+**4 条** · 推理 / 训练基础设施，覆盖投机解码、量化边缘与训练基建。
 
 [← 返回首页](<../README.md>) · [完整索引](<../INDEX.md>)
 
@@ -10,16 +10,28 @@
 
 <!-- SCRIPT:panel-readme START · 由 scripts/library_index.py 生成，勿手改 -->
 
-![Entries](https://img.shields.io/badge/Entries-3-3f51b5?style=flat-square)
+![Entries](https://img.shields.io/badge/Entries-4-3f51b5?style=flat-square)
 ![Panel](https://img.shields.io/badge/Panel-Infra-9e9e9e?style=flat-square)
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
+| **KVCachePD** | [KV Cache 服务与 Prefill/Decode 分离：什么时候复用，什么时候传输](<KVCachePD/report.md>) | 80 行 |
 | **QuantizationEdge** | [模型量化与边缘部署研究报告](<QuantizationEdge/report.md>) | 188 行 |
 | **SpeculativeDecoding** | [投机解码（Speculative Decoding）技术专题 · 深度调研](<SpeculativeDecoding/report.md>) | 549 行 |
 | **TrainingInfra** | [大模型训练基础设施与分布式训练研究报告](<TrainingInfra/report.md>) | 181 行 |
 
 ## 📎 子文档
+
+<details>
+<summary><b>KVCachePD</b>（5 份）</summary>
+
+* [implementation/lmcache-vllm-v1.md](<KVCachePD/implementation/lmcache-vllm-v1.md>) — 50 行 / 9,915 B
+* [papers/lmcache-system-paper.md](<KVCachePD/papers/lmcache-system-paper.md>) — 26 行 / 3,198 B
+* [papers/mooncake-fast25.md](<KVCachePD/papers/mooncake-fast25.md>) — 21 行 / 3,051 B
+* [sources/CANDIDATES.md](<KVCachePD/sources/CANDIDATES.md>) — 13 行 / 1,614 B
+* [sources/MANIFEST.md](<KVCachePD/sources/MANIFEST.md>) — 22 行 / 4,393 B
+
+</details>
 
 <details>
 <summary><b>SpeculativeDecoding</b>（33 份）</summary>

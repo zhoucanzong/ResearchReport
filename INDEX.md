@@ -13,17 +13,17 @@
 
 | 指标 | 数量 |
 | --- | --- |
-| **条目数**（`report.md`） | **64** |
-| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 11 · VisualGen 8 · WorldModel 2 · AI4Science 10 · Evaluation 1 · Infra 3 · OpenSource 6 |
-| 条目子文档数 | 204 |
-| 条目正文行数（剔除 front-matter） | 27,918 |
-| 条目字节 | 2,114,262 B |
-| 带 front-matter 的条目 | 23 |
-| 带合法 `date` 的条目 | 23 |
-| 文档（除生成物外的全部 `.md`） | 286 |
+| **条目数**（`report.md`） | **65** |
+| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 11 · VisualGen 8 · WorldModel 2 · AI4Science 10 · Evaluation 1 · Infra 4 · OpenSource 6 |
+| 条目子文档数 | 209 |
+| 条目正文行数（剔除 front-matter） | 27,998 |
+| 条目字节 | 2,122,638 B |
+| 带 front-matter 的条目 | 24 |
+| 带合法 `date` 的条目 | 24 |
+| 文档（除生成物外的全部 `.md`） | 292 |
 | 其中文件名 `README.md` | 10 |
-| 纳入版本控制的文件 | 307 |
-| 纳入版本控制的 `.md` | 291 |
+| 纳入版本控制的文件 | 310 |
+| 纳入版本控制的 `.md` | 294 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -38,9 +38,9 @@
 | WorldModel | 2 | 41 | 1,244 | 139,523 B | [板块页 →](<WorldModel/README.md>) |
 | AI4Science | 10 | 53 | 836 | 138,955 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 1 | 7 | 101 | 21,992 B | [板块页 →](<Evaluation/README.md>) |
-| Infra | 3 | 37 | 918 | 75,497 B | [板块页 →](<Infra/README.md>) |
+| Infra | 4 | 43 | 998 | 83,873 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 35 | 1,569 | 167,927 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **64** | **286** | **27,918** | **2,114,262 B** | — |
+| **合计** | **65** | **292** | **27,998** | **2,122,638 B** | — |
 
 ## 分面索引
 
@@ -880,10 +880,26 @@
 
 </details>
 
-### Infra（3 条目 / 37 文档）
+### Infra（4 条目 / 43 文档）
 
 <details>
-<summary><b>基础设施 Infra（3 条目 / 33 子文档）</b></summary>
+<summary><b>基础设施 Infra（4 条目 / 38 子文档）</b></summary>
+
+  <details>
+  <summary><b>KVCachePD</b> · <code>Infra/KVCachePD/report.md</code> · 80 行 · 2026-10-23</summary>
+
+
+    * **条目**：[Infra/KVCachePD/report.md](<Infra/KVCachePD/report.md>)（80 行 / 8,376 B）
+    * **专题目录**：`Infra/KVCachePD`
+    * **元数据**：type=`research` · domain=`Infra` · subject=`KVCachePD` · date=`2026-10-23` · status=`current`
+    * **子文档（5）**
+        * [implementation/lmcache-vllm-v1.md](<Infra/KVCachePD/implementation/lmcache-vllm-v1.md>) — 50 行 / 9,915 B
+        * [papers/lmcache-system-paper.md](<Infra/KVCachePD/papers/lmcache-system-paper.md>) — 26 行 / 3,198 B
+        * [papers/mooncake-fast25.md](<Infra/KVCachePD/papers/mooncake-fast25.md>) — 21 行 / 3,051 B
+        * [sources/CANDIDATES.md](<Infra/KVCachePD/sources/CANDIDATES.md>) — 13 行 / 1,614 B
+        * [sources/MANIFEST.md](<Infra/KVCachePD/sources/MANIFEST.md>) — 22 行 / 4,393 B
+
+  </details>
 
   <details>
   <summary><b>QuantizationEdge</b> · <code>Infra/QuantizationEdge/report.md</code> · 188 行 · 2026-10-22</summary>
@@ -1062,13 +1078,13 @@
 | --- | --- | --: | --: |
 | [AI4Science/README.md](<AI4Science/README.md>) | AI4Science | 137 | 6,760 B |
 | [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 37 | 1,487 B |
-| [Infra/README.md](<Infra/README.md>) | Infra | 67 | 5,018 B |
+| [Infra/README.md](<Infra/README.md>) | Infra | 79 | 5,682 B |
 | [LLM/README.md](<LLM/README.md>) | LLM | 103 | 7,059 B |
 | [Models/README.md](<Models/README.md>) | Models | 101 | 4,888 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 93 | 4,069 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 186 | 11,807 B |
+| [README.md](<README.md>) |  | 186 | 11,904 B |
 | [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,616 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 77 | 4,941 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 86 | 6,458 B |

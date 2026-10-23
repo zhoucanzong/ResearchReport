@@ -14,6 +14,7 @@
 | [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 2026-10-23 | LLM | TrainingData |
 | [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | 2026-10-23 | LLM | ReinforcementLearning |
 | [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 2026-10-23 | LLM | DiffusionLM |
+| [Infra/KVCachePD/report.md](<../Infra/KVCachePD/report.md>) | 2026-10-23 | Infra | KVCachePD |
 | [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) | 2026-10-23 | Evaluation | EvaluationScience |
 | [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) | 2026-10-23 | AI4Science | WeatherClimate |
 | [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) | 2026-10-23 | AI4Science | SingleCellPerturbation |
@@ -30,7 +31,6 @@
 | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 2026-10-22 | Infra | TrainingInfra |
 | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 2026-10-22 | Infra | SpeculativeDecoding |
 | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 2026-10-22 | Infra | QuantizationEdge |
-| [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | 2026-10-20 | OpenSource | DeepSeekHarness |
 
 ## 无 date 元数据（41）
 

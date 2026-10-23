@@ -104,7 +104,8 @@
       "representatives": [
         "Infra/SpeculativeDecoding",
         "Infra/QuantizationEdge",
-        "Infra/TrainingInfra"
+        "Infra/TrainingInfra",
+        "Infra/KVCachePD"
       ]
     },
     {

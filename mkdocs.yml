@@ -347,8 +347,15 @@ nav:
         - "2406.12045-tau-bench": "Evaluation/EvaluationScience/papers/2406.12045-tau-bench.md"
         - "CANDIDATES": "Evaluation/EvaluationScience/sources/CANDIDATES.md"
         - "MANIFEST": "Evaluation/EvaluationScience/sources/MANIFEST.md"
-  - "⚙️ Infra · 3":
+  - "⚙️ Infra · 4":
     - "Infra/README.md"
+    - "KVCachePD":
+        - "总报告": "Infra/KVCachePD/report.md"
+        - "lmcache-vllm-v1": "Infra/KVCachePD/implementation/lmcache-vllm-v1.md"
+        - "lmcache-system-paper": "Infra/KVCachePD/papers/lmcache-system-paper.md"
+        - "mooncake-fast25": "Infra/KVCachePD/papers/mooncake-fast25.md"
+        - "CANDIDATES": "Infra/KVCachePD/sources/CANDIDATES.md"
+        - "MANIFEST": "Infra/KVCachePD/sources/MANIFEST.md"
     - "QuantizationEdge": "Infra/QuantizationEdge/report.md"
     - "SpeculativeDecoding":
         - "总报告": "Infra/SpeculativeDecoding/report.md"
