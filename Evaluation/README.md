@@ -15,7 +15,7 @@
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
-| **EvaluationScience** | [评测科学：分数何时支持“模型更好”或“能力泛化”](<EvaluationScience/report.md>) | 101 行 |
+| **EvaluationScience** | [评测科学：分数何时支持“模型更好”或“能力泛化”](<EvaluationScience/report.md>) | 123 行 |
 
 ## 📎 子文档
 
@@ -26,7 +26,7 @@
 * [papers/2404.07972-osworld.md](<EvaluationScience/papers/2404.07972-osworld.md>) — 21 行 / 3,382 B
 * [papers/2406.12045-tau-bench.md](<EvaluationScience/papers/2406.12045-tau-bench.md>) — 27 行 / 4,006 B
 * [sources/CANDIDATES.md](<EvaluationScience/sources/CANDIDATES.md>) — 24 行 / 6,023 B
-* [sources/MANIFEST.md](<EvaluationScience/sources/MANIFEST.md>) — 30 行 / 15,774 B
+* [sources/MANIFEST.md](<EvaluationScience/sources/MANIFEST.md>) — 30 行 / 16,031 B
 
 </details>
 

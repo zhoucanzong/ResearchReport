@@ -18,7 +18,7 @@
 <div align="center">
 
 <!-- SCRIPT:badges START -->
-[**65** 主报告](index/by-report.md) &nbsp; · &nbsp; [**214** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**36** 技术专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
+[**65** 主报告](index/by-report.md) &nbsp; · &nbsp; [**218** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**36** 技术专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
 <!-- SCRIPT:badges END -->
 
 </div>
@@ -123,11 +123,11 @@
 <!-- SCRIPT:recent START · 报告日期优先，缺失时回退最近提交日 -->
 | 日期 | 阅读条目 | 板块 |
 | :-- | :-- | :-- |
-| 2026-10-23 | [AntibioticDiscovery](<AI4Science/AntibioticDiscovery/report.md>) | AI4Science |
-| 2026-10-23 | [Astronomy](<AI4Science/Astronomy/report.md>) | AI4Science |
-| 2026-10-23 | [AutonomousLabs](<AI4Science/AutonomousLabs/report.md>) | AI4Science |
-| 2026-10-23 | [Chemistry](<AI4Science/Chemistry/report.md>) | AI4Science |
-| 2026-10-23 | [MaterialsDiscovery](<AI4Science/MaterialsDiscovery/report.md>) | AI4Science |
+| 2026-10-24 | [AgentSystems](<Agents/AgentSystems/report.md>) | Agents |
+| 2026-10-24 | [Alignment](<LLM/Alignment/report.md>) | LLM |
+| 2026-10-24 | [DecisionModels](<LLM/DecisionModels/report.md>) | LLM |
+| 2026-10-24 | [Alibaba-Gen](<Models/Alibaba-Gen/report.md>) | Models |
+| 2026-10-24 | [ByteDance-Gen](<Models/ByteDance-Gen/report.md>) | Models |
 <!-- SCRIPT:recent END -->
 
 [查看全部更新 →](index/recent.md)

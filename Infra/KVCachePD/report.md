@@ -25,7 +25,7 @@ status: current
 
 ## 2. 论文各自说明了什么
 
-Mooncake 把 KV 缓存看作跨实例的共享资源，并由 Conductor 依据缓存前缀、排队时间、传输与 prefill 估计选择执行位置。最终 FAST ’25 论文与后续 arXiv 长版的标题、实验范围和 headline 数字不同；本专题以 FAST ’25 的 155–170 页为主要论文证据，不把 arXiv v5 的扩展模拟结果并入会议版数字。[S1；固定版与表图定位见 sources/MANIFEST.md]
+Mooncake 把 KV 缓存看作跨实例的共享资源，并由 Conductor 依据缓存前缀、排队时间、传输与 prefill 估计选择执行位置。这里仅用 FAST ’25 论文做架构层面的 bounded comparison，不据此声称读过或验证 Mooncake 源码。最终 FAST ’25 论文与后续 arXiv 长版的标题、实验范围和 headline 数字不同；本专题以 FAST ’25 的 155–170 页为主要论文证据，不把 arXiv v5 的扩展模拟结果并入会议版数字。[S1；固定版与表图定位见 sources/MANIFEST.md]
 
 LMCache paper 将存储层插在引擎 connector 与 CPU/远端 backend 之间：connector 向调度器报告可复用 token 数，worker 的 layer hooks 负责 load/save，engine 把 paged KV 打包成 I/O chunk 后交给 storage manager。论文评测的是 LMCache v0.3.6；当前多进程（MP）官方文档和本次代码快照描述的是更新后的接口，不能把论文的 benchmark 直接当作当前 MP 代码性能验证。[S2, S3]
 
@@ -56,12 +56,16 @@ sequenceDiagram
     W->>W: wait_for_layer_load before attention
 ```
 
-状态解释：
+这条链上有四个不同的可观察状态；“hit”只描述第一步，不能代替后面三步：
 
-- **Scheduler lookup** 证明 key/prefix 可匹配，不证明数据在本地，更不证明 GPU 可读。
-- **Receiver allocation** 会先建立目标内存对象并把 key 登记到本地映射，然后才回 AllocResponse；此时 key 已可见，但 payload 仍在传输中。
-- **NIXL DONE** 证明该 transfer operation 成功结束。LMCache sender 之后发 `ProxyNotif`；这是单向完成通知，不是 proxy 回给 sender 的 ACK。仓库示例 proxy 按 TP rank 计数后放行 decode。若配置把通知责任交给外部 orchestrator，这个示例 gate 不能推广到所有部署。
-- **D 端 `batched_to_gpu` 与 layer wait** 才证明请求 KV 已搬入 engine GPU layout 并可供相应注意力层读取。CPU/远端 key hit、payload transfer complete、GPU-readable 是不同里程碑。
+| 状态 | 源码能证明什么 | 不能据此声称什么 |
+| :-- | :-- | :-- |
+| **prefix metadata hit** | Scheduler/lookup client 找到连续 token chunk 的 key，并向 vLLM 报告可加载 token 数（`vllm_v1_adapter.py:1361-1536`；`cache_engine.py:1152-1267`）。 | 不证明当前进程已有完整 payload，更不证明它在 host RAM 或 vLLM 的 KV 页表中。跨存储 `contains` 后，实际 `batched_get` 仍可能返回 `None`（`cache_engine.py:1775-1802`）。 |
+| **receiver staging object 可用** | `pd_buffer_device` 是必填配置，allocator 据它选 CPU 或 GPU 池（`config.py:239-243,757-765`; `pd_backend_async.py:257-283,441-513`）。Receiver 先 reserve、分配并登记 key，再返回 `AllocResponse`（`pd_backend_async.py:1294-1415,1472-1483`）；`contains` 只查本地 key→object 映射（`:638-654`）。 | “key 可见”不表示 NIXL 已写完。这里也不总是 **host availability**：仓库 1P1D 示例把 P/D `pd_buffer_device` 都设为 `cuda`（`examples/disagg_prefill/1p1d/configs/lmcache-prefiller-config.yaml:3-10`; `examples/disagg_prefill/1p1d/configs/lmcache-decoder-config.yaml:3-10`）。只有显式选 CPU buffer 时，host-resident staging 才是这个状态；GPU buffer 则是 receiver GPU staging。 |
+| **payload transfer complete** | NIXL `async_batched_write` 轮询至 `DONE` 后返回（`nixl_channel.py:507-548`）；sender 只在收到最后一批且累计完成 chunk 数达到 request 总数后发 `ProxyNotif`（`pd_backend_async.py:949-956,1003-1028`）。示例 proxy 等各 TP rank 的通知后才放行 D（`disagg_proxy_server.py:355-396,520-565`）。 | 不表示 payload 已写入 vLLM 的 paged KV slots。`ProxyNotif` 是单向通知；跳过它时要由外部 orchestrator 承担 readiness gate（配置和 backend 见实现追踪）。 |
+| **engine KV 可读** | `CacheEngine.retrieve` 先取回 `MemoryObj` 并填 `ret_mask`，随后调用 `gpu_connector.batched_to_gpu`（`cache_engine.py:1775-1802,898-937`）。因此内部 `ret_mask=True` 早于 cache-object→engine-KV copy。非 layerwise VLLM connector 调用 `TransferDirection.H2D` 并同步 load stream 后返回（`gpu_connectors.py:271-335,412-416`）；layerwise 路径则由每层 `wait_for_layer_load` 推进和等待（`vllm_v1_adapter.py:974-999`; `cache_engine.py:1001-1128`）。 | CPU source 时这对应 host→device copy；如果 PD buffer 配在 `cuda`，仅凭该 enum 名称不能推出数据一定经过 host/PCIe。对注意力而言，准入条件是该层写入 vLLM KV slots 的 copy 已完成，而不是 metadata hit、receiver key 可见或内部 `ret_mask` 已置位。 |
+
+这也解释了为什么 P→D 示例需要 proxy/orchestrator 的完成门：receiver key 登记早于传输，单看 lookup 的命中不能安全地启动 decode。host RAM 是否出现、copy 是否经过 PCIe/H2D，取决于具体 `pd_buffer_device` 与 connector/backend；本专题不把它们泛化成每次传输都必经的步骤。`CacheEngine.retrieve` 也明确允许 MemoryObj 不在 pinned CPU memory 上，例如 RDMA/存储到 GPU 的路径（`cache_engine.py:898-902`）。
 
 ## 4. 部分命中、错误和取消边界
 

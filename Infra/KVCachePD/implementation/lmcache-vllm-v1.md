@@ -26,6 +26,23 @@ prefix key matched
     → layer wait completes; KV is usable
 ```
 
+## Readiness boundaries: what each signal actually means
+
+| Signal/state | Evidence in this commit | Boundary |
+| :-- | :-- | :-- |
+| Scheduler prefix hit | `get_num_new_matched_tokens` calls the lookup client and returns an external-token count (`vllm_v1_adapter.py:1361-1536`); `CacheEngine.lookup` advances only through consecutive chunk keys (`cache_engine.py:1152-1267`). | This is a prefix/key match. A non-PD backend can still fail the later data read: `_process_tokens_internal` handles `batched_get(...)=None`, truncates `ret_mask`, and drops the suffix (`cache_engine.py:1775-1838`). |
+| Receiver staging slot and key | `pd_buffer_device` is mandatory and selects the CPU or GPU allocator (`config.py:239-243,757-765`; `pd_backend_async.py:257-283,441-513`). Receiver allocates and calls `put(key, mem_obj)` before its allocation response (`pd_backend_async.py:1381-1422,1472-1483`); `contains` only checks the local map (`:638-654`). | With `pd_buffer_device=cpu`, an allocated host buffer exists; with `cuda`, receiver staging is GPU memory. The example 1P1D configs choose `cuda` (`examples/disagg_prefill/1p1d/configs/lmcache-prefiller-config.yaml:3-10`, `examples/disagg_prefill/1p1d/configs/lmcache-decoder-config.yaml:3-10`). Neither allocation nor key visibility proves that NIXL populated the object. |
+| Transfer payload complete | NIXL polls to `DONE` and returns (`transfer_channel/nixl_channel.py:507-548`). Sender notification requires both the last-prefill batch and `completed_chunks >= total_chunks` (`pd_backend_async.py:949-956,1003-1028`). | This is a transfer completion boundary, not vLLM-page readiness. `ProxyNotif` is one-way; the sample proxy waits across TP ranks (`examples/disagg_prefill/disagg_proxy_server.py:355-396,520-565`). |
+| Engine-page copy complete | Ordinary retrieve sets internal `ret_mask` while it is still assembling fetched objects (`cache_engine.py:1775-1802`), then calls `gpu_connector.batched_to_gpu` (`:898-937`). The VLLM connector issues `TransferDirection.H2D` and synchronizes the load stream before returning (`gpu_connectors.py:271-335,412-416`). | Internal `ret_mask` is not a completion event. The blocking retrieve returns after the connector copy; in layerwise mode, each `wait_for_layer_load` advances a layer and the final advance synchronizes the last layer (`vllm_v1_adapter.py:974-999`; `cache_engine.py:1001-1128`). The H2D enum alone does not establish a host/PCIe path when `pd_buffer_device=cuda`. |
+
+This commit does not provide a single universal “cache-ready” bit spanning these states. For a CPU PD buffer, the host payload becomes usable only after the NIXL completion; for the sample CUDA-buffer deployment, receiver staging is on GPU and the docs/config do not establish a host-resident stage. In either case, the vLLM paged cache becomes usable only after the engine-page copy completes (per-layer for layerwise mode). `CacheEngine.retrieve` also notes that its `MemoryObj` need not be pinned CPU memory and cites RDMA as a reason (`cache_engine.py:898-902`), so “host availability” is a configuration/path-specific milestone, not a universal step.
+
+### Test evidence and its limits
+
+- `tests/v1/storage_backend/test_pd_backend_async.py::test_sender_chunk_ordering` deliberately lets the last batch complete first and asserts that `ProxyNotif` waits for the earlier slow batch (`:331-397`). It tests sender notification ordering, not the vLLM attention gate end-to-end.
+- `tests/v1/storage_backend/test_pd_backend_async.py::test_receiver_cancel_notif_releases_keys_and_reservation` asserts cancellation removes keys and frees reservation (`:995-1027`); `test_receiver_alloc_timeout` and `test_receiver_fail_fast_overflow` cover receiver rollback (`:603-685`). These are local backend state tests, not a race test against an in-flight NIXL write.
+- `tests/inprocess/v1/test_gpu_connector.py::test_vllm_paged_connector_v3_with_gpu_and_mla` parameterizes GPU-vs-pinned-memory `MemoryObj` and asserts that connector `from_gpu` then `to_gpu` restores paged KV contents (`:219-231,244-255,308-352`). The test module skips unless CUDA is available (`:31-35`). This is layout/copy test coverage, not a result from this audit; I did not run it. I found no test here that proves a receiver key hit cannot race an incomplete transfer, or that abort cancels a submitted NIXL operation.
+
 ## Partial hits, failures and cancellation
 
 - **Partial prefix:** `lookup` stops at the first missing chunk; the connector returns the continuous prefix length and the remaining suffix is scheduled normally. The exact compute/admission consequences depend on vLLM scheduling and the selected configuration.

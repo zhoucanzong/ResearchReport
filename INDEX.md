@@ -15,15 +15,15 @@
 | --- | --- |
 | **条目数**（`report.md`） | **65** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 10 · Agents 1 · VisualGen 8 · WorldModel 2 · AI4Science 10 · Evaluation 1 · Infra 4 · OpenSource 6 |
-| 条目子文档数 | 214 |
-| 条目正文行数（剔除 front-matter） | 27,953 |
-| 条目字节 | 2,120,215 B |
+| 条目子文档数 | 218 |
+| 条目正文行数（剔除 front-matter） | 27,992 |
+| 条目字节 | 2,128,944 B |
 | 带 front-matter 的条目 | 24 |
 | 带合法 `date` 的条目 | 24 |
-| 文档（除生成物外的全部 `.md`） | 300 |
+| 文档（除生成物外的全部 `.md`） | 304 |
 | 其中文件名 `README.md` | 11 |
-| 纳入版本控制的文件 | 316 |
-| 纳入版本控制的 `.md` | 300 |
+| 纳入版本控制的文件 | 324 |
+| 纳入版本控制的 `.md` | 308 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -34,14 +34,14 @@
 | --- | --: | --: | --: | --: | --- |
 | Models | 23 | 41 | 12,127 | 906,146 B | [板块页 →](<Models/README.md>) |
 | LLM | 10 | 54 | 4,260 | 334,154 B | [板块页 →](<LLM/README.md>) |
-| Agents | 1 | 7 | 60 | 7,265 B | [板块页 →](<Agents/README.md>) |
+| Agents | 1 | 11 | 73 | 9,758 B | [板块页 →](<Agents/README.md>) |
 | VisualGen | 8 | 9 | 6,758 | 320,420 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 2 | 41 | 1,244 | 139,511 B | [板块页 →](<WorldModel/README.md>) |
 | AI4Science | 10 | 53 | 836 | 138,955 B | [板块页 →](<AI4Science/README.md>) |
-| Evaluation | 1 | 7 | 101 | 21,964 B | [板块页 →](<Evaluation/README.md>) |
-| Infra | 4 | 43 | 998 | 83,873 B | [板块页 →](<Infra/README.md>) |
+| Evaluation | 1 | 7 | 123 | 25,654 B | [板块页 →](<Evaluation/README.md>) |
+| Infra | 4 | 43 | 1,002 | 86,419 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 35 | 1,569 | 167,927 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **65** | **300** | **27,953** | **2,120,215 B** | — |
+| **合计** | **65** | **304** | **27,992** | **2,128,944 B** | — |
 
 ## 分面索引
 
@@ -517,24 +517,28 @@
 
 </details>
 
-### Agents（1 条目 / 7 文档）
+### Agents（1 条目 / 11 文档）
 
 <details>
-<summary><b>Agents Agents（1 条目 / 5 子文档）</b></summary>
+<summary><b>Agents Agents（1 条目 / 9 子文档）</b></summary>
 
   <details>
-  <summary><b>AgentSystems</b> · <code>Agents/AgentSystems/report.md</code> · 60 行 · —</summary>
+  <summary><b>AgentSystems</b> · <code>Agents/AgentSystems/report.md</code> · 73 行 · —</summary>
 
 
-    * **条目**：[Agents/AgentSystems/report.md](<Agents/AgentSystems/report.md>)（60 行 / 7,265 B）
+    * **条目**：[Agents/AgentSystems/report.md](<Agents/AgentSystems/report.md>)（73 行 / 9,758 B）
     * **专题目录**：`Agents/AgentSystems`
     * **元数据**：type=`—` · domain=`Agents` · subject=`AgentSystems` · date=`—` · status=`—`
-    * **子文档（5）**
-        * [papers/2026-acl-long-1573-toolscope.md](<Agents/AgentSystems/papers/2026-acl-long-1573-toolscope.md>) — 20 行 / 2,074 B
+    * **子文档（9）**
+        * [papers/2026-acl-long-1573-toolscope.md](<Agents/AgentSystems/papers/2026-acl-long-1573-toolscope.md>) — 19 行 / 2,073 B
+        * [papers/2026-acl-long-1880-fission-grpo.md](<Agents/AgentSystems/papers/2026-acl-long-1880-fission-grpo.md>) — 19 行 / 2,332 B
         * [papers/2026-acl-long-370-mem2actbench.md](<Agents/AgentSystems/papers/2026-acl-long-370-mem2actbench.md>) — 21 行 / 2,530 B
-        * [papers/2026-acl-long-981-agemem.md](<Agents/AgentSystems/papers/2026-acl-long-981-agemem.md>) — 29 行 / 3,554 B
-        * [papers/2609.34385-jam.md](<Agents/AgentSystems/papers/2609.34385-jam.md>) — 29 行 / 3,639 B
-        * [sources/MANIFEST.md](<Agents/AgentSystems/sources/MANIFEST.md>) — 10 行 / 798 B
+        * [papers/2026-acl-long-981-agemem.md](<Agents/AgentSystems/papers/2026-acl-long-981-agemem.md>) — 28 行 / 3,553 B
+        * [papers/2602.02475-agentrx.md](<Agents/AgentSystems/papers/2602.02475-agentrx.md>) — 19 行 / 2,009 B
+        * [papers/2608.14380-agentrewind.md](<Agents/AgentSystems/papers/2608.14380-agentrewind.md>) — 23 行 / 2,791 B
+        * [papers/2609.34385-jam.md](<Agents/AgentSystems/papers/2609.34385-jam.md>) — 28 行 / 3,638 B
+        * [sources/MANIFEST.md](<Agents/AgentSystems/sources/MANIFEST.md>) — 13 行 / 1,233 B
+        * [topics/long-horizon-execution-recovery.md](<Agents/AgentSystems/topics/long-horizon-execution-recovery.md>) — 17 行 / 2,935 B
 
   </details>
 
@@ -875,10 +879,10 @@
 <summary><b>评测科学 Evaluation（1 条目 / 5 子文档）</b></summary>
 
   <details>
-  <summary><b>EvaluationScience</b> · <code>Evaluation/EvaluationScience/report.md</code> · 101 行 · 2026-10-23</summary>
+  <summary><b>EvaluationScience</b> · <code>Evaluation/EvaluationScience/report.md</code> · 123 行 · 2026-10-23</summary>
 
 
-    * **条目**：[Evaluation/EvaluationScience/report.md](<Evaluation/EvaluationScience/report.md>)（101 行 / 21,964 B）
+    * **条目**：[Evaluation/EvaluationScience/report.md](<Evaluation/EvaluationScience/report.md>)（123 行 / 25,654 B）
     * **专题目录**：`Evaluation/EvaluationScience`
     * **元数据**：type=`research` · domain=`Evaluation` · subject=`EvaluationScience` · date=`2026-10-23` · status=`current`
     * **子文档（5）**
@@ -886,7 +890,7 @@
         * [papers/2404.07972-osworld.md](<Evaluation/EvaluationScience/papers/2404.07972-osworld.md>) — 21 行 / 3,382 B
         * [papers/2406.12045-tau-bench.md](<Evaluation/EvaluationScience/papers/2406.12045-tau-bench.md>) — 27 行 / 4,006 B
         * [sources/CANDIDATES.md](<Evaluation/EvaluationScience/sources/CANDIDATES.md>) — 24 行 / 6,023 B
-        * [sources/MANIFEST.md](<Evaluation/EvaluationScience/sources/MANIFEST.md>) — 30 行 / 15,774 B
+        * [sources/MANIFEST.md](<Evaluation/EvaluationScience/sources/MANIFEST.md>) — 30 行 / 16,031 B
 
   </details>
 
@@ -898,18 +902,18 @@
 <summary><b>基础设施 Infra（4 条目 / 38 子文档）</b></summary>
 
   <details>
-  <summary><b>KVCachePD</b> · <code>Infra/KVCachePD/report.md</code> · 80 行 · 2026-10-23</summary>
+  <summary><b>KVCachePD</b> · <code>Infra/KVCachePD/report.md</code> · 84 行 · 2026-10-23</summary>
 
 
-    * **条目**：[Infra/KVCachePD/report.md](<Infra/KVCachePD/report.md>)（80 行 / 8,376 B）
+    * **条目**：[Infra/KVCachePD/report.md](<Infra/KVCachePD/report.md>)（84 行 / 10,922 B）
     * **专题目录**：`Infra/KVCachePD`
     * **元数据**：type=`research` · domain=`Infra` · subject=`KVCachePD` · date=`2026-10-23` · status=`current`
     * **子文档（5）**
-        * [implementation/lmcache-vllm-v1.md](<Infra/KVCachePD/implementation/lmcache-vllm-v1.md>) — 50 行 / 9,915 B
+        * [implementation/lmcache-vllm-v1.md](<Infra/KVCachePD/implementation/lmcache-vllm-v1.md>) — 67 行 / 14,287 B
         * [papers/lmcache-system-paper.md](<Infra/KVCachePD/papers/lmcache-system-paper.md>) — 26 行 / 3,198 B
         * [papers/mooncake-fast25.md](<Infra/KVCachePD/papers/mooncake-fast25.md>) — 21 行 / 3,051 B
         * [sources/CANDIDATES.md](<Infra/KVCachePD/sources/CANDIDATES.md>) — 13 行 / 1,614 B
-        * [sources/MANIFEST.md](<Infra/KVCachePD/sources/MANIFEST.md>) — 22 行 / 4,393 B
+        * [sources/MANIFEST.md](<Infra/KVCachePD/sources/MANIFEST.md>) — 22 行 / 4,882 B
 
   </details>
 
@@ -961,11 +965,11 @@
         * [papers/sglang-implementation.md](<Infra/SpeculativeDecoding/papers/sglang-implementation.md>) — 220 行 / 15,358 B
         * [papers/vllm-implementation.md](<Infra/SpeculativeDecoding/papers/vllm-implementation.md>) — 227 行 / 18,077 B
         * [sources/CANDIDATES.md](<Infra/SpeculativeDecoding/sources/CANDIDATES.md>) — 91 行 / 9,644 B
-        * [sources/CODE-AUDIT.md](<Infra/SpeculativeDecoding/sources/CODE-AUDIT.md>) — 87 行 / 8,110 B
+        * [sources/CODE-AUDIT.md](<Infra/SpeculativeDecoding/sources/CODE-AUDIT.md>) — 99 行 / 12,828 B
         * [sources/MANIFEST.md](<Infra/SpeculativeDecoding/sources/MANIFEST.md>) — 65 行 / 9,872 B
         * [topics/algorithm-families.md](<Infra/SpeculativeDecoding/topics/algorithm-families.md>) — 164 行 / 12,014 B
         * [topics/systems-throughput-latency.md](<Infra/SpeculativeDecoding/topics/systems-throughput-latency.md>) — 168 行 / 10,532 B
-        * [topics/verification-acceptance.md](<Infra/SpeculativeDecoding/topics/verification-acceptance.md>) — 159 行 / 9,197 B
+        * [topics/verification-acceptance.md](<Infra/SpeculativeDecoding/topics/verification-acceptance.md>) — 173 行 / 11,577 B
 
   </details>
 
@@ -1074,9 +1078,9 @@
     * **子文档（5）**
         * [claim-audit.md](<OpenSource/vllm/claim-audit.md>) — 437 行 / 53,917 B
         * [kv-cache-and-prefix-reuse.md](<OpenSource/vllm/kv-cache-and-prefix-reuse.md>) — 203 行 / 19,007 B
-        * [online-request-lifecycle.md](<OpenSource/vllm/online-request-lifecycle.md>) — 34 行 / 6,168 B
+        * [online-request-lifecycle.md](<OpenSource/vllm/online-request-lifecycle.md>) — 51 行 / 11,502 B
         * [scheduling-and-spec-decode.md](<OpenSource/vllm/scheduling-and-spec-decode.md>) — 246 行 / 24,286 B
-        * [sources/MANIFEST.md](<OpenSource/vllm/sources/MANIFEST.md>) — 20 行 / 2,882 B
+        * [sources/MANIFEST.md](<OpenSource/vllm/sources/MANIFEST.md>) — 20 行 / 3,351 B
 
   </details>
 
@@ -1090,15 +1094,15 @@
 | --- | --- | --: | --: |
 | [AGENTS.md](<AGENTS.md>) |  | 9 | 908 B |
 | [AI4Science/README.md](<AI4Science/README.md>) | AI4Science | 137 | 6,760 B |
-| [Agents/README.md](<Agents/README.md>) | Agents | 37 | 1,430 B |
+| [Agents/README.md](<Agents/README.md>) | Agents | 41 | 1,888 B |
 | [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 37 | 1,487 B |
-| [Infra/README.md](<Infra/README.md>) | Infra | 79 | 5,682 B |
+| [Infra/README.md](<Infra/README.md>) | Infra | 79 | 5,684 B |
 | [LLM/README.md](<LLM/README.md>) | LLM | 102 | 6,968 B |
 | [Models/README.md](<Models/README.md>) | Models | 101 | 4,888 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 93 | 4,069 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 195 | 12,547 B |
+| [README.md](<README.md>) |  | 195 | 12,475 B |
 | [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,616 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 77 | 4,941 B |
 | [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |

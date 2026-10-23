@@ -224,10 +224,14 @@ nav:
     - "AgentSystems":
         - "总报告": "Agents/AgentSystems/report.md"
         - "2026-acl-long-1573-toolscope": "Agents/AgentSystems/papers/2026-acl-long-1573-toolscope.md"
+        - "2026-acl-long-1880-fission-grpo": "Agents/AgentSystems/papers/2026-acl-long-1880-fission-grpo.md"
         - "2026-acl-long-370-mem2actbench": "Agents/AgentSystems/papers/2026-acl-long-370-mem2actbench.md"
         - "2026-acl-long-981-agemem": "Agents/AgentSystems/papers/2026-acl-long-981-agemem.md"
+        - "2602.02475-agentrx": "Agents/AgentSystems/papers/2602.02475-agentrx.md"
+        - "2608.14380-agentrewind": "Agents/AgentSystems/papers/2608.14380-agentrewind.md"
         - "2609.34385-jam": "Agents/AgentSystems/papers/2609.34385-jam.md"
         - "MANIFEST": "Agents/AgentSystems/sources/MANIFEST.md"
+        - "long-horizon-execution-recovery": "Agents/AgentSystems/topics/long-horizon-execution-recovery.md"
   - "🎨 VisualGen · 8":
     - "VisualGen/README.md"
     - "3DGen": "VisualGen/3DGen/report.md"

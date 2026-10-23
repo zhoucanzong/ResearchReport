@@ -15,18 +15,22 @@
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
-| **AgentSystems** | [Agent 系统：让模型在环境中持续完成任务](<AgentSystems/report.md>) | 60 行 |
+| **AgentSystems** | [Agent 系统：让模型在环境中持续完成任务](<AgentSystems/report.md>) | 73 行 |
 
 ## 📎 子文档
 
 <details>
-<summary><b>AgentSystems</b>（5 份）</summary>
+<summary><b>AgentSystems</b>（9 份）</summary>
 
-* [papers/2026-acl-long-1573-toolscope.md](<AgentSystems/papers/2026-acl-long-1573-toolscope.md>) — 20 行 / 2,074 B
+* [papers/2026-acl-long-1573-toolscope.md](<AgentSystems/papers/2026-acl-long-1573-toolscope.md>) — 19 行 / 2,073 B
+* [papers/2026-acl-long-1880-fission-grpo.md](<AgentSystems/papers/2026-acl-long-1880-fission-grpo.md>) — 19 行 / 2,332 B
 * [papers/2026-acl-long-370-mem2actbench.md](<AgentSystems/papers/2026-acl-long-370-mem2actbench.md>) — 21 行 / 2,530 B
-* [papers/2026-acl-long-981-agemem.md](<AgentSystems/papers/2026-acl-long-981-agemem.md>) — 29 行 / 3,554 B
-* [papers/2609.34385-jam.md](<AgentSystems/papers/2609.34385-jam.md>) — 29 行 / 3,639 B
-* [sources/MANIFEST.md](<AgentSystems/sources/MANIFEST.md>) — 10 行 / 798 B
+* [papers/2026-acl-long-981-agemem.md](<AgentSystems/papers/2026-acl-long-981-agemem.md>) — 28 行 / 3,553 B
+* [papers/2602.02475-agentrx.md](<AgentSystems/papers/2602.02475-agentrx.md>) — 19 行 / 2,009 B
+* [papers/2608.14380-agentrewind.md](<AgentSystems/papers/2608.14380-agentrewind.md>) — 23 行 / 2,791 B
+* [papers/2609.34385-jam.md](<AgentSystems/papers/2609.34385-jam.md>) — 28 行 / 3,638 B
+* [sources/MANIFEST.md](<AgentSystems/sources/MANIFEST.md>) — 13 行 / 1,233 B
+* [topics/long-horizon-execution-recovery.md](<AgentSystems/topics/long-horizon-execution-recovery.md>) — 17 行 / 2,935 B
 
 </details>
 

@@ -15,7 +15,7 @@
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
-| **KVCachePD** | [KV Cache 服务与 Prefill/Decode 分离：什么时候复用，什么时候传输](<KVCachePD/report.md>) | 80 行 |
+| **KVCachePD** | [KV Cache 服务与 Prefill/Decode 分离：什么时候复用，什么时候传输](<KVCachePD/report.md>) | 84 行 |
 | **QuantizationEdge** | [模型量化与边缘部署研究报告](<QuantizationEdge/report.md>) | 188 行 |
 | **SpeculativeDecoding** | [投机解码（Speculative Decoding）技术专题 · 深度调研](<SpeculativeDecoding/report.md>) | 549 行 |
 | **TrainingInfra** | [大模型训练基础设施与分布式训练研究报告](<TrainingInfra/report.md>) | 181 行 |
@@ -25,11 +25,11 @@
 <details>
 <summary><b>KVCachePD</b>（5 份）</summary>
 
-* [implementation/lmcache-vllm-v1.md](<KVCachePD/implementation/lmcache-vllm-v1.md>) — 50 行 / 9,915 B
+* [implementation/lmcache-vllm-v1.md](<KVCachePD/implementation/lmcache-vllm-v1.md>) — 67 行 / 14,287 B
 * [papers/lmcache-system-paper.md](<KVCachePD/papers/lmcache-system-paper.md>) — 26 行 / 3,198 B
 * [papers/mooncake-fast25.md](<KVCachePD/papers/mooncake-fast25.md>) — 21 行 / 3,051 B
 * [sources/CANDIDATES.md](<KVCachePD/sources/CANDIDATES.md>) — 13 行 / 1,614 B
-* [sources/MANIFEST.md](<KVCachePD/sources/MANIFEST.md>) — 22 行 / 4,393 B
+* [sources/MANIFEST.md](<KVCachePD/sources/MANIFEST.md>) — 22 行 / 4,882 B
 
 </details>
 
@@ -64,11 +64,11 @@
 * [papers/sglang-implementation.md](<SpeculativeDecoding/papers/sglang-implementation.md>) — 220 行 / 15,358 B
 * [papers/vllm-implementation.md](<SpeculativeDecoding/papers/vllm-implementation.md>) — 227 行 / 18,077 B
 * [sources/CANDIDATES.md](<SpeculativeDecoding/sources/CANDIDATES.md>) — 91 行 / 9,644 B
-* [sources/CODE-AUDIT.md](<SpeculativeDecoding/sources/CODE-AUDIT.md>) — 87 行 / 8,110 B
+* [sources/CODE-AUDIT.md](<SpeculativeDecoding/sources/CODE-AUDIT.md>) — 99 行 / 12,828 B
 * [sources/MANIFEST.md](<SpeculativeDecoding/sources/MANIFEST.md>) — 65 行 / 9,872 B
 * [topics/algorithm-families.md](<SpeculativeDecoding/topics/algorithm-families.md>) — 164 行 / 12,014 B
 * [topics/systems-throughput-latency.md](<SpeculativeDecoding/topics/systems-throughput-latency.md>) — 168 行 / 10,532 B
-* [topics/verification-acceptance.md](<SpeculativeDecoding/topics/verification-acceptance.md>) — 159 行 / 9,197 B
+* [topics/verification-acceptance.md](<SpeculativeDecoding/topics/verification-acceptance.md>) — 173 行 / 11,577 B
 
 </details>
 

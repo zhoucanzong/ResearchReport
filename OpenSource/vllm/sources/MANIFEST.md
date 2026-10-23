@@ -13,8 +13,8 @@
 
 ### 在线流式请求生命周期补充
 
-- 同一固定来源 `vllm-project/vllm@fa75d3456d60a5ffe923818c4b495295675b38e1`；静态追踪 `api_router.py:43-85`、chat serving `:299-422,750-816,912-919`、`async_llm.py:324-382,480-586,795-803,840-842`、EngineCore `:554-559,657-687`、OutputProcessor `:599-660,813-853`、scheduler abort/释放 `:2733-2859` 与 KV manager `:620-630`。
-- 覆盖单 choice 文本 SSE 的路由、准入、EngineCore 执行边界、输出 collector、SSE 结束和条件性断连清理。未运行服务/模型；ASGI disconnect 传播、worker error、deadline 与端到端背压仍未验证。KV connector 和执行中 GPU step 可延后 block 归还。
-- 阅读稿：[online-request-lifecycle.md](../online-request-lifecycle.md)。此补充不表示整份仓库报告或所有配置路径已重新逐项审计。
+- 同一固定来源 `vllm-project/vllm@fa75d3456d60a5ffe923818c4b495295675b38e1`；本次扩核静态追踪 `api_utils.py:53-94`、`sse_keep_alive.py:36-65`、chat serving `:299-422,469-526,912-919`、`async_llm.py:324-382,795-842,924-947`、`output_processor.py:53-103,593-661`、EngineCore `:554-559,657-687`、scheduler abort/释放 `:2733-2859` 与 KV manager `:620-630`。
+- 阅读了测试定义但未执行：`tests/entrypoints/openai/chat_completion/test_serving_chat.py:1115-1215`（mock stream cancel/close/error）、`tests/v1/engine/test_async_llm.py:684-730`（引擎级取消与请求清理）、`tests/v1/engine/test_abort_final_step.py:144-164,265-319`（执行中最后一步 abort、connector 状态及清理）。它们没有端到端模拟 HTTP socket 断连。
+- 覆盖单 choice 文本 SSE 的路由、准入、EngineCore 执行边界、输出 collector、错误块、SSE 结束和条件性断连清理。没有运行服务/模型/pytest/GPU；真实 ASGI disconnect 传播、用户可见 queue-full 状态码、deadline 与端到端背压仍未验证。KV connector 和执行中 GPU step 可延后 block 归还。阅读稿：[online-request-lifecycle.md](../online-request-lifecycle.md)。这不是整份仓库或所有 runner 配置的重新审计。
 
 引用格式：本条目的简写 `文件:行` 均相对上述固定源码根；回源使用 `https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/<path>#L<line>`。保留旧阅读记录不将其覆盖等级自动升级成本轮已核。

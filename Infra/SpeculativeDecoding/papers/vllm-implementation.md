@@ -128,7 +128,7 @@
 
 ### 4.2 拒绝残差不等于无条件 target
 
-在固定 commit 2b85d9cb 的 [恢复 kernel 第 1044–1061 行](https://github.com/vllm-project/vllm/blob/2b85d9cb65c1f56c347cb7f56f1596a6b8b28373/vllm/v1/sample/rejection_sampler.py#L1044-L1061)，没有 draft_probs 时将被拒的候选位置置零；有 draft_probs 时取 max(p-q,0)。前者对应 q 为该候选的 point mass，拒绝后其他 token 的相对质量仍按 p 分配。kernel 用指数随机数的 argmax 竞争采样，不需要显式将全部概率除以同一个归一化常数；不能据没有除法就判断“未归一化所以有偏”。数学证明见 [验证专题 §3.2](../topics/verification-acceptance.md#32-one-hot-草稿也是合法提议)。
+在固定 commit 2b85d9cb 的 [恢复 kernel 第 1044–1061 行](https://github.com/vllm-project/vllm/blob/2b85d9cb65c1f56c347cb7f56f1596a6b8b28373/vllm/v1/sample/rejection_sampler.py#L1044-L1061)，没有 draft_probs 时将被拒的候选位置置零；有 draft_probs 时取 max(p-q,0)。前者对应 q 为该候选的 point mass，拒绝后其他 token 的相对质量仍按 p 分配。kernel 用指数随机数的 argmax 竞争采样，不需要显式将全部概率除以同一个归一化常数；不能据没有除法就判断“未归一化所以有偏”。数学证明见 [验证专题 §3.3](../topics/verification-acceptance.md#33-one-hot-草稿也是合法提议)。
 
 若候选实际来自随机分布，runner 因缓存缺失返回 None 并不自动证明回退仍保持原分布；需要把真实提议和条件概率一并检查。这是回退路径的待验证边界，不是“有 draft 模型必须保存全词表 q”的定律。
 

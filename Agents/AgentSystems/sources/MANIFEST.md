@@ -8,3 +8,6 @@
 | [JAM](https://arxiv.org/html/2609.34385v1) | arXiv:2609.34385v1, 2026-09-28 | §2–4、Tables 1–4、Appendix A.4、B.4–B.6 / Table 10 |
 | [Mem2ActBench](https://aclanthology.org/2026.acl-long.370/) | ACL 2026, pp. 8173–8190 | §1、§3–5、Tables 1–6、Limitations |
 | [ToolScope](https://aclanthology.org/2026.acl-long.1573/) | ACL 2026, pp. 34095–34119 | §1、§3–4、Tables 2–6、Limitations / Ethical Considerations |
+| [AgentRx](https://arxiv.org/html/2602.02475v2) | arXiv v2, 2026-08-31; accepted to EMNLP Findings 2026 | §§2–4、§7、Tables 1/4/7、Appendix C |
+| [AgentRewind](https://arxiv.org/html/2608.14380v1) | arXiv v1, 2026-08-14 | §3、MettleBench、Tables 3–5、Appendix A.5、C.4–C.5、D |
+| [Fission-GRPO](https://aclanthology.org/2026.acl-long.1880/) | ACL 2026, pp. 40477–40491 | §§1/3–4、Tables 1–3、Limitations |
