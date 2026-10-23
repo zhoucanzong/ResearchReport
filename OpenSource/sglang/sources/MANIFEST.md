@@ -10,4 +10,10 @@
 - Traced：scheduler overlap及EAGLE draft→verify→publish→draft_extend的报告调用链；只读，不把线程/GPU异步路径画成已观测时序。
 - 未闭合：EAGLE上游拒绝分支、Rust与Python对拍、topk>1/阈值变化的分布证明、完整HTTP入口和真实性能。
 
+### 在线流式请求生命周期补充
+
+- 新增独立固定版本：[sgl-project/sglang@6e667c431009dfd70d88ea2dd9f8784bd0787d89](https://github.com/sgl-project/sglang/tree/6e667c431009dfd70d88ea2dd9f8784bd0787d89)，2026-10-23。未覆盖或升级主报告固定于 `2a08e261ecd4cdfb04ec354f9005f18b88108b7d` 的其他结论。
+- 静态追踪 HTTP/chat conversion、TokenizerManager IPC、scheduler admission/output、detokenizer、SSE、断连检测、排队/运行中 abort、cache finish 与 queue-full 503；未运行服务或测试。
+- 阅读稿：[online-request-lifecycle.md](../online-request-lifecycle.md)。ASGI 后台任务生命周期、worker error、deadline 以及端到端背压未验证；运行中 abort 在源码中延至 scheduler/decode 边界，不能表述为立即终止 kernel。
+
 引用格式：本条目的简写 `文件:行` 均相对上述固定源码根；回源使用 `https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/<path>#L<line>`。保留旧阅读记录不将其覆盖等级自动升级成本轮已核。

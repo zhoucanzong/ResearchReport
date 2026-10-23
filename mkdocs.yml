@@ -399,6 +399,7 @@ nav:
     - "sglang":
         - "总报告": "OpenSource/sglang/report.md"
         - "claim-audit": "OpenSource/sglang/claim-audit.md"
+        - "online-request-lifecycle": "OpenSource/sglang/online-request-lifecycle.md"
         - "scheduler-and-prefix-cache": "OpenSource/sglang/scheduler-and-prefix-cache.md"
         - "MANIFEST": "OpenSource/sglang/sources/MANIFEST.md"
         - "speculative-decoding-path": "OpenSource/sglang/speculative-decoding-path.md"
@@ -409,6 +410,7 @@ nav:
         - "总报告": "OpenSource/vllm/report.md"
         - "claim-audit": "OpenSource/vllm/claim-audit.md"
         - "kv-cache-and-prefix-reuse": "OpenSource/vllm/kv-cache-and-prefix-reuse.md"
+        - "online-request-lifecycle": "OpenSource/vllm/online-request-lifecycle.md"
         - "scheduling-and-spec-decode": "OpenSource/vllm/scheduling-and-spec-decode.md"
         - "MANIFEST": "OpenSource/vllm/sources/MANIFEST.md"
     - "mini-swe-agent":

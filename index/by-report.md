@@ -61,9 +61,9 @@
 | DeepInfer | OpenSource | [OpenSource/DeepInfer/report.md](<../OpenSource/DeepInfer/report.md>) | 4 | 140 | 2026-10-22 |
 | DeepSeekHarness | OpenSource | [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | 4 | 350 | 2026-10-20 |
 | nemotron | OpenSource | [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | 7 | 220 | — |
-| sglang | OpenSource | [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | 4 | 311 | 2026-10-16 |
+| sglang | OpenSource | [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | 5 | 315 | 2026-10-16 |
 | this-that-model | OpenSource | [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | 1 | 246 | 2026-10-16 |
-| vllm | OpenSource | [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | 4 | 294 | 2026-10-16 |
+| vllm | OpenSource | [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | 5 | 298 | 2026-10-16 |
 | 3DGen | VisualGen | [VisualGen/3DGen/report.md](<../VisualGen/3DGen/report.md>) | 0 | 857 | — |
 | AudioGen | VisualGen | [VisualGen/AudioGen/report.md](<../VisualGen/AudioGen/report.md>) | 0 | 914 | — |
 | AvatarGen | VisualGen | [VisualGen/AvatarGen/report.md](<../VisualGen/AvatarGen/report.md>) | 0 | 594 | — |
@@ -74,4 +74,4 @@
 | VideoGen | VisualGen | [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) | 0 | 898 | — |
 | EmbodiedVLA | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 23 | 642 | — |
 | WorldModels | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 602 | 2026-10-22 |
-| **合计** | — | — | **191** | **27,869** | — |
+| **合计** | — | — | **193** | **27,877** | — |

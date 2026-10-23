@@ -11,4 +11,10 @@
 - Audited：`worker/block_table.py:114-153`、`config/speculative.py:604-609`；“append-only”与greedy草稿语义。
 - 不作结论：GPU运行/性能、所有attention内核、所有connector、Mamba/SWA分支、新旧runner全配置等价。
 
+### 在线流式请求生命周期补充
+
+- 同一固定来源 `vllm-project/vllm@fa75d3456d60a5ffe923818c4b495295675b38e1`；静态追踪 `api_router.py:43-85`、chat serving `:299-422,750-816,912-919`、`async_llm.py:324-382,480-586,795-803,840-842`、EngineCore `:554-559,657-687`、OutputProcessor `:599-660,813-853`、scheduler abort/释放 `:2733-2859` 与 KV manager `:620-630`。
+- 覆盖单 choice 文本 SSE 的路由、准入、EngineCore 执行边界、输出 collector、SSE 结束和条件性断连清理。未运行服务/模型；ASGI disconnect 传播、worker error、deadline 与端到端背压仍未验证。KV connector 和执行中 GPU step 可延后 block 归还。
+- 阅读稿：[online-request-lifecycle.md](../online-request-lifecycle.md)。此补充不表示整份仓库报告或所有配置路径已重新逐项审计。
+
 引用格式：本条目的简写 `文件:行` 均相对上述固定源码根；回源使用 `https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/<path>#L<line>`。保留旧阅读记录不将其覆盖等级自动升级成本轮已核。

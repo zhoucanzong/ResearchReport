@@ -83,6 +83,8 @@ SGLang 的目标场景在 README 里被概括为 "agentic workloads, large-scale
 | 模型执行 | `python/sglang/srt/model_executor/model_runner.py` | CUDA graph、attn backend 选择 |
 | 投机解码 | `python/sglang/srt/speculative/` | 按算法分 worker |
 
+普通文本 HTTP/SSE 请求从入口经 tokenizer、scheduler、detokenizer 到断连清理的独立追踪见 [在线请求生命周期专题](online-request-lifecycle.md)。它固定了单独的 2026-10-23 源码 SHA，不会升级本报告现有固定快照上的其他结论。
+
 `scan_repo.py` 的 `entry_candidates` 把 `.agents/skills/*/SKILL.md` 排在前面，这是**误判**：那些是仓库自带的 Agent 协作说明书，不是运行时入口。本报告按运行时重要性人工改判为 `entrypoints/` → `managers/` → `model_executor/`。[精读原文（SGLang 源码 @ 本报告 SHA）]
 
 ### 3.2 高信号目录（按本报告实际阅读权重）
@@ -202,6 +204,8 @@ sequenceDiagram
 5. **投机解码内部**：`EAGLEWorkerV2.forward_batch_generation` 分三段——`draft()` → `verify()` → `_draft_extend_for_decode()`，并且在 verify 之后立刻 `on_publish`（`[eagle_worker_v2.py:1424](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/speculative/eagle_worker_v2.py>)`，注释原文："Publish before draft_extend so the fence is at verify-end"）。 **[精读原文]**
 6. **采样与提交**：`eagle_sample()` 返回 `(predict, accept_lens, accept_index)`，由 `prepare_verify_commit_outputs` 转成新的 `seq_lens` 与 bonus token（`[eagle_worker_common.py:713](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/speculative/eagle_worker_common.py>)`）。 **[精读原文]**
 7. **结果落地**：`process_batch_result` 释放/保留 KV（`checkpoint_kv_cache` / `release_kv_cache`，见 `[common.py](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/common.py>)` 同名函数），默认 UnifiedRadixCache 在 `unified_radix_cache.py:1132-1248` 进行插入和 cache actions；遗留 RadixCache 的重复段释放是 `radix_cache.py:504`，两者不可混作同一实现。
+
+本节从 scheduler 的一次 decode step 开始；HTTP 入站、SSE 输出、断连 abort 与 KV 收尾见 [在线请求生命周期专题](online-request-lifecycle.md)。
 
 ---
 

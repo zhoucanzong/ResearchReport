@@ -86,6 +86,8 @@ vLLM 的目标场景在 `[README.md](<https://github.com/vllm-project/vllm/blob/
 | 采样与验证 | `vllm/v1/sample/rejection_sampler.py`（1,130 行） | 投机解码验证判据（本报告 traced） |
 | 语法约束 | `vllm/v1/structured_output/` | xgrammar / guidance / outlines 后端 |
 
+在线 HTTP 流式请求从入口到断连和 KV 清理的独立源码追踪见 [在线请求生命周期专题](online-request-lifecycle.md)；该专题复用本报告的固定 SHA，并补充本报告未深读的 `entrypoints/` 与 `v1/engine/` 切面。
+
 ### 3.2 高信号目录（按本报告实际阅读权重）
 
 - `vllm/v1/core/`：块池、KV 管理器、调度器——**本报告的主战场**。
@@ -189,6 +191,8 @@ sequenceDiagram
 1. **入口**：`Scheduler.schedule()`（`[scheduler.py:621](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py>)`）。
 2. **核心交接点**：`allocate_slots` → `BlockPool.get_new_blocks` → `FreeKVCacheBlockQueue.popleft_n`（`[block_pool.py:681](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/block_pool.py>)`），以及失败时的 `_preempt_request`（`[scheduler.py:1649](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py>)`）。
 3. **输出 / 副作用**：`update_from_output` 里按接受数回滚 `num_computed_tokens`（`[scheduler.py:2210](<https://github.com/vllm-project/vllm/blob/fa75d3456d60a5ffe923818c4b495295675b38e1/vllm/v1/core/sched/scheduler.py>)`）。
+
+这是 scheduler 内部的一步 decode 路径；面向读者的 HTTP 流式请求、SSE、客户端断连和请求级 KV 收尾见 [在线请求生命周期专题](online-request-lifecycle.md)。
 
 ---
 

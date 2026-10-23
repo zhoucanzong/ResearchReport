@@ -15,12 +15,12 @@
 | --- | --- |
 | **条目数**（`report.md`） | **63** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 10 · VisualGen 8 · WorldModel 2 · AI4Science 10 · Evaluation 1 · Infra 3 · OpenSource 6 |
-| 条目子文档数 | 191 |
-| 条目正文行数（剔除 front-matter） | 27,869 |
-| 条目字节 | 2,100,913 B |
+| 条目子文档数 | 193 |
+| 条目正文行数（剔除 front-matter） | 27,877 |
+| 条目字节 | 2,101,826 B |
 | 带 front-matter 的条目 | 22 |
 | 带合法 `date` 的条目 | 22 |
-| 文档（除生成物外的全部 `.md`） | 272 |
+| 文档（除生成物外的全部 `.md`） | 274 |
 | 其中文件名 `README.md` | 10 |
 | 纳入版本控制的文件 | 296 |
 | 纳入版本控制的 `.md` | 280 |
@@ -39,8 +39,8 @@
 | AI4Science | 10 | 53 | 836 | 138,955 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 1 | 4 | 94 | 20,067 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 3 | 37 | 918 | 75,497 B | [板块页 →](<Infra/README.md>) |
-| OpenSource | 6 | 33 | 1,561 | 167,014 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **63** | **272** | **27,869** | **2,100,913 B** | — |
+| OpenSource | 6 | 35 | 1,569 | 167,927 B | [板块页 →](<OpenSource/README.md>) |
+| **合计** | **63** | **274** | **27,877** | **2,101,826 B** | — |
 
 ## 分面索引
 
@@ -933,10 +933,10 @@
 
 </details>
 
-### OpenSource（6 条目 / 33 文档）
+### OpenSource（6 条目 / 35 文档）
 
 <details>
-<summary><b>开源仓库 OpenSource（6 条目 / 24 子文档）</b></summary>
+<summary><b>开源仓库 OpenSource（6 条目 / 26 子文档）</b></summary>
 
   <details>
   <summary><b>DeepInfer</b> · <code>OpenSource/DeepInfer/report.md</code> · 140 行 · 2026-10-22</summary>
@@ -987,16 +987,17 @@
   </details>
 
   <details>
-  <summary><b>sglang</b> · <code>OpenSource/sglang/report.md</code> · 311 行 · 2026-10-16</summary>
+  <summary><b>sglang</b> · <code>OpenSource/sglang/report.md</code> · 315 行 · 2026-10-16</summary>
 
 
-    * **条目**：[OpenSource/sglang/report.md](<OpenSource/sglang/report.md>)（311 行 / 32,383 B）
+    * **条目**：[OpenSource/sglang/report.md](<OpenSource/sglang/report.md>)（315 行 / 32,840 B）
     * **专题目录**：`OpenSource/sglang`
     * **元数据**：type=`repo-research` · domain=`Repo-Research` · subject=`sglang` · date=`2026-10-16` · status=`completed`
-    * **子文档（4）**
+    * **子文档（5）**
         * [claim-audit.md](<OpenSource/sglang/claim-audit.md>) — 164 行 / 12,992 B
+        * [online-request-lifecycle.md](<OpenSource/sglang/online-request-lifecycle.md>) — 29 行 / 7,686 B
         * [scheduler-and-prefix-cache.md](<OpenSource/sglang/scheduler-and-prefix-cache.md>) — 178 行 / 21,680 B
-        * [sources/MANIFEST.md](<OpenSource/sglang/sources/MANIFEST.md>) — 13 行 / 1,894 B
+        * [sources/MANIFEST.md](<OpenSource/sglang/sources/MANIFEST.md>) — 19 行 / 2,705 B
         * [speculative-decoding-path.md](<OpenSource/sglang/speculative-decoding-path.md>) — 230 行 / 25,401 B
 
   </details>
@@ -1014,17 +1015,18 @@
   </details>
 
   <details>
-  <summary><b>vllm</b> · <code>OpenSource/vllm/report.md</code> · 294 行 · 2026-10-16</summary>
+  <summary><b>vllm</b> · <code>OpenSource/vllm/report.md</code> · 298 行 · 2026-10-16</summary>
 
 
-    * **条目**：[OpenSource/vllm/report.md](<OpenSource/vllm/report.md>)（294 行 / 35,347 B）
+    * **条目**：[OpenSource/vllm/report.md](<OpenSource/vllm/report.md>)（298 行 / 35,803 B）
     * **专题目录**：`OpenSource/vllm`
     * **元数据**：type=`repo-research` · domain=`Repo-Research` · subject=`vllm` · date=`2026-10-16` · status=`completed`
-    * **子文档（4）**
+    * **子文档（5）**
         * [claim-audit.md](<OpenSource/vllm/claim-audit.md>) — 437 行 / 53,917 B
         * [kv-cache-and-prefix-reuse.md](<OpenSource/vllm/kv-cache-and-prefix-reuse.md>) — 203 行 / 19,007 B
+        * [online-request-lifecycle.md](<OpenSource/vllm/online-request-lifecycle.md>) — 34 行 / 6,168 B
         * [scheduling-and-spec-decode.md](<OpenSource/vllm/scheduling-and-spec-decode.md>) — 246 行 / 24,286 B
-        * [sources/MANIFEST.md](<OpenSource/vllm/sources/MANIFEST.md>) — 14 行 / 2,032 B
+        * [sources/MANIFEST.md](<OpenSource/vllm/sources/MANIFEST.md>) — 20 行 / 2,882 B
 
   </details>
 
@@ -1041,7 +1043,7 @@
 | [Infra/README.md](<Infra/README.md>) | Infra | 67 | 5,018 B |
 | [LLM/README.md](<LLM/README.md>) | LLM | 88 | 5,946 B |
 | [Models/README.md](<Models/README.md>) | Models | 101 | 4,888 B |
-| [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 91 | 3,889 B |
+| [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 93 | 4,069 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
 | [README.md](<README.md>) |  | 186 | 11,672 B |

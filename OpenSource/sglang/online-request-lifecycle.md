@@ -1,0 +1,29 @@
+# SGLang 在线流式请求：入口、取消与缓存收尾
+
+> 本文补上主报告明确留出的 HTTP、tokenizer、detokenizer 请求生命周期切面。范围限于普通文本 `POST /v1/chat/completions`、`stream=true`、单个 choice 的 Python 服务路径，不涵盖多模态、disaggregation 或 Rust server。
+
+## 固定源码与阅读边界
+
+- 来源：[`sgl-project/sglang@6e667c431009dfd70d88ea2dd9f8784bd0787d89`](https://github.com/sgl-project/sglang/tree/6e667c431009dfd70d88ea2dd9f8784bd0787d89)，固定于 2026-10-23。
+- 本文为静态源码追踪，未启动服务、运行测试或观测 GPU/客户端时间线。ASGI 响应何时触发后台任务仍属于框架运行时边界。
+- 与 [vLLM 在线请求专题](../vllm/online-request-lifecycle.md)对照的是控制与所有权边界；vLLM 专题使用 2026-10-16 的固定版本，因此不能据此比较同一时点的实现优劣或性能。
+
+## 一条文本流式请求如何穿过系统
+
+1. HTTP server 将 `/v1/chat/completions` 请求交给 OpenAI serving handler；handler 校验并转为聊天输入，应用模板后构造 `GenerateReqInput`。[HTTP 路由](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/entrypoints/http_server.py#L1816-L1825) · [聊天转换与模板](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/entrypoints/openai/serving_chat.py#L1270-L1366) · [文本 token 路径](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/entrypoints/openai/serving_chat.py#L1896-L1960)
+2. `_handle_streaming_request` 先取生成器的首个结果，以便在响应开始前处理输入错误；随后返回 `StreamingResponse`，并挂上延迟 abort 后台任务。生成器将内部结果编码成 chat SSE 块，正常结束时写出 `[DONE]`。[响应和后台任务](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/entrypoints/openai/serving_chat.py#L1962-L1988) · [SSE 生成](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/entrypoints/openai/serving_chat.py#L2041-L2043) · [结束块](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/entrypoints/openai/serving_chat.py#L2120-L2127)
+3. TokenizerManager 创建 `ReqState`、tokenize 输入并通过 scheduler IPC 发送请求。[请求状态与 dispatch](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/managers/tokenizer_manager.py#L910-L982) · [tokenize 与请求归一](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/managers/tokenizer_manager.py#L1111-L1164) · [IPC 发送](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/managers/tokenizer_manager.py#L1784-L1815)
+4. Scheduler 接收消息并创建 `Req`，普通请求进入等待/前缀缓存路径，后续由主循环组 batch 并执行。[IPC 接收](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/managers/scheduler.py#L2143-L2219) · [Req 构造](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/managers/scheduler.py#L2888-L2965) · [队列准入](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/managers/scheduler.py#L3425-L3440) · [调度主循环](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/managers/scheduler.py#L2020-L2089)
+5. Scheduler 的输出 streamer 将 token ID 发给 detokenizer；detokenizer 解码后返回文本，TokenizerManager 更新请求状态并唤醒等待者，聊天生成器再编码成 SSE。[token 输出](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/managers/scheduler_components/output_streamer.py#L119-L220) · [detokenizer 收发](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/managers/detokenizer_manager.py#L444-L485) · [TokenizerManager 更新与唤醒](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/managers/tokenizer_manager.py#L2634-L2679)
+6. 正常完成时，finish-state handler 释放请求持有的 KV；启用 checkpoint 时仍可能保留可复用前缀缓存。TokenizerManager 标记状态结束、移除请求映射并唤醒响应协程。[正常结束与 KV 释放](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/managers/scheduler_components/batch_result_processor.py#L1427-L1460) · [响应状态收尾](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/managers/tokenizer_manager.py#L2788-L2812)
+
+## 断连、abort 与资源收尾
+
+TokenizerManager 在等待下一段输出时使用定时等待；满足 HTTP 请求、非后台任务等条件后检查 `Request.is_disconnected()`，发现断连便发送 abort。[断连轮询](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/managers/tokenizer_manager.py#L1951-L1990) 该检查发生在等待输出的循环中，不代表模型计算期间持续轮询。SSE 响应还附加一个后台任务：睡眠两秒后，若请求仍在 `rid_to_state` 中则请求 abort。[响应后台任务](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/entrypoints/openai/serving_chat.py#L1984-L1988) · [延迟 abort](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/managers/tokenizer_manager.py#L2442-L2453) ASGI 何时运行该后台任务未由本次仓库源码阅读独立验证。
+
+- **仍在等待队列**：scheduler 将请求移出等待队列，释放多模态输入并结束对应 cache 请求。[排队请求 abort](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/managers/scheduler.py#L5561-L5589)
+- **正在运行**：scheduler 将请求标为 `FINISH_ABORT`；源码说明它会经过一个 decode forward 边界，再进入普通 finish-state 清理和 KV 释放路径。[运行中 abort](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/managers/scheduler.py#L5687-L5703) · [finish-state 清理](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/managers/scheduler_components/batch_result_processor.py#L1427-L1460)
+- **队列过载**：超过配置队列上限时，scheduler 以 503 `SERVICE_UNAVAILABLE` 拒绝请求。[队列长度处理](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/managers/scheduler.py#L3497-L3535)
+- **请求状态竞态**：正常完成可能先于 abort 回执清除 `rid_to_state`；代码在状态已结束时忽略迟到 abort。[回执与状态清理](https://github.com/sgl-project/sglang/blob/6e667c431009dfd70d88ea2dd9f8784bd0787d89/python/sglang/srt/managers/tokenizer_manager.py#L3592-L3658)
+
+这条源码链支持“请求级 KV 所有权最终走清理路径”，不支持“断连会立即中断 GPU kernel”或“所有可复用前缀都从缓存删除”。本次未确认端到端 SSE 背压是否有界，也未覆盖 worker 失败和 deadline 分支。

@@ -18,9 +18,9 @@
 | **DeepInfer** | [DeepInfer：离线推理内核、异步调度与状态契约](<DeepInfer/report.md>) | 140 行 |
 | **DeepSeekHarness** | [DeepSeek Harness（DSH）仓库深读](<DeepSeekHarness/report.md>) | 350 行 |
 | **nemotron** | [Nemotron-Labs-Diffusion 阅读报告](<nemotron/report.md>) | 220 行 |
-| **sglang** | [SGLang 仓库代码分析报告](<sglang/report.md>) | 311 行 |
+| **sglang** | [SGLang 仓库代码分析报告](<sglang/report.md>) | 315 行 |
 | **this-that-model** | [this-that-model 仓库深读](<this-that-model/report.md>) | 246 行 |
-| **vllm** | [vLLM 仓库代码分析报告](<vllm/report.md>) | 294 行 |
+| **vllm** | [vLLM 仓库代码分析报告](<vllm/report.md>) | 298 行 |
 
 ## 📎 子文档
 
@@ -58,11 +58,12 @@
 </details>
 
 <details>
-<summary><b>sglang</b>（4 份）</summary>
+<summary><b>sglang</b>（5 份）</summary>
 
 * [claim-audit.md](<sglang/claim-audit.md>) — 164 行 / 12,992 B
+* [online-request-lifecycle.md](<sglang/online-request-lifecycle.md>) — 29 行 / 7,686 B
 * [scheduler-and-prefix-cache.md](<sglang/scheduler-and-prefix-cache.md>) — 178 行 / 21,680 B
-* [sources/MANIFEST.md](<sglang/sources/MANIFEST.md>) — 13 行 / 1,894 B
+* [sources/MANIFEST.md](<sglang/sources/MANIFEST.md>) — 19 行 / 2,705 B
 * [speculative-decoding-path.md](<sglang/speculative-decoding-path.md>) — 230 行 / 25,401 B
 
 </details>
@@ -75,12 +76,13 @@
 </details>
 
 <details>
-<summary><b>vllm</b>（4 份）</summary>
+<summary><b>vllm</b>（5 份）</summary>
 
 * [claim-audit.md](<vllm/claim-audit.md>) — 437 行 / 53,917 B
 * [kv-cache-and-prefix-reuse.md](<vllm/kv-cache-and-prefix-reuse.md>) — 203 行 / 19,007 B
+* [online-request-lifecycle.md](<vllm/online-request-lifecycle.md>) — 34 行 / 6,168 B
 * [scheduling-and-spec-decode.md](<vllm/scheduling-and-spec-decode.md>) — 246 行 / 24,286 B
-* [sources/MANIFEST.md](<vllm/sources/MANIFEST.md>) — 14 行 / 2,032 B
+* [sources/MANIFEST.md](<vllm/sources/MANIFEST.md>) — 20 行 / 2,882 B
 
 </details>
 
