@@ -53,7 +53,7 @@
 <summary><b>AutonomousLabs</b>（2 份）</summary>
 
 * [sources/CANDIDATES.md](<AutonomousLabs/sources/CANDIDATES.md>) — 21 行 / 2,110 B
-* [sources/MANIFEST.md](<AutonomousLabs/sources/MANIFEST.md>) — 29 行 / 9,443 B
+* [sources/MANIFEST.md](<AutonomousLabs/sources/MANIFEST.md>) — 30 行 / 9,960 B
 
 </details>
 
@@ -98,12 +98,12 @@
 <details>
 <summary><b>ProteinDesign</b>（6 份）</summary>
 
-* [papers/2026-bits-to-binders.md](<ProteinDesign/papers/2026-bits-to-binders.md>) — 21 行 / 3,428 B
+* [papers/2026-bits-to-binders.md](<ProteinDesign/papers/2026-bits-to-binders.md>) — 21 行 / 3,644 B
 * [papers/2504.13075-apm.md](<ProteinDesign/papers/2504.13075-apm.md>) — 59 行 / 5,212 B
 * [papers/2601.13327-pepediff.md](<ProteinDesign/papers/2601.13327-pepediff.md>) — 53 行 / 4,657 B
 * [papers/2608.20755-shortlisting.md](<ProteinDesign/papers/2608.20755-shortlisting.md>) — 54 行 / 5,698 B
 * [sources/CANDIDATES.md](<ProteinDesign/sources/CANDIDATES.md>) — 15 行 / 2,209 B
-* [sources/MANIFEST.md](<ProteinDesign/sources/MANIFEST.md>) — 17 行 / 4,013 B
+* [sources/MANIFEST.md](<ProteinDesign/sources/MANIFEST.md>) — 18 行 / 4,610 B
 
 </details>
 

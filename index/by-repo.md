@@ -46,11 +46,11 @@
 
 * [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) — 117 行
 * [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) — 347 行
-* [Models/Claude/report.md](<../Models/Claude/report.md>) — 594 行
+* [Models/Claude/report.md](<../Models/Claude/report.md>) — 604 行
 * [Models/DeepSeek/report.md](<../Models/DeepSeek/report.md>) — 776 行
 * [Models/Doubao-Seed/report.md](<../Models/Doubao-Seed/report.md>) — 651 行
 * [Models/GLM/report.md](<../Models/GLM/report.md>) — 737 行
-* [Models/GPT/report.md](<../Models/GPT/report.md>) — 773 行
+* [Models/GPT/report.md](<../Models/GPT/report.md>) — 785 行
 * [Models/Gemini/report.md](<../Models/Gemini/report.md>) — 842 行
 * [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>) — 895 行
 * [Models/Grok/report.md](<../Models/Grok/report.md>) — 265 行

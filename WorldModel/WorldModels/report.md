@@ -117,7 +117,7 @@ status: needs-review
 
 ### 4.1 本章结论
 
-1. **公开指标集中在「分辨率 × 帧率 × 一致性时长」三角，三者不可同时拉满**：Genie 3 官方称 720p / 24 FPS / 维持数分钟（[Genie 3 官方博客](https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/)）；GameNGen 在 DOOM 上以 320×240、20 FPS 达成数分钟稳定（PSNR 29.43，[arXiv:2408.14837](https://arxiv.org/abs/2408.14837)），分辨率与场景复杂度显著更低。`[摘要级]`（Genie 3 官方博客）+ `[摘要级]`（GameNGen 正文）
+1. **公开指标集中在「分辨率 × 帧率 × 一致性时长」三角，三者不可同时拉满**：Genie 3 官方称 720p / 24 FPS / 维持数分钟（[Genie 3 官方博客](https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/)）；GameNGen 在 DOOM 上以 320×240、20 FPS 达成数分钟稳定（PSNR 29.43，[arXiv:2408.14837v2 摘要 / §5](https://arxiv.org/html/2408.14837v2)），分辨率与场景复杂度显著更低。`[摘要级]`（Genie 3 官方博客）+ `[精读原文]`（GameNGen 分册及正文）
 2. **潜空间路线不追像素级实时渲染，而追「想象中训练」的可扩展性**：Dreamer 4 以 shortcut forcing 实现**单 GPU 实时交互推理**，并首次做到纯离线数据在 Minecraft 取得钻石（[arXiv:2509.24527](https://arxiv.org/abs/2509.24527)）。`[摘要级]`
 3. **机器人侧世界模型以「少量真机数据 + 零样本部署」为标志**：V-JEPA 2-AC 仅用 **<62 小时**无标注 Droid 数据 post-train，零样本在 Franka 上做图像目标规划抓放。`[摘要级]`
 4. **平台化路线把世界模型做成可被下游 fine-tune 的基础设施**：Cosmos 开源因果视频 tokenizer 与 Predict1 多规格模型（7B / 12B / 13B / 14B）。`[摘要级]`
@@ -128,7 +128,7 @@ status: needs-review
 | 系统 | 关键实测数字 | 出处 | 主等级 |
 | :-- | :-- | :-- | :-- |
 | **Genie 3**（Google DeepMind） | 实时导航 **24 FPS**、分辨率 **720p**、一致性维持**数分钟** | [官方博客 2025-08-05](https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/) | `[摘要级]` |
-| **GameNGen** | DOOM，320×240；**单 TPU 20 FPS**；**PSNR 29.43 / LPIPS 0.249**（5 关卡 2048 条轨迹）；连续游玩 **5–10 分钟**后人类判别仍接近随机 | [arXiv:2408.14837](https://arxiv.org/abs/2408.14837) 正文 | `[精读原文]` |
+| **GameNGen** | DOOM，320×240；**单 TPU 20 FPS**；**PSNR 29.43 / LPIPS 0.249**（5 关卡 2048 条轨迹）；连续游玩 **5–10 分钟**后人类判别仍接近随机 | [arXiv:2408.14837v2 摘要 / §5](https://arxiv.org/html/2408.14837v2)；精读定位见 [分册 §7.8](papers/2408.14837-gamengen.md) | `[精读原文]` |
 | **Dreamer 4** | **单 GPU 实时交互推理**（shortcut forcing + 高效 transformer）；纯离线数据在 Minecraft **首次取得钻石** | [arXiv:2509.24527](https://arxiv.org/abs/2509.24527) 正文 | `[摘要级]` |
 | **V-JEPA 2 / V-JEPA 2-AC** | 预训练 **>1M 小时**互联网视频；2-AC 用 **<62h** Droid 无标注视频 post-train；**零样本** Franka 抓放 | [arXiv:2506.09985](https://arxiv.org/abs/2506.09985) 正文 | `[摘要级]` |
 | **Cosmos WFM**（NVIDIA） | 平台化：视频 curation 流水线 + **因果视频 tokenizer** + **Cosmos-Predict1 7B/12B/13B/14B** + 开放权重 | [arXiv:2501.03575](https://arxiv.org/abs/2501.03575) 正文 | `[摘要级]` |
@@ -379,7 +379,7 @@ status: needs-review
 | :-- | :-- | :-- | :-- |
 | **要可渲染、可交互的环境**（人能玩/能看未来） | 像素/视频生成式 | GameNGen（实时、单域）、UniSim（多源、视频级） | 漂移需噪声增强；单域或信息鸿沟；评测口径不统一 |
 | **要能在模型里做规划** | 潜空间 + 搜索 | PlaNet（在线规划）、MuZero（搜索，**不可渲染**） | 规划开销；模型不准则崩；MuZero 原模型不提供观测解码器 |
-| **要训练 RL 策略**（省交互） | 想象训练 | Dreamer / DreamerV3 | 想象误差 → 策略误差；需防钻空子；表征瓶颈 |
+| **要训练 RL 策略**（省交互） | 想象训练 | Dreamer / DreamerV3 | 想象误差 → 策略误差（[Dreamer §4](papers/1912.01603-dreamer.md)；[DreamerV3 §4](papers/2301.04104-dreamerv3.md)）；需防钻空子（[World Models §4](papers/1803.10122-world-models.md)）；表征瓶颈（[DreamerV3 §4](papers/2301.04104-dreamerv3.md)） |
 | **要训练视觉-语言-动作策略** | 动作进-视频出模拟器 | UniSim | 域内零样本，跨域未证明；动作是"伪动作" |
 | **只要通用视觉表征**（不要环境） | 特征预测 | V-JEPA | 不能规划、不能生成、不证明物理理解 |
 | **要评测"懂不懂物理"** | 真实拍摄基准 | Physics-IQ（物理理解）、VBench-2.0（内在真实性） | 两套口径不可互换；都不测交互 |
@@ -424,7 +424,7 @@ status: needs-review
 | :-- | :-- | :-- | :-- |
 | **RSSM**（Recurrent State Space Model） | 循环状态空间模型：**确定性路径**（记历史） + **随机路径**（建模不确定性）双分量 | PlaNet / Dreamer / DreamerV3 | [papers/1811.04551](papers/1811.04551-planet.md) §1.2 |
 | **latent overshooting** | 多步变分目标：不只训 1 步预测，强制多步一致性 | PlaNet | 同上 §1.3 |
-| **CEM**（Cross-Entropy Method） | 种群采样 + 精英筛选 + 迭代的免梯度优化，用作模型内规划器 | PlaNet | 同上 §1.4 |
+| **CEM**（Cross-Entropy Method） | 种群采样 + 精英筛选 + 迭代的免梯度优化，用作模型内规划器 | PlaNet | [papers/1811.04551-planet.md](papers/1811.04551-planet.md) §1.4 |
 | **MPC**（Model Predictive Control） | 滚动时域：每一步重新规划，只执行第一个动作 | PlaNet | 同上 |
 | **MCTS** | 蒙特卡洛树搜索；MuZero 用学到的模型在搜索树里展开 | MuZero | [papers/1911.08265](papers/1911.08265-muzero.md) §1.1 |
 | **Reanalyze** | MuZero 变体：用当前模型重新分析旧轨迹 | MuZero | 同上 §2 |
@@ -526,7 +526,7 @@ status: needs-review
 | **长时程一致性无机制保证** | GameNGen 靠噪声增强压漂移、无显式长期记忆；UniSim 只证 8 次交互 | 显式记忆/检索机制 + 一致性时长指标 |
 | **安全与不可逆场景** | 世界模型在"被钻空子"时给出的高分**不可信**（World Models §4.5） | 部署前必须做对抗性利用测试，而非只看真环境回报 |
 
-**三张清单共同指向一件事**：这条线的**生成能力已经跑到实时**，而**度量、数据与安全**三件配套都还没跟上。
+**三张清单共同指向一件事**：本专题纳入的代表系统中，GameNGen 已报告单 TPU 实时推理；本专题同时识别出跨系统交互评测口径缺口（§5.2）、动作标注与跨域证据缺口（§19.2），以及对抗性利用测试需求（§19.3）。
 
 ---
 

@@ -19,6 +19,7 @@
 - Checked `/Users/zhoucanzong/Documents/paper-cache` for filename matches to the arXiv IDs used in this report; none were found. No full paper was added to the repository. The Nature version of record and correction, RSC publisher article, and arXiv fixed HTML were used as primary evidence. For Robin, the publisher full text was read directly; PaperFetcher DOI `fetch` returned Hugging Face 404 and arXiv 429, and no local cache copy was found.
 - No code repository was cloned, reviewed or executed; no laboratory protocol was run or independently reproduced. Linked code is not counted as implementation evidence.
 - Source diversity is limited: several recent examples center on materials research and overlapping Toronto/Berkeley acceleration-lab collaborations. The selection prioritizes mechanism diversity (BO, thermodynamics/active learning, state-machine LLM agents, agentic hypothesis generation, and a biological lab-in-the-loop case) over survey-like coverage.
+- Canonical `claim_audit.py` on `report.md` detects 23 high-impact claims and 4 missing-local-source flags after the report linked the summary conclusion to this manifest. Manual triage classifies the remaining flags as metadata/structure or general guidance (frontmatter evidence marker, workflow diagram label, comparison-table header, and Bayesian-optimization reading advice); no Robin numeric/method claim lacked a primary citation or manifest anchor. This is a path-neighborhood scan, not a factuality verdict.
 
 ## Claim discipline
 

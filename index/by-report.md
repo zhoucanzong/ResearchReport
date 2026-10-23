@@ -37,11 +37,11 @@
 | VLM | LLM | [LLM/VLM/report.md](<../LLM/VLM/report.md>) | 0 | 516 | — |
 | Alibaba-Gen | Models | [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) | 0 | 117 | — |
 | ByteDance-Gen | Models | [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) | 0 | 347 | — |
-| Claude | Models | [Models/Claude/report.md](<../Models/Claude/report.md>) | 0 | 594 | — |
+| Claude | Models | [Models/Claude/report.md](<../Models/Claude/report.md>) | 0 | 604 | — |
 | DeepSeek | Models | [Models/DeepSeek/report.md](<../Models/DeepSeek/report.md>) | 6 | 776 | — |
 | Doubao-Seed | Models | [Models/Doubao-Seed/report.md](<../Models/Doubao-Seed/report.md>) | 0 | 651 | — |
 | GLM | Models | [Models/GLM/report.md](<../Models/GLM/report.md>) | 0 | 737 | — |
-| GPT | Models | [Models/GPT/report.md](<../Models/GPT/report.md>) | 0 | 773 | — |
+| GPT | Models | [Models/GPT/report.md](<../Models/GPT/report.md>) | 0 | 785 | — |
 | Gemini | Models | [Models/Gemini/report.md](<../Models/Gemini/report.md>) | 0 | 842 | — |
 | Google-Gen | Models | [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>) | 1 | 895 | — |
 | Grok | Models | [Models/Grok/report.md](<../Models/Grok/report.md>) | 0 | 265 | — |
@@ -74,4 +74,4 @@
 | VideoGen | VisualGen | [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) | 0 | 898 | — |
 | EmbodiedVLA | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 23 | 642 | — |
 | WorldModels | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 602 | 2026-10-22 |
-| **合计** | — | — | **191** | **27,847** | — |
+| **合计** | — | — | **191** | **27,869** | — |

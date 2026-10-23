@@ -568,6 +568,14 @@ GPT-5.5 是自 GPT-4o 以来 OpenAI 在**原生全模态**上的最大升级：
 
 > 一个重要观察：**GPT-4o 之后，OpenAI 已不再发表独立的「多模态架构论文」**。一切技术都走 System Card 路径，结合产品发布节奏；这与 Google 在 Gemini / Anthropic 在 Claude 上的策略类似——架构成为商业秘密，能力以评测和产品形态对外。
 
+### 6.7 GPT-Live-1.1（2026-10-15）：语音安全评估的两种证据
+
+GPT-Live-1.1 系统卡把语音安全测试分成两类互补证据。**Production prompts** 来自选择分享语音交互、且通过权限、删除/退出资格检查的用户音频；音频经筛选、PII 清理和去标识后转写，再生成回答并评估安全性。这是有真实交互上下文的困难样本集，但按前代模型容易答得不理想的类别取样，**不按生产流量加权**，不能当成实际风险发生率。卡片报告 GPT-Live-1.1 在这组评估中与前代大致持平，未见统计显著退步。
+
+**Synthetic prompts** 则先按安全政策和相关指引撰写文本，刻意覆盖边界、对抗性及罕见难采样情形，再转为语音测试。它测的是明确构造的政策风险能否迁移到语音，不代表日常流量行为，也不纳入 Trusted Contact、危机热线和家长控制等系统级干预。GPT-Live-1.1 总体接近前代，但相对 GPT-Live-1 在性内容、心理健康、情感依赖和血腥内容四类出现统计显著退步；OpenAI 表示需继续研究并改进。生产集较多包含含糊边界、长对话和持续诱导，因此两类分数刻画不同风险面，不能互相替代，也不宜与评估规则已变的旧卡直接纵向比较。
+
+来源：[GPT-Live-1.1 System Card](https://deploymentsafety.openai.com/gpt-live-1-1)，§§3.1.1–3.1.2；核查日期：2026-10-23。
+
 ---
 
 ## 7. 跨代技术演进分析
@@ -767,6 +775,10 @@ OpenAI 于 2026 年 2 月 13 日公布首批大规模模型退役时间表，标
 54. SemiAnalysis (Dylan Patel) 关于 GPT-5.5 架构与定价分析（博客文章，2026-04）。
 55. OpenAI. [*GPT-5.6 System Card*](https://deploymentsafety.openai.com/gpt-5-6)，2026-07-09；[*GPT-6 Astra System Card*](https://deploymentsafety.openai.com/gpt-6-astra)，2026-09-03；[*GPT-6.1 Sol System Card Addendum*](https://deploymentsafety.openai.com/gpt-6-1-sol)，2026-09-29；[*GPT-6 Sol and GPT-6 Luna: October 2026 update*](https://deploymentsafety.openai.com/gpt-6-october)，2026-10-07；目录核查日 2026-10-23。
 56. OpenAI. *GPT-6 and Intelligent UI for everyone*，2026-10-07. [官方发布](https://openai.com/index/gpt-6-for-everyone/)。
+
+### 10.4 部署安全系统卡
+
+57. OpenAI. [*GPT-Live-1.1 System Card*](https://deploymentsafety.openai.com/gpt-live-1-1)，2026-10-15；语音安全评估见 §§3.1.1–3.1.2。
 
 ---
 

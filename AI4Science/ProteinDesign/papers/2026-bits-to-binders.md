@@ -18,4 +18,4 @@
 
 ## 限制与解读
 
-研究只覆盖 CD20、80-aa binder 和一个 CAR scaffold；方法来自自选的竞赛团队，不是严格控制的算法头对头实验。筛出的前十设计是从 pooled screen 排名中挑选后再测，因此不能代表全体 hits 的个体功能分布。事后应用序列过滤规则会提高同一数据集内的比例，但属于回顾性分析；作者也指出方法分类无法排除混杂或证明因果（Results; Discussion）。个别 SPR 用分离的 binder 和 detergent-solubilized CD20 测定，未包含 CAR 展示、折叠和 avidity 的情境（“Characterization of binding”）。因此这项研究是强功能筛查证据，不是跨靶标成功率、临床疗效或普遍序列规则的验证。
+研究只覆盖 CD20、80-aa binder 和一个 CAR scaffold；方法来自自选的竞赛团队，不是严格控制的算法头对头实验。筛出的前十设计是从 pooled screen 排名中挑选后再测，因此不能代表全体 hits 的个体功能分布。Pooled screen 的对照是 CD20+ Raji 与无 Raji 条件，而非 CD20− Raji；作者因此将该屏幕的特异性解释限定为 Raji-specific，尽管结合测定显示这项近似大体成立（Discussion）。事后应用序列过滤规则会提高同一数据集内的比例，但属于回顾性分析；作者也指出方法分类无法排除混杂或证明因果（Results; Discussion）。个别 SPR 用分离的 binder 和 detergent-solubilized CD20 测定，未包含 CAR 展示、折叠和 avidity 的情境（“Characterization of binding”）。因此这项研究是强功能筛查证据，不是跨靶标成功率、临床疗效或普遍序列规则的验证。

@@ -16,14 +16,14 @@
 | **条目数**（`report.md`） | **63** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 10 · VisualGen 8 · WorldModel 2 · AI4Science 10 · Evaluation 1 · Infra 3 · OpenSource 6 |
 | 条目子文档数 | 191 |
-| 条目正文行数（剔除 front-matter） | 27,847 |
-| 条目字节 | 2,095,868 B |
+| 条目正文行数（剔除 front-matter） | 27,869 |
+| 条目字节 | 2,100,913 B |
 | 带 front-matter 的条目 | 22 |
 | 带合法 `date` 的条目 | 22 |
 | 文档（除生成物外的全部 `.md`） | 272 |
 | 其中文件名 `README.md` | 10 |
-| 纳入版本控制的文件 | 289 |
-| 纳入版本控制的 `.md` | 273 |
+| 纳入版本控制的文件 | 296 |
+| 纳入版本控制的 `.md` | 280 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -32,15 +32,15 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| Models | 23 | 41 | 12,136 | 904,992 B | [板块页 →](<Models/README.md>) |
+| Models | 23 | 41 | 12,158 | 909,121 B | [板块页 →](<Models/README.md>) |
 | LLM | 10 | 46 | 4,300 | 330,316 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,758 | 320,420 B | [板块页 →](<VisualGen/README.md>) |
-| WorldModel | 2 | 41 | 1,244 | 139,021 B | [板块页 →](<WorldModel/README.md>) |
-| AI4Science | 10 | 53 | 836 | 138,541 B | [板块页 →](<AI4Science/README.md>) |
+| WorldModel | 2 | 41 | 1,244 | 139,523 B | [板块页 →](<WorldModel/README.md>) |
+| AI4Science | 10 | 53 | 836 | 138,955 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 1 | 4 | 94 | 20,067 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 3 | 37 | 918 | 75,497 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 33 | 1,561 | 167,014 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **63** | **272** | **27,847** | **2,095,868 B** | — |
+| **合计** | **63** | **272** | **27,869** | **2,100,913 B** | — |
 
 ## 分面索引
 
@@ -86,10 +86,10 @@
   </details>
 
   <details>
-  <summary><b>Claude</b> · <code>Models/Claude/report.md</code> · 594 行 · —</summary>
+  <summary><b>Claude</b> · <code>Models/Claude/report.md</code> · 604 行 · —</summary>
 
 
-    * **条目**：[Models/Claude/report.md](<Models/Claude/report.md>)（594 行 / 51,228 B）
+    * **条目**：[Models/Claude/report.md](<Models/Claude/report.md>)（604 行 / 53,717 B）
     * **专题目录**：`Models/Claude`
     * **元数据**：type=`—` · domain=`Models` · subject=`Claude` · date=`—` · status=`—`
     * **子文档（0）**
@@ -139,10 +139,10 @@
   </details>
 
   <details>
-  <summary><b>GPT</b> · <code>Models/GPT/report.md</code> · 773 行 · —</summary>
+  <summary><b>GPT</b> · <code>Models/GPT/report.md</code> · 785 行 · —</summary>
 
 
-    * **条目**：[Models/GPT/report.md](<Models/GPT/report.md>)（773 行 / 59,941 B）
+    * **条目**：[Models/GPT/report.md](<Models/GPT/report.md>)（785 行 / 61,581 B）
     * **专题目录**：`Models/GPT`
     * **元数据**：type=`—` · domain=`Models` · subject=`GPT` · date=`—` · status=`—`
     * **子文档（0）**
@@ -655,7 +655,7 @@
   <summary><b>WorldModels</b> · <code>WorldModel/WorldModels/report.md</code> · 602 行 · 2026-10-22</summary>
 
 
-    * **条目**：[WorldModel/WorldModels/report.md](<WorldModel/WorldModels/report.md>)（602 行 / 61,443 B）
+    * **条目**：[WorldModel/WorldModels/report.md](<WorldModel/WorldModels/report.md>)（602 行 / 61,945 B）
     * **专题目录**：`WorldModel/WorldModels`
     * **元数据**：type=`topic-research` · domain=`WorldModel` · subject=`WorldModels` · date=`2026-10-22` · status=`needs-review`
     * **子文档（15）**
@@ -719,12 +719,12 @@
   <summary><b>AutonomousLabs</b> · <code>AI4Science/AutonomousLabs/report.md</code> · 127 行 · 2026-10-23</summary>
 
 
-    * **条目**：[AI4Science/AutonomousLabs/report.md](<AI4Science/AutonomousLabs/report.md>)（127 行 / 21,942 B）
+    * **条目**：[AI4Science/AutonomousLabs/report.md](<AI4Science/AutonomousLabs/report.md>)（127 行 / 22,012 B）
     * **专题目录**：`AI4Science/AutonomousLabs`
     * **元数据**：type=`research` · domain=`AI4Science` · subject=`AutonomousLabs` · date=`2026-10-23` · status=`completed`
     * **子文档（2）**
         * [sources/CANDIDATES.md](<AI4Science/AutonomousLabs/sources/CANDIDATES.md>) — 21 行 / 2,110 B
-        * [sources/MANIFEST.md](<AI4Science/AutonomousLabs/sources/MANIFEST.md>) — 29 行 / 9,443 B
+        * [sources/MANIFEST.md](<AI4Science/AutonomousLabs/sources/MANIFEST.md>) — 30 行 / 9,960 B
 
   </details>
 
@@ -790,16 +790,16 @@
   <summary><b>ProteinDesign</b> · <code>AI4Science/ProteinDesign/report.md</code> · 80 行 · 2026-10-23</summary>
 
 
-    * **条目**：[AI4Science/ProteinDesign/report.md](<AI4Science/ProteinDesign/report.md>)（80 行 / 11,108 B）
+    * **条目**：[AI4Science/ProteinDesign/report.md](<AI4Science/ProteinDesign/report.md>)（80 行 / 11,452 B）
     * **专题目录**：`AI4Science/ProteinDesign`
     * **元数据**：type=`research` · domain=`AI4Science` · subject=`ProteinDesign` · date=`2026-10-23` · status=`completed`
     * **子文档（6）**
-        * [papers/2026-bits-to-binders.md](<AI4Science/ProteinDesign/papers/2026-bits-to-binders.md>) — 21 行 / 3,428 B
+        * [papers/2026-bits-to-binders.md](<AI4Science/ProteinDesign/papers/2026-bits-to-binders.md>) — 21 行 / 3,644 B
         * [papers/2504.13075-apm.md](<AI4Science/ProteinDesign/papers/2504.13075-apm.md>) — 59 行 / 5,212 B
         * [papers/2601.13327-pepediff.md](<AI4Science/ProteinDesign/papers/2601.13327-pepediff.md>) — 53 行 / 4,657 B
         * [papers/2608.20755-shortlisting.md](<AI4Science/ProteinDesign/papers/2608.20755-shortlisting.md>) — 54 行 / 5,698 B
         * [sources/CANDIDATES.md](<AI4Science/ProteinDesign/sources/CANDIDATES.md>) — 15 行 / 2,209 B
-        * [sources/MANIFEST.md](<AI4Science/ProteinDesign/sources/MANIFEST.md>) — 17 行 / 4,013 B
+        * [sources/MANIFEST.md](<AI4Science/ProteinDesign/sources/MANIFEST.md>) — 18 行 / 4,610 B
 
   </details>
 

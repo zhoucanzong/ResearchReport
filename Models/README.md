@@ -17,11 +17,11 @@
 | :-- | :-- | --: |
 | **Alibaba-Gen** | [阿里巴巴通义万相（Wan）视频生成模型研究报告](<Alibaba-Gen/report.md>) | 117 行 |
 | **ByteDance-Gen** | [字节跳动生成模型系列研究报告](<ByteDance-Gen/report.md>) | 347 行 |
-| **Claude** | [Anthropic Claude 系列模型深度调研报告](<Claude/report.md>) | 594 行 |
+| **Claude** | [Anthropic Claude 系列模型深度调研报告](<Claude/report.md>) | 604 行 |
 | **DeepSeek** | [DeepSeek 系列模型深度调研报告](<DeepSeek/report.md>) | 776 行 |
 | **Doubao-Seed** | [Doubao/Seed系列模型深度调研报告](<Doubao-Seed/report.md>) | 651 行 |
 | **GLM** | [GLM 系列模型深度调研报告](<GLM/report.md>) | 737 行 |
-| **GPT** | [OpenAI GPT 系列模型深度调研报告](<GPT/report.md>) | 773 行 |
+| **GPT** | [OpenAI GPT 系列模型深度调研报告](<GPT/report.md>) | 785 行 |
 | **Gemini** | [Google Gemini系列模型深度调研报告](<Gemini/report.md>) | 842 行 |
 | **Google-Gen** | [Google / DeepMind 生成模型系列研究报告](<Google-Gen/report.md>) | 895 行 |
 | **Grok** | [xAI Grok 系列模型深度调研报告](<Grok/report.md>) | 265 行 |
