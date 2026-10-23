@@ -18,7 +18,7 @@
 <div align="center">
 
 <!-- SCRIPT:badges START -->
-[**65** 主报告](index/by-report.md) &nbsp; · &nbsp; [**218** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**36** 技术专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
+[**70** 主报告](index/by-report.md) &nbsp; · &nbsp; [**233** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**41** 技术专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
 <!-- SCRIPT:badges END -->
 
 </div>
@@ -52,8 +52,8 @@
 </td>
 <td width="33%" valign="top">
 <h3>03 · <a href="Agents/README.md">Agents</a></h3>
-<p><strong>智能体系统</strong><br><sub>1 篇主报告 · 智能体架构、记忆、工具使用与长期执行</sub></p>
-<p><a href="Agents/AgentSystems/report.md">AgentSystems</a></p>
+<p><strong>智能体系统</strong><br><sub>3 篇主报告 · 智能体架构、记忆、工具使用与长期执行</sub></p>
+<p><a href="Agents/AgentSystems/report.md">AgentSystems</a> · <a href="Agents/ComputerUse/report.md">ComputerUse</a> · <a href="Agents/AgentSecurity/report.md">AgentSecurity</a></p>
 <p><a href="Agents/README.md"><strong>浏览板块 →</strong></a></p>
 </td>
 </tr>
@@ -66,8 +66,8 @@
 </td>
 <td width="33%" valign="top">
 <h3>05 · <a href="WorldModel/README.md">WorldModel</a></h3>
-<p><strong>世界模型与具身</strong><br><sub>2 篇主报告 · 世界模型与具身 VLA</sub></p>
-<p><a href="WorldModel/WorldModels/report.md">WorldModels</a> · <a href="WorldModel/EmbodiedVLA/report.md">EmbodiedVLA</a></p>
+<p><strong>世界模型与具身</strong><br><sub>3 篇主报告 · 世界模型与具身 VLA</sub></p>
+<p><a href="WorldModel/WorldModels/report.md">WorldModels</a> · <a href="WorldModel/EmbodiedVLA/report.md">EmbodiedVLA</a> · <a href="WorldModel/EmbodiedPlanning/report.md">EmbodiedPlanning</a></p>
 <p><a href="WorldModel/README.md"><strong>浏览板块 →</strong></a></p>
 </td>
 <td width="33%" valign="top">
@@ -80,14 +80,14 @@
 <tr>
 <td width="33%" valign="top">
 <h3>07 · <a href="Evaluation/README.md">Evaluation</a></h3>
-<p><strong>跨领域评测科学</strong><br><sub>1 篇主报告 · 跨领域 AI 评测与测量方法</sub></p>
-<p><a href="Evaluation/EvaluationScience/report.md">EvaluationScience</a></p>
+<p><strong>跨领域评测科学</strong><br><sub>2 篇主报告 · 跨领域 AI 评测与测量方法</sub></p>
+<p><a href="Evaluation/EvaluationScience/report.md">EvaluationScience</a> · <a href="Evaluation/ScientificDiscovery/report.md">ScientificDiscovery</a></p>
 <p><a href="Evaluation/README.md"><strong>浏览板块 →</strong></a></p>
 </td>
 <td width="33%" valign="top">
 <h3>08 · <a href="Infra/README.md">Infra</a></h3>
-<p><strong>训练与推理系统</strong><br><sub>4 篇主报告 · 推理 / 训练基础设施</sub></p>
-<p><a href="Infra/SpeculativeDecoding/report.md">SpeculativeDecoding</a> · <a href="Infra/QuantizationEdge/report.md">QuantizationEdge</a> · <a href="Infra/TrainingInfra/report.md">TrainingInfra</a> · <a href="Infra/KVCachePD/report.md">KVCachePD</a></p>
+<p><strong>训练与推理系统</strong><br><sub>5 篇主报告 · 推理 / 训练基础设施</sub></p>
+<p><a href="Infra/SpeculativeDecoding/report.md">SpeculativeDecoding</a> · <a href="Infra/QuantizationEdge/report.md">QuantizationEdge</a> · <a href="Infra/TrainingInfra/report.md">TrainingInfra</a> · <a href="Infra/KVCachePD/report.md">KVCachePD</a> · <a href="Infra/ServingEvaluation/report.md">ServingEvaluation</a></p>
 <p><a href="Infra/README.md"><strong>浏览板块 →</strong></a></p>
 </td>
 <td width="33%" valign="top">
@@ -123,11 +123,11 @@
 <!-- SCRIPT:recent START · 报告日期优先，缺失时回退最近提交日 -->
 | 日期 | 阅读条目 | 板块 |
 | :-- | :-- | :-- |
+| 2026-10-24 | [AgentSecurity](<Agents/AgentSecurity/report.md>) | Agents |
+| 2026-10-24 | [ComputerUse](<Agents/ComputerUse/report.md>) | Agents |
+| 2026-10-24 | [ScientificDiscovery](<Evaluation/ScientificDiscovery/report.md>) | Evaluation |
+| 2026-10-24 | [ServingEvaluation](<Infra/ServingEvaluation/report.md>) | Infra |
 | 2026-10-24 | [AgentSystems](<Agents/AgentSystems/report.md>) | Agents |
-| 2026-10-24 | [Alignment](<LLM/Alignment/report.md>) | LLM |
-| 2026-10-24 | [DecisionModels](<LLM/DecisionModels/report.md>) | LLM |
-| 2026-10-24 | [Alibaba-Gen](<Models/Alibaba-Gen/report.md>) | Models |
-| 2026-10-24 | [ByteDance-Gen](<Models/ByteDance-Gen/report.md>) | Models |
 <!-- SCRIPT:recent END -->
 
 [查看全部更新 →](index/recent.md)
@@ -138,12 +138,12 @@
 | 方向 | 专题入口 |
 | :-- | :-- |
 | **LLM** | [Alignment](<LLM/Alignment/report.md>) · [DecisionModels](<LLM/DecisionModels/report.md>) · [DiffusionLM](<LLM/DiffusionLM/report.md>) · [LongContext](<LLM/LongContext/report.md>) · [MoE](<LLM/MoE/report.md>) · [RAG](<LLM/RAG/report.md>) · [ReasoningModels](<LLM/ReasoningModels/report.md>) · [ReinforcementLearning](<LLM/ReinforcementLearning/report.md>) · [TrainingData](<LLM/TrainingData/report.md>) · [VLM](<LLM/VLM/report.md>) |
-| **Agents** | [AgentSystems](<Agents/AgentSystems/report.md>) |
+| **Agents** | [AgentSecurity](<Agents/AgentSecurity/report.md>) · [AgentSystems](<Agents/AgentSystems/report.md>) · [ComputerUse](<Agents/ComputerUse/report.md>) |
 | **VisualGen** | [3DGen](<VisualGen/3DGen/report.md>) · [AudioGen](<VisualGen/AudioGen/report.md>) · [AvatarGen](<VisualGen/AvatarGen/report.md>) · [ControllableGen](<VisualGen/ControllableGen/report.md>) · [DiT](<VisualGen/DiT/report.md>) · [DiffusionModels](<VisualGen/DiffusionModels/report.md>) · [ImageEditing](<VisualGen/ImageEditing/report.md>) · [VideoGen](<VisualGen/VideoGen/report.md>) |
-| **WorldModel** | [EmbodiedVLA](<WorldModel/EmbodiedVLA/report.md>) · [WorldModels](<WorldModel/WorldModels/report.md>) |
+| **WorldModel** | [EmbodiedPlanning](<WorldModel/EmbodiedPlanning/report.md>) · [EmbodiedVLA](<WorldModel/EmbodiedVLA/report.md>) · [WorldModels](<WorldModel/WorldModels/report.md>) |
 | **AI4Science** | [AntibioticDiscovery](<AI4Science/AntibioticDiscovery/report.md>) · [Astronomy](<AI4Science/Astronomy/report.md>) · [AutonomousLabs](<AI4Science/AutonomousLabs/report.md>) · [Chemistry](<AI4Science/Chemistry/report.md>) · [MaterialsDiscovery](<AI4Science/MaterialsDiscovery/report.md>) · [MathematicalDiscovery](<AI4Science/MathematicalDiscovery/report.md>) · [Neuroscience](<AI4Science/Neuroscience/report.md>) · [ProteinDesign](<AI4Science/ProteinDesign/report.md>) · [SingleCellPerturbation](<AI4Science/SingleCellPerturbation/report.md>) · [WeatherClimate](<AI4Science/WeatherClimate/report.md>) |
-| **Evaluation** | [EvaluationScience](<Evaluation/EvaluationScience/report.md>) |
-| **Infra** | [KVCachePD](<Infra/KVCachePD/report.md>) · [QuantizationEdge](<Infra/QuantizationEdge/report.md>) · [SpeculativeDecoding](<Infra/SpeculativeDecoding/report.md>) · [TrainingInfra](<Infra/TrainingInfra/report.md>) |
+| **Evaluation** | [EvaluationScience](<Evaluation/EvaluationScience/report.md>) · [ScientificDiscovery](<Evaluation/ScientificDiscovery/report.md>) |
+| **Infra** | [KVCachePD](<Infra/KVCachePD/report.md>) · [QuantizationEdge](<Infra/QuantizationEdge/report.md>) · [ServingEvaluation](<Infra/ServingEvaluation/report.md>) · [SpeculativeDecoding](<Infra/SpeculativeDecoding/report.md>) · [TrainingInfra](<Infra/TrainingInfra/report.md>) |
 <!-- SCRIPT:topics END -->
 
 ## 阅读与引用
@@ -160,24 +160,24 @@
 ### 完整索引
 
 <!-- SCRIPT:index START · 条目单一真值在 index/by-report.md -->
-共 **65** 条，分属 **9** 个板块：Models 23 · LLM 10 · Agents 1 · VisualGen 8 · WorldModel 2 · AI4Science 10 · Evaluation 1 · Infra 4 · OpenSource 6。
-完整 65 行（条目 | 板块 | 路径）见 **[index/by-report.md](<index/by-report.md>)**；按域 / 主题 / 来源分面见 [index/](<index/>)，总目录见 [INDEX.md](<INDEX.md>)。
+共 **70** 条，分属 **9** 个板块：Models 23 · LLM 10 · Agents 3 · VisualGen 8 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 5 · OpenSource 6。
+完整 70 行（条目 | 板块 | 路径）见 **[index/by-report.md](<index/by-report.md>)**；按域 / 主题 / 来源分面见 [index/](<index/>)，总目录见 [INDEX.md](<INDEX.md>)。
 <!-- SCRIPT:index END -->
 
 ### 目录结构
 
 <!-- SCRIPT:structure START · 来源 scripts/panels.json，配置驱动 -->
 ```text
-ResearchReport/    65 条目 · 36 专题 · 9 板块
+ResearchReport/    70 条目 · 41 专题 · 9 板块
 │
 ├─ 🧠 Models/        23 条 · 厂商模型 / 系列逐个精读（GPT · Qwen · Gemini …）
 ├─ 💬 LLM/           10 条 · 语言模型能力、训练数据与技术专题（ReasoningModels · LongContext · MoE …）
-├─ 🤖 Agents/         1 条 · 智能体架构、记忆、工具使用与长期执行（AgentSystems …）
+├─ 🤖 Agents/         3 条 · 智能体架构、记忆、工具使用与长期执行（AgentSystems · ComputerUse · AgentSecurity …）
 ├─ 🎨 VisualGen/      8 条 · 视觉与多模态生成（VideoGen · DiT · DiffusionModels …）
-├─ 🌍 WorldModel/     2 条 · 世界模型与具身 VLA（WorldModels · EmbodiedVLA …）
+├─ 🌍 WorldModel/     3 条 · 世界模型与具身 VLA（WorldModels · EmbodiedVLA · EmbodiedPlanning …）
 ├─ 🧪 AI4Science/    10 条 · 科学问题中的 AI 方法与实验闭环（ProteinDesign · MaterialsDiscovery · WeatherClimate …）
-├─ 📏 Evaluation/     1 条 · 跨领域 AI 评测与测量方法（EvaluationScience …）
-├─ ⚙️ Infra/          4 条 · 推理 / 训练基础设施（SpeculativeDecoding · QuantizationEdge · TrainingInfra …）
+├─ 📏 Evaluation/     2 条 · 跨领域 AI 评测与测量方法（EvaluationScience · ScientificDiscovery …）
+├─ ⚙️ Infra/          5 条 · 推理 / 训练基础设施（SpeculativeDecoding · QuantizationEdge · TrainingInfra …）
 ├─ 🔧 OpenSource/     6 条 · 开源仓库代码深读（DeepInfer · vllm · sglang …）
 │
 └─ ⚙ 生成管线：scripts/panels.json（单一真值）→ library_index.py

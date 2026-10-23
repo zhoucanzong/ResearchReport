@@ -20,18 +20,22 @@
 * [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) — 87 行
 * [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) — 89 行
 
-## Agents (1)
+## Agents (3)
 
-* [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) — 73 行
+* [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) — 53 行
+* [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) — 94 行
+* [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) — 59 行
 
-## Evaluation (1)
+## Evaluation (2)
 
-* [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) — 123 行
+* [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) — 125 行
+* [Evaluation/ScientificDiscovery/report.md](<../Evaluation/ScientificDiscovery/report.md>) — 33 行
 
-## Infra (4)
+## Infra (5)
 
 * [Infra/KVCachePD/report.md](<../Infra/KVCachePD/report.md>) — 84 行
 * [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) — 188 行
+* [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) — 73 行
 * [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) — 549 行
 * [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) — 181 行
 
@@ -88,10 +92,11 @@
 * [VisualGen/ImageEditing/report.md](<../VisualGen/ImageEditing/report.md>) — 834 行
 * [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) — 898 行
 
-## WorldModel (2)
+## WorldModel (3)
 
+* [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) — 53 行
 * [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) — 642 行
-* [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) — 602 行
+* [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) — 604 行
 
 ## https://github.com/FLock-io/this-that-model@6af11c63c8bb260aa4bed2b7717f33f25decd16e (1)
 

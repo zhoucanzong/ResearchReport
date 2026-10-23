@@ -7,7 +7,7 @@
 
 ---
 
-共 **65** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter；「板块」列由 [`scripts/panels.json`](<../scripts/panels.json>) 驱动。
+共 **70** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter；「板块」列由 [`scripts/panels.json`](<../scripts/panels.json>) 驱动。
 
 | 条目 | 板块 | 路径 | 子报告数 | 行数 | 日期 |
 | --- | --- | --- | --: | --: | --- |
@@ -21,10 +21,14 @@
 | ProteinDesign | AI4Science | [AI4Science/ProteinDesign/report.md](<../AI4Science/ProteinDesign/report.md>) | 6 | 80 | 2026-10-23 |
 | SingleCellPerturbation | AI4Science | [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) | 4 | 87 | 2026-10-23 |
 | WeatherClimate | AI4Science | [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) | 7 | 89 | 2026-10-23 |
-| AgentSystems | Agents | [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) | 9 | 73 | — |
-| EvaluationScience | Evaluation | [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) | 5 | 123 | 2026-10-23 |
+| AgentSecurity | Agents | [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) | 4 | 53 | 2026-10-24 |
+| AgentSystems | Agents | [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) | 12 | 94 | — |
+| ComputerUse | Agents | [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) | 2 | 59 | 2026-10-24 |
+| EvaluationScience | Evaluation | [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) | 5 | 125 | 2026-10-23 |
+| ScientificDiscovery | Evaluation | [Evaluation/ScientificDiscovery/report.md](<../Evaluation/ScientificDiscovery/report.md>) | 2 | 33 | 2026-10-24 |
 | KVCachePD | Infra | [Infra/KVCachePD/report.md](<../Infra/KVCachePD/report.md>) | 5 | 84 | 2026-10-23 |
 | QuantizationEdge | Infra | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 0 | 188 | 2026-10-22 |
+| ServingEvaluation | Infra | [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) | 2 | 73 | 2026-10-24 |
 | SpeculativeDecoding | Infra | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 33 | 549 | 2026-10-22 |
 | TrainingInfra | Infra | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 0 | 181 | 2026-10-22 |
 | Alignment | LLM | [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) | 0 | 114 | — |
@@ -74,6 +78,7 @@
 | DiffusionModels | VisualGen | [VisualGen/DiffusionModels/report.md](<../VisualGen/DiffusionModels/report.md>) | 0 | 858 | — |
 | ImageEditing | VisualGen | [VisualGen/ImageEditing/report.md](<../VisualGen/ImageEditing/report.md>) | 0 | 834 | — |
 | VideoGen | VisualGen | [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) | 0 | 898 | — |
+| EmbodiedPlanning | WorldModel | [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) | 2 | 53 | — |
 | EmbodiedVLA | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 23 | 642 | — |
-| WorldModels | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 602 | 2026-10-22 |
-| **合计** | — | — | **218** | **27,992** | — |
+| WorldModels | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 604 | 2026-10-22 |
+| **合计** | — | — | **233** | **28,288** | — |

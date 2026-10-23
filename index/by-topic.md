@@ -13,6 +13,12 @@
 | --- | --- | --- | --- | --- |
 | [VisualGen/3DGen/report.md](<../VisualGen/3DGen/report.md>) | 3D 生成技术研究报告：从 DreamFusion SDS 蒸馏到 Tripo3D DiT 原生 3D 生成 | — | — | — |
 
+## AgentSecurity (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) | 工具 Agent 安全：提示注入、权限与动作证据 | research | 2026-10-24 | current |
+
 ## AgentSystems (1)
 
 | 条目 | 标题 | type | date | status |
@@ -79,6 +85,12 @@
 | --- | --- | --- | --- | --- |
 | [Models/Claude/report.md](<../Models/Claude/report.md>) | Anthropic Claude 系列模型深度调研报告 | — | — | — |
 
+## ComputerUse (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) | 电脑使用 Agent：从看见界面到交付完整工作流 | research | 2026-10-24 | current |
+
 ## ControllableGen (1)
 
 | 条目 | 标题 | type | date | status |
@@ -132,6 +144,12 @@
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [Models/Doubao-Seed/report.md](<../Models/Doubao-Seed/report.md>) | Doubao/Seed系列模型深度调研报告 | — | — | — |
+
+## EmbodiedPlanning (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) | 具身预测规划：执行前怎样筛选想象中的动作？ | — | — | — |
 
 ## EmbodiedVLA (1)
 
@@ -318,6 +336,18 @@
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [Models/Runway/report.md](<../Models/Runway/report.md>) | Runway 视频生成与编辑模型研究报告 | — | — | — |
+
+## ScientificDiscovery (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Evaluation/ScientificDiscovery/report.md](<../Evaluation/ScientificDiscovery/report.md>) | AI for Science：怎样判断闭环实验带来了发现 | research | 2026-10-24 | current |
+
+## ServingEvaluation (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) | 在线 LLM Serving：SLO、Goodput 与请求完整性 | research | 2026-10-24 | current |
 
 ## SingleCellPerturbation (1)
 

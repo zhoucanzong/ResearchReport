@@ -2,7 +2,7 @@
 
 # ⚙️ Infra
 
-**4 条** · 推理 / 训练基础设施，覆盖投机解码、量化边缘与训练基建。
+**5 条** · 推理 / 训练基础设施，覆盖投机解码、量化边缘与训练基建。
 
 [← 返回首页](<../README.md>) · [完整索引](<../INDEX.md>)
 
@@ -10,13 +10,14 @@
 
 <!-- SCRIPT:panel-readme START · 由 scripts/library_index.py 生成，勿手改 -->
 
-![Entries](https://img.shields.io/badge/Entries-4-3f51b5?style=flat-square)
+![Entries](https://img.shields.io/badge/Entries-5-3f51b5?style=flat-square)
 ![Panel](https://img.shields.io/badge/Panel-Infra-9e9e9e?style=flat-square)
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
 | **KVCachePD** | [KV Cache 服务与 Prefill/Decode 分离：什么时候复用，什么时候传输](<KVCachePD/report.md>) | 84 行 |
 | **QuantizationEdge** | [模型量化与边缘部署研究报告](<QuantizationEdge/report.md>) | 188 行 |
+| **ServingEvaluation** | [在线 LLM Serving：SLO、Goodput 与请求完整性](<ServingEvaluation/report.md>) | 73 行 |
 | **SpeculativeDecoding** | [投机解码（Speculative Decoding）技术专题 · 深度调研](<SpeculativeDecoding/report.md>) | 549 行 |
 | **TrainingInfra** | [大模型训练基础设施与分布式训练研究报告](<TrainingInfra/report.md>) | 181 行 |
 
@@ -30,6 +31,14 @@
 * [papers/mooncake-fast25.md](<KVCachePD/papers/mooncake-fast25.md>) — 21 行 / 3,051 B
 * [sources/CANDIDATES.md](<KVCachePD/sources/CANDIDATES.md>) — 13 行 / 1,614 B
 * [sources/MANIFEST.md](<KVCachePD/sources/MANIFEST.md>) — 22 行 / 4,882 B
+
+</details>
+
+<details>
+<summary><b>ServingEvaluation</b>（2 份）</summary>
+
+* [papers/2401.09670-distserve.md](<ServingEvaluation/papers/2401.09670-distserve.md>) — 23 行 / 3,276 B
+* [papers/2410.14257-slo-goodput.md](<ServingEvaluation/papers/2410.14257-slo-goodput.md>) — 33 行 / 4,110 B
 
 </details>
 

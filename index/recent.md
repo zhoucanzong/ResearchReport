@@ -11,6 +11,10 @@
 
 | 条目 | date | 板块 | 专题 |
 | --- | --- | --- | --- |
+| [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) | 2026-10-24 | Infra | ServingEvaluation |
+| [Evaluation/ScientificDiscovery/report.md](<../Evaluation/ScientificDiscovery/report.md>) | 2026-10-24 | Evaluation | ScientificDiscovery |
+| [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) | 2026-10-24 | Agents | ComputerUse |
+| [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) | 2026-10-24 | Agents | AgentSecurity |
 | [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 2026-10-23 | LLM | TrainingData |
 | [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | 2026-10-23 | LLM | ReinforcementLearning |
 | [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 2026-10-23 | LLM | DiffusionLM |
@@ -27,12 +31,8 @@
 | [AI4Science/Astronomy/report.md](<../AI4Science/Astronomy/report.md>) | 2026-10-23 | AI4Science | Astronomy |
 | [AI4Science/AntibioticDiscovery/report.md](<../AI4Science/AntibioticDiscovery/report.md>) | 2026-10-23 | AI4Science | AntibioticDiscovery |
 | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 2026-10-22 | WorldModel | WorldModels |
-| [OpenSource/DeepInfer/report.md](<../OpenSource/DeepInfer/report.md>) | 2026-10-22 | OpenSource | DeepInfer |
-| [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 2026-10-22 | Infra | TrainingInfra |
-| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 2026-10-22 | Infra | SpeculativeDecoding |
-| [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 2026-10-22 | Infra | QuantizationEdge |
 
-## 无 date 元数据（41）
+## 无 date 元数据（42）
 
 以下条目缺少可解析的 `date`，无法参与「最近更新」排序：
 
@@ -76,4 +76,5 @@
 * [VisualGen/DiffusionModels/report.md](<../VisualGen/DiffusionModels/report.md>)
 * [VisualGen/ImageEditing/report.md](<../VisualGen/ImageEditing/report.md>)
 * [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>)
+* [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>)
 * [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>)

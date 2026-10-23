@@ -13,17 +13,17 @@
 
 | 指标 | 数量 |
 | --- | --- |
-| **条目数**（`report.md`） | **65** |
-| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 10 · Agents 1 · VisualGen 8 · WorldModel 2 · AI4Science 10 · Evaluation 1 · Infra 4 · OpenSource 6 |
-| 条目子文档数 | 218 |
-| 条目正文行数（剔除 front-matter） | 27,992 |
-| 条目字节 | 2,128,944 B |
-| 带 front-matter 的条目 | 24 |
-| 带合法 `date` 的条目 | 24 |
-| 文档（除生成物外的全部 `.md`） | 304 |
+| **条目数**（`report.md`） | **70** |
+| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 10 · Agents 3 · VisualGen 8 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 5 · OpenSource 6 |
+| 条目子文档数 | 233 |
+| 条目正文行数（剔除 front-matter） | 28,288 |
+| 条目字节 | 2,173,483 B |
+| 带 front-matter 的条目 | 28 |
+| 带合法 `date` 的条目 | 28 |
+| 文档（除生成物外的全部 `.md`） | 324 |
 | 其中文件名 `README.md` | 11 |
-| 纳入版本控制的文件 | 324 |
-| 纳入版本控制的 `.md` | 308 |
+| 纳入版本控制的文件 | 328 |
+| 纳入版本控制的 `.md` | 312 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -34,14 +34,14 @@
 | --- | --: | --: | --: | --: | --- |
 | Models | 23 | 41 | 12,127 | 906,146 B | [板块页 →](<Models/README.md>) |
 | LLM | 10 | 54 | 4,260 | 334,154 B | [板块页 →](<LLM/README.md>) |
-| Agents | 1 | 11 | 73 | 9,758 B | [板块页 →](<Agents/README.md>) |
+| Agents | 3 | 22 | 206 | 29,869 B | [板块页 →](<Agents/README.md>) |
 | VisualGen | 8 | 9 | 6,758 | 320,420 B | [板块页 →](<VisualGen/README.md>) |
-| WorldModel | 2 | 41 | 1,244 | 139,511 B | [板块页 →](<WorldModel/README.md>) |
+| WorldModel | 3 | 44 | 1,299 | 147,436 B | [板块页 →](<WorldModel/README.md>) |
 | AI4Science | 10 | 53 | 836 | 138,955 B | [板块页 →](<AI4Science/README.md>) |
-| Evaluation | 1 | 7 | 123 | 25,654 B | [板块页 →](<Evaluation/README.md>) |
-| Infra | 4 | 43 | 1,002 | 86,419 B | [板块页 →](<Infra/README.md>) |
+| Evaluation | 2 | 10 | 158 | 32,272 B | [板块页 →](<Evaluation/README.md>) |
+| Infra | 5 | 46 | 1,075 | 96,304 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 35 | 1,569 | 167,927 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **65** | **304** | **27,992** | **2,128,944 B** | — |
+| **合计** | **70** | **324** | **28,288** | **2,173,483 B** | — |
 
 ## 分面索引
 
@@ -517,28 +517,59 @@
 
 </details>
 
-### Agents（1 条目 / 11 文档）
+### Agents（3 条目 / 22 文档）
 
 <details>
-<summary><b>Agents Agents（1 条目 / 9 子文档）</b></summary>
+<summary><b>Agents Agents（3 条目 / 18 子文档）</b></summary>
 
   <details>
-  <summary><b>AgentSystems</b> · <code>Agents/AgentSystems/report.md</code> · 73 行 · —</summary>
+  <summary><b>AgentSecurity</b> · <code>Agents/AgentSecurity/report.md</code> · 53 行 · 2026-10-24</summary>
 
 
-    * **条目**：[Agents/AgentSystems/report.md](<Agents/AgentSystems/report.md>)（73 行 / 9,758 B）
+    * **条目**：[Agents/AgentSecurity/report.md](<Agents/AgentSecurity/report.md>)（53 行 / 8,688 B）
+    * **专题目录**：`Agents/AgentSecurity`
+    * **元数据**：type=`research` · domain=`Agents` · subject=`AgentSecurity` · date=`2026-10-24` · status=`current`
+    * **子文档（4）**
+        * [papers/2406.13352-agentdojo.md](<Agents/AgentSecurity/papers/2406.13352-agentdojo.md>) — 61 行 / 11,393 B
+        * [papers/2503.18813-camel.md](<Agents/AgentSecurity/papers/2503.18813-camel.md>) — 53 行 / 10,560 B
+        * [papers/2605.03378-argus.md](<Agents/AgentSecurity/papers/2605.03378-argus.md>) — 37 行 / 8,214 B
+        * [sources/MANIFEST.md](<Agents/AgentSecurity/sources/MANIFEST.md>) — 8 行 / 1,119 B
+
+  </details>
+
+  <details>
+  <summary><b>AgentSystems</b> · <code>Agents/AgentSystems/report.md</code> · 94 行 · —</summary>
+
+
+    * **条目**：[Agents/AgentSystems/report.md](<Agents/AgentSystems/report.md>)（94 行 / 13,771 B）
     * **专题目录**：`Agents/AgentSystems`
     * **元数据**：type=`—` · domain=`Agents` · subject=`AgentSystems` · date=`—` · status=`—`
-    * **子文档（9）**
+    * **子文档（12）**
         * [papers/2026-acl-long-1573-toolscope.md](<Agents/AgentSystems/papers/2026-acl-long-1573-toolscope.md>) — 19 行 / 2,073 B
         * [papers/2026-acl-long-1880-fission-grpo.md](<Agents/AgentSystems/papers/2026-acl-long-1880-fission-grpo.md>) — 19 行 / 2,332 B
         * [papers/2026-acl-long-370-mem2actbench.md](<Agents/AgentSystems/papers/2026-acl-long-370-mem2actbench.md>) — 21 行 / 2,530 B
         * [papers/2026-acl-long-981-agemem.md](<Agents/AgentSystems/papers/2026-acl-long-981-agemem.md>) — 28 行 / 3,553 B
         * [papers/2602.02475-agentrx.md](<Agents/AgentSystems/papers/2602.02475-agentrx.md>) — 19 行 / 2,009 B
+        * [papers/2608.07429-tepa.md](<Agents/AgentSystems/papers/2608.07429-tepa.md>) — 54 行 / 8,095 B
         * [papers/2608.14380-agentrewind.md](<Agents/AgentSystems/papers/2608.14380-agentrewind.md>) — 23 行 / 2,791 B
         * [papers/2609.34385-jam.md](<Agents/AgentSystems/papers/2609.34385-jam.md>) — 28 行 / 3,638 B
-        * [sources/MANIFEST.md](<Agents/AgentSystems/sources/MANIFEST.md>) — 13 行 / 1,233 B
+        * [papers/2610.05640-multicamel.md](<Agents/AgentSystems/papers/2610.05640-multicamel.md>) — 35 行 / 7,660 B
+        * [papers/2610.16067-oracle-integrity.md](<Agents/AgentSystems/papers/2610.16067-oracle-integrity.md>) — 41 行 / 7,459 B
+        * [sources/MANIFEST.md](<Agents/AgentSystems/sources/MANIFEST.md>) — 16 行 / 2,047 B
         * [topics/long-horizon-execution-recovery.md](<Agents/AgentSystems/topics/long-horizon-execution-recovery.md>) — 17 行 / 2,935 B
+
+  </details>
+
+  <details>
+  <summary><b>ComputerUse</b> · <code>Agents/ComputerUse/report.md</code> · 59 行 · 2026-10-24</summary>
+
+
+    * **条目**：[Agents/ComputerUse/report.md](<Agents/ComputerUse/report.md>)（59 行 / 7,410 B）
+    * **专题目录**：`Agents/ComputerUse`
+    * **元数据**：type=`research` · domain=`Agents` · subject=`ComputerUse` · date=`2026-10-24` · status=`current`
+    * **子文档（2）**
+        * [papers/2606.09426-weavebench.md](<Agents/ComputerUse/papers/2606.09426-weavebench.md>) — 60 行 / 11,573 B
+        * [papers/2606.29537-osworld2.md](<Agents/ComputerUse/papers/2606.29537-osworld2.md>) — 61 行 / 12,141 B
 
   </details>
 
@@ -647,10 +678,23 @@
 
 </details>
 
-### WorldModel（2 条目 / 41 文档）
+### WorldModel（3 条目 / 44 文档）
 
 <details>
-<summary><b>世界模型 WorldModel（2 条目 / 38 子文档）</b></summary>
+<summary><b>世界模型 WorldModel（3 条目 / 40 子文档）</b></summary>
+
+  <details>
+  <summary><b>EmbodiedPlanning</b> · <code>WorldModel/EmbodiedPlanning/report.md</code> · 53 行 · —</summary>
+
+
+    * **条目**：[WorldModel/EmbodiedPlanning/report.md](<WorldModel/EmbodiedPlanning/report.md>)（53 行 / 7,706 B）
+    * **专题目录**：`WorldModel/EmbodiedPlanning`
+    * **元数据**：type=`—` · domain=`WorldModel` · subject=`EmbodiedPlanning` · date=`—` · status=`—`
+    * **子文档（2）**
+        * [papers/2606.01027-tau0-wm.md](<WorldModel/EmbodiedPlanning/papers/2606.01027-tau0-wm.md>) — 56 行 / 6,967 B
+        * [papers/2609.02159-wcd.md](<WorldModel/EmbodiedPlanning/papers/2609.02159-wcd.md>) — 58 行 / 7,405 B
+
+  </details>
 
   <details>
   <summary><b>EmbodiedVLA</b> · <code>WorldModel/EmbodiedVLA/report.md</code> · 642 行 · —</summary>
@@ -687,10 +731,10 @@
   </details>
 
   <details>
-  <summary><b>WorldModels</b> · <code>WorldModel/WorldModels/report.md</code> · 602 行 · 2026-10-22</summary>
+  <summary><b>WorldModels</b> · <code>WorldModel/WorldModels/report.md</code> · 604 行 · 2026-10-22</summary>
 
 
-    * **条目**：[WorldModel/WorldModels/report.md](<WorldModel/WorldModels/report.md>)（602 行 / 61,945 B）
+    * **条目**：[WorldModel/WorldModels/report.md](<WorldModel/WorldModels/report.md>)（604 行 / 62,164 B）
     * **专题目录**：`WorldModel/WorldModels`
     * **元数据**：type=`topic-research` · domain=`WorldModel` · subject=`WorldModels` · date=`2026-10-22` · status=`needs-review`
     * **子文档（15）**
@@ -873,16 +917,16 @@
 
 </details>
 
-### Evaluation（1 条目 / 7 文档）
+### Evaluation（2 条目 / 10 文档）
 
 <details>
-<summary><b>评测科学 Evaluation（1 条目 / 5 子文档）</b></summary>
+<summary><b>评测科学 Evaluation（2 条目 / 7 子文档）</b></summary>
 
   <details>
-  <summary><b>EvaluationScience</b> · <code>Evaluation/EvaluationScience/report.md</code> · 123 行 · 2026-10-23</summary>
+  <summary><b>EvaluationScience</b> · <code>Evaluation/EvaluationScience/report.md</code> · 125 行 · 2026-10-23</summary>
 
 
-    * **条目**：[Evaluation/EvaluationScience/report.md](<Evaluation/EvaluationScience/report.md>)（123 行 / 25,654 B）
+    * **条目**：[Evaluation/EvaluationScience/report.md](<Evaluation/EvaluationScience/report.md>)（125 行 / 26,006 B）
     * **专题目录**：`Evaluation/EvaluationScience`
     * **元数据**：type=`research` · domain=`Evaluation` · subject=`EvaluationScience` · date=`2026-10-23` · status=`current`
     * **子文档（5）**
@@ -894,12 +938,25 @@
 
   </details>
 
+  <details>
+  <summary><b>ScientificDiscovery</b> · <code>Evaluation/ScientificDiscovery/report.md</code> · 33 行 · 2026-10-24</summary>
+
+
+    * **条目**：[Evaluation/ScientificDiscovery/report.md](<Evaluation/ScientificDiscovery/report.md>)（33 行 / 6,266 B）
+    * **专题目录**：`Evaluation/ScientificDiscovery`
+    * **元数据**：type=`research` · domain=`Evaluation` · subject=`ScientificDiscovery` · date=`2026-10-24` · status=`current`
+    * **子文档（2）**
+        * [papers/2024-nature-closed-loop-transfer.md](<Evaluation/ScientificDiscovery/papers/2024-nature-closed-loop-transfer.md>) — 27 行 / 4,241 B
+        * [papers/2412.12347-autoscilab.md](<Evaluation/ScientificDiscovery/papers/2412.12347-autoscilab.md>) — 23 行 / 3,733 B
+
+  </details>
+
 </details>
 
-### Infra（4 条目 / 43 文档）
+### Infra（5 条目 / 46 文档）
 
 <details>
-<summary><b>基础设施 Infra（4 条目 / 38 子文档）</b></summary>
+<summary><b>基础设施 Infra（5 条目 / 40 子文档）</b></summary>
 
   <details>
   <summary><b>KVCachePD</b> · <code>Infra/KVCachePD/report.md</code> · 84 行 · 2026-10-23</summary>
@@ -926,6 +983,19 @@
     * **元数据**：type=`topic-research` · domain=`Infra` · subject=`QuantizationEdge` · date=`2026-10-22` · status=`needs-review`
     * **子文档（0）**
         * _该条目暂无子文档_
+
+  </details>
+
+  <details>
+  <summary><b>ServingEvaluation</b> · <code>Infra/ServingEvaluation/report.md</code> · 73 行 · 2026-10-24</summary>
+
+
+    * **条目**：[Infra/ServingEvaluation/report.md](<Infra/ServingEvaluation/report.md>)（73 行 / 9,885 B）
+    * **专题目录**：`Infra/ServingEvaluation`
+    * **元数据**：type=`research` · domain=`Infra` · subject=`ServingEvaluation` · date=`2026-10-24` · status=`current`
+    * **子文档（2）**
+        * [papers/2401.09670-distserve.md](<Infra/ServingEvaluation/papers/2401.09670-distserve.md>) — 23 行 / 3,276 B
+        * [papers/2410.14257-slo-goodput.md](<Infra/ServingEvaluation/papers/2410.14257-slo-goodput.md>) — 33 行 / 4,110 B
 
   </details>
 
@@ -1078,7 +1148,7 @@
     * **子文档（5）**
         * [claim-audit.md](<OpenSource/vllm/claim-audit.md>) — 437 行 / 53,917 B
         * [kv-cache-and-prefix-reuse.md](<OpenSource/vllm/kv-cache-and-prefix-reuse.md>) — 203 行 / 19,007 B
-        * [online-request-lifecycle.md](<OpenSource/vllm/online-request-lifecycle.md>) — 51 行 / 11,502 B
+        * [online-request-lifecycle.md](<OpenSource/vllm/online-request-lifecycle.md>) — 50 行 / 11,501 B
         * [scheduling-and-spec-decode.md](<OpenSource/vllm/scheduling-and-spec-decode.md>) — 246 行 / 24,286 B
         * [sources/MANIFEST.md](<OpenSource/vllm/sources/MANIFEST.md>) — 20 行 / 3,351 B
 
@@ -1094,17 +1164,17 @@
 | --- | --- | --: | --: |
 | [AGENTS.md](<AGENTS.md>) |  | 9 | 908 B |
 | [AI4Science/README.md](<AI4Science/README.md>) | AI4Science | 137 | 6,760 B |
-| [Agents/README.md](<Agents/README.md>) | Agents | 41 | 1,888 B |
-| [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 37 | 1,487 B |
-| [Infra/README.md](<Infra/README.md>) | Infra | 79 | 5,684 B |
+| [Agents/README.md](<Agents/README.md>) | Agents | 53 | 2,602 B |
+| [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 46 | 1,945 B |
+| [Infra/README.md](<Infra/README.md>) | Infra | 88 | 6,108 B |
 | [LLM/README.md](<LLM/README.md>) | LLM | 102 | 6,968 B |
 | [Models/README.md](<Models/README.md>) | Models | 101 | 4,888 B |
-| [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 93 | 4,069 B |
+| [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 93 | 4,070 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 195 | 12,475 B |
+| [README.md](<README.md>) |  | 195 | 13,081 B |
 | [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,616 B |
-| [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 77 | 4,941 B |
+| [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 86 | 5,349 B |
 | [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 86 | 6,458 B |
 | [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 11,079 B |

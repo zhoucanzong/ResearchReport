@@ -22,24 +22,28 @@
 | [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) | 单细胞扰动预测：从“配对细胞”转向“群体响应” | research | 2026-10-23 | completed |
 | [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) | AI 天气与气候预测：从天气状态外推到强迫响应 | research | 2026-10-23 | completed |
 
-## Agents (1)
+## Agents (3)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
+| [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) | 工具 Agent 安全：提示注入、权限与动作证据 | research | 2026-10-24 | current |
 | [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) | Agent 系统：让模型在环境中持续完成任务 | — | — | — |
+| [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) | 电脑使用 Agent：从看见界面到交付完整工作流 | research | 2026-10-24 | current |
 
-## Evaluation (1)
+## Evaluation (2)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) | 评测科学：分数何时支持“模型更好”或“能力泛化” | research | 2026-10-23 | current |
+| [Evaluation/ScientificDiscovery/report.md](<../Evaluation/ScientificDiscovery/report.md>) | AI for Science：怎样判断闭环实验带来了发现 | research | 2026-10-24 | current |
 
-## Infra (4)
+## Infra (5)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [Infra/KVCachePD/report.md](<../Infra/KVCachePD/report.md>) | KV Cache 服务与 Prefill/Decode 分离：什么时候复用，什么时候传输 | research | 2026-10-23 | current |
 | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 模型量化与边缘部署研究报告 | topic-research | 2026-10-22 | needs-review |
+| [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) | 在线 LLM Serving：SLO、Goodput 与请求完整性 | research | 2026-10-24 | current |
 | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-22 | needs-review |
 | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 大模型训练基础设施与分布式训练研究报告 | topic-research | 2026-10-22 | needs-review |
 
@@ -115,9 +119,10 @@
 | [VisualGen/ImageEditing/report.md](<../VisualGen/ImageEditing/report.md>) | 图像编辑与修复技术研究报告 | — | — | — |
 | [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) | 视频生成技术研究报告 | — | — | — |
 
-## WorldModel (2)
+## WorldModel (3)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
+| [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) | 具身预测规划：执行前怎样筛选想象中的动作？ | — | — | — |
 | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | EmbodiedVLA 技术专题调研 | — | — | — |
 | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | WorldModels 技术专题调研 | topic-research | 2026-10-22 | needs-review |

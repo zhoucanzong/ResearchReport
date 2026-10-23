@@ -44,7 +44,9 @@
         "Agents/*"
       ],
       "representatives": [
-        "Agents/AgentSystems"
+        "Agents/AgentSystems",
+        "Agents/ComputerUse",
+        "Agents/AgentSecurity"
       ]
     },
     {
@@ -73,7 +75,8 @@
       ],
       "representatives": [
         "WorldModel/WorldModels",
-        "WorldModel/EmbodiedVLA"
+        "WorldModel/EmbodiedVLA",
+        "WorldModel/EmbodiedPlanning"
       ]
     },
     {
@@ -102,7 +105,8 @@
         "Evaluation/*"
       ],
       "representatives": [
-        "Evaluation/EvaluationScience"
+        "Evaluation/EvaluationScience",
+        "Evaluation/ScientificDiscovery"
       ]
     },
     {
@@ -118,7 +122,8 @@
         "Infra/SpeculativeDecoding",
         "Infra/QuantizationEdge",
         "Infra/TrainingInfra",
-        "Infra/KVCachePD"
+        "Infra/KVCachePD",
+        "Infra/ServingEvaluation"
       ]
     },
     {

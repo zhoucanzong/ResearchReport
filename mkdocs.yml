@@ -219,8 +219,14 @@ nav:
         - "CANDIDATES": "LLM/TrainingData/sources/CANDIDATES.md"
         - "MANIFEST": "LLM/TrainingData/sources/MANIFEST.md"
     - "VLM": "LLM/VLM/report.md"
-  - "🤖 Agents · 1":
+  - "🤖 Agents · 3":
     - "Agents/README.md"
+    - "AgentSecurity":
+        - "总报告": "Agents/AgentSecurity/report.md"
+        - "2406.13352-agentdojo": "Agents/AgentSecurity/papers/2406.13352-agentdojo.md"
+        - "2503.18813-camel": "Agents/AgentSecurity/papers/2503.18813-camel.md"
+        - "2605.03378-argus": "Agents/AgentSecurity/papers/2605.03378-argus.md"
+        - "MANIFEST": "Agents/AgentSecurity/sources/MANIFEST.md"
     - "AgentSystems":
         - "总报告": "Agents/AgentSystems/report.md"
         - "2026-acl-long-1573-toolscope": "Agents/AgentSystems/papers/2026-acl-long-1573-toolscope.md"
@@ -228,10 +234,17 @@ nav:
         - "2026-acl-long-370-mem2actbench": "Agents/AgentSystems/papers/2026-acl-long-370-mem2actbench.md"
         - "2026-acl-long-981-agemem": "Agents/AgentSystems/papers/2026-acl-long-981-agemem.md"
         - "2602.02475-agentrx": "Agents/AgentSystems/papers/2602.02475-agentrx.md"
+        - "2608.07429-tepa": "Agents/AgentSystems/papers/2608.07429-tepa.md"
         - "2608.14380-agentrewind": "Agents/AgentSystems/papers/2608.14380-agentrewind.md"
         - "2609.34385-jam": "Agents/AgentSystems/papers/2609.34385-jam.md"
+        - "2610.05640-multicamel": "Agents/AgentSystems/papers/2610.05640-multicamel.md"
+        - "2610.16067-oracle-integrity": "Agents/AgentSystems/papers/2610.16067-oracle-integrity.md"
         - "MANIFEST": "Agents/AgentSystems/sources/MANIFEST.md"
         - "long-horizon-execution-recovery": "Agents/AgentSystems/topics/long-horizon-execution-recovery.md"
+    - "ComputerUse":
+        - "总报告": "Agents/ComputerUse/report.md"
+        - "2606.09426-weavebench": "Agents/ComputerUse/papers/2606.09426-weavebench.md"
+        - "2606.29537-osworld2": "Agents/ComputerUse/papers/2606.29537-osworld2.md"
   - "🎨 VisualGen · 8":
     - "VisualGen/README.md"
     - "3DGen": "VisualGen/3DGen/report.md"
@@ -242,8 +255,12 @@ nav:
     - "DiffusionModels": "VisualGen/DiffusionModels/report.md"
     - "ImageEditing": "VisualGen/ImageEditing/report.md"
     - "VideoGen": "VisualGen/VideoGen/report.md"
-  - "🌍 WorldModel · 2":
+  - "🌍 WorldModel · 3":
     - "WorldModel/README.md"
+    - "EmbodiedPlanning":
+        - "总报告": "WorldModel/EmbodiedPlanning/report.md"
+        - "2606.01027-tau0-wm": "WorldModel/EmbodiedPlanning/papers/2606.01027-tau0-wm.md"
+        - "2609.02159-wcd": "WorldModel/EmbodiedPlanning/papers/2609.02159-wcd.md"
     - "EmbodiedVLA":
         - "总报告": "WorldModel/EmbodiedVLA/report.md"
         - "2303.04137-diffusion-policy": "WorldModel/EmbodiedVLA/papers/2303.04137-diffusion-policy.md"
@@ -350,7 +367,7 @@ nav:
         - "pbc-subseasonal": "AI4Science/WeatherClimate/papers/pbc-subseasonal.md"
         - "CANDIDATES": "AI4Science/WeatherClimate/sources/CANDIDATES.md"
         - "MANIFEST": "AI4Science/WeatherClimate/sources/MANIFEST.md"
-  - "📏 Evaluation · 1":
+  - "📏 Evaluation · 2":
     - "Evaluation/README.md"
     - "EvaluationScience":
         - "总报告": "Evaluation/EvaluationScience/report.md"
@@ -359,7 +376,11 @@ nav:
         - "2406.12045-tau-bench": "Evaluation/EvaluationScience/papers/2406.12045-tau-bench.md"
         - "CANDIDATES": "Evaluation/EvaluationScience/sources/CANDIDATES.md"
         - "MANIFEST": "Evaluation/EvaluationScience/sources/MANIFEST.md"
-  - "⚙️ Infra · 4":
+    - "ScientificDiscovery":
+        - "总报告": "Evaluation/ScientificDiscovery/report.md"
+        - "2024-nature-closed-loop-transfer": "Evaluation/ScientificDiscovery/papers/2024-nature-closed-loop-transfer.md"
+        - "2412.12347-autoscilab": "Evaluation/ScientificDiscovery/papers/2412.12347-autoscilab.md"
+  - "⚙️ Infra · 5":
     - "Infra/README.md"
     - "KVCachePD":
         - "总报告": "Infra/KVCachePD/report.md"
@@ -369,6 +390,10 @@ nav:
         - "CANDIDATES": "Infra/KVCachePD/sources/CANDIDATES.md"
         - "MANIFEST": "Infra/KVCachePD/sources/MANIFEST.md"
     - "QuantizationEdge": "Infra/QuantizationEdge/report.md"
+    - "ServingEvaluation":
+        - "总报告": "Infra/ServingEvaluation/report.md"
+        - "2401.09670-distserve": "Infra/ServingEvaluation/papers/2401.09670-distserve.md"
+        - "2410.14257-slo-goodput": "Infra/ServingEvaluation/papers/2410.14257-slo-goodput.md"
     - "SpeculativeDecoding":
         - "总报告": "Infra/SpeculativeDecoding/report.md"
         - "speculative-block-diffusion": "Infra/SpeculativeDecoding/legacy/speculative-block-diffusion.md"

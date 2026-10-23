@@ -33,7 +33,7 @@
 | [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | status=completed |
 | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | status=needs-review |
 
-## 无 date 且无 status（无法判定，41）
+## 无 date 且无 status（无法判定，42）
 
 以下条目既没有 `date` 也没有 `status`，陈旧度无法评估（不算作已标记）：
 
@@ -77,4 +77,5 @@
 * [VisualGen/DiffusionModels/report.md](<../VisualGen/DiffusionModels/report.md>)
 * [VisualGen/ImageEditing/report.md](<../VisualGen/ImageEditing/report.md>)
 * [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>)
+* [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>)
 * [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>)

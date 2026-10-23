@@ -2,7 +2,7 @@
 
 # 🌍 WorldModel
 
-**2 条** · 世界模型与具身 VLA，关注环境动力学与可部署动作策略。
+**3 条** · 世界模型与具身 VLA，关注环境动力学与可部署动作策略。
 
 [← 返回首页](<../README.md>) · [完整索引](<../INDEX.md>)
 
@@ -10,15 +10,24 @@
 
 <!-- SCRIPT:panel-readme START · 由 scripts/library_index.py 生成，勿手改 -->
 
-![Entries](https://img.shields.io/badge/Entries-2-3f51b5?style=flat-square)
+![Entries](https://img.shields.io/badge/Entries-3-3f51b5?style=flat-square)
 ![Panel](https://img.shields.io/badge/Panel-WorldModel-9e9e9e?style=flat-square)
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
+| **EmbodiedPlanning** | [具身预测规划：执行前怎样筛选想象中的动作？](<EmbodiedPlanning/report.md>) | 53 行 |
 | **EmbodiedVLA** | [EmbodiedVLA 技术专题调研](<EmbodiedVLA/report.md>) | 642 行 |
-| **WorldModels** | [WorldModels 技术专题调研](<WorldModels/report.md>) | 602 行 |
+| **WorldModels** | [WorldModels 技术专题调研](<WorldModels/report.md>) | 604 行 |
 
 ## 📎 子文档
+
+<details>
+<summary><b>EmbodiedPlanning</b>（2 份）</summary>
+
+* [papers/2606.01027-tau0-wm.md](<EmbodiedPlanning/papers/2606.01027-tau0-wm.md>) — 56 行 / 6,967 B
+* [papers/2609.02159-wcd.md](<EmbodiedPlanning/papers/2609.02159-wcd.md>) — 58 行 / 7,405 B
+
+</details>
 
 <details>
 <summary><b>EmbodiedVLA</b>（23 份）</summary>

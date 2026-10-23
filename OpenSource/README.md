@@ -80,7 +80,7 @@
 
 * [claim-audit.md](<vllm/claim-audit.md>) — 437 行 / 53,917 B
 * [kv-cache-and-prefix-reuse.md](<vllm/kv-cache-and-prefix-reuse.md>) — 203 行 / 19,007 B
-* [online-request-lifecycle.md](<vllm/online-request-lifecycle.md>) — 51 行 / 11,502 B
+* [online-request-lifecycle.md](<vllm/online-request-lifecycle.md>) — 50 行 / 11,501 B
 * [scheduling-and-spec-decode.md](<vllm/scheduling-and-spec-decode.md>) — 246 行 / 24,286 B
 * [sources/MANIFEST.md](<vllm/sources/MANIFEST.md>) — 20 行 / 3,351 B
 
