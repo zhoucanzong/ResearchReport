@@ -22,8 +22,8 @@
 | **LongContext** | [长上下文（Long Context）技术研究报告](<LongContext/report.md>) | 609 行 |
 | **MoE** | [混合专家模型（Mixture of Experts, MoE）架构演进研究报告](<MoE/report.md>) | 405 行 |
 | **RAG** | [检索增强生成（Retrieval-Augmented Generation, RAG）技术研究报告](<RAG/report.md>) | 834 行 |
-| **ReasoningModels** | [推理模型（Reasoning Models）与 Test-Time Compute 研究报告](<ReasoningModels/report.md>) | 679 行 |
-| **ReinforcementLearning** | [LLM 后训练中的强化学习：轨迹从哪里来，策略何时更新](<ReinforcementLearning/report.md>) | 94 行 |
+| **ReasoningModels** | [推理模型（Reasoning Models）与 Test-Time Compute 研究报告](<ReasoningModels/report.md>) | 675 行 |
+| **ReinforcementLearning** | [LLM 后训练中的强化学习：轨迹从哪里来，策略何时更新](<ReinforcementLearning/report.md>) | 107 行 |
 | **TrainingData** | [训练数据策展：过滤、去重与预算如何改变模型测量](<TrainingData/report.md>) | 56 行 |
 | **VLM** | [多模态大模型（Vision-Language Models, VLM）研究报告](<VLM/report.md>) | 516 行 |
 
@@ -70,15 +70,18 @@
 </details>
 
 <details>
-<summary><b>ReinforcementLearning</b>（7 份）</summary>
+<summary><b>ReinforcementLearning</b>（10 份）</summary>
 
+* [papers/2305.20050-prm800k.md](<ReinforcementLearning/papers/2305.20050-prm800k.md>) — 23 行 / 3,412 B
+* [papers/2501.07301-process-reward-model-lessons.md](<ReinforcementLearning/papers/2501.07301-process-reward-model-lessons.md>) — 26 行 / 3,807 B
+* [papers/2506.14245-rlvr-correct-reasoning.md](<ReinforcementLearning/papers/2506.14245-rlvr-correct-reasoning.md>) — 22 行 / 3,100 B
 * [papers/2609.01354-category-level-verifier-audit.md](<ReinforcementLearning/papers/2609.01354-category-level-verifier-audit.md>) — 29 行 / 5,950 B
 * [papers/2609.35677-verifier-errors-selective-control.md](<ReinforcementLearning/papers/2609.35677-verifier-errors-selective-control.md>) — 29 行 / 7,072 B
 * [papers/loop.md](<ReinforcementLearning/papers/loop.md>) — 28 行 / 4,539 B
 * [papers/online-preference.md](<ReinforcementLearning/papers/online-preference.md>) — 28 行 / 3,980 B
 * [papers/prime.md](<ReinforcementLearning/papers/prime.md>) — 30 行 / 4,636 B
-* [sources/CANDIDATES.md](<ReinforcementLearning/sources/CANDIDATES.md>) — 24 行 / 3,877 B
-* [sources/MANIFEST.md](<ReinforcementLearning/sources/MANIFEST.md>) — 33 行 / 6,655 B
+* [sources/CANDIDATES.md](<ReinforcementLearning/sources/CANDIDATES.md>) — 26 行 / 4,756 B
+* [sources/MANIFEST.md](<ReinforcementLearning/sources/MANIFEST.md>) — 43 行 / 9,620 B
 
 </details>
 

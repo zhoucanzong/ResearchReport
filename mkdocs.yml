@@ -202,6 +202,9 @@ nav:
     - "ReasoningModels": "LLM/ReasoningModels/report.md"
     - "ReinforcementLearning":
         - "总报告": "LLM/ReinforcementLearning/report.md"
+        - "2305.20050-prm800k": "LLM/ReinforcementLearning/papers/2305.20050-prm800k.md"
+        - "2501.07301-process-reward-model-lessons": "LLM/ReinforcementLearning/papers/2501.07301-process-reward-model-lessons.md"
+        - "2506.14245-rlvr-correct-reasoning": "LLM/ReinforcementLearning/papers/2506.14245-rlvr-correct-reasoning.md"
         - "2609.01354-category-level-verifier-audit": "LLM/ReinforcementLearning/papers/2609.01354-category-level-verifier-audit.md"
         - "2609.35677-verifier-errors-selective-control": "LLM/ReinforcementLearning/papers/2609.35677-verifier-errors-selective-control.md"
         - "loop": "LLM/ReinforcementLearning/papers/loop.md"

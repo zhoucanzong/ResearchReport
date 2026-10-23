@@ -15,15 +15,15 @@
 | --- | --- |
 | **条目数**（`report.md`） | **64** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 11 · VisualGen 8 · WorldModel 2 · AI4Science 10 · Evaluation 1 · Infra 3 · OpenSource 6 |
-| 条目子文档数 | 201 |
-| 条目正文行数（剔除 front-matter） | 27,909 |
-| 条目字节 | 2,110,056 B |
+| 条目子文档数 | 204 |
+| 条目正文行数（剔除 front-matter） | 27,918 |
+| 条目字节 | 2,114,262 B |
 | 带 front-matter 的条目 | 23 |
 | 带合法 `date` 的条目 | 23 |
-| 文档（除生成物外的全部 `.md`） | 283 |
+| 文档（除生成物外的全部 `.md`） | 286 |
 | 其中文件名 `README.md` | 10 |
-| 纳入版本控制的文件 | 301 |
-| 纳入版本控制的 `.md` | 285 |
+| 纳入版本控制的文件 | 307 |
+| 纳入版本控制的 `.md` | 291 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -33,14 +33,14 @@
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
 | Models | 23 | 41 | 12,127 | 906,140 B | [板块页 →](<Models/README.md>) |
-| LLM | 11 | 52 | 4,356 | 339,602 B | [板块页 →](<LLM/README.md>) |
+| LLM | 11 | 55 | 4,365 | 343,808 B | [板块页 →](<LLM/README.md>) |
 | VisualGen | 8 | 9 | 6,758 | 320,420 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 2 | 41 | 1,244 | 139,523 B | [板块页 →](<WorldModel/README.md>) |
 | AI4Science | 10 | 53 | 836 | 138,955 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 1 | 7 | 101 | 21,992 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 3 | 37 | 918 | 75,497 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 35 | 1,569 | 167,927 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **64** | **283** | **27,909** | **2,110,056 B** | — |
+| **合计** | **64** | **286** | **27,918** | **2,114,262 B** | — |
 
 ## 分面索引
 
@@ -350,10 +350,10 @@
 
 </details>
 
-### LLM（11 条目 / 52 文档）
+### LLM（11 条目 / 55 文档）
 
 <details>
-<summary><b>语言模型 LLM（11 条目 / 40 子文档）</b></summary>
+<summary><b>语言模型 LLM（11 条目 / 43 子文档）</b></summary>
 
   <details>
   <summary><b>Agent</b> · <code>LLM/Agent/report.md</code> · 105 行 · —</summary>
@@ -466,10 +466,10 @@
   </details>
 
   <details>
-  <summary><b>ReasoningModels</b> · <code>LLM/ReasoningModels/report.md</code> · 679 行 · —</summary>
+  <summary><b>ReasoningModels</b> · <code>LLM/ReasoningModels/report.md</code> · 675 行 · —</summary>
 
 
-    * **条目**：[LLM/ReasoningModels/report.md](<LLM/ReasoningModels/report.md>)（679 行 / 35,018 B）
+    * **条目**：[LLM/ReasoningModels/report.md](<LLM/ReasoningModels/report.md>)（675 行 / 35,781 B）
     * **专题目录**：`LLM/ReasoningModels`
     * **元数据**：type=`—` · domain=`LLM` · subject=`ReasoningModels` · date=`—` · status=`—`
     * **子文档（0）**
@@ -478,20 +478,23 @@
   </details>
 
   <details>
-  <summary><b>ReinforcementLearning</b> · <code>LLM/ReinforcementLearning/report.md</code> · 94 行 · 2026-10-23</summary>
+  <summary><b>ReinforcementLearning</b> · <code>LLM/ReinforcementLearning/report.md</code> · 107 行 · 2026-10-23</summary>
 
 
-    * **条目**：[LLM/ReinforcementLearning/report.md](<LLM/ReinforcementLearning/report.md>)（94 行 / 19,421 B）
+    * **条目**：[LLM/ReinforcementLearning/report.md](<LLM/ReinforcementLearning/report.md>)（107 行 / 22,864 B）
     * **专题目录**：`LLM/ReinforcementLearning`
     * **元数据**：type=`research` · domain=`LLM` · subject=`ReinforcementLearning` · date=`2026-10-23` · status=`current`
-    * **子文档（7）**
+    * **子文档（10）**
+        * [papers/2305.20050-prm800k.md](<LLM/ReinforcementLearning/papers/2305.20050-prm800k.md>) — 23 行 / 3,412 B
+        * [papers/2501.07301-process-reward-model-lessons.md](<LLM/ReinforcementLearning/papers/2501.07301-process-reward-model-lessons.md>) — 26 行 / 3,807 B
+        * [papers/2506.14245-rlvr-correct-reasoning.md](<LLM/ReinforcementLearning/papers/2506.14245-rlvr-correct-reasoning.md>) — 22 行 / 3,100 B
         * [papers/2609.01354-category-level-verifier-audit.md](<LLM/ReinforcementLearning/papers/2609.01354-category-level-verifier-audit.md>) — 29 行 / 5,950 B
         * [papers/2609.35677-verifier-errors-selective-control.md](<LLM/ReinforcementLearning/papers/2609.35677-verifier-errors-selective-control.md>) — 29 行 / 7,072 B
         * [papers/loop.md](<LLM/ReinforcementLearning/papers/loop.md>) — 28 行 / 4,539 B
         * [papers/online-preference.md](<LLM/ReinforcementLearning/papers/online-preference.md>) — 28 行 / 3,980 B
         * [papers/prime.md](<LLM/ReinforcementLearning/papers/prime.md>) — 30 行 / 4,636 B
-        * [sources/CANDIDATES.md](<LLM/ReinforcementLearning/sources/CANDIDATES.md>) — 24 行 / 3,877 B
-        * [sources/MANIFEST.md](<LLM/ReinforcementLearning/sources/MANIFEST.md>) — 33 行 / 6,655 B
+        * [sources/CANDIDATES.md](<LLM/ReinforcementLearning/sources/CANDIDATES.md>) — 26 行 / 4,756 B
+        * [sources/MANIFEST.md](<LLM/ReinforcementLearning/sources/MANIFEST.md>) — 43 行 / 9,620 B
 
   </details>
 
@@ -1060,12 +1063,12 @@
 | [AI4Science/README.md](<AI4Science/README.md>) | AI4Science | 137 | 6,760 B |
 | [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 37 | 1,487 B |
 | [Infra/README.md](<Infra/README.md>) | Infra | 67 | 5,018 B |
-| [LLM/README.md](<LLM/README.md>) | LLM | 88 | 5,946 B |
+| [LLM/README.md](<LLM/README.md>) | LLM | 103 | 7,059 B |
 | [Models/README.md](<Models/README.md>) | Models | 101 | 4,888 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 93 | 4,069 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 186 | 11,672 B |
+| [README.md](<README.md>) |  | 186 | 11,807 B |
 | [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,616 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 77 | 4,941 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 86 | 6,458 B |

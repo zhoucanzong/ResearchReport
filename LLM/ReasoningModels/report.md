@@ -52,8 +52,7 @@
 | 2022.01 | Chain-of-Thought Prompting 提出 | Google Research | 首次系统展示中间推理步骤对 LLM 推理能力的提升 |
 | 2022.05 | Self-Consistency 提出 | Google Research | 通过多数投票聚合多条推理路径的结果 |
 | 2022.10 | Tree of Thoughts (ToT) 提出 | Princeton / NYU | 将推理建模为树搜索问题，支持回溯与全局决策 |
-| 2023.05 | Process-Supervised Reward Models (PRM) 提出 | OpenAI | 逐步验证推理过程，而非仅验证最终答案 |
-| 2023.10 | Let's Verify Step by Step 发表 | OpenAI | 系统验证过程监督优于结果监督 |
+| 2023.05 | Let's Verify Step by Step / PRM800K | OpenAI | 发布过程标签数据并比较 MATH 题的过程监督与结果监督；结论限定于原文的标注和 Best-of-N 设置 |
 | 2024.01 | Scaling LLM Test-Time Compute Optimally 发表 | Google DeepMind | 系统研究推理时间计算的最优分配策略 |
 | 2024.09 | **OpenAI o1 发布** | OpenAI | 首个大规模 RL 训练的推理模型，开创 Long CoT 范式 |
 | 2025.01 | **DeepSeek-R1 发布** | DeepSeek | 纯 RL 训练的开源推理模型，复现 o1 风格行为 |
@@ -122,7 +121,7 @@ Overthinking 的本质是模型未能学会根据问题难度自适应地调整�
 ### 3.4 过程监督 vs 结果监督
 
 - **Outcome-Supervised Reward Model (ORM)**：仅根据最终答案的正确性提供奖励信号。简单但稀疏，难以指导中间步骤。
-- **Process-Supervised Reward Model (PRM)**：对推理的每一步进行验证，提供更细粒度的监督信号。训练成本高，但指导性更强。
+- **Process-Supervised Reward Model (PRM)**：对推理的中间步骤给分。标签可来自人工、自动判定或后续解答成功率等不同信号；更细粒度不自动等于更准确，需检查步骤标签定义和目标评测。
 - **Generative PRM (如 ThinkPRM)**：使用生成式模型而非判别式模型进行过程验证，可以生成自然语言的验证反馈。
 
 ---
@@ -251,12 +250,9 @@ ToT 的局限在于需要手工设计的启发式函数和较高的推理成本�
 
 #### Process-Supervised Reward Models (PRM)
 
-OpenAI 的 "Let's Verify Step by Step" 展示了过程监督的优势：
-- 对推理的每一步进行正确性验证
-- 相比结果监督（ORM），PRM 能更准确地定位错误步骤
-- 需要大量人工标注或自动化验证数据
+OpenAI 的 *Let's Verify Step by Step* 在 MATH 解题上比较过程标签与结果标签。PRM800K 的轨迹由固定模型生成，人工按步标为正、负或中性；后续收集阶段用当前 PRM 主动挑选高分但最终答案错误的轨迹，再交给人工标注。这不是 MCTS 生成训练轨迹。[固定版原文精读](../ReinforcementLearning/papers/2305.20050-prm800k.md)
 
-PRM 的训练通常采用**蒙特卡洛树搜索（MCTS）**生成推理轨迹，然后对每一步进行标注。
+论文的大规模结果是 MATH 测试集 Best-of-1860 的最终答案正确率：PRM 78.2%、ORM 72.4%、多数投票 69.6%；它不是直接测得的逐步错误定位率，而且 PRM 与 ORM 的训练数据规模/选样方式不相同。较小规模的 Figure 4 对同一批轨迹改变监督类型，提供了更受控的补充。224 道数学/理化题的 Best-of-100 检查提供有限 STEM 外推，不证明过程监督对所有任务都优于结果监督。[§3 Figure 3、§4.1 Figure 4、§5 Table 1；逐篇定位见精读分册]
 
 #### Test-Time Compute 的最优分配
 
@@ -631,7 +627,7 @@ Google DeepMind 的研究提出了以下最优分配策略：
 1. Chain-of-Thought Prompting Elicits Reasoning in Large Language Models (Wei et al., 2022) - [arXiv:2201.11903](https://arxiv.org/abs/2201.11903)
 2. Self-Consistency Improves Chain of Thought Reasoning in Language Models (Wang et al., 2022) - [arXiv:2203.11171](https://arxiv.org/abs/2203.11171)
 3. Tree of Thoughts: Deliberate Problem Solving with Large Language Models (Yao et al., 2023) - [arXiv:2305.10601](https://arxiv.org/abs/2305.10601)
-4. Let's Verify Step by Step (Lightman et al., 2023) - [arXiv:2305.20050](https://arxiv.org/abs/2305.20050)
+4. Let's Verify Step by Step (Lightman et al., 2023) - [arXiv:2305.20050v1](https://arxiv.org/abs/2305.20050v1)；PRM800K 的标注来源、主动选样与评价边界见[逐篇精读](../ReinforcementLearning/papers/2305.20050-prm800k.md)。
 5. Large Language Models are Zero-Shot Reasoners (Kojima et al., 2022) - [arXiv:2205.11916](https://arxiv.org/abs/2205.11916)
 6. Scaling LLM Test-Time Compute Optimally (Snell et al., 2024) - [arXiv:2408.03314](https://arxiv.org/abs/2408.03314)
 7. DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning (DeepSeek-AI, 2025) - [arXiv:2501.12948](https://arxiv.org/abs/2501.12948)

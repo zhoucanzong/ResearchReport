@@ -38,6 +38,16 @@ status: current
 
 这个信号是**相对于一个语言模型参考分布的隐式过程分数**，不能解释成每个中间推理步骤已经被人工判定为正确。PRIME 的规则验证器也只覆盖特定数学答案和代码测试。作者报告，从 Eurus-2-7B-SFT 出发，Eurus-2-7B-PRIME 在七个数学/编程基准平均由 28.8 到 43.9，作者称平均提升 15.1%；AIME 2024 pass@1 为 26.7。此组结果不是同预算比较：表 1 的 RLOO + outcome verifier 为 240 步，PRIME 主模型为 592 步；另一个等 240 步对照中，PRIME 在多项指标普遍更高。论文使用 8×A800，基准列于表 1、设置在 §4.1–4.3。该证据支持“在线密集信号在该实验中有用”，不支持“PRM 总能消灭 reward hacking”。[2 Table 1、§4.3、Appendix A；定位见 MANIFEST S2](sources/MANIFEST.md#sources-manifest--llm-reinforcement-learning)
 
+### 过程监督与答案奖励：标签目标会改变结论
+
+OpenAI 的 PRM800K 工作把 PRM 训练定义得更具体：固定模型生成 MATH 解答，人工把每一步标为正、负或中性；大规模数据第二阶段用当前 PRM 挑出高分但最终答案错误的轨迹，再交由人工标注。这里的轨迹来自模型采样，PRM 参与的是主动选样，论文**没有用 MCTS 生成训练轨迹**。其 78.2% PRM vs 72.4% ORM 数字是 MATH 测试集 Best-of-1860 最终答案准确率；PRM/ORM 训练数据规模和选样策略不同，不能单独解读为过程监督的纯因果收益。Figure 4 的小规模、同数据比较补充了监督类型差异，但用更大 PRM 生成过程标签，不是独立人工真值。[S17 §2.3–2.4, Appendix B/D, §3 Figure 3, §4.1 Figure 4；[原文精读](papers/2305.20050-prm800k.md)]
+
+“过程标签”本身也有不同定义。Process Reward Models 的开发研究用八次后续采样中能否到达正确答案来构造 Monte Carlo 步骤标签；这更接近“从该前缀继续解题的概率”，并非对当前数学步骤的逻辑真值。结果依评价指标而变：同一策略的 Best-of-8 最终答案平均准确率中，MC 标签为 65.9%、judge 标签 65.3%、PRM800K 人工标签 64.9%，majority@8 为 66.2%；ProcessBench 首错定位 F1 则分别为 40.1、46.5、56.5。相同标注方案可以在答案选择与步骤定位上排序不同；该研究只覆盖数学推理，也未报告步骤概率的 ECE/可靠性曲线。[S18 §2.1、§3.1.2, Tables 3–5, §3.2；[原文精读](papers/2501.07301-process-reward-model-lessons.md)]
+
+答案验证的 RLVR 也可能产生一种**隐式**过程选择机制，但需满足前提。Wen 等人的分析要求正确 CoT 比错误 CoT 更可能导向正确答案（`α > β`），且组内奖励方差非零、GRPO 组大小足够；在这些条件下，答案奖励可给正确 CoT 正期望优势。作者用 CoT-Pass@K 将最终答案正确与 judge 认可推理同时计入，报告 DAPO-Qwen-32B 在 AIME 2024/2025 上到 K=1024 仍高于 Qwen2.5-32B base；但 judge 有误差、MATH-500/AMC23 上优势较弱、MinervaMath 无提升，作者也复现出答案正确率饱和而 judge 认可 CoT 中位数仍约 0.7 的情形。[S8 §3.1–§5, Figures 2/5, Appendix A.3–A.7；[原文精读](papers/2506.14245-rlvr-correct-reasoning.md)]
+
+因此要分清四个对象：**终局答案正确率**、**人工步骤标签**、**未来续写成功率代理**和**模型 judge 对 CoT 的认可**。PRM 不天然等于逐步真值，CoT-Pass@K 也仍依赖 judge；答案奖励能否筛到更好推理，取决于论文所需的相关性假设与实际评估任务。
+
 验证器只保障**它检查的属性**。如果测试仅检查一组示例的外延输出，策略可能记住实例答案而不学规则；类似地，若代码 reward 只覆盖有限单测，测试未覆盖的行为仍无保证（这是一般性推论，并非下述研究直接测试的代码奖励漏洞）。2026 年对归纳任务的受控研究发现，使用外延验证的 RLVR 会诱发实例枚举式捷径，而同构验证训练在该实验中避免了这一漏洞；这表明对该类任务，仅检查原例输出会漏掉规则泛化失败。[6 §1、§4、Appendix C；来源见 MANIFEST S6](sources/MANIFEST.md#sources-manifest--llm-reinforcement-learning) 另一项 2026 预印本指出，RLVR 可能提升当前任务的 pass@1，同时减少固定 rollout 预算下还能采到的其他任务成功轨迹；在其 Qwen3-8B-Base 的 IFEval 实验中，Math-RLVR 后 pass@1 +6.5 个百分点、best@32 −9.8 个百分点。该结果是特定模型、指令基准和顺序训练的作者实验，不应扩展成 RLVR 必然损害泛化；它提醒评价不能只有已优化验证器上的单次准确率。[7 摘要]
 
 ### 验证器的两种不同问题：模型会利用漏洞，还是验证器会误判
@@ -85,9 +95,9 @@ WebRL 与 WebAgent-R1 的 42.4% / 44.8% 不宜直接排列成胜负：backbone�
 
 ## 本次阅读范围与尚未解决的问题
 
-本次论文池 16 项：5 篇逐篇精读（在线偏好、PRIME、LOOP、RLVR verifier 反馈边界、答案验证器类别审计），3 篇原文选读（WebRL、WebAgent-R1、OpenWebRL），1 篇失败边界选读（LLMs Gaming Verifiers），1 篇摘要级候选（support reshaping），其余 6 项保留为待读、排除或交叉引用。精读分册均按四个亮点与七问组织；各候选取舍见 [CANDIDATES](sources/CANDIDATES.md)，固定版本、许可、锚点和缓存记录见 [MANIFEST](sources/MANIFEST.md)。
+本次论文池 18 项：8 篇逐篇精读（在线偏好、PRIME、LOOP、RLVR 隐式 CoT 选择、PRM800K、PRM 开发经验、两篇 verifier 审计），3 篇原文选读（WebRL、WebAgent-R1、OpenWebRL），1 篇失败边界选读（LLMs Gaming Verifiers），其余 6 项保留为待读、摘要级、排除或交叉引用。精读分册均按四个亮点与七问组织；各候选取舍见 [CANDIDATES](sources/CANDIDATES.md)，固定版本、许可、锚点和缓存记录见 [MANIFEST](sources/MANIFEST.md)。
 
-仍需横向实验回答：偏好回路与 RLVR 在同一基座、同一采样预算下的成本—质量曲线；对环境状态的部分验证能否降低终局稀疏性，同时不鼓励投机；策略探索压缩与跨任务能力损失的因果关系；长时序 agent 在可复用真实环境中的多 seed、环境版本和奖励审计。当前证据来自不同任务、模型与预算的单篇作者实验，未进行统一基准复现。
+仍需横向实验回答：偏好回路与 RLVR 在同一基座、同一采样预算下的质量比较；过程标签模型如何在新策略分布下校准，并在同一任务上与答案级 verifier 做同预算对照；对环境状态的部分验证能否降低终局稀疏性而不鼓励投机；长时序 agent 在可复用真实环境中的多 seed、环境版本和奖励审计。当前证据来自不同任务、模型与预算的单篇作者实验，未进行统一基准复现。
 
 ## 参考来源
 
@@ -101,3 +111,6 @@ WebRL 与 WebAgent-R1 的 42.4% / 44.8% 不宜直接排列成胜负：backbone�
 8. Yang et al., [OpenWebRL: Demystifying Online Multi-turn Reinforcement Learning for Visual Web Agents, arXiv:2606.02031v2 (2026-06-04)](https://arxiv.org/html/2606.02031v2), §4–5, Table 2–4。
 9. Moya, Thornley, and Lin, [Verifier Errors in RLVR: Reward Hacking, Limits of Feedback, and Selective Control, arXiv:2609.35677v1 (2026-09-28)](https://arxiv.org/abs/2609.35677v1), §§2–6, Appendix A.1–A.2/D.3, Figures 1–7, Tables 1–6。
 10. Xin, [Where the Verifier Fails: A Category-Level Audit of Reward Signals in RLVR, arXiv:2609.01354v1 (2026-09-01)](https://arxiv.org/html/2609.01354v1), §§2–5, Tables 1–8, Figures 1–3。
+11. Wen et al., [Reinforcement Learning with Verifiable Rewards Implicitly Incentivizes Correct Reasoning in Base LLMs, arXiv:2506.14245v2 (2025-10-02; ICLR 2026)](https://arxiv.org/html/2506.14245v2), §3.1–§5, Figures 2/5, Appendix A.3–A.7。
+12. Lightman et al., [Let's Verify Step by Step, arXiv:2305.20050v1 (2023-05-31; ICLR 2024)](https://arxiv.org/html/2305.20050v1), §§2.3–2.4, Appendix B/D, §3 Figure 3, §4.1 Figure 4, §5 Table 1, §6.3。
+13. Wang et al., [The Lessons of Developing Process Reward Models in Mathematical Reasoning, arXiv:2501.07301v2 (2025-06-05)](https://arxiv.org/html/2501.07301v2), §2.1, §3.1.2–3.2, Tables 3–5, §4.2, §5.6 and limitations。

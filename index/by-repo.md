@@ -39,7 +39,7 @@
 * [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) — 609 行
 * [LLM/MoE/report.md](<../LLM/MoE/report.md>) — 405 行
 * [LLM/RAG/report.md](<../LLM/RAG/report.md>) — 834 行
-* [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) — 679 行
+* [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) — 675 行
 * [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) — 56 行
 * [LLM/VLM/report.md](<../LLM/VLM/report.md>) — 516 行
 
@@ -111,4 +111,4 @@
 
 ## null (1)
 
-* [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) — 94 行
+* [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) — 107 行

@@ -32,8 +32,8 @@
 | LongContext | LLM | [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 0 | 609 | — |
 | MoE | LLM | [LLM/MoE/report.md](<../LLM/MoE/report.md>) | 0 | 405 | — |
 | RAG | LLM | [LLM/RAG/report.md](<../LLM/RAG/report.md>) | 0 | 834 | — |
-| ReasoningModels | LLM | [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) | 0 | 679 | — |
-| ReinforcementLearning | LLM | [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | 7 | 94 | 2026-10-23 |
+| ReasoningModels | LLM | [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) | 0 | 675 | — |
+| ReinforcementLearning | LLM | [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | 10 | 107 | 2026-10-23 |
 | TrainingData | LLM | [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 5 | 56 | 2026-10-23 |
 | VLM | LLM | [LLM/VLM/report.md](<../LLM/VLM/report.md>) | 0 | 516 | — |
 | Alibaba-Gen | Models | [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) | 0 | 117 | — |
@@ -75,4 +75,4 @@
 | VideoGen | VisualGen | [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) | 0 | 898 | — |
 | EmbodiedVLA | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 23 | 642 | — |
 | WorldModels | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 602 | 2026-10-22 |
-| **合计** | — | — | **201** | **27,909** | — |
+| **合计** | — | — | **204** | **27,918** | — |
