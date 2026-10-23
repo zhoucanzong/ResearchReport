@@ -66,6 +66,12 @@ MT-Bench/Chatbot Arena 的奠基研究给出了支持 LLM-as-judge 的正面证�
 
 静态问答通常把输入固定，模型只产生一次回答；agent 需要经过工具、状态、时间预算和失败反馈完成任务。最终答案对错可能漏掉“是否真的写入文件/改变环境”“是否越权”“轨迹是否可审计”这些部署属性。Agent 评测因此至少应描述任务目标、环境状态、工具权限、交互轮数、重试、时限、成本、评分器与终止条件，并区分模型能力与 harness/工具链的共同效果。
 
+交互评测的**环境可重置**与**agent 可重复成功**是两种证据。τ-bench 固定数据库状态并让 GPT-4 用户模拟器以温度 1 产生多轮互动；其 `pass^k` 估计同一任务随机抽取 k 次都成功的概率，和只要求至少一次成功的 `pass@k` 不同。主结果表至少运行三次/任务；Figure 4 的曲线画到 k=32，但确切试次数及区间没有讲清，因此适合支持“重复成功会下降”的机制判断，精确曲线不宜过度解读。它的最终数据库状态与回答必需信息组成二元奖励，作者承认未被检查器编码的政策违规仍可能拿到满分。[S12 §3、§5.1 Table 2/Figure 4；[原文精读](papers/2406.12045-tau-bench.md)]
+
+桌面和网页基准提供互补的环境/判分设计。OSWorld 通过 VM snapshot 与配置重建初态，再由逐任务 evaluator 检查最终文件或应用状态；WebArena 通过 Docker image 恢复站点状态，操作任务按数据库、API 或页面属性核验，信息任务则混用 exact、must-include 和 GPT-4 fuzzy match。两篇原论文的主模型结果都没有报告同一任务多随机运行的 `pass@k`、均值/方差或置信区间；OSWorld 的多轮任务审查、WebArena 的任务模板变体都不能替代这种重复试验。[S13 §2.2–§4.1 Table 5; S14 Appendix A.2, §3.2/Table 1, §5.2/Table 3；[OSWorld 精读](papers/2404.07972-osworld.md)；[WebArena 精读](papers/2307.13854-webarena.md)]
+
+这些设计还暴露出终态 checker 的边界：状态正确不必然证明策略合规；有限样本的人工作业检查也不能证明所有 evaluator 无误。OSWorld-Verified 维护者在 2025 年公告中称处理了 300 多个社区问题，并集中重测、修订任务和评估函数；这说明任务与 checker 需要持续维护。该版本记录应和 2024 年原论文结果分开报告，维护者发布的重测也不等于独立第三方复现。[S12 §3; S13 §3.2; S14 Appendix A.8; S15；来源定位见 sources/MANIFEST.md]
+
 WildClawBench 是 2026 年值得纳入的案例：arXiv v1（2026-05-11）报告 60 个双语、多模态、人工编写任务，6 类场景，平均约 8 分钟、20 余次工具调用；任务运行在容器化的 CLI agent runtime，涉及 bash、浏览器、文件、邮件和日历等工具。评分组合确定性规则、环境副作用审计和 GPT-5.4 语义评分；ground-truth 资源在 agent 退出后才挂载。作者在 OpenClaw harness 下评测 19 个模型，最高分为 Claude Opus 4.7 的 62.2%；另在四个代表模型上比较四种 harness，其中 MiMo V2 Pro 在 Claude Code 与 Hermes Agent 间相差 18 个百分点。这直接提醒读者：agent 结果的测量对象常是“模型 + harness + 工具 + 环境”的组合，而非孤立模型。[S5 摘要、§3.1–3.4、§4.1–4.3, Tables 2–3]
 
 这仍不能推出生产部署泛化：论文承认任务都以单轮指令开始、没有用户中途澄清/纠正；60 题对真实部署覆盖仍有限，GUI 密集型控制及生物、金融、法律等专家工作流代表不足。GPT-5.4 judge 的人评一致性案例只抽取 5 个需要 LLM judge 的任务，由两名独立专家盲评并使用同一 rubric；这只是小样本案例，不是对整套语义评分的外部效度验证。[S5 Appendix B, H]
@@ -93,10 +99,11 @@ WildClawBench 是 2026 年值得纳入的案例：arXiv v1（2026-05-11）报告
 - 动态 benchmark 如何保持时间上的可比性，同时避免题集公开后污染；何时应按版本分开报，何时可以用校准集链接量尺。[S4 §5–6]
 - judge 经过 prompt / rubric / model 更新后，怎样做跨版本校准和审计自偏好；同意率、重测信度、排序恢复、pair 难度分层和被审属性效度如何同时报告。[S6–S7, S10]
 - agent benchmark 在什么任务与用户采样设计下能代表真实工作流；离线真实用户记录、模拟交互环境与在线运行数据如何共同支撑部署推断。[S5 Appendix B; S8; S11]
+- 交互任务应采用何种重复次数与抽样单位；如何同时报告 `pass^k`/`pass@k`、任务态、政策约束和随机用户模拟器带来的变化；基准 checker 修订前后怎样保持可比。[S12–S15]
 - 更广泛跨学科框架如何纳入基准策展者、受影响群体和决策后果；现有测量效度框架本身没有穷尽这些社会维度。[S1 §6.3]
 
 ## 7. 阅读与核验边界
 
-本报告精读 10 篇主线来源（S1–S7、S9–S11），其中 S3 是污染分类补充；VLA 仿真—真机机制从本库既有精读分册交叉引用。原文报告的实验数值没有独立复跑。本轮 PaperFetcher 元数据批取确认了 S9 与 S10 的 arXiv 题名、作者和提交日期，但没有提供全文缓存；S9/S10 依据固定版本 arXiv HTML 核对，S11 依据 AAAI 官方论文页与 PDF 核对。PaperFetcher 主题搜索受到 arXiv 429 且返回结果噪声较大，未用作原文证据；本轮没有新增论文 PDF 缓存。每个主张的版本、章节/表图及证据等级见 [sources/MANIFEST.md](sources/MANIFEST.md)，未入选文献及取舍见 [sources/CANDIDATES.md](sources/CANDIDATES.md)。修订后 canonical `claim_audit.py` 报高影响结论 16 项、缺少邻近本地源码路径 1 项；唯一提示是 front matter 的 `evidence: fixed-primary-papers` 字段被关键词规则误判为正文结论。该脚本只扫描 Markdown 行附近的本地文件路径，不识别论文章节编号、不访问网页，也不判断论据与主张是否相符。事实支撑范围仍以 MANIFEST 中列出的原文定位和人工核查为准。
+本报告精读 13 篇主线论文（S1–S7、S9–S14），其中 S3 是污染分类补充；S8 的 VLA 仿真—真机机制从本库既有精读分册交叉引用，S15 是 OSWorld-Verified 项目组维护者公告，不是同行评审论文。原文结果未独立复跑。S12 使用 PaperFetcher 下载到仓库外的固定 PDF；S13 由 PaperFetcher 核对元数据后依据 arXiv v2 HTML 阅读；S14 使用 arXiv v4 HTML；S15 于 2026-10-23 核验项目组公告。三个新增论文均未在 `/Users/zhoucanzong/Documents/paper-cache` 找到匹配缓存，未把 PaperFetcher 摘要当作全文证据。本轮没有将 PDF 或上游代码放入仓库。每项主张的版本、章节/表图及证据等级见 [sources/MANIFEST.md](sources/MANIFEST.md)，未入选文献及取舍见 [sources/CANDIDATES.md](sources/CANDIDATES.md)。canonical `claim_audit.py` 的最新计数见本轮验证记录；它只扫描 Markdown 行附近的本地路径，不解析论文锚点，也不判断论据是否支持主张。事实支撑范围仍以 MANIFEST 中列出的原文定位和人工核查为准。
 
-**技能使用证据**：按仓库 `docs/team.md` 实际读取 `researcher` deep 与 `paper-fetcher` 技能说明。Researcher deep 的既有搜索—筛选—原文精读—综合结构见本报告和候选清单；本次增补重新核对 S9、S10 固定版本 HTML 和 S11 AAAI 官方 PDF。PaperFetcher `search_papers.py` 的小样本主题查询遇 arXiv 429，judge 查询结果噪声较大，agent 查询因请求迟滞未完成；`fetch_paper.py batch` 成功取回 S9 与 S10 的元数据/引用，但不含全文；S11 没有 arXiv ID，改从 AAAI 官方页面取 PDF。没有把搜索结果或 PaperFetcher 摘要当作论文全文证据，也没有新增论文缓存。未调用交互式访谈、引文网络或知识图谱。原文阅读范围及 claim-audit 限制见 [sources/MANIFEST.md](sources/MANIFEST.md)。
+**技能使用证据**：按仓库 `docs/team.md` 实际读取本机 researcher 与 paper-fetcher SKILL.md。本批按 researcher 的候选筛选、原文核验和 reader-first 综合方式，使用 paper-fetcher 核验 τ-bench/OSWorld 元数据并下载 τ-bench PDF 至 `/tmp`；WebArena 和 OSWorld 原文以固定版本官方 HTML 阅读。OSWorld-Verified 作为项目组公告另行标注。本批无 benchmark 执行、模型调用、API 支出或共享 paper-cache 写入；未使用搜索摘要替代原文。版本、阅读定位和工具边界见 [sources/MANIFEST.md](sources/MANIFEST.md)。

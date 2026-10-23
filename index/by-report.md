@@ -21,7 +21,7 @@
 | ProteinDesign | AI4Science | [AI4Science/ProteinDesign/report.md](<../AI4Science/ProteinDesign/report.md>) | 6 | 80 | 2026-10-23 |
 | SingleCellPerturbation | AI4Science | [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) | 4 | 87 | 2026-10-23 |
 | WeatherClimate | AI4Science | [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) | 7 | 89 | 2026-10-23 |
-| EvaluationScience | Evaluation | [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) | 2 | 94 | 2026-10-23 |
+| EvaluationScience | Evaluation | [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) | 5 | 101 | 2026-10-23 |
 | QuantizationEdge | Infra | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 0 | 188 | 2026-10-22 |
 | SpeculativeDecoding | Infra | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 33 | 549 | 2026-10-22 |
 | TrainingInfra | Infra | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 0 | 181 | 2026-10-22 |
@@ -74,4 +74,4 @@
 | VideoGen | VisualGen | [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) | 0 | 898 | — |
 | EmbodiedVLA | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 23 | 642 | — |
 | WorldModels | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 602 | 2026-10-22 |
-| **合计** | — | — | **193** | **27,877** | — |
+| **合计** | — | — | **196** | **27,884** | — |

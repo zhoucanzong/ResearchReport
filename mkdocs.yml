@@ -332,6 +332,9 @@ nav:
     - "Evaluation/README.md"
     - "EvaluationScience":
         - "总报告": "Evaluation/EvaluationScience/report.md"
+        - "2307.13854-webarena": "Evaluation/EvaluationScience/papers/2307.13854-webarena.md"
+        - "2404.07972-osworld": "Evaluation/EvaluationScience/papers/2404.07972-osworld.md"
+        - "2406.12045-tau-bench": "Evaluation/EvaluationScience/papers/2406.12045-tau-bench.md"
         - "CANDIDATES": "Evaluation/EvaluationScience/sources/CANDIDATES.md"
         - "MANIFEST": "Evaluation/EvaluationScience/sources/MANIFEST.md"
   - "⚙️ Infra · 3":

@@ -15,15 +15,15 @@
 | --- | --- |
 | **条目数**（`report.md`） | **63** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 10 · VisualGen 8 · WorldModel 2 · AI4Science 10 · Evaluation 1 · Infra 3 · OpenSource 6 |
-| 条目子文档数 | 193 |
-| 条目正文行数（剔除 front-matter） | 27,877 |
-| 条目字节 | 2,101,826 B |
+| 条目子文档数 | 196 |
+| 条目正文行数（剔除 front-matter） | 27,884 |
+| 条目字节 | 2,103,751 B |
 | 带 front-matter 的条目 | 22 |
 | 带合法 `date` 的条目 | 22 |
-| 文档（除生成物外的全部 `.md`） | 274 |
+| 文档（除生成物外的全部 `.md`） | 277 |
 | 其中文件名 `README.md` | 10 |
-| 纳入版本控制的文件 | 296 |
-| 纳入版本控制的 `.md` | 280 |
+| 纳入版本控制的文件 | 298 |
+| 纳入版本控制的 `.md` | 282 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -37,10 +37,10 @@
 | VisualGen | 8 | 9 | 6,758 | 320,420 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 2 | 41 | 1,244 | 139,523 B | [板块页 →](<WorldModel/README.md>) |
 | AI4Science | 10 | 53 | 836 | 138,955 B | [板块页 →](<AI4Science/README.md>) |
-| Evaluation | 1 | 4 | 94 | 20,067 B | [板块页 →](<Evaluation/README.md>) |
+| Evaluation | 1 | 7 | 101 | 21,992 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 3 | 37 | 918 | 75,497 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 35 | 1,569 | 167,927 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **63** | **274** | **27,877** | **2,101,826 B** | — |
+| **合计** | **63** | **277** | **27,884** | **2,103,751 B** | — |
 
 ## 分面索引
 
@@ -838,21 +838,24 @@
 
 </details>
 
-### Evaluation（1 条目 / 4 文档）
+### Evaluation（1 条目 / 7 文档）
 
 <details>
-<summary><b>评测科学 Evaluation（1 条目 / 2 子文档）</b></summary>
+<summary><b>评测科学 Evaluation（1 条目 / 5 子文档）</b></summary>
 
   <details>
-  <summary><b>EvaluationScience</b> · <code>Evaluation/EvaluationScience/report.md</code> · 94 行 · 2026-10-23</summary>
+  <summary><b>EvaluationScience</b> · <code>Evaluation/EvaluationScience/report.md</code> · 101 行 · 2026-10-23</summary>
 
 
-    * **条目**：[Evaluation/EvaluationScience/report.md](<Evaluation/EvaluationScience/report.md>)（94 行 / 20,067 B）
+    * **条目**：[Evaluation/EvaluationScience/report.md](<Evaluation/EvaluationScience/report.md>)（101 行 / 21,992 B）
     * **专题目录**：`Evaluation/EvaluationScience`
     * **元数据**：type=`research` · domain=`Evaluation` · subject=`EvaluationScience` · date=`2026-10-23` · status=`current`
-    * **子文档（2）**
-        * [sources/CANDIDATES.md](<Evaluation/EvaluationScience/sources/CANDIDATES.md>) — 21 行 / 5,014 B
-        * [sources/MANIFEST.md](<Evaluation/EvaluationScience/sources/MANIFEST.md>) — 26 行 / 11,900 B
+    * **子文档（5）**
+        * [papers/2307.13854-webarena.md](<Evaluation/EvaluationScience/papers/2307.13854-webarena.md>) — 22 行 / 2,837 B
+        * [papers/2404.07972-osworld.md](<Evaluation/EvaluationScience/papers/2404.07972-osworld.md>) — 21 行 / 3,410 B
+        * [papers/2406.12045-tau-bench.md](<Evaluation/EvaluationScience/papers/2406.12045-tau-bench.md>) — 27 行 / 4,034 B
+        * [sources/CANDIDATES.md](<Evaluation/EvaluationScience/sources/CANDIDATES.md>) — 24 行 / 6,023 B
+        * [sources/MANIFEST.md](<Evaluation/EvaluationScience/sources/MANIFEST.md>) — 30 行 / 15,802 B
 
   </details>
 
