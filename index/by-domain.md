@@ -37,11 +37,12 @@
 | [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) | 评测科学：分数何时支持“模型更好”或“能力泛化” | research | 2026-10-23 | current |
 | [Evaluation/ScientificDiscovery/report.md](<../Evaluation/ScientificDiscovery/report.md>) | AI for Science：怎样判断闭环实验带来了发现 | research | 2026-10-24 | current |
 
-## Infra (5)
+## Infra (6)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [Infra/KVCachePD/report.md](<../Infra/KVCachePD/report.md>) | KV Cache 服务与 Prefill/Decode 分离：什么时候复用，什么时候传输 | research | 2026-10-23 | current |
+| [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | MoE 执行：token 如何抵达专家，又如何回到原序 | repo-research | 2026-10-24 | completed |
 | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 模型量化与边缘部署研究报告 | topic-research | 2026-10-22 | needs-review |
 | [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) | 在线 LLM Serving：SLO、Goodput 与请求完整性 | research | 2026-10-24 | current |
 | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-22 | needs-review |
@@ -59,7 +60,7 @@
 | [LLM/RAG/report.md](<../LLM/RAG/report.md>) | 检索增强生成（Retrieval-Augmented Generation, RAG）技术研究报告 | — | — | — |
 | [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) | 推理模型（Reasoning Models）与 Test-Time Compute 研究报告 | — | — | — |
 | [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | LLM 后训练中的强化学习：轨迹从哪里来，策略何时更新 | research | 2026-10-23 | current |
-| [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 训练数据策展：过滤、去重与预算如何改变模型测量 | research | 2026-10-23 | current |
+| [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 训练数据策展：筛选、去重与配比如何改变训练结果 | research | 2026-10-24 | current |
 | [LLM/VLM/report.md](<../LLM/VLM/report.md>) | 多模态大模型（Vision-Language Models, VLM）研究报告 | — | — | — |
 
 ## Models (23)

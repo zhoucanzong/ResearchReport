@@ -123,6 +123,7 @@
         "Infra/QuantizationEdge",
         "Infra/TrainingInfra",
         "Infra/KVCachePD",
+        "Infra/MoEExecution",
         "Infra/ServingEvaluation"
       ]
     },

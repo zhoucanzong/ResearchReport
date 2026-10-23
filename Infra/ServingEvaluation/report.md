@@ -72,9 +72,17 @@ DistServe 将 prefill 和 decode 分配到不同 GPU 池，分别调节并行度
 
 通用 benchmark 工具和跨领域效度见[评测科学](../../Evaluation/EvaluationScience/report.md)。引擎如何具体处理准入、流式响应、错误和取消，见上述 vLLM/SGLang 源码精读；本专题聚焦跨实现的负载、SLO、结果分母和资源账，不替它们写第二份实现报告。
 
+### GuideLLM 中两个常被混为一谈的分母
+
+以固定 GuideLLM v0.8.1 源码为例，报告的 `request_totals.total` 将 measurement window 内的 successful、incomplete（例如取消）和 errored 请求相加；SLO attainment 使用不同分母：已得到足够 objective 数据的成功请求，加上所有错误请求；被测量时长边界截断的取消及无法计算目标指标的成功请求不计入该分母。因而“请求总数”“可判定的 SLO 样本数”和“合规请求数”是不同数值，不能从一个总请求字段反推出 SLO 达标率。[分母实现见固定源码定位](sources/MANIFEST.md)
+
+该版本从发送请求时开始记录时钟，基于客户端接收到并解析的流式内容事件计算首 token 与 inter-token latency；若单个 SSE chunk 含多个模型 token，chunk 时间戳并不能揭示每个 token 的单独间隔。profile 也定义不同负载形状：串行同步、固定并发、恒定请求率和 Poisson 到达不可互称为“不同负载强度”。这些是 GuideLLM 的特定实现定义，用来说明压测工具会怎样塑造统计对象，并非通用协议标准。[计时、profiles 与来源定位](sources/MANIFEST.md)
+
 ## 证据边界与开放问题
 
 两篇论文展示了 SLO 约束如何影响资源架构，以及 goodput/SLO 指标可能如何诱发不符合用户体验的策略。它们没有形成统一的失败/取消分类标准；DistServe 的主评测也不是逐个剖析 HTTP 错误、客户端取消和释放延迟。对这些边界，本库当前依据是 vLLM、SGLang 与 LMCache 的固定版本静态源码阅读，缺少真实 socket 断连、deadline、过载阶跃和 GPU 资源回收联合实验。
+
+本轮还尝试对 GuideLLM 固定版本做 CPU/mock 校准，但 CLI 在加载 benchmark 数据模块时因缺少 `datasets` 依赖而未进入后端测量；没有安装重型数据/ML依赖绕过该边界。单独的标准库 mock 客户端只观测了预设 SSE 时序、HTTP 429 和提前 EOF，用来检查客户端可见事件与预设脚本的差异，不是 GuideLLM 输出，也不是推理服务或引擎性能结果。实现边界和本次校准限制见[来源清单](sources/MANIFEST.md)。
 
 下一步若做运行研究，优先在一个固定引擎上构造闭环：open-loop 到达率扫描与突发负载；同时记录所有 offered request 的终态和端到端时间；注入超载、超时、客户端取消及执行错误；核对请求退出后 KV blocks / worker slots 何时重新可用。再与一个不同策略引擎比较时，应固定相同模型、硬件、工作负载和统计口径。没有该实测前，本文不宣称哪种引擎有更好的尾延迟或回收效率。
 

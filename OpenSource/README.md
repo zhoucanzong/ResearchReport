@@ -16,7 +16,7 @@
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
 | **DeepInfer** | [DeepInfer：离线推理内核、异步调度与状态契约](<DeepInfer/report.md>) | 140 行 |
-| **DeepSeekHarness** | [DeepSeek Harness（DSH）仓库深读](<DeepSeekHarness/report.md>) | 350 行 |
+| **DeepSeekHarness** | [DeepSeek Harness（DSH）仓库深读](<DeepSeekHarness/report.md>) | 352 行 |
 | **nemotron** | [Nemotron-Labs-Diffusion 阅读报告](<nemotron/report.md>) | 220 行 |
 | **sglang** | [SGLang 仓库代码分析报告](<sglang/report.md>) | 315 行 |
 | **this-that-model** | [this-that-model 仓库深读](<this-that-model/report.md>) | 246 行 |
@@ -35,12 +35,13 @@
 </details>
 
 <details>
-<summary><b>DeepSeekHarness</b>（4 份）</summary>
+<summary><b>DeepSeekHarness</b>（5 份）</summary>
 
 * [compaction-and-bundles.md](<DeepSeekHarness/compaction-and-bundles.md>) — 382 行 / 45,773 B
 * [gateway-projection.md](<DeepSeekHarness/gateway-projection.md>) — 125 行 / 10,354 B
 * [ptc.md](<DeepSeekHarness/ptc.md>) — 251 行 / 35,465 B
-* [sources/MANIFEST.md](<DeepSeekHarness/sources/MANIFEST.md>) — 11 行 / 1,525 B
+* [sources/MANIFEST.md](<DeepSeekHarness/sources/MANIFEST.md>) — 18 行 / 2,823 B
+* [topics/tool-effect-durability.md](<DeepSeekHarness/topics/tool-effect-durability.md>) — 69 行 / 13,042 B
 
 </details>
 

@@ -10,6 +10,8 @@ status: completed
 # DeepSeek Harness（DSH）仓库深读
 
 > **2026-10-22 源码复核**：当前无 Git 身份的快照、文件指纹及已核范围见 [sources/MANIFEST.md](sources/MANIFEST.md)；版本字符串不等于 commit。
+>
+> **后续运行时专题**：工具副作用与会话持久化路径已单独固定到上游 commit [`22ddee3`](https://github.com/deepseek-ai/deepseek-harness/tree/22ddee3792402c3e70ec5f86a63c3e3e895a2f60)，追踪调用记录刷盘、工具体执行、结果持久化与崩溃恢复；见[工具副作用与会话持久化](topics/tool-effect-durability.md)。这项较新版本的精读不追溯替换下文原架构报告所用的 2026-10-20 快照。
 
 > **方法**：`code-researcher` skill 的 `deep` 模式（四层法：Codebase Map → Runtime Story → Design Inquiry → Maintainer Notes），结论一律带 `文件:行`。
 > **对象**：`github.com/deepseek-ai/deepseek-harness`，快照的 package.json 自述 **`0.2.1-rc.2`**；缺少 commit，不能称 master 等于该版本。

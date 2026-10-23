@@ -9,7 +9,7 @@
 
 判定口径：`status` 不是 active/current/ok/stable/published，或 `date` 早于 180 天。
 
-## 已标记（19）
+## 已标记（20）
 
 | 条目 | 原因 |
 | --- | --- |
@@ -23,6 +23,7 @@
 | [AI4Science/ProteinDesign/report.md](<../AI4Science/ProteinDesign/report.md>) | status=completed |
 | [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) | status=completed |
 | [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) | status=completed |
+| [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | status=completed |
 | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | status=needs-review |
 | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | status=needs-review |
 | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | status=needs-review |

@@ -24,8 +24,8 @@
 <details>
 <summary><b>EmbodiedPlanning</b>（2 份）</summary>
 
-* [papers/2606.01027-tau0-wm.md](<EmbodiedPlanning/papers/2606.01027-tau0-wm.md>) — 56 行 / 6,967 B
-* [papers/2609.02159-wcd.md](<EmbodiedPlanning/papers/2609.02159-wcd.md>) — 58 行 / 7,405 B
+* [papers/2606.01027-tau0-wm.md](<EmbodiedPlanning/papers/2606.01027-tau0-wm.md>) — 56 行 / 6,965 B
+* [papers/2609.02159-wcd.md](<EmbodiedPlanning/papers/2609.02159-wcd.md>) — 58 行 / 7,403 B
 
 </details>
 

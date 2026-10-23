@@ -18,7 +18,7 @@
 <div align="center">
 
 <!-- SCRIPT:badges START -->
-[**70** 主报告](index/by-report.md) &nbsp; · &nbsp; [**233** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**41** 技术专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
+[**71** 主报告](index/by-report.md) &nbsp; · &nbsp; [**241** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**42** 技术专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
 <!-- SCRIPT:badges END -->
 
 </div>
@@ -86,8 +86,8 @@
 </td>
 <td width="33%" valign="top">
 <h3>08 · <a href="Infra/README.md">Infra</a></h3>
-<p><strong>训练与推理系统</strong><br><sub>5 篇主报告 · 推理 / 训练基础设施</sub></p>
-<p><a href="Infra/SpeculativeDecoding/report.md">SpeculativeDecoding</a> · <a href="Infra/QuantizationEdge/report.md">QuantizationEdge</a> · <a href="Infra/TrainingInfra/report.md">TrainingInfra</a> · <a href="Infra/KVCachePD/report.md">KVCachePD</a> · <a href="Infra/ServingEvaluation/report.md">ServingEvaluation</a></p>
+<p><strong>训练与推理系统</strong><br><sub>6 篇主报告 · 推理 / 训练基础设施</sub></p>
+<p><a href="Infra/SpeculativeDecoding/report.md">SpeculativeDecoding</a> · <a href="Infra/QuantizationEdge/report.md">QuantizationEdge</a> · <a href="Infra/TrainingInfra/report.md">TrainingInfra</a> · <a href="Infra/KVCachePD/report.md">KVCachePD</a> · <a href="Infra/MoEExecution/report.md">MoEExecution</a> · <a href="Infra/ServingEvaluation/report.md">ServingEvaluation</a></p>
 <p><a href="Infra/README.md"><strong>浏览板块 →</strong></a></p>
 </td>
 <td width="33%" valign="top">
@@ -126,8 +126,8 @@
 | 2026-10-24 | [AgentSecurity](<Agents/AgentSecurity/report.md>) | Agents |
 | 2026-10-24 | [ComputerUse](<Agents/ComputerUse/report.md>) | Agents |
 | 2026-10-24 | [ScientificDiscovery](<Evaluation/ScientificDiscovery/report.md>) | Evaluation |
+| 2026-10-24 | [MoEExecution](<Infra/MoEExecution/report.md>) | Infra |
 | 2026-10-24 | [ServingEvaluation](<Infra/ServingEvaluation/report.md>) | Infra |
-| 2026-10-24 | [AgentSystems](<Agents/AgentSystems/report.md>) | Agents |
 <!-- SCRIPT:recent END -->
 
 [查看全部更新 →](index/recent.md)
@@ -143,7 +143,7 @@
 | **WorldModel** | [EmbodiedPlanning](<WorldModel/EmbodiedPlanning/report.md>) · [EmbodiedVLA](<WorldModel/EmbodiedVLA/report.md>) · [WorldModels](<WorldModel/WorldModels/report.md>) |
 | **AI4Science** | [AntibioticDiscovery](<AI4Science/AntibioticDiscovery/report.md>) · [Astronomy](<AI4Science/Astronomy/report.md>) · [AutonomousLabs](<AI4Science/AutonomousLabs/report.md>) · [Chemistry](<AI4Science/Chemistry/report.md>) · [MaterialsDiscovery](<AI4Science/MaterialsDiscovery/report.md>) · [MathematicalDiscovery](<AI4Science/MathematicalDiscovery/report.md>) · [Neuroscience](<AI4Science/Neuroscience/report.md>) · [ProteinDesign](<AI4Science/ProteinDesign/report.md>) · [SingleCellPerturbation](<AI4Science/SingleCellPerturbation/report.md>) · [WeatherClimate](<AI4Science/WeatherClimate/report.md>) |
 | **Evaluation** | [EvaluationScience](<Evaluation/EvaluationScience/report.md>) · [ScientificDiscovery](<Evaluation/ScientificDiscovery/report.md>) |
-| **Infra** | [KVCachePD](<Infra/KVCachePD/report.md>) · [QuantizationEdge](<Infra/QuantizationEdge/report.md>) · [ServingEvaluation](<Infra/ServingEvaluation/report.md>) · [SpeculativeDecoding](<Infra/SpeculativeDecoding/report.md>) · [TrainingInfra](<Infra/TrainingInfra/report.md>) |
+| **Infra** | [KVCachePD](<Infra/KVCachePD/report.md>) · [MoEExecution](<Infra/MoEExecution/report.md>) · [QuantizationEdge](<Infra/QuantizationEdge/report.md>) · [ServingEvaluation](<Infra/ServingEvaluation/report.md>) · [SpeculativeDecoding](<Infra/SpeculativeDecoding/report.md>) · [TrainingInfra](<Infra/TrainingInfra/report.md>) |
 <!-- SCRIPT:topics END -->
 
 ## 阅读与引用
@@ -160,15 +160,15 @@
 ### 完整索引
 
 <!-- SCRIPT:index START · 条目单一真值在 index/by-report.md -->
-共 **70** 条，分属 **9** 个板块：Models 23 · LLM 10 · Agents 3 · VisualGen 8 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 5 · OpenSource 6。
-完整 70 行（条目 | 板块 | 路径）见 **[index/by-report.md](<index/by-report.md>)**；按域 / 主题 / 来源分面见 [index/](<index/>)，总目录见 [INDEX.md](<INDEX.md>)。
+共 **71** 条，分属 **9** 个板块：Models 23 · LLM 10 · Agents 3 · VisualGen 8 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6。
+完整 71 行（条目 | 板块 | 路径）见 **[index/by-report.md](<index/by-report.md>)**；按域 / 主题 / 来源分面见 [index/](<index/>)，总目录见 [INDEX.md](<INDEX.md>)。
 <!-- SCRIPT:index END -->
 
 ### 目录结构
 
 <!-- SCRIPT:structure START · 来源 scripts/panels.json，配置驱动 -->
 ```text
-ResearchReport/    70 条目 · 41 专题 · 9 板块
+ResearchReport/    71 条目 · 42 专题 · 9 板块
 │
 ├─ 🧠 Models/        23 条 · 厂商模型 / 系列逐个精读（GPT · Qwen · Gemini …）
 ├─ 💬 LLM/           10 条 · 语言模型能力、训练数据与技术专题（ReasoningModels · LongContext · MoE …）
@@ -177,7 +177,7 @@ ResearchReport/    70 条目 · 41 专题 · 9 板块
 ├─ 🌍 WorldModel/     3 条 · 世界模型与具身 VLA（WorldModels · EmbodiedVLA · EmbodiedPlanning …）
 ├─ 🧪 AI4Science/    10 条 · 科学问题中的 AI 方法与实验闭环（ProteinDesign · MaterialsDiscovery · WeatherClimate …）
 ├─ 📏 Evaluation/     2 条 · 跨领域 AI 评测与测量方法（EvaluationScience · ScientificDiscovery …）
-├─ ⚙️ Infra/          5 条 · 推理 / 训练基础设施（SpeculativeDecoding · QuantizationEdge · TrainingInfra …）
+├─ ⚙️ Infra/          6 条 · 推理 / 训练基础设施（SpeculativeDecoding · QuantizationEdge · TrainingInfra …）
 ├─ 🔧 OpenSource/     6 条 · 开源仓库代码深读（DeepInfer · vllm · sglang …）
 │
 └─ ⚙ 生成管线：scripts/panels.json（单一真值）→ library_index.py

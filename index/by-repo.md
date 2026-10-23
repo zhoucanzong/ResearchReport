@@ -35,7 +35,7 @@
 
 * [Infra/KVCachePD/report.md](<../Infra/KVCachePD/report.md>) — 84 行
 * [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) — 188 行
-* [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) — 73 行
+* [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) — 81 行
 * [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) — 549 行
 * [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) — 181 行
 
@@ -48,8 +48,8 @@
 * [LLM/MoE/report.md](<../LLM/MoE/report.md>) — 405 行
 * [LLM/RAG/report.md](<../LLM/RAG/report.md>) — 834 行
 * [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) — 675 行
-* [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) — 56 行
-* [LLM/VLM/report.md](<../LLM/VLM/report.md>) — 516 行
+* [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) — 60 行
+* [LLM/VLM/report.md](<../LLM/VLM/report.md>) — 518 行
 
 ## Models (23)
 
@@ -102,13 +102,14 @@
 
 * [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) — 246 行
 
-## https://github.com/deepseek-ai/DeepInfer@9bd9cf243fc53ef9afbf8f04d391d989117d6ab9 (1)
+## https://github.com/deepseek-ai/DeepInfer@9bd9cf243fc53ef9afbf8f04d391d989117d6ab9 (2)
 
+* [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) — 25 行
 * [OpenSource/DeepInfer/report.md](<../OpenSource/DeepInfer/report.md>) — 140 行
 
 ## https://github.com/deepseek-ai/deepseek-harness (1)
 
-* [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) — 350 行
+* [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) — 352 行
 
 ## https://github.com/sgl-project/sglang@2a08e261ecd4cdfb04ec354f9005f18b88108b7d (1)
 

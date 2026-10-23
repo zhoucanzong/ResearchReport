@@ -218,7 +218,13 @@ nav:
         - "2406.17557-fineweb": "LLM/TrainingData/papers/2406.17557-fineweb.md"
         - "CANDIDATES": "LLM/TrainingData/sources/CANDIDATES.md"
         - "MANIFEST": "LLM/TrainingData/sources/MANIFEST.md"
-    - "VLM": "LLM/VLM/report.md"
+        - "data-mixture": "LLM/TrainingData/topics/data-mixture.md"
+    - "VLM":
+        - "总报告": "LLM/VLM/report.md"
+        - "2405.21075-videomme": "LLM/VLM/papers/2405.21075-videomme.md"
+        - "2412.07626-omnidocbench": "LLM/VLM/papers/2412.07626-omnidocbench.md"
+        - "evaluation-input-budget": "LLM/VLM/topics/evaluation-input-budget.md"
+        - "vlmevalkit-video-mme-path": "LLM/VLM/topics/vlmevalkit-video-mme-path.md"
   - "🤖 Agents · 3":
     - "Agents/README.md"
     - "AgentSecurity":
@@ -380,7 +386,7 @@ nav:
         - "总报告": "Evaluation/ScientificDiscovery/report.md"
         - "2024-nature-closed-loop-transfer": "Evaluation/ScientificDiscovery/papers/2024-nature-closed-loop-transfer.md"
         - "2412.12347-autoscilab": "Evaluation/ScientificDiscovery/papers/2412.12347-autoscilab.md"
-  - "⚙️ Infra · 5":
+  - "⚙️ Infra · 6":
     - "Infra/README.md"
     - "KVCachePD":
         - "总报告": "Infra/KVCachePD/report.md"
@@ -389,11 +395,15 @@ nav:
         - "mooncake-fast25": "Infra/KVCachePD/papers/mooncake-fast25.md"
         - "CANDIDATES": "Infra/KVCachePD/sources/CANDIDATES.md"
         - "MANIFEST": "Infra/KVCachePD/sources/MANIFEST.md"
+    - "MoEExecution":
+        - "总报告": "Infra/MoEExecution/report.md"
+        - "deepep-v2-dispatch-compute-combine": "Infra/MoEExecution/implementation/deepep-v2-dispatch-compute-combine.md"
     - "QuantizationEdge": "Infra/QuantizationEdge/report.md"
     - "ServingEvaluation":
         - "总报告": "Infra/ServingEvaluation/report.md"
         - "2401.09670-distserve": "Infra/ServingEvaluation/papers/2401.09670-distserve.md"
         - "2410.14257-slo-goodput": "Infra/ServingEvaluation/papers/2410.14257-slo-goodput.md"
+        - "MANIFEST": "Infra/ServingEvaluation/sources/MANIFEST.md"
     - "SpeculativeDecoding":
         - "总报告": "Infra/SpeculativeDecoding/report.md"
         - "speculative-block-diffusion": "Infra/SpeculativeDecoding/legacy/speculative-block-diffusion.md"
@@ -444,6 +454,7 @@ nav:
         - "gateway-projection": "OpenSource/DeepSeekHarness/gateway-projection.md"
         - "ptc": "OpenSource/DeepSeekHarness/ptc.md"
         - "MANIFEST": "OpenSource/DeepSeekHarness/sources/MANIFEST.md"
+        - "tool-effect-durability": "OpenSource/DeepSeekHarness/topics/tool-effect-durability.md"
     - "nemotron":
         - "总报告": "OpenSource/nemotron/report.md"
         - "knowledge-graph": "OpenSource/nemotron/knowledge-graph.md"

@@ -7,7 +7,7 @@
 
 ---
 
-共 **70** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter；「板块」列由 [`scripts/panels.json`](<../scripts/panels.json>) 驱动。
+共 **71** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter；「板块」列由 [`scripts/panels.json`](<../scripts/panels.json>) 驱动。
 
 | 条目 | 板块 | 路径 | 子报告数 | 行数 | 日期 |
 | --- | --- | --- | --: | --: | --- |
@@ -27,8 +27,9 @@
 | EvaluationScience | Evaluation | [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) | 5 | 125 | 2026-10-23 |
 | ScientificDiscovery | Evaluation | [Evaluation/ScientificDiscovery/report.md](<../Evaluation/ScientificDiscovery/report.md>) | 2 | 33 | 2026-10-24 |
 | KVCachePD | Infra | [Infra/KVCachePD/report.md](<../Infra/KVCachePD/report.md>) | 5 | 84 | 2026-10-23 |
+| MoEExecution | Infra | [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | 1 | 25 | 2026-10-24 |
 | QuantizationEdge | Infra | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 0 | 188 | 2026-10-22 |
-| ServingEvaluation | Infra | [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) | 2 | 73 | 2026-10-24 |
+| ServingEvaluation | Infra | [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) | 3 | 81 | 2026-10-24 |
 | SpeculativeDecoding | Infra | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 33 | 549 | 2026-10-22 |
 | TrainingInfra | Infra | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 0 | 181 | 2026-10-22 |
 | Alignment | LLM | [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) | 0 | 114 | — |
@@ -39,8 +40,8 @@
 | RAG | LLM | [LLM/RAG/report.md](<../LLM/RAG/report.md>) | 0 | 834 | — |
 | ReasoningModels | LLM | [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) | 0 | 675 | — |
 | ReinforcementLearning | LLM | [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | 10 | 107 | 2026-10-23 |
-| TrainingData | LLM | [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 5 | 56 | 2026-10-23 |
-| VLM | LLM | [LLM/VLM/report.md](<../LLM/VLM/report.md>) | 0 | 516 | — |
+| TrainingData | LLM | [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 6 | 60 | 2026-10-24 |
+| VLM | LLM | [LLM/VLM/report.md](<../LLM/VLM/report.md>) | 4 | 518 | — |
 | Alibaba-Gen | Models | [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) | 0 | 117 | — |
 | ByteDance-Gen | Models | [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) | 0 | 347 | — |
 | Claude | Models | [Models/Claude/report.md](<../Models/Claude/report.md>) | 0 | 604 | — |
@@ -65,7 +66,7 @@
 | Runway | Models | [Models/Runway/report.md](<../Models/Runway/report.md>) | 0 | 103 | — |
 | StabilityAI | Models | [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>) | 0 | 739 | — |
 | DeepInfer | OpenSource | [OpenSource/DeepInfer/report.md](<../OpenSource/DeepInfer/report.md>) | 4 | 140 | 2026-10-22 |
-| DeepSeekHarness | OpenSource | [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | 4 | 350 | 2026-10-20 |
+| DeepSeekHarness | OpenSource | [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | 5 | 352 | 2026-10-20 |
 | nemotron | OpenSource | [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | 7 | 220 | — |
 | sglang | OpenSource | [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | 5 | 315 | 2026-10-16 |
 | this-that-model | OpenSource | [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | 1 | 246 | 2026-10-16 |
@@ -81,4 +82,4 @@
 | EmbodiedPlanning | WorldModel | [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) | 2 | 53 | — |
 | EmbodiedVLA | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 23 | 642 | — |
 | WorldModels | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 604 | 2026-10-22 |
-| **合计** | — | — | **233** | **28,288** | — |
+| **合计** | — | — | **241** | **28,329** | — |

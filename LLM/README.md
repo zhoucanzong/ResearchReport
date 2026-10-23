@@ -23,8 +23,8 @@
 | **RAG** | [检索增强生成（Retrieval-Augmented Generation, RAG）技术研究报告](<RAG/report.md>) | 834 行 |
 | **ReasoningModels** | [推理模型（Reasoning Models）与 Test-Time Compute 研究报告](<ReasoningModels/report.md>) | 675 行 |
 | **ReinforcementLearning** | [LLM 后训练中的强化学习：轨迹从哪里来，策略何时更新](<ReinforcementLearning/report.md>) | 107 行 |
-| **TrainingData** | [训练数据策展：过滤、去重与预算如何改变模型测量](<TrainingData/report.md>) | 56 行 |
-| **VLM** | [多模态大模型（Vision-Language Models, VLM）研究报告](<VLM/report.md>) | 516 行 |
+| **TrainingData** | [训练数据策展：筛选、去重与配比如何改变训练结果](<TrainingData/report.md>) | 60 行 |
+| **VLM** | [多模态大模型（Vision-Language Models, VLM）研究报告](<VLM/report.md>) | 518 行 |
 
 ## 📎 子文档
 
@@ -85,13 +85,24 @@
 </details>
 
 <details>
-<summary><b>TrainingData</b>（5 份）</summary>
+<summary><b>TrainingData</b>（6 份）</summary>
 
 * [papers/2107.06499-deduplicating-training-data.md](<TrainingData/papers/2107.06499-deduplicating-training-data.md>) — 24 行 / 2,755 B
 * [papers/2406.11794-datacomp-lm.md](<TrainingData/papers/2406.11794-datacomp-lm.md>) — 27 行 / 3,389 B
 * [papers/2406.17557-fineweb.md](<TrainingData/papers/2406.17557-fineweb.md>) — 24 行 / 3,175 B
-* [sources/CANDIDATES.md](<TrainingData/sources/CANDIDATES.md>) — 13 行 / 1,460 B
-* [sources/MANIFEST.md](<TrainingData/sources/MANIFEST.md>) — 17 行 / 3,402 B
+* [sources/CANDIDATES.md](<TrainingData/sources/CANDIDATES.md>) — 15 行 / 1,873 B
+* [sources/MANIFEST.md](<TrainingData/sources/MANIFEST.md>) — 20 行 / 4,832 B
+* [topics/data-mixture.md](<TrainingData/topics/data-mixture.md>) — 43 行 / 8,270 B
+
+</details>
+
+<details>
+<summary><b>VLM</b>（4 份）</summary>
+
+* [papers/2405.21075-videomme.md](<VLM/papers/2405.21075-videomme.md>) — 35 行 / 7,567 B
+* [papers/2412.07626-omnidocbench.md](<VLM/papers/2412.07626-omnidocbench.md>) — 42 行 / 9,196 B
+* [topics/evaluation-input-budget.md](<VLM/topics/evaluation-input-budget.md>) — 46 行 / 6,584 B
+* [topics/vlmevalkit-video-mme-path.md](<VLM/topics/vlmevalkit-video-mme-path.md>) — 51 行 / 10,053 B
 
 </details>
 

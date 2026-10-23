@@ -9,3 +9,10 @@
 - 仍未验证：端到端运行与 OS 沙箱强度、真实持久化完整性、闭源客户端/编排层行为；未以符号零命中证明不存在绕过路径或全局出口。
 
 使用技能：`code-researcher deep`，按 evidence-quality/runtime-story/claim-audit/reading-coverage 回到代码核实入口、交接和输出；本轮未构建或启动应用。
+
+## 工具副作用与持久化追踪（2026-10-24）
+
+- 上游固定版本：[deepseek-ai/deepseek-harness `22ddee3792402c3e70ec5f86a63c3e3e895a2f60`](https://github.com/deepseek-ai/deepseek-harness/tree/22ddee3792402c3e70ec5f86a63c3e3e895a2f60)，由官方 `master` HEAD 复取；不是 2026-10-20 `/tmp/dsh-src` 无 Git 身份快照的补记版本。
+- 阅读覆盖：`packages/core/agent-loop/src/agent.ts`、`packages/core/tools/src/{batch,pipeline}.ts`、`packages/core/session/src/{index,repair}.ts`、`packages/session/session-persistence-jsonl/src/{storage,index}.ts`、`packages/session/session-checkpoint-policy/src/index.ts`、对应 checkpoint 单元与 crash-recovery e2e 测试、`packages/bundle/base/cordis.patch.yml`。
+- 追踪结论和逐处不可变源码链接见[工具副作用与会话持久化](../topics/tool-effect-durability.md)：base 组合在顶层工具体前等待 session flush；副作用完成而结果未耐久时恢复为 `TOOL_OUTCOME_UNKNOWN`，不自动重试；缺少 checkpoint policy 的自定义组合保留事件缓冲窗口。
+- 本次只静态阅读源码与测试，不运行测试、模型、文件/网络工具副作用或故障注入；测试文件中的 SIGKILL 场景是已有测试，不等于本次复现。未下载论文或源码缓存。

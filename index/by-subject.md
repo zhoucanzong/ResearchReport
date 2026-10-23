@@ -277,6 +277,12 @@
 | --- | --- | --- | --- | --- |
 | [LLM/MoE/report.md](<../LLM/MoE/report.md>) | 混合专家模型（Mixture of Experts, MoE）架构演进研究报告 | — | — | — |
 
+## MoEExecution (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | MoE 执行：token 如何抵达专家，又如何回到原序 | repo-research | 2026-10-24 | completed |
+
 ## Nemotron (1)
 
 | 条目 | 标题 | type | date | status |
@@ -371,7 +377,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 训练数据策展：过滤、去重与预算如何改变模型测量 | research | 2026-10-23 | current |
+| [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 训练数据策展：筛选、去重与配比如何改变训练结果 | research | 2026-10-24 | current |
 
 ## TrainingInfra (1)
 

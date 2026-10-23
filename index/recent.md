@@ -11,11 +11,12 @@
 
 | 条目 | date | 板块 | 专题 |
 | --- | --- | --- | --- |
+| [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 2026-10-24 | LLM | TrainingData |
 | [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) | 2026-10-24 | Infra | ServingEvaluation |
+| [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | 2026-10-24 | Infra | MoEExecution |
 | [Evaluation/ScientificDiscovery/report.md](<../Evaluation/ScientificDiscovery/report.md>) | 2026-10-24 | Evaluation | ScientificDiscovery |
 | [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) | 2026-10-24 | Agents | ComputerUse |
 | [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) | 2026-10-24 | Agents | AgentSecurity |
-| [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 2026-10-23 | LLM | TrainingData |
 | [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | 2026-10-23 | LLM | ReinforcementLearning |
 | [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 2026-10-23 | LLM | DiffusionLM |
 | [Infra/KVCachePD/report.md](<../Infra/KVCachePD/report.md>) | 2026-10-23 | Infra | KVCachePD |
@@ -30,7 +31,6 @@
 | [AI4Science/AutonomousLabs/report.md](<../AI4Science/AutonomousLabs/report.md>) | 2026-10-23 | AI4Science | AutonomousLabs |
 | [AI4Science/Astronomy/report.md](<../AI4Science/Astronomy/report.md>) | 2026-10-23 | AI4Science | Astronomy |
 | [AI4Science/AntibioticDiscovery/report.md](<../AI4Science/AntibioticDiscovery/report.md>) | 2026-10-23 | AI4Science | AntibioticDiscovery |
-| [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 2026-10-22 | WorldModel | WorldModels |
 
 ## 无 date 元数据（42）
 
