@@ -22,8 +22,8 @@
 | 带合法 `date` 的条目 | 29 |
 | 文档（除生成物外的全部 `.md`） | 349 |
 | 其中文件名 `README.md` | 11 |
-| 纳入版本控制的文件 | 361 |
-| 纳入版本控制的 `.md` | 345 |
+| 纳入版本控制的文件 | 373 |
+| 纳入版本控制的 `.md` | 357 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -1201,12 +1201,12 @@
 | [Agents/README.md](<Agents/README.md>) | Agents | 64 | 3,177 B |
 | [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 46 | 1,945 B |
 | [Infra/README.md](<Infra/README.md>) | Infra | 97 | 6,537 B |
-| [LLM/README.md](<LLM/README.md>) | LLM | 123 | 8,510 B |
+| [LLM/README.md](<LLM/README.md>) | LLM | 133 | 9,329 B |
 | [Models/README.md](<Models/README.md>) | Models | 101 | 4,888 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 94 | 4,181 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 195 | 13,334 B |
+| [README.md](<README.md>) |  | 196 | 13,503 B |
 | [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,616 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 86 | 5,349 B |
 | [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |

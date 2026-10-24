@@ -144,6 +144,7 @@
 | **AI4Science** | [AntibioticDiscovery](<AI4Science/AntibioticDiscovery/report.md>) · [Astronomy](<AI4Science/Astronomy/report.md>) · [AutonomousLabs](<AI4Science/AutonomousLabs/report.md>) · [Chemistry](<AI4Science/Chemistry/report.md>) · [MaterialsDiscovery](<AI4Science/MaterialsDiscovery/report.md>) · [MathematicalDiscovery](<AI4Science/MathematicalDiscovery/report.md>) · [Neuroscience](<AI4Science/Neuroscience/report.md>) · [ProteinDesign](<AI4Science/ProteinDesign/report.md>) · [SingleCellPerturbation](<AI4Science/SingleCellPerturbation/report.md>) · [WeatherClimate](<AI4Science/WeatherClimate/report.md>) |
 | **Evaluation** | [EvaluationScience](<Evaluation/EvaluationScience/report.md>) · [ScientificDiscovery](<Evaluation/ScientificDiscovery/report.md>) |
 | **Infra** | [KVCachePD](<Infra/KVCachePD/report.md>) · [MoEExecution](<Infra/MoEExecution/report.md>) · [QuantizationEdge](<Infra/QuantizationEdge/report.md>) · [ServingEvaluation](<Infra/ServingEvaluation/report.md>) · [SpeculativeDecoding](<Infra/SpeculativeDecoding/report.md>) · [TrainingInfra](<Infra/TrainingInfra/report.md>) |
+| **专题直达** | [OCR 与文档解析](<LLM/VLM/topics/document-parsing.md>) — 从版面、阅读顺序与结构恢复，到多家团队近年路线的精读。 |
 <!-- SCRIPT:topics END -->
 
 ## 阅读与引用

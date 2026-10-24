@@ -112,6 +112,8 @@ validation:
 nav:
   # SCRIPT:nav START · 由 scripts/library_index.py 生成，勿手改
   - "首页": "README.md"
+  - "✨ 专题直达":
+      - "OCR 与文档解析": "LLM/VLM/topics/document-parsing.md"
   - "🧠 Models · 23":
     - "Models/README.md"
     - "Alibaba-Gen": "Models/Alibaba-Gen/report.md"

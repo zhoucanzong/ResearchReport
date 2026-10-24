@@ -13,6 +13,10 @@
 ![Entries](https://img.shields.io/badge/Entries-10-3f51b5?style=flat-square)
 ![Panel](https://img.shields.io/badge/Panel-LLM-9e9e9e?style=flat-square)
 
+## 精选专题直达
+
+* [OCR 与文档解析](<VLM/topics/document-parsing.md>) — 从版面、阅读顺序与结构恢复，到多家团队近年路线的精读。
+
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
 | **Alignment** | [模型对齐与后训练：方法、目标与证据边界](<Alignment/report.md>) | 114 行 |

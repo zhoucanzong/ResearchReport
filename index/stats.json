@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "861d534a87c4c22e24127417b0106e874a8e92a37f499e9e4a44f5022f9e1aaa",
+  "content_fingerprint": "adffa2f269da6e6b060bf5bc518f56cb7270da4cb21af43d864d180486590c38",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -28,8 +28,8 @@
     "with_front_matter": 42,
     "named_report_md": 71,
     "named_readme_md": 11,
-    "lines": 60173,
-    "bytes": 5354173
+    "lines": 60184,
+    "bytes": 5355161
   },
   "libraries": {
     "Models": {
@@ -95,7 +95,7 @@
       "lines_raw": 4293,
       "dir_files": 75,
       "dir_md": 75,
-      "dir_bytes": 1075544,
+      "dir_bytes": 1076363,
       "du_sk": 1200
     },
     "Agents": {
@@ -335,16 +335,16 @@
     "library_entries": 71,
     "library_documents_md": 339,
     "library_dir_files": 342,
-    "library_dir_bytes": 5297994,
+    "library_dir_bytes": 5298813,
     "library_du_sk": 5820,
     "library_entry_lines": 28331,
     "library_entry_bytes": 2184031
   },
   "version_control": {
-    "tracked_total": 361,
-    "tracked_md": 345,
+    "tracked_total": 373,
+    "tracked_md": 357,
     "tracked_report_md": 71,
-    "tracked_libraries": 330,
+    "tracked_libraries": 342,
     "tracked_repo_root": 5,
     "tracked_docs": 7,
     "tracked_scripts": 4
@@ -492,15 +492,15 @@
         },
         "other_md": {
           "files": 65,
-          "lines": 6024,
-          "lines_raw": 6164,
-          "bytes": 739554
+          "lines": 6034,
+          "lines_raw": 6174,
+          "bytes": 740373
         },
         "dir_md": {
           "files": 75,
-          "lines": 10292,
-          "lines_raw": 10457,
-          "bytes": 1075544
+          "lines": 10302,
+          "lines_raw": 10467,
+          "bytes": 1076363
         }
       },
       "Agents": {
@@ -1038,21 +1038,21 @@
     },
     "repo_md": {
       "files": 349,
-      "lines": 60173,
-      "lines_raw": 60558,
-      "bytes": 5354173
+      "lines": 60184,
+      "lines_raw": 60569,
+      "bytes": 5355161
     },
     "library_md": {
       "files": 339,
-      "lines": 58957,
-      "lines_raw": 59342,
-      "bytes": 5269744
+      "lines": 58967,
+      "lines_raw": 59352,
+      "bytes": 5270563
     },
     "root_readme": {
       "files": 1,
-      "lines": 195,
-      "lines_raw": 195,
-      "bytes": 13334
+      "lines": 196,
+      "lines_raw": 196,
+      "bytes": 13503
     },
     "docs_md": {
       "files": 7,
@@ -1072,7 +1072,7 @@
     ]
   },
   "storage": {
-    "tracked_bytes": 10492300,
+    "tracked_bytes": 10583261,
     "definition": "纳入版本控制的文件字节合计（`git ls-files` 跟踪路径逐个 getsize 求和）；刻意**不**用 du 量工作树——工作树含 site/site-docs/构建产物、别人的未提交草稿、虚拟环境等「车间地面」，会让数字每个 clone 一个样、生成物不可复现。本字段与提交树同源，任意 clone 重跑一致。"
   }
 }

@@ -186,6 +186,7 @@ a:focus-visible, button:focus-visible, label:focus-visible {
 .rr-topic-links { display: flex; flex-wrap: wrap; gap: .35rem; }
 .rr-topic-links > p { display: contents; }
 .rr-home .rr-topic { color: var(--rr-muted); font-size: .6rem; line-height: 1.55; padding: .25rem .5rem; border: 1px solid var(--rr-line); background: var(--rr-surface); border-radius: .25rem; transition: border-color .15s, color .15s; }
+.rr-home .rr-topic-featured { color: var(--rr-accent); border-color: var(--rr-accent); font-weight: 650; }
 .rr-home .rr-topic:hover { border-color: var(--rr-accent); color: var(--rr-accent); }
 .rr-library-footer { display: flex; align-items: baseline; justify-content: space-between; gap: .4rem 1rem; flex-wrap: wrap; color: var(--rr-muted); border-top: 1px solid var(--rr-line); padding: 1rem 0 0; font-size: .55rem; }
 .rr-library-footer > p { margin: 0; }

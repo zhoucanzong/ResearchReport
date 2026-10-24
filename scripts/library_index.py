@@ -1138,6 +1138,19 @@ def load_panels(repo_root: str) -> dict:
     fallback = cfg.get("date_fallback")
     if fallback not in ("none", "git"):
         raise ConfigError(f"date_fallback 只能是 `none` 或 `git`：{fallback!r}")
+    shortcuts = cfg.get("topic_shortcuts", [])
+    if not isinstance(shortcuts, list):
+        raise ConfigError("topic_shortcuts 必须是列表")
+    for shortcut in shortcuts:
+        if not isinstance(shortcut, dict) or not all(
+            isinstance(shortcut.get(key), str) and shortcut[key].strip()
+            for key in ("title", "path", "description")
+        ):
+            raise ConfigError(f"topic_shortcuts 每项必须包含非空 title/path/description：{shortcut!r}")
+        if not shortcut["path"].endswith(".md"):
+            raise ConfigError(f"专题快捷入口必须指向 Markdown：{shortcut['path']}")
+        if not os.path.isfile(os.path.join(repo_root, shortcut["path"])):
+            raise ConfigError(f"专题快捷入口目标不存在：{shortcut['path']}")
     return cfg
 
 
@@ -1401,8 +1414,9 @@ def render_panels_block(cfg: dict, mapping: dict, entries: list, label_limit: in
 
 
 
-def render_topics_block(entries: list, mapping: dict, panels: list) -> str:
-    """按 panels.json 标记的专题 / 应用板块分组。"""
+def render_topics_block(entries: list, mapping: dict, panels: list,
+                        topic_shortcuts: list | None = None) -> str:
+    """按板块列入口报告，并为精选跨论文专题提供直达链接。"""
     lines = ["| 方向 | 专题入口 |", "| :-- | :-- |"]
     for panel in panels:
         if not panel.get("topic_index", False):
@@ -1413,6 +1427,12 @@ def render_topics_block(entries: list, mapping: dict, panels: list) -> str:
         )
         links = " · ".join(f"[{entry_short_name(d)}](<{d['path']}>)" for d in members)
         lines.append(f"| **{panel['title']}** | {links} |")
+    for shortcut in topic_shortcuts or []:
+        title = str(shortcut["title"]).replace("|", r"\|")
+        description = str(shortcut["description"]).replace("|", r"\|")
+        lines.append(
+            f"| **专题直达** | [{title}](<{shortcut['path']}>) — {description} |"
+        )
     return "\n".join(lines)
 
 
@@ -1456,7 +1476,9 @@ def render_readme_blocks(cfg: dict, entries: list, stats: dict, mapping: dict,
         "structure": render_structure_block(cfg, mapping, entries),
         "panels": render_panels_block(cfg, mapping, entries),
         "highlights": render_highlights_block(cfg, mapping, entries),
-        "topics": render_topics_block(entries, mapping, cfg["panels"]),
+        "topics": render_topics_block(
+            entries, mapping, cfg["panels"], cfg.get("topic_shortcuts", [])
+        ),
         "recent": render_recent_block(recent_rows(repo_root, entries, cfg), mapping),
         "index": render_index_block(entries, mapping, cfg["panels"]),
     }
@@ -1514,7 +1536,8 @@ PANEL_ONE_LINERS = {
 }
 
 
-def render_panel_readme(panel: dict, members: list, repo_root: str) -> str:
+def render_panel_readme(panel: dict, members: list, repo_root: str,
+                        topic_shortcuts: list | None = None) -> str:
     """单个板块 README：统一卡头 + 徽章 + 条目表 + 子文档折叠。
 
     卡头的 ``<div>`` 带 ``markdown="1"``：GitHub 与 MkDocs（md_in_html）都会
@@ -1539,6 +1562,18 @@ def render_panel_readme(panel: dict, members: list, repo_root: str) -> str:
         f'![Entries](https://img.shields.io/badge/Entries-{len(names)}-3f51b5?style=flat-square)',
         f'![Panel](https://img.shields.io/badge/Panel-{top}-9e9e9e?style=flat-square)',
         '',
+    ]
+    visible_shortcuts = [
+        item for item in (topic_shortcuts or [])
+        if item["path"].split("/", 1)[0] == top
+    ]
+    if visible_shortcuts:
+        lines += ["## 精选专题直达", ""]
+        for item in visible_shortcuts:
+            rel = os.path.relpath(item["path"], top).replace(os.sep, "/")
+            lines.append(f'* [{item["title"]}](<{rel}>) — {item["description"]}')
+        lines.append("")
+    lines += [
         '| 条目 | 报告 | 规模 |',
         '| :-- | :-- | --: |',
     ]
@@ -1585,7 +1620,9 @@ def write_panel_readmes(repo_root: str, cfg: dict, mapping: dict, docs: list) ->
     for panel in cfg["panels"]:
         top = panel["title"]
         members = [d for d in entries if mapping.get(d["path"], {}).get("id") == panel["id"]]
-        text = render_panel_readme(panel, members, repo_root)
+        text = render_panel_readme(
+            panel, members, repo_root, cfg.get("topic_shortcuts", [])
+        )
         path = os.path.join(repo_root, top, PANEL_README_NAME)
         os.makedirs(os.path.dirname(path), exist_ok=True)
         old = open(path, encoding="utf-8").read() if os.path.isfile(path) else None
@@ -1752,6 +1789,11 @@ def render_site_nav(cfg: dict, mapping: dict, docs: list, orphans: list) -> str:
     """生成 ``mkdocs.yml`` nav 区块的内容（2 空格缩进起，供幂等替换）。"""
     entries = [d for d in docs if d["is_entry"]]
     lines = [f"  - {_yaml_dq('首页')}: {_yaml_dq(SITE_HOME_NAME)}"]
+    shortcuts = cfg.get("topic_shortcuts", [])
+    if shortcuts:
+        lines.append(f"  - {_yaml_dq('✨ 专题直达')}:")
+        for item in shortcuts:
+            lines.append(f"      - {_yaml_dq(item['title'])}: {_yaml_dq(item['path'])}")
     for panel in cfg["panels"]:
         members = [d for d in entries
                    if mapping.get(d["path"], {}).get("id") == panel["id"]]
@@ -1903,7 +1945,13 @@ def render_site_home(cfg: dict, mapping: dict, entries: list,
         '<div class="rr-discovery" markdown="1">', "",
         '<label for="__search" class="rr-search-launch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><span>搜索模型、论文或技术问题</span><kbd>/</kbd></label>', "",
         '<div class="rr-quicklinks" markdown="1">', "",
-        f'[按专题探索](<{GENERATED_DIR}/by-topic.md>) · [查看最近更新](<{GENERATED_DIR}/recent.md>) · [阅读与证据说明](<docs/research-method.md>)', "",
+        f'[按专题探索](<{GENERATED_DIR}/by-topic.md>) · '
+        + " · ".join(
+            f'[{label(item["title"])}](<{item["path"]}>)'
+            for item in cfg.get("topic_shortcuts", [])
+        )
+        + f' · [查看最近更新](<{GENERATED_DIR}/recent.md>) · '
+        + f'[阅读与证据说明](<docs/research-method.md>)', "",
         '</div>', "", '</div>', "",
         '<section class="rr-section rr-collections" markdown="1">', "",
         '<div class="rr-section-heading" markdown="1">', "",
@@ -1972,10 +2020,15 @@ def render_site_home(cfg: dict, mapping: dict, entries: list,
         lines += ['<section class="rr-section rr-topics" markdown="1">', "",
                   '<div class="rr-section-heading" markdown="1">', "",
                   '## 你关注的问题', "",
-                  f'<span>{len(topic_names)} 个技术专题，继续向下探索。</span>', "",
+                  f'<span>{len(topic_names)} 个研究方向入口，以及精选跨论文专题。</span>', "",
                   '</div>', "", '<div class="rr-topic-links" markdown="1">', ""]
         for doc in sorted(topics_entries, key=lambda d: d["path"]):
             lines += [f'[{label(entry_short_name(doc))}](<{doc["path"]}>){{ .rr-topic }}', ""]
+        for item in cfg.get("topic_shortcuts", []):
+            lines += [
+                f'[{label(item["title"])}](<{item["path"]}>){{ .rr-topic .rr-topic-featured }}',
+                "",
+            ]
         lines += ['</div>', "", '</section>', ""]
     lines += ['<div class="rr-library-footer" markdown="1">', "",
               'ResearchReport · 让结论有出处，让阅读有路径。', "",
