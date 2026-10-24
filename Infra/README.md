@@ -13,6 +13,18 @@
 ![Entries](https://img.shields.io/badge/Entries-6-3f51b5?style=flat-square)
 ![Panel](https://img.shields.io/badge/Panel-Infra-9e9e9e?style=flat-square)
 
+## 专题内分析
+
+| 所属报告 | 分册入口 |
+| --- | --- |
+| SpeculativeDecoding | [横切专题①：投机解码的算法家族谱系](<SpeculativeDecoding/topics/algorithm-families.md>) |
+| SpeculativeDecoding | [横切专题③：系统实现与吞吐—延迟权衡](<SpeculativeDecoding/topics/systems-throughput-latency.md>) |
+| SpeculativeDecoding | [横切专题②：验证、接受率与无损性的适用条件](<SpeculativeDecoding/topics/verification-acceptance.md>) |
+
+[查看研究专题与分析分册](<../index/by-topic.md>)
+
+## 主报告
+
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
 | **KVCachePD** | [KV Cache 服务与 Prefill/Decode 分离：什么时候复用，什么时候传输](<KVCachePD/report.md>) | 84 行 |

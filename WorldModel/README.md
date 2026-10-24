@@ -13,6 +13,23 @@
 ![Entries](https://img.shields.io/badge/Entries-3-3f51b5?style=flat-square)
 ![Panel](https://img.shields.io/badge/Panel-WorldModel-9e9e9e?style=flat-square)
 
+## 专题内分析
+
+| 所属报告 | 分册入口 |
+| --- | --- |
+| EmbodiedVLA | [横切专题：动作表征三路线（token / flow matching / diffusion head）](<EmbodiedVLA/topics/action-representation.md>) |
+| EmbodiedVLA | [横切专题：机器人闭环控制与 VLA](<EmbodiedVLA/topics/closed-loop-control.md>) |
+| EmbodiedVLA | [横切专题：失效边界与部署条件](<EmbodiedVLA/topics/deployment-boundaries.md>) |
+| EmbodiedVLA | [横切专题：评测与数据集（真机 vs 仿真、协议、规模与许可）](<EmbodiedVLA/topics/evaluation-and-datasets.md>) |
+| EmbodiedVLA | [世界模型怎样把预测变成 VLA 的真实改进？](<EmbodiedVLA/topics/world-model-to-vla-transfer.md>) |
+| WorldModels | [横切专题：环境动力学与动作条件化](<WorldModels/topics/dynamics-and-action-conditioning.md>) |
+| WorldModels | [横切专题：不可比性清单（评测碎片化）](<WorldModels/topics/incomparability-checklist.md>) |
+| WorldModels | [横切专题：世界模型作训练 / 评测环境](<WorldModels/topics/world-model-as-env.md>) |
+
+[查看研究专题与分析分册](<../index/by-topic.md>)
+
+## 主报告
+
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
 | **EmbodiedPlanning** | [具身预测规划：执行前怎样筛选想象中的动作？](<EmbodiedPlanning/report.md>) | 53 行 |

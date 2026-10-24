@@ -13,13 +13,13 @@
 
 | 指标 | 数量 |
 | --- | --- |
-| **条目数**（`report.md`） | **71** |
-| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 10 · Agents 3 · VisualGen 8 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6 |
-| 条目子文档数 | 257 |
-| 条目正文行数（剔除 front-matter） | 28,331 |
-| 条目字节 | 2,184,031 B |
-| 带 front-matter 的条目 | 29 |
-| 带合法 `date` 的条目 | 29 |
+| **条目数**（`report.md`） | **72** |
+| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 11 · Agents 3 · VisualGen 8 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6 |
+| 条目子文档数 | 256 |
+| 条目正文行数（剔除 front-matter） | 28,433 |
+| 条目字节 | 2,202,601 B |
+| 带 front-matter 的条目 | 30 |
+| 带合法 `date` 的条目 | 30 |
 | 文档（除生成物外的全部 `.md`） | 349 |
 | 其中文件名 `README.md` | 11 |
 | 纳入版本控制的文件 | 373 |
@@ -33,7 +33,7 @@
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
 | Models | 23 | 41 | 12,127 | 906,146 B | [板块页 →](<Models/README.md>) |
-| LLM | 10 | 75 | 4,268 | 335,990 B | [板块页 →](<LLM/README.md>) |
+| LLM | 11 | 75 | 4,370 | 354,560 B | [板块页 →](<LLM/README.md>) |
 | Agents | 3 | 22 | 206 | 29,869 B | [板块页 →](<Agents/README.md>) |
 | VisualGen | 8 | 9 | 6,758 | 320,420 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 3 | 44 | 1,299 | 147,436 B | [板块页 →](<WorldModel/README.md>) |
@@ -41,7 +41,7 @@
 | Evaluation | 2 | 10 | 158 | 32,272 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 6 | 49 | 1,108 | 104,557 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 36 | 1,571 | 168,386 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **71** | **349** | **28,331** | **2,184,031 B** | — |
+| **合计** | **72** | **349** | **28,433** | **2,202,601 B** | — |
 
 ## 分面索引
 
@@ -50,7 +50,7 @@
 | [index/by-domain.md](<index/by-domain.md>) | 按领域（domain） |
 | [index/by-subject.md](<index/by-subject.md>) | 按主题（subject） |
 | [index/by-repo.md](<index/by-repo.md>) | 按来源仓库（upstream / 本地库根） |
-| [index/by-topic.md](<index/by-topic.md>) | 按专题与专题子文档 |
+| [index/by-topic.md](<index/by-topic.md>) | 研究专题与分析分册 |
 | [index/by-report.md](<index/by-report.md>) | 按条目（report.md）平铺 |
 | [index/recent.md](<index/recent.md>) | 最近更新（按 date 降序） |
 | [index/stale.md](<index/stale.md>) | 陈旧 / 待复核（status 或超期） |
@@ -351,10 +351,10 @@
 
 </details>
 
-### LLM（10 条目 / 75 文档）
+### LLM（11 条目 / 75 文档）
 
 <details>
-<summary><b>语言模型 LLM（10 条目 / 64 子文档）</b></summary>
+<summary><b>语言模型 LLM（11 条目 / 63 子文档）</b></summary>
 
   <details>
   <summary><b>Alignment</b> · <code>LLM/Alignment/report.md</code> · 114 行 · —</summary>
@@ -415,6 +415,33 @@
         * [papers/LLaDA2.2-Levenshtein-Editing.md](<LLM/DiffusionLM/papers/LLaDA2.2-Levenshtein-Editing.md>) — 64 行 / 11,889 B
         * [sources/CANDIDATES.md](<LLM/DiffusionLM/sources/CANDIDATES.md>) — 29 行 / 3,474 B
         * [sources/MANIFEST.md](<LLM/DiffusionLM/sources/MANIFEST.md>) — 21 行 / 5,028 B
+
+  </details>
+
+  <details>
+  <summary><b>DocumentParsing</b> · <code>LLM/DocumentParsing/report.md</code> · 102 行 · 2026-10-25</summary>
+
+
+    * **条目**：[LLM/DocumentParsing/report.md](<LLM/DocumentParsing/report.md>)（102 行 / 18,604 B）
+    * **专题目录**：`LLM/DocumentParsing`
+    * **元数据**：type=`research` · domain=`LLM` · subject=`DocumentParsing` · date=`2026-10-25` · status=`current`
+    * **子文档（16）**
+        * [papers/2412.07626-omnidocbench.md](<LLM/DocumentParsing/papers/2412.07626-omnidocbench.md>) — 42 行 / 9,196 B
+        * [papers/2505.14059-bytedance-dolphin.md](<LLM/DocumentParsing/papers/2505.14059-bytedance-dolphin.md>) — 40 行 / 5,505 B
+        * [papers/2509.19760-alibaba-logics-parsing.md](<LLM/DocumentParsing/papers/2509.19760-alibaba-logics-parsing.md>) — 38 行 / 5,449 B
+        * [papers/2510.14528-paddleocr-vl.md](<LLM/DocumentParsing/papers/2510.14528-paddleocr-vl.md>) — 53 行 / 10,262 B
+        * [papers/2510.18234-deepseek-ocr.md](<LLM/DocumentParsing/papers/2510.18234-deepseek-ocr.md>) — 47 行 / 8,883 B
+        * [papers/2510.21603-huawei-doc-researcher.md](<LLM/DocumentParsing/papers/2510.21603-huawei-doc-researcher.md>) — 38 行 / 5,906 B
+        * [papers/2511.19575-hunyuan-ocr.md](<LLM/DocumentParsing/papers/2511.19575-hunyuan-ocr.md>) — 39 行 / 8,134 B
+        * [papers/2601.20552-deepseek-ocr2.md](<LLM/DocumentParsing/papers/2601.20552-deepseek-ocr2.md>) — 45 行 / 8,359 B
+        * [papers/2603.01840-firered-ocr.md](<LLM/DocumentParsing/papers/2603.01840-firered-ocr.md>) — 39 行 / 6,932 B
+        * [papers/2603.13032-multimodal-ocr.md](<LLM/DocumentParsing/papers/2603.13032-multimodal-ocr.md>) — 41 行 / 7,530 B
+        * [papers/2603.24326-coarse-to-fine.md](<LLM/DocumentParsing/papers/2603.24326-coarse-to-fine.md>) — 67 行 / 9,350 B
+        * [papers/2603.28130-mdpbench.md](<LLM/DocumentParsing/papers/2603.28130-mdpbench.md>) — 51 行 / 10,106 B
+        * [papers/2605.17447-jd-fastocr.md](<LLM/DocumentParsing/papers/2605.17447-jd-fastocr.md>) — 40 行 / 5,443 B
+        * [papers/2605.27978-amap-abot-ocr.md](<LLM/DocumentParsing/papers/2605.27978-amap-abot-ocr.md>) — 42 行 / 5,791 B
+        * [papers/2607.04884-hunyuan-ocr-15.md](<LLM/DocumentParsing/papers/2607.04884-hunyuan-ocr-15.md>) — 53 行 / 11,829 B
+        * [papers/2607.21617-amazon-faithc4.md](<LLM/DocumentParsing/papers/2607.21617-amazon-faithc4.md>) — 39 行 / 6,093 B
 
   </details>
 
@@ -508,29 +535,12 @@
   <summary><b>VLM</b> · <code>LLM/VLM/report.md</code> · 520 行 · —</summary>
 
 
-    * **条目**：[LLM/VLM/report.md](<LLM/VLM/report.md>)（520 行 / 29,667 B）
+    * **条目**：[LLM/VLM/report.md](<LLM/VLM/report.md>)（520 行 / 29,633 B）
     * **专题目录**：`LLM/VLM`
     * **元数据**：type=`—` · domain=`LLM` · subject=`VLM` · date=`—` · status=`—`
-    * **子文档（20）**
+    * **子文档（3）**
         * [papers/2405.21075-videomme.md](<LLM/VLM/papers/2405.21075-videomme.md>) — 35 行 / 7,567 B
-        * [papers/2412.07626-omnidocbench.md](<LLM/VLM/papers/2412.07626-omnidocbench.md>) — 42 行 / 9,196 B
-        * [papers/2505.14059-bytedance-dolphin.md](<LLM/VLM/papers/2505.14059-bytedance-dolphin.md>) — 40 行 / 5,505 B
-        * [papers/2509.19760-alibaba-logics-parsing.md](<LLM/VLM/papers/2509.19760-alibaba-logics-parsing.md>) — 38 行 / 5,449 B
-        * [papers/2510.14528-paddleocr-vl.md](<LLM/VLM/papers/2510.14528-paddleocr-vl.md>) — 53 行 / 10,262 B
-        * [papers/2510.18234-deepseek-ocr.md](<LLM/VLM/papers/2510.18234-deepseek-ocr.md>) — 47 行 / 8,883 B
-        * [papers/2510.21603-huawei-doc-researcher.md](<LLM/VLM/papers/2510.21603-huawei-doc-researcher.md>) — 38 行 / 5,906 B
-        * [papers/2511.19575-hunyuan-ocr.md](<LLM/VLM/papers/2511.19575-hunyuan-ocr.md>) — 39 行 / 8,134 B
-        * [papers/2601.20552-deepseek-ocr2.md](<LLM/VLM/papers/2601.20552-deepseek-ocr2.md>) — 45 行 / 8,359 B
-        * [papers/2603.01840-firered-ocr.md](<LLM/VLM/papers/2603.01840-firered-ocr.md>) — 39 行 / 6,932 B
-        * [papers/2603.13032-multimodal-ocr.md](<LLM/VLM/papers/2603.13032-multimodal-ocr.md>) — 41 行 / 7,530 B
-        * [papers/2603.24326-coarse-to-fine.md](<LLM/VLM/papers/2603.24326-coarse-to-fine.md>) — 67 行 / 9,350 B
-        * [papers/2603.28130-mdpbench.md](<LLM/VLM/papers/2603.28130-mdpbench.md>) — 51 行 / 10,106 B
-        * [papers/2605.17447-jd-fastocr.md](<LLM/VLM/papers/2605.17447-jd-fastocr.md>) — 40 行 / 5,443 B
-        * [papers/2605.27978-amap-abot-ocr.md](<LLM/VLM/papers/2605.27978-amap-abot-ocr.md>) — 42 行 / 5,791 B
-        * [papers/2607.04884-hunyuan-ocr-15.md](<LLM/VLM/papers/2607.04884-hunyuan-ocr-15.md>) — 53 行 / 11,829 B
-        * [papers/2607.21617-amazon-faithc4.md](<LLM/VLM/papers/2607.21617-amazon-faithc4.md>) — 39 行 / 6,093 B
-        * [topics/document-parsing.md](<LLM/VLM/topics/document-parsing.md>) — 103 行 / 18,595 B
-        * [topics/evaluation-input-budget.md](<LLM/VLM/topics/evaluation-input-budget.md>) — 46 行 / 6,584 B
+        * [topics/evaluation-input-budget.md](<LLM/VLM/topics/evaluation-input-budget.md>) — 46 行 / 6,622 B
         * [topics/vlmevalkit-video-mme-path.md](<LLM/VLM/topics/vlmevalkit-video-mme-path.md>) — 51 行 / 10,053 B
 
   </details>
@@ -1198,23 +1208,23 @@
 | --- | --- | --: | --: |
 | [AGENTS.md](<AGENTS.md>) |  | 9 | 908 B |
 | [AI4Science/README.md](<AI4Science/README.md>) | AI4Science | 137 | 6,760 B |
-| [Agents/README.md](<Agents/README.md>) | Agents | 64 | 3,177 B |
+| [Agents/README.md](<Agents/README.md>) | Agents | 74 | 3,460 B |
 | [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 46 | 1,945 B |
-| [Infra/README.md](<Infra/README.md>) | Infra | 97 | 6,537 B |
-| [LLM/README.md](<LLM/README.md>) | LLM | 133 | 9,329 B |
+| [Infra/README.md](<Infra/README.md>) | Infra | 109 | 7,103 B |
+| [LLM/README.md](<LLM/README.md>) | LLM | 147 | 9,955 B |
 | [Models/README.md](<Models/README.md>) | Models | 101 | 4,888 B |
-| [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 94 | 4,181 B |
+| [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 104 | 4,484 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 196 | 13,503 B |
+| [README.md](<README.md>) |  | 196 | 13,461 B |
 | [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,616 B |
-| [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 86 | 5,349 B |
+| [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 103 | 6,509 B |
 | [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 86 | 6,458 B |
 | [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 11,079 B |
 | [docs/research-method.md](<docs/research-method.md>) | docs | 31 | 2,380 B |
 | [docs/statistics.md](<docs/statistics.md>) | docs | 215 | 15,662 B |
-| [docs/team.md](<docs/team.md>) | docs | 64 | 5,611 B |
+| [docs/team.md](<docs/team.md>) | docs | 66 | 5,930 B |
 | [docs/verification.md](<docs/verification.md>) | docs | 21 | 1,991 B |
 | [scripts/README.md](<scripts/README.md>) | scripts | 101 | 4,956 B |
 

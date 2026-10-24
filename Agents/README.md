@@ -13,6 +13,16 @@
 ![Entries](https://img.shields.io/badge/Entries-3-3f51b5?style=flat-square)
 ![Panel](https://img.shields.io/badge/Panel-Agents-9e9e9e?style=flat-square)
 
+## 专题内分析
+
+| 所属报告 | 分册入口 |
+| --- | --- |
+| AgentSystems | [长程 Agent 的执行恢复：诊断、回滚与学习修正](<AgentSystems/topics/long-horizon-execution-recovery.md>) |
+
+[查看研究专题与分析分册](<../index/by-topic.md>)
+
+## 主报告
+
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
 | **AgentSecurity** | [工具 Agent 安全：提示注入、权限与动作证据](<AgentSecurity/report.md>) | 53 行 |

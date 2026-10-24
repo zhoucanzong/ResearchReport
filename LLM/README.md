@@ -2,7 +2,7 @@
 
 # 💬 LLM
 
-**10 条** · 语言模型能力与技术专题，覆盖推理、对齐、Agent、RAG 等方向。
+**11 条** · 语言模型能力与技术专题，覆盖推理、对齐、Agent、RAG 等方向。
 
 [← 返回首页](<../README.md>) · [完整索引](<../INDEX.md>)
 
@@ -10,19 +10,27 @@
 
 <!-- SCRIPT:panel-readme START · 由 scripts/library_index.py 生成，勿手改 -->
 
-![Entries](https://img.shields.io/badge/Entries-10-3f51b5?style=flat-square)
+![Entries](https://img.shields.io/badge/Entries-11-3f51b5?style=flat-square)
 ![Panel](https://img.shields.io/badge/Panel-LLM-9e9e9e?style=flat-square)
 
-## 精选专题直达
+## 专题内分析
 
-* [OCR 与文档解析](<VLM/topics/document-parsing.md>) — 从版面、阅读顺序与结构恢复，到多家团队近年路线的精读。
-* [查看全部跨论文专题与子专题](<../index/by-topic.md>)
+| 所属报告 | 分册入口 |
+| --- | --- |
+| TrainingData | [预训练数据配比：从稳健重加权到代理回归](<TrainingData/topics/data-mixture.md>) |
+| VLM | [VLM 评测的输入预算与 grounding：模型究竟看到了什么？](<VLM/topics/evaluation-input-budget.md>) |
+| VLM | [VLMEvalKit 如何把 Video-MME 的回答变成分数](<VLM/topics/vlmevalkit-video-mme-path.md>) |
+
+[查看研究专题与分析分册](<../index/by-topic.md>)
+
+## 主报告
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
 | **Alignment** | [模型对齐与后训练：方法、目标与证据边界](<Alignment/report.md>) | 114 行 |
 | **DecisionModels** | [Decision Models（System One / Typed Decision Model）技术专题调研](<DecisionModels/report.md>) | 874 行 |
 | **DiffusionLM** | [扩散语言模型：从随机遮盖到大规模并行生成](<DiffusionLM/report.md>) | 70 行 |
+| **DocumentParsing** | [OCR 与文档解析：从字符识别到结构还原](<DocumentParsing/report.md>) | 102 行 |
 | **LongContext** | [长上下文（Long Context）技术研究报告](<LongContext/report.md>) | 609 行 |
 | **MoE** | [混合专家模型（Mixture of Experts, MoE）架构演进研究报告](<MoE/report.md>) | 405 行 |
 | **RAG** | [检索增强生成（Retrieval-Augmented Generation, RAG）技术研究报告](<RAG/report.md>) | 834 行 |
@@ -74,6 +82,28 @@
 </details>
 
 <details>
+<summary><b>DocumentParsing</b>（16 份）</summary>
+
+* [papers/2412.07626-omnidocbench.md](<DocumentParsing/papers/2412.07626-omnidocbench.md>) — 42 行 / 9,196 B
+* [papers/2505.14059-bytedance-dolphin.md](<DocumentParsing/papers/2505.14059-bytedance-dolphin.md>) — 40 行 / 5,505 B
+* [papers/2509.19760-alibaba-logics-parsing.md](<DocumentParsing/papers/2509.19760-alibaba-logics-parsing.md>) — 38 行 / 5,449 B
+* [papers/2510.14528-paddleocr-vl.md](<DocumentParsing/papers/2510.14528-paddleocr-vl.md>) — 53 行 / 10,262 B
+* [papers/2510.18234-deepseek-ocr.md](<DocumentParsing/papers/2510.18234-deepseek-ocr.md>) — 47 行 / 8,883 B
+* [papers/2510.21603-huawei-doc-researcher.md](<DocumentParsing/papers/2510.21603-huawei-doc-researcher.md>) — 38 行 / 5,906 B
+* [papers/2511.19575-hunyuan-ocr.md](<DocumentParsing/papers/2511.19575-hunyuan-ocr.md>) — 39 行 / 8,134 B
+* [papers/2601.20552-deepseek-ocr2.md](<DocumentParsing/papers/2601.20552-deepseek-ocr2.md>) — 45 行 / 8,359 B
+* [papers/2603.01840-firered-ocr.md](<DocumentParsing/papers/2603.01840-firered-ocr.md>) — 39 行 / 6,932 B
+* [papers/2603.13032-multimodal-ocr.md](<DocumentParsing/papers/2603.13032-multimodal-ocr.md>) — 41 行 / 7,530 B
+* [papers/2603.24326-coarse-to-fine.md](<DocumentParsing/papers/2603.24326-coarse-to-fine.md>) — 67 行 / 9,350 B
+* [papers/2603.28130-mdpbench.md](<DocumentParsing/papers/2603.28130-mdpbench.md>) — 51 行 / 10,106 B
+* [papers/2605.17447-jd-fastocr.md](<DocumentParsing/papers/2605.17447-jd-fastocr.md>) — 40 行 / 5,443 B
+* [papers/2605.27978-amap-abot-ocr.md](<DocumentParsing/papers/2605.27978-amap-abot-ocr.md>) — 42 行 / 5,791 B
+* [papers/2607.04884-hunyuan-ocr-15.md](<DocumentParsing/papers/2607.04884-hunyuan-ocr-15.md>) — 53 行 / 11,829 B
+* [papers/2607.21617-amazon-faithc4.md](<DocumentParsing/papers/2607.21617-amazon-faithc4.md>) — 39 行 / 6,093 B
+
+</details>
+
+<details>
 <summary><b>ReinforcementLearning</b>（10 份）</summary>
 
 * [papers/2305.20050-prm800k.md](<ReinforcementLearning/papers/2305.20050-prm800k.md>) — 23 行 / 3,412 B
@@ -102,27 +132,10 @@
 </details>
 
 <details>
-<summary><b>VLM</b>（20 份）</summary>
+<summary><b>VLM</b>（3 份）</summary>
 
 * [papers/2405.21075-videomme.md](<VLM/papers/2405.21075-videomme.md>) — 35 行 / 7,567 B
-* [papers/2412.07626-omnidocbench.md](<VLM/papers/2412.07626-omnidocbench.md>) — 42 行 / 9,196 B
-* [papers/2505.14059-bytedance-dolphin.md](<VLM/papers/2505.14059-bytedance-dolphin.md>) — 40 行 / 5,505 B
-* [papers/2509.19760-alibaba-logics-parsing.md](<VLM/papers/2509.19760-alibaba-logics-parsing.md>) — 38 行 / 5,449 B
-* [papers/2510.14528-paddleocr-vl.md](<VLM/papers/2510.14528-paddleocr-vl.md>) — 53 行 / 10,262 B
-* [papers/2510.18234-deepseek-ocr.md](<VLM/papers/2510.18234-deepseek-ocr.md>) — 47 行 / 8,883 B
-* [papers/2510.21603-huawei-doc-researcher.md](<VLM/papers/2510.21603-huawei-doc-researcher.md>) — 38 行 / 5,906 B
-* [papers/2511.19575-hunyuan-ocr.md](<VLM/papers/2511.19575-hunyuan-ocr.md>) — 39 行 / 8,134 B
-* [papers/2601.20552-deepseek-ocr2.md](<VLM/papers/2601.20552-deepseek-ocr2.md>) — 45 行 / 8,359 B
-* [papers/2603.01840-firered-ocr.md](<VLM/papers/2603.01840-firered-ocr.md>) — 39 行 / 6,932 B
-* [papers/2603.13032-multimodal-ocr.md](<VLM/papers/2603.13032-multimodal-ocr.md>) — 41 行 / 7,530 B
-* [papers/2603.24326-coarse-to-fine.md](<VLM/papers/2603.24326-coarse-to-fine.md>) — 67 行 / 9,350 B
-* [papers/2603.28130-mdpbench.md](<VLM/papers/2603.28130-mdpbench.md>) — 51 行 / 10,106 B
-* [papers/2605.17447-jd-fastocr.md](<VLM/papers/2605.17447-jd-fastocr.md>) — 40 行 / 5,443 B
-* [papers/2605.27978-amap-abot-ocr.md](<VLM/papers/2605.27978-amap-abot-ocr.md>) — 42 行 / 5,791 B
-* [papers/2607.04884-hunyuan-ocr-15.md](<VLM/papers/2607.04884-hunyuan-ocr-15.md>) — 53 行 / 11,829 B
-* [papers/2607.21617-amazon-faithc4.md](<VLM/papers/2607.21617-amazon-faithc4.md>) — 39 行 / 6,093 B
-* [topics/document-parsing.md](<VLM/topics/document-parsing.md>) — 103 行 / 18,595 B
-* [topics/evaluation-input-budget.md](<VLM/topics/evaluation-input-budget.md>) — 46 行 / 6,584 B
+* [topics/evaluation-input-budget.md](<VLM/topics/evaluation-input-budget.md>) — 46 行 / 6,622 B
 * [topics/vlmevalkit-video-mme-path.md](<VLM/topics/vlmevalkit-video-mme-path.md>) — 51 行 / 10,053 B
 
 </details>

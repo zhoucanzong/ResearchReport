@@ -7,7 +7,7 @@
 
 ---
 
-共 **71** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter；「板块」列由 [`scripts/panels.json`](<../scripts/panels.json>) 驱动。
+共 **72** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter；「板块」列由 [`scripts/panels.json`](<../scripts/panels.json>) 驱动。
 
 | 条目 | 板块 | 路径 | 子报告数 | 行数 | 日期 |
 | --- | --- | --- | --: | --: | --- |
@@ -35,13 +35,14 @@
 | Alignment | LLM | [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) | 0 | 114 | — |
 | DecisionModels | LLM | [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | 18 | 874 | — |
 | DiffusionLM | LLM | [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 10 | 70 | 2026-10-23 |
+| DocumentParsing | LLM | [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) | 16 | 102 | 2026-10-25 |
 | LongContext | LLM | [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 0 | 609 | — |
 | MoE | LLM | [LLM/MoE/report.md](<../LLM/MoE/report.md>) | 0 | 405 | — |
 | RAG | LLM | [LLM/RAG/report.md](<../LLM/RAG/report.md>) | 0 | 834 | — |
 | ReasoningModels | LLM | [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) | 0 | 675 | — |
 | ReinforcementLearning | LLM | [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | 10 | 107 | 2026-10-23 |
 | TrainingData | LLM | [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 6 | 60 | 2026-10-24 |
-| VLM | LLM | [LLM/VLM/report.md](<../LLM/VLM/report.md>) | 20 | 520 | — |
+| VLM | LLM | [LLM/VLM/report.md](<../LLM/VLM/report.md>) | 3 | 520 | — |
 | Alibaba-Gen | Models | [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) | 0 | 117 | — |
 | ByteDance-Gen | Models | [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) | 0 | 347 | — |
 | Claude | Models | [Models/Claude/report.md](<../Models/Claude/report.md>) | 0 | 604 | — |
@@ -82,4 +83,4 @@
 | EmbodiedPlanning | WorldModel | [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) | 2 | 53 | — |
 | EmbodiedVLA | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 23 | 642 | — |
 | WorldModels | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 604 | 2026-10-22 |
-| **合计** | — | — | **257** | **28,331** | — |
+| **合计** | — | — | **256** | **28,433** | — |

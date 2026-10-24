@@ -13,6 +13,16 @@
 ![Entries](https://img.shields.io/badge/Entries-6-3f51b5?style=flat-square)
 ![Panel](https://img.shields.io/badge/Panel-OpenSource-9e9e9e?style=flat-square)
 
+## 专题内分析
+
+| 所属报告 | 分册入口 |
+| --- | --- |
+| DeepSeekHarness | [工具副作用与会话持久化：记录“要做”不等于记录“做成了”](<DeepSeekHarness/topics/tool-effect-durability.md>) |
+
+[查看研究专题与分析分册](<../index/by-topic.md>)
+
+## 主报告
+
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
 | **DeepInfer** | [DeepInfer：离线推理内核、异步调度与状态契约](<DeepInfer/report.md>) | 140 行 |

@@ -156,12 +156,5 @@
     "Evaluation/EvaluationScience",
     "Infra/SpeculativeDecoding",
     "OpenSource/DeepInfer"
-  ],
-  "topic_shortcuts": [
-    {
-      "title": "OCR 与文档解析",
-      "path": "LLM/VLM/topics/document-parsing.md",
-      "description": "从版面、阅读顺序与结构恢复，到多家团队近年路线的精读。"
-    }
   ]
 }

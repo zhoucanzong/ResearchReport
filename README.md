@@ -18,7 +18,7 @@
 <div align="center">
 
 <!-- SCRIPT:badges START -->
-[**71** 主报告](index/by-report.md) &nbsp; · &nbsp; [**257** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**42** 主报告主题](index/by-topic.md) &nbsp; · &nbsp; [**17** 跨报告子专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
+[**72** 主报告](index/by-report.md) &nbsp; · &nbsp; [**256** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**43** 研究专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
 <!-- SCRIPT:badges END -->
 
 </div>
@@ -46,7 +46,7 @@
 </td>
 <td width="33%" valign="top">
 <h3>02 · <a href="LLM/README.md">LLM</a></h3>
-<p><strong>语言模型方法</strong><br><sub>10 篇主报告 · 语言模型能力、训练数据与技术专题</sub></p>
+<p><strong>语言模型方法</strong><br><sub>11 篇主报告 · 语言模型能力、训练数据与技术专题</sub></p>
 <p><a href="LLM/ReasoningModels/report.md">ReasoningModels</a> · <a href="LLM/LongContext/report.md">LongContext</a> · <a href="LLM/MoE/report.md">MoE</a> · <a href="LLM/TrainingData/report.md">TrainingData</a></p>
 <p><a href="LLM/README.md"><strong>浏览板块 →</strong></a></p>
 </td>
@@ -123,11 +123,11 @@
 <!-- SCRIPT:recent START · 报告日期优先，缺失时回退最近提交日 -->
 | 日期 | 阅读条目 | 板块 |
 | :-- | :-- | :-- |
+| 2026-10-25 | [DocumentParsing](<LLM/DocumentParsing/report.md>) | LLM |
 | 2026-10-24 | [AgentSecurity](<Agents/AgentSecurity/report.md>) | Agents |
 | 2026-10-24 | [ComputerUse](<Agents/ComputerUse/report.md>) | Agents |
 | 2026-10-24 | [ScientificDiscovery](<Evaluation/ScientificDiscovery/report.md>) | Evaluation |
 | 2026-10-24 | [MoEExecution](<Infra/MoEExecution/report.md>) | Infra |
-| 2026-10-24 | [ServingEvaluation](<Infra/ServingEvaluation/report.md>) | Infra |
 <!-- SCRIPT:recent END -->
 
 [查看全部更新 →](index/recent.md)
@@ -137,15 +137,14 @@
 <!-- SCRIPT:topics START · 从条目目录生成 -->
 | 方向 | 专题入口 |
 | :-- | :-- |
-| **LLM** | [Alignment](<LLM/Alignment/report.md>) · [DecisionModels](<LLM/DecisionModels/report.md>) · [DiffusionLM](<LLM/DiffusionLM/report.md>) · [LongContext](<LLM/LongContext/report.md>) · [MoE](<LLM/MoE/report.md>) · [RAG](<LLM/RAG/report.md>) · [ReasoningModels](<LLM/ReasoningModels/report.md>) · [ReinforcementLearning](<LLM/ReinforcementLearning/report.md>) · [TrainingData](<LLM/TrainingData/report.md>) · [VLM](<LLM/VLM/report.md>) |
+| **LLM** | [Alignment](<LLM/Alignment/report.md>) · [DecisionModels](<LLM/DecisionModels/report.md>) · [DiffusionLM](<LLM/DiffusionLM/report.md>) · [DocumentParsing](<LLM/DocumentParsing/report.md>) · [LongContext](<LLM/LongContext/report.md>) · [MoE](<LLM/MoE/report.md>) · [RAG](<LLM/RAG/report.md>) · [ReasoningModels](<LLM/ReasoningModels/report.md>) · [ReinforcementLearning](<LLM/ReinforcementLearning/report.md>) · [TrainingData](<LLM/TrainingData/report.md>) · [VLM](<LLM/VLM/report.md>) |
 | **Agents** | [AgentSecurity](<Agents/AgentSecurity/report.md>) · [AgentSystems](<Agents/AgentSystems/report.md>) · [ComputerUse](<Agents/ComputerUse/report.md>) |
 | **VisualGen** | [3DGen](<VisualGen/3DGen/report.md>) · [AudioGen](<VisualGen/AudioGen/report.md>) · [AvatarGen](<VisualGen/AvatarGen/report.md>) · [ControllableGen](<VisualGen/ControllableGen/report.md>) · [DiT](<VisualGen/DiT/report.md>) · [DiffusionModels](<VisualGen/DiffusionModels/report.md>) · [ImageEditing](<VisualGen/ImageEditing/report.md>) · [VideoGen](<VisualGen/VideoGen/report.md>) |
 | **WorldModel** | [EmbodiedPlanning](<WorldModel/EmbodiedPlanning/report.md>) · [EmbodiedVLA](<WorldModel/EmbodiedVLA/report.md>) · [WorldModels](<WorldModel/WorldModels/report.md>) |
 | **AI4Science** | [AntibioticDiscovery](<AI4Science/AntibioticDiscovery/report.md>) · [Astronomy](<AI4Science/Astronomy/report.md>) · [AutonomousLabs](<AI4Science/AutonomousLabs/report.md>) · [Chemistry](<AI4Science/Chemistry/report.md>) · [MaterialsDiscovery](<AI4Science/MaterialsDiscovery/report.md>) · [MathematicalDiscovery](<AI4Science/MathematicalDiscovery/report.md>) · [Neuroscience](<AI4Science/Neuroscience/report.md>) · [ProteinDesign](<AI4Science/ProteinDesign/report.md>) · [SingleCellPerturbation](<AI4Science/SingleCellPerturbation/report.md>) · [WeatherClimate](<AI4Science/WeatherClimate/report.md>) |
 | **Evaluation** | [EvaluationScience](<Evaluation/EvaluationScience/report.md>) · [ScientificDiscovery](<Evaluation/ScientificDiscovery/report.md>) |
 | **Infra** | [KVCachePD](<Infra/KVCachePD/report.md>) · [MoEExecution](<Infra/MoEExecution/report.md>) · [QuantizationEdge](<Infra/QuantizationEdge/report.md>) · [ServingEvaluation](<Infra/ServingEvaluation/report.md>) · [SpeculativeDecoding](<Infra/SpeculativeDecoding/report.md>) · [TrainingInfra](<Infra/TrainingInfra/report.md>) |
-| **专题直达** | [OCR 与文档解析](<LLM/VLM/topics/document-parsing.md>) — 从版面、阅读顺序与结构恢复，到多家团队近年路线的精读。 |
-| **全部子专题** | [查看 17 篇专题子文档](<index/by-topic.md>) |
+| **分析分册** | [查看 16 篇专题内分析](<index/by-topic.md>) |
 <!-- SCRIPT:topics END -->
 
 ## 阅读与引用
@@ -162,18 +161,18 @@
 ### 完整索引
 
 <!-- SCRIPT:index START · 条目单一真值在 index/by-report.md -->
-共 **71** 条，分属 **9** 个板块：Models 23 · LLM 10 · Agents 3 · VisualGen 8 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6。
-完整 71 行（条目 | 板块 | 路径）见 **[index/by-report.md](<index/by-report.md>)**；按域 / 主题 / 来源分面见 [index/](<index/>)，总目录见 [INDEX.md](<INDEX.md>)。
+共 **72** 条，分属 **9** 个板块：Models 23 · LLM 11 · Agents 3 · VisualGen 8 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6。
+完整 72 行（条目 | 板块 | 路径）见 **[index/by-report.md](<index/by-report.md>)**；按域 / 主题 / 来源分面见 [index/](<index/>)，总目录见 [INDEX.md](<INDEX.md>)。
 <!-- SCRIPT:index END -->
 
 ### 目录结构
 
 <!-- SCRIPT:structure START · 来源 scripts/panels.json，配置驱动 -->
 ```text
-ResearchReport/    71 条目 · 42 主报告主题 · 17 跨报告子专题 · 9 板块
+ResearchReport/    72 条目 · 43 研究专题 · 9 板块
 │
 ├─ 🧠 Models/        23 条 · 厂商模型 / 系列逐个精读（GPT · Qwen · Gemini …）
-├─ 💬 LLM/           10 条 · 语言模型能力、训练数据与技术专题（ReasoningModels · LongContext · MoE …）
+├─ 💬 LLM/           11 条 · 语言模型能力、训练数据与技术专题（ReasoningModels · LongContext · MoE …）
 ├─ 🤖 Agents/         3 条 · 智能体架构、记忆、工具使用与长期执行（AgentSystems · ComputerUse · AgentSecurity …）
 ├─ 🎨 VisualGen/      8 条 · 视觉与多模态生成（VideoGen · DiT · DiffusionModels …）
 ├─ 🌍 WorldModel/     3 条 · 世界模型与具身 VLA（WorldModels · EmbodiedVLA · EmbodiedPlanning …）

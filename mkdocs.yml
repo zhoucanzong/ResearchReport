@@ -105,6 +105,27 @@ extra_javascript:
   - assets/vendor/tex-svg.js
   - assets/vendor/mermaid.min.js
 
+# 内容迁移后保留旧网页地址；跳转页仅在构建产物中生成。
+extra:
+  page_redirects:
+    "LLM/VLM/topics/document-parsing.md": "LLM/DocumentParsing/report.md"
+    "LLM/VLM/papers/2412.07626-omnidocbench.md": "LLM/DocumentParsing/papers/2412.07626-omnidocbench.md"
+    "LLM/VLM/papers/2505.14059-bytedance-dolphin.md": "LLM/DocumentParsing/papers/2505.14059-bytedance-dolphin.md"
+    "LLM/VLM/papers/2509.19760-alibaba-logics-parsing.md": "LLM/DocumentParsing/papers/2509.19760-alibaba-logics-parsing.md"
+    "LLM/VLM/papers/2510.14528-paddleocr-vl.md": "LLM/DocumentParsing/papers/2510.14528-paddleocr-vl.md"
+    "LLM/VLM/papers/2510.18234-deepseek-ocr.md": "LLM/DocumentParsing/papers/2510.18234-deepseek-ocr.md"
+    "LLM/VLM/papers/2510.21603-huawei-doc-researcher.md": "LLM/DocumentParsing/papers/2510.21603-huawei-doc-researcher.md"
+    "LLM/VLM/papers/2511.19575-hunyuan-ocr.md": "LLM/DocumentParsing/papers/2511.19575-hunyuan-ocr.md"
+    "LLM/VLM/papers/2601.20552-deepseek-ocr2.md": "LLM/DocumentParsing/papers/2601.20552-deepseek-ocr2.md"
+    "LLM/VLM/papers/2603.01840-firered-ocr.md": "LLM/DocumentParsing/papers/2603.01840-firered-ocr.md"
+    "LLM/VLM/papers/2603.13032-multimodal-ocr.md": "LLM/DocumentParsing/papers/2603.13032-multimodal-ocr.md"
+    "LLM/VLM/papers/2603.24326-coarse-to-fine.md": "LLM/DocumentParsing/papers/2603.24326-coarse-to-fine.md"
+    "LLM/VLM/papers/2603.28130-mdpbench.md": "LLM/DocumentParsing/papers/2603.28130-mdpbench.md"
+    "LLM/VLM/papers/2605.17447-jd-fastocr.md": "LLM/DocumentParsing/papers/2605.17447-jd-fastocr.md"
+    "LLM/VLM/papers/2605.27978-amap-abot-ocr.md": "LLM/DocumentParsing/papers/2605.27978-amap-abot-ocr.md"
+    "LLM/VLM/papers/2607.04884-hunyuan-ocr-15.md": "LLM/DocumentParsing/papers/2607.04884-hunyuan-ocr-15.md"
+    "LLM/VLM/papers/2607.21617-amazon-faithc4.md": "LLM/DocumentParsing/papers/2607.21617-amazon-faithc4.md"
+
 validation:
   # 未进 nav 的页面（子文档、根 README）仍然构建、可访问，仅记 info —— 让 --strict 聚焦真正的坏链
   omitted_files: info
@@ -112,9 +133,7 @@ validation:
 nav:
   # SCRIPT:nav START · 由 scripts/library_index.py 生成，勿手改
   - "首页": "README.md"
-  - "✨ 专题直达":
-      - "OCR 与文档解析": "LLM/VLM/topics/document-parsing.md"
-      - "全部专题与子专题": "index/by-topic.md"
+  - "研究专题": "index/by-topic.md"
   - "🧠 Models · 23":
     - "Models/README.md"
     - "Alibaba-Gen": "Models/Alibaba-Gen/report.md"
@@ -163,7 +182,7 @@ nav:
         - "MANIFEST": "Models/Qwen/sources/MANIFEST.md"
     - "Runway": "Models/Runway/report.md"
     - "StabilityAI": "Models/StabilityAI/report.md"
-  - "💬 LLM · 10":
+  - "💬 LLM · 11":
     - "LLM/README.md"
     - "Alignment": "LLM/Alignment/report.md"
     - "DecisionModels":
@@ -198,6 +217,24 @@ nav:
         - "LLaDA2.2-Levenshtein-Editing": "LLM/DiffusionLM/papers/LLaDA2.2-Levenshtein-Editing.md"
         - "CANDIDATES": "LLM/DiffusionLM/sources/CANDIDATES.md"
         - "MANIFEST": "LLM/DiffusionLM/sources/MANIFEST.md"
+    - "DocumentParsing":
+        - "总报告": "LLM/DocumentParsing/report.md"
+        - "2412.07626-omnidocbench": "LLM/DocumentParsing/papers/2412.07626-omnidocbench.md"
+        - "2505.14059-bytedance-dolphin": "LLM/DocumentParsing/papers/2505.14059-bytedance-dolphin.md"
+        - "2509.19760-alibaba-logics-parsing": "LLM/DocumentParsing/papers/2509.19760-alibaba-logics-parsing.md"
+        - "2510.14528-paddleocr-vl": "LLM/DocumentParsing/papers/2510.14528-paddleocr-vl.md"
+        - "2510.18234-deepseek-ocr": "LLM/DocumentParsing/papers/2510.18234-deepseek-ocr.md"
+        - "2510.21603-huawei-doc-researcher": "LLM/DocumentParsing/papers/2510.21603-huawei-doc-researcher.md"
+        - "2511.19575-hunyuan-ocr": "LLM/DocumentParsing/papers/2511.19575-hunyuan-ocr.md"
+        - "2601.20552-deepseek-ocr2": "LLM/DocumentParsing/papers/2601.20552-deepseek-ocr2.md"
+        - "2603.01840-firered-ocr": "LLM/DocumentParsing/papers/2603.01840-firered-ocr.md"
+        - "2603.13032-multimodal-ocr": "LLM/DocumentParsing/papers/2603.13032-multimodal-ocr.md"
+        - "2603.24326-coarse-to-fine": "LLM/DocumentParsing/papers/2603.24326-coarse-to-fine.md"
+        - "2603.28130-mdpbench": "LLM/DocumentParsing/papers/2603.28130-mdpbench.md"
+        - "2605.17447-jd-fastocr": "LLM/DocumentParsing/papers/2605.17447-jd-fastocr.md"
+        - "2605.27978-amap-abot-ocr": "LLM/DocumentParsing/papers/2605.27978-amap-abot-ocr.md"
+        - "2607.04884-hunyuan-ocr-15": "LLM/DocumentParsing/papers/2607.04884-hunyuan-ocr-15.md"
+        - "2607.21617-amazon-faithc4": "LLM/DocumentParsing/papers/2607.21617-amazon-faithc4.md"
     - "LongContext": "LLM/LongContext/report.md"
     - "MoE": "LLM/MoE/report.md"
     - "RAG": "LLM/RAG/report.md"
@@ -225,23 +262,6 @@ nav:
     - "VLM":
         - "总报告": "LLM/VLM/report.md"
         - "2405.21075-videomme": "LLM/VLM/papers/2405.21075-videomme.md"
-        - "2412.07626-omnidocbench": "LLM/VLM/papers/2412.07626-omnidocbench.md"
-        - "2505.14059-bytedance-dolphin": "LLM/VLM/papers/2505.14059-bytedance-dolphin.md"
-        - "2509.19760-alibaba-logics-parsing": "LLM/VLM/papers/2509.19760-alibaba-logics-parsing.md"
-        - "2510.14528-paddleocr-vl": "LLM/VLM/papers/2510.14528-paddleocr-vl.md"
-        - "2510.18234-deepseek-ocr": "LLM/VLM/papers/2510.18234-deepseek-ocr.md"
-        - "2510.21603-huawei-doc-researcher": "LLM/VLM/papers/2510.21603-huawei-doc-researcher.md"
-        - "2511.19575-hunyuan-ocr": "LLM/VLM/papers/2511.19575-hunyuan-ocr.md"
-        - "2601.20552-deepseek-ocr2": "LLM/VLM/papers/2601.20552-deepseek-ocr2.md"
-        - "2603.01840-firered-ocr": "LLM/VLM/papers/2603.01840-firered-ocr.md"
-        - "2603.13032-multimodal-ocr": "LLM/VLM/papers/2603.13032-multimodal-ocr.md"
-        - "2603.24326-coarse-to-fine": "LLM/VLM/papers/2603.24326-coarse-to-fine.md"
-        - "2603.28130-mdpbench": "LLM/VLM/papers/2603.28130-mdpbench.md"
-        - "2605.17447-jd-fastocr": "LLM/VLM/papers/2605.17447-jd-fastocr.md"
-        - "2605.27978-amap-abot-ocr": "LLM/VLM/papers/2605.27978-amap-abot-ocr.md"
-        - "2607.04884-hunyuan-ocr-15": "LLM/VLM/papers/2607.04884-hunyuan-ocr-15.md"
-        - "2607.21617-amazon-faithc4": "LLM/VLM/papers/2607.21617-amazon-faithc4.md"
-        - "document-parsing": "LLM/VLM/topics/document-parsing.md"
         - "evaluation-input-budget": "LLM/VLM/topics/evaluation-input-budget.md"
         - "vlmevalkit-video-mme-path": "LLM/VLM/topics/vlmevalkit-video-mme-path.md"
   - "🤖 Agents · 3":

@@ -139,6 +139,12 @@
 | --- | --- | --- | --- | --- |
 | [VisualGen/DiffusionModels/report.md](<../VisualGen/DiffusionModels/report.md>) | 扩散模型（Diffusion Models）基础框架与架构演进研究报告 | — | — | — |
 
+## DocumentParsing (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) | OCR 与文档解析：从字符识别到结构还原 | research | 2026-10-25 | current |
+
 ## Doubao-Seed (1)
 
 | 条目 | 标题 | type | date | status |

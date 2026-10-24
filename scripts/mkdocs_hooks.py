@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """mkdocs_hooks.py —— 站点构建钩子：让 MkDocs 渲染与 GitHub 口径完全一致。
 
-站点是「只读渲染层」，源文件一个字符不改；两处口径差异由本钩子在构建期抹平：
+站点是「只读渲染层」，源文件一个字符不改；构建期处理锚点、目录链接与旧地址跳转：
 
 1. **锚点 slugify**：`report.md` 的页内目录按 GitHub slugger 写死
    （小写、去标点、空格转连字符、CJK 保留），Python-Markdown 默认会把中文
@@ -20,6 +20,8 @@ import os
 import re
 import urllib.parse
 import hashlib
+import html
+import json
 
 # GitHub slugger 保留：Unicode 字母/数字（\w 含 CJK）、下划线、连字符、空格；
 # 其余（标点、符号、箭头 →、全角括号等）一律删除。
@@ -94,3 +96,45 @@ def on_page_markdown(markdown, page, config, files):
         return f"](<{new}>)" if angle is not None else f"]({new})"
 
     return _LINK.sub(_sub, markdown)
+
+
+def _page_html_path(source: str, directory_urls: bool) -> str:
+    """Markdown 页面对应的构建文件，相对 site_dir。"""
+    stem, _extension = os.path.splitext(source)
+    directory, name = os.path.split(stem)
+    if name.lower() in ("index", "readme"):
+        return os.path.join(directory, "index.html")
+    return os.path.join(stem, "index.html") if directory_urls else stem + ".html"
+
+
+def on_post_build(config):
+    """为迁移页面生成旧地址跳转，避免创建重复的研究文档。"""
+    redirects = config.get("extra", {}).get("page_redirects", {})
+    directory_urls = config.get("use_directory_urls", True)
+    for old, new in redirects.items():
+        source = os.path.join(config["site_dir"], _page_html_path(old, directory_urls))
+        target = os.path.join(config["site_dir"], _page_html_path(new, directory_urls))
+        if source == target:
+            continue
+        if not os.path.isfile(target):
+            raise ValueError(f"页面跳转目标没有构建：{new}")
+        if os.path.exists(source):
+            raise ValueError(f"页面跳转不能覆盖现有页面：{old}")
+        relative = os.path.relpath(target, os.path.dirname(source)).replace(os.sep, "/")
+        canonical = urllib.parse.urljoin(
+            config["site_url"], _page_html_path(new, directory_urls).replace(os.sep, "/")
+        )
+        if directory_urls:
+            relative = relative.removesuffix("index.html")
+            canonical = canonical.removesuffix("index.html")
+        os.makedirs(os.path.dirname(source), exist_ok=True)
+        with open(source, "w", encoding="utf-8") as output:
+            output.write(
+                '<!doctype html><html lang="zh"><meta charset="utf-8">'
+                '<title>页面已迁移</title>'
+                f'<link rel="canonical" href="{html.escape(canonical, quote=True)}">'
+                f'<meta http-equiv="refresh" content="0; url={html.escape(relative, quote=True)}">'
+                f'<script>location.replace({json.dumps(relative)}+location.search+location.hash)</script>'
+                f'<p>页面已迁移，<a href="{html.escape(relative, quote=True)}">前往新地址</a>。</p>'
+                '</html>\n'
+            )

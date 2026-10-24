@@ -74,7 +74,7 @@ FACET_TITLES = {
     "by-domain": "按领域（domain）",
     "by-subject": "按主题（subject）",
     "by-repo": "按来源仓库（upstream / 本地库根）",
-    "by-topic": "按专题与专题子文档",
+    "by-topic": "研究专题与分析分册",
     "by-report": "按条目（report.md）平铺",
     "recent": "最近更新（按 date 降序）",
     "stale": "陈旧 / 待复核（status 或超期）",
@@ -1072,8 +1072,8 @@ def render_by_topic(entries: list, out_root: str, dry_run: bool) -> str:
     """先列 report 的 topic 标签，再列可直达的 topics/ 子专题文档。"""
     lines = header(FACET_TITLES["by-topic"], out_root, dry_run)
     lines += [
-        "上半部分按主报告的 `topic` 元数据归类；下半部分汇总各报告下的 `topics/` 子专题，"
-        "可直接进入跨论文分析，不必先展开父报告的子文档清单。",
+        "上半部分按主报告的 `topic` 元数据归类；下半部分汇总各报告下的 `topics/` 分册。"
+        "分析分册属于父专题，不单独计为独立研究专题。",
         "",
     ]
     lines += group_table(entries, lambda e: e["topic"] or UNFILED)
@@ -1084,8 +1084,8 @@ def render_by_topic(entries: list, out_root: str, dry_run: bool) -> str:
             if "topics" in child["path"].split("/"):
                 children.append((entry, child))
     if children:
-        lines += [f"## 专题子文档直达（{len(children)}）", "",
-                  "| 所属报告 | 专题入口 |", "| --- | --- |"]
+        lines += [f"## 专题内分析分册（{len(children)}）", "",
+                  "| 所属报告 | 分册入口 |", "| --- | --- |"]
         for entry, child in sorted(children, key=lambda pair: (pair[0]["path"], pair[1]["path"])):
             lines.append(
                 f"| {link(entry['path'], '../')} | "
@@ -1164,19 +1164,6 @@ def load_panels(repo_root: str) -> dict:
     fallback = cfg.get("date_fallback")
     if fallback not in ("none", "git"):
         raise ConfigError(f"date_fallback 只能是 `none` 或 `git`：{fallback!r}")
-    shortcuts = cfg.get("topic_shortcuts", [])
-    if not isinstance(shortcuts, list):
-        raise ConfigError("topic_shortcuts 必须是列表")
-    for shortcut in shortcuts:
-        if not isinstance(shortcut, dict) or not all(
-            isinstance(shortcut.get(key), str) and shortcut[key].strip()
-            for key in ("title", "path", "description")
-        ):
-            raise ConfigError(f"topic_shortcuts 每项必须包含非空 title/path/description：{shortcut!r}")
-        if not shortcut["path"].endswith(".md"):
-            raise ConfigError(f"专题快捷入口必须指向 Markdown：{shortcut['path']}")
-        if not os.path.isfile(os.path.join(repo_root, shortcut["path"])):
-            raise ConfigError(f"专题快捷入口目标不存在：{shortcut['path']}")
     return cfg
 
 
@@ -1337,16 +1324,14 @@ def last_commit_date(repo_root: str, fallback: _dt.date) -> _dt.date:
 
 
 
-def render_badges(stats: dict, topics: int, today: _dt.date, panels: int | None = None,
-                  topic_children: int = 0) -> str:
+def render_badges(stats: dict, topics: int, today: _dt.date, panels: int | None = None) -> str:
     """GitHub 原生统计导航，不依赖远程徽章图片；保留旧调用签名。"""
     if panels is None:
         panels = stats.get("totals", {}).get("libraries", 0)
     items = [
         (stats["entries"]["total"], "主报告", "index/by-report.md"),
         (stats["entries"]["children"], "分册与子文档", "INDEX.md"),
-        (topics, "主报告主题", "index/by-topic.md"),
-        (topic_children, "跨报告子专题", "index/by-topic.md"),
+        (topics, "研究专题", "index/by-topic.md"),
         (panels, "研究板块", "#研究板块"),
     ]
     return " &nbsp; · &nbsp; ".join(
@@ -1358,14 +1343,9 @@ def render_structure_block(cfg: dict, mapping: dict, entries: list) -> str:
     """图书馆结构树（代码块，GitHub 与站点都可读）：板块计数、代表条目与生成管线。"""
     topic_ids = {p["id"] for p in cfg["panels"] if p.get("topic_index", False)}
     topics = sum(1 for d in entries if mapping.get(d["path"], {}).get("id") in topic_ids)
-    topic_children = sum(
-        1 for d in entries for child in d.get("children", [])
-        if "topics" in child["path"].split("/")
-    )
     lines = [
         "```text",
-        f"ResearchReport/    {len(entries)} 条目 · {topics} 主报告主题 · "
-        f"{topic_children} 跨报告子专题 · {len(cfg['panels'])} 板块",
+        f"ResearchReport/    {len(entries)} 条目 · {topics} 研究专题 · {len(cfg['panels'])} 板块",
         "│",
     ]
     panels = cfg["panels"]
@@ -1447,9 +1427,8 @@ def render_panels_block(cfg: dict, mapping: dict, entries: list, label_limit: in
 
 
 
-def render_topics_block(entries: list, mapping: dict, panels: list,
-                        topic_shortcuts: list | None = None) -> str:
-    """按板块列入口报告，并为精选跨论文专题提供直达链接。"""
+def render_topics_block(entries: list, mapping: dict, panels: list) -> str:
+    """按板块列入口报告，并链接自动汇总的子专题索引。"""
     lines = ["| 方向 | 专题入口 |", "| :-- | :-- |"]
     for panel in panels:
         if not panel.get("topic_index", False):
@@ -1460,19 +1439,13 @@ def render_topics_block(entries: list, mapping: dict, panels: list,
         )
         links = " · ".join(f"[{entry_short_name(d)}](<{d['path']}>)" for d in members)
         lines.append(f"| **{panel['title']}** | {links} |")
-    for shortcut in topic_shortcuts or []:
-        title = str(shortcut["title"]).replace("|", r"\|")
-        description = str(shortcut["description"]).replace("|", r"\|")
-        lines.append(
-            f"| **专题直达** | [{title}](<{shortcut['path']}>) — {description} |"
-        )
     child_topics = sum(
         1 for entry in entries for child in entry.get("children", [])
         if "topics" in child["path"].split("/")
     )
     if child_topics:
         lines.append(
-            f"| **全部子专题** | [查看 {child_topics} 篇专题子文档](<index/by-topic.md>) |"
+            f"| **分析分册** | [查看 {child_topics} 篇专题内分析](<index/by-topic.md>) |"
         )
     return "\n".join(lines)
 
@@ -1510,22 +1483,14 @@ def render_readme_blocks(cfg: dict, entries: list, stats: dict, mapping: dict,
                          repo_root: str, today: _dt.date) -> dict:
     topic_ids = {p["id"] for p in cfg["panels"] if p.get("topic_index", False)}
     topics = sum(1 for d in entries if mapping.get(d["path"], {}).get("id") in topic_ids)
-    topic_children = sum(
-        1 for d in entries for child in d.get("children", [])
-        if "topics" in child["path"].split("/")
-    )
     # 「更新日期」徽章取最后一次提交日，而非当天 wall-clock：跨零点不漂，任意一天重跑字节一致。
     badge_date = last_commit_date(repo_root, today)
     return {
-        "badges": render_badges(
-            stats, topics, badge_date, len(cfg["panels"]), topic_children
-        ),
+        "badges": render_badges(stats, topics, badge_date, len(cfg["panels"])),
         "structure": render_structure_block(cfg, mapping, entries),
         "panels": render_panels_block(cfg, mapping, entries),
         "highlights": render_highlights_block(cfg, mapping, entries),
-        "topics": render_topics_block(
-            entries, mapping, cfg["panels"], cfg.get("topic_shortcuts", [])
-        ),
+        "topics": render_topics_block(entries, mapping, cfg["panels"]),
         "recent": render_recent_block(recent_rows(repo_root, entries, cfg), mapping),
         "index": render_index_block(entries, mapping, cfg["panels"]),
     }
@@ -1583,8 +1548,7 @@ PANEL_ONE_LINERS = {
 }
 
 
-def render_panel_readme(panel: dict, members: list, repo_root: str,
-                        topic_shortcuts: list | None = None) -> str:
+def render_panel_readme(panel: dict, members: list, repo_root: str) -> str:
     """单个板块 README：统一卡头 + 徽章 + 条目表 + 子文档折叠。
 
     卡头的 ``<div>`` 带 ``markdown="1"``：GitHub 与 MkDocs（md_in_html）都会
@@ -1610,17 +1574,19 @@ def render_panel_readme(panel: dict, members: list, repo_root: str,
         f'![Panel](https://img.shields.io/badge/Panel-{top}-9e9e9e?style=flat-square)',
         '',
     ]
-    visible_shortcuts = [
-        item for item in (topic_shortcuts or [])
-        if item["path"].split("/", 1)[0] == top
+    topic_children = [
+        (entry, child) for entry in names for child in entry.get("children", [])
+        if "topics" in child["path"].split("/")
     ]
-    if visible_shortcuts:
-        lines += ["## 精选专题直达", ""]
-        for item in visible_shortcuts:
-            rel = os.path.relpath(item["path"], top).replace(os.sep, "/")
-            lines.append(f'* [{item["title"]}](<{rel}>) — {item["description"]}')
-        lines.append('* [查看全部跨论文专题与子专题](<../index/by-topic.md>)')
-        lines.append("")
+    if topic_children:
+        lines += ["## 专题内分析", "", "| 所属报告 | 分册入口 |", "| --- | --- |"]
+        for entry, child in sorted(topic_children, key=lambda pair: pair[1]["path"]):
+            rel = os.path.relpath(child["path"], top).replace(os.sep, "/")
+            lines.append(
+                f'| {entry_short_name(entry)} | '
+                f'{link_label(rel, "", child["title"] or child["filename"])} |'
+            )
+        lines += ["", '[查看研究专题与分析分册](<../index/by-topic.md>)', "", "## 主报告", ""]
     lines += [
         '| 条目 | 报告 | 规模 |',
         '| :-- | :-- | --: |',
@@ -1668,9 +1634,7 @@ def write_panel_readmes(repo_root: str, cfg: dict, mapping: dict, docs: list) ->
     for panel in cfg["panels"]:
         top = panel["title"]
         members = [d for d in entries if mapping.get(d["path"], {}).get("id") == panel["id"]]
-        text = render_panel_readme(
-            panel, members, repo_root, cfg.get("topic_shortcuts", [])
-        )
+        text = render_panel_readme(panel, members, repo_root)
         path = os.path.join(repo_root, top, PANEL_README_NAME)
         os.makedirs(os.path.dirname(path), exist_ok=True)
         old = open(path, encoding="utf-8").read() if os.path.isfile(path) else None
@@ -1837,15 +1801,10 @@ def render_site_nav(cfg: dict, mapping: dict, docs: list, orphans: list) -> str:
     """生成 ``mkdocs.yml`` nav 区块的内容（2 空格缩进起，供幂等替换）。"""
     entries = [d for d in docs if d["is_entry"]]
     lines = [f"  - {_yaml_dq('首页')}: {_yaml_dq(SITE_HOME_NAME)}"]
-    shortcuts = cfg.get("topic_shortcuts", [])
-    if shortcuts:
-        lines.append(f"  - {_yaml_dq('✨ 专题直达')}:")
-        for item in shortcuts:
-            lines.append(f"      - {_yaml_dq(item['title'])}: {_yaml_dq(item['path'])}")
-        lines.append(
-            f"      - {_yaml_dq('全部专题与子专题')}: "
-            f"{_yaml_dq(GENERATED_DIR + '/by-topic.md')}"
-        )
+    lines.append(
+        f"  - {_yaml_dq('研究专题')}: "
+        f"{_yaml_dq(GENERATED_DIR + '/by-topic.md')}"
+    )
     for panel in cfg["panels"]:
         members = [d for d in entries
                    if mapping.get(d["path"], {}).get("id") == panel["id"]]
@@ -1961,11 +1920,6 @@ def render_site_home(cfg: dict, mapping: dict, entries: list,
     topic_ids = {p["id"] for p in cfg["panels"] if p.get("topic_index", False)}
     topics_entries = [d for d in entries
                       if mapping.get(d["path"], {}).get("id") in topic_ids]
-    topic_names = {d["topic"] for d in topics_entries if d.get("topic")}
-    topic_children = [
-        (entry, child) for entry in entries for child in entry.get("children", [])
-        if "topics" in child["path"].split("/")
-    ]
     child_count = stats.get("entries", {}).get(
         "children", sum(len(d.get("children", [])) for d in entries))
     captions = {
@@ -2001,13 +1955,9 @@ def render_site_home(cfg: dict, mapping: dict, entries: list,
         '<div class="rr-discovery" markdown="1">', "",
         '<label for="__search" class="rr-search-launch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><span>搜索模型、论文或技术问题</span><kbd>/</kbd></label>', "",
         '<div class="rr-quicklinks" markdown="1">', "",
-        f'[专题与子专题索引](<{GENERATED_DIR}/by-topic.md>) · '
-        + " · ".join(
-            f'[{label(item["title"])}](<{item["path"]}>)'
-            for item in cfg.get("topic_shortcuts", [])
-        )
-        + f' · [查看最近更新](<{GENERATED_DIR}/recent.md>) · '
-        + f'[阅读与证据说明](<docs/research-method.md>)', "",
+        f'[研究专题索引](<{GENERATED_DIR}/by-topic.md>) · '
+        f'[查看最近更新](<{GENERATED_DIR}/recent.md>) · '
+        f'[阅读与证据说明](<docs/research-method.md>)', "",
         '</div>', "", '</div>', "",
         '<section class="rr-section rr-collections" markdown="1">', "",
         '<div class="rr-section-heading" markdown="1">', "",
@@ -2039,7 +1989,7 @@ def render_site_home(cfg: dict, mapping: dict, entries: list,
               '<div class="rr-reading-grid" markdown="1">', "",
               '<section class="rr-section rr-start" markdown="1">', "",
               '<div class="rr-section-heading" markdown="1">', "",
-              '## 从这里开始', "", '<span>六篇入口报告，建立研究坐标。</span>', "",
+              '## 从这里开始', "", '<span>从入口报告建立研究坐标。</span>', "",
               '</div>', "", '<div class="rr-reading-list" markdown="1">', ""]
     for rel in cfg.get("highlights", []):
         doc = by_dir.get(rel)
@@ -2076,15 +2026,10 @@ def render_site_home(cfg: dict, mapping: dict, entries: list,
         lines += ['<section class="rr-section rr-topics" markdown="1">', "",
                   '<div class="rr-section-heading" markdown="1">', "",
                   '## 你关注的问题', "",
-                  f'<span>{len(topic_names)} 个主报告主题 · {len(topic_children)} 篇专题子文档，可直接进入精读。</span>', "",
+                  f'<span>{len(topics_entries)} 个研究专题，按问题进入阅读。</span>', "",
                   '</div>', "", '<div class="rr-topic-links" markdown="1">', ""]
         for doc in sorted(topics_entries, key=lambda d: d["path"]):
             lines += [f'[{label(entry_short_name(doc))}](<{doc["path"]}>){{ .rr-topic }}', ""]
-        for item in cfg.get("topic_shortcuts", []):
-            lines += [
-                f'[{label(item["title"])}](<{item["path"]}>){{ .rr-topic .rr-topic-featured }}',
-                "",
-            ]
         lines += ['</div>', "", '</section>', ""]
     lines += ['<div class="rr-library-footer" markdown="1">', "",
               'ResearchReport · 让结论有出处，让阅读有路径。', "",

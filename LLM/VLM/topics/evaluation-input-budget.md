@@ -14,7 +14,7 @@
 
 ## 文档：识字、找版面、读顺序、还原结构是不同能力
 
-[OmniDocBench 精读](../papers/2412.07626-omnidocbench.md)将文档解析拆为 OCR 文本、版面区域检测、阅读顺序、表格结构和公式表达等不同指标。OCR 的编辑距离不能代表多栏阅读顺序；区域框 mAP 也不能代表端到端表格/公式重建。阅读顺序指标会受 OCR 漏字和段落合并影响，因此某一子分数低，并不总是相应模块单独出了错。
+[OmniDocBench 精读](../../DocumentParsing/papers/2412.07626-omnidocbench.md)将文档解析拆为 OCR 文本、版面区域检测、阅读顺序、表格结构和公式表达等不同指标。OCR 的编辑距离不能代表多栏阅读顺序；区域框 mAP 也不能代表端到端表格/公式重建。阅读顺序指标会受 OCR 漏字和段落合并影响，因此某一子分数低，并不总是相应模块单独出了错。
 
 该基准含 981 个单页 PDF 样本，覆盖九类页面；页面先由专用模型预标，再经人工标注和校正。它适合比较**页面解析**，但不是多页文档检索或跨页推理测试。跨系统配置也没有统一页面栅格分辨率、视觉 token 或计算量；不同工具版本、模型输入和解析流水线会共同影响分数。论文按 OCR、布局、顺序、表格和公式分别给出指标，读者不应把它们合并成一个含义不明的“文档理解分”。[OmniDocBench v2, §§3–5, Tables 1–9, Appendix IV](https://arxiv.org/html/2412.07626v2)
 
@@ -41,6 +41,6 @@
 ## 推荐阅读
 
 1. [Video-MME](../papers/2405.21075-videomme.md)：先读帧采样、字幕设置和模态消融，再看长视频分桶。
-2. [OmniDocBench](../papers/2412.07626-omnidocbench.md)：比较 OCR、版面、阅读顺序、表格和公式指标的构念差异。
+2. [OmniDocBench](../../DocumentParsing/papers/2412.07626-omnidocbench.md)：比较 OCR、版面、阅读顺序、表格和公式指标的构念差异。
 3. [VLMEvalKit 的 Video-MME 代码路径](vlmevalkit-video-mme-path.md)：将配置、预处理、输出解析和分数聚合连起来。
 4. 回读[评测科学](../../../Evaluation/EvaluationScience/report.md)：理解基准效度、污染、评分者误差和外部效度。
