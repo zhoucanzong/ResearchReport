@@ -1220,7 +1220,7 @@
 | [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,674 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 103 | 6,735 B |
 | [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |
-| [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 86 | 6,458 B |
+| [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 102 | 7,365 B |
 | [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 11,079 B |
 | [docs/research-method.md](<docs/research-method.md>) | docs | 31 | 2,380 B |
 | [docs/statistics.md](<docs/statistics.md>) | docs | 215 | 15,662 B |
