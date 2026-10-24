@@ -1224,7 +1224,7 @@
 | [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 11,079 B |
 | [docs/research-method.md](<docs/research-method.md>) | docs | 31 | 2,380 B |
 | [docs/statistics.md](<docs/statistics.md>) | docs | 215 | 15,662 B |
-| [docs/team.md](<docs/team.md>) | docs | 68 | 6,212 B |
+| [docs/team.md](<docs/team.md>) | docs | 75 | 6,919 B |
 | [docs/verification.md](<docs/verification.md>) | docs | 21 | 1,991 B |
 | [scripts/README.md](<scripts/README.md>) | scripts | 101 | 4,956 B |
 
