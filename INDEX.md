@@ -14,7 +14,7 @@
 | 指标 | 数量 |
 | --- | --- |
 | **条目数**（`report.md`） | **72** |
-| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 11 · Agents 3 · AIGC（内容生成） 8 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6 |
+| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 11 · Agents 3 · AIGC 8 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6 |
 | 条目子文档数 | 263 |
 | 条目正文行数（剔除 front-matter） | 28,498 |
 | 条目字节 | 2,208,267 B |
@@ -1230,7 +1230,7 @@
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 102 | 7,365 B |
 | [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 11,064 B |
 | [docs/research-method.md](<docs/research-method.md>) | docs | 31 | 2,380 B |
-| [docs/statistics.md](<docs/statistics.md>) | docs | 215 | 15,675 B |
+| [docs/statistics.md](<docs/statistics.md>) | docs | 215 | 15,657 B |
 | [docs/team.md](<docs/team.md>) | docs | 75 | 6,919 B |
 | [docs/verification.md](<docs/verification.md>) | docs | 21 | 1,991 B |
 | [scripts/README.md](<scripts/README.md>) | scripts | 101 | 4,956 B |

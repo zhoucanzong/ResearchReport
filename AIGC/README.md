@@ -1,6 +1,6 @@
 <div align="center" markdown="1">
 
-# 🎨 AIGC（内容生成）
+# 🎨 AIGC
 
 **8 条** · 图像、视频、音频、3D、数字人生成及相关架构与编辑方法。
 
@@ -11,7 +11,7 @@
 <!-- SCRIPT:panel-readme START · 由 scripts/library_index.py 生成，勿手改 -->
 
 ![Entries](https://img.shields.io/badge/Entries-8-3f51b5?style=flat-square)
-![Panel](https://img.shields.io/badge/Panel-AIGC（内容生成）-9e9e9e?style=flat-square)
+![Panel](https://img.shields.io/badge/Panel-AIGC-9e9e9e?style=flat-square)
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |

@@ -1419,7 +1419,7 @@ def render_panels_block(cfg: dict, mapping: dict, entries: list, label_limit: in
             by_panel.setdefault(panel["id"], []).append(doc)
     captions = {
         "models": "模型系列", "llm": "语言模型方法", "agents": "智能体系统",
-        "aigc": "AIGC（内容生成）",
+        "aigc": "AIGC",
         "worldmodel": "世界模型与具身", "ai4science": "科学研究应用",
         "evaluation": "跨领域评测科学",
         "infra": "训练与推理系统", "opensource": "开源代码深读",
@@ -1951,7 +1951,7 @@ def render_site_home(cfg: dict, mapping: dict, entries: list,
         "children", sum(len(d.get("children", [])) for d in entries))
     captions = {
         "models": "模型系列", "llm": "语言模型技术", "agents": "智能体系统",
-        "aigc": "AIGC（内容生成）",
+        "aigc": "AIGC",
         "worldmodel": "世界模型与具身", "ai4science": "科学研究应用",
         "evaluation": "跨领域评测科学",
         "infra": "训练与推理系统", "opensource": "开源代码研究",

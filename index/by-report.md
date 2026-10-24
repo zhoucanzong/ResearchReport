@@ -21,14 +21,14 @@
 | 蛋白质与肽结合体设计 | AI4Science | [AI4Science/ProteinDesign/report.md](<../AI4Science/ProteinDesign/report.md>) | 6 | 80 | 2026-10-23 |
 | 单细胞扰动预测 | AI4Science | [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) | 4 | 87 | 2026-10-23 |
 | 天气与气候预测 | AI4Science | [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) | 7 | 89 | 2026-10-23 |
-| 3D 生成 | AIGC（内容生成） | [AIGC/3DGen/report.md](<../AIGC/3DGen/report.md>) | 0 | 858 | — |
-| 音频与音乐生成 | AIGC（内容生成） | [AIGC/AudioGen/report.md](<../AIGC/AudioGen/report.md>) | 0 | 915 | — |
-| 数字人与 Avatar | AIGC（内容生成） | [AIGC/AvatarGen/report.md](<../AIGC/AvatarGen/report.md>) | 0 | 595 | — |
-| 可控生成 | AIGC（内容生成） | [AIGC/ControllableGen/report.md](<../AIGC/ControllableGen/report.md>) | 0 | 917 | — |
-| 扩散 Transformer（DiT） | AIGC（内容生成） | [AIGC/DiT/report.md](<../AIGC/DiT/report.md>) | 0 | 888 | — |
-| 扩散模型 | AIGC（内容生成） | [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) | 0 | 859 | — |
-| 图像编辑与修复 | AIGC（内容生成） | [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) | 0 | 835 | — |
-| 视频生成 | AIGC（内容生成） | [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) | 0 | 899 | — |
+| 3D 生成 | AIGC | [AIGC/3DGen/report.md](<../AIGC/3DGen/report.md>) | 0 | 858 | — |
+| 音频与音乐生成 | AIGC | [AIGC/AudioGen/report.md](<../AIGC/AudioGen/report.md>) | 0 | 915 | — |
+| 数字人与 Avatar | AIGC | [AIGC/AvatarGen/report.md](<../AIGC/AvatarGen/report.md>) | 0 | 595 | — |
+| 可控生成 | AIGC | [AIGC/ControllableGen/report.md](<../AIGC/ControllableGen/report.md>) | 0 | 917 | — |
+| 扩散 Transformer（DiT） | AIGC | [AIGC/DiT/report.md](<../AIGC/DiT/report.md>) | 0 | 888 | — |
+| 扩散模型 | AIGC | [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) | 0 | 859 | — |
+| 图像编辑与修复 | AIGC | [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) | 0 | 835 | — |
+| 视频生成 | AIGC | [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) | 0 | 899 | — |
 | 工具 Agent 安全 | Agents | [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) | 4 | 53 | 2026-10-24 |
 | 智能体系统 | Agents | [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) | 12 | 95 | — |
 | 电脑使用 Agent | Agents | [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) | 2 | 59 | 2026-10-24 |

@@ -51,7 +51,7 @@
     },
     {
       "id": "aigc",
-      "title": "AIGC（内容生成）",
+      "title": "AIGC",
       "directory": "AIGC",
       "emoji": "🎨",
       "tagline": "图像、视频、音频、3D、数字人生成及相关架构与编辑方法",

@@ -299,8 +299,8 @@ nav:
         - "总报告": "Agents/ComputerUse/report.md"
         - "2606.09426-weavebench": "Agents/ComputerUse/papers/2606.09426-weavebench.md"
         - "2606.29537-osworld2": "Agents/ComputerUse/papers/2606.29537-osworld2.md"
-  - "🎨 AIGC（内容生成） · 8":
-    - "AIGC（内容生成）": "AIGC/README.md"
+  - "🎨 AIGC · 8":
+    - "AIGC/README.md"
     - "3D 生成": "AIGC/3DGen/report.md"
     - "音频与音乐生成": "AIGC/AudioGen/report.md"
     - "数字人与 Avatar": "AIGC/AvatarGen/report.md"
