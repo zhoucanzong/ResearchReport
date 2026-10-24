@@ -1216,7 +1216,7 @@
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 104 | 4,484 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 196 | 14,129 B |
+| [README.md](<README.md>) |  | 196 | 14,102 B |
 | [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,674 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 103 | 6,735 B |
 | [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |

@@ -124,10 +124,10 @@
 | 日期 | 阅读条目 | 板块 |
 | :-- | :-- | :-- |
 | 2026-10-25 | [OCR 与文档解析](<LLM/DocumentParsing/report.md>) | LLM |
-| 2026-10-25 | [视觉语言模型（VLM）](<LLM/VLM/report.md>) | LLM |
-| 2026-10-24 | [工具 Agent 安全](<Agents/AgentSecurity/report.md>) | Agents |
-| 2026-10-24 | [电脑使用 Agent](<Agents/ComputerUse/report.md>) | Agents |
-| 2026-10-24 | [科学发现的评测方法](<Evaluation/ScientificDiscovery/report.md>) | Evaluation |
+| 2026-10-25 | [智能体系统](<Agents/AgentSystems/report.md>) | Agents |
+| 2026-10-25 | [模型对齐与后训练](<LLM/Alignment/report.md>) | LLM |
+| 2026-10-25 | [决策模型（Decision Models）](<LLM/DecisionModels/report.md>) | LLM |
+| 2026-10-25 | [长上下文](<LLM/LongContext/report.md>) | LLM |
 <!-- SCRIPT:recent END -->
 
 [查看全部更新 →](index/recent.md)

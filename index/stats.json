@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "b87ff49ba9e515e97ed845e796ab547f2a0acb329fee382682f755375fac5235",
+  "content_fingerprint": "02b473aeb0052b0219b2ffcd80b585be85ca7c1b438b74d091e7a7deb4140e27",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -29,7 +29,7 @@
     "named_report_md": 72,
     "named_readme_md": 11,
     "lines": 60268,
-    "bytes": 5361958
+    "bytes": 5361931
   },
   "libraries": {
     "Models": {
@@ -1040,7 +1040,7 @@
       "files": 349,
       "lines": 60268,
       "lines_raw": 60741,
-      "bytes": 5361958
+      "bytes": 5361931
     },
     "library_md": {
       "files": 339,
@@ -1052,7 +1052,7 @@
       "files": 1,
       "lines": 196,
       "lines_raw": 196,
-      "bytes": 14129
+      "bytes": 14102
     },
     "docs_md": {
       "files": 7,
@@ -1072,7 +1072,7 @@
     ]
   },
   "storage": {
-    "tracked_bytes": 10600406,
+    "tracked_bytes": 10600379,
     "definition": "纳入版本控制的文件字节合计（`git ls-files` 跟踪路径逐个 getsize 求和）；刻意**不**用 du 量工作树——工作树含 site/site-docs/构建产物、别人的未提交草稿、虚拟环境等「车间地面」，会让数字每个 clone 一个样、生成物不可复现。本字段与提交树同源，任意 clone 重跑一致。"
   }
 }
