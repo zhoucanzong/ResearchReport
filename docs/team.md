@@ -66,3 +66,10 @@ python3 scripts/library_index.py --repo-root . --out-root . --write-stats --chec
 ```
 
 再运行仓库所需的站点构建或相关验证。提交与推送按用户当次授权执行。
+
+
+## 协作运维（Shell 与权限）
+
+- 执行 Shell 时把工具的 `workdir` 参数设为授权目录（例如 `/Users/zhoucanzong/Documents/Research`），命令体内不要 `cd`：`cd <dir> && …` 在受限沙箱下会被判为越界并报 `Operation not permitted`，这不代表缺少授权。
+- 动手前先确认分支与工作树状态：`git rev-parse --abbrev-ref HEAD`、`git status --short`。共享工作树应停在 `main`；改动在独立 `git worktree` 中完成，交付后删除该工作树。
+- 判断「能不能写」看 `workdir` 用法与会话 sandbox：授权决定可写哪些路径，会话 sandbox 决定本次能否写；不要凭一次 `cd` 失败就报「没权限」。
