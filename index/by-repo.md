@@ -54,29 +54,29 @@
 
 ## Models (23)
 
-* [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) — 117 行
-* [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) — 347 行
-* [Models/Claude/report.md](<../Models/Claude/report.md>) — 604 行
-* [Models/DeepSeek/report.md](<../Models/DeepSeek/report.md>) — 776 行
-* [Models/Doubao-Seed/report.md](<../Models/Doubao-Seed/report.md>) — 651 行
-* [Models/GLM/report.md](<../Models/GLM/report.md>) — 737 行
-* [Models/GPT/report.md](<../Models/GPT/report.md>) — 785 行
-* [Models/Gemini/report.md](<../Models/Gemini/report.md>) — 842 行
-* [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>) — 895 行
-* [Models/Grok/report.md](<../Models/Grok/report.md>) — 265 行
-* [Models/Hunyuan/report.md](<../Models/Hunyuan/report.md>) — 504 行
-* [Models/Kimi/report.md](<../Models/Kimi/report.md>) — 585 行
-* [Models/Kling/report.md](<../Models/Kling/report.md>) — 75 行
-* [Models/LLaMA/report.md](<../Models/LLaMA/report.md>) — 483 行
-* [Models/MiMo/report.md](<../Models/MiMo/report.md>) — 757 行
-* [Models/Midjourney/report.md](<../Models/Midjourney/report.md>) — 85 行
-* [Models/MiniMax/report.md](<../Models/MiniMax/report.md>) — 524 行
-* [Models/Mistral/report.md](<../Models/Mistral/report.md>) — 502 行
-* [Models/Nemotron/report.md](<../Models/Nemotron/report.md>) — 238 行
-* [Models/OpenAI-Gen/report.md](<../Models/OpenAI-Gen/report.md>) — 393 行
-* [Models/Qwen/report.md](<../Models/Qwen/report.md>) — 1,120 行
-* [Models/Runway/report.md](<../Models/Runway/report.md>) — 103 行
-* [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>) — 739 行
+* [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) — 118 行
+* [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) — 348 行
+* [Models/Claude/report.md](<../Models/Claude/report.md>) — 605 行
+* [Models/DeepSeek/report.md](<../Models/DeepSeek/report.md>) — 777 行
+* [Models/Doubao-Seed/report.md](<../Models/Doubao-Seed/report.md>) — 652 行
+* [Models/GLM/report.md](<../Models/GLM/report.md>) — 738 行
+* [Models/GPT/report.md](<../Models/GPT/report.md>) — 786 行
+* [Models/Gemini/report.md](<../Models/Gemini/report.md>) — 843 行
+* [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>) — 896 行
+* [Models/Grok/report.md](<../Models/Grok/report.md>) — 266 行
+* [Models/Hunyuan/report.md](<../Models/Hunyuan/report.md>) — 505 行
+* [Models/Kimi/report.md](<../Models/Kimi/report.md>) — 586 行
+* [Models/Kling/report.md](<../Models/Kling/report.md>) — 76 行
+* [Models/LLaMA/report.md](<../Models/LLaMA/report.md>) — 484 行
+* [Models/MiMo/report.md](<../Models/MiMo/report.md>) — 758 行
+* [Models/Midjourney/report.md](<../Models/Midjourney/report.md>) — 86 行
+* [Models/MiniMax/report.md](<../Models/MiniMax/report.md>) — 525 行
+* [Models/Mistral/report.md](<../Models/Mistral/report.md>) — 503 行
+* [Models/Nemotron/report.md](<../Models/Nemotron/report.md>) — 239 行
+* [Models/OpenAI-Gen/report.md](<../Models/OpenAI-Gen/report.md>) — 394 行
+* [Models/Qwen/report.md](<../Models/Qwen/report.md>) — 1,121 行
+* [Models/Runway/report.md](<../Models/Runway/report.md>) — 104 行
+* [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>) — 740 行
 
 ## OpenSource (1)
 

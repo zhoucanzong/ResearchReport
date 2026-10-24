@@ -1,3 +1,8 @@
+---
+display_name: DeepSeek
+display_name: DeepSeek
+---
+
 # DeepSeek 系列模型深度调研报告
 
 > 调研范围：DeepSeek 六条模型研究线；历史主体保留至 2026 年 4 月 V4 Preview，近期分批补核到 2026-10-23，涉及 V4.1-Flash-1017 身份、训练/部署证据及分块 KV 压缩相位敏感性；见 §2.8、§11.10。各批只覆盖标明的范围，不代表六条研究线全量新型号扫描。

@@ -1,3 +1,7 @@
+---
+display_name: Kling
+---
+
 # 快手 Kling 视频生成研究报告
 
 > 原报告日期：2026-06-06；证据复核：2026-10-23。范围以 Kling-Omni（产品标识 Kling-O1）、KlingAvatar 2.0 与 Kling-MotionControl 三份技术报告为主。产品规格和闭源型号未公开的实现不作反推。

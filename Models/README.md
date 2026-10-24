@@ -15,29 +15,29 @@
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
-| **Alibaba-Gen** | [阿里巴巴通义万相（Wan）视频生成模型研究报告](<Alibaba-Gen/report.md>) | 117 行 |
-| **ByteDance-Gen** | [字节跳动生成模型系列研究报告](<ByteDance-Gen/report.md>) | 347 行 |
-| **Claude** | [Anthropic Claude 系列模型深度调研报告](<Claude/report.md>) | 604 行 |
-| **DeepSeek** | [DeepSeek 系列模型深度调研报告](<DeepSeek/report.md>) | 776 行 |
-| **Doubao-Seed** | [Doubao/Seed系列模型深度调研报告](<Doubao-Seed/report.md>) | 651 行 |
-| **GLM** | [GLM 系列模型深度调研报告](<GLM/report.md>) | 737 行 |
-| **GPT** | [OpenAI GPT 系列模型深度调研报告](<GPT/report.md>) | 785 行 |
-| **Gemini** | [Google Gemini系列模型深度调研报告](<Gemini/report.md>) | 842 行 |
-| **Google-Gen** | [Google / DeepMind 生成模型系列研究报告](<Google-Gen/report.md>) | 895 行 |
-| **Grok** | [xAI Grok 系列模型深度调研报告](<Grok/report.md>) | 265 行 |
-| **Hunyuan** | [Hunyuan系列模型深度调研报告](<Hunyuan/report.md>) | 504 行 |
-| **Kimi** | [Kimi 系列模型深度调研报告](<Kimi/report.md>) | 585 行 |
-| **Kling** | [快手 Kling 视频生成研究报告](<Kling/report.md>) | 75 行 |
-| **LLaMA** | [Meta LLaMA 系列大模型完整研究报告](<LLaMA/report.md>) | 483 行 |
-| **MiMo** | [小米 MiMo 系列模型深度调研报告](<MiMo/report.md>) | 757 行 |
-| **Midjourney** | [Midjourney 模型与产品演进研究报告](<Midjourney/report.md>) | 85 行 |
-| **MiniMax** | [MiniMax 系列模型研究报告：以 Lightning Attention 重写 Transformer 的扩展曲线](<MiniMax/report.md>) | 524 行 |
-| **Mistral** | [Mistral AI 系列模型深度调研报告](<Mistral/report.md>) | 502 行 |
-| **Nemotron** | [NVIDIA Nemotron 系列研究脉络](<Nemotron/report.md>) | 238 行 |
-| **OpenAI-Gen** | [OpenAI 生成模型系列研究报告](<OpenAI-Gen/report.md>) | 393 行 |
-| **Qwen** | [Qwen系列模型深度调研报告](<Qwen/report.md>) | 1,120 行 |
-| **Runway** | [Runway 视频生成与编辑模型研究报告](<Runway/report.md>) | 103 行 |
-| **StabilityAI** | [Stability AI / Black Forest Labs 图像生成模型系列研究报告](<StabilityAI/report.md>) | 739 行 |
+| **阿里通义生成模型** | [阿里巴巴通义万相（Wan）视频生成模型研究报告](<Alibaba-Gen/report.md>) | 118 行 |
+| **字节跳动生成模型** | [字节跳动生成模型系列研究报告](<ByteDance-Gen/report.md>) | 348 行 |
+| **Claude** | [Anthropic Claude 系列模型深度调研报告](<Claude/report.md>) | 605 行 |
+| **DeepSeek** | [DeepSeek 系列模型深度调研报告](<DeepSeek/report.md>) | 777 行 |
+| **Doubao-Seed** | [Doubao/Seed系列模型深度调研报告](<Doubao-Seed/report.md>) | 652 行 |
+| **GLM** | [GLM 系列模型深度调研报告](<GLM/report.md>) | 738 行 |
+| **GPT** | [OpenAI GPT 系列模型深度调研报告](<GPT/report.md>) | 786 行 |
+| **Gemini** | [Google Gemini系列模型深度调研报告](<Gemini/report.md>) | 843 行 |
+| **Google 生成模型** | [Google / DeepMind 生成模型系列研究报告](<Google-Gen/report.md>) | 896 行 |
+| **Grok** | [xAI Grok 系列模型深度调研报告](<Grok/report.md>) | 266 行 |
+| **Hunyuan** | [Hunyuan系列模型深度调研报告](<Hunyuan/report.md>) | 505 行 |
+| **Kimi** | [Kimi 系列模型深度调研报告](<Kimi/report.md>) | 586 行 |
+| **Kling** | [快手 Kling 视频生成研究报告](<Kling/report.md>) | 76 行 |
+| **LLaMA** | [Meta LLaMA 系列大模型完整研究报告](<LLaMA/report.md>) | 484 行 |
+| **MiMo** | [小米 MiMo 系列模型深度调研报告](<MiMo/report.md>) | 758 行 |
+| **Midjourney** | [Midjourney 模型与产品演进研究报告](<Midjourney/report.md>) | 86 行 |
+| **MiniMax** | [MiniMax 系列模型研究报告：以 Lightning Attention 重写 Transformer 的扩展曲线](<MiniMax/report.md>) | 525 行 |
+| **Mistral** | [Mistral AI 系列模型深度调研报告](<Mistral/report.md>) | 503 行 |
+| **Nemotron** | [NVIDIA Nemotron 系列研究脉络](<Nemotron/report.md>) | 239 行 |
+| **OpenAI 生成模型** | [OpenAI 生成模型系列研究报告](<OpenAI-Gen/report.md>) | 394 行 |
+| **Qwen** | [Qwen系列模型深度调研报告](<Qwen/report.md>) | 1,121 行 |
+| **Runway** | [Runway 视频生成与编辑模型研究报告](<Runway/report.md>) | 104 行 |
+| **StabilityAI** | [Stability AI / Black Forest Labs 图像生成模型系列研究报告](<StabilityAI/report.md>) | 740 行 |
 
 ## 📎 子文档
 
@@ -54,7 +54,7 @@
 </details>
 
 <details>
-<summary><b>Google-Gen</b>（1 份）</summary>
+<summary><b>Google 生成模型</b>（1 份）</summary>
 
 * [papers/2604.20329-vision-banana.md](<Google-Gen/papers/2604.20329-vision-banana.md>) — 425 行 / 55,019 B
 

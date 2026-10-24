@@ -1,3 +1,8 @@
+---
+display_name: GLM
+display_name: GLM
+---
+
 # GLM 系列模型深度调研报告
 
 > 调研对象：智谱 AI（Zhipu AI / Z.ai）与清华大学 KEG 实验室（THUDM）联合研发的 GLM/ChatGLM/CogVLM/CogVideoX/GLM-Z1/GLM-4.5 等模型家族

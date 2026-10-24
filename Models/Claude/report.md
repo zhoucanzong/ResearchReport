@@ -1,3 +1,7 @@
+---
+display_name: Claude
+---
+
 # Anthropic Claude 系列模型深度调研报告
 
 > 对 Anthropic 自 2023 年起公开发布的 Claude 系列模型——从 Claude 1 / 2 / 3 / 3.5 / 3.7 到 Claude 4 / 4.1 / 4.5 / 4.6 / 4.7 / 4.8 / 5 / 5.5——以及其背后的 Constitutional AI（CAI）、机制可解释性（Mechanistic Interpretability）、Computer Use、Extended Thinking、Responsible Scaling Policy 等方法论的系统性梳理。Anthropic 长期采取**相对闭源**的发布策略，仅公开 Model Card、System Card、研究博客与少量论文；本报告所有结论均严格区分**确认（Confirmed，源自 Anthropic 官方资料或同行评议论文）**与**推测（Inferred，来自第三方评测、社区分析或行业惯例）**。

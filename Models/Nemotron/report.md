@@ -1,3 +1,8 @@
+---
+display_name: Nemotron
+display_name: Nemotron
+---
+
 # NVIDIA Nemotron 系列研究脉络
 
 > 调研时间：2026-06-06；证据修订：2026-10-22

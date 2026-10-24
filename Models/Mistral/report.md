@@ -1,3 +1,8 @@
+---
+display_name: Mistral
+display_name: Mistral
+---
+
 # Mistral AI 系列模型深度调研报告
 
 > 调研对象：Mistral AI 及其模型家族（Mistral 7B → Mixtral → Large → Small → Codestral/Devstral → Magistral → Voxtral）

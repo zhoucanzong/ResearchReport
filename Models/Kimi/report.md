@@ -1,3 +1,8 @@
+---
+display_name: Kimi
+display_name: Kimi
+---
+
 # Kimi 系列模型深度调研报告
 
 > 调研对象：Moonshot AI（月之暗面）的 Kimi 模型家族

@@ -1,3 +1,8 @@
+---
+display_name: LLaMA
+display_name: LLaMA
+---
+
 # Meta LLaMA 系列大模型完整研究报告
 
 > 调研范围：LLaMA 1 → LLaMA 2 → Code Llama → LLaMA 3 → LLaMA 3.1 / 3.2 / 3.3 → LLaMA 4（Scout / Maverick / Behemoth）→ 2025-2026 最新进展

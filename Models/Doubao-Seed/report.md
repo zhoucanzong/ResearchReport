@@ -1,3 +1,7 @@
+---
+display_name: Doubao-Seed
+---
+
 # Doubao/Seed系列模型深度调研报告
 
 ## 概述与时间线

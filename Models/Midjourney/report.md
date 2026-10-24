@@ -1,3 +1,8 @@
+---
+display_name: Midjourney
+display_name: Midjourney
+---
+
 # Midjourney 模型与产品演进研究报告
 
 > 原报告日期：2026-06-06；证据修订：2026-10-22。主体保留图像 V1–V7 与视频 V1，另说明原报告时点已出现的 V8 测试；不把本次复核扩写成最新产品大全。

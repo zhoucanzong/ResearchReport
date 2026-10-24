@@ -136,8 +136,8 @@ nav:
   - "研究专题": "index/by-topic.md"
   - "🧠 Models · 23":
     - "Models/README.md"
-    - "Alibaba-Gen": "Models/Alibaba-Gen/report.md"
-    - "ByteDance-Gen": "Models/ByteDance-Gen/report.md"
+    - "阿里通义生成模型": "Models/Alibaba-Gen/report.md"
+    - "字节跳动生成模型": "Models/ByteDance-Gen/report.md"
     - "Claude": "Models/Claude/report.md"
     - "DeepSeek":
         - "总报告": "Models/DeepSeek/report.md"
@@ -151,7 +151,7 @@ nav:
     - "GLM": "Models/GLM/report.md"
     - "GPT": "Models/GPT/report.md"
     - "Gemini": "Models/Gemini/report.md"
-    - "Google-Gen":
+    - "Google 生成模型":
         - "总报告": "Models/Google-Gen/report.md"
         - "2604.20329-vision-banana": "Models/Google-Gen/papers/2604.20329-vision-banana.md"
     - "Grok": "Models/Grok/report.md"
@@ -171,7 +171,7 @@ nav:
     - "MiniMax": "Models/MiniMax/report.md"
     - "Mistral": "Models/Mistral/report.md"
     - "Nemotron": "Models/Nemotron/report.md"
-    - "OpenAI-Gen": "Models/OpenAI-Gen/report.md"
+    - "OpenAI 生成模型": "Models/OpenAI-Gen/report.md"
     - "Qwen":
         - "总报告": "Models/Qwen/report.md"
         - "2610.02819-text-centric-omni": "Models/Qwen/papers/2610.02819-text-centric-omni.md"

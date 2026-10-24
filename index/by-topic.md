@@ -15,18 +15,6 @@
 | --- | --- | --- | --- | --- |
 | [VisualGen/3DGen/report.md](<../VisualGen/3DGen/report.md>) | 3D 生成技术研究报告：从 DreamFusion SDS 蒸馏到 Tripo3D DiT 原生 3D 生成 | — | — | — |
 
-## Alibaba-Gen (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) | 阿里巴巴通义万相（Wan）视频生成模型研究报告 | — | — | — |
-
-## ByteDance-Gen (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) | 字节跳动生成模型系列研究报告 | — | — | — |
-
 ## Claude (1)
 
 | 条目 | 标题 | type | date | status |
@@ -75,7 +63,7 @@
 | --- | --- | --- | --- | --- |
 | [Models/Gemini/report.md](<../Models/Gemini/report.md>) | Google Gemini系列模型深度调研报告 | — | — | — |
 
-## Google-Gen (1)
+## Google 生成模型 (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
@@ -171,7 +159,7 @@
 | --- | --- | --- | --- | --- |
 | [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) | OCR 与文档解析：从字符识别到结构还原 | research | 2026-10-25 | current |
 
-## OpenAI-Gen (1)
+## OpenAI 生成模型 (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
@@ -278,6 +266,12 @@
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) | AI 天气与气候预测：从天气状态外推到强迫响应 | research | 2026-10-23 | completed |
+
+## 字节跳动生成模型 (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) | 字节跳动生成模型系列研究报告 | — | — | — |
 
 ## 工具 Agent 安全 (1)
 
@@ -434,6 +428,12 @@
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 长上下文（Long Context）技术研究报告 | — | — | — |
+
+## 阿里通义生成模型 (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) | 阿里巴巴通义万相（Wan）视频生成模型研究报告 | — | — | — |
 
 ## 音频与音乐生成 (1)
 

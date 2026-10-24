@@ -43,29 +43,29 @@
 | LLM 后训练中的强化学习 | LLM | [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | 10 | 107 | 2026-10-23 |
 | 训练数据策展 | LLM | [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 6 | 60 | 2026-10-24 |
 | 视觉语言模型（VLM） | LLM | [LLM/VLM/report.md](<../LLM/VLM/report.md>) | 3 | 521 | — |
-| Alibaba-Gen | Models | [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) | 0 | 117 | — |
-| ByteDance-Gen | Models | [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) | 0 | 347 | — |
-| Claude | Models | [Models/Claude/report.md](<../Models/Claude/report.md>) | 0 | 604 | — |
-| DeepSeek | Models | [Models/DeepSeek/report.md](<../Models/DeepSeek/report.md>) | 6 | 776 | — |
-| Doubao-Seed | Models | [Models/Doubao-Seed/report.md](<../Models/Doubao-Seed/report.md>) | 0 | 651 | — |
-| GLM | Models | [Models/GLM/report.md](<../Models/GLM/report.md>) | 0 | 737 | — |
-| GPT | Models | [Models/GPT/report.md](<../Models/GPT/report.md>) | 0 | 785 | — |
-| Gemini | Models | [Models/Gemini/report.md](<../Models/Gemini/report.md>) | 0 | 842 | — |
-| Google-Gen | Models | [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>) | 1 | 895 | — |
-| Grok | Models | [Models/Grok/report.md](<../Models/Grok/report.md>) | 0 | 265 | — |
-| Hunyuan | Models | [Models/Hunyuan/report.md](<../Models/Hunyuan/report.md>) | 1 | 504 | — |
-| Kimi | Models | [Models/Kimi/report.md](<../Models/Kimi/report.md>) | 2 | 585 | — |
-| Kling | Models | [Models/Kling/report.md](<../Models/Kling/report.md>) | 0 | 75 | — |
-| LLaMA | Models | [Models/LLaMA/report.md](<../Models/LLaMA/report.md>) | 0 | 483 | — |
-| MiMo | Models | [Models/MiMo/report.md](<../Models/MiMo/report.md>) | 1 | 757 | — |
-| Midjourney | Models | [Models/Midjourney/report.md](<../Models/Midjourney/report.md>) | 0 | 85 | — |
-| MiniMax | Models | [Models/MiniMax/report.md](<../Models/MiniMax/report.md>) | 0 | 524 | — |
-| Mistral | Models | [Models/Mistral/report.md](<../Models/Mistral/report.md>) | 0 | 502 | — |
-| Nemotron | Models | [Models/Nemotron/report.md](<../Models/Nemotron/report.md>) | 0 | 238 | — |
-| OpenAI-Gen | Models | [Models/OpenAI-Gen/report.md](<../Models/OpenAI-Gen/report.md>) | 0 | 393 | — |
-| Qwen | Models | [Models/Qwen/report.md](<../Models/Qwen/report.md>) | 6 | 1,120 | — |
-| Runway | Models | [Models/Runway/report.md](<../Models/Runway/report.md>) | 0 | 103 | — |
-| StabilityAI | Models | [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>) | 0 | 739 | — |
+| 阿里通义生成模型 | Models | [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) | 0 | 118 | — |
+| 字节跳动生成模型 | Models | [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) | 0 | 348 | — |
+| Claude | Models | [Models/Claude/report.md](<../Models/Claude/report.md>) | 0 | 605 | — |
+| DeepSeek | Models | [Models/DeepSeek/report.md](<../Models/DeepSeek/report.md>) | 6 | 777 | — |
+| Doubao-Seed | Models | [Models/Doubao-Seed/report.md](<../Models/Doubao-Seed/report.md>) | 0 | 652 | — |
+| GLM | Models | [Models/GLM/report.md](<../Models/GLM/report.md>) | 0 | 738 | — |
+| GPT | Models | [Models/GPT/report.md](<../Models/GPT/report.md>) | 0 | 786 | — |
+| Gemini | Models | [Models/Gemini/report.md](<../Models/Gemini/report.md>) | 0 | 843 | — |
+| Google 生成模型 | Models | [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>) | 1 | 896 | — |
+| Grok | Models | [Models/Grok/report.md](<../Models/Grok/report.md>) | 0 | 266 | — |
+| Hunyuan | Models | [Models/Hunyuan/report.md](<../Models/Hunyuan/report.md>) | 1 | 505 | — |
+| Kimi | Models | [Models/Kimi/report.md](<../Models/Kimi/report.md>) | 2 | 586 | — |
+| Kling | Models | [Models/Kling/report.md](<../Models/Kling/report.md>) | 0 | 76 | — |
+| LLaMA | Models | [Models/LLaMA/report.md](<../Models/LLaMA/report.md>) | 0 | 484 | — |
+| MiMo | Models | [Models/MiMo/report.md](<../Models/MiMo/report.md>) | 1 | 758 | — |
+| Midjourney | Models | [Models/Midjourney/report.md](<../Models/Midjourney/report.md>) | 0 | 86 | — |
+| MiniMax | Models | [Models/MiniMax/report.md](<../Models/MiniMax/report.md>) | 0 | 525 | — |
+| Mistral | Models | [Models/Mistral/report.md](<../Models/Mistral/report.md>) | 0 | 503 | — |
+| Nemotron | Models | [Models/Nemotron/report.md](<../Models/Nemotron/report.md>) | 0 | 239 | — |
+| OpenAI 生成模型 | Models | [Models/OpenAI-Gen/report.md](<../Models/OpenAI-Gen/report.md>) | 0 | 394 | — |
+| Qwen | Models | [Models/Qwen/report.md](<../Models/Qwen/report.md>) | 6 | 1,121 | — |
+| Runway | Models | [Models/Runway/report.md](<../Models/Runway/report.md>) | 0 | 104 | — |
+| StabilityAI | Models | [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>) | 0 | 740 | — |
 | DeepInfer | OpenSource | [OpenSource/DeepInfer/report.md](<../OpenSource/DeepInfer/report.md>) | 4 | 140 | 2026-10-22 |
 | DeepSeek Harness | OpenSource | [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | 5 | 352 | 2026-10-20 |
 | Nemotron-Labs-Diffusion | OpenSource | [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | 7 | 221 | — |
@@ -83,4 +83,4 @@
 | 具身预测规划 | WorldModel | [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) | 2 | 54 | — |
 | 机器人视觉语言动作模型（VLA） | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 23 | 643 | — |
 | 世界模型 | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 604 | 2026-10-22 |
-| **合计** | — | — | **256** | **28,458** | — |
+| **合计** | — | — | **256** | **28,481** | — |

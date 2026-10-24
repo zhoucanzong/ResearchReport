@@ -1,3 +1,7 @@
+---
+display_name: Google 生成模型
+---
+
 # Google / DeepMind 生成模型系列研究报告
 
 > 报告日期：2026年6月6日  

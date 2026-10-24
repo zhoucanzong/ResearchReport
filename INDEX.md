@@ -16,9 +16,9 @@
 | **条目数**（`report.md`） | **72** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 11 · Agents 3 · VisualGen 8 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6 |
 | 条目子文档数 | 256 |
-| 条目正文行数（剔除 front-matter） | 28,458 |
-| 条目字节 | 2,204,518 B |
-| 带 front-matter 的条目 | 49 |
+| 条目正文行数（剔除 front-matter） | 28,481 |
+| 条目字节 | 2,205,539 B |
+| 带 front-matter 的条目 | 72 |
 | 带合法 `date` 的条目 | 30 |
 | 文档（除生成物外的全部 `.md`） | 349 |
 | 其中文件名 `README.md` | 11 |
@@ -32,7 +32,7 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| Models | 23 | 41 | 12,127 | 906,146 B | [板块页 →](<Models/README.md>) |
+| Models | 23 | 41 | 12,150 | 907,167 B | [板块页 →](<Models/README.md>) |
 | LLM | 11 | 75 | 4,377 | 355,054 B | [板块页 →](<LLM/README.md>) |
 | Agents | 3 | 22 | 207 | 29,975 B | [板块页 →](<Agents/README.md>) |
 | VisualGen | 8 | 9 | 6,766 | 320,745 B | [板块页 →](<VisualGen/README.md>) |
@@ -41,7 +41,7 @@
 | Evaluation | 2 | 10 | 158 | 32,341 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 6 | 49 | 1,108 | 104,801 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 36 | 1,578 | 168,561 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **72** | **349** | **28,458** | **2,204,518 B** | — |
+| **合计** | **72** | **349** | **28,481** | **2,205,539 B** | — |
 
 ## 分面索引
 
@@ -63,10 +63,10 @@
 <summary><b>模型系列 Models（23 条目 / 17 子文档）</b></summary>
 
   <details>
-  <summary><b>Alibaba-Gen</b> · <code>Models/Alibaba-Gen/report.md</code> · 117 行 · —</summary>
+  <summary><b>阿里通义生成模型</b> · <code>Models/Alibaba-Gen/report.md</code> · 118 行 · —</summary>
 
 
-    * **条目**：[Models/Alibaba-Gen/report.md](<Models/Alibaba-Gen/report.md>)（117 行 / 15,415 B）
+    * **条目**：[Models/Alibaba-Gen/report.md](<Models/Alibaba-Gen/report.md>)（118 行 / 15,463 B）
     * **专题目录**：`Models/Alibaba-Gen`
     * **元数据**：type=`—` · domain=`Models` · subject=`Alibaba-Gen` · date=`—` · status=`—`
     * **子文档（0）**
@@ -75,10 +75,10 @@
   </details>
 
   <details>
-  <summary><b>ByteDance-Gen</b> · <code>Models/ByteDance-Gen/report.md</code> · 347 行 · —</summary>
+  <summary><b>字节跳动生成模型</b> · <code>Models/ByteDance-Gen/report.md</code> · 348 行 · —</summary>
 
 
-    * **条目**：[Models/ByteDance-Gen/report.md](<Models/ByteDance-Gen/report.md>)（347 行 / 26,233 B）
+    * **条目**：[Models/ByteDance-Gen/report.md](<Models/ByteDance-Gen/report.md>)（348 行 / 26,320 B）
     * **专题目录**：`Models/ByteDance-Gen`
     * **元数据**：type=`—` · domain=`Models` · subject=`ByteDance-Gen` · date=`—` · status=`—`
     * **子文档（0）**
@@ -87,10 +87,10 @@
   </details>
 
   <details>
-  <summary><b>Claude</b> · <code>Models/Claude/report.md</code> · 604 行 · —</summary>
+  <summary><b>Claude</b> · <code>Models/Claude/report.md</code> · 605 行 · —</summary>
 
 
-    * **条目**：[Models/Claude/report.md](<Models/Claude/report.md>)（604 行 / 53,717 B）
+    * **条目**：[Models/Claude/report.md](<Models/Claude/report.md>)（605 行 / 53,747 B）
     * **专题目录**：`Models/Claude`
     * **元数据**：type=`—` · domain=`Models` · subject=`Claude` · date=`—` · status=`—`
     * **子文档（0）**
@@ -99,10 +99,10 @@
   </details>
 
   <details>
-  <summary><b>DeepSeek</b> · <code>Models/DeepSeek/report.md</code> · 776 行 · —</summary>
+  <summary><b>DeepSeek</b> · <code>Models/DeepSeek/report.md</code> · 777 行 · —</summary>
 
 
-    * **条目**：[Models/DeepSeek/report.md](<Models/DeepSeek/report.md>)（776 行 / 66,117 B）
+    * **条目**：[Models/DeepSeek/report.md](<Models/DeepSeek/report.md>)（777 行 / 66,172 B）
     * **专题目录**：`Models/DeepSeek`
     * **元数据**：type=`—` · domain=`Models` · subject=`DeepSeek` · date=`—` · status=`—`
     * **子文档（6）**
@@ -116,10 +116,10 @@
   </details>
 
   <details>
-  <summary><b>Doubao-Seed</b> · <code>Models/Doubao-Seed/report.md</code> · 651 行 · —</summary>
+  <summary><b>Doubao-Seed</b> · <code>Models/Doubao-Seed/report.md</code> · 652 行 · —</summary>
 
 
-    * **条目**：[Models/Doubao-Seed/report.md](<Models/Doubao-Seed/report.md>)（651 行 / 29,957 B）
+    * **条目**：[Models/Doubao-Seed/report.md](<Models/Doubao-Seed/report.md>)（652 行 / 29,992 B）
     * **专题目录**：`Models/Doubao-Seed`
     * **元数据**：type=`—` · domain=`Models` · subject=`Doubao-Seed` · date=`—` · status=`—`
     * **子文档（0）**
@@ -128,10 +128,10 @@
   </details>
 
   <details>
-  <summary><b>GLM</b> · <code>Models/GLM/report.md</code> · 737 行 · —</summary>
+  <summary><b>GLM</b> · <code>Models/GLM/report.md</code> · 738 行 · —</summary>
 
 
-    * **条目**：[Models/GLM/report.md](<Models/GLM/report.md>)（737 行 / 68,351 B）
+    * **条目**：[Models/GLM/report.md](<Models/GLM/report.md>)（738 行 / 68,396 B）
     * **专题目录**：`Models/GLM`
     * **元数据**：type=`—` · domain=`Models` · subject=`GLM` · date=`—` · status=`—`
     * **子文档（0）**
@@ -140,10 +140,10 @@
   </details>
 
   <details>
-  <summary><b>GPT</b> · <code>Models/GPT/report.md</code> · 785 行 · —</summary>
+  <summary><b>GPT</b> · <code>Models/GPT/report.md</code> · 786 行 · —</summary>
 
 
-    * **条目**：[Models/GPT/report.md](<Models/GPT/report.md>)（785 行 / 61,581 B）
+    * **条目**：[Models/GPT/report.md](<Models/GPT/report.md>)（786 行 / 61,608 B）
     * **专题目录**：`Models/GPT`
     * **元数据**：type=`—` · domain=`Models` · subject=`GPT` · date=`—` · status=`—`
     * **子文档（0）**
@@ -152,10 +152,10 @@
   </details>
 
   <details>
-  <summary><b>Gemini</b> · <code>Models/Gemini/report.md</code> · 842 行 · —</summary>
+  <summary><b>Gemini</b> · <code>Models/Gemini/report.md</code> · 843 行 · —</summary>
 
 
-    * **条目**：[Models/Gemini/report.md](<Models/Gemini/report.md>)（842 行 / 45,955 B）
+    * **条目**：[Models/Gemini/report.md](<Models/Gemini/report.md>)（843 行 / 45,985 B）
     * **专题目录**：`Models/Gemini`
     * **元数据**：type=`—` · domain=`Models` · subject=`Gemini` · date=`—` · status=`—`
     * **子文档（0）**
@@ -164,10 +164,10 @@
   </details>
 
   <details>
-  <summary><b>Google-Gen</b> · <code>Models/Google-Gen/report.md</code> · 895 行 · —</summary>
+  <summary><b>Google 生成模型</b> · <code>Models/Google-Gen/report.md</code> · 896 行 · —</summary>
 
 
-    * **条目**：[Models/Google-Gen/report.md](<Models/Google-Gen/report.md>)（895 行 / 42,826 B）
+    * **条目**：[Models/Google-Gen/report.md](<Models/Google-Gen/report.md>)（896 行 / 42,869 B）
     * **专题目录**：`Models/Google-Gen`
     * **元数据**：type=`—` · domain=`Models` · subject=`Google-Gen` · date=`—` · status=`—`
     * **子文档（1）**
@@ -176,10 +176,10 @@
   </details>
 
   <details>
-  <summary><b>Grok</b> · <code>Models/Grok/report.md</code> · 265 行 · —</summary>
+  <summary><b>Grok</b> · <code>Models/Grok/report.md</code> · 266 行 · —</summary>
 
 
-    * **条目**：[Models/Grok/report.md](<Models/Grok/report.md>)（265 行 / 18,947 B）
+    * **条目**：[Models/Grok/report.md](<Models/Grok/report.md>)（266 行 / 18,994 B）
     * **专题目录**：`Models/Grok`
     * **元数据**：type=`—` · domain=`Models` · subject=`Grok` · date=`—` · status=`—`
     * **子文档（0）**
@@ -188,10 +188,10 @@
   </details>
 
   <details>
-  <summary><b>Hunyuan</b> · <code>Models/Hunyuan/report.md</code> · 504 行 · —</summary>
+  <summary><b>Hunyuan</b> · <code>Models/Hunyuan/report.md</code> · 505 行 · —</summary>
 
 
-    * **条目**：[Models/Hunyuan/report.md](<Models/Hunyuan/report.md>)（504 行 / 42,348 B）
+    * **条目**：[Models/Hunyuan/report.md](<Models/Hunyuan/report.md>)（505 行 / 42,401 B）
     * **专题目录**：`Models/Hunyuan`
     * **元数据**：type=`—` · domain=`Models` · subject=`Hunyuan` · date=`—` · status=`—`
     * **子文档（1）**
@@ -200,10 +200,10 @@
   </details>
 
   <details>
-  <summary><b>Kimi</b> · <code>Models/Kimi/report.md</code> · 585 行 · —</summary>
+  <summary><b>Kimi</b> · <code>Models/Kimi/report.md</code> · 586 行 · —</summary>
 
 
-    * **条目**：[Models/Kimi/report.md](<Models/Kimi/report.md>)（585 行 / 52,148 B）
+    * **条目**：[Models/Kimi/report.md](<Models/Kimi/report.md>)（586 行 / 52,195 B）
     * **专题目录**：`Models/Kimi`
     * **元数据**：type=`—` · domain=`Models` · subject=`Kimi` · date=`—` · status=`—`
     * **子文档（2）**
@@ -213,10 +213,10 @@
   </details>
 
   <details>
-  <summary><b>Kling</b> · <code>Models/Kling/report.md</code> · 75 行 · —</summary>
+  <summary><b>Kling</b> · <code>Models/Kling/report.md</code> · 76 行 · —</summary>
 
 
-    * **条目**：[Models/Kling/report.md](<Models/Kling/report.md>)（75 行 / 9,334 B）
+    * **条目**：[Models/Kling/report.md](<Models/Kling/report.md>)（76 行 / 9,363 B）
     * **专题目录**：`Models/Kling`
     * **元数据**：type=`—` · domain=`Models` · subject=`Kling` · date=`—` · status=`—`
     * **子文档（0）**
@@ -225,10 +225,10 @@
   </details>
 
   <details>
-  <summary><b>LLaMA</b> · <code>Models/LLaMA/report.md</code> · 483 行 · —</summary>
+  <summary><b>LLaMA</b> · <code>Models/LLaMA/report.md</code> · 484 行 · —</summary>
 
 
-    * **条目**：[Models/LLaMA/report.md](<Models/LLaMA/report.md>)（483 行 / 42,535 B）
+    * **条目**：[Models/LLaMA/report.md](<Models/LLaMA/report.md>)（484 行 / 42,584 B）
     * **专题目录**：`Models/LLaMA`
     * **元数据**：type=`—` · domain=`Models` · subject=`LLaMA` · date=`—` · status=`—`
     * **子文档（0）**
@@ -237,10 +237,10 @@
   </details>
 
   <details>
-  <summary><b>MiMo</b> · <code>Models/MiMo/report.md</code> · 757 行 · —</summary>
+  <summary><b>MiMo</b> · <code>Models/MiMo/report.md</code> · 758 行 · —</summary>
 
 
-    * **条目**：[Models/MiMo/report.md](<Models/MiMo/report.md>)（757 行 / 64,784 B）
+    * **条目**：[Models/MiMo/report.md](<Models/MiMo/report.md>)（758 行 / 64,812 B）
     * **专题目录**：`Models/MiMo`
     * **元数据**：type=`—` · domain=`Models` · subject=`MiMo` · date=`—` · status=`—`
     * **子文档（1）**
@@ -249,10 +249,10 @@
   </details>
 
   <details>
-  <summary><b>Midjourney</b> · <code>Models/Midjourney/report.md</code> · 85 行 · —</summary>
+  <summary><b>Midjourney</b> · <code>Models/Midjourney/report.md</code> · 86 行 · —</summary>
 
 
-    * **条目**：[Models/Midjourney/report.md](<Models/Midjourney/report.md>)（85 行 / 9,426 B）
+    * **条目**：[Models/Midjourney/report.md](<Models/Midjourney/report.md>)（86 行 / 9,485 B）
     * **专题目录**：`Models/Midjourney`
     * **元数据**：type=`—` · domain=`Models` · subject=`Midjourney` · date=`—` · status=`—`
     * **子文档（0）**
@@ -261,10 +261,10 @@
   </details>
 
   <details>
-  <summary><b>MiniMax</b> · <code>Models/MiniMax/report.md</code> · 524 行 · —</summary>
+  <summary><b>MiniMax</b> · <code>Models/MiniMax/report.md</code> · 525 行 · —</summary>
 
 
-    * **条目**：[Models/MiniMax/report.md](<Models/MiniMax/report.md>)（524 行 / 42,545 B）
+    * **条目**：[Models/MiniMax/report.md](<Models/MiniMax/report.md>)（525 行 / 42,576 B）
     * **专题目录**：`Models/MiniMax`
     * **元数据**：type=`—` · domain=`Models` · subject=`MiniMax` · date=`—` · status=`—`
     * **子文档（0）**
@@ -273,10 +273,10 @@
   </details>
 
   <details>
-  <summary><b>Mistral</b> · <code>Models/Mistral/report.md</code> · 502 行 · —</summary>
+  <summary><b>Mistral</b> · <code>Models/Mistral/report.md</code> · 503 行 · —</summary>
 
 
-    * **条目**：[Models/Mistral/report.md](<Models/Mistral/report.md>)（502 行 / 31,260 B）
+    * **条目**：[Models/Mistral/report.md](<Models/Mistral/report.md>)（503 行 / 31,313 B）
     * **专题目录**：`Models/Mistral`
     * **元数据**：type=`—` · domain=`Models` · subject=`Mistral` · date=`—` · status=`—`
     * **子文档（0）**
@@ -285,10 +285,10 @@
   </details>
 
   <details>
-  <summary><b>Nemotron</b> · <code>Models/Nemotron/report.md</code> · 238 行 · —</summary>
+  <summary><b>Nemotron</b> · <code>Models/Nemotron/report.md</code> · 239 行 · —</summary>
 
 
-    * **条目**：[Models/Nemotron/report.md](<Models/Nemotron/report.md>)（238 行 / 22,851 B）
+    * **条目**：[Models/Nemotron/report.md](<Models/Nemotron/report.md>)（239 行 / 22,906 B）
     * **专题目录**：`Models/Nemotron`
     * **元数据**：type=`—` · domain=`Models` · subject=`Nemotron` · date=`—` · status=`—`
     * **子文档（0）**
@@ -297,10 +297,10 @@
   </details>
 
   <details>
-  <summary><b>OpenAI-Gen</b> · <code>Models/OpenAI-Gen/report.md</code> · 393 行 · —</summary>
+  <summary><b>OpenAI 生成模型</b> · <code>Models/OpenAI-Gen/report.md</code> · 394 行 · —</summary>
 
 
-    * **条目**：[Models/OpenAI-Gen/report.md](<Models/OpenAI-Gen/report.md>)（393 行 / 25,109 B）
+    * **条目**：[Models/OpenAI-Gen/report.md](<Models/OpenAI-Gen/report.md>)（394 行 / 25,186 B）
     * **专题目录**：`Models/OpenAI-Gen`
     * **元数据**：type=`—` · domain=`Models` · subject=`OpenAI-Gen` · date=`—` · status=`—`
     * **子文档（0）**
@@ -309,10 +309,10 @@
   </details>
 
   <details>
-  <summary><b>Qwen</b> · <code>Models/Qwen/report.md</code> · 1120 行 · —</summary>
+  <summary><b>Qwen</b> · <code>Models/Qwen/report.md</code> · 1121 行 · —</summary>
 
 
-    * **条目**：[Models/Qwen/report.md](<Models/Qwen/report.md>)（1120 行 / 75,464 B）
+    * **条目**：[Models/Qwen/report.md](<Models/Qwen/report.md>)（1121 行 / 75,492 B）
     * **专题目录**：`Models/Qwen`
     * **元数据**：type=`—` · domain=`Models` · subject=`Qwen` · date=`—` · status=`—`
     * **子文档（6）**
@@ -326,10 +326,10 @@
   </details>
 
   <details>
-  <summary><b>Runway</b> · <code>Models/Runway/report.md</code> · 103 行 · —</summary>
+  <summary><b>Runway</b> · <code>Models/Runway/report.md</code> · 104 行 · —</summary>
 
 
-    * **条目**：[Models/Runway/report.md](<Models/Runway/report.md>)（103 行 / 12,683 B）
+    * **条目**：[Models/Runway/report.md](<Models/Runway/report.md>)（104 行 / 12,713 B）
     * **专题目录**：`Models/Runway`
     * **元数据**：type=`—` · domain=`Models` · subject=`Runway` · date=`—` · status=`—`
     * **子文档（0）**
@@ -338,10 +338,10 @@
   </details>
 
   <details>
-  <summary><b>StabilityAI</b> · <code>Models/StabilityAI/report.md</code> · 739 行 · —</summary>
+  <summary><b>StabilityAI</b> · <code>Models/StabilityAI/report.md</code> · 740 行 · —</summary>
 
 
-    * **条目**：[Models/StabilityAI/report.md](<Models/StabilityAI/report.md>)（739 行 / 46,560 B）
+    * **条目**：[Models/StabilityAI/report.md](<Models/StabilityAI/report.md>)（740 行 / 46,595 B）
     * **专题目录**：`Models/StabilityAI`
     * **元数据**：type=`—` · domain=`Models` · subject=`StabilityAI` · date=`—` · status=`—`
     * **子文档（0）**
@@ -1212,7 +1212,7 @@
 | [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 46 | 1,951 B |
 | [Infra/README.md](<Infra/README.md>) | Infra | 109 | 7,193 B |
 | [LLM/README.md](<LLM/README.md>) | LLM | 147 | 10,228 B |
-| [Models/README.md](<Models/README.md>) | Models | 101 | 4,888 B |
+| [Models/README.md](<Models/README.md>) | Models | 101 | 4,939 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 104 | 4,517 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
@@ -1232,6 +1232,6 @@
 ## 说明
 
 * 本索引是**派生数据**，仓库里的条目文件才是唯一事实来源；重建索引只需重跑脚本。
-* 当前 49 份条目带 front-matter；缺失的 `type` / `date` / `status` 显示为 `—`，domain / subject / topic 缺失时由路径推断。
+* 当前 72 份条目带 front-matter；缺失的 `type` / `date` / `status` 显示为 `—`，domain / subject / topic 缺失时由路径推断。
 * 可选元数据：`title` / `display_name` / `type` / `domain` / `subject` / `topic` / `upstream` / `date` / `evidence` / `status`。
 * 脚本只读扫描、只写生成物；**不会删除或改写任何条目文件**。

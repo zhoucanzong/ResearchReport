@@ -1,3 +1,7 @@
+---
+display_name: StabilityAI
+---
+
 # Stability AI / Black Forest Labs 图像生成模型系列研究报告
 
 > 原报告日期：2026年6月6日；证据复核：2026年10月23日

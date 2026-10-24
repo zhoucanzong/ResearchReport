@@ -1,3 +1,7 @@
+---
+display_name: GPT
+---
+
 # OpenAI GPT 系列模型深度调研报告
 
 > 调研对象：OpenAI 自 2018 年至 2026 年发布的 Generative Pre-trained Transformer（GPT）系列与 o-Reasoning 系列模型

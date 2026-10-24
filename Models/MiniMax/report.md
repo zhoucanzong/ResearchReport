@@ -1,3 +1,7 @@
+---
+display_name: MiniMax
+---
+
 # MiniMax 系列模型研究报告：以 Lightning Attention 重写 Transformer 的扩展曲线
 
 > 撰写时间：2026-06-05 ｜ 研究范围：MiniMax-abab 系列、MiniMax-01（Text/VL）、MiniMax-Speech 与海螺音视频模型、MiniMax-M1/M2/M2.5/M2.7/M3 推理与 Agent 模型、海螺 AI 产品线
