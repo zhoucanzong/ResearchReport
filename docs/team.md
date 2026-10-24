@@ -41,6 +41,8 @@ ResearchReport 是面向阅读学习的 AI 研究图书馆。研究工作优先�
 
 对应 Skill 是调研方法的入口，任务开始前阅读实际 Skill 文档。远程仓库是获取和安装来源；本机绝对路径只用于确认当前环境的安装位置，不作为项目规范。
 
+发现机构论文与研究进展的官方入口，以及后续巡检方式，见 [`research-source-sites.md`](research-source-sites.md)。该清单用于发现候选工作；专题结论仍以论文原文、官方技术报告或固定版本源码为依据。
+
 | 工作 | Skill | 项目约定 | 官方仓库 |
 |---|---|---|---|
 | 论文与领域研究 | `researcher` | 默认 deep；deep 指原文理解和分析深度，不指日志或篇幅 | [zhoucanzong/researcher](https://github.com/zhoucanzong/researcher) |

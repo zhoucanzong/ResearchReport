@@ -553,6 +553,7 @@ nav:
       - "DSH Harness 反馈清单（2026-10-18，来自一次真实事故）": "docs/harness-feedback.md"
       - "🛠 维护指南 · Maintenance": "docs/maintenance.md"
       - "阅读与研究方法": "docs/research-method.md"
+      - "AI 研究机构与团队入口": "docs/research-source-sites.md"
       - "📊 统计明细 · Statistics": "docs/statistics.md"
       - "ResearchReport 项目规范": "docs/team.md"
       - "证据与发布核验": "docs/verification.md"
