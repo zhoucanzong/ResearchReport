@@ -41,7 +41,7 @@
 | ReasoningModels | LLM | [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) | 0 | 675 | — |
 | ReinforcementLearning | LLM | [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | 10 | 107 | 2026-10-23 |
 | TrainingData | LLM | [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 6 | 60 | 2026-10-24 |
-| VLM | LLM | [LLM/VLM/report.md](<../LLM/VLM/report.md>) | 8 | 520 | — |
+| VLM | LLM | [LLM/VLM/report.md](<../LLM/VLM/report.md>) | 20 | 520 | — |
 | Alibaba-Gen | Models | [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) | 0 | 117 | — |
 | ByteDance-Gen | Models | [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) | 0 | 347 | — |
 | Claude | Models | [Models/Claude/report.md](<../Models/Claude/report.md>) | 0 | 604 | — |
@@ -82,4 +82,4 @@
 | EmbodiedPlanning | WorldModel | [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) | 2 | 53 | — |
 | EmbodiedVLA | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 23 | 642 | — |
 | WorldModels | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 604 | 2026-10-22 |
-| **合计** | — | — | **245** | **28,331** | — |
+| **合计** | — | — | **257** | **28,331** | — |

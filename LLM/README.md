@@ -97,14 +97,26 @@
 </details>
 
 <details>
-<summary><b>VLM</b>（8 份）</summary>
+<summary><b>VLM</b>（20 份）</summary>
 
 * [papers/2405.21075-videomme.md](<VLM/papers/2405.21075-videomme.md>) — 35 行 / 7,567 B
 * [papers/2412.07626-omnidocbench.md](<VLM/papers/2412.07626-omnidocbench.md>) — 42 行 / 9,196 B
+* [papers/2505.14059-bytedance-dolphin.md](<VLM/papers/2505.14059-bytedance-dolphin.md>) — 40 行 / 5,505 B
+* [papers/2509.19760-alibaba-logics-parsing.md](<VLM/papers/2509.19760-alibaba-logics-parsing.md>) — 38 行 / 5,449 B
 * [papers/2510.14528-paddleocr-vl.md](<VLM/papers/2510.14528-paddleocr-vl.md>) — 53 行 / 10,262 B
-* [papers/2603.24326-coarse-to-fine.md](<VLM/papers/2603.24326-coarse-to-fine.md>) — 67 行 / 9,354 B
+* [papers/2510.18234-deepseek-ocr.md](<VLM/papers/2510.18234-deepseek-ocr.md>) — 47 行 / 8,883 B
+* [papers/2510.21603-huawei-doc-researcher.md](<VLM/papers/2510.21603-huawei-doc-researcher.md>) — 38 行 / 5,906 B
+* [papers/2511.19575-hunyuan-ocr.md](<VLM/papers/2511.19575-hunyuan-ocr.md>) — 39 行 / 8,134 B
+* [papers/2601.20552-deepseek-ocr2.md](<VLM/papers/2601.20552-deepseek-ocr2.md>) — 45 行 / 8,359 B
+* [papers/2603.01840-firered-ocr.md](<VLM/papers/2603.01840-firered-ocr.md>) — 39 行 / 6,932 B
+* [papers/2603.13032-multimodal-ocr.md](<VLM/papers/2603.13032-multimodal-ocr.md>) — 41 行 / 7,530 B
+* [papers/2603.24326-coarse-to-fine.md](<VLM/papers/2603.24326-coarse-to-fine.md>) — 67 行 / 9,350 B
 * [papers/2603.28130-mdpbench.md](<VLM/papers/2603.28130-mdpbench.md>) — 51 行 / 10,106 B
-* [topics/document-parsing.md](<VLM/topics/document-parsing.md>) — 60 行 / 7,664 B
+* [papers/2605.17447-jd-fastocr.md](<VLM/papers/2605.17447-jd-fastocr.md>) — 40 行 / 5,443 B
+* [papers/2605.27978-amap-abot-ocr.md](<VLM/papers/2605.27978-amap-abot-ocr.md>) — 42 行 / 5,791 B
+* [papers/2607.04884-hunyuan-ocr-15.md](<VLM/papers/2607.04884-hunyuan-ocr-15.md>) — 53 行 / 11,829 B
+* [papers/2607.21617-amazon-faithc4.md](<VLM/papers/2607.21617-amazon-faithc4.md>) — 39 行 / 6,093 B
+* [topics/document-parsing.md](<VLM/topics/document-parsing.md>) — 103 行 / 18,595 B
 * [topics/evaluation-input-budget.md](<VLM/topics/evaluation-input-budget.md>) — 46 行 / 6,584 B
 * [topics/vlmevalkit-video-mme-path.md](<VLM/topics/vlmevalkit-video-mme-path.md>) — 51 行 / 10,053 B
 
