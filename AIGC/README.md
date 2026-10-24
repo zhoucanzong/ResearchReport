@@ -2,7 +2,7 @@
 
 # 🎨 AIGC
 
-**8 条** · 图像、视频、音频、3D、数字人生成及相关架构与编辑方法。
+**9 条** · 图像、视频、音频、3D、数字人生成及相关架构与编辑方法。
 
 [← 返回首页](<../README.md>) · [完整索引](<../INDEX.md>)
 
@@ -10,7 +10,7 @@
 
 <!-- SCRIPT:panel-readme START · 由 scripts/library_index.py 生成，勿手改 -->
 
-![Entries](https://img.shields.io/badge/Entries-8-3f51b5?style=flat-square)
+![Entries](https://img.shields.io/badge/Entries-9-3f51b5?style=flat-square)
 ![Panel](https://img.shields.io/badge/Panel-AIGC-9e9e9e?style=flat-square)
 
 | 条目 | 报告 | 规模 |
@@ -22,6 +22,7 @@
 | **扩散 Transformer（DiT）** | [Diffusion Transformer (DiT) 架构演进研究报告](<DiT/report.md>) | 888 行 |
 | **扩散模型** | [扩散模型（Diffusion Models）基础框架与架构演进研究报告](<DiffusionModels/report.md>) | 859 行 |
 | **图像编辑与修复** | [图像编辑与修复技术研究报告](<ImageEditing/report.md>) | 835 行 |
+| **图像生成** | [图像生成：从表示与目标到控制和编辑](<ImageGeneration/report.md>) | 76 行 |
 | **视频生成** | [视频生成技术研究报告](<VideoGen/report.md>) | 899 行 |
 
 <!-- SCRIPT:panel-readme END -->

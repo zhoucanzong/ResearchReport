@@ -22,7 +22,7 @@
 | [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) | 单细胞扰动预测：从“配对细胞”转向“群体响应” | research | 2026-10-23 | completed |
 | [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) | AI 天气与气候预测：从天气状态外推到强迫响应 | research | 2026-10-23 | completed |
 
-## AIGC (8)
+## AIGC (9)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
@@ -33,6 +33,7 @@
 | [AIGC/DiT/report.md](<../AIGC/DiT/report.md>) | Diffusion Transformer (DiT) 架构演进研究报告 | — | — | — |
 | [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) | 扩散模型（Diffusion Models）基础框架与架构演进研究报告 | — | — | — |
 | [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) | 图像编辑与修复技术研究报告 | — | — | — |
+| [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) | 图像生成：从表示与目标到控制和编辑 | — | — | — |
 | [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) | 视频生成技术研究报告 | — | — | — |
 
 ## Agents (3)

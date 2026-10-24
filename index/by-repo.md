@@ -20,7 +20,7 @@
 * [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) — 87 行
 * [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) — 89 行
 
-## AIGC (8)
+## AIGC (9)
 
 * [AIGC/3DGen/report.md](<../AIGC/3DGen/report.md>) — 858 行
 * [AIGC/AudioGen/report.md](<../AIGC/AudioGen/report.md>) — 915 行
@@ -29,6 +29,7 @@
 * [AIGC/DiT/report.md](<../AIGC/DiT/report.md>) — 888 行
 * [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) — 859 行
 * [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) — 835 行
+* [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) — 76 行
 * [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) — 899 行
 
 ## Agents (3)

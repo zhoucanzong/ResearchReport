@@ -32,7 +32,7 @@
 | [AI4Science/AutonomousLabs/report.md](<../AI4Science/AutonomousLabs/report.md>) | 2026-10-23 | AI4Science | AutonomousLabs |
 | [AI4Science/Astronomy/report.md](<../AI4Science/Astronomy/report.md>) | 2026-10-23 | AI4Science | Astronomy |
 
-## 无 date 元数据（42）
+## 无 date 元数据（43）
 
 以下条目缺少可解析的 `date`，无法参与「最近更新」排序：
 
@@ -43,6 +43,7 @@
 * [AIGC/DiT/report.md](<../AIGC/DiT/report.md>)
 * [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>)
 * [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>)
+* [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>)
 * [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>)
 * [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>)
 * [LLM/Alignment/report.md](<../LLM/Alignment/report.md>)

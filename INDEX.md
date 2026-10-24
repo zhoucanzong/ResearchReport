@@ -13,17 +13,17 @@
 
 | 指标 | 数量 |
 | --- | --- |
-| **条目数**（`report.md`） | **72** |
-| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 11 · Agents 3 · AIGC 8 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6 |
+| **条目数**（`report.md`） | **73** |
+| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 11 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6 |
 | 条目子文档数 | 263 |
-| 条目正文行数（剔除 front-matter） | 28,498 |
-| 条目字节 | 2,208,267 B |
-| 带 front-matter 的条目 | 72 |
+| 条目正文行数（剔除 front-matter） | 28,574 |
+| 条目字节 | 2,218,527 B |
+| 带 front-matter 的条目 | 73 |
 | 带合法 `date` 的条目 | 30 |
-| 文档（除生成物外的全部 `.md`） | 357 |
+| 文档（除生成物外的全部 `.md`） | 358 |
 | 其中文件名 `README.md` | 11 |
-| 纳入版本控制的文件 | 380 |
-| 纳入版本控制的 `.md` | 364 |
+| 纳入版本控制的文件 | 381 |
+| 纳入版本控制的 `.md` | 365 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -35,13 +35,13 @@
 | Models | 23 | 41 | 12,150 | 906,873 B | [板块页 →](<Models/README.md>) |
 | LLM | 11 | 75 | 4,383 | 356,570 B | [板块页 →](<LLM/README.md>) |
 | Agents | 3 | 22 | 207 | 29,975 B | [板块页 →](<Agents/README.md>) |
-| AIGC | 8 | 9 | 6,766 | 320,745 B | [板块页 →](<AIGC/README.md>) |
+| AIGC | 9 | 10 | 6,842 | 331,005 B | [板块页 →](<AIGC/README.md>) |
 | WorldModel | 3 | 44 | 1,301 | 147,571 B | [板块页 →](<WorldModel/README.md>) |
 | AI4Science | 10 | 53 | 836 | 139,324 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 2 | 10 | 158 | 32,341 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 6 | 56 | 1,119 | 106,307 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 36 | 1,578 | 168,561 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **72** | **357** | **28,498** | **2,208,267 B** | — |
+| **合计** | **73** | **358** | **28,574** | **2,218,527 B** | — |
 
 ## 分面索引
 
@@ -605,10 +605,10 @@
 
 </details>
 
-### AIGC（8 条目 / 9 文档）
+### AIGC（9 条目 / 10 文档）
 
 <details>
-<summary><b>内容生成 AIGC（8 条目 / 0 子文档）</b></summary>
+<summary><b>内容生成 AIGC（9 条目 / 0 子文档）</b></summary>
 
   <details>
   <summary><b>3D 生成</b> · <code>AIGC/3DGen/report.md</code> · 858 行 · —</summary>
@@ -662,7 +662,7 @@
   <summary><b>扩散 Transformer（DiT）</b> · <code>AIGC/DiT/report.md</code> · 888 行 · —</summary>
 
 
-    * **条目**：[AIGC/DiT/report.md](<AIGC/DiT/report.md>)（888 行 / 46,309 B）
+    * **条目**：[AIGC/DiT/report.md](<AIGC/DiT/report.md>)（888 行 / 46,416 B）
     * **专题目录**：`AIGC/DiT`
     * **元数据**：type=`—` · domain=`AIGC` · subject=`DiT` · date=`—` · status=`—`
     * **子文档（0）**
@@ -689,6 +689,18 @@
     * **条目**：[AIGC/ImageEditing/report.md](<AIGC/ImageEditing/report.md>)（835 行 / 43,097 B）
     * **专题目录**：`AIGC/ImageEditing`
     * **元数据**：type=`—` · domain=`AIGC` · subject=`ImageEditing` · date=`—` · status=`—`
+    * **子文档（0）**
+        * _该条目暂无子文档_
+
+  </details>
+
+  <details>
+  <summary><b>图像生成</b> · <code>AIGC/ImageGeneration/report.md</code> · 76 行 · —</summary>
+
+
+    * **条目**：[AIGC/ImageGeneration/report.md](<AIGC/ImageGeneration/report.md>)（76 行 / 10,153 B）
+    * **专题目录**：`AIGC/ImageGeneration`
+    * **元数据**：type=`—` · domain=`AIGC` · subject=`ImageGeneration` · date=`—` · status=`—`
     * **子文档（0）**
         * _该条目暂无子文档_
 
@@ -1215,7 +1227,7 @@
 | --- | --- | --: | --: |
 | [AGENTS.md](<AGENTS.md>) |  | 9 | 908 B |
 | [AI4Science/README.md](<AI4Science/README.md>) | AI4Science | 137 | 6,896 B |
-| [AIGC/README.md](<AIGC/README.md>) | AIGC | 31 | 1,655 B |
+| [AIGC/README.md](<AIGC/README.md>) | AIGC | 32 | 1,770 B |
 | [Agents/README.md](<Agents/README.md>) | Agents | 74 | 3,495 B |
 | [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 46 | 1,951 B |
 | [Infra/README.md](<Infra/README.md>) | Infra | 117 | 8,075 B |
@@ -1224,7 +1236,7 @@
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 104 | 4,517 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 196 | 14,237 B |
+| [README.md](<README.md>) |  | 196 | 14,289 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 103 | 6,735 B |
 | [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 102 | 7,365 B |
@@ -1240,6 +1252,6 @@
 ## 说明
 
 * 本索引是**派生数据**，仓库里的条目文件才是唯一事实来源；重建索引只需重跑脚本。
-* 当前 72 份条目带 front-matter；缺失的 `type` / `date` / `status` 显示为 `—`，domain / subject / topic 缺失时由路径推断。
+* 当前 73 份条目带 front-matter；缺失的 `type` / `date` / `status` 显示为 `—`，domain / subject / topic 缺失时由路径推断。
 * 可选元数据：`title` / `display_name` / `type` / `domain` / `subject` / `topic` / `upstream` / `date` / `evidence` / `status`。
 * 脚本只读扫描、只写生成物；**不会删除或改写任何条目文件**。

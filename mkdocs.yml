@@ -299,7 +299,7 @@ nav:
         - "总报告": "Agents/ComputerUse/report.md"
         - "2606.09426-weavebench": "Agents/ComputerUse/papers/2606.09426-weavebench.md"
         - "2606.29537-osworld2": "Agents/ComputerUse/papers/2606.29537-osworld2.md"
-  - "🎨 AIGC · 8":
+  - "🎨 AIGC · 9":
     - "AIGC/README.md"
     - "3D 生成": "AIGC/3DGen/report.md"
     - "音频与音乐生成": "AIGC/AudioGen/report.md"
@@ -308,6 +308,7 @@ nav:
     - "扩散 Transformer（DiT）": "AIGC/DiT/report.md"
     - "扩散模型": "AIGC/DiffusionModels/report.md"
     - "图像编辑与修复": "AIGC/ImageEditing/report.md"
+    - "图像生成": "AIGC/ImageGeneration/report.md"
     - "视频生成": "AIGC/VideoGen/report.md"
   - "🌍 WorldModel · 3":
     - "WorldModel/README.md"

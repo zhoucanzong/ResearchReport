@@ -243,6 +243,12 @@
 | --- | --- | --- | --- | --- |
 | [AIGC/ControllableGen/report.md](<../AIGC/ControllableGen/report.md>) | 可控生成（Controllable Generation）技术研究报告 | — | — | — |
 
+## 图像生成 (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) | 图像生成：从表示与目标到控制和编辑 | — | — | — |
+
 ## 图像编辑与修复 (1)
 
 | 条目 | 标题 | type | date | status |

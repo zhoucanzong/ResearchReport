@@ -211,6 +211,12 @@
 | --- | --- | --- | --- | --- |
 | [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) | 图像编辑与修复技术研究报告 | — | — | — |
 
+## ImageGeneration (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) | 图像生成：从表示与目标到控制和编辑 | — | — | — |
+
 ## KVCachePD (1)
 
 | 条目 | 标题 | type | date | status |
