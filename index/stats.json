@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "c38e5e2598479dc3ee883f381b513275debe0760217af9a4e1fe7e890d698467",
+  "content_fingerprint": "4fb0b2f5d8ee72db56c7fabb1a9e5c472485693789008d80a276d821b73b8f24",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -19,7 +19,7 @@
     "without_front_matter": 0,
     "with_date": 30,
     "lines": 28498,
-    "bytes": 2208297,
+    "bytes": 2208267,
     "children": 263
   },
   "documents": {
@@ -29,7 +29,7 @@
     "named_report_md": 72,
     "named_readme_md": 11,
     "lines": 60594,
-    "bytes": 5401634
+    "bytes": 5401696
   },
   "libraries": {
     "Models": {
@@ -39,7 +39,7 @@
         "Models": 41,
         "LLM": 0,
         "Agents": 0,
-        "VisualGen": 0,
+        "AIGC": 0,
         "WorldModel": 0,
         "AI4Science": 0,
         "Evaluation": 0,
@@ -50,7 +50,7 @@
         "Models": 23,
         "LLM": 0,
         "Agents": 0,
-        "VisualGen": 0,
+        "AIGC": 0,
         "WorldModel": 0,
         "AI4Science": 0,
         "Evaluation": 0,
@@ -58,11 +58,11 @@
         "OpenSource": 0
       },
       "lines": 12150,
-      "bytes": 906903,
+      "bytes": 906873,
       "lines_raw": 12219,
       "dir_files": 41,
       "dir_md": 41,
-      "dir_bytes": 1228888,
+      "dir_bytes": 1228843,
       "du_sk": 1292
     },
     "LLM": {
@@ -72,7 +72,7 @@
         "Models": 0,
         "LLM": 75,
         "Agents": 0,
-        "VisualGen": 0,
+        "AIGC": 0,
         "WorldModel": 0,
         "AI4Science": 0,
         "Evaluation": 0,
@@ -83,7 +83,7 @@
         "Models": 0,
         "LLM": 11,
         "Agents": 0,
-        "VisualGen": 0,
+        "AIGC": 0,
         "WorldModel": 0,
         "AI4Science": 0,
         "Evaluation": 0,
@@ -105,7 +105,7 @@
         "Models": 0,
         "LLM": 0,
         "Agents": 22,
-        "VisualGen": 0,
+        "AIGC": 0,
         "WorldModel": 0,
         "AI4Science": 0,
         "Evaluation": 0,
@@ -116,7 +116,7 @@
         "Models": 0,
         "LLM": 0,
         "Agents": 3,
-        "VisualGen": 0,
+        "AIGC": 0,
         "WorldModel": 0,
         "AI4Science": 0,
         "Evaluation": 0,
@@ -131,14 +131,14 @@
       "dir_bytes": 135592,
       "du_sk": 164
     },
-    "VisualGen": {
+    "AIGC": {
       "entries": 8,
       "documents_md": 9,
       "md_by_category": {
         "Models": 0,
         "LLM": 0,
         "Agents": 0,
-        "VisualGen": 9,
+        "AIGC": 9,
         "WorldModel": 0,
         "AI4Science": 0,
         "Evaluation": 0,
@@ -149,7 +149,7 @@
         "Models": 0,
         "LLM": 0,
         "Agents": 0,
-        "VisualGen": 8,
+        "AIGC": 8,
         "WorldModel": 0,
         "AI4Science": 0,
         "Evaluation": 0,
@@ -161,7 +161,7 @@
       "lines_raw": 6790,
       "dir_files": 9,
       "dir_md": 9,
-      "dir_bytes": 322419,
+      "dir_bytes": 322436,
       "du_sk": 332
     },
     "WorldModel": {
@@ -171,7 +171,7 @@
         "Models": 0,
         "LLM": 0,
         "Agents": 0,
-        "VisualGen": 0,
+        "AIGC": 0,
         "WorldModel": 44,
         "AI4Science": 0,
         "Evaluation": 0,
@@ -182,7 +182,7 @@
         "Models": 0,
         "LLM": 0,
         "Agents": 0,
-        "VisualGen": 0,
+        "AIGC": 0,
         "WorldModel": 3,
         "AI4Science": 0,
         "Evaluation": 0,
@@ -204,7 +204,7 @@
         "Models": 0,
         "LLM": 0,
         "Agents": 0,
-        "VisualGen": 0,
+        "AIGC": 0,
         "WorldModel": 0,
         "AI4Science": 53,
         "Evaluation": 0,
@@ -215,7 +215,7 @@
         "Models": 0,
         "LLM": 0,
         "Agents": 0,
-        "VisualGen": 0,
+        "AIGC": 0,
         "WorldModel": 0,
         "AI4Science": 10,
         "Evaluation": 0,
@@ -237,7 +237,7 @@
         "Models": 0,
         "LLM": 0,
         "Agents": 0,
-        "VisualGen": 0,
+        "AIGC": 0,
         "WorldModel": 0,
         "AI4Science": 0,
         "Evaluation": 10,
@@ -248,7 +248,7 @@
         "Models": 0,
         "LLM": 0,
         "Agents": 0,
-        "VisualGen": 0,
+        "AIGC": 0,
         "WorldModel": 0,
         "AI4Science": 0,
         "Evaluation": 2,
@@ -270,7 +270,7 @@
         "Models": 0,
         "LLM": 0,
         "Agents": 0,
-        "VisualGen": 0,
+        "AIGC": 0,
         "WorldModel": 0,
         "AI4Science": 0,
         "Evaluation": 0,
@@ -281,7 +281,7 @@
         "Models": 0,
         "LLM": 0,
         "Agents": 0,
-        "VisualGen": 0,
+        "AIGC": 0,
         "WorldModel": 0,
         "AI4Science": 0,
         "Evaluation": 0,
@@ -303,7 +303,7 @@
         "Models": 0,
         "LLM": 0,
         "Agents": 0,
-        "VisualGen": 0,
+        "AIGC": 0,
         "WorldModel": 0,
         "AI4Science": 0,
         "Evaluation": 0,
@@ -314,7 +314,7 @@
         "Models": 0,
         "LLM": 0,
         "Agents": 0,
-        "VisualGen": 0,
+        "AIGC": 0,
         "WorldModel": 0,
         "AI4Science": 0,
         "Evaluation": 0,
@@ -335,16 +335,16 @@
     "library_entries": 72,
     "library_documents_md": 346,
     "library_dir_files": 349,
-    "library_dir_bytes": 5342256,
+    "library_dir_bytes": 5342228,
     "library_du_sk": 5868,
     "library_entry_lines": 28498,
-    "library_entry_bytes": 2208297
+    "library_entry_bytes": 2208267
   },
   "version_control": {
-    "tracked_total": 373,
-    "tracked_md": 357,
+    "tracked_total": 380,
+    "tracked_md": 364,
     "tracked_report_md": 72,
-    "tracked_libraries": 342,
+    "tracked_libraries": 349,
     "tracked_repo_root": 5,
     "tracked_docs": 7,
     "tracked_scripts": 4
@@ -356,14 +356,14 @@
           "files": 23,
           "lines": 12150,
           "lines_raw": 12219,
-          "bytes": 906903
+          "bytes": 906873
         },
         "report_md_by_category": {
           "Models": {
             "files": 23,
             "lines": 12150,
             "lines_raw": 12219,
-            "bytes": 906903
+            "bytes": 906873
           },
           "LLM": {
             "files": 0,
@@ -377,7 +377,7 @@
             "lines_raw": 0,
             "bytes": 0
           },
-          "VisualGen": {
+          "AIGC": {
             "files": 0,
             "lines": 0,
             "lines_raw": 0,
@@ -418,13 +418,13 @@
           "files": 18,
           "lines": 4076,
           "lines_raw": 4076,
-          "bytes": 321985
+          "bytes": 321970
         },
         "dir_md": {
           "files": 41,
           "lines": 16226,
           "lines_raw": 16295,
-          "bytes": 1228888
+          "bytes": 1228843
         }
       },
       "LLM": {
@@ -453,7 +453,7 @@
             "lines_raw": 0,
             "bytes": 0
           },
-          "VisualGen": {
+          "AIGC": {
             "files": 0,
             "lines": 0,
             "lines_raw": 0,
@@ -529,7 +529,7 @@
             "lines_raw": 228,
             "bytes": 29975
           },
-          "VisualGen": {
+          "AIGC": {
             "files": 0,
             "lines": 0,
             "lines_raw": 0,
@@ -579,7 +579,7 @@
           "bytes": 135592
         }
       },
-      "VisualGen": {
+      "AIGC": {
         "report_md": {
           "files": 8,
           "lines": 6766,
@@ -605,7 +605,7 @@
             "lines_raw": 0,
             "bytes": 0
           },
-          "VisualGen": {
+          "AIGC": {
             "files": 8,
             "lines": 6766,
             "lines_raw": 6790,
@@ -646,13 +646,13 @@
           "files": 1,
           "lines": 31,
           "lines_raw": 31,
-          "bytes": 1674
+          "bytes": 1691
         },
         "dir_md": {
           "files": 9,
           "lines": 6797,
           "lines_raw": 6821,
-          "bytes": 322419
+          "bytes": 322436
         }
       },
       "WorldModel": {
@@ -681,7 +681,7 @@
             "lines_raw": 0,
             "bytes": 0
           },
-          "VisualGen": {
+          "AIGC": {
             "files": 0,
             "lines": 0,
             "lines_raw": 0,
@@ -757,7 +757,7 @@
             "lines_raw": 0,
             "bytes": 0
           },
-          "VisualGen": {
+          "AIGC": {
             "files": 0,
             "lines": 0,
             "lines_raw": 0,
@@ -833,7 +833,7 @@
             "lines_raw": 0,
             "bytes": 0
           },
-          "VisualGen": {
+          "AIGC": {
             "files": 0,
             "lines": 0,
             "lines_raw": 0,
@@ -909,7 +909,7 @@
             "lines_raw": 0,
             "bytes": 0
           },
-          "VisualGen": {
+          "AIGC": {
             "files": 0,
             "lines": 0,
             "lines_raw": 0,
@@ -985,7 +985,7 @@
             "lines_raw": 0,
             "bytes": 0
           },
-          "VisualGen": {
+          "AIGC": {
             "files": 0,
             "lines": 0,
             "lines_raw": 0,
@@ -1040,25 +1040,25 @@
       "files": 356,
       "lines": 60594,
       "lines_raw": 61141,
-      "bytes": 5401634
+      "bytes": 5401696
     },
     "library_md": {
       "files": 346,
       "lines": 59350,
       "lines_raw": 59897,
-      "bytes": 5314006
+      "bytes": 5313978
     },
     "root_readme": {
       "files": 1,
       "lines": 196,
       "lines_raw": 196,
-      "bytes": 14265
+      "bytes": 14357
     },
     "docs_md": {
       "files": 7,
       "lines": 938,
       "lines_raw": 938,
-      "bytes": 67499
+      "bytes": 67497
     },
     "scripts_md": {
       "files": 1,
@@ -1072,7 +1072,7 @@
     ]
   },
   "storage": {
-    "tracked_bytes": 10610474,
+    "tracked_bytes": 10641177,
     "definition": "纳入版本控制的文件字节合计（`git ls-files` 跟踪路径逐个 getsize 求和）；刻意**不**用 du 量工作树——工作树含 site/site-docs/构建产物、别人的未提交草稿、虚拟环境等「车间地面」，会让数字每个 clone 一个样、生成物不可复现。本字段与提交树同源，任意 clone 重跑一致。"
   }
 }

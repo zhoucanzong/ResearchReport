@@ -50,18 +50,19 @@
       ]
     },
     {
-      "id": "visualgen",
-      "title": "VisualGen",
+      "id": "aigc",
+      "title": "AIGC（内容生成）",
+      "directory": "AIGC",
       "emoji": "🎨",
-      "tagline": "视觉与多模态生成",
+      "tagline": "图像、视频、音频、3D、数字人生成及相关架构与编辑方法",
       "topic_index": true,
       "match": [
-        "VisualGen/*"
+        "AIGC/*"
       ],
       "representatives": [
-        "VisualGen/VideoGen",
-        "VisualGen/DiT",
-        "VisualGen/DiffusionModels"
+        "AIGC/VideoGen",
+        "AIGC/DiT",
+        "AIGC/DiffusionModels"
       ]
     },
     {
@@ -150,7 +151,7 @@
     "Models/GPT",
     "LLM/ReasoningModels",
     "Agents/AgentSystems",
-    "VisualGen/VideoGen",
+    "AIGC/VideoGen",
     "WorldModel/WorldModels",
     "AI4Science/ProteinDesign",
     "Evaluation/EvaluationScience",

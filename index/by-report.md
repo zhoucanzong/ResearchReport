@@ -21,6 +21,14 @@
 | 蛋白质与肽结合体设计 | AI4Science | [AI4Science/ProteinDesign/report.md](<../AI4Science/ProteinDesign/report.md>) | 6 | 80 | 2026-10-23 |
 | 单细胞扰动预测 | AI4Science | [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) | 4 | 87 | 2026-10-23 |
 | 天气与气候预测 | AI4Science | [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) | 7 | 89 | 2026-10-23 |
+| 3D 生成 | AIGC（内容生成） | [AIGC/3DGen/report.md](<../AIGC/3DGen/report.md>) | 0 | 858 | — |
+| 音频与音乐生成 | AIGC（内容生成） | [AIGC/AudioGen/report.md](<../AIGC/AudioGen/report.md>) | 0 | 915 | — |
+| 数字人与 Avatar | AIGC（内容生成） | [AIGC/AvatarGen/report.md](<../AIGC/AvatarGen/report.md>) | 0 | 595 | — |
+| 可控生成 | AIGC（内容生成） | [AIGC/ControllableGen/report.md](<../AIGC/ControllableGen/report.md>) | 0 | 917 | — |
+| 扩散 Transformer（DiT） | AIGC（内容生成） | [AIGC/DiT/report.md](<../AIGC/DiT/report.md>) | 0 | 888 | — |
+| 扩散模型 | AIGC（内容生成） | [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) | 0 | 859 | — |
+| 图像编辑与修复 | AIGC（内容生成） | [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) | 0 | 835 | — |
+| 视频生成 | AIGC（内容生成） | [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) | 0 | 899 | — |
 | 工具 Agent 安全 | Agents | [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) | 4 | 53 | 2026-10-24 |
 | 智能体系统 | Agents | [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) | 12 | 95 | — |
 | 电脑使用 Agent | Agents | [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) | 2 | 59 | 2026-10-24 |
@@ -72,14 +80,6 @@
 | SGLang | OpenSource | [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | 5 | 317 | 2026-10-16 |
 | this-that-model | OpenSource | [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | 1 | 248 | 2026-10-16 |
 | vLLM | OpenSource | [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | 5 | 300 | 2026-10-16 |
-| 3D 生成 | VisualGen | [VisualGen/3DGen/report.md](<../VisualGen/3DGen/report.md>) | 0 | 858 | — |
-| 音频与音乐生成 | VisualGen | [VisualGen/AudioGen/report.md](<../VisualGen/AudioGen/report.md>) | 0 | 915 | — |
-| 数字人与 Avatar | VisualGen | [VisualGen/AvatarGen/report.md](<../VisualGen/AvatarGen/report.md>) | 0 | 595 | — |
-| 可控生成 | VisualGen | [VisualGen/ControllableGen/report.md](<../VisualGen/ControllableGen/report.md>) | 0 | 917 | — |
-| 扩散 Transformer（DiT） | VisualGen | [VisualGen/DiT/report.md](<../VisualGen/DiT/report.md>) | 0 | 888 | — |
-| 扩散模型 | VisualGen | [VisualGen/DiffusionModels/report.md](<../VisualGen/DiffusionModels/report.md>) | 0 | 859 | — |
-| 图像编辑与修复 | VisualGen | [VisualGen/ImageEditing/report.md](<../VisualGen/ImageEditing/report.md>) | 0 | 835 | — |
-| 视频生成 | VisualGen | [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) | 0 | 899 | — |
 | 具身预测规划 | WorldModel | [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) | 2 | 54 | — |
 | 机器人视觉语言动作模型（VLA） | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 23 | 643 | — |
 | 世界模型 | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 604 | 2026-10-22 |

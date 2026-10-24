@@ -17,7 +17,7 @@
 
 ## 1. 按板块汇总（重排后实测，脚本产出）
 
-| 指标 | Models | LLM | VisualGen | WorldModel | AI4Science | Infra | OpenSource | 合计 |
+| 指标 | Models | LLM | AIGC（内容生成） | WorldModel | AI4Science | Infra | OpenSource | 合计 |
 | :-- | --: | --: | --: | --: | --: | --: | --: |
 | 条目数（`report.md`） | 23 | 8 | 8 | 2 | 10 | 3 | 6 | **60** |
 | 板块内 `.md` 文档数 | 35 | 27 | 9 | 31 | 52 | 33 | 33 | **220** |

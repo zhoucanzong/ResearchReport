@@ -14,16 +14,16 @@
 | 指标 | 数量 |
 | --- | --- |
 | **条目数**（`report.md`） | **72** |
-| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 11 · Agents 3 · VisualGen 8 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6 |
+| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 11 · Agents 3 · AIGC（内容生成） 8 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6 |
 | 条目子文档数 | 263 |
 | 条目正文行数（剔除 front-matter） | 28,498 |
-| 条目字节 | 2,208,297 B |
+| 条目字节 | 2,208,267 B |
 | 带 front-matter 的条目 | 72 |
 | 带合法 `date` 的条目 | 30 |
 | 文档（除生成物外的全部 `.md`） | 356 |
 | 其中文件名 `README.md` | 11 |
-| 纳入版本控制的文件 | 373 |
-| 纳入版本控制的 `.md` | 357 |
+| 纳入版本控制的文件 | 380 |
+| 纳入版本控制的 `.md` | 364 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -32,16 +32,16 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| Models | 23 | 41 | 12,150 | 906,903 B | [板块页 →](<Models/README.md>) |
+| Models | 23 | 41 | 12,150 | 906,873 B | [板块页 →](<Models/README.md>) |
 | LLM | 11 | 75 | 4,383 | 356,570 B | [板块页 →](<LLM/README.md>) |
 | Agents | 3 | 22 | 207 | 29,975 B | [板块页 →](<Agents/README.md>) |
-| VisualGen | 8 | 9 | 6,766 | 320,745 B | [板块页 →](<VisualGen/README.md>) |
+| AIGC | 8 | 9 | 6,766 | 320,745 B | [板块页 →](<AIGC/README.md>) |
 | WorldModel | 3 | 44 | 1,301 | 147,571 B | [板块页 →](<WorldModel/README.md>) |
 | AI4Science | 10 | 53 | 836 | 139,324 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 2 | 10 | 158 | 32,341 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 6 | 56 | 1,119 | 106,307 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 36 | 1,578 | 168,561 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **72** | **356** | **28,498** | **2,208,297 B** | — |
+| **合计** | **72** | **356** | **28,498** | **2,208,267 B** | — |
 
 ## 分面索引
 
@@ -171,7 +171,7 @@
     * **专题目录**：`Models/Google-Gen`
     * **元数据**：type=`—` · domain=`Models` · subject=`Google-Gen` · date=`—` · status=`—`
     * **子文档（1）**
-        * [papers/2604.20329-vision-banana.md](<Models/Google-Gen/papers/2604.20329-vision-banana.md>) — 425 行 / 55,019 B
+        * [papers/2604.20329-vision-banana.md](<Models/Google-Gen/papers/2604.20329-vision-banana.md>) — 425 行 / 55,004 B
 
   </details>
 
@@ -312,7 +312,7 @@
   <summary><b>Qwen</b> · <code>Models/Qwen/report.md</code> · 1121 行 · —</summary>
 
 
-    * **条目**：[Models/Qwen/report.md](<Models/Qwen/report.md>)（1121 行 / 75,492 B）
+    * **条目**：[Models/Qwen/report.md](<Models/Qwen/report.md>)（1121 行 / 75,462 B）
     * **专题目录**：`Models/Qwen`
     * **元数据**：type=`—` · domain=`Models` · subject=`Qwen` · date=`—` · status=`—`
     * **子文档（6）**
@@ -605,102 +605,102 @@
 
 </details>
 
-### VisualGen（8 条目 / 9 文档）
+### AIGC（8 条目 / 9 文档）
 
 <details>
-<summary><b>视觉生成 VisualGen（8 条目 / 0 子文档）</b></summary>
+<summary><b>内容生成 AIGC（8 条目 / 0 子文档）</b></summary>
 
   <details>
-  <summary><b>3D 生成</b> · <code>VisualGen/3DGen/report.md</code> · 858 行 · —</summary>
+  <summary><b>3D 生成</b> · <code>AIGC/3DGen/report.md</code> · 858 行 · —</summary>
 
 
-    * **条目**：[VisualGen/3DGen/report.md](<VisualGen/3DGen/report.md>)（858 行 / 45,956 B）
-    * **专题目录**：`VisualGen/3DGen`
-    * **元数据**：type=`—` · domain=`VisualGen` · subject=`3DGen` · date=`—` · status=`—`
+    * **条目**：[AIGC/3DGen/report.md](<AIGC/3DGen/report.md>)（858 行 / 45,956 B）
+    * **专题目录**：`AIGC/3DGen`
+    * **元数据**：type=`—` · domain=`AIGC` · subject=`3DGen` · date=`—` · status=`—`
     * **子文档（0）**
         * _该条目暂无子文档_
 
   </details>
 
   <details>
-  <summary><b>音频与音乐生成</b> · <code>VisualGen/AudioGen/report.md</code> · 915 行 · —</summary>
+  <summary><b>音频与音乐生成</b> · <code>AIGC/AudioGen/report.md</code> · 915 行 · —</summary>
 
 
-    * **条目**：[VisualGen/AudioGen/report.md](<VisualGen/AudioGen/report.md>)（915 行 / 41,827 B）
-    * **专题目录**：`VisualGen/AudioGen`
-    * **元数据**：type=`—` · domain=`VisualGen` · subject=`AudioGen` · date=`—` · status=`—`
+    * **条目**：[AIGC/AudioGen/report.md](<AIGC/AudioGen/report.md>)（915 行 / 41,827 B）
+    * **专题目录**：`AIGC/AudioGen`
+    * **元数据**：type=`—` · domain=`AIGC` · subject=`AudioGen` · date=`—` · status=`—`
     * **子文档（0）**
         * _该条目暂无子文档_
 
   </details>
 
   <details>
-  <summary><b>数字人与 Avatar</b> · <code>VisualGen/AvatarGen/report.md</code> · 595 行 · —</summary>
+  <summary><b>数字人与 Avatar</b> · <code>AIGC/AvatarGen/report.md</code> · 595 行 · —</summary>
 
 
-    * **条目**：[VisualGen/AvatarGen/report.md](<VisualGen/AvatarGen/report.md>)（595 行 / 28,228 B）
-    * **专题目录**：`VisualGen/AvatarGen`
-    * **元数据**：type=`—` · domain=`VisualGen` · subject=`AvatarGen` · date=`—` · status=`—`
+    * **条目**：[AIGC/AvatarGen/report.md](<AIGC/AvatarGen/report.md>)（595 行 / 28,228 B）
+    * **专题目录**：`AIGC/AvatarGen`
+    * **元数据**：type=`—` · domain=`AIGC` · subject=`AvatarGen` · date=`—` · status=`—`
     * **子文档（0）**
         * _该条目暂无子文档_
 
   </details>
 
   <details>
-  <summary><b>可控生成</b> · <code>VisualGen/ControllableGen/report.md</code> · 917 行 · —</summary>
+  <summary><b>可控生成</b> · <code>AIGC/ControllableGen/report.md</code> · 917 行 · —</summary>
 
 
-    * **条目**：[VisualGen/ControllableGen/report.md](<VisualGen/ControllableGen/report.md>)（917 行 / 43,801 B）
-    * **专题目录**：`VisualGen/ControllableGen`
-    * **元数据**：type=`—` · domain=`VisualGen` · subject=`ControllableGen` · date=`—` · status=`—`
+    * **条目**：[AIGC/ControllableGen/report.md](<AIGC/ControllableGen/report.md>)（917 行 / 43,801 B）
+    * **专题目录**：`AIGC/ControllableGen`
+    * **元数据**：type=`—` · domain=`AIGC` · subject=`ControllableGen` · date=`—` · status=`—`
     * **子文档（0）**
         * _该条目暂无子文档_
 
   </details>
 
   <details>
-  <summary><b>扩散 Transformer（DiT）</b> · <code>VisualGen/DiT/report.md</code> · 888 行 · —</summary>
+  <summary><b>扩散 Transformer（DiT）</b> · <code>AIGC/DiT/report.md</code> · 888 行 · —</summary>
 
 
-    * **条目**：[VisualGen/DiT/report.md](<VisualGen/DiT/report.md>)（888 行 / 46,309 B）
-    * **专题目录**：`VisualGen/DiT`
-    * **元数据**：type=`—` · domain=`VisualGen` · subject=`DiT` · date=`—` · status=`—`
+    * **条目**：[AIGC/DiT/report.md](<AIGC/DiT/report.md>)（888 行 / 46,309 B）
+    * **专题目录**：`AIGC/DiT`
+    * **元数据**：type=`—` · domain=`AIGC` · subject=`DiT` · date=`—` · status=`—`
     * **子文档（0）**
         * _该条目暂无子文档_
 
   </details>
 
   <details>
-  <summary><b>扩散模型</b> · <code>VisualGen/DiffusionModels/report.md</code> · 859 行 · —</summary>
+  <summary><b>扩散模型</b> · <code>AIGC/DiffusionModels/report.md</code> · 859 行 · —</summary>
 
 
-    * **条目**：[VisualGen/DiffusionModels/report.md](<VisualGen/DiffusionModels/report.md>)（859 行 / 36,749 B）
-    * **专题目录**：`VisualGen/DiffusionModels`
-    * **元数据**：type=`—` · domain=`VisualGen` · subject=`DiffusionModels` · date=`—` · status=`—`
+    * **条目**：[AIGC/DiffusionModels/report.md](<AIGC/DiffusionModels/report.md>)（859 行 / 36,749 B）
+    * **专题目录**：`AIGC/DiffusionModels`
+    * **元数据**：type=`—` · domain=`AIGC` · subject=`DiffusionModels` · date=`—` · status=`—`
     * **子文档（0）**
         * _该条目暂无子文档_
 
   </details>
 
   <details>
-  <summary><b>图像编辑与修复</b> · <code>VisualGen/ImageEditing/report.md</code> · 835 行 · —</summary>
+  <summary><b>图像编辑与修复</b> · <code>AIGC/ImageEditing/report.md</code> · 835 行 · —</summary>
 
 
-    * **条目**：[VisualGen/ImageEditing/report.md](<VisualGen/ImageEditing/report.md>)（835 行 / 43,097 B）
-    * **专题目录**：`VisualGen/ImageEditing`
-    * **元数据**：type=`—` · domain=`VisualGen` · subject=`ImageEditing` · date=`—` · status=`—`
+    * **条目**：[AIGC/ImageEditing/report.md](<AIGC/ImageEditing/report.md>)（835 行 / 43,097 B）
+    * **专题目录**：`AIGC/ImageEditing`
+    * **元数据**：type=`—` · domain=`AIGC` · subject=`ImageEditing` · date=`—` · status=`—`
     * **子文档（0）**
         * _该条目暂无子文档_
 
   </details>
 
   <details>
-  <summary><b>视频生成</b> · <code>VisualGen/VideoGen/report.md</code> · 899 行 · —</summary>
+  <summary><b>视频生成</b> · <code>AIGC/VideoGen/report.md</code> · 899 行 · —</summary>
 
 
-    * **条目**：[VisualGen/VideoGen/report.md](<VisualGen/VideoGen/report.md>)（899 行 / 34,778 B）
-    * **专题目录**：`VisualGen/VideoGen`
-    * **元数据**：type=`—` · domain=`VisualGen` · subject=`VideoGen` · date=`—` · status=`—`
+    * **条目**：[AIGC/VideoGen/report.md](<AIGC/VideoGen/report.md>)（899 行 / 34,778 B）
+    * **专题目录**：`AIGC/VideoGen`
+    * **元数据**：type=`—` · domain=`AIGC` · subject=`VideoGen` · date=`—` · status=`—`
     * **子文档（0）**
         * _该条目暂无子文档_
 
@@ -1215,6 +1215,7 @@
 | --- | --- | --: | --: |
 | [AGENTS.md](<AGENTS.md>) |  | 9 | 908 B |
 | [AI4Science/README.md](<AI4Science/README.md>) | AI4Science | 137 | 6,896 B |
+| [AIGC/README.md](<AIGC/README.md>) | AIGC | 31 | 1,691 B |
 | [Agents/README.md](<Agents/README.md>) | Agents | 74 | 3,495 B |
 | [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 46 | 1,951 B |
 | [Infra/README.md](<Infra/README.md>) | Infra | 117 | 8,075 B |
@@ -1223,14 +1224,13 @@
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 104 | 4,517 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 196 | 14,265 B |
-| [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,674 B |
+| [README.md](<README.md>) |  | 196 | 14,357 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 103 | 6,735 B |
 | [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 102 | 7,365 B |
-| [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 11,079 B |
+| [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 11,064 B |
 | [docs/research-method.md](<docs/research-method.md>) | docs | 31 | 2,380 B |
-| [docs/statistics.md](<docs/statistics.md>) | docs | 215 | 15,662 B |
+| [docs/statistics.md](<docs/statistics.md>) | docs | 215 | 15,675 B |
 | [docs/team.md](<docs/team.md>) | docs | 75 | 6,919 B |
 | [docs/verification.md](<docs/verification.md>) | docs | 21 | 1,991 B |
 | [scripts/README.md](<scripts/README.md>) | scripts | 101 | 4,956 B |

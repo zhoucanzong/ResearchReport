@@ -20,6 +20,17 @@
 * [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) — 87 行
 * [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) — 89 行
 
+## AIGC (8)
+
+* [AIGC/3DGen/report.md](<../AIGC/3DGen/report.md>) — 858 行
+* [AIGC/AudioGen/report.md](<../AIGC/AudioGen/report.md>) — 915 行
+* [AIGC/AvatarGen/report.md](<../AIGC/AvatarGen/report.md>) — 595 行
+* [AIGC/ControllableGen/report.md](<../AIGC/ControllableGen/report.md>) — 917 行
+* [AIGC/DiT/report.md](<../AIGC/DiT/report.md>) — 888 行
+* [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) — 859 行
+* [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) — 835 行
+* [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) — 899 行
+
 ## Agents (3)
 
 * [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) — 53 行
@@ -81,17 +92,6 @@
 ## OpenSource (1)
 
 * [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) — 221 行
-
-## VisualGen (8)
-
-* [VisualGen/3DGen/report.md](<../VisualGen/3DGen/report.md>) — 858 行
-* [VisualGen/AudioGen/report.md](<../VisualGen/AudioGen/report.md>) — 915 行
-* [VisualGen/AvatarGen/report.md](<../VisualGen/AvatarGen/report.md>) — 595 行
-* [VisualGen/ControllableGen/report.md](<../VisualGen/ControllableGen/report.md>) — 917 行
-* [VisualGen/DiT/report.md](<../VisualGen/DiT/report.md>) — 888 行
-* [VisualGen/DiffusionModels/report.md](<../VisualGen/DiffusionModels/report.md>) — 859 行
-* [VisualGen/ImageEditing/report.md](<../VisualGen/ImageEditing/report.md>) — 835 行
-* [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) — 899 行
 
 ## WorldModel (3)
 

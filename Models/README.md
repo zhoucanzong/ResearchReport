@@ -56,7 +56,7 @@
 <details>
 <summary><b>Google 生成模型</b>（1 份）</summary>
 
-* [papers/2604.20329-vision-banana.md](<Google-Gen/papers/2604.20329-vision-banana.md>) — 425 行 / 55,019 B
+* [papers/2604.20329-vision-banana.md](<Google-Gen/papers/2604.20329-vision-banana.md>) — 425 行 / 55,004 B
 
 </details>
 

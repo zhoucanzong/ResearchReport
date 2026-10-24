@@ -36,6 +36,14 @@
 
 以下条目缺少可解析的 `date`，无法参与「最近更新」排序：
 
+* [AIGC/3DGen/report.md](<../AIGC/3DGen/report.md>)
+* [AIGC/AudioGen/report.md](<../AIGC/AudioGen/report.md>)
+* [AIGC/AvatarGen/report.md](<../AIGC/AvatarGen/report.md>)
+* [AIGC/ControllableGen/report.md](<../AIGC/ControllableGen/report.md>)
+* [AIGC/DiT/report.md](<../AIGC/DiT/report.md>)
+* [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>)
+* [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>)
+* [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>)
 * [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>)
 * [LLM/Alignment/report.md](<../LLM/Alignment/report.md>)
 * [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>)
@@ -68,13 +76,5 @@
 * [Models/Runway/report.md](<../Models/Runway/report.md>)
 * [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>)
 * [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>)
-* [VisualGen/3DGen/report.md](<../VisualGen/3DGen/report.md>)
-* [VisualGen/AudioGen/report.md](<../VisualGen/AudioGen/report.md>)
-* [VisualGen/AvatarGen/report.md](<../VisualGen/AvatarGen/report.md>)
-* [VisualGen/ControllableGen/report.md](<../VisualGen/ControllableGen/report.md>)
-* [VisualGen/DiT/report.md](<../VisualGen/DiT/report.md>)
-* [VisualGen/DiffusionModels/report.md](<../VisualGen/DiffusionModels/report.md>)
-* [VisualGen/ImageEditing/report.md](<../VisualGen/ImageEditing/report.md>)
-* [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>)
 * [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>)
 * [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>)

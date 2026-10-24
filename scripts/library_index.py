@@ -895,7 +895,7 @@ def render_index(docs: list, orphans: list, stats: dict, out_root: str, dry_run:
             if not cat_entries:
                 continue
             child_total = sum(len(d["children"]) for d in cat_entries)
-            cat_cn = {"Models": "模型系列", "LLM": "语言模型", "VisualGen": "视觉生成",
+            cat_cn = {"Models": "模型系列", "LLM": "语言模型", "AIGC": "内容生成",
                       "WorldModel": "世界模型", "AI4Science": "科学研究",
                       "Evaluation": "评测科学",
                       "Infra": "基础设施", "OpenSource": "开源仓库"}.get(cat, cat)
@@ -1182,10 +1182,20 @@ def panel_top_dirs(cfg: dict) -> tuple[str, ...]:
         root = next(iter(panel_roots))
         if any(ch in root for ch in "*?["):
             raise ConfigError(f"面板 {panel['id']} 的顶层目录不能是 glob：{root}")
+        if panel.get("directory", panel["title"]) != root:
+            raise ConfigError(
+                f"面板 {panel['id']} 的 directory 与 match 根目录不一致："
+                f"directory={panel.get('directory')!r}, match={root!r}"
+            )
         if root in roots:
             raise ConfigError(f"多个面板映射到同一顶层目录：{root}")
         roots.append(root)
     return tuple(roots)
+
+
+def panel_dir(panel: dict) -> str:
+    """物理目录名；通常等于展示名，少数板块可用独立 display title。"""
+    return panel.get("directory", panel["title"])
 
 
 def match_panels(entries: list, cfg: dict) -> tuple:
@@ -1366,7 +1376,7 @@ def render_structure_block(cfg: dict, mapping: dict, entries: list) -> str:
         )
         rep_text = f"（{reps} …）" if reps else ""
         lines.append(
-            f"{branch} {panel['emoji']} {panel['title'] + '/':<14}"
+            f"{branch} {panel['emoji']} {panel_dir(panel) + '/':<14}"
             f" {len(members):>2} 条 · {panel['tagline']}{rep_text}"
         )
     lines += [
@@ -1409,14 +1419,15 @@ def render_panels_block(cfg: dict, mapping: dict, entries: list, label_limit: in
             by_panel.setdefault(panel["id"], []).append(doc)
     captions = {
         "models": "模型系列", "llm": "语言模型方法", "agents": "智能体系统",
-        "visualgen": "视觉与多模态",
+        "aigc": "AIGC（内容生成）",
         "worldmodel": "世界模型与具身", "ai4science": "科学研究应用",
         "evaluation": "跨领域评测科学",
         "infra": "训练与推理系统", "opensource": "开源代码深读",
     }
     cards = []
     for number, panel in enumerate(cfg["panels"], 1):
-        top = panel["title"]
+        top = panel_dir(panel)
+        display_title = panel["title"]
         members = by_panel.get(panel["id"], [])
         reps = [
             f'<a href="{rel}/report.md">{escape(entry_short_name(by_dir[rel]))}</a>'
@@ -1424,8 +1435,8 @@ def render_panels_block(cfg: dict, mapping: dict, entries: list, label_limit: in
         ]
         cards.append(
             f'<td width="33%" valign="top">\n'
-            f'<h3>{number:02d} · <a href="{top}/README.md">{top}</a></h3>\n'
-            f'<p><strong>{captions.get(panel["id"], top)}</strong>'
+            f'<h3>{number:02d} · <a href="{top}/README.md">{display_title}</a></h3>\n'
+            f'<p><strong>{captions.get(panel["id"], display_title)}</strong>'
             f'<br><sub>{len(members)} 篇主报告 · {panel["tagline"]}</sub></p>\n'
             f'<p>{" · ".join(reps)}</p>\n'
             f'<p><a href="{top}/README.md"><strong>浏览板块 →</strong></a></p>\n'
@@ -1551,7 +1562,7 @@ PANEL_README_BLOCK = "panel-readme"
 PANEL_ONE_LINERS = {
     "Models": "厂商模型 / 系列逐个精读，按公司与模型家族归档。",
     "LLM": "语言模型能力与技术专题，覆盖推理、对齐、Agent、RAG 等方向。",
-    "VisualGen": "视觉与多模态生成，含视频 / 图像 / 3D / 音频 / 数字人与扩散基础。",
+    "AIGC": "图像、视频、音频、3D、数字人生成及相关架构与编辑方法。",
     "WorldModel": "世界模型与具身 VLA，关注环境动力学与可部署动作策略。",
     "AI4Science": "科学问题中的 AI 方法与实验闭环，按具体领域和证据链深入。",
     "Evaluation": "跨领域研究 AI 评测的构念效度、数据污染、评分可靠性与真实任务外推。",
@@ -1566,9 +1577,10 @@ def render_panel_readme(panel: dict, members: list, repo_root: str) -> str:
     卡头的 ``<div>`` 带 ``markdown="1"``：GitHub 与 MkDocs（md_in_html）都会
     正确渲染其中的 Markdown（不带时 MkDocs 会把整块当原始 HTML）。
     """
+    directory = panel_dir(panel)
     top = panel["title"]
     names = sorted(members, key=lambda d: d["path"])
-    one_liner = PANEL_ONE_LINERS.get(top, panel["tagline"])
+    one_liner = PANEL_ONE_LINERS.get(directory, panel["tagline"])
     lines = [
         '<div align="center" markdown="1">',
         '',
@@ -1593,7 +1605,7 @@ def render_panel_readme(panel: dict, members: list, repo_root: str) -> str:
     if topic_children:
         lines += ["## 专题内分析", "", "| 所属报告 | 分册入口 |", "| --- | --- |"]
         for entry, child in sorted(topic_children, key=lambda pair: pair[1]["path"]):
-            rel = os.path.relpath(child["path"], top).replace(os.sep, "/")
+            rel = os.path.relpath(child["path"], directory).replace(os.sep, "/")
             lines.append(
                 f'| {entry_short_name(entry)} | '
                 f'{link_label(rel, "", child["title"] or child["filename"])} |'
@@ -1605,7 +1617,7 @@ def render_panel_readme(panel: dict, members: list, repo_root: str) -> str:
     ]
     for doc in names:
         label = entry_short_name(doc)
-        rel = os.path.relpath(doc["path"], top).replace(os.sep, "/")
+        rel = os.path.relpath(doc["path"], directory).replace(os.sep, "/")
         lines.append(
             f'| **{label}** | [{doc["title"] or label}](<{rel}>) '
             f'| {doc["lines"]:,} 行 |'
@@ -1644,7 +1656,7 @@ def write_panel_readmes(repo_root: str, cfg: dict, mapping: dict, docs: list) ->
     entries = [d for d in docs if d["is_entry"]]
     written = []
     for panel in cfg["panels"]:
-        top = panel["title"]
+        top = panel_dir(panel)
         members = [d for d in entries if mapping.get(d["path"], {}).get("id") == panel["id"]]
         text = render_panel_readme(panel, members, repo_root)
         path = os.path.join(repo_root, top, PANEL_README_NAME)
@@ -1792,8 +1804,11 @@ def _site_nav_entry_lines(entries: list, mapping: dict, panel: dict) -> list:
     members = [d for d in entries
                if mapping.get(d["path"], {}).get("id") == panel["id"]]
     members.sort(key=lambda d: d["path"])
-    top = panel["title"]
-    lines = [f"    - {_yaml_dq(top + '/README.md')}"]
+    top = panel_dir(panel)
+    if panel["title"] == top:
+        lines = [f"    - {_yaml_dq(top + '/README.md')}"]
+    else:
+        lines = [f"    - {_yaml_dq(panel['title'])}: {_yaml_dq(top + '/README.md')}"]
     for doc in members:
         label = entry_short_name(doc)
         children = [c for c in doc.get("children", [])
@@ -1823,7 +1838,7 @@ def render_site_nav(cfg: dict, mapping: dict, docs: list, orphans: list) -> str:
         title = f"{panel['emoji']} {panel['title']} · {len(members)}"
         lines.append(f"  - {_yaml_dq(title)}:")
         lines.extend(_site_nav_entry_lines(entries, mapping, panel))
-        lines.extend(_site_nav_orphan_lines(orphans, panel["title"]))
+        lines.extend(_site_nav_orphan_lines(orphans, panel_dir(panel)))
 
     # 索引区（生成物，作为站点内容渲染）
     lines.append(f"  - {_yaml_dq('📇 索引')}:")
@@ -1906,7 +1921,7 @@ def _site_home_icon(panel_id: str) -> str:
         "models": '<path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/>',
         "llm": '<path d="M5 4h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-6 4V6a2 2 0 0 1 2-2Z"/><path d="M7 9h10M7 13h6"/>',
         "agents": '<rect x="5" y="7" width="14" height="13" rx="4"/><path d="M12 3v4m-3 6h.01M15 13h.01M9 17h6"/><path d="M5 11H3m18 0h-2"/>',
-        "visualgen": '<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 5-5 4 4 4-6 5 7"/>',
+        "aigc": '<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 5-5 4 4 4-6 5 7"/>',
         "worldmodel": '<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/>',
         "ai4science": '<path d="M9 3h6m-5 0v7l-4.5 8.2A1.5 1.5 0 0 0 6 20.5h12a1.5 1.5 0 0 0 1.5-2.3L15 10V3"/><path d="M7 15h10"/>',
         "evaluation": '<path d="M4 20h16M6 16V9m4 7V4m4 12v-5m4 5V7"/><path d="M4 4h2M18 4h2"/>',
@@ -1936,7 +1951,7 @@ def render_site_home(cfg: dict, mapping: dict, entries: list,
         "children", sum(len(d.get("children", [])) for d in entries))
     captions = {
         "models": "模型系列", "llm": "语言模型技术", "agents": "智能体系统",
-        "visualgen": "视觉与多模态",
+        "aigc": "AIGC（内容生成）",
         "worldmodel": "世界模型与具身", "ai4science": "科学研究应用",
         "evaluation": "跨领域评测科学",
         "infra": "训练与推理系统", "opensource": "开源代码研究",
@@ -1990,7 +2005,7 @@ def render_site_home(cfg: dict, mapping: dict, entries: list,
             '<div class="rr-panel-meta">'
             f'<span class="rr-panel-icon">{_site_home_icon(panel["id"])}</span>'
             f'<span class="rr-panel-number">{number:02d} / {len(members):02d} 条目</span></div>', "",
-            f'### [{captions.get(panel["id"], label(title))}](<{title}/README.md>){{ .rr-panel-link }}', "",
+            f'### [{captions.get(panel["id"], label(title))}](<{panel_dir(panel)}/README.md>){{ .rr-panel-link }}', "",
             f'<p class="rr-panel-english">{escape(title)}</p>', "",
             f'<p class="rr-panel-description">{escape(panel["tagline"])}</p>', "",
             '<div class="rr-panel-reps" markdown="1">', "",

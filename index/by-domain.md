@@ -22,6 +22,19 @@
 | [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) | 单细胞扰动预测：从“配对细胞”转向“群体响应” | research | 2026-10-23 | completed |
 | [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) | AI 天气与气候预测：从天气状态外推到强迫响应 | research | 2026-10-23 | completed |
 
+## AIGC (8)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [AIGC/3DGen/report.md](<../AIGC/3DGen/report.md>) | 3D 生成技术研究报告：从 DreamFusion SDS 蒸馏到 Tripo3D DiT 原生 3D 生成 | — | — | — |
+| [AIGC/AudioGen/report.md](<../AIGC/AudioGen/report.md>) | 音频/音乐生成技术研究报告 | — | — | — |
+| [AIGC/AvatarGen/report.md](<../AIGC/AvatarGen/report.md>) | 数字人与 Avatar 生成技术研究报告 | — | — | — |
+| [AIGC/ControllableGen/report.md](<../AIGC/ControllableGen/report.md>) | 可控生成（Controllable Generation）技术研究报告 | — | — | — |
+| [AIGC/DiT/report.md](<../AIGC/DiT/report.md>) | Diffusion Transformer (DiT) 架构演进研究报告 | — | — | — |
+| [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) | 扩散模型（Diffusion Models）基础框架与架构演进研究报告 | — | — | — |
+| [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) | 图像编辑与修复技术研究报告 | — | — | — |
+| [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) | 视频生成技术研究报告 | — | — | — |
+
 ## Agents (3)
 
 | 条目 | 标题 | type | date | status |
@@ -107,19 +120,6 @@
 | [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | SGLang 仓库代码分析报告 | repo-research | 2026-10-16 | completed |
 | [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | this-that-model 仓库深读 | repo-research | 2026-10-16 | completed |
 | [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | vLLM 仓库代码分析报告 | repo-research | 2026-10-16 | completed |
-
-## VisualGen (8)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [VisualGen/3DGen/report.md](<../VisualGen/3DGen/report.md>) | 3D 生成技术研究报告：从 DreamFusion SDS 蒸馏到 Tripo3D DiT 原生 3D 生成 | — | — | — |
-| [VisualGen/AudioGen/report.md](<../VisualGen/AudioGen/report.md>) | 音频/音乐生成技术研究报告 | — | — | — |
-| [VisualGen/AvatarGen/report.md](<../VisualGen/AvatarGen/report.md>) | 数字人与 Avatar 生成技术研究报告 | — | — | — |
-| [VisualGen/ControllableGen/report.md](<../VisualGen/ControllableGen/report.md>) | 可控生成（Controllable Generation）技术研究报告 | — | — | — |
-| [VisualGen/DiT/report.md](<../VisualGen/DiT/report.md>) | Diffusion Transformer (DiT) 架构演进研究报告 | — | — | — |
-| [VisualGen/DiffusionModels/report.md](<../VisualGen/DiffusionModels/report.md>) | 扩散模型（Diffusion Models）基础框架与架构演进研究报告 | — | — | — |
-| [VisualGen/ImageEditing/report.md](<../VisualGen/ImageEditing/report.md>) | 图像编辑与修复技术研究报告 | — | — | — |
-| [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) | 视频生成技术研究报告 | — | — | — |
 
 ## WorldModel (3)
 

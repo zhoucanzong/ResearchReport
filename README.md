@@ -59,10 +59,10 @@
 </tr>
 <tr>
 <td width="33%" valign="top">
-<h3>04 · <a href="VisualGen/README.md">VisualGen</a></h3>
-<p><strong>视觉与多模态</strong><br><sub>8 篇主报告 · 视觉与多模态生成</sub></p>
-<p><a href="VisualGen/VideoGen/report.md">视频生成</a> · <a href="VisualGen/DiT/report.md">扩散 Transformer（DiT）</a> · <a href="VisualGen/DiffusionModels/report.md">扩散模型</a></p>
-<p><a href="VisualGen/README.md"><strong>浏览板块 →</strong></a></p>
+<h3>04 · <a href="AIGC/README.md">AIGC（内容生成）</a></h3>
+<p><strong>AIGC（内容生成）</strong><br><sub>8 篇主报告 · 图像、视频、音频、3D、数字人生成及相关架构与编辑方法</sub></p>
+<p><a href="AIGC/VideoGen/report.md">视频生成</a> · <a href="AIGC/DiT/report.md">扩散 Transformer（DiT）</a> · <a href="AIGC/DiffusionModels/report.md">扩散模型</a></p>
+<p><a href="AIGC/README.md"><strong>浏览板块 →</strong></a></p>
 </td>
 <td width="33%" valign="top">
 <h3>05 · <a href="WorldModel/README.md">WorldModel</a></h3>
@@ -110,7 +110,7 @@
 | **[GPT](<Models/GPT/report.md>)**<br><sub>Models</sub> | OpenAI GPT 系列模型深度调研报告 |
 | **[推理模型与推理时计算](<LLM/ReasoningModels/report.md>)**<br><sub>LLM</sub> | 推理模型（Reasoning Models）与 Test-Time Compute 研究报告 |
 | **[智能体系统](<Agents/AgentSystems/report.md>)**<br><sub>Agents</sub> | Agent 系统：让模型在环境中持续完成任务 |
-| **[视频生成](<VisualGen/VideoGen/report.md>)**<br><sub>VisualGen</sub> | 视频生成技术研究报告 |
+| **[视频生成](<AIGC/VideoGen/report.md>)**<br><sub>AIGC（内容生成）</sub> | 视频生成技术研究报告 |
 | **[世界模型](<WorldModel/WorldModels/report.md>)**<br><sub>WorldModel</sub> | WorldModels 技术专题调研 |
 | **[蛋白质与肽结合体设计](<AI4Science/ProteinDesign/report.md>)**<br><sub>AI4Science</sub> | 蛋白质 binder 发现：从复合物生成到候选筛选 |
 | **[评测科学](<Evaluation/EvaluationScience/report.md>)**<br><sub>Evaluation</sub> | 评测科学：分数何时支持“模型更好”或“能力泛化” |
@@ -139,7 +139,7 @@
 | :-- | :-- |
 | **LLM** | [模型对齐与后训练](<LLM/Alignment/report.md>) · [决策模型（Decision Models）](<LLM/DecisionModels/report.md>) · [扩散语言模型](<LLM/DiffusionLM/report.md>) · [OCR 与文档解析](<LLM/DocumentParsing/report.md>) · [长上下文](<LLM/LongContext/report.md>) · [混合专家模型（MoE）](<LLM/MoE/report.md>) · [检索增强生成（RAG）](<LLM/RAG/report.md>) · [推理模型与推理时计算](<LLM/ReasoningModels/report.md>) · [LLM 后训练中的强化学习](<LLM/ReinforcementLearning/report.md>) · [训练数据策展](<LLM/TrainingData/report.md>) · [视觉语言模型（VLM）](<LLM/VLM/report.md>) |
 | **Agents** | [工具 Agent 安全](<Agents/AgentSecurity/report.md>) · [智能体系统](<Agents/AgentSystems/report.md>) · [电脑使用 Agent](<Agents/ComputerUse/report.md>) |
-| **VisualGen** | [3D 生成](<VisualGen/3DGen/report.md>) · [音频与音乐生成](<VisualGen/AudioGen/report.md>) · [数字人与 Avatar](<VisualGen/AvatarGen/report.md>) · [可控生成](<VisualGen/ControllableGen/report.md>) · [扩散 Transformer（DiT）](<VisualGen/DiT/report.md>) · [扩散模型](<VisualGen/DiffusionModels/report.md>) · [图像编辑与修复](<VisualGen/ImageEditing/report.md>) · [视频生成](<VisualGen/VideoGen/report.md>) |
+| **AIGC（内容生成）** | [3D 生成](<AIGC/3DGen/report.md>) · [音频与音乐生成](<AIGC/AudioGen/report.md>) · [数字人与 Avatar](<AIGC/AvatarGen/report.md>) · [可控生成](<AIGC/ControllableGen/report.md>) · [扩散 Transformer（DiT）](<AIGC/DiT/report.md>) · [扩散模型](<AIGC/DiffusionModels/report.md>) · [图像编辑与修复](<AIGC/ImageEditing/report.md>) · [视频生成](<AIGC/VideoGen/report.md>) |
 | **WorldModel** | [具身预测规划](<WorldModel/EmbodiedPlanning/report.md>) · [机器人视觉语言动作模型（VLA）](<WorldModel/EmbodiedVLA/report.md>) · [世界模型](<WorldModel/WorldModels/report.md>) |
 | **AI4Science** | [抗生素发现](<AI4Science/AntibioticDiscovery/report.md>) · [天文图像异常发现](<AI4Science/Astronomy/report.md>) · [自主实验室](<AI4Science/AutonomousLabs/report.md>) · [化学反应条件优化](<AI4Science/Chemistry/report.md>) · [生成式材料设计](<AI4Science/MaterialsDiscovery/report.md>) · [数学与算法发现](<AI4Science/MathematicalDiscovery/report.md>) · [神经活动表征与解码](<AI4Science/Neuroscience/report.md>) · [蛋白质与肽结合体设计](<AI4Science/ProteinDesign/report.md>) · [单细胞扰动预测](<AI4Science/SingleCellPerturbation/report.md>) · [天气与气候预测](<AI4Science/WeatherClimate/report.md>) |
 | **Evaluation** | [评测科学](<Evaluation/EvaluationScience/report.md>) · [科学发现的评测方法](<Evaluation/ScientificDiscovery/report.md>) |
@@ -161,7 +161,7 @@
 ### 完整索引
 
 <!-- SCRIPT:index START · 条目单一真值在 index/by-report.md -->
-共 **72** 条，分属 **9** 个板块：Models 23 · LLM 11 · Agents 3 · VisualGen 8 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6。
+共 **72** 条，分属 **9** 个板块：Models 23 · LLM 11 · Agents 3 · AIGC（内容生成） 8 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6。
 完整 72 行（条目 | 板块 | 路径）见 **[index/by-report.md](<index/by-report.md>)**；按域 / 主题 / 来源分面见 [index/](<index/>)，总目录见 [INDEX.md](<INDEX.md>)。
 <!-- SCRIPT:index END -->
 
@@ -174,7 +174,7 @@ ResearchReport/    72 条目 · 43 研究专题 · 9 板块
 ├─ 🧠 Models/        23 条 · 厂商模型 / 系列逐个精读（GPT · Qwen · Gemini …）
 ├─ 💬 LLM/           11 条 · 语言模型能力、训练数据与技术专题（推理模型与推理时计算 · 长上下文 · 混合专家模型（MoE） …）
 ├─ 🤖 Agents/         3 条 · 智能体架构、记忆、工具使用与长期执行（智能体系统 · 电脑使用 Agent · 工具 Agent 安全 …）
-├─ 🎨 VisualGen/      8 条 · 视觉与多模态生成（视频生成 · 扩散 Transformer（DiT） · 扩散模型 …）
+├─ 🎨 AIGC/           8 条 · 图像、视频、音频、3D、数字人生成及相关架构与编辑方法（视频生成 · 扩散 Transformer（DiT） · 扩散模型 …）
 ├─ 🌍 WorldModel/     3 条 · 世界模型与具身 VLA（世界模型 · 机器人视觉语言动作模型（VLA） · 具身预测规划 …）
 ├─ 🧪 AI4Science/    10 条 · 科学问题中的 AI 方法与实验闭环（蛋白质与肽结合体设计 · 生成式材料设计 · 天气与气候预测 …）
 ├─ 📏 Evaluation/     2 条 · 跨领域 AI 评测与测量方法（评测科学 · 科学发现的评测方法 …）

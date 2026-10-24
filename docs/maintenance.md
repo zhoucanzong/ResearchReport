@@ -67,7 +67,7 @@ git push origin main
 # 例：从 GitHub 取上游 AIGC-Research 存档
 git clone https://github.com/zhoucanzong/AIGC-Research.git /tmp/AIGC-Research
 rsync -a --delete --exclude '.git' --exclude '.DS_Store' \
-  /tmp/AIGC-Research/ ResearchReport/   # 上游内容按新板块目录归位（Models/ VisualGen/ WorldModel/）
+  /tmp/AIGC-Research/ ResearchReport/   # 上游内容按新板块目录归位（Models/ AIGC/ WorldModel/）
 
 cd ResearchReport && git add -A && git commit -m "同步上游 AIGC-Research"
 ```
@@ -127,7 +127,7 @@ cd .. && git add -A && git commit -m "新增 XXX 深度阅读" && git push origi
 ```bash
 git ls-files | wc -l                                    # 跟踪文件数
 git ls-files '*.md' | wc -l                             # 全仓库 .md 数
-git ls-files 'Models/*.md' 'LLM/*.md' 'VisualGen/*.md' 'WorldModel/*.md' 'AI4Science/*.md' 'Infra/*.md' 'OpenSource/*.md' | grep -vc 'README\.md$'   # 报告数（精确值以索引统计为准）
+git ls-files 'Models/*.md' 'LLM/*.md' 'AIGC/*.md' 'WorldModel/*.md' 'AI4Science/*.md' 'Infra/*.md' 'OpenSource/*.md' | grep -vc 'README\.md$'   # 报告数（精确值以索引统计为准）
 find <dir> -type f -exec stat -f '%z' {} + | awk '{s+=$1} END{print s}'          # 字节数
 du -sk <dir>                                            # 磁盘占用
 ```
@@ -146,7 +146,7 @@ git ls-files -s | awk '{print $1}' | sort | uniq -c              # 期望全部 
 # 2) 计数
 git ls-files | wc -l
 git ls-files '*.md' | wc -l
-git ls-files 'Models/*.md' 'LLM/*.md' 'VisualGen/*.md' 'WorldModel/*.md' 'Infra/*.md' | grep -vc 'README\.md$'   # 期望（按新目录重算）
+git ls-files 'Models/*.md' 'LLM/*.md' 'AIGC/*.md' 'WorldModel/*.md' 'Infra/*.md' | grep -vc 'README\.md$'   # 期望（按新目录重算）
 
 # 3) 工作区干净
 git status --short

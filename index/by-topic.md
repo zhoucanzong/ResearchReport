@@ -13,7 +13,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [VisualGen/3DGen/report.md](<../VisualGen/3DGen/report.md>) | 3D 生成技术研究报告：从 DreamFusion SDS 蒸馏到 Tripo3D DiT 原生 3D 生成 | — | — | — |
+| [AIGC/3DGen/report.md](<../AIGC/3DGen/report.md>) | 3D 生成技术研究报告：从 DreamFusion SDS 蒸馏到 Tripo3D DiT 原生 3D 生成 | — | — | — |
 
 ## Claude (1)
 
@@ -241,13 +241,13 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [VisualGen/ControllableGen/report.md](<../VisualGen/ControllableGen/report.md>) | 可控生成（Controllable Generation）技术研究报告 | — | — | — |
+| [AIGC/ControllableGen/report.md](<../AIGC/ControllableGen/report.md>) | 可控生成（Controllable Generation）技术研究报告 | — | — | — |
 
 ## 图像编辑与修复 (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [VisualGen/ImageEditing/report.md](<../VisualGen/ImageEditing/report.md>) | 图像编辑与修复技术研究报告 | — | — | — |
+| [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) | 图像编辑与修复技术研究报告 | — | — | — |
 
 ## 在线推理服务与评测 (1)
 
@@ -283,13 +283,13 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [VisualGen/DiT/report.md](<../VisualGen/DiT/report.md>) | Diffusion Transformer (DiT) 架构演进研究报告 | — | — | — |
+| [AIGC/DiT/report.md](<../AIGC/DiT/report.md>) | Diffusion Transformer (DiT) 架构演进研究报告 | — | — | — |
 
 ## 扩散模型 (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [VisualGen/DiffusionModels/report.md](<../VisualGen/DiffusionModels/report.md>) | 扩散模型（Diffusion Models）基础框架与架构演进研究报告 | — | — | — |
+| [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) | 扩散模型（Diffusion Models）基础框架与架构演进研究报告 | — | — | — |
 
 ## 扩散语言模型 (1)
 
@@ -319,7 +319,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [VisualGen/AvatarGen/report.md](<../VisualGen/AvatarGen/report.md>) | 数字人与 Avatar 生成技术研究报告 | — | — | — |
+| [AIGC/AvatarGen/report.md](<../AIGC/AvatarGen/report.md>) | 数字人与 Avatar 生成技术研究报告 | — | — | — |
 
 ## 数学与算法发现 (1)
 
@@ -409,7 +409,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) | 视频生成技术研究报告 | — | — | — |
+| [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) | 视频生成技术研究报告 | — | — | — |
 
 ## 训练数据策展 (1)
 
@@ -439,7 +439,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [VisualGen/AudioGen/report.md](<../VisualGen/AudioGen/report.md>) | 音频/音乐生成技术研究报告 | — | — | — |
+| [AIGC/AudioGen/report.md](<../AIGC/AudioGen/report.md>) | 音频/音乐生成技术研究报告 | — | — | — |
 
 ## 专题内分析分册（17）
 

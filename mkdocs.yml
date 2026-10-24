@@ -108,6 +108,15 @@ extra_javascript:
 # 内容迁移后保留旧网页地址；跳转页仅在构建产物中生成。
 extra:
   page_redirects:
+    "VisualGen/README.md": "AIGC/README.md"
+    "VisualGen/3DGen/report.md": "AIGC/3DGen/report.md"
+    "VisualGen/AudioGen/report.md": "AIGC/AudioGen/report.md"
+    "VisualGen/AvatarGen/report.md": "AIGC/AvatarGen/report.md"
+    "VisualGen/ControllableGen/report.md": "AIGC/ControllableGen/report.md"
+    "VisualGen/DiT/report.md": "AIGC/DiT/report.md"
+    "VisualGen/DiffusionModels/report.md": "AIGC/DiffusionModels/report.md"
+    "VisualGen/ImageEditing/report.md": "AIGC/ImageEditing/report.md"
+    "VisualGen/VideoGen/report.md": "AIGC/VideoGen/report.md"
     "LLM/VLM/topics/document-parsing.md": "LLM/DocumentParsing/report.md"
     "LLM/VLM/papers/2412.07626-omnidocbench.md": "LLM/DocumentParsing/papers/2412.07626-omnidocbench.md"
     "LLM/VLM/papers/2505.14059-bytedance-dolphin.md": "LLM/DocumentParsing/papers/2505.14059-bytedance-dolphin.md"
@@ -290,16 +299,16 @@ nav:
         - "总报告": "Agents/ComputerUse/report.md"
         - "2606.09426-weavebench": "Agents/ComputerUse/papers/2606.09426-weavebench.md"
         - "2606.29537-osworld2": "Agents/ComputerUse/papers/2606.29537-osworld2.md"
-  - "🎨 VisualGen · 8":
-    - "VisualGen/README.md"
-    - "3D 生成": "VisualGen/3DGen/report.md"
-    - "音频与音乐生成": "VisualGen/AudioGen/report.md"
-    - "数字人与 Avatar": "VisualGen/AvatarGen/report.md"
-    - "可控生成": "VisualGen/ControllableGen/report.md"
-    - "扩散 Transformer（DiT）": "VisualGen/DiT/report.md"
-    - "扩散模型": "VisualGen/DiffusionModels/report.md"
-    - "图像编辑与修复": "VisualGen/ImageEditing/report.md"
-    - "视频生成": "VisualGen/VideoGen/report.md"
+  - "🎨 AIGC（内容生成） · 8":
+    - "AIGC（内容生成）": "AIGC/README.md"
+    - "3D 生成": "AIGC/3DGen/report.md"
+    - "音频与音乐生成": "AIGC/AudioGen/report.md"
+    - "数字人与 Avatar": "AIGC/AvatarGen/report.md"
+    - "可控生成": "AIGC/ControllableGen/report.md"
+    - "扩散 Transformer（DiT）": "AIGC/DiT/report.md"
+    - "扩散模型": "AIGC/DiffusionModels/report.md"
+    - "图像编辑与修复": "AIGC/ImageEditing/report.md"
+    - "视频生成": "AIGC/VideoGen/report.md"
   - "🌍 WorldModel · 3":
     - "WorldModel/README.md"
     - "具身预测规划":
