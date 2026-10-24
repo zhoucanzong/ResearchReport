@@ -114,6 +114,7 @@ nav:
   - "首页": "README.md"
   - "✨ 专题直达":
       - "OCR 与文档解析": "LLM/VLM/topics/document-parsing.md"
+      - "全部专题与子专题": "index/by-topic.md"
   - "🧠 Models · 23":
     - "Models/README.md"
     - "Alibaba-Gen": "Models/Alibaba-Gen/report.md"

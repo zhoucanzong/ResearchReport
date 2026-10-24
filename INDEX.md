@@ -50,7 +50,7 @@
 | [index/by-domain.md](<index/by-domain.md>) | 按领域（domain） |
 | [index/by-subject.md](<index/by-subject.md>) | 按主题（subject） |
 | [index/by-repo.md](<index/by-repo.md>) | 按来源仓库（upstream / 本地库根） |
-| [index/by-topic.md](<index/by-topic.md>) | 按专题（topic） |
+| [index/by-topic.md](<index/by-topic.md>) | 按专题与专题子文档 |
 | [index/by-report.md](<index/by-report.md>) | 按条目（report.md）平铺 |
 | [index/recent.md](<index/recent.md>) | 最近更新（按 date 降序） |
 | [index/stale.md](<index/stale.md>) | 陈旧 / 待复核（status 或超期） |
@@ -1216,7 +1216,7 @@
 | [docs/statistics.md](<docs/statistics.md>) | docs | 215 | 15,662 B |
 | [docs/team.md](<docs/team.md>) | docs | 64 | 5,611 B |
 | [docs/verification.md](<docs/verification.md>) | docs | 21 | 1,991 B |
-| [scripts/README.md](<scripts/README.md>) | scripts | 101 | 4,903 B |
+| [scripts/README.md](<scripts/README.md>) | scripts | 101 | 4,956 B |
 
 
 ## 说明

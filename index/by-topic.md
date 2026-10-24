@@ -1,4 +1,4 @@
-# 按专题（topic）
+# 按专题与专题子文档
 
 > 本文件由 scripts/library_index.py 自动生成，请勿手改。
 > 生成命令：`python3 scripts/library_index.py --repo-root . --out-root .`
@@ -6,6 +6,8 @@
 > 条目口径：条目 = `report.md`
 
 ---
+
+上半部分按主报告的 `topic` 元数据归类；下半部分汇总各报告下的 `topics/` 子专题，可直接进入跨论文分析，不必先展开父报告的子文档清单。
 
 ## 3DGen (1)
 
@@ -432,3 +434,25 @@
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | vLLM 仓库代码分析报告 | repo-research | 2026-10-16 | completed |
+
+## 专题子文档直达（17）
+
+| 所属报告 | 专题入口 |
+| --- | --- |
+| [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) | [长程 Agent 的执行恢复：诊断、回滚与学习修正](<../Agents/AgentSystems/topics/long-horizon-execution-recovery.md>) |
+| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | [横切专题①：投机解码的算法家族谱系](<../Infra/SpeculativeDecoding/topics/algorithm-families.md>) |
+| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | [横切专题③：系统实现与吞吐—延迟权衡](<../Infra/SpeculativeDecoding/topics/systems-throughput-latency.md>) |
+| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | [横切专题②：验证、接受率与无损性的适用条件](<../Infra/SpeculativeDecoding/topics/verification-acceptance.md>) |
+| [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | [预训练数据配比：从稳健重加权到代理回归](<../LLM/TrainingData/topics/data-mixture.md>) |
+| [LLM/VLM/report.md](<../LLM/VLM/report.md>) | [OCR 与文档解析：从字符识别到结构还原](<../LLM/VLM/topics/document-parsing.md>) |
+| [LLM/VLM/report.md](<../LLM/VLM/report.md>) | [VLM 评测的输入预算与 grounding：模型究竟看到了什么？](<../LLM/VLM/topics/evaluation-input-budget.md>) |
+| [LLM/VLM/report.md](<../LLM/VLM/report.md>) | [VLMEvalKit 如何把 Video-MME 的回答变成分数](<../LLM/VLM/topics/vlmevalkit-video-mme-path.md>) |
+| [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | [工具副作用与会话持久化：记录“要做”不等于记录“做成了”](<../OpenSource/DeepSeekHarness/topics/tool-effect-durability.md>) |
+| [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | [横切专题：动作表征三路线（token / flow matching / diffusion head）](<../WorldModel/EmbodiedVLA/topics/action-representation.md>) |
+| [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | [横切专题：机器人闭环控制与 VLA](<../WorldModel/EmbodiedVLA/topics/closed-loop-control.md>) |
+| [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | [横切专题：失效边界与部署条件](<../WorldModel/EmbodiedVLA/topics/deployment-boundaries.md>) |
+| [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | [横切专题：评测与数据集（真机 vs 仿真、协议、规模与许可）](<../WorldModel/EmbodiedVLA/topics/evaluation-and-datasets.md>) |
+| [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | [世界模型怎样把预测变成 VLA 的真实改进？](<../WorldModel/EmbodiedVLA/topics/world-model-to-vla-transfer.md>) |
+| [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | [横切专题：环境动力学与动作条件化](<../WorldModel/WorldModels/topics/dynamics-and-action-conditioning.md>) |
+| [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | [横切专题：不可比性清单（评测碎片化）](<../WorldModel/WorldModels/topics/incomparability-checklist.md>) |
+| [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | [横切专题：世界模型作训练 / 评测环境](<../WorldModel/WorldModels/topics/world-model-as-env.md>) |

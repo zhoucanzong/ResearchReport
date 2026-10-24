@@ -18,7 +18,7 @@
 <div align="center">
 
 <!-- SCRIPT:badges START -->
-[**71** 主报告](index/by-report.md) &nbsp; · &nbsp; [**257** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**42** 技术专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
+[**71** 主报告](index/by-report.md) &nbsp; · &nbsp; [**257** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**42** 主报告主题](index/by-topic.md) &nbsp; · &nbsp; [**17** 跨报告子专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
 <!-- SCRIPT:badges END -->
 
 </div>
@@ -145,6 +145,7 @@
 | **Evaluation** | [EvaluationScience](<Evaluation/EvaluationScience/report.md>) · [ScientificDiscovery](<Evaluation/ScientificDiscovery/report.md>) |
 | **Infra** | [KVCachePD](<Infra/KVCachePD/report.md>) · [MoEExecution](<Infra/MoEExecution/report.md>) · [QuantizationEdge](<Infra/QuantizationEdge/report.md>) · [ServingEvaluation](<Infra/ServingEvaluation/report.md>) · [SpeculativeDecoding](<Infra/SpeculativeDecoding/report.md>) · [TrainingInfra](<Infra/TrainingInfra/report.md>) |
 | **专题直达** | [OCR 与文档解析](<LLM/VLM/topics/document-parsing.md>) — 从版面、阅读顺序与结构恢复，到多家团队近年路线的精读。 |
+| **全部子专题** | [查看 17 篇专题子文档](<index/by-topic.md>) |
 <!-- SCRIPT:topics END -->
 
 ## 阅读与引用
@@ -169,7 +170,7 @@
 
 <!-- SCRIPT:structure START · 来源 scripts/panels.json，配置驱动 -->
 ```text
-ResearchReport/    71 条目 · 42 专题 · 9 板块
+ResearchReport/    71 条目 · 42 主报告主题 · 17 跨报告子专题 · 9 板块
 │
 ├─ 🧠 Models/        23 条 · 厂商模型 / 系列逐个精读（GPT · Qwen · Gemini …）
 ├─ 💬 LLM/           10 条 · 语言模型能力、训练数据与技术专题（ReasoningModels · LongContext · MoE …）

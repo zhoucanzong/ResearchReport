@@ -47,7 +47,7 @@ python3 scripts/library_index.py --repo-root . --out-root . --check-links
 | `index/by-domain.md` | 按领域（`domain`）分组 |
 | `index/by-subject.md` | 按主题（`subject`）分组 |
 | `index/by-repo.md` | 按来源仓库（`upstream`，缺省时退回本地一级目录）分组 |
-| `index/by-topic.md` | 按专题（`topic`）分组 |
+| `index/by-topic.md` | 按报告 `topic` 分组，并集中直达各报告下的 `topics/*.md` 子专题 |
 | `index/recent.md` | 按 `date` 降序的最近条目 |
 | `index/stale.md` | `status` 非 active 或 `date` 超期的待复核条目 |
 

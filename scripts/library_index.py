@@ -74,7 +74,7 @@ FACET_TITLES = {
     "by-domain": "按领域（domain）",
     "by-subject": "按主题（subject）",
     "by-repo": "按来源仓库（upstream / 本地库根）",
-    "by-topic": "按专题（topic）",
+    "by-topic": "按专题与专题子文档",
     "by-report": "按条目（report.md）平铺",
     "recent": "最近更新（按 date 降序）",
     "stale": "陈旧 / 待复核（status 或超期）",
@@ -1068,6 +1068,33 @@ def render_stale(entries: list, out_root: str, dry_run: bool, stale_days: int) -
     return "\n".join(lines)
 
 
+def render_by_topic(entries: list, out_root: str, dry_run: bool) -> str:
+    """先列 report 的 topic 标签，再列可直达的 topics/ 子专题文档。"""
+    lines = header(FACET_TITLES["by-topic"], out_root, dry_run)
+    lines += [
+        "上半部分按主报告的 `topic` 元数据归类；下半部分汇总各报告下的 `topics/` 子专题，"
+        "可直接进入跨论文分析，不必先展开父报告的子文档清单。",
+        "",
+    ]
+    lines += group_table(entries, lambda e: e["topic"] or UNFILED)
+
+    children = []
+    for entry in entries:
+        for child in entry.get("children", []):
+            if "topics" in child["path"].split("/"):
+                children.append((entry, child))
+    if children:
+        lines += [f"## 专题子文档直达（{len(children)}）", "",
+                  "| 所属报告 | 专题入口 |", "| --- | --- |"]
+        for entry, child in sorted(children, key=lambda pair: (pair[0]["path"], pair[1]["path"])):
+            lines.append(
+                f"| {link(entry['path'], '../')} | "
+                f"{link_label(child['path'], '../', child['title'] or child['filename'])} |"
+            )
+        lines.append("")
+    return "\n".join(lines)
+
+
 def render_facets(entries: list, out_root: str, dry_run: bool, args, mapping: dict) -> dict:
     return {
         "by-domain": "\n".join(header(FACET_TITLES["by-domain"], out_root, dry_run)
@@ -1075,8 +1102,7 @@ def render_facets(entries: list, out_root: str, dry_run: bool, args, mapping: di
         "by-subject": "\n".join(header(FACET_TITLES["by-subject"], out_root, dry_run)
                                 + group_table(entries, lambda e: e["subject"])),
         "by-repo": render_by_repo(entries, out_root, dry_run),
-        "by-topic": "\n".join(header(FACET_TITLES["by-topic"], out_root, dry_run)
-                              + group_table(entries, lambda e: e["topic"] or UNFILED)),
+        "by-topic": render_by_topic(entries, out_root, dry_run),
         "by-report": render_by_report(entries, out_root, dry_run, mapping),
         "recent": render_recent(entries, out_root, dry_run, args.recent_limit),
         "stale": render_stale(entries, out_root, dry_run, args.stale_days),
@@ -1311,14 +1337,16 @@ def last_commit_date(repo_root: str, fallback: _dt.date) -> _dt.date:
 
 
 
-def render_badges(stats: dict, topics: int, today: _dt.date, panels: int | None = None) -> str:
+def render_badges(stats: dict, topics: int, today: _dt.date, panels: int | None = None,
+                  topic_children: int = 0) -> str:
     """GitHub 原生统计导航，不依赖远程徽章图片；保留旧调用签名。"""
     if panels is None:
         panels = stats.get("totals", {}).get("libraries", 0)
     items = [
         (stats["entries"]["total"], "主报告", "index/by-report.md"),
         (stats["entries"]["children"], "分册与子文档", "INDEX.md"),
-        (topics, "技术专题", "index/by-topic.md"),
+        (topics, "主报告主题", "index/by-topic.md"),
+        (topic_children, "跨报告子专题", "index/by-topic.md"),
         (panels, "研究板块", "#研究板块"),
     ]
     return " &nbsp; · &nbsp; ".join(
@@ -1330,9 +1358,14 @@ def render_structure_block(cfg: dict, mapping: dict, entries: list) -> str:
     """图书馆结构树（代码块，GitHub 与站点都可读）：板块计数、代表条目与生成管线。"""
     topic_ids = {p["id"] for p in cfg["panels"] if p.get("topic_index", False)}
     topics = sum(1 for d in entries if mapping.get(d["path"], {}).get("id") in topic_ids)
+    topic_children = sum(
+        1 for d in entries for child in d.get("children", [])
+        if "topics" in child["path"].split("/")
+    )
     lines = [
         "```text",
-        f"ResearchReport/    {len(entries)} 条目 · {topics} 专题 · {len(cfg['panels'])} 板块",
+        f"ResearchReport/    {len(entries)} 条目 · {topics} 主报告主题 · "
+        f"{topic_children} 跨报告子专题 · {len(cfg['panels'])} 板块",
         "│",
     ]
     panels = cfg["panels"]
@@ -1433,6 +1466,14 @@ def render_topics_block(entries: list, mapping: dict, panels: list,
         lines.append(
             f"| **专题直达** | [{title}](<{shortcut['path']}>) — {description} |"
         )
+    child_topics = sum(
+        1 for entry in entries for child in entry.get("children", [])
+        if "topics" in child["path"].split("/")
+    )
+    if child_topics:
+        lines.append(
+            f"| **全部子专题** | [查看 {child_topics} 篇专题子文档](<index/by-topic.md>) |"
+        )
     return "\n".join(lines)
 
 
@@ -1469,10 +1510,16 @@ def render_readme_blocks(cfg: dict, entries: list, stats: dict, mapping: dict,
                          repo_root: str, today: _dt.date) -> dict:
     topic_ids = {p["id"] for p in cfg["panels"] if p.get("topic_index", False)}
     topics = sum(1 for d in entries if mapping.get(d["path"], {}).get("id") in topic_ids)
+    topic_children = sum(
+        1 for d in entries for child in d.get("children", [])
+        if "topics" in child["path"].split("/")
+    )
     # 「更新日期」徽章取最后一次提交日，而非当天 wall-clock：跨零点不漂，任意一天重跑字节一致。
     badge_date = last_commit_date(repo_root, today)
     return {
-        "badges": render_badges(stats, topics, badge_date, len(cfg["panels"])),
+        "badges": render_badges(
+            stats, topics, badge_date, len(cfg["panels"]), topic_children
+        ),
         "structure": render_structure_block(cfg, mapping, entries),
         "panels": render_panels_block(cfg, mapping, entries),
         "highlights": render_highlights_block(cfg, mapping, entries),
@@ -1572,6 +1619,7 @@ def render_panel_readme(panel: dict, members: list, repo_root: str,
         for item in visible_shortcuts:
             rel = os.path.relpath(item["path"], top).replace(os.sep, "/")
             lines.append(f'* [{item["title"]}](<{rel}>) — {item["description"]}')
+        lines.append('* [查看全部跨论文专题与子专题](<../index/by-topic.md>)')
         lines.append("")
     lines += [
         '| 条目 | 报告 | 规模 |',
@@ -1794,6 +1842,10 @@ def render_site_nav(cfg: dict, mapping: dict, docs: list, orphans: list) -> str:
         lines.append(f"  - {_yaml_dq('✨ 专题直达')}:")
         for item in shortcuts:
             lines.append(f"      - {_yaml_dq(item['title'])}: {_yaml_dq(item['path'])}")
+        lines.append(
+            f"      - {_yaml_dq('全部专题与子专题')}: "
+            f"{_yaml_dq(GENERATED_DIR + '/by-topic.md')}"
+        )
     for panel in cfg["panels"]:
         members = [d for d in entries
                    if mapping.get(d["path"], {}).get("id") == panel["id"]]
@@ -1910,6 +1962,10 @@ def render_site_home(cfg: dict, mapping: dict, entries: list,
     topics_entries = [d for d in entries
                       if mapping.get(d["path"], {}).get("id") in topic_ids]
     topic_names = {d["topic"] for d in topics_entries if d.get("topic")}
+    topic_children = [
+        (entry, child) for entry in entries for child in entry.get("children", [])
+        if "topics" in child["path"].split("/")
+    ]
     child_count = stats.get("entries", {}).get(
         "children", sum(len(d.get("children", [])) for d in entries))
     captions = {
@@ -1945,7 +2001,7 @@ def render_site_home(cfg: dict, mapping: dict, entries: list,
         '<div class="rr-discovery" markdown="1">', "",
         '<label for="__search" class="rr-search-launch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><span>搜索模型、论文或技术问题</span><kbd>/</kbd></label>', "",
         '<div class="rr-quicklinks" markdown="1">', "",
-        f'[按专题探索](<{GENERATED_DIR}/by-topic.md>) · '
+        f'[专题与子专题索引](<{GENERATED_DIR}/by-topic.md>) · '
         + " · ".join(
             f'[{label(item["title"])}](<{item["path"]}>)'
             for item in cfg.get("topic_shortcuts", [])
@@ -2020,7 +2076,7 @@ def render_site_home(cfg: dict, mapping: dict, entries: list,
         lines += ['<section class="rr-section rr-topics" markdown="1">', "",
                   '<div class="rr-section-heading" markdown="1">', "",
                   '## 你关注的问题', "",
-                  f'<span>{len(topic_names)} 个研究方向入口，以及精选跨论文专题。</span>', "",
+                  f'<span>{len(topic_names)} 个主报告主题 · {len(topic_children)} 篇专题子文档，可直接进入精读。</span>', "",
                   '</div>', "", '<div class="rr-topic-links" markdown="1">', ""]
         for doc in sorted(topics_entries, key=lambda d: d["path"]):
             lines += [f'[{label(entry_short_name(doc))}](<{doc["path"]}>){{ .rr-topic }}', ""]
