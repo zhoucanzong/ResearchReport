@@ -327,6 +327,8 @@ Qwen3-VL“99.5%@1M”的具体协议与原始表仍待复核，本文不再据�
 
 视频与文档基准的帧/页面输入预算、分模态指标和 VLMEvalKit 一条实际解析路径见[输入预算与 grounding 专题](topics/evaluation-input-budget.md)；跨模型成绩应先核对真实输入协议，不能只按基准名称并表。
 
+若重点是 OCR 与页面结构恢复，另见[文档解析专题](topics/document-parsing.md)：它从字符、版面、阅读顺序、表格和公式几种任务解释架构取舍及 grounding 评测边界。
+
 ## 6. 应用场景
 
 ### 6.1 按模态组合分类

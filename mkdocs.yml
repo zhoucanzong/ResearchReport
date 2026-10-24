@@ -223,6 +223,10 @@ nav:
         - "总报告": "LLM/VLM/report.md"
         - "2405.21075-videomme": "LLM/VLM/papers/2405.21075-videomme.md"
         - "2412.07626-omnidocbench": "LLM/VLM/papers/2412.07626-omnidocbench.md"
+        - "2510.14528-paddleocr-vl": "LLM/VLM/papers/2510.14528-paddleocr-vl.md"
+        - "2603.24326-coarse-to-fine": "LLM/VLM/papers/2603.24326-coarse-to-fine.md"
+        - "2603.28130-mdpbench": "LLM/VLM/papers/2603.28130-mdpbench.md"
+        - "document-parsing": "LLM/VLM/topics/document-parsing.md"
         - "evaluation-input-budget": "LLM/VLM/topics/evaluation-input-budget.md"
         - "vlmevalkit-video-mme-path": "LLM/VLM/topics/vlmevalkit-video-mme-path.md"
   - "🤖 Agents · 3":

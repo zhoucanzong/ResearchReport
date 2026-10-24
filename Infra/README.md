@@ -47,7 +47,7 @@
 
 * [papers/2401.09670-distserve.md](<ServingEvaluation/papers/2401.09670-distserve.md>) — 23 行 / 3,276 B
 * [papers/2410.14257-slo-goodput.md](<ServingEvaluation/papers/2410.14257-slo-goodput.md>) — 33 行 / 4,110 B
-* [sources/MANIFEST.md](<ServingEvaluation/sources/MANIFEST.md>) — 10 行 / 2,375 B
+* [sources/MANIFEST.md](<ServingEvaluation/sources/MANIFEST.md>) — 9 行 / 1,815 B
 
 </details>
 

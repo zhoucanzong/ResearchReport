@@ -24,7 +24,7 @@
 | **ReasoningModels** | [推理模型（Reasoning Models）与 Test-Time Compute 研究报告](<ReasoningModels/report.md>) | 675 行 |
 | **ReinforcementLearning** | [LLM 后训练中的强化学习：轨迹从哪里来，策略何时更新](<ReinforcementLearning/report.md>) | 107 行 |
 | **TrainingData** | [训练数据策展：筛选、去重与配比如何改变训练结果](<TrainingData/report.md>) | 60 行 |
-| **VLM** | [多模态大模型（Vision-Language Models, VLM）研究报告](<VLM/report.md>) | 518 行 |
+| **VLM** | [多模态大模型（Vision-Language Models, VLM）研究报告](<VLM/report.md>) | 520 行 |
 
 ## 📎 子文档
 
@@ -97,10 +97,14 @@
 </details>
 
 <details>
-<summary><b>VLM</b>（4 份）</summary>
+<summary><b>VLM</b>（8 份）</summary>
 
 * [papers/2405.21075-videomme.md](<VLM/papers/2405.21075-videomme.md>) — 35 行 / 7,567 B
 * [papers/2412.07626-omnidocbench.md](<VLM/papers/2412.07626-omnidocbench.md>) — 42 行 / 9,196 B
+* [papers/2510.14528-paddleocr-vl.md](<VLM/papers/2510.14528-paddleocr-vl.md>) — 53 行 / 10,262 B
+* [papers/2603.24326-coarse-to-fine.md](<VLM/papers/2603.24326-coarse-to-fine.md>) — 67 行 / 9,354 B
+* [papers/2603.28130-mdpbench.md](<VLM/papers/2603.28130-mdpbench.md>) — 51 行 / 10,106 B
+* [topics/document-parsing.md](<VLM/topics/document-parsing.md>) — 60 行 / 7,664 B
 * [topics/evaluation-input-budget.md](<VLM/topics/evaluation-input-budget.md>) — 46 行 / 6,584 B
 * [topics/vlmevalkit-video-mme-path.md](<VLM/topics/vlmevalkit-video-mme-path.md>) — 51 行 / 10,053 B
 

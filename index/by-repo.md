@@ -49,7 +49,7 @@
 * [LLM/RAG/report.md](<../LLM/RAG/report.md>) — 834 行
 * [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) — 675 行
 * [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) — 60 行
-* [LLM/VLM/report.md](<../LLM/VLM/report.md>) — 518 行
+* [LLM/VLM/report.md](<../LLM/VLM/report.md>) — 520 行
 
 ## Models (23)
 

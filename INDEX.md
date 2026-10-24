@@ -15,15 +15,15 @@
 | --- | --- |
 | **条目数**（`report.md`） | **71** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 10 · Agents 3 · VisualGen 8 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6 |
-| 条目子文档数 | 241 |
-| 条目正文行数（剔除 front-matter） | 28,329 |
-| 条目字节 | 2,184,035 B |
+| 条目子文档数 | 245 |
+| 条目正文行数（剔除 front-matter） | 28,331 |
+| 条目字节 | 2,184,031 B |
 | 带 front-matter 的条目 | 29 |
 | 带合法 `date` 的条目 | 29 |
-| 文档（除生成物外的全部 `.md`） | 333 |
+| 文档（除生成物外的全部 `.md`） | 337 |
 | 其中文件名 `README.md` | 11 |
-| 纳入版本控制的文件 | 348 |
-| 纳入版本控制的 `.md` | 332 |
+| 纳入版本控制的文件 | 357 |
+| 纳入版本控制的 `.md` | 341 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -33,15 +33,15 @@
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
 | Models | 23 | 41 | 12,127 | 906,146 B | [板块页 →](<Models/README.md>) |
-| LLM | 10 | 59 | 4,266 | 335,777 B | [板块页 →](<LLM/README.md>) |
+| LLM | 10 | 63 | 4,268 | 335,990 B | [板块页 →](<LLM/README.md>) |
 | Agents | 3 | 22 | 206 | 29,869 B | [板块页 →](<Agents/README.md>) |
 | VisualGen | 8 | 9 | 6,758 | 320,420 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 3 | 44 | 1,299 | 147,436 B | [板块页 →](<WorldModel/README.md>) |
 | AI4Science | 10 | 53 | 836 | 138,955 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 2 | 10 | 158 | 32,272 B | [板块页 →](<Evaluation/README.md>) |
-| Infra | 6 | 49 | 1,108 | 104,774 B | [板块页 →](<Infra/README.md>) |
+| Infra | 6 | 49 | 1,108 | 104,557 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 36 | 1,571 | 168,386 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **71** | **333** | **28,329** | **2,184,035 B** | — |
+| **合计** | **71** | **337** | **28,331** | **2,184,031 B** | — |
 
 ## 分面索引
 
@@ -351,10 +351,10 @@
 
 </details>
 
-### LLM（10 条目 / 59 文档）
+### LLM（10 条目 / 63 文档）
 
 <details>
-<summary><b>语言模型 LLM（10 条目 / 48 子文档）</b></summary>
+<summary><b>语言模型 LLM（10 条目 / 52 子文档）</b></summary>
 
   <details>
   <summary><b>Alignment</b> · <code>LLM/Alignment/report.md</code> · 114 行 · —</summary>
@@ -505,15 +505,19 @@
   </details>
 
   <details>
-  <summary><b>VLM</b> · <code>LLM/VLM/report.md</code> · 518 行 · —</summary>
+  <summary><b>VLM</b> · <code>LLM/VLM/report.md</code> · 520 行 · —</summary>
 
 
-    * **条目**：[LLM/VLM/report.md](<LLM/VLM/report.md>)（518 行 / 29,454 B）
+    * **条目**：[LLM/VLM/report.md](<LLM/VLM/report.md>)（520 行 / 29,667 B）
     * **专题目录**：`LLM/VLM`
     * **元数据**：type=`—` · domain=`LLM` · subject=`VLM` · date=`—` · status=`—`
-    * **子文档（4）**
+    * **子文档（8）**
         * [papers/2405.21075-videomme.md](<LLM/VLM/papers/2405.21075-videomme.md>) — 35 行 / 7,567 B
         * [papers/2412.07626-omnidocbench.md](<LLM/VLM/papers/2412.07626-omnidocbench.md>) — 42 行 / 9,196 B
+        * [papers/2510.14528-paddleocr-vl.md](<LLM/VLM/papers/2510.14528-paddleocr-vl.md>) — 53 行 / 10,262 B
+        * [papers/2603.24326-coarse-to-fine.md](<LLM/VLM/papers/2603.24326-coarse-to-fine.md>) — 67 行 / 9,354 B
+        * [papers/2603.28130-mdpbench.md](<LLM/VLM/papers/2603.28130-mdpbench.md>) — 51 行 / 10,106 B
+        * [topics/document-parsing.md](<LLM/VLM/topics/document-parsing.md>) — 60 行 / 7,664 B
         * [topics/evaluation-input-budget.md](<LLM/VLM/topics/evaluation-input-budget.md>) — 46 行 / 6,584 B
         * [topics/vlmevalkit-video-mme-path.md](<LLM/VLM/topics/vlmevalkit-video-mme-path.md>) — 51 行 / 10,053 B
 
@@ -1006,13 +1010,13 @@
   <summary><b>ServingEvaluation</b> · <code>Infra/ServingEvaluation/report.md</code> · 81 行 · 2026-10-24</summary>
 
 
-    * **条目**：[Infra/ServingEvaluation/report.md](<Infra/ServingEvaluation/report.md>)（81 行 / 11,612 B）
+    * **条目**：[Infra/ServingEvaluation/report.md](<Infra/ServingEvaluation/report.md>)（81 行 / 11,395 B）
     * **专题目录**：`Infra/ServingEvaluation`
     * **元数据**：type=`research` · domain=`Infra` · subject=`ServingEvaluation` · date=`2026-10-24` · status=`current`
     * **子文档（3）**
         * [papers/2401.09670-distserve.md](<Infra/ServingEvaluation/papers/2401.09670-distserve.md>) — 23 行 / 3,276 B
         * [papers/2410.14257-slo-goodput.md](<Infra/ServingEvaluation/papers/2410.14257-slo-goodput.md>) — 33 行 / 4,110 B
-        * [sources/MANIFEST.md](<Infra/ServingEvaluation/sources/MANIFEST.md>) — 10 行 / 2,375 B
+        * [sources/MANIFEST.md](<Infra/ServingEvaluation/sources/MANIFEST.md>) — 9 行 / 1,815 B
 
   </details>
 
@@ -1184,13 +1188,13 @@
 | [AI4Science/README.md](<AI4Science/README.md>) | AI4Science | 137 | 6,760 B |
 | [Agents/README.md](<Agents/README.md>) | Agents | 64 | 3,177 B |
 | [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 46 | 1,945 B |
-| [Infra/README.md](<Infra/README.md>) | Infra | 96 | 6,452 B |
-| [LLM/README.md](<LLM/README.md>) | LLM | 103 | 7,055 B |
+| [Infra/README.md](<Infra/README.md>) | Infra | 97 | 6,537 B |
+| [LLM/README.md](<LLM/README.md>) | LLM | 113 | 7,517 B |
 | [Models/README.md](<Models/README.md>) | Models | 101 | 4,888 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 94 | 4,181 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 195 | 13,275 B |
+| [README.md](<README.md>) |  | 195 | 13,334 B |
 | [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,616 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 86 | 5,349 B |
 | [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |
@@ -1198,8 +1202,8 @@
 | [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 11,079 B |
 | [docs/research-method.md](<docs/research-method.md>) | docs | 31 | 2,380 B |
 | [docs/statistics.md](<docs/statistics.md>) | docs | 215 | 15,662 B |
-| [docs/team.md](<docs/team.md>) | docs | 63 | 5,246 B |
-| [docs/verification.md](<docs/verification.md>) | docs | 23 | 2,285 B |
+| [docs/team.md](<docs/team.md>) | docs | 64 | 5,611 B |
+| [docs/verification.md](<docs/verification.md>) | docs | 21 | 1,991 B |
 | [scripts/README.md](<scripts/README.md>) | scripts | 101 | 4,903 B |
 
 
