@@ -1357,8 +1357,13 @@ def render_structure_block(cfg: dict, mapping: dict, entries: list) -> str:
         members = [d for d in entries
                    if mapping.get(d["path"], {}).get("id") == panel["id"]]
         branch = "├─"  # 生成管线才是树的最后一个分支（└─）
-        reps = " · ".join(rel.rstrip("/").rsplit("/", 1)[-1]
-                          for rel in panel.get("representatives", [])[:3])
+        by_dir = {entry_dir(d["path"]): d for d in entries}
+        reps = " · ".join(
+            entry_short_name(by_dir[rel.rstrip("/")])
+            if rel.rstrip("/") in by_dir
+            else rel.rstrip("/").rsplit("/", 1)[-1]
+            for rel in panel.get("representatives", [])[:3]
+        )
         rep_text = f"（{reps} …）" if reps else ""
         lines.append(
             f"{branch} {panel['emoji']} {panel['title'] + '/':<14}"

@@ -172,14 +172,14 @@
 ResearchReport/    72 条目 · 43 研究专题 · 9 板块
 │
 ├─ 🧠 Models/        23 条 · 厂商模型 / 系列逐个精读（GPT · Qwen · Gemini …）
-├─ 💬 LLM/           11 条 · 语言模型能力、训练数据与技术专题（ReasoningModels · LongContext · MoE …）
-├─ 🤖 Agents/         3 条 · 智能体架构、记忆、工具使用与长期执行（AgentSystems · ComputerUse · AgentSecurity …）
-├─ 🎨 VisualGen/      8 条 · 视觉与多模态生成（VideoGen · DiT · DiffusionModels …）
-├─ 🌍 WorldModel/     3 条 · 世界模型与具身 VLA（WorldModels · EmbodiedVLA · EmbodiedPlanning …）
-├─ 🧪 AI4Science/    10 条 · 科学问题中的 AI 方法与实验闭环（ProteinDesign · MaterialsDiscovery · WeatherClimate …）
-├─ 📏 Evaluation/     2 条 · 跨领域 AI 评测与测量方法（EvaluationScience · ScientificDiscovery …）
-├─ ⚙️ Infra/          6 条 · 推理 / 训练基础设施（SpeculativeDecoding · QuantizationEdge · TrainingInfra …）
-├─ 🔧 OpenSource/     6 条 · 开源仓库代码深读（DeepInfer · vllm · sglang …）
+├─ 💬 LLM/           11 条 · 语言模型能力、训练数据与技术专题（推理模型与推理时计算 · 长上下文 · 混合专家模型（MoE） …）
+├─ 🤖 Agents/         3 条 · 智能体架构、记忆、工具使用与长期执行（智能体系统 · 电脑使用 Agent · 工具 Agent 安全 …）
+├─ 🎨 VisualGen/      8 条 · 视觉与多模态生成（视频生成 · 扩散 Transformer（DiT） · 扩散模型 …）
+├─ 🌍 WorldModel/     3 条 · 世界模型与具身 VLA（世界模型 · 机器人视觉语言动作模型（VLA） · 具身预测规划 …）
+├─ 🧪 AI4Science/    10 条 · 科学问题中的 AI 方法与实验闭环（蛋白质与肽结合体设计 · 生成式材料设计 · 天气与气候预测 …）
+├─ 📏 Evaluation/     2 条 · 跨领域 AI 评测与测量方法（评测科学 · 科学发现的评测方法 …）
+├─ ⚙️ Infra/          6 条 · 推理 / 训练基础设施（投机解码 · 模型量化与边缘部署 · 分布式训练基础设施 …）
+├─ 🔧 OpenSource/     6 条 · 开源仓库代码深读（DeepInfer · vLLM · SGLang …）
 │
 └─ ⚙ 生成管线：scripts/panels.json（单一真值）→ library_index.py
               → README / INDEX.md / index/* / 站点 nav
