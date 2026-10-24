@@ -1,5 +1,5 @@
 ---
-display_name: this-that-model 共享视觉推理
+display_name: this-that-model
 type: repo-research
 domain: Repo-Research
 subject: this-that-model

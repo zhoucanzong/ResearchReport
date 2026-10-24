@@ -93,7 +93,7 @@
 <td width="33%" valign="top">
 <h3>09 · <a href="OpenSource/README.md">OpenSource</a></h3>
 <p><strong>开源代码深读</strong><br><sub>6 篇主报告 · 开源仓库代码深读</sub></p>
-<p><a href="OpenSource/DeepInfer/report.md">DeepInfer 离线推理</a> · <a href="OpenSource/vllm/report.md">vLLM 推理引擎</a> · <a href="OpenSource/sglang/report.md">SGLang 推理框架</a></p>
+<p><a href="OpenSource/DeepInfer/report.md">DeepInfer</a> · <a href="OpenSource/vllm/report.md">vLLM</a> · <a href="OpenSource/sglang/report.md">SGLang</a></p>
 <p><a href="OpenSource/README.md"><strong>浏览板块 →</strong></a></p>
 </td>
 </tr>
@@ -115,7 +115,7 @@
 | **[蛋白质与肽结合体设计](<AI4Science/ProteinDesign/report.md>)**<br><sub>AI4Science</sub> | 蛋白质 binder 发现：从复合物生成到候选筛选 |
 | **[评测科学](<Evaluation/EvaluationScience/report.md>)**<br><sub>Evaluation</sub> | 评测科学：分数何时支持“模型更好”或“能力泛化” |
 | **[投机解码](<Infra/SpeculativeDecoding/report.md>)**<br><sub>Infra</sub> | 投机解码（Speculative Decoding）技术专题 · 深度调研 |
-| **[DeepInfer 离线推理](<OpenSource/DeepInfer/report.md>)**<br><sub>OpenSource</sub> | DeepInfer：离线推理内核、异步调度与状态契约 |
+| **[DeepInfer](<OpenSource/DeepInfer/report.md>)**<br><sub>OpenSource</sub> | DeepInfer：离线推理内核、异步调度与状态契约 |
 <!-- SCRIPT:highlights END -->
 
 ## 最近更新

@@ -1,5 +1,5 @@
 ---
-display_name: vLLM 推理引擎
+display_name: vLLM
 type: repo-research
 domain: Repo-Research
 subject: vllm

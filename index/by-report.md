@@ -66,12 +66,12 @@
 | Qwen | Models | [Models/Qwen/report.md](<../Models/Qwen/report.md>) | 6 | 1,120 | — |
 | Runway | Models | [Models/Runway/report.md](<../Models/Runway/report.md>) | 0 | 103 | — |
 | StabilityAI | Models | [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>) | 0 | 739 | — |
-| DeepInfer 离线推理 | OpenSource | [OpenSource/DeepInfer/report.md](<../OpenSource/DeepInfer/report.md>) | 4 | 140 | 2026-10-22 |
-| DeepSeek Harness 框架 | OpenSource | [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | 5 | 352 | 2026-10-20 |
-| Nemotron-Labs 扩散模型 | OpenSource | [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | 7 | 221 | — |
-| SGLang 推理框架 | OpenSource | [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | 5 | 317 | 2026-10-16 |
-| this-that-model 共享视觉推理 | OpenSource | [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | 1 | 248 | 2026-10-16 |
-| vLLM 推理引擎 | OpenSource | [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | 5 | 300 | 2026-10-16 |
+| DeepInfer | OpenSource | [OpenSource/DeepInfer/report.md](<../OpenSource/DeepInfer/report.md>) | 4 | 140 | 2026-10-22 |
+| DeepSeek Harness | OpenSource | [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | 5 | 352 | 2026-10-20 |
+| Nemotron-Labs-Diffusion | OpenSource | [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | 7 | 221 | — |
+| SGLang | OpenSource | [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | 5 | 317 | 2026-10-16 |
+| this-that-model | OpenSource | [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | 1 | 248 | 2026-10-16 |
+| vLLM | OpenSource | [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | 5 | 300 | 2026-10-16 |
 | 3D 生成 | VisualGen | [VisualGen/3DGen/report.md](<../VisualGen/3DGen/report.md>) | 0 | 858 | — |
 | 音频与音乐生成 | VisualGen | [VisualGen/AudioGen/report.md](<../VisualGen/AudioGen/report.md>) | 0 | 915 | — |
 | 数字人与 Avatar | VisualGen | [VisualGen/AvatarGen/report.md](<../VisualGen/AvatarGen/report.md>) | 0 | 595 | — |

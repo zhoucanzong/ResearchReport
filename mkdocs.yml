@@ -481,20 +481,20 @@ nav:
     - "分布式训练基础设施": "Infra/TrainingInfra/report.md"
   - "🔧 OpenSource · 6":
     - "OpenSource/README.md"
-    - "DeepInfer 离线推理":
+    - "DeepInfer":
         - "总报告": "OpenSource/DeepInfer/report.md"
         - "claim-audit": "OpenSource/DeepInfer/claim-audit.md"
         - "runtime-and-lifetimes": "OpenSource/DeepInfer/runtime-and-lifetimes.md"
         - "MANIFEST": "OpenSource/DeepInfer/sources/MANIFEST.md"
         - "speculation-cache-and-so": "OpenSource/DeepInfer/speculation-cache-and-so.md"
-    - "DeepSeek Harness 框架":
+    - "DeepSeek Harness":
         - "总报告": "OpenSource/DeepSeekHarness/report.md"
         - "compaction-and-bundles": "OpenSource/DeepSeekHarness/compaction-and-bundles.md"
         - "gateway-projection": "OpenSource/DeepSeekHarness/gateway-projection.md"
         - "ptc": "OpenSource/DeepSeekHarness/ptc.md"
         - "MANIFEST": "OpenSource/DeepSeekHarness/sources/MANIFEST.md"
         - "tool-effect-durability": "OpenSource/DeepSeekHarness/topics/tool-effect-durability.md"
-    - "Nemotron-Labs 扩散模型":
+    - "Nemotron-Labs-Diffusion":
         - "总报告": "OpenSource/nemotron/report.md"
         - "knowledge-graph": "OpenSource/nemotron/knowledge-graph.md"
         - "structured-reading": "OpenSource/nemotron/notes/structured-reading.md"
@@ -503,17 +503,17 @@ nav:
         - "pdf-fu_等__nemotronlabsdiffusion_a_trimode_language_model_unifying_autoregressive_dif": "OpenSource/nemotron/raw-extracts/pdf-fu_等__nemotronlabsdiffusion_a_trimode_language_model_unifying_autoregressive_dif.md"
         - "sources-index": "OpenSource/nemotron/sources-index.md"
         - "MANIFEST": "OpenSource/nemotron/sources/MANIFEST.md"
-    - "SGLang 推理框架":
+    - "SGLang":
         - "总报告": "OpenSource/sglang/report.md"
         - "claim-audit": "OpenSource/sglang/claim-audit.md"
         - "online-request-lifecycle": "OpenSource/sglang/online-request-lifecycle.md"
         - "scheduler-and-prefix-cache": "OpenSource/sglang/scheduler-and-prefix-cache.md"
         - "MANIFEST": "OpenSource/sglang/sources/MANIFEST.md"
         - "speculative-decoding-path": "OpenSource/sglang/speculative-decoding-path.md"
-    - "this-that-model 共享视觉推理":
+    - "this-that-model":
         - "总报告": "OpenSource/this-that-model/report.md"
         - "MANIFEST": "OpenSource/this-that-model/sources/MANIFEST.md"
-    - "vLLM 推理引擎":
+    - "vLLM":
         - "总报告": "OpenSource/vllm/report.md"
         - "claim-audit": "OpenSource/vllm/claim-audit.md"
         - "kv-cache-and-prefix-reuse": "OpenSource/vllm/kv-cache-and-prefix-reuse.md"

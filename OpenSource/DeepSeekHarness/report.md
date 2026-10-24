@@ -1,5 +1,5 @@
 ---
-display_name: DeepSeek Harness 框架
+display_name: DeepSeek Harness
 type: repo-research
 domain: Repo-Research
 subject: DeepSeekHarness

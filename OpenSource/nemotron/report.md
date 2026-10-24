@@ -1,5 +1,5 @@
 ---
-display_name: Nemotron-Labs 扩散模型
+display_name: Nemotron-Labs-Diffusion
 ---
 
 # Nemotron-Labs-Diffusion 阅读报告

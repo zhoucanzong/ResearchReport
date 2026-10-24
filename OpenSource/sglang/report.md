@@ -1,5 +1,5 @@
 ---
-display_name: SGLang 推理框架
+display_name: SGLang
 type: repo-research
 domain: Repo-Research
 subject: sglang

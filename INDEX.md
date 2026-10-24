@@ -17,7 +17,7 @@
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 11 · Agents 3 · VisualGen 8 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6 |
 | 条目子文档数 | 256 |
 | 条目正文行数（剔除 front-matter） | 28,458 |
-| 条目字节 | 2,204,586 B |
+| 条目字节 | 2,204,518 B |
 | 带 front-matter 的条目 | 49 |
 | 带合法 `date` 的条目 | 30 |
 | 文档（除生成物外的全部 `.md`） | 349 |
@@ -40,8 +40,8 @@
 | AI4Science | 10 | 53 | 836 | 139,324 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 2 | 10 | 158 | 32,341 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 6 | 49 | 1,108 | 104,801 B | [板块页 →](<Infra/README.md>) |
-| OpenSource | 6 | 36 | 1,578 | 168,629 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **72** | **349** | **28,458** | **2,204,586 B** | — |
+| OpenSource | 6 | 36 | 1,578 | 168,561 B | [板块页 →](<OpenSource/README.md>) |
+| **合计** | **72** | **349** | **28,458** | **2,204,518 B** | — |
 
 ## 分面索引
 
@@ -1106,10 +1106,10 @@
 <summary><b>开源仓库 OpenSource（6 条目 / 27 子文档）</b></summary>
 
   <details>
-  <summary><b>DeepInfer 离线推理</b> · <code>OpenSource/DeepInfer/report.md</code> · 140 行 · 2026-10-22</summary>
+  <summary><b>DeepInfer</b> · <code>OpenSource/DeepInfer/report.md</code> · 140 行 · 2026-10-22</summary>
 
 
-    * **条目**：[OpenSource/DeepInfer/report.md](<OpenSource/DeepInfer/report.md>)（140 行 / 32,214 B）
+    * **条目**：[OpenSource/DeepInfer/report.md](<OpenSource/DeepInfer/report.md>)（140 行 / 32,201 B）
     * **专题目录**：`OpenSource/DeepInfer`
     * **元数据**：type=`repo-research` · domain=`OpenSource` · subject=`DeepInfer` · date=`2026-10-22` · status=`completed`
     * **子文档（4）**
@@ -1121,10 +1121,10 @@
   </details>
 
   <details>
-  <summary><b>DeepSeek Harness 框架</b> · <code>OpenSource/DeepSeekHarness/report.md</code> · 352 行 · 2026-10-20</summary>
+  <summary><b>DeepSeek Harness</b> · <code>OpenSource/DeepSeekHarness/report.md</code> · 352 行 · 2026-10-20</summary>
 
 
-    * **条目**：[OpenSource/DeepSeekHarness/report.md](<OpenSource/DeepSeekHarness/report.md>)（352 行 / 26,971 B）
+    * **条目**：[OpenSource/DeepSeekHarness/report.md](<OpenSource/DeepSeekHarness/report.md>)（352 行 / 26,964 B）
     * **专题目录**：`OpenSource/DeepSeekHarness`
     * **元数据**：type=`repo-research` · domain=`Repo-Research` · subject=`DeepSeekHarness` · date=`2026-10-20` · status=`completed`
     * **子文档（5）**
@@ -1137,10 +1137,10 @@
   </details>
 
   <details>
-  <summary><b>Nemotron-Labs 扩散模型</b> · <code>OpenSource/nemotron/report.md</code> · 221 行 · —</summary>
+  <summary><b>Nemotron-Labs-Diffusion</b> · <code>OpenSource/nemotron/report.md</code> · 221 行 · —</summary>
 
 
-    * **条目**：[OpenSource/nemotron/report.md](<OpenSource/nemotron/report.md>)（221 行 / 16,225 B）
+    * **条目**：[OpenSource/nemotron/report.md](<OpenSource/nemotron/report.md>)（221 行 / 16,222 B）
     * **专题目录**：`OpenSource/nemotron`
     * **元数据**：type=`—` · domain=`OpenSource` · subject=`nemotron` · date=`—` · status=`—`
     * **子文档（7）**
@@ -1155,10 +1155,10 @@
   </details>
 
   <details>
-  <summary><b>SGLang 推理框架</b> · <code>OpenSource/sglang/report.md</code> · 317 行 · 2026-10-16</summary>
+  <summary><b>SGLang</b> · <code>OpenSource/sglang/report.md</code> · 317 行 · 2026-10-16</summary>
 
 
-    * **条目**：[OpenSource/sglang/report.md](<OpenSource/sglang/report.md>)（317 行 / 32,875 B）
+    * **条目**：[OpenSource/sglang/report.md](<OpenSource/sglang/report.md>)（317 行 / 32,862 B）
     * **专题目录**：`OpenSource/sglang`
     * **元数据**：type=`repo-research` · domain=`Repo-Research` · subject=`sglang` · date=`2026-10-16` · status=`completed`
     * **子文档（5）**
@@ -1171,10 +1171,10 @@
   </details>
 
   <details>
-  <summary><b>this-that-model 共享视觉推理</b> · <code>OpenSource/this-that-model/report.md</code> · 248 行 · 2026-10-16</summary>
+  <summary><b>this-that-model</b> · <code>OpenSource/this-that-model/report.md</code> · 248 行 · 2026-10-16</summary>
 
 
-    * **条目**：[OpenSource/this-that-model/report.md](<OpenSource/this-that-model/report.md>)（248 行 / 24,508 B）
+    * **条目**：[OpenSource/this-that-model/report.md](<OpenSource/this-that-model/report.md>)（248 行 / 24,489 B）
     * **专题目录**：`OpenSource/this-that-model`
     * **元数据**：type=`repo-research` · domain=`Repo-Research` · subject=`this-that-model` · date=`2026-10-16` · status=`completed`
     * **子文档（1）**
@@ -1183,10 +1183,10 @@
   </details>
 
   <details>
-  <summary><b>vLLM 推理引擎</b> · <code>OpenSource/vllm/report.md</code> · 300 行 · 2026-10-16</summary>
+  <summary><b>vLLM</b> · <code>OpenSource/vllm/report.md</code> · 300 行 · 2026-10-16</summary>
 
 
-    * **条目**：[OpenSource/vllm/report.md](<OpenSource/vllm/report.md>)（300 行 / 35,836 B）
+    * **条目**：[OpenSource/vllm/report.md](<OpenSource/vllm/report.md>)（300 行 / 35,823 B）
     * **专题目录**：`OpenSource/vllm`
     * **元数据**：type=`repo-research` · domain=`Repo-Research` · subject=`vllm` · date=`2026-10-16` · status=`completed`
     * **子文档（5）**
@@ -1213,10 +1213,10 @@
 | [Infra/README.md](<Infra/README.md>) | Infra | 109 | 7,193 B |
 | [LLM/README.md](<LLM/README.md>) | LLM | 147 | 10,228 B |
 | [Models/README.md](<Models/README.md>) | Models | 101 | 4,888 B |
-| [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 104 | 4,660 B |
+| [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 104 | 4,517 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 196 | 14,154 B |
+| [README.md](<README.md>) |  | 196 | 14,102 B |
 | [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,674 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 103 | 6,735 B |
 | [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |
