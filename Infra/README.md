@@ -17,9 +17,9 @@
 
 | 所属报告 | 分册入口 |
 | --- | --- |
-| SpeculativeDecoding | [横切专题①：投机解码的算法家族谱系](<SpeculativeDecoding/topics/algorithm-families.md>) |
-| SpeculativeDecoding | [横切专题③：系统实现与吞吐—延迟权衡](<SpeculativeDecoding/topics/systems-throughput-latency.md>) |
-| SpeculativeDecoding | [横切专题②：验证、接受率与无损性的适用条件](<SpeculativeDecoding/topics/verification-acceptance.md>) |
+| 投机解码 | [横切专题①：投机解码的算法家族谱系](<SpeculativeDecoding/topics/algorithm-families.md>) |
+| 投机解码 | [横切专题③：系统实现与吞吐—延迟权衡](<SpeculativeDecoding/topics/systems-throughput-latency.md>) |
+| 投机解码 | [横切专题②：验证、接受率与无损性的适用条件](<SpeculativeDecoding/topics/verification-acceptance.md>) |
 
 [查看研究专题与分析分册](<../index/by-topic.md>)
 
@@ -27,17 +27,17 @@
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
-| **KVCachePD** | [KV Cache 服务与 Prefill/Decode 分离：什么时候复用，什么时候传输](<KVCachePD/report.md>) | 84 行 |
-| **MoEExecution** | [MoE 执行：token 如何抵达专家，又如何回到原序](<MoEExecution/report.md>) | 25 行 |
-| **QuantizationEdge** | [模型量化与边缘部署研究报告](<QuantizationEdge/report.md>) | 188 行 |
-| **ServingEvaluation** | [在线 LLM Serving：SLO、Goodput 与请求完整性](<ServingEvaluation/report.md>) | 81 行 |
-| **SpeculativeDecoding** | [投机解码（Speculative Decoding）技术专题 · 深度调研](<SpeculativeDecoding/report.md>) | 549 行 |
-| **TrainingInfra** | [大模型训练基础设施与分布式训练研究报告](<TrainingInfra/report.md>) | 181 行 |
+| **KV Cache 与预填充／解码分离** | [KV Cache 服务与 Prefill/Decode 分离：什么时候复用，什么时候传输](<KVCachePD/report.md>) | 84 行 |
+| **MoE 执行与专家通信** | [MoE 执行：token 如何抵达专家，又如何回到原序](<MoEExecution/report.md>) | 25 行 |
+| **模型量化与边缘部署** | [模型量化与边缘部署研究报告](<QuantizationEdge/report.md>) | 188 行 |
+| **在线推理服务与评测** | [在线 LLM Serving：SLO、Goodput 与请求完整性](<ServingEvaluation/report.md>) | 81 行 |
+| **投机解码** | [投机解码（Speculative Decoding）技术专题 · 深度调研](<SpeculativeDecoding/report.md>) | 549 行 |
+| **分布式训练基础设施** | [大模型训练基础设施与分布式训练研究报告](<TrainingInfra/report.md>) | 181 行 |
 
 ## 📎 子文档
 
 <details>
-<summary><b>KVCachePD</b>（5 份）</summary>
+<summary><b>KV Cache 与预填充／解码分离</b>（5 份）</summary>
 
 * [implementation/lmcache-vllm-v1.md](<KVCachePD/implementation/lmcache-vllm-v1.md>) — 67 行 / 14,287 B
 * [papers/lmcache-system-paper.md](<KVCachePD/papers/lmcache-system-paper.md>) — 26 行 / 3,198 B
@@ -48,14 +48,14 @@
 </details>
 
 <details>
-<summary><b>MoEExecution</b>（1 份）</summary>
+<summary><b>MoE 执行与专家通信</b>（1 份）</summary>
 
 * [implementation/deepep-v2-dispatch-compute-combine.md](<MoEExecution/implementation/deepep-v2-dispatch-compute-combine.md>) — 78 行 / 15,317 B
 
 </details>
 
 <details>
-<summary><b>ServingEvaluation</b>（3 份）</summary>
+<summary><b>在线推理服务与评测</b>（3 份）</summary>
 
 * [papers/2401.09670-distserve.md](<ServingEvaluation/papers/2401.09670-distserve.md>) — 23 行 / 3,276 B
 * [papers/2410.14257-slo-goodput.md](<ServingEvaluation/papers/2410.14257-slo-goodput.md>) — 33 行 / 4,110 B
@@ -64,7 +64,7 @@
 </details>
 
 <details>
-<summary><b>SpeculativeDecoding</b>（33 份）</summary>
+<summary><b>投机解码</b>（33 份）</summary>
 
 * [legacy/speculative-block-diffusion.md](<SpeculativeDecoding/legacy/speculative-block-diffusion.md>) — 230 行 / 18,588 B
 * [legacy/speculative-cascade-heterogeneous.md](<SpeculativeDecoding/legacy/speculative-cascade-heterogeneous.md>) — 141 行 / 11,829 B

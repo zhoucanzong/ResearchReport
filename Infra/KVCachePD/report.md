@@ -1,4 +1,5 @@
 ---
+display_name: KV Cache 与预填充／解码分离
 type: research
 domain: Infra
 subject: KVCachePD

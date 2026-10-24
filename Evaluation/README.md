@@ -15,13 +15,13 @@
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
-| **EvaluationScience** | [评测科学：分数何时支持“模型更好”或“能力泛化”](<EvaluationScience/report.md>) | 125 行 |
-| **ScientificDiscovery** | [AI for Science：怎样判断闭环实验带来了发现](<ScientificDiscovery/report.md>) | 33 行 |
+| **评测科学** | [评测科学：分数何时支持“模型更好”或“能力泛化”](<EvaluationScience/report.md>) | 125 行 |
+| **科学发现的评测方法** | [AI for Science：怎样判断闭环实验带来了发现](<ScientificDiscovery/report.md>) | 33 行 |
 
 ## 📎 子文档
 
 <details>
-<summary><b>EvaluationScience</b>（5 份）</summary>
+<summary><b>评测科学</b>（5 份）</summary>
 
 * [papers/2307.13854-webarena.md](<EvaluationScience/papers/2307.13854-webarena.md>) — 22 行 / 2,809 B
 * [papers/2404.07972-osworld.md](<EvaluationScience/papers/2404.07972-osworld.md>) — 21 行 / 3,382 B
@@ -32,7 +32,7 @@
 </details>
 
 <details>
-<summary><b>ScientificDiscovery</b>（2 份）</summary>
+<summary><b>科学发现的评测方法</b>（2 份）</summary>
 
 * [papers/2024-nature-closed-loop-transfer.md](<ScientificDiscovery/papers/2024-nature-closed-loop-transfer.md>) — 27 行 / 4,241 B
 * [papers/2412.12347-autoscilab.md](<ScientificDiscovery/papers/2412.12347-autoscilab.md>) — 23 行 / 3,733 B

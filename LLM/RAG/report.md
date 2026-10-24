@@ -1,3 +1,7 @@
+---
+display_name: 检索增强生成（RAG）
+---
+
 # 检索增强生成（Retrieval-Augmented Generation, RAG）技术研究报告
 
 > 报告日期：2026年6月6日  

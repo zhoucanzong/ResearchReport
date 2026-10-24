@@ -1,4 +1,5 @@
 ---
+display_name: 模型量化与边缘部署
 type: topic-research
 domain: Infra
 subject: QuantizationEdge

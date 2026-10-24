@@ -1,4 +1,5 @@
 ---
+display_name: 分布式训练基础设施
 type: topic-research
 domain: Infra
 subject: TrainingInfra

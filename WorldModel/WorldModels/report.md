@@ -1,4 +1,5 @@
 ---
+display_name: 世界模型
 type: topic-research
 domain: WorldModel
 subject: WorldModels

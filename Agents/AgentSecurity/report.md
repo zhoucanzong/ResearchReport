@@ -1,4 +1,5 @@
 ---
+display_name: 工具 Agent 安全
 type: research
 domain: Agents
 subject: AgentSecurity

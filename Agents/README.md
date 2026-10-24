@@ -17,7 +17,7 @@
 
 | 所属报告 | 分册入口 |
 | --- | --- |
-| AgentSystems | [长程 Agent 的执行恢复：诊断、回滚与学习修正](<AgentSystems/topics/long-horizon-execution-recovery.md>) |
+| 智能体系统 | [长程 Agent 的执行恢复：诊断、回滚与学习修正](<AgentSystems/topics/long-horizon-execution-recovery.md>) |
 
 [查看研究专题与分析分册](<../index/by-topic.md>)
 
@@ -25,14 +25,14 @@
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
-| **AgentSecurity** | [工具 Agent 安全：提示注入、权限与动作证据](<AgentSecurity/report.md>) | 53 行 |
-| **AgentSystems** | [Agent 系统：让模型在环境中持续完成任务](<AgentSystems/report.md>) | 94 行 |
-| **ComputerUse** | [电脑使用 Agent：从看见界面到交付完整工作流](<ComputerUse/report.md>) | 59 行 |
+| **工具 Agent 安全** | [工具 Agent 安全：提示注入、权限与动作证据](<AgentSecurity/report.md>) | 53 行 |
+| **智能体系统** | [Agent 系统：让模型在环境中持续完成任务](<AgentSystems/report.md>) | 95 行 |
+| **电脑使用 Agent** | [电脑使用 Agent：从看见界面到交付完整工作流](<ComputerUse/report.md>) | 59 行 |
 
 ## 📎 子文档
 
 <details>
-<summary><b>AgentSecurity</b>（4 份）</summary>
+<summary><b>工具 Agent 安全</b>（4 份）</summary>
 
 * [papers/2406.13352-agentdojo.md](<AgentSecurity/papers/2406.13352-agentdojo.md>) — 61 行 / 11,393 B
 * [papers/2503.18813-camel.md](<AgentSecurity/papers/2503.18813-camel.md>) — 53 行 / 10,560 B
@@ -42,7 +42,7 @@
 </details>
 
 <details>
-<summary><b>AgentSystems</b>（12 份）</summary>
+<summary><b>智能体系统</b>（12 份）</summary>
 
 * [papers/2026-acl-long-1573-toolscope.md](<AgentSystems/papers/2026-acl-long-1573-toolscope.md>) — 19 行 / 2,073 B
 * [papers/2026-acl-long-1880-fission-grpo.md](<AgentSystems/papers/2026-acl-long-1880-fission-grpo.md>) — 19 行 / 2,332 B
@@ -60,7 +60,7 @@
 </details>
 
 <details>
-<summary><b>ComputerUse</b>（2 份）</summary>
+<summary><b>电脑使用 Agent</b>（2 份）</summary>
 
 * [papers/2606.09426-weavebench.md](<ComputerUse/papers/2606.09426-weavebench.md>) — 60 行 / 11,573 B
 * [papers/2606.29537-osworld2.md](<ComputerUse/papers/2606.29537-osworld2.md>) — 61 行 / 12,141 B

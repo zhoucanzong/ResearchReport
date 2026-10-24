@@ -1,4 +1,5 @@
 ---
+display_name: 化学反应条件优化
 type: research
 domain: AI4Science
 subject: Chemistry

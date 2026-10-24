@@ -1,4 +1,5 @@
 ---
+display_name: 单细胞扰动预测
 type: research
 domain: AI4Science
 subject: SingleCellPerturbation

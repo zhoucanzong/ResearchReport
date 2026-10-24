@@ -1,4 +1,5 @@
 ---
+display_name: 训练数据策展
 type: research
 domain: LLM
 subject: TrainingData

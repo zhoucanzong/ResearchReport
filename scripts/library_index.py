@@ -59,6 +59,7 @@ SCHEMA_VERSION = 2
 #: front-matter 元数据键（缺 pyyaml 时逐行解析这套键）。
 KNOWN_KEYS = (
     "title",
+    "display_name",
     "type",
     "domain",
     "subject",
@@ -422,6 +423,7 @@ def build_doc(repo_root: str, rel_path: str, today: _dt.date) -> dict:
         "path": rel_path,
         "filename": filename,
         "title": to_str(fm.get("title")) or heading(text) or filename,
+        "display_name": to_str(fm.get("display_name")),
         "type": to_str(fm.get("type")),
         "domain": domain,
         "subject": subject,
@@ -780,8 +782,8 @@ def group_table(entries: list, key_fn) -> list:
 
 
 def entry_label(doc: dict) -> str:
-    """条目的展示名：用所属专题目录名（对 report.md 更可读）。"""
-    return os.path.basename(entry_dir(doc["path"])) or doc["filename"]
+    """折叠索引与其他入口共用条目展示名。"""
+    return entry_short_name(doc)
 
 
 def render_entry_block(doc: dict, prefix: str, indent: str = "") -> list:
@@ -934,9 +936,9 @@ def render_index(docs: list, orphans: list, stats: dict, out_root: str, dry_run:
         "## 说明",
         "",
         "* 本索引是**派生数据**，仓库里的条目文件才是唯一事实来源；重建索引只需重跑脚本。",
-        "* 当前 front-matter 为 0 份：所有条目的 `type` / `date` / `status` 显示为 `—`，"
-        "domain / subject / topic 由路径推断。补齐 front-matter 后重跑即可自动填充。",
-        f"* 键位契约：`{'` / `'.join(KNOWN_KEYS[:7])}`（另容忍可选 `topic`）。",
+        f"* 当前 {counts['with_front_matter']} 份条目带 front-matter；缺失的 `type` / `date` / `status` "
+        "显示为 `—`，domain / subject / topic 缺失时由路径推断。",
+        f"* 可选元数据：`{'` / `'.join(KNOWN_KEYS)}`。",
         "* 脚本只读扫描、只写生成物；**不会删除或改写任何条目文件**。",
         "",
     ]
@@ -1069,14 +1071,14 @@ def render_stale(entries: list, out_root: str, dry_run: bool, stale_days: int) -
 
 
 def render_by_topic(entries: list, out_root: str, dry_run: bool) -> str:
-    """先列 report 的 topic 标签，再列可直达的 topics/ 子专题文档。"""
+    """先按展示名列主报告，再列可直达的 topics/ 分析分册。"""
     lines = header(FACET_TITLES["by-topic"], out_root, dry_run)
     lines += [
-        "上半部分按主报告的 `topic` 元数据归类；下半部分汇总各报告下的 `topics/` 分册。"
+        "上半部分使用主报告的展示名，未设置时回退到 `topic` 元数据；下半部分汇总各报告下的 `topics/` 分册。"
         "分析分册属于父专题，不单独计为独立研究专题。",
         "",
     ]
-    lines += group_table(entries, lambda e: e["topic"] or UNFILED)
+    lines += group_table(entries, lambda e: e.get("display_name") or e["topic"] or UNFILED)
 
     children = []
     for entry in entries:
@@ -1088,7 +1090,7 @@ def render_by_topic(entries: list, out_root: str, dry_run: bool) -> str:
                   "| 所属报告 | 分册入口 |", "| --- | --- |"]
         for entry, child in sorted(children, key=lambda pair: (pair[0]["path"], pair[1]["path"])):
             lines.append(
-                f"| {link(entry['path'], '../')} | "
+                f"| {link_label(entry['path'], '../', entry_short_name(entry))} | "
                 f"{link_label(child['path'], '../', child['title'] or child['filename'])} |"
             )
         lines.append("")
@@ -1273,7 +1275,9 @@ def recent_rows(repo_root: str, entries: list, cfg: dict) -> list:
     return rows[:cfg["recent_limit"]]
 
 def entry_short_name(doc: dict) -> str:
-    """条目的短名：目录名去掉 `-research` 后缀（配置与索引都用它做展示名）。"""
+    """展示名优先使用元数据；未指定时保留目录短名。"""
+    if doc.get("display_name"):
+        return doc["display_name"]
     name = os.path.basename(entry_dir(doc["path"])) or doc["filename"]
     return name[: -len(ENTRY_MARK)] if name.endswith(ENTRY_MARK) else name
 
@@ -1390,7 +1394,10 @@ def render_highlights_block(cfg: dict, mapping: dict, entries: list) -> str:
 
 def render_panels_block(cfg: dict, mapping: dict, entries: list, label_limit: int = 12) -> str:
     """GitHub 安全 HTML 卡片：只用语义元素，无样式属性和外部脚本。"""
+    from html import escape
+
     by_panel = {}
+    by_dir = {entry_dir(d["path"]): d for d in entries}
     for doc in entries:
         panel = mapping.get(doc["path"])
         if panel is not None:
@@ -1407,7 +1414,7 @@ def render_panels_block(cfg: dict, mapping: dict, entries: list, label_limit: in
         top = panel["title"]
         members = by_panel.get(panel["id"], [])
         reps = [
-            f'<a href="{rel}/report.md">{rel.rstrip("/").rsplit("/", 1)[-1]}</a>'
+            f'<a href="{rel}/report.md">{escape(entry_short_name(by_dir[rel]))}</a>'
             for rel in panel.get("representatives", [])
         ]
         cards.append(
@@ -2025,8 +2032,8 @@ def render_site_home(cfg: dict, mapping: dict, entries: list,
     if topics_entries:
         lines += ['<section class="rr-section rr-topics" markdown="1">', "",
                   '<div class="rr-section-heading" markdown="1">', "",
-                  '## 你关注的问题', "",
-                  f'<span>{len(topics_entries)} 个研究专题，按问题进入阅读。</span>', "",
+                  '## 研究专题', "",
+                  f'<span>{len(topics_entries)} 个研究专题，选择感兴趣的方向开始阅读。</span>', "",
                   '</div>', "", '<div class="rr-topic-links" markdown="1">', ""]
         for doc in sorted(topics_entries, key=lambda d: d["path"]):
             lines += [f'[{label(entry_short_name(doc))}](<{doc["path"]}>){{ .rr-topic }}', ""]

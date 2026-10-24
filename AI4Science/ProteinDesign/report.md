@@ -1,4 +1,5 @@
 ---
+display_name: 蛋白质与肽结合体设计
 type: research
 domain: AI4Science
 subject: ProteinDesign

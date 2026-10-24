@@ -1,4 +1,5 @@
 ---
+display_name: 电脑使用 Agent
 type: research
 domain: Agents
 subject: ComputerUse

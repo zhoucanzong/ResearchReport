@@ -16,9 +16,9 @@
 | **条目数**（`report.md`） | **72** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 11 · Agents 3 · VisualGen 8 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6 |
 | 条目子文档数 | 256 |
-| 条目正文行数（剔除 front-matter） | 28,433 |
-| 条目字节 | 2,202,601 B |
-| 带 front-matter 的条目 | 30 |
+| 条目正文行数（剔除 front-matter） | 28,451 |
+| 条目字节 | 2,204,343 B |
+| 带 front-matter 的条目 | 48 |
 | 带合法 `date` 的条目 | 30 |
 | 文档（除生成物外的全部 `.md`） | 349 |
 | 其中文件名 `README.md` | 11 |
@@ -33,15 +33,15 @@
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
 | Models | 23 | 41 | 12,127 | 906,146 B | [板块页 →](<Models/README.md>) |
-| LLM | 11 | 75 | 4,370 | 354,560 B | [板块页 →](<LLM/README.md>) |
-| Agents | 3 | 22 | 206 | 29,869 B | [板块页 →](<Agents/README.md>) |
-| VisualGen | 8 | 9 | 6,758 | 320,420 B | [板块页 →](<VisualGen/README.md>) |
-| WorldModel | 3 | 44 | 1,299 | 147,436 B | [板块页 →](<WorldModel/README.md>) |
-| AI4Science | 10 | 53 | 836 | 138,955 B | [板块页 →](<AI4Science/README.md>) |
-| Evaluation | 2 | 10 | 158 | 32,272 B | [板块页 →](<Evaluation/README.md>) |
-| Infra | 6 | 49 | 1,108 | 104,557 B | [板块页 →](<Infra/README.md>) |
+| LLM | 11 | 75 | 4,377 | 355,054 B | [板块页 →](<LLM/README.md>) |
+| Agents | 3 | 22 | 207 | 29,975 B | [板块页 →](<Agents/README.md>) |
+| VisualGen | 8 | 9 | 6,766 | 320,745 B | [板块页 →](<VisualGen/README.md>) |
+| WorldModel | 3 | 44 | 1,301 | 147,571 B | [板块页 →](<WorldModel/README.md>) |
+| AI4Science | 10 | 53 | 836 | 139,324 B | [板块页 →](<AI4Science/README.md>) |
+| Evaluation | 2 | 10 | 158 | 32,341 B | [板块页 →](<Evaluation/README.md>) |
+| Infra | 6 | 49 | 1,108 | 104,801 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 36 | 1,571 | 168,386 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **72** | **349** | **28,433** | **2,202,601 B** | — |
+| **合计** | **72** | **349** | **28,451** | **2,204,343 B** | — |
 
 ## 分面索引
 
@@ -357,10 +357,10 @@
 <summary><b>语言模型 LLM（11 条目 / 63 子文档）</b></summary>
 
   <details>
-  <summary><b>Alignment</b> · <code>LLM/Alignment/report.md</code> · 114 行 · —</summary>
+  <summary><b>模型对齐与后训练</b> · <code>LLM/Alignment/report.md</code> · 115 行 · —</summary>
 
 
-    * **条目**：[LLM/Alignment/report.md](<LLM/Alignment/report.md>)（114 行 / 10,544 B）
+    * **条目**：[LLM/Alignment/report.md](<LLM/Alignment/report.md>)（115 行 / 10,592 B）
     * **专题目录**：`LLM/Alignment`
     * **元数据**：type=`—` · domain=`LLM` · subject=`Alignment` · date=`—` · status=`—`
     * **子文档（0）**
@@ -369,10 +369,10 @@
   </details>
 
   <details>
-  <summary><b>DecisionModels</b> · <code>LLM/DecisionModels/report.md</code> · 874 行 · —</summary>
+  <summary><b>决策模型（Decision Models）</b> · <code>LLM/DecisionModels/report.md</code> · 875 行 · —</summary>
 
 
-    * **条目**：[LLM/DecisionModels/report.md](<LLM/DecisionModels/report.md>)（874 行 / 109,141 B）
+    * **条目**：[LLM/DecisionModels/report.md](<LLM/DecisionModels/report.md>)（875 行 / 109,198 B）
     * **专题目录**：`LLM/DecisionModels`
     * **元数据**：type=`—` · domain=`LLM` · subject=`DecisionModels` · date=`—` · status=`—`
     * **子文档（18）**
@@ -398,10 +398,10 @@
   </details>
 
   <details>
-  <summary><b>DiffusionLM</b> · <code>LLM/DiffusionLM/report.md</code> · 70 行 · 2026-10-23</summary>
+  <summary><b>扩散语言模型</b> · <code>LLM/DiffusionLM/report.md</code> · 70 行 · 2026-10-23</summary>
 
 
-    * **条目**：[LLM/DiffusionLM/report.md](<LLM/DiffusionLM/report.md>)（70 行 / 11,793 B）
+    * **条目**：[LLM/DiffusionLM/report.md](<LLM/DiffusionLM/report.md>)（70 行 / 11,826 B）
     * **专题目录**：`LLM/DiffusionLM`
     * **元数据**：type=`topic-research` · domain=`LLM` · subject=`DiffusionLM` · date=`2026-10-23` · status=`current`
     * **子文档（10）**
@@ -419,10 +419,10 @@
   </details>
 
   <details>
-  <summary><b>DocumentParsing</b> · <code>LLM/DocumentParsing/report.md</code> · 102 行 · 2026-10-25</summary>
+  <summary><b>OCR 与文档解析</b> · <code>LLM/DocumentParsing/report.md</code> · 102 行 · 2026-10-25</summary>
 
 
-    * **条目**：[LLM/DocumentParsing/report.md](<LLM/DocumentParsing/report.md>)（102 行 / 18,604 B）
+    * **条目**：[LLM/DocumentParsing/report.md](<LLM/DocumentParsing/report.md>)（102 行 / 18,638 B）
     * **专题目录**：`LLM/DocumentParsing`
     * **元数据**：type=`research` · domain=`LLM` · subject=`DocumentParsing` · date=`2026-10-25` · status=`current`
     * **子文档（16）**
@@ -446,10 +446,10 @@
   </details>
 
   <details>
-  <summary><b>LongContext</b> · <code>LLM/LongContext/report.md</code> · 609 行 · —</summary>
+  <summary><b>长上下文</b> · <code>LLM/LongContext/report.md</code> · 610 行 · —</summary>
 
 
-    * **条目**：[LLM/LongContext/report.md](<LLM/LongContext/report.md>)（609 行 / 31,223 B）
+    * **条目**：[LLM/LongContext/report.md](<LLM/LongContext/report.md>)（610 行 / 31,259 B）
     * **专题目录**：`LLM/LongContext`
     * **元数据**：type=`—` · domain=`LLM` · subject=`LongContext` · date=`—` · status=`—`
     * **子文档（0）**
@@ -458,10 +458,10 @@
   </details>
 
   <details>
-  <summary><b>MoE</b> · <code>LLM/MoE/report.md</code> · 405 行 · —</summary>
+  <summary><b>混合专家模型（MoE）</b> · <code>LLM/MoE/report.md</code> · 406 行 · —</summary>
 
 
-    * **条目**：[LLM/MoE/report.md](<LLM/MoE/report.md>)（405 行 / 28,869 B）
+    * **条目**：[LLM/MoE/report.md](<LLM/MoE/report.md>)（406 行 / 28,920 B）
     * **专题目录**：`LLM/MoE`
     * **元数据**：type=`—` · domain=`LLM` · subject=`MoE` · date=`—` · status=`—`
     * **子文档（0）**
@@ -470,10 +470,10 @@
   </details>
 
   <details>
-  <summary><b>RAG</b> · <code>LLM/RAG/report.md</code> · 834 行 · —</summary>
+  <summary><b>检索增强生成（RAG）</b> · <code>LLM/RAG/report.md</code> · 835 行 · —</summary>
 
 
-    * **条目**：[LLM/RAG/report.md](<LLM/RAG/report.md>)（834 行 / 45,460 B）
+    * **条目**：[LLM/RAG/report.md](<LLM/RAG/report.md>)（835 行 / 45,511 B）
     * **专题目录**：`LLM/RAG`
     * **元数据**：type=`—` · domain=`LLM` · subject=`RAG` · date=`—` · status=`—`
     * **子文档（0）**
@@ -482,10 +482,10 @@
   </details>
 
   <details>
-  <summary><b>ReasoningModels</b> · <code>LLM/ReasoningModels/report.md</code> · 675 行 · —</summary>
+  <summary><b>推理模型与推理时计算</b> · <code>LLM/ReasoningModels/report.md</code> · 676 行 · —</summary>
 
 
-    * **条目**：[LLM/ReasoningModels/report.md](<LLM/ReasoningModels/report.md>)（675 行 / 35,781 B）
+    * **条目**：[LLM/ReasoningModels/report.md](<LLM/ReasoningModels/report.md>)（676 行 / 35,835 B）
     * **专题目录**：`LLM/ReasoningModels`
     * **元数据**：type=`—` · domain=`LLM` · subject=`ReasoningModels` · date=`—` · status=`—`
     * **子文档（0）**
@@ -494,10 +494,10 @@
   </details>
 
   <details>
-  <summary><b>ReinforcementLearning</b> · <code>LLM/ReinforcementLearning/report.md</code> · 107 行 · 2026-10-23</summary>
+  <summary><b>LLM 后训练中的强化学习</b> · <code>LLM/ReinforcementLearning/report.md</code> · 107 行 · 2026-10-23</summary>
 
 
-    * **条目**：[LLM/ReinforcementLearning/report.md](<LLM/ReinforcementLearning/report.md>)（107 行 / 22,864 B）
+    * **条目**：[LLM/ReinforcementLearning/report.md](<LLM/ReinforcementLearning/report.md>)（107 行 / 22,910 B）
     * **专题目录**：`LLM/ReinforcementLearning`
     * **元数据**：type=`research` · domain=`LLM` · subject=`ReinforcementLearning` · date=`2026-10-23` · status=`current`
     * **子文档（10）**
@@ -515,10 +515,10 @@
   </details>
 
   <details>
-  <summary><b>TrainingData</b> · <code>LLM/TrainingData/report.md</code> · 60 行 · 2026-10-24</summary>
+  <summary><b>训练数据策展</b> · <code>LLM/TrainingData/report.md</code> · 60 行 · 2026-10-24</summary>
 
 
-    * **条目**：[LLM/TrainingData/report.md](<LLM/TrainingData/report.md>)（60 行 / 10,648 B）
+    * **条目**：[LLM/TrainingData/report.md](<LLM/TrainingData/report.md>)（60 行 / 10,681 B）
     * **专题目录**：`LLM/TrainingData`
     * **元数据**：type=`research` · domain=`LLM` · subject=`TrainingData` · date=`2026-10-24` · status=`current`
     * **子文档（6）**
@@ -532,10 +532,10 @@
   </details>
 
   <details>
-  <summary><b>VLM</b> · <code>LLM/VLM/report.md</code> · 520 行 · —</summary>
+  <summary><b>视觉语言模型（VLM）</b> · <code>LLM/VLM/report.md</code> · 521 行 · —</summary>
 
 
-    * **条目**：[LLM/VLM/report.md](<LLM/VLM/report.md>)（520 行 / 29,633 B）
+    * **条目**：[LLM/VLM/report.md](<LLM/VLM/report.md>)（521 行 / 29,684 B）
     * **专题目录**：`LLM/VLM`
     * **元数据**：type=`—` · domain=`LLM` · subject=`VLM` · date=`—` · status=`—`
     * **子文档（3）**
@@ -553,10 +553,10 @@
 <summary><b>Agents Agents（3 条目 / 18 子文档）</b></summary>
 
   <details>
-  <summary><b>AgentSecurity</b> · <code>Agents/AgentSecurity/report.md</code> · 53 行 · 2026-10-24</summary>
+  <summary><b>工具 Agent 安全</b> · <code>Agents/AgentSecurity/report.md</code> · 53 行 · 2026-10-24</summary>
 
 
-    * **条目**：[Agents/AgentSecurity/report.md](<Agents/AgentSecurity/report.md>)（53 行 / 8,688 B）
+    * **条目**：[Agents/AgentSecurity/report.md](<Agents/AgentSecurity/report.md>)（53 行 / 8,722 B）
     * **专题目录**：`Agents/AgentSecurity`
     * **元数据**：type=`research` · domain=`Agents` · subject=`AgentSecurity` · date=`2026-10-24` · status=`current`
     * **子文档（4）**
@@ -568,10 +568,10 @@
   </details>
 
   <details>
-  <summary><b>AgentSystems</b> · <code>Agents/AgentSystems/report.md</code> · 94 行 · —</summary>
+  <summary><b>智能体系统</b> · <code>Agents/AgentSystems/report.md</code> · 95 行 · —</summary>
 
 
-    * **条目**：[Agents/AgentSystems/report.md](<Agents/AgentSystems/report.md>)（94 行 / 13,771 B）
+    * **条目**：[Agents/AgentSystems/report.md](<Agents/AgentSystems/report.md>)（95 行 / 13,810 B）
     * **专题目录**：`Agents/AgentSystems`
     * **元数据**：type=`—` · domain=`Agents` · subject=`AgentSystems` · date=`—` · status=`—`
     * **子文档（12）**
@@ -591,10 +591,10 @@
   </details>
 
   <details>
-  <summary><b>ComputerUse</b> · <code>Agents/ComputerUse/report.md</code> · 59 行 · 2026-10-24</summary>
+  <summary><b>电脑使用 Agent</b> · <code>Agents/ComputerUse/report.md</code> · 59 行 · 2026-10-24</summary>
 
 
-    * **条目**：[Agents/ComputerUse/report.md](<Agents/ComputerUse/report.md>)（59 行 / 7,410 B）
+    * **条目**：[Agents/ComputerUse/report.md](<Agents/ComputerUse/report.md>)（59 行 / 7,443 B）
     * **专题目录**：`Agents/ComputerUse`
     * **元数据**：type=`research` · domain=`Agents` · subject=`ComputerUse` · date=`2026-10-24` · status=`current`
     * **子文档（2）**
@@ -611,10 +611,10 @@
 <summary><b>视觉生成 VisualGen（8 条目 / 0 子文档）</b></summary>
 
   <details>
-  <summary><b>3DGen</b> · <code>VisualGen/3DGen/report.md</code> · 857 行 · —</summary>
+  <summary><b>3D 生成</b> · <code>VisualGen/3DGen/report.md</code> · 858 行 · —</summary>
 
 
-    * **条目**：[VisualGen/3DGen/report.md](<VisualGen/3DGen/report.md>)（857 行 / 45,923 B）
+    * **条目**：[VisualGen/3DGen/report.md](<VisualGen/3DGen/report.md>)（858 行 / 45,956 B）
     * **专题目录**：`VisualGen/3DGen`
     * **元数据**：type=`—` · domain=`VisualGen` · subject=`3DGen` · date=`—` · status=`—`
     * **子文档（0）**
@@ -623,10 +623,10 @@
   </details>
 
   <details>
-  <summary><b>AudioGen</b> · <code>VisualGen/AudioGen/report.md</code> · 914 行 · —</summary>
+  <summary><b>音频与音乐生成</b> · <code>VisualGen/AudioGen/report.md</code> · 915 行 · —</summary>
 
 
-    * **条目**：[VisualGen/AudioGen/report.md](<VisualGen/AudioGen/report.md>)（914 行 / 41,782 B）
+    * **条目**：[VisualGen/AudioGen/report.md](<VisualGen/AudioGen/report.md>)（915 行 / 41,827 B）
     * **专题目录**：`VisualGen/AudioGen`
     * **元数据**：type=`—` · domain=`VisualGen` · subject=`AudioGen` · date=`—` · status=`—`
     * **子文档（0）**
@@ -635,10 +635,10 @@
   </details>
 
   <details>
-  <summary><b>AvatarGen</b> · <code>VisualGen/AvatarGen/report.md</code> · 594 行 · —</summary>
+  <summary><b>数字人与 Avatar</b> · <code>VisualGen/AvatarGen/report.md</code> · 595 行 · —</summary>
 
 
-    * **条目**：[VisualGen/AvatarGen/report.md](<VisualGen/AvatarGen/report.md>)（594 行 / 28,185 B）
+    * **条目**：[VisualGen/AvatarGen/report.md](<VisualGen/AvatarGen/report.md>)（595 行 / 28,228 B）
     * **专题目录**：`VisualGen/AvatarGen`
     * **元数据**：type=`—` · domain=`VisualGen` · subject=`AvatarGen` · date=`—` · status=`—`
     * **子文档（0）**
@@ -647,10 +647,10 @@
   </details>
 
   <details>
-  <summary><b>ControllableGen</b> · <code>VisualGen/ControllableGen/report.md</code> · 916 行 · —</summary>
+  <summary><b>可控生成</b> · <code>VisualGen/ControllableGen/report.md</code> · 917 行 · —</summary>
 
 
-    * **条目**：[VisualGen/ControllableGen/report.md](<VisualGen/ControllableGen/report.md>)（916 行 / 43,765 B）
+    * **条目**：[VisualGen/ControllableGen/report.md](<VisualGen/ControllableGen/report.md>)（917 行 / 43,801 B）
     * **专题目录**：`VisualGen/ControllableGen`
     * **元数据**：type=`—` · domain=`VisualGen` · subject=`ControllableGen` · date=`—` · status=`—`
     * **子文档（0）**
@@ -659,10 +659,10 @@
   </details>
 
   <details>
-  <summary><b>DiT</b> · <code>VisualGen/DiT/report.md</code> · 887 行 · —</summary>
+  <summary><b>扩散 Transformer（DiT）</b> · <code>VisualGen/DiT/report.md</code> · 888 行 · —</summary>
 
 
-    * **条目**：[VisualGen/DiT/report.md](<VisualGen/DiT/report.md>)（887 行 / 46,258 B）
+    * **条目**：[VisualGen/DiT/report.md](<VisualGen/DiT/report.md>)（888 行 / 46,309 B）
     * **专题目录**：`VisualGen/DiT`
     * **元数据**：type=`—` · domain=`VisualGen` · subject=`DiT` · date=`—` · status=`—`
     * **子文档（0）**
@@ -671,10 +671,10 @@
   </details>
 
   <details>
-  <summary><b>DiffusionModels</b> · <code>VisualGen/DiffusionModels/report.md</code> · 858 行 · —</summary>
+  <summary><b>扩散模型</b> · <code>VisualGen/DiffusionModels/report.md</code> · 859 行 · —</summary>
 
 
-    * **条目**：[VisualGen/DiffusionModels/report.md](<VisualGen/DiffusionModels/report.md>)（858 行 / 36,713 B）
+    * **条目**：[VisualGen/DiffusionModels/report.md](<VisualGen/DiffusionModels/report.md>)（859 行 / 36,749 B）
     * **专题目录**：`VisualGen/DiffusionModels`
     * **元数据**：type=`—` · domain=`VisualGen` · subject=`DiffusionModels` · date=`—` · status=`—`
     * **子文档（0）**
@@ -683,10 +683,10 @@
   </details>
 
   <details>
-  <summary><b>ImageEditing</b> · <code>VisualGen/ImageEditing/report.md</code> · 834 行 · —</summary>
+  <summary><b>图像编辑与修复</b> · <code>VisualGen/ImageEditing/report.md</code> · 835 行 · —</summary>
 
 
-    * **条目**：[VisualGen/ImageEditing/report.md](<VisualGen/ImageEditing/report.md>)（834 行 / 43,052 B）
+    * **条目**：[VisualGen/ImageEditing/report.md](<VisualGen/ImageEditing/report.md>)（835 行 / 43,097 B）
     * **专题目录**：`VisualGen/ImageEditing`
     * **元数据**：type=`—` · domain=`VisualGen` · subject=`ImageEditing` · date=`—` · status=`—`
     * **子文档（0）**
@@ -695,10 +695,10 @@
   </details>
 
   <details>
-  <summary><b>VideoGen</b> · <code>VisualGen/VideoGen/report.md</code> · 898 行 · —</summary>
+  <summary><b>视频生成</b> · <code>VisualGen/VideoGen/report.md</code> · 899 行 · —</summary>
 
 
-    * **条目**：[VisualGen/VideoGen/report.md](<VisualGen/VideoGen/report.md>)（898 行 / 34,742 B）
+    * **条目**：[VisualGen/VideoGen/report.md](<VisualGen/VideoGen/report.md>)（899 行 / 34,778 B）
     * **专题目录**：`VisualGen/VideoGen`
     * **元数据**：type=`—` · domain=`VisualGen` · subject=`VideoGen` · date=`—` · status=`—`
     * **子文档（0）**
@@ -714,10 +714,10 @@
 <summary><b>世界模型 WorldModel（3 条目 / 40 子文档）</b></summary>
 
   <details>
-  <summary><b>EmbodiedPlanning</b> · <code>WorldModel/EmbodiedPlanning/report.md</code> · 53 行 · —</summary>
+  <summary><b>具身预测规划</b> · <code>WorldModel/EmbodiedPlanning/report.md</code> · 54 行 · —</summary>
 
 
-    * **条目**：[WorldModel/EmbodiedPlanning/report.md](<WorldModel/EmbodiedPlanning/report.md>)（53 行 / 7,706 B）
+    * **条目**：[WorldModel/EmbodiedPlanning/report.md](<WorldModel/EmbodiedPlanning/report.md>)（54 行 / 7,748 B）
     * **专题目录**：`WorldModel/EmbodiedPlanning`
     * **元数据**：type=`—` · domain=`WorldModel` · subject=`EmbodiedPlanning` · date=`—` · status=`—`
     * **子文档（2）**
@@ -727,10 +727,10 @@
   </details>
 
   <details>
-  <summary><b>EmbodiedVLA</b> · <code>WorldModel/EmbodiedVLA/report.md</code> · 642 行 · —</summary>
+  <summary><b>机器人视觉语言动作模型（VLA）</b> · <code>WorldModel/EmbodiedVLA/report.md</code> · 643 行 · —</summary>
 
 
-    * **条目**：[WorldModel/EmbodiedVLA/report.md](<WorldModel/EmbodiedVLA/report.md>)（642 行 / 77,566 B）
+    * **条目**：[WorldModel/EmbodiedVLA/report.md](<WorldModel/EmbodiedVLA/report.md>)（643 行 / 77,632 B）
     * **专题目录**：`WorldModel/EmbodiedVLA`
     * **元数据**：type=`—` · domain=`WorldModel` · subject=`EmbodiedVLA` · date=`—` · status=`—`
     * **子文档（23）**
@@ -761,10 +761,10 @@
   </details>
 
   <details>
-  <summary><b>WorldModels</b> · <code>WorldModel/WorldModels/report.md</code> · 604 行 · 2026-10-22</summary>
+  <summary><b>世界模型</b> · <code>WorldModel/WorldModels/report.md</code> · 604 行 · 2026-10-22</summary>
 
 
-    * **条目**：[WorldModel/WorldModels/report.md](<WorldModel/WorldModels/report.md>)（604 行 / 62,164 B）
+    * **条目**：[WorldModel/WorldModels/report.md](<WorldModel/WorldModels/report.md>)（604 行 / 62,191 B）
     * **专题目录**：`WorldModel/WorldModels`
     * **元数据**：type=`topic-research` · domain=`WorldModel` · subject=`WorldModels` · date=`2026-10-22` · status=`needs-review`
     * **子文档（15）**
@@ -794,10 +794,10 @@
 <summary><b>科学研究 AI4Science（10 条目 / 42 子文档）</b></summary>
 
   <details>
-  <summary><b>AntibioticDiscovery</b> · <code>AI4Science/AntibioticDiscovery/report.md</code> · 48 行 · 2026-10-23</summary>
+  <summary><b>抗生素发现</b> · <code>AI4Science/AntibioticDiscovery/report.md</code> · 48 行 · 2026-10-23</summary>
 
 
-    * **条目**：[AI4Science/AntibioticDiscovery/report.md](<AI4Science/AntibioticDiscovery/report.md>)（48 行 / 10,713 B）
+    * **条目**：[AI4Science/AntibioticDiscovery/report.md](<AI4Science/AntibioticDiscovery/report.md>)（48 行 / 10,743 B）
     * **专题目录**：`AI4Science/AntibioticDiscovery`
     * **元数据**：type=`research` · domain=`AI4Science` · subject=`AntibioticDiscovery` · date=`2026-10-23` · status=`completed`
     * **子文档（6）**
@@ -811,10 +811,10 @@
   </details>
 
   <details>
-  <summary><b>Astronomy</b> · <code>AI4Science/Astronomy/report.md</code> · 59 行 · 2026-10-23</summary>
+  <summary><b>天文图像异常发现</b> · <code>AI4Science/Astronomy/report.md</code> · 59 行 · 2026-10-23</summary>
 
 
-    * **条目**：[AI4Science/Astronomy/report.md](<AI4Science/Astronomy/report.md>)（59 行 / 11,000 B）
+    * **条目**：[AI4Science/Astronomy/report.md](<AI4Science/Astronomy/report.md>)（59 行 / 11,039 B）
     * **专题目录**：`AI4Science/Astronomy`
     * **元数据**：type=`research` · domain=`AI4Science` · subject=`Astronomy` · date=`2026-10-23` · status=`completed`
     * **子文档（3）**
@@ -825,10 +825,10 @@
   </details>
 
   <details>
-  <summary><b>AutonomousLabs</b> · <code>AI4Science/AutonomousLabs/report.md</code> · 127 行 · 2026-10-23</summary>
+  <summary><b>自主实验室</b> · <code>AI4Science/AutonomousLabs/report.md</code> · 127 行 · 2026-10-23</summary>
 
 
-    * **条目**：[AI4Science/AutonomousLabs/report.md](<AI4Science/AutonomousLabs/report.md>)（127 行 / 22,012 B）
+    * **条目**：[AI4Science/AutonomousLabs/report.md](<AI4Science/AutonomousLabs/report.md>)（127 行 / 22,042 B）
     * **专题目录**：`AI4Science/AutonomousLabs`
     * **元数据**：type=`research` · domain=`AI4Science` · subject=`AutonomousLabs` · date=`2026-10-23` · status=`completed`
     * **子文档（2）**
@@ -838,10 +838,10 @@
   </details>
 
   <details>
-  <summary><b>Chemistry</b> · <code>AI4Science/Chemistry/report.md</code> · 89 行 · 2026-10-23</summary>
+  <summary><b>化学反应条件优化</b> · <code>AI4Science/Chemistry/report.md</code> · 89 行 · 2026-10-23</summary>
 
 
-    * **条目**：[AI4Science/Chemistry/report.md](<AI4Science/Chemistry/report.md>)（89 行 / 16,487 B）
+    * **条目**：[AI4Science/Chemistry/report.md](<AI4Science/Chemistry/report.md>)（89 行 / 16,526 B）
     * **专题目录**：`AI4Science/Chemistry`
     * **元数据**：type=`research` · domain=`AI4Science` · subject=`Chemistry` · date=`2026-10-23` · status=`completed`
     * **子文档（2）**
@@ -851,10 +851,10 @@
   </details>
 
   <details>
-  <summary><b>MaterialsDiscovery</b> · <code>AI4Science/MaterialsDiscovery/report.md</code> · 66 行 · 2026-10-23</summary>
+  <summary><b>生成式材料设计</b> · <code>AI4Science/MaterialsDiscovery/report.md</code> · 66 行 · 2026-10-23</summary>
 
 
-    * **条目**：[AI4Science/MaterialsDiscovery/report.md](<AI4Science/MaterialsDiscovery/report.md>)（66 行 / 9,275 B）
+    * **条目**：[AI4Science/MaterialsDiscovery/report.md](<AI4Science/MaterialsDiscovery/report.md>)（66 行 / 9,311 B）
     * **专题目录**：`AI4Science/MaterialsDiscovery`
     * **元数据**：type=`research` · domain=`AI4Science` · subject=`MaterialsDiscovery` · date=`2026-10-23` · status=`completed`
     * **子文档（4）**
@@ -866,10 +866,10 @@
   </details>
 
   <details>
-  <summary><b>MathematicalDiscovery</b> · <code>AI4Science/MathematicalDiscovery/report.md</code> · 78 行 · 2026-10-23</summary>
+  <summary><b>数学与算法发现</b> · <code>AI4Science/MathematicalDiscovery/report.md</code> · 78 行 · 2026-10-23</summary>
 
 
-    * **条目**：[AI4Science/MathematicalDiscovery/report.md](<AI4Science/MathematicalDiscovery/report.md>)（78 行 / 13,711 B）
+    * **条目**：[AI4Science/MathematicalDiscovery/report.md](<AI4Science/MathematicalDiscovery/report.md>)（78 行 / 13,747 B）
     * **专题目录**：`AI4Science/MathematicalDiscovery`
     * **元数据**：type=`research` · domain=`AI4Science` · subject=`MathematicalDiscovery` · date=`2026-10-23` · status=`completed`
     * **子文档（6）**
@@ -883,10 +883,10 @@
   </details>
 
   <details>
-  <summary><b>Neuroscience</b> · <code>AI4Science/Neuroscience/report.md</code> · 113 行 · 2026-10-23</summary>
+  <summary><b>神经活动表征与解码</b> · <code>AI4Science/Neuroscience/report.md</code> · 113 行 · 2026-10-23</summary>
 
 
-    * **条目**：[AI4Science/Neuroscience/report.md](<AI4Science/Neuroscience/report.md>)（113 行 / 18,430 B）
+    * **条目**：[AI4Science/Neuroscience/report.md](<AI4Science/Neuroscience/report.md>)（113 行 / 18,472 B）
     * **专题目录**：`AI4Science/Neuroscience`
     * **元数据**：type=`research` · domain=`AI4Science` · subject=`Neuroscience` · date=`2026-10-23` · status=`completed`
     * **子文档（2）**
@@ -896,10 +896,10 @@
   </details>
 
   <details>
-  <summary><b>ProteinDesign</b> · <code>AI4Science/ProteinDesign/report.md</code> · 80 行 · 2026-10-23</summary>
+  <summary><b>蛋白质与肽结合体设计</b> · <code>AI4Science/ProteinDesign/report.md</code> · 80 行 · 2026-10-23</summary>
 
 
-    * **条目**：[AI4Science/ProteinDesign/report.md](<AI4Science/ProteinDesign/report.md>)（80 行 / 11,452 B）
+    * **条目**：[AI4Science/ProteinDesign/report.md](<AI4Science/ProteinDesign/report.md>)（80 行 / 11,497 B）
     * **专题目录**：`AI4Science/ProteinDesign`
     * **元数据**：type=`research` · domain=`AI4Science` · subject=`ProteinDesign` · date=`2026-10-23` · status=`completed`
     * **子文档（6）**
@@ -913,10 +913,10 @@
   </details>
 
   <details>
-  <summary><b>SingleCellPerturbation</b> · <code>AI4Science/SingleCellPerturbation/report.md</code> · 87 行 · 2026-10-23</summary>
+  <summary><b>单细胞扰动预测</b> · <code>AI4Science/SingleCellPerturbation/report.md</code> · 87 行 · 2026-10-23</summary>
 
 
-    * **条目**：[AI4Science/SingleCellPerturbation/report.md](<AI4Science/SingleCellPerturbation/report.md>)（87 行 / 12,157 B）
+    * **条目**：[AI4Science/SingleCellPerturbation/report.md](<AI4Science/SingleCellPerturbation/report.md>)（87 行 / 12,193 B）
     * **专题目录**：`AI4Science/SingleCellPerturbation`
     * **元数据**：type=`research` · domain=`AI4Science` · subject=`SingleCellPerturbation` · date=`2026-10-23` · status=`completed`
     * **子文档（4）**
@@ -928,10 +928,10 @@
   </details>
 
   <details>
-  <summary><b>WeatherClimate</b> · <code>AI4Science/WeatherClimate/report.md</code> · 89 行 · 2026-10-23</summary>
+  <summary><b>天气与气候预测</b> · <code>AI4Science/WeatherClimate/report.md</code> · 89 行 · 2026-10-23</summary>
 
 
-    * **条目**：[AI4Science/WeatherClimate/report.md](<AI4Science/WeatherClimate/report.md>)（89 行 / 13,718 B）
+    * **条目**：[AI4Science/WeatherClimate/report.md](<AI4Science/WeatherClimate/report.md>)（89 行 / 13,754 B）
     * **专题目录**：`AI4Science/WeatherClimate`
     * **元数据**：type=`research` · domain=`AI4Science` · subject=`WeatherClimate` · date=`2026-10-23` · status=`completed`
     * **子文档（7）**
@@ -953,10 +953,10 @@
 <summary><b>评测科学 Evaluation（2 条目 / 7 子文档）</b></summary>
 
   <details>
-  <summary><b>EvaluationScience</b> · <code>Evaluation/EvaluationScience/report.md</code> · 125 行 · 2026-10-23</summary>
+  <summary><b>评测科学</b> · <code>Evaluation/EvaluationScience/report.md</code> · 125 行 · 2026-10-23</summary>
 
 
-    * **条目**：[Evaluation/EvaluationScience/report.md](<Evaluation/EvaluationScience/report.md>)（125 行 / 26,006 B）
+    * **条目**：[Evaluation/EvaluationScience/report.md](<Evaluation/EvaluationScience/report.md>)（125 行 / 26,033 B）
     * **专题目录**：`Evaluation/EvaluationScience`
     * **元数据**：type=`research` · domain=`Evaluation` · subject=`EvaluationScience` · date=`2026-10-23` · status=`current`
     * **子文档（5）**
@@ -969,10 +969,10 @@
   </details>
 
   <details>
-  <summary><b>ScientificDiscovery</b> · <code>Evaluation/ScientificDiscovery/report.md</code> · 33 行 · 2026-10-24</summary>
+  <summary><b>科学发现的评测方法</b> · <code>Evaluation/ScientificDiscovery/report.md</code> · 33 行 · 2026-10-24</summary>
 
 
-    * **条目**：[Evaluation/ScientificDiscovery/report.md](<Evaluation/ScientificDiscovery/report.md>)（33 行 / 6,266 B）
+    * **条目**：[Evaluation/ScientificDiscovery/report.md](<Evaluation/ScientificDiscovery/report.md>)（33 行 / 6,308 B）
     * **专题目录**：`Evaluation/ScientificDiscovery`
     * **元数据**：type=`research` · domain=`Evaluation` · subject=`ScientificDiscovery` · date=`2026-10-24` · status=`current`
     * **子文档（2）**
@@ -989,10 +989,10 @@
 <summary><b>基础设施 Infra（6 条目 / 42 子文档）</b></summary>
 
   <details>
-  <summary><b>KVCachePD</b> · <code>Infra/KVCachePD/report.md</code> · 84 行 · 2026-10-23</summary>
+  <summary><b>KV Cache 与预填充／解码分离</b> · <code>Infra/KVCachePD/report.md</code> · 84 行 · 2026-10-23</summary>
 
 
-    * **条目**：[Infra/KVCachePD/report.md](<Infra/KVCachePD/report.md>)（84 行 / 10,922 B）
+    * **条目**：[Infra/KVCachePD/report.md](<Infra/KVCachePD/report.md>)（84 行 / 10,973 B）
     * **专题目录**：`Infra/KVCachePD`
     * **元数据**：type=`research` · domain=`Infra` · subject=`KVCachePD` · date=`2026-10-23` · status=`current`
     * **子文档（5）**
@@ -1005,10 +1005,10 @@
   </details>
 
   <details>
-  <summary><b>MoEExecution</b> · <code>Infra/MoEExecution/report.md</code> · 25 行 · 2026-10-24</summary>
+  <summary><b>MoE 执行与专家通信</b> · <code>Infra/MoEExecution/report.md</code> · 25 行 · 2026-10-24</summary>
 
 
-    * **条目**：[Infra/MoEExecution/report.md](<Infra/MoEExecution/report.md>)（25 行 / 6,743 B）
+    * **条目**：[Infra/MoEExecution/report.md](<Infra/MoEExecution/report.md>)（25 行 / 6,783 B）
     * **专题目录**：`Infra/MoEExecution`
     * **元数据**：type=`repo-research` · domain=`Infra` · subject=`MoEExecution` · date=`2026-10-24` · status=`completed`
     * **子文档（1）**
@@ -1017,10 +1017,10 @@
   </details>
 
   <details>
-  <summary><b>QuantizationEdge</b> · <code>Infra/QuantizationEdge/report.md</code> · 188 行 · 2026-10-22</summary>
+  <summary><b>模型量化与边缘部署</b> · <code>Infra/QuantizationEdge/report.md</code> · 188 行 · 2026-10-22</summary>
 
 
-    * **条目**：[Infra/QuantizationEdge/report.md](<Infra/QuantizationEdge/report.md>)（188 行 / 15,490 B）
+    * **条目**：[Infra/QuantizationEdge/report.md](<Infra/QuantizationEdge/report.md>)（188 行 / 15,532 B）
     * **专题目录**：`Infra/QuantizationEdge`
     * **元数据**：type=`topic-research` · domain=`Infra` · subject=`QuantizationEdge` · date=`2026-10-22` · status=`needs-review`
     * **子文档（0）**
@@ -1029,10 +1029,10 @@
   </details>
 
   <details>
-  <summary><b>ServingEvaluation</b> · <code>Infra/ServingEvaluation/report.md</code> · 81 行 · 2026-10-24</summary>
+  <summary><b>在线推理服务与评测</b> · <code>Infra/ServingEvaluation/report.md</code> · 81 行 · 2026-10-24</summary>
 
 
-    * **条目**：[Infra/ServingEvaluation/report.md](<Infra/ServingEvaluation/report.md>)（81 行 / 11,395 B）
+    * **条目**：[Infra/ServingEvaluation/report.md](<Infra/ServingEvaluation/report.md>)（81 行 / 11,437 B）
     * **专题目录**：`Infra/ServingEvaluation`
     * **元数据**：type=`research` · domain=`Infra` · subject=`ServingEvaluation` · date=`2026-10-24` · status=`current`
     * **子文档（3）**
@@ -1043,10 +1043,10 @@
   </details>
 
   <details>
-  <summary><b>SpeculativeDecoding</b> · <code>Infra/SpeculativeDecoding/report.md</code> · 549 行 · 2026-10-22</summary>
+  <summary><b>投机解码</b> · <code>Infra/SpeculativeDecoding/report.md</code> · 549 行 · 2026-10-22</summary>
 
 
-    * **条目**：[Infra/SpeculativeDecoding/report.md](<Infra/SpeculativeDecoding/report.md>)（549 行 / 46,589 B）
+    * **条目**：[Infra/SpeculativeDecoding/report.md](<Infra/SpeculativeDecoding/report.md>)（549 行 / 46,616 B）
     * **专题目录**：`Infra/SpeculativeDecoding`
     * **元数据**：type=`topic-research` · domain=`Infra` · subject=`SpeculativeDecoding` · date=`2026-10-22` · status=`needs-review`
     * **子文档（33）**
@@ -1087,10 +1087,10 @@
   </details>
 
   <details>
-  <summary><b>TrainingInfra</b> · <code>Infra/TrainingInfra/report.md</code> · 181 行 · 2026-10-22</summary>
+  <summary><b>分布式训练基础设施</b> · <code>Infra/TrainingInfra/report.md</code> · 181 行 · 2026-10-22</summary>
 
 
-    * **条目**：[Infra/TrainingInfra/report.md](<Infra/TrainingInfra/report.md>)（181 行 / 13,418 B）
+    * **条目**：[Infra/TrainingInfra/report.md](<Infra/TrainingInfra/report.md>)（181 行 / 13,460 B）
     * **专题目录**：`Infra/TrainingInfra`
     * **元数据**：type=`topic-research` · domain=`Infra` · subject=`TrainingInfra` · date=`2026-10-22` · status=`needs-review`
     * **子文档（0）**
@@ -1207,24 +1207,24 @@
 | 文档 | 板块 | 行数 | 字节 |
 | --- | --- | --: | --: |
 | [AGENTS.md](<AGENTS.md>) |  | 9 | 908 B |
-| [AI4Science/README.md](<AI4Science/README.md>) | AI4Science | 137 | 6,760 B |
-| [Agents/README.md](<Agents/README.md>) | Agents | 74 | 3,460 B |
-| [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 46 | 1,945 B |
-| [Infra/README.md](<Infra/README.md>) | Infra | 109 | 7,103 B |
-| [LLM/README.md](<LLM/README.md>) | LLM | 147 | 9,955 B |
+| [AI4Science/README.md](<AI4Science/README.md>) | AI4Science | 137 | 6,896 B |
+| [Agents/README.md](<Agents/README.md>) | Agents | 74 | 3,495 B |
+| [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 46 | 1,951 B |
+| [Infra/README.md](<Infra/README.md>) | Infra | 109 | 7,193 B |
+| [LLM/README.md](<LLM/README.md>) | LLM | 147 | 10,228 B |
 | [Models/README.md](<Models/README.md>) | Models | 101 | 4,888 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 104 | 4,484 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 196 | 13,461 B |
-| [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,616 B |
-| [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 103 | 6,509 B |
+| [README.md](<README.md>) |  | 196 | 14,129 B |
+| [VisualGen/README.md](<VisualGen/README.md>) | VisualGen | 31 | 1,674 B |
+| [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 103 | 6,735 B |
 | [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 86 | 6,458 B |
 | [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 11,079 B |
 | [docs/research-method.md](<docs/research-method.md>) | docs | 31 | 2,380 B |
 | [docs/statistics.md](<docs/statistics.md>) | docs | 215 | 15,662 B |
-| [docs/team.md](<docs/team.md>) | docs | 66 | 5,930 B |
+| [docs/team.md](<docs/team.md>) | docs | 68 | 6,212 B |
 | [docs/verification.md](<docs/verification.md>) | docs | 21 | 1,991 B |
 | [scripts/README.md](<scripts/README.md>) | scripts | 101 | 4,956 B |
 
@@ -1232,6 +1232,6 @@
 ## 说明
 
 * 本索引是**派生数据**，仓库里的条目文件才是唯一事实来源；重建索引只需重跑脚本。
-* 当前 front-matter 为 0 份：所有条目的 `type` / `date` / `status` 显示为 `—`，domain / subject / topic 由路径推断。补齐 front-matter 后重跑即可自动填充。
-* 键位契约：`title` / `type` / `domain` / `subject` / `topic` / `upstream` / `date`（另容忍可选 `topic`）。
+* 当前 48 份条目带 front-matter；缺失的 `type` / `date` / `status` 显示为 `—`，domain / subject / topic 缺失时由路径推断。
+* 可选元数据：`title` / `display_name` / `type` / `domain` / `subject` / `topic` / `upstream` / `date` / `evidence` / `status`。
 * 脚本只读扫描、只写生成物；**不会删除或改写任何条目文件**。

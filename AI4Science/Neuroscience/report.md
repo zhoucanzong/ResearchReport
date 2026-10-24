@@ -1,4 +1,5 @@
 ---
+display_name: 神经活动表征与解码
 type: research
 domain: AI4Science
 subject: Neuroscience

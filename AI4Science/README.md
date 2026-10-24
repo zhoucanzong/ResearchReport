@@ -15,21 +15,21 @@
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
-| **AntibioticDiscovery** | [AI 辅助小分子抗生素发现：从活性筛选到机制与动物模型](<AntibioticDiscovery/report.md>) | 48 行 |
-| **Astronomy** | [巡天星系图像中的 AI 异常发现：DECaLS 近 390 万目标案例](<Astronomy/report.md>) | 59 行 |
-| **AutonomousLabs** | [自主实验室：从自动化执行到科学闭环](<AutonomousLabs/report.md>) | 127 行 |
-| **Chemistry** | [化学反应条件优化：历史数据怎样帮助新底物少做实验](<Chemistry/report.md>) | 89 行 |
-| **MaterialsDiscovery** | [生成式材料设计：从晶体候选到实验验证](<MaterialsDiscovery/report.md>) | 66 行 |
-| **MathematicalDiscovery** | [可验证的数学与算法发现：证明、程序搜索和方程恢复](<MathematicalDiscovery/report.md>) | 78 行 |
-| **Neuroscience** | [神经活动到运动行为：跨记录会话的表征与解码](<Neuroscience/report.md>) | 113 行 |
-| **ProteinDesign** | [蛋白质 binder 发现：从复合物生成到候选筛选](<ProteinDesign/report.md>) | 80 行 |
-| **SingleCellPerturbation** | [单细胞扰动预测：从“配对细胞”转向“群体响应”](<SingleCellPerturbation/report.md>) | 87 行 |
-| **WeatherClimate** | [AI 天气与气候预测：从天气状态外推到强迫响应](<WeatherClimate/report.md>) | 89 行 |
+| **抗生素发现** | [AI 辅助小分子抗生素发现：从活性筛选到机制与动物模型](<AntibioticDiscovery/report.md>) | 48 行 |
+| **天文图像异常发现** | [巡天星系图像中的 AI 异常发现：DECaLS 近 390 万目标案例](<Astronomy/report.md>) | 59 行 |
+| **自主实验室** | [自主实验室：从自动化执行到科学闭环](<AutonomousLabs/report.md>) | 127 行 |
+| **化学反应条件优化** | [化学反应条件优化：历史数据怎样帮助新底物少做实验](<Chemistry/report.md>) | 89 行 |
+| **生成式材料设计** | [生成式材料设计：从晶体候选到实验验证](<MaterialsDiscovery/report.md>) | 66 行 |
+| **数学与算法发现** | [可验证的数学与算法发现：证明、程序搜索和方程恢复](<MathematicalDiscovery/report.md>) | 78 行 |
+| **神经活动表征与解码** | [神经活动到运动行为：跨记录会话的表征与解码](<Neuroscience/report.md>) | 113 行 |
+| **蛋白质与肽结合体设计** | [蛋白质 binder 发现：从复合物生成到候选筛选](<ProteinDesign/report.md>) | 80 行 |
+| **单细胞扰动预测** | [单细胞扰动预测：从“配对细胞”转向“群体响应”](<SingleCellPerturbation/report.md>) | 87 行 |
+| **天气与气候预测** | [AI 天气与气候预测：从天气状态外推到强迫响应](<WeatherClimate/report.md>) | 89 行 |
 
 ## 📎 子文档
 
 <details>
-<summary><b>AntibioticDiscovery</b>（6 份）</summary>
+<summary><b>抗生素发现</b>（6 份）</summary>
 
 * [papers/2024-synthemol-mcts.md](<AntibioticDiscovery/papers/2024-synthemol-mcts.md>) — 38 行 / 6,361 B
 * [papers/2025-cell-de-novo.md](<AntibioticDiscovery/papers/2025-cell-de-novo.md>) — 47 行 / 7,076 B
@@ -41,7 +41,7 @@
 </details>
 
 <details>
-<summary><b>Astronomy</b>（3 份）</summary>
+<summary><b>天文图像异常发现</b>（3 份）</summary>
 
 * [papers/2309.08660.md](<Astronomy/papers/2309.08660.md>) — 80 行 / 7,731 B
 * [sources/CANDIDATES.md](<Astronomy/sources/CANDIDATES.md>) — 24 行 / 2,555 B
@@ -50,7 +50,7 @@
 </details>
 
 <details>
-<summary><b>AutonomousLabs</b>（2 份）</summary>
+<summary><b>自主实验室</b>（2 份）</summary>
 
 * [sources/CANDIDATES.md](<AutonomousLabs/sources/CANDIDATES.md>) — 21 行 / 2,110 B
 * [sources/MANIFEST.md](<AutonomousLabs/sources/MANIFEST.md>) — 30 行 / 9,932 B
@@ -58,7 +58,7 @@
 </details>
 
 <details>
-<summary><b>Chemistry</b>（2 份）</summary>
+<summary><b>化学反应条件优化</b>（2 份）</summary>
 
 * [sources/CANDIDATES.md](<Chemistry/sources/CANDIDATES.md>) — 30 行 / 4,195 B
 * [sources/MANIFEST.md](<Chemistry/sources/MANIFEST.md>) — 19 行 / 7,769 B
@@ -66,7 +66,7 @@
 </details>
 
 <details>
-<summary><b>MaterialsDiscovery</b>（4 份）</summary>
+<summary><b>生成式材料设计</b>（4 份）</summary>
 
 * [papers/2312.03687-mattergen.md](<MaterialsDiscovery/papers/2312.03687-mattergen.md>) — 75 行 / 11,695 B
 * [papers/2603.22748-gnome-experiment.md](<MaterialsDiscovery/papers/2603.22748-gnome-experiment.md>) — 45 行 / 4,637 B
@@ -76,7 +76,7 @@
 </details>
 
 <details>
-<summary><b>MathematicalDiscovery</b>（6 份）</summary>
+<summary><b>数学与算法发现</b>（6 份）</summary>
 
 * [papers/ai-feynman.md](<MathematicalDiscovery/papers/ai-feynman.md>) — 73 行 / 8,398 B
 * [papers/alphaproof.md](<MathematicalDiscovery/papers/alphaproof.md>) — 61 行 / 8,795 B
@@ -88,7 +88,7 @@
 </details>
 
 <details>
-<summary><b>Neuroscience</b>（2 份）</summary>
+<summary><b>神经活动表征与解码</b>（2 份）</summary>
 
 * [sources/CANDIDATES.md](<Neuroscience/sources/CANDIDATES.md>) — 30 行 / 4,170 B
 * [sources/MANIFEST.md](<Neuroscience/sources/MANIFEST.md>) — 17 行 / 6,089 B
@@ -96,7 +96,7 @@
 </details>
 
 <details>
-<summary><b>ProteinDesign</b>（6 份）</summary>
+<summary><b>蛋白质与肽结合体设计</b>（6 份）</summary>
 
 * [papers/2026-bits-to-binders.md](<ProteinDesign/papers/2026-bits-to-binders.md>) — 21 行 / 3,644 B
 * [papers/2504.13075-apm.md](<ProteinDesign/papers/2504.13075-apm.md>) — 59 行 / 5,212 B
@@ -108,7 +108,7 @@
 </details>
 
 <details>
-<summary><b>SingleCellPerturbation</b>（4 份）</summary>
+<summary><b>单细胞扰动预测</b>（4 份）</summary>
 
 * [papers/2609.34391-p2p.md](<SingleCellPerturbation/papers/2609.34391-p2p.md>) — 60 行 / 6,419 B
 * [papers/2610.02232-scegflow.md](<SingleCellPerturbation/papers/2610.02232-scegflow.md>) — 61 行 / 6,685 B
@@ -118,7 +118,7 @@
 </details>
 
 <details>
-<summary><b>WeatherClimate</b>（7 份）</summary>
+<summary><b>天气与气候预测</b>（7 份）</summary>
 
 * [papers/aurora.md](<WeatherClimate/papers/aurora.md>) — 46 行 / 6,177 B
 * [papers/gencast.md](<WeatherClimate/papers/gencast.md>) — 47 行 / 5,727 B

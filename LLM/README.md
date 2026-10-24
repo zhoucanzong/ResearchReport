@@ -17,9 +17,9 @@
 
 | 所属报告 | 分册入口 |
 | --- | --- |
-| TrainingData | [预训练数据配比：从稳健重加权到代理回归](<TrainingData/topics/data-mixture.md>) |
-| VLM | [VLM 评测的输入预算与 grounding：模型究竟看到了什么？](<VLM/topics/evaluation-input-budget.md>) |
-| VLM | [VLMEvalKit 如何把 Video-MME 的回答变成分数](<VLM/topics/vlmevalkit-video-mme-path.md>) |
+| 训练数据策展 | [预训练数据配比：从稳健重加权到代理回归](<TrainingData/topics/data-mixture.md>) |
+| 视觉语言模型（VLM） | [VLM 评测的输入预算与 grounding：模型究竟看到了什么？](<VLM/topics/evaluation-input-budget.md>) |
+| 视觉语言模型（VLM） | [VLMEvalKit 如何把 Video-MME 的回答变成分数](<VLM/topics/vlmevalkit-video-mme-path.md>) |
 
 [查看研究专题与分析分册](<../index/by-topic.md>)
 
@@ -27,22 +27,22 @@
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
-| **Alignment** | [模型对齐与后训练：方法、目标与证据边界](<Alignment/report.md>) | 114 行 |
-| **DecisionModels** | [Decision Models（System One / Typed Decision Model）技术专题调研](<DecisionModels/report.md>) | 874 行 |
-| **DiffusionLM** | [扩散语言模型：从随机遮盖到大规模并行生成](<DiffusionLM/report.md>) | 70 行 |
-| **DocumentParsing** | [OCR 与文档解析：从字符识别到结构还原](<DocumentParsing/report.md>) | 102 行 |
-| **LongContext** | [长上下文（Long Context）技术研究报告](<LongContext/report.md>) | 609 行 |
-| **MoE** | [混合专家模型（Mixture of Experts, MoE）架构演进研究报告](<MoE/report.md>) | 405 行 |
-| **RAG** | [检索增强生成（Retrieval-Augmented Generation, RAG）技术研究报告](<RAG/report.md>) | 834 行 |
-| **ReasoningModels** | [推理模型（Reasoning Models）与 Test-Time Compute 研究报告](<ReasoningModels/report.md>) | 675 行 |
-| **ReinforcementLearning** | [LLM 后训练中的强化学习：轨迹从哪里来，策略何时更新](<ReinforcementLearning/report.md>) | 107 行 |
-| **TrainingData** | [训练数据策展：筛选、去重与配比如何改变训练结果](<TrainingData/report.md>) | 60 行 |
-| **VLM** | [多模态大模型（Vision-Language Models, VLM）研究报告](<VLM/report.md>) | 520 行 |
+| **模型对齐与后训练** | [模型对齐与后训练：方法、目标与证据边界](<Alignment/report.md>) | 115 行 |
+| **决策模型（Decision Models）** | [Decision Models（System One / Typed Decision Model）技术专题调研](<DecisionModels/report.md>) | 875 行 |
+| **扩散语言模型** | [扩散语言模型：从随机遮盖到大规模并行生成](<DiffusionLM/report.md>) | 70 行 |
+| **OCR 与文档解析** | [OCR 与文档解析：从字符识别到结构还原](<DocumentParsing/report.md>) | 102 行 |
+| **长上下文** | [长上下文（Long Context）技术研究报告](<LongContext/report.md>) | 610 行 |
+| **混合专家模型（MoE）** | [混合专家模型（Mixture of Experts, MoE）架构演进研究报告](<MoE/report.md>) | 406 行 |
+| **检索增强生成（RAG）** | [检索增强生成（Retrieval-Augmented Generation, RAG）技术研究报告](<RAG/report.md>) | 835 行 |
+| **推理模型与推理时计算** | [推理模型（Reasoning Models）与 Test-Time Compute 研究报告](<ReasoningModels/report.md>) | 676 行 |
+| **LLM 后训练中的强化学习** | [LLM 后训练中的强化学习：轨迹从哪里来，策略何时更新](<ReinforcementLearning/report.md>) | 107 行 |
+| **训练数据策展** | [训练数据策展：筛选、去重与配比如何改变训练结果](<TrainingData/report.md>) | 60 行 |
+| **视觉语言模型（VLM）** | [多模态大模型（Vision-Language Models, VLM）研究报告](<VLM/report.md>) | 521 行 |
 
 ## 📎 子文档
 
 <details>
-<summary><b>DecisionModels</b>（18 份）</summary>
+<summary><b>决策模型（Decision Models）</b>（18 份）</summary>
 
 * [calibration.md](<DecisionModels/calibration.md>) — 261 行 / 28,610 B
 * [experiments.md](<DecisionModels/experiments.md>) — 349 行 / 25,166 B
@@ -66,7 +66,7 @@
 </details>
 
 <details>
-<summary><b>DiffusionLM</b>（10 份）</summary>
+<summary><b>扩散语言模型</b>（10 份）</summary>
 
 * [papers/2502.09992-llada.md](<DiffusionLM/papers/2502.09992-llada.md>) — 86 行 / 12,781 B
 * [papers/2503.09573-block-diffusion.md](<DiffusionLM/papers/2503.09573-block-diffusion.md>) — 59 行 / 7,692 B
@@ -82,7 +82,7 @@
 </details>
 
 <details>
-<summary><b>DocumentParsing</b>（16 份）</summary>
+<summary><b>OCR 与文档解析</b>（16 份）</summary>
 
 * [papers/2412.07626-omnidocbench.md](<DocumentParsing/papers/2412.07626-omnidocbench.md>) — 42 行 / 9,196 B
 * [papers/2505.14059-bytedance-dolphin.md](<DocumentParsing/papers/2505.14059-bytedance-dolphin.md>) — 40 行 / 5,505 B
@@ -104,7 +104,7 @@
 </details>
 
 <details>
-<summary><b>ReinforcementLearning</b>（10 份）</summary>
+<summary><b>LLM 后训练中的强化学习</b>（10 份）</summary>
 
 * [papers/2305.20050-prm800k.md](<ReinforcementLearning/papers/2305.20050-prm800k.md>) — 23 行 / 3,412 B
 * [papers/2501.07301-process-reward-model-lessons.md](<ReinforcementLearning/papers/2501.07301-process-reward-model-lessons.md>) — 26 行 / 3,807 B
@@ -120,7 +120,7 @@
 </details>
 
 <details>
-<summary><b>TrainingData</b>（6 份）</summary>
+<summary><b>训练数据策展</b>（6 份）</summary>
 
 * [papers/2107.06499-deduplicating-training-data.md](<TrainingData/papers/2107.06499-deduplicating-training-data.md>) — 24 行 / 2,755 B
 * [papers/2406.11794-datacomp-lm.md](<TrainingData/papers/2406.11794-datacomp-lm.md>) — 27 行 / 3,389 B
@@ -132,7 +132,7 @@
 </details>
 
 <details>
-<summary><b>VLM</b>（3 份）</summary>
+<summary><b>视觉语言模型（VLM）</b>（3 份）</summary>
 
 * [papers/2405.21075-videomme.md](<VLM/papers/2405.21075-videomme.md>) — 35 行 / 7,567 B
 * [topics/evaluation-input-budget.md](<VLM/topics/evaluation-input-budget.md>) — 46 行 / 6,622 B

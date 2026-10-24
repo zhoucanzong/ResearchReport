@@ -1,3 +1,7 @@
+---
+display_name: 视觉语言模型（VLM）
+---
+
 # 多模态大模型（Vision-Language Models, VLM）研究报告
 
 > **报告日期**: 2026年6月6日

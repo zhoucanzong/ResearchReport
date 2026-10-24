@@ -1,4 +1,5 @@
 ---
+display_name: OCR 与文档解析
 title: OCR 与文档解析：从字符识别到结构还原
 type: research
 domain: LLM

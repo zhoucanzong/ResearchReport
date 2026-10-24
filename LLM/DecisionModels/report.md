@@ -1,3 +1,7 @@
+---
+display_name: 决策模型（Decision Models）
+---
+
 # Decision Models（System One / Typed Decision Model）技术专题调研
 
 > **JEV（TypeSafe）为本条目的主线案例**，其官方文档、第三方研究与失效证据构成主要材料；条目同时覆盖同类的开源决策模型实现。

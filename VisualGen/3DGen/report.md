@@ -1,3 +1,7 @@
+---
+display_name: 3D 生成
+---
+
 # 3D 生成技术研究报告：从 DreamFusion SDS 蒸馏到 Tripo3D DiT 原生 3D 生成
 
 > 报告日期：2026年6月6日

@@ -1,4 +1,5 @@
 ---
+display_name: 天气与气候预测
 type: research
 domain: AI4Science
 subject: WeatherClimate

@@ -1,3 +1,7 @@
+---
+display_name: 机器人视觉语言动作模型（VLA）
+---
+
 # EmbodiedVLA 技术专题调研
 
 > **声明**：本报告由 AI Agent 自动调研生成，未经官方确认；引用具体参数、日期或 benchmark 前请回溯原始来源。

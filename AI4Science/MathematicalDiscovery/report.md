@@ -1,4 +1,5 @@
 ---
+display_name: 数学与算法发现
 type: research
 domain: AI4Science
 subject: MathematicalDiscovery

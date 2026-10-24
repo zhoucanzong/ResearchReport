@@ -1,3 +1,7 @@
+---
+display_name: 推理模型与推理时计算
+---
+
 # 推理模型（Reasoning Models）与 Test-Time Compute 研究报告
 
 > **报告日期**：2026年6月6日  

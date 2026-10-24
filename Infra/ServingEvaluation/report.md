@@ -1,4 +1,5 @@
 ---
+display_name: 在线推理服务与评测
 type: research
 domain: Infra
 subject: ServingEvaluation

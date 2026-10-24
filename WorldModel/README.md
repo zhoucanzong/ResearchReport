@@ -17,14 +17,14 @@
 
 | 所属报告 | 分册入口 |
 | --- | --- |
-| EmbodiedVLA | [横切专题：动作表征三路线（token / flow matching / diffusion head）](<EmbodiedVLA/topics/action-representation.md>) |
-| EmbodiedVLA | [横切专题：机器人闭环控制与 VLA](<EmbodiedVLA/topics/closed-loop-control.md>) |
-| EmbodiedVLA | [横切专题：失效边界与部署条件](<EmbodiedVLA/topics/deployment-boundaries.md>) |
-| EmbodiedVLA | [横切专题：评测与数据集（真机 vs 仿真、协议、规模与许可）](<EmbodiedVLA/topics/evaluation-and-datasets.md>) |
-| EmbodiedVLA | [世界模型怎样把预测变成 VLA 的真实改进？](<EmbodiedVLA/topics/world-model-to-vla-transfer.md>) |
-| WorldModels | [横切专题：环境动力学与动作条件化](<WorldModels/topics/dynamics-and-action-conditioning.md>) |
-| WorldModels | [横切专题：不可比性清单（评测碎片化）](<WorldModels/topics/incomparability-checklist.md>) |
-| WorldModels | [横切专题：世界模型作训练 / 评测环境](<WorldModels/topics/world-model-as-env.md>) |
+| 机器人视觉语言动作模型（VLA） | [横切专题：动作表征三路线（token / flow matching / diffusion head）](<EmbodiedVLA/topics/action-representation.md>) |
+| 机器人视觉语言动作模型（VLA） | [横切专题：机器人闭环控制与 VLA](<EmbodiedVLA/topics/closed-loop-control.md>) |
+| 机器人视觉语言动作模型（VLA） | [横切专题：失效边界与部署条件](<EmbodiedVLA/topics/deployment-boundaries.md>) |
+| 机器人视觉语言动作模型（VLA） | [横切专题：评测与数据集（真机 vs 仿真、协议、规模与许可）](<EmbodiedVLA/topics/evaluation-and-datasets.md>) |
+| 机器人视觉语言动作模型（VLA） | [世界模型怎样把预测变成 VLA 的真实改进？](<EmbodiedVLA/topics/world-model-to-vla-transfer.md>) |
+| 世界模型 | [横切专题：环境动力学与动作条件化](<WorldModels/topics/dynamics-and-action-conditioning.md>) |
+| 世界模型 | [横切专题：不可比性清单（评测碎片化）](<WorldModels/topics/incomparability-checklist.md>) |
+| 世界模型 | [横切专题：世界模型作训练 / 评测环境](<WorldModels/topics/world-model-as-env.md>) |
 
 [查看研究专题与分析分册](<../index/by-topic.md>)
 
@@ -32,14 +32,14 @@
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
-| **EmbodiedPlanning** | [具身预测规划：执行前怎样筛选想象中的动作？](<EmbodiedPlanning/report.md>) | 53 行 |
-| **EmbodiedVLA** | [EmbodiedVLA 技术专题调研](<EmbodiedVLA/report.md>) | 642 行 |
-| **WorldModels** | [WorldModels 技术专题调研](<WorldModels/report.md>) | 604 行 |
+| **具身预测规划** | [具身预测规划：执行前怎样筛选想象中的动作？](<EmbodiedPlanning/report.md>) | 54 行 |
+| **机器人视觉语言动作模型（VLA）** | [EmbodiedVLA 技术专题调研](<EmbodiedVLA/report.md>) | 643 行 |
+| **世界模型** | [WorldModels 技术专题调研](<WorldModels/report.md>) | 604 行 |
 
 ## 📎 子文档
 
 <details>
-<summary><b>EmbodiedPlanning</b>（2 份）</summary>
+<summary><b>具身预测规划</b>（2 份）</summary>
 
 * [papers/2606.01027-tau0-wm.md](<EmbodiedPlanning/papers/2606.01027-tau0-wm.md>) — 56 行 / 6,965 B
 * [papers/2609.02159-wcd.md](<EmbodiedPlanning/papers/2609.02159-wcd.md>) — 58 行 / 7,403 B
@@ -47,7 +47,7 @@
 </details>
 
 <details>
-<summary><b>EmbodiedVLA</b>（23 份）</summary>
+<summary><b>机器人视觉语言动作模型（VLA）</b>（23 份）</summary>
 
 * [papers/2303.04137-diffusion-policy.md](<EmbodiedVLA/papers/2303.04137-diffusion-policy.md>) — 246 行 / 38,592 B
 * [papers/2307.15818-rt2.md](<EmbodiedVLA/papers/2307.15818-rt2.md>) — 222 行 / 29,179 B
@@ -76,7 +76,7 @@
 </details>
 
 <details>
-<summary><b>WorldModels</b>（15 份）</summary>
+<summary><b>世界模型</b>（15 份）</summary>
 
 * [papers/1803.10122-world-models.md](<WorldModels/papers/1803.10122-world-models.md>) — 206 行 / 15,578 B
 * [papers/1811.04551-planet.md](<WorldModels/papers/1811.04551-planet.md>) — 204 行 / 13,762 B

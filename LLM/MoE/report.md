@@ -1,3 +1,7 @@
+---
+display_name: 混合专家模型（MoE）
+---
+
 # 混合专家模型（Mixture of Experts, MoE）架构演进研究报告
 
 > 报告日期：2026年6月6日

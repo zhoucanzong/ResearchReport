@@ -1,4 +1,5 @@
 ---
+display_name: 自主实验室
 type: research
 domain: AI4Science
 subject: AutonomousLabs

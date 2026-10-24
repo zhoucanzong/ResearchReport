@@ -1,4 +1,5 @@
 ---
+display_name: MoE 执行与专家通信
 type: repo-research
 domain: Infra
 subject: MoEExecution

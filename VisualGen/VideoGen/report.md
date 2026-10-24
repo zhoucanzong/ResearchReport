@@ -1,3 +1,7 @@
+---
+display_name: 视频生成
+---
+
 # 视频生成技术研究报告
 
 > **Video Generation Technology Research Report**  

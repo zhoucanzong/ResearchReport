@@ -1,4 +1,5 @@
 ---
+display_name: 科学发现的评测方法
 type: research
 domain: Evaluation
 subject: ScientificDiscovery

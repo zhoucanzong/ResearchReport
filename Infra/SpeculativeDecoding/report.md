@@ -1,4 +1,5 @@
 ---
+display_name: 投机解码
 type: topic-research
 domain: Infra
 subject: SpeculativeDecoding

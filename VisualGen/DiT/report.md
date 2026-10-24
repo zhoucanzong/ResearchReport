@@ -1,3 +1,7 @@
+---
+display_name: 扩散 Transformer（DiT）
+---
+
 # Diffusion Transformer (DiT) 架构演进研究报告
 
 > **报告日期**: 2026年6月6日  

@@ -1,4 +1,5 @@
 ---
+display_name: 扩散语言模型
 type: topic-research
 domain: LLM
 subject: DiffusionLM

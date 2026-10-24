@@ -11,38 +11,38 @@
 
 | 条目 | 板块 | 路径 | 子报告数 | 行数 | 日期 |
 | --- | --- | --- | --: | --: | --- |
-| AntibioticDiscovery | AI4Science | [AI4Science/AntibioticDiscovery/report.md](<../AI4Science/AntibioticDiscovery/report.md>) | 6 | 48 | 2026-10-23 |
-| Astronomy | AI4Science | [AI4Science/Astronomy/report.md](<../AI4Science/Astronomy/report.md>) | 3 | 59 | 2026-10-23 |
-| AutonomousLabs | AI4Science | [AI4Science/AutonomousLabs/report.md](<../AI4Science/AutonomousLabs/report.md>) | 2 | 127 | 2026-10-23 |
-| Chemistry | AI4Science | [AI4Science/Chemistry/report.md](<../AI4Science/Chemistry/report.md>) | 2 | 89 | 2026-10-23 |
-| MaterialsDiscovery | AI4Science | [AI4Science/MaterialsDiscovery/report.md](<../AI4Science/MaterialsDiscovery/report.md>) | 4 | 66 | 2026-10-23 |
-| MathematicalDiscovery | AI4Science | [AI4Science/MathematicalDiscovery/report.md](<../AI4Science/MathematicalDiscovery/report.md>) | 6 | 78 | 2026-10-23 |
-| Neuroscience | AI4Science | [AI4Science/Neuroscience/report.md](<../AI4Science/Neuroscience/report.md>) | 2 | 113 | 2026-10-23 |
-| ProteinDesign | AI4Science | [AI4Science/ProteinDesign/report.md](<../AI4Science/ProteinDesign/report.md>) | 6 | 80 | 2026-10-23 |
-| SingleCellPerturbation | AI4Science | [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) | 4 | 87 | 2026-10-23 |
-| WeatherClimate | AI4Science | [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) | 7 | 89 | 2026-10-23 |
-| AgentSecurity | Agents | [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) | 4 | 53 | 2026-10-24 |
-| AgentSystems | Agents | [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) | 12 | 94 | — |
-| ComputerUse | Agents | [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) | 2 | 59 | 2026-10-24 |
-| EvaluationScience | Evaluation | [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) | 5 | 125 | 2026-10-23 |
-| ScientificDiscovery | Evaluation | [Evaluation/ScientificDiscovery/report.md](<../Evaluation/ScientificDiscovery/report.md>) | 2 | 33 | 2026-10-24 |
-| KVCachePD | Infra | [Infra/KVCachePD/report.md](<../Infra/KVCachePD/report.md>) | 5 | 84 | 2026-10-23 |
-| MoEExecution | Infra | [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | 1 | 25 | 2026-10-24 |
-| QuantizationEdge | Infra | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 0 | 188 | 2026-10-22 |
-| ServingEvaluation | Infra | [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) | 3 | 81 | 2026-10-24 |
-| SpeculativeDecoding | Infra | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 33 | 549 | 2026-10-22 |
-| TrainingInfra | Infra | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 0 | 181 | 2026-10-22 |
-| Alignment | LLM | [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) | 0 | 114 | — |
-| DecisionModels | LLM | [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | 18 | 874 | — |
-| DiffusionLM | LLM | [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 10 | 70 | 2026-10-23 |
-| DocumentParsing | LLM | [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) | 16 | 102 | 2026-10-25 |
-| LongContext | LLM | [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 0 | 609 | — |
-| MoE | LLM | [LLM/MoE/report.md](<../LLM/MoE/report.md>) | 0 | 405 | — |
-| RAG | LLM | [LLM/RAG/report.md](<../LLM/RAG/report.md>) | 0 | 834 | — |
-| ReasoningModels | LLM | [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) | 0 | 675 | — |
-| ReinforcementLearning | LLM | [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | 10 | 107 | 2026-10-23 |
-| TrainingData | LLM | [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 6 | 60 | 2026-10-24 |
-| VLM | LLM | [LLM/VLM/report.md](<../LLM/VLM/report.md>) | 3 | 520 | — |
+| 抗生素发现 | AI4Science | [AI4Science/AntibioticDiscovery/report.md](<../AI4Science/AntibioticDiscovery/report.md>) | 6 | 48 | 2026-10-23 |
+| 天文图像异常发现 | AI4Science | [AI4Science/Astronomy/report.md](<../AI4Science/Astronomy/report.md>) | 3 | 59 | 2026-10-23 |
+| 自主实验室 | AI4Science | [AI4Science/AutonomousLabs/report.md](<../AI4Science/AutonomousLabs/report.md>) | 2 | 127 | 2026-10-23 |
+| 化学反应条件优化 | AI4Science | [AI4Science/Chemistry/report.md](<../AI4Science/Chemistry/report.md>) | 2 | 89 | 2026-10-23 |
+| 生成式材料设计 | AI4Science | [AI4Science/MaterialsDiscovery/report.md](<../AI4Science/MaterialsDiscovery/report.md>) | 4 | 66 | 2026-10-23 |
+| 数学与算法发现 | AI4Science | [AI4Science/MathematicalDiscovery/report.md](<../AI4Science/MathematicalDiscovery/report.md>) | 6 | 78 | 2026-10-23 |
+| 神经活动表征与解码 | AI4Science | [AI4Science/Neuroscience/report.md](<../AI4Science/Neuroscience/report.md>) | 2 | 113 | 2026-10-23 |
+| 蛋白质与肽结合体设计 | AI4Science | [AI4Science/ProteinDesign/report.md](<../AI4Science/ProteinDesign/report.md>) | 6 | 80 | 2026-10-23 |
+| 单细胞扰动预测 | AI4Science | [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) | 4 | 87 | 2026-10-23 |
+| 天气与气候预测 | AI4Science | [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) | 7 | 89 | 2026-10-23 |
+| 工具 Agent 安全 | Agents | [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) | 4 | 53 | 2026-10-24 |
+| 智能体系统 | Agents | [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) | 12 | 95 | — |
+| 电脑使用 Agent | Agents | [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) | 2 | 59 | 2026-10-24 |
+| 评测科学 | Evaluation | [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) | 5 | 125 | 2026-10-23 |
+| 科学发现的评测方法 | Evaluation | [Evaluation/ScientificDiscovery/report.md](<../Evaluation/ScientificDiscovery/report.md>) | 2 | 33 | 2026-10-24 |
+| KV Cache 与预填充／解码分离 | Infra | [Infra/KVCachePD/report.md](<../Infra/KVCachePD/report.md>) | 5 | 84 | 2026-10-23 |
+| MoE 执行与专家通信 | Infra | [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | 1 | 25 | 2026-10-24 |
+| 模型量化与边缘部署 | Infra | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 0 | 188 | 2026-10-22 |
+| 在线推理服务与评测 | Infra | [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) | 3 | 81 | 2026-10-24 |
+| 投机解码 | Infra | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 33 | 549 | 2026-10-22 |
+| 分布式训练基础设施 | Infra | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 0 | 181 | 2026-10-22 |
+| 模型对齐与后训练 | LLM | [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) | 0 | 115 | — |
+| 决策模型（Decision Models） | LLM | [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | 18 | 875 | — |
+| 扩散语言模型 | LLM | [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 10 | 70 | 2026-10-23 |
+| OCR 与文档解析 | LLM | [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) | 16 | 102 | 2026-10-25 |
+| 长上下文 | LLM | [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 0 | 610 | — |
+| 混合专家模型（MoE） | LLM | [LLM/MoE/report.md](<../LLM/MoE/report.md>) | 0 | 406 | — |
+| 检索增强生成（RAG） | LLM | [LLM/RAG/report.md](<../LLM/RAG/report.md>) | 0 | 835 | — |
+| 推理模型与推理时计算 | LLM | [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) | 0 | 676 | — |
+| LLM 后训练中的强化学习 | LLM | [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | 10 | 107 | 2026-10-23 |
+| 训练数据策展 | LLM | [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 6 | 60 | 2026-10-24 |
+| 视觉语言模型（VLM） | LLM | [LLM/VLM/report.md](<../LLM/VLM/report.md>) | 3 | 521 | — |
 | Alibaba-Gen | Models | [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) | 0 | 117 | — |
 | ByteDance-Gen | Models | [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) | 0 | 347 | — |
 | Claude | Models | [Models/Claude/report.md](<../Models/Claude/report.md>) | 0 | 604 | — |
@@ -72,15 +72,15 @@
 | sglang | OpenSource | [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | 5 | 315 | 2026-10-16 |
 | this-that-model | OpenSource | [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | 1 | 246 | 2026-10-16 |
 | vllm | OpenSource | [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | 5 | 298 | 2026-10-16 |
-| 3DGen | VisualGen | [VisualGen/3DGen/report.md](<../VisualGen/3DGen/report.md>) | 0 | 857 | — |
-| AudioGen | VisualGen | [VisualGen/AudioGen/report.md](<../VisualGen/AudioGen/report.md>) | 0 | 914 | — |
-| AvatarGen | VisualGen | [VisualGen/AvatarGen/report.md](<../VisualGen/AvatarGen/report.md>) | 0 | 594 | — |
-| ControllableGen | VisualGen | [VisualGen/ControllableGen/report.md](<../VisualGen/ControllableGen/report.md>) | 0 | 916 | — |
-| DiT | VisualGen | [VisualGen/DiT/report.md](<../VisualGen/DiT/report.md>) | 0 | 887 | — |
-| DiffusionModels | VisualGen | [VisualGen/DiffusionModels/report.md](<../VisualGen/DiffusionModels/report.md>) | 0 | 858 | — |
-| ImageEditing | VisualGen | [VisualGen/ImageEditing/report.md](<../VisualGen/ImageEditing/report.md>) | 0 | 834 | — |
-| VideoGen | VisualGen | [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) | 0 | 898 | — |
-| EmbodiedPlanning | WorldModel | [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) | 2 | 53 | — |
-| EmbodiedVLA | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 23 | 642 | — |
-| WorldModels | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 604 | 2026-10-22 |
-| **合计** | — | — | **256** | **28,433** | — |
+| 3D 生成 | VisualGen | [VisualGen/3DGen/report.md](<../VisualGen/3DGen/report.md>) | 0 | 858 | — |
+| 音频与音乐生成 | VisualGen | [VisualGen/AudioGen/report.md](<../VisualGen/AudioGen/report.md>) | 0 | 915 | — |
+| 数字人与 Avatar | VisualGen | [VisualGen/AvatarGen/report.md](<../VisualGen/AvatarGen/report.md>) | 0 | 595 | — |
+| 可控生成 | VisualGen | [VisualGen/ControllableGen/report.md](<../VisualGen/ControllableGen/report.md>) | 0 | 917 | — |
+| 扩散 Transformer（DiT） | VisualGen | [VisualGen/DiT/report.md](<../VisualGen/DiT/report.md>) | 0 | 888 | — |
+| 扩散模型 | VisualGen | [VisualGen/DiffusionModels/report.md](<../VisualGen/DiffusionModels/report.md>) | 0 | 859 | — |
+| 图像编辑与修复 | VisualGen | [VisualGen/ImageEditing/report.md](<../VisualGen/ImageEditing/report.md>) | 0 | 835 | — |
+| 视频生成 | VisualGen | [VisualGen/VideoGen/report.md](<../VisualGen/VideoGen/report.md>) | 0 | 899 | — |
+| 具身预测规划 | WorldModel | [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) | 2 | 54 | — |
+| 机器人视觉语言动作模型（VLA） | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 23 | 643 | — |
+| 世界模型 | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 604 | 2026-10-22 |
+| **合计** | — | — | **256** | **28,451** | — |

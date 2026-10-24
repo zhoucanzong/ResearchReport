@@ -1,3 +1,7 @@
+---
+display_name: 可控生成
+---
+
 # 可控生成（Controllable Generation）技术研究报告
 
 > 报告日期：2026年6月6日

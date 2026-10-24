@@ -1,4 +1,5 @@
 ---
+display_name: 天文图像异常发现
 type: research
 domain: AI4Science
 subject: Astronomy

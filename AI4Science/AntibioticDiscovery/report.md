@@ -1,4 +1,5 @@
 ---
+display_name: 抗生素发现
 type: research
 domain: AI4Science
 subject: AntibioticDiscovery

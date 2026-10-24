@@ -1,4 +1,5 @@
 ---
+display_name: 生成式材料设计
 type: research
 domain: AI4Science
 subject: MaterialsDiscovery
