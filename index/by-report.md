@@ -28,7 +28,7 @@
 | 扩散 Transformer（DiT） | AIGC | [AIGC/DiT/report.md](<../AIGC/DiT/report.md>) | 0 | 888 | — |
 | 扩散模型 | AIGC | [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) | 0 | 859 | — |
 | 图像编辑与修复 | AIGC | [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) | 0 | 835 | — |
-| 图像生成 | AIGC | [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) | 0 | 76 | — |
+| 图像生成 | AIGC | [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) | 0 | 227 | — |
 | 视频生成 | AIGC | [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) | 0 | 899 | — |
 | 工具 Agent 安全 | Agents | [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) | 4 | 53 | 2026-10-24 |
 | 智能体系统 | Agents | [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) | 12 | 95 | — |
@@ -84,4 +84,4 @@
 | 具身预测规划 | WorldModel | [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) | 2 | 54 | — |
 | 机器人视觉语言动作模型（VLA） | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 23 | 643 | — |
 | 世界模型 | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 604 | 2026-10-22 |
-| **合计** | — | — | **263** | **28,574** | — |
+| **合计** | — | — | **263** | **28,725** | — |

@@ -33,7 +33,7 @@
 | [AIGC/DiT/report.md](<../AIGC/DiT/report.md>) | Diffusion Transformer (DiT) 架构演进研究报告 | — | — | — |
 | [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) | 扩散模型（Diffusion Models）基础框架与架构演进研究报告 | — | — | — |
 | [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) | 图像编辑与修复技术研究报告 | — | — | — |
-| [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) | 图像生成：从表示与目标到控制和编辑 | — | — | — |
+| [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) | 图像生成：表示、生成目标、条件控制与评测 | — | — | — |
 | [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) | 视频生成技术研究报告 | — | — | — |
 
 ## Agents (3)

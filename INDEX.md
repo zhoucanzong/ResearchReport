@@ -16,14 +16,14 @@
 | **条目数**（`report.md`） | **73** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 11 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6 |
 | 条目子文档数 | 263 |
-| 条目正文行数（剔除 front-matter） | 28,574 |
-| 条目字节 | 2,218,527 B |
+| 条目正文行数（剔除 front-matter） | 28,725 |
+| 条目字节 | 2,235,815 B |
 | 带 front-matter 的条目 | 73 |
 | 带合法 `date` 的条目 | 30 |
 | 文档（除生成物外的全部 `.md`） | 358 |
 | 其中文件名 `README.md` | 11 |
-| 纳入版本控制的文件 | 381 |
-| 纳入版本控制的 `.md` | 365 |
+| 纳入版本控制的文件 | 382 |
+| 纳入版本控制的 `.md` | 366 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -35,13 +35,13 @@
 | Models | 23 | 41 | 12,150 | 906,873 B | [板块页 →](<Models/README.md>) |
 | LLM | 11 | 75 | 4,383 | 356,570 B | [板块页 →](<LLM/README.md>) |
 | Agents | 3 | 22 | 207 | 29,975 B | [板块页 →](<Agents/README.md>) |
-| AIGC | 9 | 10 | 6,842 | 331,005 B | [板块页 →](<AIGC/README.md>) |
+| AIGC | 9 | 10 | 6,993 | 348,293 B | [板块页 →](<AIGC/README.md>) |
 | WorldModel | 3 | 44 | 1,301 | 147,571 B | [板块页 →](<WorldModel/README.md>) |
 | AI4Science | 10 | 53 | 836 | 139,324 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 2 | 10 | 158 | 32,341 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 6 | 56 | 1,119 | 106,307 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 36 | 1,578 | 168,561 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **73** | **358** | **28,574** | **2,218,527 B** | — |
+| **合计** | **73** | **358** | **28,725** | **2,235,815 B** | — |
 
 ## 分面索引
 
@@ -695,10 +695,10 @@
   </details>
 
   <details>
-  <summary><b>图像生成</b> · <code>AIGC/ImageGeneration/report.md</code> · 76 行 · —</summary>
+  <summary><b>图像生成</b> · <code>AIGC/ImageGeneration/report.md</code> · 227 行 · —</summary>
 
 
-    * **条目**：[AIGC/ImageGeneration/report.md](<AIGC/ImageGeneration/report.md>)（76 行 / 10,153 B）
+    * **条目**：[AIGC/ImageGeneration/report.md](<AIGC/ImageGeneration/report.md>)（227 行 / 27,441 B）
     * **专题目录**：`AIGC/ImageGeneration`
     * **元数据**：type=`—` · domain=`AIGC` · subject=`ImageGeneration` · date=`—` · status=`—`
     * **子文档（0）**
@@ -1227,7 +1227,7 @@
 | --- | --- | --: | --: |
 | [AGENTS.md](<AGENTS.md>) |  | 9 | 908 B |
 | [AI4Science/README.md](<AI4Science/README.md>) | AI4Science | 137 | 6,896 B |
-| [AIGC/README.md](<AIGC/README.md>) | AIGC | 32 | 1,770 B |
+| [AIGC/README.md](<AIGC/README.md>) | AIGC | 32 | 1,780 B |
 | [Agents/README.md](<Agents/README.md>) | Agents | 74 | 3,495 B |
 | [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 46 | 1,951 B |
 | [Infra/README.md](<Infra/README.md>) | Infra | 117 | 8,075 B |

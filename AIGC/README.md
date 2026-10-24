@@ -22,7 +22,7 @@
 | **扩散 Transformer（DiT）** | [Diffusion Transformer (DiT) 架构演进研究报告](<DiT/report.md>) | 888 行 |
 | **扩散模型** | [扩散模型（Diffusion Models）基础框架与架构演进研究报告](<DiffusionModels/report.md>) | 859 行 |
 | **图像编辑与修复** | [图像编辑与修复技术研究报告](<ImageEditing/report.md>) | 835 行 |
-| **图像生成** | [图像生成：从表示与目标到控制和编辑](<ImageGeneration/report.md>) | 76 行 |
+| **图像生成** | [图像生成：表示、生成目标、条件控制与评测](<ImageGeneration/report.md>) | 227 行 |
 | **视频生成** | [视频生成技术研究报告](<VideoGen/report.md>) | 899 行 |
 
 <!-- SCRIPT:panel-readme END -->

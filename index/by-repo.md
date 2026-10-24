@@ -29,7 +29,7 @@
 * [AIGC/DiT/report.md](<../AIGC/DiT/report.md>) — 888 行
 * [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) — 859 行
 * [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) — 835 行
-* [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) — 76 行
+* [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) — 227 行
 * [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) — 899 行
 
 ## Agents (3)
