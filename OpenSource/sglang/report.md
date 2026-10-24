@@ -1,4 +1,5 @@
 ---
+display_name: SGLang 推理框架
 type: repo-research
 domain: Repo-Research
 subject: sglang
@@ -6,9 +7,10 @@ upstream: https://github.com/sgl-project/sglang@2a08e261ecd4cdfb04ec354f9005f18b
 date: 2026-10-16
 evidence: 精读原文
 status: completed
-> **2026-10-22 语义复核**：固定源码、已核调用链和未覆盖项见 [sources/MANIFEST.md](sources/MANIFEST.md)；本轮核验限定在列明的行为切面。
 
 ---
+> **2026-10-22 语义复核**：固定源码、已核调用链和未覆盖项见 [sources/MANIFEST.md](sources/MANIFEST.md)；本轮核验限定在列明的行为切面。
+
 
 # SGLang 仓库代码分析报告
 

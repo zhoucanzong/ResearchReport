@@ -1,4 +1,5 @@
 ---
+display_name: vLLM 推理引擎
 type: repo-research
 domain: Repo-Research
 subject: vllm
@@ -6,9 +7,10 @@ upstream: https://github.com/vllm-project/vllm@fa75d3456d60a5ffe923818c4b4952956
 date: 2026-10-16
 evidence: 精读原文
 status: completed
-> **2026-10-22 语义复核**：固定源码、已核调用链和未覆盖项见 [sources/MANIFEST.md](sources/MANIFEST.md)；本轮核验限定在列明的行为切面。
 
 ---
+> **2026-10-22 语义复核**：固定源码、已核调用链和未覆盖项见 [sources/MANIFEST.md](sources/MANIFEST.md)；本轮核验限定在列明的行为切面。
+
 
 # vLLM 仓库代码分析报告
 

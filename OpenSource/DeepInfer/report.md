@@ -1,4 +1,5 @@
 ---
+display_name: DeepInfer 离线推理
 type: repo-research
 domain: OpenSource
 subject: DeepInfer

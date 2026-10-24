@@ -1,4 +1,5 @@
 ---
+display_name: this-that-model 共享视觉推理
 type: repo-research
 domain: Repo-Research
 subject: this-that-model
@@ -6,9 +7,10 @@ upstream: https://github.com/FLock-io/this-that-model@6af11c63c8bb260aa4bed2b771
 date: 2026-10-16
 evidence: 精读原文
 status: completed
-> **2026-10-22 语义复核**：固定源码、已核调用链和未覆盖项见 [sources/MANIFEST.md](sources/MANIFEST.md)；本轮核验限定在列明的行为切面。
 
 ---
+> **2026-10-22 语义复核**：固定源码、已核调用链和未覆盖项见 [sources/MANIFEST.md](sources/MANIFEST.md)；本轮核验限定在列明的行为切面。
+
 
 # this-that-model 仓库深读
 

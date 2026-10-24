@@ -33,7 +33,7 @@
 | --- | --- | --- | --- | --- |
 | [Models/Claude/report.md](<../Models/Claude/report.md>) | Anthropic Claude 系列模型深度调研报告 | — | — | — |
 
-## DeepInfer (1)
+## DeepInfer 离线推理 (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
@@ -45,7 +45,7 @@
 | --- | --- | --- | --- | --- |
 | [Models/DeepSeek/report.md](<../Models/DeepSeek/report.md>) | DeepSeek 系列模型深度调研报告 | — | — | — |
 
-## DeepSeekHarness (1)
+## DeepSeek Harness 框架 (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
@@ -159,6 +159,12 @@
 | --- | --- | --- | --- | --- |
 | [Models/Nemotron/report.md](<../Models/Nemotron/report.md>) | NVIDIA Nemotron 系列研究脉络 | — | — | — |
 
+## Nemotron-Labs 扩散模型 (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | Nemotron-Labs-Diffusion 阅读报告 | — | — | — |
+
 ## OCR 与文档解析 (1)
 
 | 条目 | 标题 | type | date | status |
@@ -183,31 +189,25 @@
 | --- | --- | --- | --- | --- |
 | [Models/Runway/report.md](<../Models/Runway/report.md>) | Runway 视频生成与编辑模型研究报告 | — | — | — |
 
+## SGLang 推理框架 (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | SGLang 仓库代码分析报告 | repo-research | 2026-10-16 | completed |
+
 ## StabilityAI (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>) | Stability AI / Black Forest Labs 图像生成模型系列研究报告 | — | — | — |
 
-## nemotron (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | Nemotron-Labs-Diffusion 阅读报告 | — | — | — |
-
-## sglang (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | SGLang 仓库代码分析报告 | repo-research | 2026-10-16 | completed |
-
-## this-that-model (1)
+## this-that-model 共享视觉推理 (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | this-that-model 仓库深读 | repo-research | 2026-10-16 | completed |
 
-## vllm (1)
+## vLLM 推理引擎 (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
@@ -452,7 +452,7 @@
 | [训练数据策展](<../LLM/TrainingData/report.md>) | [预训练数据配比：从稳健重加权到代理回归](<../LLM/TrainingData/topics/data-mixture.md>) |
 | [视觉语言模型（VLM）](<../LLM/VLM/report.md>) | [VLM 评测的输入预算与 grounding：模型究竟看到了什么？](<../LLM/VLM/topics/evaluation-input-budget.md>) |
 | [视觉语言模型（VLM）](<../LLM/VLM/report.md>) | [VLMEvalKit 如何把 Video-MME 的回答变成分数](<../LLM/VLM/topics/vlmevalkit-video-mme-path.md>) |
-| [DeepSeekHarness](<../OpenSource/DeepSeekHarness/report.md>) | [工具副作用与会话持久化：记录“要做”不等于记录“做成了”](<../OpenSource/DeepSeekHarness/topics/tool-effect-durability.md>) |
+| [DeepSeek Harness 框架](<../OpenSource/DeepSeekHarness/report.md>) | [工具副作用与会话持久化：记录“要做”不等于记录“做成了”](<../OpenSource/DeepSeekHarness/topics/tool-effect-durability.md>) |
 | [机器人视觉语言动作模型（VLA）](<../WorldModel/EmbodiedVLA/report.md>) | [横切专题：动作表征三路线（token / flow matching / diffusion head）](<../WorldModel/EmbodiedVLA/topics/action-representation.md>) |
 | [机器人视觉语言动作模型（VLA）](<../WorldModel/EmbodiedVLA/report.md>) | [横切专题：机器人闭环控制与 VLA](<../WorldModel/EmbodiedVLA/topics/closed-loop-control.md>) |
 | [机器人视觉语言动作模型（VLA）](<../WorldModel/EmbodiedVLA/report.md>) | [横切专题：失效边界与部署条件](<../WorldModel/EmbodiedVLA/topics/deployment-boundaries.md>) |

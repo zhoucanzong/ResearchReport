@@ -1,3 +1,7 @@
+---
+display_name: Nemotron-Labs 扩散模型
+---
+
 # Nemotron-Labs-Diffusion 阅读报告
 
 > **报告日期**: 2026-05-27
