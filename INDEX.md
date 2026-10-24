@@ -15,12 +15,12 @@
 | --- | --- |
 | **条目数**（`report.md`） | **72** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 11 · Agents 3 · VisualGen 8 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6 |
-| 条目子文档数 | 256 |
-| 条目正文行数（剔除 front-matter） | 28,481 |
-| 条目字节 | 2,205,539 B |
+| 条目子文档数 | 263 |
+| 条目正文行数（剔除 front-matter） | 28,498 |
+| 条目字节 | 2,208,297 B |
 | 带 front-matter 的条目 | 72 |
 | 带合法 `date` 的条目 | 30 |
-| 文档（除生成物外的全部 `.md`） | 349 |
+| 文档（除生成物外的全部 `.md`） | 356 |
 | 其中文件名 `README.md` | 11 |
 | 纳入版本控制的文件 | 373 |
 | 纳入版本控制的 `.md` | 357 |
@@ -32,16 +32,16 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| Models | 23 | 41 | 12,150 | 907,167 B | [板块页 →](<Models/README.md>) |
-| LLM | 11 | 75 | 4,377 | 355,054 B | [板块页 →](<LLM/README.md>) |
+| Models | 23 | 41 | 12,150 | 906,903 B | [板块页 →](<Models/README.md>) |
+| LLM | 11 | 75 | 4,383 | 356,570 B | [板块页 →](<LLM/README.md>) |
 | Agents | 3 | 22 | 207 | 29,975 B | [板块页 →](<Agents/README.md>) |
 | VisualGen | 8 | 9 | 6,766 | 320,745 B | [板块页 →](<VisualGen/README.md>) |
 | WorldModel | 3 | 44 | 1,301 | 147,571 B | [板块页 →](<WorldModel/README.md>) |
 | AI4Science | 10 | 53 | 836 | 139,324 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 2 | 10 | 158 | 32,341 B | [板块页 →](<Evaluation/README.md>) |
-| Infra | 6 | 49 | 1,108 | 104,801 B | [板块页 →](<Infra/README.md>) |
+| Infra | 6 | 56 | 1,119 | 106,307 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 36 | 1,578 | 168,561 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **72** | **349** | **28,481** | **2,205,539 B** | — |
+| **合计** | **72** | **356** | **28,498** | **2,208,297 B** | — |
 
 ## 分面索引
 
@@ -78,7 +78,7 @@
   <summary><b>字节跳动生成模型</b> · <code>Models/ByteDance-Gen/report.md</code> · 348 行 · —</summary>
 
 
-    * **条目**：[Models/ByteDance-Gen/report.md](<Models/ByteDance-Gen/report.md>)（348 行 / 26,320 B）
+    * **条目**：[Models/ByteDance-Gen/report.md](<Models/ByteDance-Gen/report.md>)（348 行 / 26,281 B）
     * **专题目录**：`Models/ByteDance-Gen`
     * **元数据**：type=`—` · domain=`Models` · subject=`ByteDance-Gen` · date=`—` · status=`—`
     * **子文档（0）**
@@ -102,7 +102,7 @@
   <summary><b>DeepSeek</b> · <code>Models/DeepSeek/report.md</code> · 777 行 · —</summary>
 
 
-    * **条目**：[Models/DeepSeek/report.md](<Models/DeepSeek/report.md>)（777 行 / 66,172 B）
+    * **条目**：[Models/DeepSeek/report.md](<Models/DeepSeek/report.md>)（777 行 / 66,149 B）
     * **专题目录**：`Models/DeepSeek`
     * **元数据**：type=`—` · domain=`Models` · subject=`DeepSeek` · date=`—` · status=`—`
     * **子文档（6）**
@@ -131,7 +131,7 @@
   <summary><b>GLM</b> · <code>Models/GLM/report.md</code> · 738 行 · —</summary>
 
 
-    * **条目**：[Models/GLM/report.md](<Models/GLM/report.md>)（738 行 / 68,396 B）
+    * **条目**：[Models/GLM/report.md](<Models/GLM/report.md>)（738 行 / 68,378 B）
     * **专题目录**：`Models/GLM`
     * **元数据**：type=`—` · domain=`Models` · subject=`GLM` · date=`—` · status=`—`
     * **子文档（0）**
@@ -179,7 +179,7 @@
   <summary><b>Grok</b> · <code>Models/Grok/report.md</code> · 266 行 · —</summary>
 
 
-    * **条目**：[Models/Grok/report.md](<Models/Grok/report.md>)（266 行 / 18,994 B）
+    * **条目**：[Models/Grok/report.md](<Models/Grok/report.md>)（266 行 / 18,975 B）
     * **专题目录**：`Models/Grok`
     * **元数据**：type=`—` · domain=`Models` · subject=`Grok` · date=`—` · status=`—`
     * **子文档（0）**
@@ -191,7 +191,7 @@
   <summary><b>Hunyuan</b> · <code>Models/Hunyuan/report.md</code> · 505 行 · —</summary>
 
 
-    * **条目**：[Models/Hunyuan/report.md](<Models/Hunyuan/report.md>)（505 行 / 42,401 B）
+    * **条目**：[Models/Hunyuan/report.md](<Models/Hunyuan/report.md>)（505 行 / 42,379 B）
     * **专题目录**：`Models/Hunyuan`
     * **元数据**：type=`—` · domain=`Models` · subject=`Hunyuan` · date=`—` · status=`—`
     * **子文档（1）**
@@ -203,7 +203,7 @@
   <summary><b>Kimi</b> · <code>Models/Kimi/report.md</code> · 586 行 · —</summary>
 
 
-    * **条目**：[Models/Kimi/report.md](<Models/Kimi/report.md>)（586 行 / 52,195 B）
+    * **条目**：[Models/Kimi/report.md](<Models/Kimi/report.md>)（586 行 / 52,176 B）
     * **专题目录**：`Models/Kimi`
     * **元数据**：type=`—` · domain=`Models` · subject=`Kimi` · date=`—` · status=`—`
     * **子文档（2）**
@@ -228,7 +228,7 @@
   <summary><b>LLaMA</b> · <code>Models/LLaMA/report.md</code> · 484 行 · —</summary>
 
 
-    * **条目**：[Models/LLaMA/report.md](<Models/LLaMA/report.md>)（484 行 / 42,584 B）
+    * **条目**：[Models/LLaMA/report.md](<Models/LLaMA/report.md>)（484 行 / 42,564 B）
     * **专题目录**：`Models/LLaMA`
     * **元数据**：type=`—` · domain=`Models` · subject=`LLaMA` · date=`—` · status=`—`
     * **子文档（0）**
@@ -252,7 +252,7 @@
   <summary><b>Midjourney</b> · <code>Models/Midjourney/report.md</code> · 86 行 · —</summary>
 
 
-    * **条目**：[Models/Midjourney/report.md](<Models/Midjourney/report.md>)（86 行 / 9,485 B）
+    * **条目**：[Models/Midjourney/report.md](<Models/Midjourney/report.md>)（86 行 / 9,460 B）
     * **专题目录**：`Models/Midjourney`
     * **元数据**：type=`—` · domain=`Models` · subject=`Midjourney` · date=`—` · status=`—`
     * **子文档（0）**
@@ -276,7 +276,7 @@
   <summary><b>Mistral</b> · <code>Models/Mistral/report.md</code> · 503 行 · —</summary>
 
 
-    * **条目**：[Models/Mistral/report.md](<Models/Mistral/report.md>)（503 行 / 31,313 B）
+    * **条目**：[Models/Mistral/report.md](<Models/Mistral/report.md>)（503 行 / 31,291 B）
     * **专题目录**：`Models/Mistral`
     * **元数据**：type=`—` · domain=`Models` · subject=`Mistral` · date=`—` · status=`—`
     * **子文档（0）**
@@ -288,7 +288,7 @@
   <summary><b>Nemotron</b> · <code>Models/Nemotron/report.md</code> · 239 行 · —</summary>
 
 
-    * **条目**：[Models/Nemotron/report.md](<Models/Nemotron/report.md>)（239 行 / 22,906 B）
+    * **条目**：[Models/Nemotron/report.md](<Models/Nemotron/report.md>)（239 行 / 22,883 B）
     * **专题目录**：`Models/Nemotron`
     * **元数据**：type=`—` · domain=`Models` · subject=`Nemotron` · date=`—` · status=`—`
     * **子文档（0）**
@@ -300,7 +300,7 @@
   <summary><b>OpenAI 生成模型</b> · <code>Models/OpenAI-Gen/report.md</code> · 394 行 · —</summary>
 
 
-    * **条目**：[Models/OpenAI-Gen/report.md](<Models/OpenAI-Gen/report.md>)（394 行 / 25,186 B）
+    * **条目**：[Models/OpenAI-Gen/report.md](<Models/OpenAI-Gen/report.md>)（394 行 / 25,152 B）
     * **专题目录**：`Models/OpenAI-Gen`
     * **元数据**：type=`—` · domain=`Models` · subject=`OpenAI-Gen` · date=`—` · status=`—`
     * **子文档（0）**
@@ -398,10 +398,10 @@
   </details>
 
   <details>
-  <summary><b>扩散语言模型</b> · <code>LLM/DiffusionLM/report.md</code> · 70 行 · 2026-10-23</summary>
+  <summary><b>扩散语言模型</b> · <code>LLM/DiffusionLM/report.md</code> · 76 行 · 2026-10-23</summary>
 
 
-    * **条目**：[LLM/DiffusionLM/report.md](<LLM/DiffusionLM/report.md>)（70 行 / 11,826 B）
+    * **条目**：[LLM/DiffusionLM/report.md](<LLM/DiffusionLM/report.md>)（76 行 / 13,342 B）
     * **专题目录**：`LLM/DiffusionLM`
     * **元数据**：type=`topic-research` · domain=`LLM` · subject=`DiffusionLM` · date=`2026-10-23` · status=`current`
     * **子文档（10）**
@@ -413,7 +413,7 @@
         * [papers/LLaDA2.0-Scaling-to-100B.md](<LLM/DiffusionLM/papers/LLaDA2.0-Scaling-to-100B.md>) — 63 行 / 9,346 B
         * [papers/LLaDA2.1-Token-Editing.md](<LLM/DiffusionLM/papers/LLaDA2.1-Token-Editing.md>) — 65 行 / 9,366 B
         * [papers/LLaDA2.2-Levenshtein-Editing.md](<LLM/DiffusionLM/papers/LLaDA2.2-Levenshtein-Editing.md>) — 64 行 / 11,889 B
-        * [sources/CANDIDATES.md](<LLM/DiffusionLM/sources/CANDIDATES.md>) — 29 行 / 3,474 B
+        * [sources/CANDIDATES.md](<LLM/DiffusionLM/sources/CANDIDATES.md>) — 32 行 / 4,175 B
         * [sources/MANIFEST.md](<LLM/DiffusionLM/sources/MANIFEST.md>) — 21 行 / 5,028 B
 
   </details>
@@ -983,10 +983,10 @@
 
 </details>
 
-### Infra（6 条目 / 49 文档）
+### Infra（6 条目 / 56 文档）
 
 <details>
-<summary><b>基础设施 Infra（6 条目 / 42 子文档）</b></summary>
+<summary><b>基础设施 Infra（6 条目 / 49 子文档）</b></summary>
 
   <details>
   <summary><b>KV Cache 与预填充／解码分离</b> · <code>Infra/KVCachePD/report.md</code> · 84 行 · 2026-10-23</summary>
@@ -1043,13 +1043,13 @@
   </details>
 
   <details>
-  <summary><b>投机解码</b> · <code>Infra/SpeculativeDecoding/report.md</code> · 549 行 · 2026-10-22</summary>
+  <summary><b>投机解码</b> · <code>Infra/SpeculativeDecoding/report.md</code> · 560 行 · 2026-10-22</summary>
 
 
-    * **条目**：[Infra/SpeculativeDecoding/report.md](<Infra/SpeculativeDecoding/report.md>)（549 行 / 46,616 B）
+    * **条目**：[Infra/SpeculativeDecoding/report.md](<Infra/SpeculativeDecoding/report.md>)（560 行 / 48,122 B）
     * **专题目录**：`Infra/SpeculativeDecoding`
     * **元数据**：type=`topic-research` · domain=`Infra` · subject=`SpeculativeDecoding` · date=`2026-10-22` · status=`needs-review`
-    * **子文档（33）**
+    * **子文档（40）**
         * [legacy/speculative-block-diffusion.md](<Infra/SpeculativeDecoding/legacy/speculative-block-diffusion.md>) — 230 行 / 18,588 B
         * [legacy/speculative-cascade-heterogeneous.md](<Infra/SpeculativeDecoding/legacy/speculative-cascade-heterogeneous.md>) — 141 行 / 11,829 B
         * [legacy/speculative-classical-and-self.md](<Infra/SpeculativeDecoding/legacy/speculative-classical-and-self.md>) — 157 行 / 12,113 B
@@ -1066,9 +1066,15 @@
         * [papers/2401.15077-eagle-series.md](<Infra/SpeculativeDecoding/papers/2401.15077-eagle-series.md>) — 244 行 / 19,850 B
         * [papers/2402.02057-lookahead.md](<Infra/SpeculativeDecoding/papers/2402.02057-lookahead.md>) — 202 行 / 15,270 B
         * [papers/2408.11049-magicdec.md](<Infra/SpeculativeDecoding/papers/2408.11049-magicdec.md>) — 200 行 / 14,379 B
+        * [papers/2509.18085-spiffy.md](<Infra/SpeculativeDecoding/papers/2509.18085-spiffy.md>) — 19 行 / 2,586 B
         * [papers/2601.05724-hsd.md](<Infra/SpeculativeDecoding/papers/2601.05724-hsd.md>) — 84 行 / 8,788 B
+        * [papers/2602.06036-dflash.md](<Infra/SpeculativeDecoding/papers/2602.06036-dflash.md>) — 21 行 / 2,771 B
         * [papers/2602.16994-delayed-tree.md](<Infra/SpeculativeDecoding/papers/2602.16994-delayed-tree.md>) — 83 行 / 9,007 B
+        * [papers/2604.12989-ddtree.md](<Infra/SpeculativeDecoding/papers/2604.12989-ddtree.md>) — 21 行 / 2,490 B
         * [papers/2606.01813-caddtree.md](<Infra/SpeculativeDecoding/papers/2606.01813-caddtree.md>) — 53 行 / 8,309 B
+        * [papers/2606.02091-dflare.md](<Infra/SpeculativeDecoding/papers/2606.02091-dflare.md>) — 23 行 / 2,424 B
+        * [papers/2606.08048-poe-bridge.md](<Infra/SpeculativeDecoding/papers/2606.08048-poe-bridge.md>) — 17 行 / 2,114 B
+        * [papers/2607.22634-presto.md](<Infra/SpeculativeDecoding/papers/2607.22634-presto.md>) — 19 行 / 2,452 B
         * [papers/2608.13524-dartree.md](<Infra/SpeculativeDecoding/papers/2608.13524-dartree.md>) — 31 行 / 3,850 B
         * [papers/2609.21827-rheosampling.md](<Infra/SpeculativeDecoding/papers/2609.21827-rheosampling.md>) — 216 行 / 15,804 B
         * [papers/2609.33184-specstream.md](<Infra/SpeculativeDecoding/papers/2609.33184-specstream.md>) — 44 行 / 5,416 B
@@ -1077,10 +1083,11 @@
         * [papers/2610.23787-dlite.md](<Infra/SpeculativeDecoding/papers/2610.23787-dlite.md>) — 48 行 / 6,161 B
         * [papers/sglang-implementation.md](<Infra/SpeculativeDecoding/papers/sglang-implementation.md>) — 220 行 / 15,358 B
         * [papers/vllm-implementation.md](<Infra/SpeculativeDecoding/papers/vllm-implementation.md>) — 227 行 / 18,077 B
-        * [sources/CANDIDATES.md](<Infra/SpeculativeDecoding/sources/CANDIDATES.md>) — 91 行 / 9,644 B
+        * [sources/CANDIDATES.md](<Infra/SpeculativeDecoding/sources/CANDIDATES.md>) — 96 行 / 10,366 B
         * [sources/CODE-AUDIT.md](<Infra/SpeculativeDecoding/sources/CODE-AUDIT.md>) — 99 行 / 12,828 B
-        * [sources/MANIFEST.md](<Infra/SpeculativeDecoding/sources/MANIFEST.md>) — 65 行 / 9,872 B
+        * [sources/MANIFEST.md](<Infra/SpeculativeDecoding/sources/MANIFEST.md>) — 71 行 / 11,370 B
         * [topics/algorithm-families.md](<Infra/SpeculativeDecoding/topics/algorithm-families.md>) — 164 行 / 12,014 B
+        * [topics/diffusion-drafters.md](<Infra/SpeculativeDecoding/topics/diffusion-drafters.md>) — 114 行 / 15,248 B
         * [topics/systems-throughput-latency.md](<Infra/SpeculativeDecoding/topics/systems-throughput-latency.md>) — 168 行 / 10,532 B
         * [topics/verification-acceptance.md](<Infra/SpeculativeDecoding/topics/verification-acceptance.md>) — 173 行 / 11,577 B
 
@@ -1210,7 +1217,7 @@
 | [AI4Science/README.md](<AI4Science/README.md>) | AI4Science | 137 | 6,896 B |
 | [Agents/README.md](<Agents/README.md>) | Agents | 74 | 3,495 B |
 | [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 46 | 1,951 B |
-| [Infra/README.md](<Infra/README.md>) | Infra | 109 | 7,193 B |
+| [Infra/README.md](<Infra/README.md>) | Infra | 117 | 8,075 B |
 | [LLM/README.md](<LLM/README.md>) | LLM | 147 | 10,228 B |
 | [Models/README.md](<Models/README.md>) | Models | 101 | 4,939 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 104 | 4,517 B |

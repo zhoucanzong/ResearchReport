@@ -1,6 +1,6 @@
 # 选文说明与候选池 · SpeculativeDecoding
 
-> 目的：**先筛选、后精读**。把“为什么选这 16 项、为什么没选其它”写清楚，以后不必重复筛。
+> 目的：**先筛选、后精读**。把“为什么选这 22 项、为什么没选其它”写清楚，以后不必重复筛。
 > 证据纪律：本页只做**选文判断**，不含未核实的论文结论。**带 ID 的排除项均已回查 arXiv 元数据**；未核实的按类别排除，**不编号、不编造 ID**。
 
 ## 1. 本条目要回答什么（决定选文标准）
@@ -14,7 +14,7 @@
 **入选门槛（满足其一）**：提出新机制或新范式 ｜ 首次在某能力上成立且有规模证据 ｜ 成为后续基线 ｜ 证伪/纠正已有共识。
 **淘汰标准（命中其一）**：增量调参无新机制 ｜ 只在玩具设置验证或无消融 ｜ 已被后续取代 ｜ 与本条目主题仅擦边 ｜ 拿不到正文。
 
-## 2. 入选（16 项，逐篇一句理由）
+## 2. 入选（22 项，逐篇一句理由）
 
 | 分册 | 入选理由（一句话） |
 | :-- | :-- |
@@ -26,6 +26,12 @@
 | [RheoSampling](../papers/2609.21827-rheosampling.md) | T>0 动态树的无损修复；本轮“转折点”的核心证据，且明确给出接受率 = `Σ min(p,q)`。 |
 | [SecureSD](../papers/2610.08678-secure-sd.md) | 2026-10 新增安全维度：测量有损验证下 jailbreak/prompt-injection 相对 utility 的退化，并提出按位置校正；arXiv 元数据称已收 IEEE S&P 2027。 |
 | [DARTree](../papers/2608.13524-dartree.md) | 把扩散块草稿的校正从一条链扩展到多条条件分支，并用分层并行扩展 + 延迟 top-B 替代逐节点 heap；代码可固定，适合解释 2026 diffusion draft 的树化。 |
+| [DFlash](../papers/2602.06036-dflash.md) | 用 target KV 条件化块扩散 draft，建立“扩散并行提议、AR target 验收”的主线。 |
+| [DFlare](../papers/2606.02091-dflare.md) | 为每个 draft layer 学不同的 target feature 融合权重，研究草稿容量扩大的收益与训练成本。 |
+| [DDTree](../papers/2604.12989-ddtree.md) | 将单次块扩散的逐位置候选组织成树，并按 draft surrogate 目标配置 target 验证预算。 |
+| [PRESTO](../papers/2607.22634-presto.md) | 揭示扩散边际分数与 AR 前缀验证的错位，用轻量 prefix signal 改善树排序。 |
+| [Spiffy](../papers/2509.18085-spiffy.md) | 对 standalone dLLM 自己的未来 block state 做图式投机，并证明保留该 dLLM 的输出分布。 |
+| [PoE-Bridge](../papers/2606.08048-poe-bridge.md) | 以中间分布缩小 DLM proposal 与 AR target 的差异；明示有限候选下非严格无损。 |
 | [SpecStream](../papers/2609.33184-specstream.md) | 代表 serving 系统线：围绕已提交 KV、流式 full-attention、按 useful output 调 q 和共卡调度设计，且论文明确展示 PCIe offload 的速度边界。 |
 | [DLite](../papers/2610.23787-dlite.md) | 10 月最新的 agentic drafter 工作：把 target hidden states 当上下文，删除的是 draft 历史 KV/重复历史编码；有论文与官方推理代码可相互核对。 |
 | [HSD](../papers/2601.05724-hsd.md) | 用分层概率质量平衡扩展严格无损的序列级验证；同时区分正确性保证与 verifier 实现开销。 |
@@ -35,7 +41,7 @@
 | [vLLM 实现核验](../papers/vllm-implementation.md) | 生产框架一手代码；`greedy` vs `probabilistic` 的语义分叉，是“论文 q 如何落地”的最佳样本。 |
 | [SGLang 实现核验](../papers/sglang-implementation.md) | 生产框架一手代码；#10308 的处置对象，能同时回答“issue 状态”与“代码能力”。 |
 
-## 3. 排除清单（14 条：4 条带已核实 ID + 10 条类别性排除）
+## 3. 排除清单（13 条：4 条带已核实 ID + 9 条类别性排除）
 
 ### 3.1 带已核实 ID 的排除（4 条）
 
@@ -48,32 +54,31 @@
 | 3 | `2408.15766` | Learning Harmonized Representations for Speculative Sampling（HASS；v3，2025-02-26，Zhang, Lefan） | EAGLE-3 论文已直接对照 HASS 并说明差异（HASS 保留特征预测损失）；单设分册会与 EAGLE 分册重复。 |
 | 4 | `2403.00835` | CLLMs: Consistency Large Language Models（v4，2024-06-13，Kou, Siqi） | **不是投机解码**（一致性模型的并行解码）；同时用作“素材层 EAGLE ID 误写”的更正样本，故只登记不设册。 |
 
-### 3.2 类别性排除（10 条，**未逐一核实 ID，故不给 ID**）
+### 3.2 类别性排除（9 条，**未逐一核实 ID，故不给 ID**）
 
 | # | 类别 | 排除理由（一句话） |
 | --: | :-- | :-- |
-| 5 | **块/扩散草稿**：DFlash、DSpark、BASTION 等 | DARTree 已覆盖“扩散 proposal + 分支条件校正”这一交叉点；其余工作仍作为 draft/训练基线留在素材层，逐篇纳入前需先比较新机制和可核实验。 |
-| 6 | **自投机子型**：Hydra、SWIFT、CLaSp、LayerSkip 等 | 机制已被 Medusa（并行头）与 EAGLE（特征级）覆盖；作为素材层保留，不重复设册。 |
-| 7 | **系统优化**：TriForce、Mirror-SD 等 | SpecStream 已补 KV offload / streaming / co-execution；TriForce 作为其论文内基线出现。其它系统仍需固定实现和同条件对照，避免与 MagicDec 重复讲历史 KV 结论。 |
-| 8 | **量化/分层交叉**：QSpec、HiSpec 等 | 更适合归 `Infra/QuantizationEdge`；本条目只在谱系里提一句。 |
-| 9 | **多模态投机**：ViSpec、SpecVLM、MSD、SpecPrune-VLA 等 | 素材层已有横切文档；本轮篇幅优先给“验证 + 系统”两条主线。 |
-| 10 | **领域/语种特化**：DictSpec、CDSL 等 | 属于“检索式/受限输出”的补充；已在素材层保留，本轮不设册。 |
-| 11 | **端侧/专用硅**：SMoLPU、SS-MoE、FlexSpec 等 | 指标口径不同（µJ/token、能效 vs tokens/s），无法与算法论文同表；素材层保留。 |
-| 12 | **草稿训练新法**：AdaSPEC、Attention Drift、TLT 等 | 与 EAGLE-3 的训练/上下文对齐线交叉；本轮以 EAGLE 分册 + 素材层覆盖。 |
-| 13 | **检索式**：REST、PLD、SAM 等 | Lookahead 与 TLAR 分别覆盖语料/prompt线索和当前生成轨迹复用；其它检索器仍需同预算对照。 |
-| 14 | **经典背景**：Leviathan / Chen（2023） | 范式源头，已在 topic 2 作为数学基础引用；不单设分册（无“新机制”可拆）。 |
+| 5 | **自投机子型**：Hydra、SWIFT、CLaSp、LayerSkip 等 | 机制已被 Medusa（并行头）与 EAGLE（特征级）覆盖；作为素材层保留，不重复设册。 |
+| 6 | **系统优化**：TriForce、Mirror-SD 等 | SpecStream 已补 KV offload / streaming / co-execution；TriForce 作为其论文内基线出现。其它系统仍需固定实现和同条件对照，避免与 MagicDec 重复讲历史 KV 结论。 |
+| 7 | **量化/分层交叉**：QSpec、HiSpec 等 | 更适合归 `Infra/QuantizationEdge`；本条目只在谱系里提一句。 |
+| 8 | **多模态投机**：ViSpec、SpecVLM、MSD、SpecPrune-VLA 等 | 素材层已有横切文档；本轮篇幅优先给“验证 + 系统”两条主线。 |
+| 9 | **领域/语种特化**：DictSpec、CDSL 等 | 属于“检索式/受限输出”的补充；已在素材层保留，本轮不设册。 |
+| 10 | **端侧/专用硅**：SMoLPU、SS-MoE、FlexSpec 等 | 指标口径不同（µJ/token、能效 vs tokens/s），无法与算法论文同表；素材层保留。 |
+| 11 | **草稿训练新法**：AdaSPEC、Attention Drift、TLT 等 | 与 EAGLE-3 的训练/上下文对齐线交叉；本轮以 EAGLE 分册 + 素材层覆盖。 |
+| 12 | **检索式**：REST、PLD、SAM 等 | Lookahead 与 TLAR 分别覆盖语料/prompt线索和当前生成轨迹复用；其它检索器仍需同预算对照。 |
+| 13 | **经典背景**：Leviathan / Chen（2023） | 范式源头，已在 topic 2 作为数学基础引用；不单设分册（无“新机制”可拆）。 |
 
 ## 4. 统计口径（可逐条核对）
 
 | 项 | 数 | 说明 |
 | :-- | --: | :-- |
-| 候选池 N | **30** | 4 条带 ID 的排除 + 10 条类别排除 + 16 条入选 |
-| 入选 M | **16** | 14 篇论文分册（覆盖 16 篇论文）+ 2 篇框架代码核验 |
-| 排除 | **14** | 4 带 ID + 10 类别 |
+| 候选池 N | **35** | 4 条带 ID 的排除 + 9 条类别排除 + 22 个精读/代码入口 |
+| 入选 M | **22** | 20 篇论文精读分册（覆盖 22 篇论文）+ 2 篇框架代码核验 |
+| 排除 | **13** | 4 带 ID + 9 类别 |
 | 其中本轮重新核 ID | **4** | `2310.08461` / `2402.12374` / `2408.15766` / `2403.00835` |
-| 未设分册但进谱系 | 3+ | DFlash / DSpark / BASTION（只定位，不入表） |
+| 未设分册但进谱系 | 2+ | DSpark / BASTION（只定位，不入表） |
 
-**ID 纪律**：3.1 的 4 个 ID 与标题/版本/日期**已逐条回查 arXiv**；3.2 是类别性排除，**不编号、不编造 ID**。DFlash 等如需引用，请回素材层并自行回查。
+**ID 纪律**：3.1 的 4 个 ID 与标题/版本/日期**已逐条回查 arXiv**；3.2 是类别性排除，**不编号、不编造 ID**。现已精读的扩散交叉论文以 [MANIFEST](MANIFEST.md) 中固定版本和原文链接为准。
 
 ## 5. 下一轮候选（按价值排序）
 

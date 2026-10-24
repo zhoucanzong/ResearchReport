@@ -1,0 +1,114 @@
+# 扩散语言模型与投机解码：草稿、验证和生成目标
+
+> **读前先分清研究对象**：扩散语言模型可以直接生成文本，也可以给自回归模型提出待验证草稿；还可以给自己提出后续去噪状态。三种角色的 target、正确性保证与速度基线不同。本篇把库内 [投机解码专题](../report.md) 和 [扩散语言模型专题](../../../LLM/DiffusionLM/report.md) 接起来，分析这些交叉线索怎样共享机制、又在哪里分开。
+
+## 一张图：谁在生成，谁在验收
+
+```mermaid
+flowchart LR
+  A[独立扩散模型] -->|块并行草稿| B[自回归 target]
+  B -->|验收或拒绝| C[提交到 AR 输出]
+  D[扩散语言模型自身] -->|对未来去噪状态自投机| D
+  D -->|接受状态跳步| E[提交到 DLM 输出]
+  A -->|proposal / 中间分布| B
+  B -.有限采样近似 target 质量.-> C
+```
+
+上面第一条是 **DFlash 家族**：diffusion 只负责提议，强 AR 模型决定最终输出。第二条是 **Spiffy**：同一个 dLLM 提出未来的去噪状态，再由该 dLLM 验证。最后的虚线是 **PoE-Bridge**：DLM 提供并行候选，AR 分布通过中间桥接和有限重要性采样提高候选质量；论文没有承诺有限预算下严格保持 AR target 分布。
+
+“用了扩散”本身无法回答系统究竟快多少、生成的又是谁的分布。读每篇论文先找四件事：目标分布、候选从哪来、target 如何验收、计时把哪些阶段算进去。
+
+## 三种扩散角色的边界
+
+| 角色 | 代表工作 | 候选产生方式 | 最终质量由谁定义 | 正确性或质量主张 |
+|---|---|---|---|---|
+| **独立 draft，AR target** | DFlash、DFlare、DDTree、DARTree、PRESTO | 专门训练的块扩散 draft 并行预测未来 token，再扩成路径或树 | AR target | 由 target 验证的算法可保持 target 分布；提议质量主要影响接受率与速度 |
+| **dLLM 自投机** | Spiffy；PRESTO 也拓展到 hybrid/self-speculative 设置 | 同一个 dLLM 提议后续 block state 或多条去噪路径 | 原始 dLLM | Spiffy 证明其状态接受规则保持该 dLLM 的输出分布；不代表输出等于 AR |
+| **DLM proposal，AR 质量桥接** | PoE-Bridge | DLM 并行采样，经 DLM/AR product-of-experts 中间分布和采样校正 | AR 是质量参照 | 有限候选数时不严格无损，报告 accuracy 与吞吐的折衷 |
+| **独立扩散生成器** | LLaDA、Block Diffusion、SDAR、CARD、LLaDA 2.x | 迭代去噪、块级并行或 token editing | 扩散模型自身 | 论文比较该生成器的质量、长度与延迟；没有 AR target verifier 就不构成 target-preserving speculative decoding |
+
+最后一行是 [扩散语言模型报告](../../../LLM/DiffusionLM/report.md) 的主体。它问“模型本身怎样学会去噪、怎样并行生成或修订”；前三行问“草稿能否被另一个明确的分布接受”。论文可能兼有多种机制，分类应按具体实验路径而定，不能只看模型名字。
+
+## 为什么块扩散适合做 AR 草稿
+
+自回归 draft 逐个产生 \(k\) 个 token，延迟大致随 draft 长度累积。块扩散 draft 让多个未来位置共享一次并行前向；它可以把节省下来的串行步骤用于更深的 draft 网络或更大的候选块。此时评价目标不是要求小模型自己写出完整、可直接交付的回答，而是让 AR target 经常接受草稿前缀。
+
+DFlash 让这一设计第一次形成清楚的机制闭环：target prefill 同时提供隐藏状态，draft 通过逐层 KV 注入读取这些表示，再用 block diffusion 生成候选；target 检查草稿并决定提交位置。[DFlash 精读](../papers/2602.06036-dflash.md) 的消融显示，仅把小扩散模型放在旁边“从头猜”会明显削弱效果。**扩散的并行性解决候选延迟，target 特征对齐解决候选质量**，二者缺一都会压低收益。
+
+DFlare 把这个约束继续往容量方向推进：每层 draft 不再共享一个融合好的 target 特征，而是学习从多层 target hidden states 取信息的权重，同时扩大 draft 深度和训练数据。[DFlare 精读](../papers/2606.02091-dflare.md) 支持“扩大 draft 容量可以继续提高接受长度”的作者报告结果；代价是较大的 draft 和训练语料。训练成本是否值得，取决于之后能服务多少请求以及是否能部署同一 target/draft 配对。
+
+因此，不能从“一个扩散 forward 能预测 16 个位置”推导“每轮就能接受 16 个 token”。位置预测是多个边际分布；AR 验收依赖逐步增长的真实前缀。下一步研究集中在怎么利用候选空间，又不让扩散的并行草稿脱离因果路径。
+
+## 树搜索从“候选覆盖”走到“路径条件”
+
+单条草稿每个位置只走一个候选；早期 token 错了，后面整块大多浪费。把每个位置的 top-k 接成树能保留多条替代前缀，但树也会增加 target 验证 token 数和 attention 成本。node budget 是在“更多候选覆盖”与“更多验证计算”之间分配。
+
+| 方法 | 它改善的环节 | 如何给候选路径排序 | 要留意的边界 |
+|---|---|---|---|
+| DFlash | 单块并行草稿的延迟与容量 | 一条 draft trajectory | 接受收益随 task、target、batch 改变 |
+| DDTree | 不浪费同次前向的其他位置候选 | 各位置边际概率的乘积，按 surrogate mass best-first 建树 | 候选概率不含真实已选前缀；“surrogate 最优”不是 target 接受率全局最优 |
+| DARTree | 给树中每个候选分支恢复因果校正 | correction head 按 branch prefix 给条件分数；同一深度并行校正，随后全局剪枝 | 复用 Domino correction head，新增校正也占计算；target 验证节点数仍需选 |
+| PRESTO | 让 diffusion 树分数贴合 AR 的前缀验证 | 边际 draft log-score 加轻量 prefix-conditioned n-gram signal，再优先扩展高潜力路径 | n-gram 是 proxy，不是精确 target 条件概率；搜索预算和树 attention 仍花时间 |
+
+DDTree 把一次 diffusion 前向所生成的每个位置分布都用来探索可能前缀。其树按 draft-induced surrogate 的期望接受长度构造；证明对这个 surrogate 最优，并不表示未知的 target 接受概率也最优。[DDTree 精读](../papers/2604.12989-ddtree.md)
+
+DARTree 指出这正是边际候选的结构性缺口：扩散位置的 confidence 不会随候选路径的前缀变化。它把 correction head 从单链扩展到树上的每条 branch，再按深度批量计算，最后剪成 target 的验证预算。[DARTree 精读](../papers/2608.13524-dartree.md) 把另一个系统约束显露出来：逐节点调用 correction head 与 heap 排序相互依赖，可能把并行草稿变回串行树构造；先批量形成更宽 supertree 再剪枝，是专门针对这段调度开销的设计。
+
+PRESTO 的思路更轻：用廉价 prefix-conditioned score 校准边际概率，再树搜索。它不把 n-gram 分数说成 target 分布，也不替代 verifier；分数用于排列“哪个路径更值得验证”。[PRESTO 精读](../papers/2607.22634-presto.md) 同时测试独立 diffusion drafter 与 self-speculative dLLM，并报告树预算变大到一定程度后 verifier 的计算会侵蚀吞吐。
+
+树方法的共同问题不是无限扩宽，而是**预测有效验收机会的单位计算成本**。不同模型、任务、并发度、温度或 GPU 上，最佳节点数可能不同。接受长度增大只是中间信号；若 draft 构造或 target tree forward 同时变贵，token/s 未必提升。
+
+## self-speculation：扩散模型也能跳过自己的去噪步骤
+
+对 standalone dLLM，传统 one-step-per-iteration 解码会反复调用同一个大模型。Spiffy 把下一步 block state 当作 proposal：从当前 target 分布构造若干未来去噪状态，按 dLLM 的 blockwise、bidirectional 结构形成有向 draft graph，再通过 attention mask 并行验证。图允许一个未来状态由多个路径到达，表达能力不同于 AR verifier 使用的单根 token tree。
+
+在接受条件下，Spiffy 直接复用已算出的子状态分布并跳过中间调用；若候选不等于 target 真实产生的下一状态，则仍按原去噪过程继续。作者给出保持原 dLLM 输出分布的证明。[Spiffy 精读](../papers/2509.18085-spiffy.md)
+
+这里的“无损”指**相对于该 dLLM 原始采样过程**，不表示生成质量已经追平 AR，也不表示 graph mask、离线校准和多分支前向没有内存/计算开销。离线校准依赖生成轨迹中实际出现的解遮蔽模式；换模型、解码策略或任务，现有图的覆盖情况值得单独观察。
+
+PoE-Bridge 则连接两种模型分布：DLM 批量生成 proposals，AR 作为更高质量的参照，通过 product-of-experts 中间分布把两者的差距拆为拒绝采样与重要性重采样两步。[PoE-Bridge 精读](../papers/2606.08048-poe-bridge.md) 作者报告在数学与代码任务上用有限候选让输出质量靠近 AR，同时提升吞吐；论文明确指出有限重要性采样预算下**并非严格无损**。它研究的是质量—吞吐折衷，不应与 DFlash/Spiffy 的 exact distribution-preserving speedup 并列成一种保证。
+
+## “无损”究竟对谁、相对什么
+
+| 工作线 | 被保留的分布 | 验收判据 | 可以怎么描述 |
+|---|---|---|---|
+| DFlash / DFlare / DDTree / DARTree / PRESTO | AR target | target 样本匹配或论文相应的 exact speculative verification | 若按其验证规则运行，可保留 target 分布；diffusion proposal 影响效率，不替 target 下结论 |
+| Spiffy | standalone dLLM 原始去噪过程 | 接受候选 state 必须与 target 的真实下一 state 相同 | 保持原 dLLM 的输出分布；不自动说明它与 AR 的质量差距 |
+| PoE-Bridge | AR 是校正参照 | product-of-experts bridge + 有限拒绝/重要性采样 | 在给定预算下近似 AR 质量；有限候选时不严格无损 |
+| LLaDA / SDAR / CARD 等独立生成 | 模型自己的分布 | 模型原生解码规则 | 直接评估该模型的质量和速度，不属于“经 AR 验证后无损加速” |
+
+注意，“target 与草稿逐位置 logit 相同”“大部分草稿被接受”“benchmark accuracy 接近”都不是同一证明。精确 target-preserving 需要明确 target 分布、proposal probability、拒绝时的残差处理或状态匹配证明。对 PoE-Bridge 这类有限候选近似方案，应同时给出任务、accuracy、吞吐和候选预算。
+
+## 结果应该怎样读
+
+| 论文报告的例子 | 论文条件 | 它说明什么 | 不能推出什么 |
+|---|---|---|---|
+| DFlash 在 LLaMA-3.1-8B 的 SGLang serving 对照里，GSM8K 加速随并发 1→32 从 2.4× 降到 1.6× | 单张 B200、block size 10、Spec-v1；其 EAGLE-3 对照使用同训练数据、多个树大小 | 单条低并发结果会高估多请求时相对 AR 的收益 | 不能直接概括到其它 target、后端、block size 或 SGLang 新调度版本 |
+| DFlare 报告六基准平均：Qwen3-4B 5.52×、Qwen3-8B 5.46×、GPT-OSS-20B 3.91× | 7-layer draft、block size 16、约 2.4M 训练样本；另有不同模型、解码和算力配置 | draft 的条件质量和容量仍是主导变量；扩大 draft 带来稳定提升，也增加一次性训练成本 | 不与其它论文的 headline 数值直接排名 |
+| DDTree 在 Qwen3-4B、T=0、AIME24 报告 7.27×，DFlash 同表为 5.56× | 8 张 H200；对每个模型/任务/温度从七种节点预算选最佳值 | 树候选可利用单次 draft pass 中不同位置的备选 token | 不能把 per-case 最佳预算视作线上固定预算表现 |
+| DARTree 在 Qwen3-4B、T=0、GSM8K 报告 9.73×，7 任务平均 6.99× | batch 1、RTX 6000 Ada、最多 2048 输出 token、预算 B=64 | 路径校正和深度批处理能提高候选树质量并降低建树串行 | 9.73× 不是跨任务平均，也不是多并发 serving 结果 |
+| PRESTO 在其 Qwen3-4B/8B DFlash 设置中，表列平均加速从 4.8–4.9× 提到约 7.3× | B200、batch 1、T=0/1、最大 2048 token、为 DFlash 搜树预算 | prefix-conditioned 路径排序可提高 diffusion draft 树的验收 | 不能将 best-tree 配置当作在线服务默认值；每轮验证成本仍需计入 |
+| PoE-Bridge 在 MATH 报告约 95% 的 AR accuracy 与约 95 token/s | Dream-7B proposal + Qwen2.5-Math-7B target、A100 80GB、batch 1、K=4、窗口 V=32 | bridge 能让有限并行候选靠近 AR 质量而增加吞吐 | 论文承认有限采样下不严格无损，也未测试多请求服务 |
+
+以上都是论文原文报告的结果，条件列说明证据适用范围。体系间的数字不能仅因都写“speedup”就横向排列；baseline、硬件、batch、输出长度、温度、计时范围和搜索预算都影响比值。
+
+## 阅读顺序
+
+1. 先读本专题的[投机解码验证边界](verification-acceptance.md)，再读 [DFlash](../papers/2602.06036-dflash.md)：建立 block diffusion drafter + AR verifier 的主线。
+2. 读 [DFlare](../papers/2606.02091-dflare.md)，看 target hidden state 融合如何扩 draft 容量及其训练代价。
+3. 读 [DDTree](../papers/2604.12989-ddtree.md) → [DARTree](../papers/2608.13524-dartree.md) → [PRESTO](../papers/2607.22634-presto.md)：依次看边际候选覆盖、路径因果校正、前缀对齐的启发式打分。
+4. 再读 [Spiffy](../papers/2509.18085-spiffy.md)，把 target 改成 standalone dLLM，观察 block state graph 如何保留原模型分布。
+5. 最后读 [PoE-Bridge](../papers/2606.08048-poe-bridge.md)，比较精确目标分布保持和有限预算下的 AR 质量逼近。
+6. 回到 [扩散语言模型总览](../../../LLM/DiffusionLM/report.md)，区分 native denoising 的训练/长度/编辑问题，与把 diffusion 放入 proposal/verification pipeline 后的新问题。
+
+## 开放问题
+
+- DFlash 训练好的 block drafter 能否跨任务、上下文长度、target 版本或 tokenizer 稳定迁移？哪个变化必须重新训练？
+- DFlare 增加模型容量后，draft inference 能耗和训练摊销何时抵得过吞吐收益？多请求 serving 中的 Pareto 点怎样随并发变化？
+- DDTree 的 factorized prefix surrogate、DARTree 的 learned correction head、PRESTO 的 n-gram prefix signal，在哪些置信度与任务类型下最能预测真实验收？
+- tree budget 是按接受长度、target attention cost 还是端到端吞吐选择？能否在线适应请求和 batch，而不为搜索新预算增加过多延迟？
+- Spiffy 的校准 graph 能否跨分布或动态 unmasking 策略泛化？哪些 graph 更新能在运行时保留分布证明？
+- PoE-Bridge 当候选数增加时的质量收益与显存/时延曲线，如何扩展到不同 tokenizer、多请求和超出 batch 1 的服务？
+- 三种速度结果能否在固定 target、输入/输出长度、温度、batch、硬件、质量标准和尾延迟分母下对照？当前论文设置不足以据此给出统一优胜者。
+
+本综合分析没有独立运行模型、代码或 benchmark；所有数字按论文报告结果引用。原文版本、实验定位见各篇精读链接。

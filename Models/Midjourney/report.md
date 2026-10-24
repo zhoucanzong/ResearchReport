@@ -1,6 +1,5 @@
 ---
 display_name: Midjourney
-display_name: Midjourney
 ---
 
 # Midjourney 模型与产品演进研究报告

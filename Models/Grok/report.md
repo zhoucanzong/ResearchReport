@@ -1,6 +1,5 @@
 ---
 display_name: Grok
-display_name: Grok
 ---
 
 # xAI Grok 系列模型深度调研报告

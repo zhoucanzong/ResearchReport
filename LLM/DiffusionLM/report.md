@@ -10,7 +10,7 @@ status: current
 
 # 扩散语言模型：从随机遮盖到大规模并行生成
 
-> 本专题研究把语言模型本身训练成扩散生成器的工作。核心问题不是“扩散是不是更快”，而是：训练目标、生成顺序与可修改状态怎样共同影响能力、长度控制、推理计算和编辑能力。所有分数与速度均为论文作者报告；本专题没有独立复现。版本和阅读范围见 [来源清单](sources/MANIFEST.md)。
+> 本专题研究把语言模型本身训练成扩散生成器的工作。核心问题不是“扩散是不是更快”，而是：训练目标、生成顺序与可修改状态怎样共同影响能力、长度控制、推理计算和编辑能力。所有分数与速度均为论文作者报告；本专题没有独立复现。版本和阅读范围见 [来源清单](sources/MANIFEST.md)。投机式解码与本文的关系见[扩散语言模型与投机解码综合分析](../../Infra/SpeculativeDecoding/topics/diffusion-drafters.md)。
 
 ## 先区分两种“diffusion”
 
@@ -24,6 +24,12 @@ status: current
 4. **一次生成需要做多少次全量或块级前向？** 并行预测一批 token 不等于总计算或延迟更低；还要看去噪轮数、块数、批量、注意力实现、长度控制和吞吐测量边界。论文条件对照见 [LLaDA2.1](papers/LLaDA2.1-Token-Editing.md) 与 [CARD](papers/2601.22031-card.md)。
 
 ## 研究路线不是一条“更快”曲线
+
+### 扩散既可直接生成，也可作为 proposal
+
+独立扩散生成的速度—质量问题属于本专题：模型自身的去噪轮数、块策略、EOS 与 token editing 决定最终输出。若扩散模型只负责为 AR target 提议 token，最终输出质量由 target 与验证规则决定；若同一个 dLLM 对未来去噪 state 自投机，则验证对象又回到该 dLLM 的原分布。PoE-Bridge 还把 AR 作为质量参照，通过有限重要性采样逼近；论文明确承认有限预算不严格无损。
+
+建议先读[跨专题综合分析](../../Infra/SpeculativeDecoding/topics/diffusion-drafters.md)，再按问题进入代表论文：块扩散怎样作为 AR 草稿见 [DFlash](../../Infra/SpeculativeDecoding/papers/2602.06036-dflash.md)；如何把每个位置的候选用进验证树见 [DDTree](../../Infra/SpeculativeDecoding/papers/2604.12989-ddtree.md) 与 [PRESTO](../../Infra/SpeculativeDecoding/papers/2607.22634-presto.md)；怎样加速 dLLM 自身见 [Spiffy](../../Infra/SpeculativeDecoding/papers/2509.18085-spiffy.md)；怎样以有限预算逼近 AR 质量见 [PoE-Bridge](../../Infra/SpeculativeDecoding/papers/2606.08048-poe-bridge.md)。
 
 表内证据按固定论文逐篇定位；缓存、许可和各自未核实边界见 [MANIFEST](sources/MANIFEST.md)。
 
@@ -66,7 +72,7 @@ LLaDA 2.2 在此基础上增加**局部长度变化**：以 draft/target 的最�
 
 建议按问题阅读：先读 [LLaDA](papers/2502.09992-llada.md)理解随机 mask objective 和固定长度反向采样；接着读 [LLaDA 1.5](papers/2505.19223-llada-1.5-vrpo.md)看扩散概率估计怎样影响 DPO；再读 [LLaDA 2.0](papers/LLaDA2.0-Scaling-to-100B.md)看模型转换与大规模训练；最后依次读 [LLaDA 2.1](papers/LLaDA2.1-Token-Editing.md)与 [LLaDA 2.2](papers/LLaDA2.2-Levenshtein-Editing.md)，比较替换修订与插入/删除编辑。Block Diffusion、SDAR 与 CARD 用来比较不同条件化和生成顺序，而不是扩充模型名录。
 
-纳入边界：视觉生成 diffusion 不属于本专题；用 diffusion drafter 为自回归 target 加速的 DFlash / DARTree / BASTION 归[投机解码专题](../../Infra/SpeculativeDecoding/report.md)。若某论文只是在 related work 提及 LLaDA，或只给一个推理速度数字却不交代任务和评测条件，不作为主线证据。候选范围与暂缓理由见 [CANDIDATES](sources/CANDIDATES.md)。
+纳入边界：视觉生成 diffusion 不属于本专题；以 diffusion drafter 为 AR target 加速、对 dLLM 自身做 self-speculation、或用 DLM 候选逼近 AR 质量的工作，统一见[投机解码的扩散交叉专题](../../Infra/SpeculativeDecoding/topics/diffusion-drafters.md)。本报告继续聚焦扩散模型本身的训练目标、去噪/块机制、长度控制和编辑能力。若论文只在 related work 提及 LLaDA，或只给速度数字却未交代任务与计时条件，不作为主线证据。候选范围与暂缓理由见 [CANDIDATES](sources/CANDIDATES.md)。
 
 ## 尚未解决的问题
 

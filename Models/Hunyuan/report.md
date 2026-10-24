@@ -1,6 +1,5 @@
 ---
 display_name: Hunyuan
-display_name: Hunyuan
 ---
 
 # Hunyuan系列模型深度调研报告

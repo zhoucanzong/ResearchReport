@@ -1,6 +1,5 @@
 ---
 display_name: LLaMA
-display_name: LLaMA
 ---
 
 # Meta LLaMA 系列大模型完整研究报告

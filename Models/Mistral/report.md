@@ -1,6 +1,5 @@
 ---
 display_name: Mistral
-display_name: Mistral
 ---
 
 # Mistral AI 系列模型深度调研报告

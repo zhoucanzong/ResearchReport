@@ -7,31 +7,15 @@
 
 ---
 
-判定口径：`status` 不是 active/current/ok/stable/published，或 `date` 早于 180 天。
+判定口径：`status` 不是 active/current/ok/stable/published/completed，或 `date` 早于 180 天。
 
-## 已标记（20）
+## 已标记（4）
 
 | 条目 | 原因 |
 | --- | --- |
-| [AI4Science/AntibioticDiscovery/report.md](<../AI4Science/AntibioticDiscovery/report.md>) | status=completed |
-| [AI4Science/Astronomy/report.md](<../AI4Science/Astronomy/report.md>) | status=completed |
-| [AI4Science/AutonomousLabs/report.md](<../AI4Science/AutonomousLabs/report.md>) | status=completed |
-| [AI4Science/Chemistry/report.md](<../AI4Science/Chemistry/report.md>) | status=completed |
-| [AI4Science/MaterialsDiscovery/report.md](<../AI4Science/MaterialsDiscovery/report.md>) | status=completed |
-| [AI4Science/MathematicalDiscovery/report.md](<../AI4Science/MathematicalDiscovery/report.md>) | status=completed |
-| [AI4Science/Neuroscience/report.md](<../AI4Science/Neuroscience/report.md>) | status=completed |
-| [AI4Science/ProteinDesign/report.md](<../AI4Science/ProteinDesign/report.md>) | status=completed |
-| [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) | status=completed |
-| [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) | status=completed |
-| [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | status=completed |
 | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | status=needs-review |
 | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | status=needs-review |
 | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | status=needs-review |
-| [OpenSource/DeepInfer/report.md](<../OpenSource/DeepInfer/report.md>) | status=completed |
-| [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | status=completed |
-| [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | status=completed |
-| [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | status=completed |
-| [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | status=completed |
 | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | status=needs-review |
 
 ## 无 date 且无 status（无法判定，42）

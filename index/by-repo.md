@@ -36,14 +36,14 @@
 * [Infra/KVCachePD/report.md](<../Infra/KVCachePD/report.md>) — 84 行
 * [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) — 188 行
 * [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) — 81 行
-* [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) — 549 行
+* [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) — 560 行
 * [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) — 181 行
 
 ## LLM (10)
 
 * [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) — 115 行
 * [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) — 875 行
-* [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) — 70 行
+* [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) — 76 行
 * [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) — 102 行
 * [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) — 610 行
 * [LLM/MoE/report.md](<../LLM/MoE/report.md>) — 406 行

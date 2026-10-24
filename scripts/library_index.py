@@ -96,7 +96,7 @@ STATS_FILE = "index/stats.json"
 UNFILED = "unfiled"
 ROOT_GROUP = "repository-root"
 
-ACTIVE_STATUSES = ("active", "current", "ok", "stable", "published")
+NON_STALE_STATUSES = ("active", "current", "ok", "stable", "published", "completed")
 
 #: 资料库（含 `report.md` 条目的顶层目录）。顺序即展示顺序。
 #: 顶层板块目录在 ``main`` 中由 ``scripts/panels.json`` 推导，不在脚本中硬编码。
@@ -1026,7 +1026,7 @@ def render_recent(entries: list, out_root: str, dry_run: bool, limit: int) -> st
 def stale_reasons(entry: dict, stale_days: int) -> list:
     reasons = []
     status = entry["status"].strip().lower()
-    if status and status not in ACTIVE_STATUSES:
+    if status and status not in NON_STALE_STATUSES:
         reasons.append(f"status={entry['status']}")
     if entry["date_valid"] and entry["age_days"] is not None and entry["age_days"] > stale_days:
         reasons.append(f"date={entry['date_iso']}（{entry['age_days']} 天前）")
@@ -1036,7 +1036,7 @@ def stale_reasons(entry: dict, stale_days: int) -> list:
 def render_stale(entries: list, out_root: str, dry_run: bool, stale_days: int) -> str:
     lines = header(FACET_TITLES["stale"], out_root, dry_run)
     lines += [
-        "判定口径：`status` 不是 active/current/ok/stable/published，或 `date` 早于 "
+        "判定口径：`status` 不是 active/current/ok/stable/published/completed，或 `date` 早于 "
         f"{stale_days} 天。",
         "",
     ]

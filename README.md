@@ -18,7 +18,7 @@
 <div align="center">
 
 <!-- SCRIPT:badges START -->
-[**72** 主报告](index/by-report.md) &nbsp; · &nbsp; [**256** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**43** 研究专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
+[**72** 主报告](index/by-report.md) &nbsp; · &nbsp; [**263** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**43** 研究专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
 <!-- SCRIPT:badges END -->
 
 </div>
@@ -144,7 +144,7 @@
 | **AI4Science** | [抗生素发现](<AI4Science/AntibioticDiscovery/report.md>) · [天文图像异常发现](<AI4Science/Astronomy/report.md>) · [自主实验室](<AI4Science/AutonomousLabs/report.md>) · [化学反应条件优化](<AI4Science/Chemistry/report.md>) · [生成式材料设计](<AI4Science/MaterialsDiscovery/report.md>) · [数学与算法发现](<AI4Science/MathematicalDiscovery/report.md>) · [神经活动表征与解码](<AI4Science/Neuroscience/report.md>) · [蛋白质与肽结合体设计](<AI4Science/ProteinDesign/report.md>) · [单细胞扰动预测](<AI4Science/SingleCellPerturbation/report.md>) · [天气与气候预测](<AI4Science/WeatherClimate/report.md>) |
 | **Evaluation** | [评测科学](<Evaluation/EvaluationScience/report.md>) · [科学发现的评测方法](<Evaluation/ScientificDiscovery/report.md>) |
 | **Infra** | [KV Cache 与预填充／解码分离](<Infra/KVCachePD/report.md>) · [MoE 执行与专家通信](<Infra/MoEExecution/report.md>) · [模型量化与边缘部署](<Infra/QuantizationEdge/report.md>) · [在线推理服务与评测](<Infra/ServingEvaluation/report.md>) · [投机解码](<Infra/SpeculativeDecoding/report.md>) · [分布式训练基础设施](<Infra/TrainingInfra/report.md>) |
-| **分析分册** | [查看 16 篇专题内分析](<index/by-topic.md>) |
+| **分析分册** | [查看 17 篇专题内分析](<index/by-topic.md>) |
 <!-- SCRIPT:topics END -->
 
 ## 阅读与引用

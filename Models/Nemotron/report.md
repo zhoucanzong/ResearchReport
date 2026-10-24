@@ -1,6 +1,5 @@
 ---
 display_name: Nemotron
-display_name: Nemotron
 ---
 
 # NVIDIA Nemotron 系列研究脉络

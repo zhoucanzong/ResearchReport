@@ -441,12 +441,13 @@
 | --- | --- | --- | --- | --- |
 | [VisualGen/AudioGen/report.md](<../VisualGen/AudioGen/report.md>) | 音频/音乐生成技术研究报告 | — | — | — |
 
-## 专题内分析分册（16）
+## 专题内分析分册（17）
 
 | 所属报告 | 分册入口 |
 | --- | --- |
 | [智能体系统](<../Agents/AgentSystems/report.md>) | [长程 Agent 的执行恢复：诊断、回滚与学习修正](<../Agents/AgentSystems/topics/long-horizon-execution-recovery.md>) |
 | [投机解码](<../Infra/SpeculativeDecoding/report.md>) | [横切专题①：投机解码的算法家族谱系](<../Infra/SpeculativeDecoding/topics/algorithm-families.md>) |
+| [投机解码](<../Infra/SpeculativeDecoding/report.md>) | [扩散语言模型与投机解码：草稿、验证和生成目标](<../Infra/SpeculativeDecoding/topics/diffusion-drafters.md>) |
 | [投机解码](<../Infra/SpeculativeDecoding/report.md>) | [横切专题③：系统实现与吞吐—延迟权衡](<../Infra/SpeculativeDecoding/topics/systems-throughput-latency.md>) |
 | [投机解码](<../Infra/SpeculativeDecoding/report.md>) | [横切专题②：验证、接受率与无损性的适用条件](<../Infra/SpeculativeDecoding/topics/verification-acceptance.md>) |
 | [训练数据策展](<../LLM/TrainingData/report.md>) | [预训练数据配比：从稳健重加权到代理回归](<../LLM/TrainingData/topics/data-mixture.md>) |

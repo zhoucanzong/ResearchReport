@@ -29,7 +29,7 @@
 | :-- | :-- | --: |
 | **模型对齐与后训练** | [模型对齐与后训练：方法、目标与证据边界](<Alignment/report.md>) | 115 行 |
 | **决策模型（Decision Models）** | [Decision Models（System One / Typed Decision Model）技术专题调研](<DecisionModels/report.md>) | 875 行 |
-| **扩散语言模型** | [扩散语言模型：从随机遮盖到大规模并行生成](<DiffusionLM/report.md>) | 70 行 |
+| **扩散语言模型** | [扩散语言模型：从随机遮盖到大规模并行生成](<DiffusionLM/report.md>) | 76 行 |
 | **OCR 与文档解析** | [OCR 与文档解析：从字符识别到结构还原](<DocumentParsing/report.md>) | 102 行 |
 | **长上下文** | [长上下文（Long Context）技术研究报告](<LongContext/report.md>) | 610 行 |
 | **混合专家模型（MoE）** | [混合专家模型（Mixture of Experts, MoE）架构演进研究报告](<MoE/report.md>) | 406 行 |
@@ -76,7 +76,7 @@
 * [papers/LLaDA2.0-Scaling-to-100B.md](<DiffusionLM/papers/LLaDA2.0-Scaling-to-100B.md>) — 63 行 / 9,346 B
 * [papers/LLaDA2.1-Token-Editing.md](<DiffusionLM/papers/LLaDA2.1-Token-Editing.md>) — 65 行 / 9,366 B
 * [papers/LLaDA2.2-Levenshtein-Editing.md](<DiffusionLM/papers/LLaDA2.2-Levenshtein-Editing.md>) — 64 行 / 11,889 B
-* [sources/CANDIDATES.md](<DiffusionLM/sources/CANDIDATES.md>) — 29 行 / 3,474 B
+* [sources/CANDIDATES.md](<DiffusionLM/sources/CANDIDATES.md>) — 32 行 / 4,175 B
 * [sources/MANIFEST.md](<DiffusionLM/sources/MANIFEST.md>) — 21 行 / 5,028 B
 
 </details>

@@ -1,6 +1,5 @@
 ---
 display_name: Kimi
-display_name: Kimi
 ---
 
 # Kimi 系列模型深度调研报告

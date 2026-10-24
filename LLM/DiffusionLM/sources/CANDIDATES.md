@@ -1,6 +1,6 @@
 # 选文说明与候选池 · DiffusionLM
 
-> 核查截止：2026-10-23。目标不是列举所有 diffusion LM，而是用少数论文解释训练目标、条件化结构、生成/编辑策略和成本证据怎样彼此影响。核心论文均须有固定版本和可回看的原文定位；产品卡或榜单只作检索线索。
+> 核查截止：2026-10-25。目标不是列举所有 diffusion LM，而是用少数论文解释训练目标、条件化结构、生成/编辑策略和成本证据怎样彼此影响。核心论文均须有固定版本和可回看的原文定位；产品卡或榜单只作检索线索。扩散与 AR 投机解码的交叉精读统一汇入 [SpeculativeDecoding](../../../Infra/SpeculativeDecoding/topics/diffusion-drafters.md)。
 
 ## 纳入主线
 
@@ -23,7 +23,10 @@
 | LangFlow | 暂缓 | 连续/flow-matching 分支与离散 masked diffusion 的目标不同；适合后续扩展，不为追求模型覆盖率而并入本轮。 |
 | Nemotron-Labs-Diffusion | 交叉引用 | 联合训练 AR 与 diffusion 模式并研究 self-speculation，主要交叉点已属于 [投机解码](../../../Infra/SpeculativeDecoding/report.md)；只在新专题说明边界。 |
 | SEDD、MDLM | 背景引用 | 用于理解 score-entropy 与 masked diffusion 的前史，不扩成历史综述。 |
-| DFlash、DARTree、BASTION | 排除本专题 | 扩散网络在这些工作中是自回归 target 的草稿器；核心对象不是 standalone diffusion LM。见 [投机解码专题](../../../Infra/SpeculativeDecoding/report.md)。 |
+| DFlash、DFlare、DDTree、DARTree、PRESTO | 交叉到投机解码专题 | 扩散模型为 AR target 提出并行 draft，target 决定最终接受序列；精读与设计关系见[扩散交叉分析](../../../Infra/SpeculativeDecoding/topics/diffusion-drafters.md)。 |
+| Spiffy | 交叉到投机解码专题 | 在 standalone dLLM 上对未来去噪状态自投机；保持的是原 dLLM 分布，不是 AR 分布。 |
+| PoE-Bridge | 交叉到投机解码专题 | DLM proposal + AR 目标的有限采样质量桥接；论文承认有限预算下不严格无损。 |
+| DSpark、BASTION | 候选，未精读 | 仅留作后续筛选线索；不以题录或产品材料替代方法分析。 |
 | “Top 10 Open Challenges for Diffusion LMs” | outlook only | 观点/议程类材料可帮助列未解问题，但不能替代算法机制或受控实验原文。 |
 
-**统计口径**：当前核心池 7 篇固定版本论文 + 1 份官方 technical report 补充。该报告无 arXiv ID 或自身许可声明；两种来源形态分开登记，不合并成“8 篇论文”。没有对未逐篇搜索的文献全集作穷尽性主张；候选筛选是面向学习的定向覆盖。
+**统计口径**：当前 standalone diffusion LM 核心池 7 篇固定版本论文 + 1 份官方 technical report 补充。另有多篇 diffusion-to-AR 与 dLLM self-speculation 论文，已按专题边界移至 SpeculativeDecoding 的交叉阅读路线；两种模型角色不合并成同一条性能曲线。没有对未逐篇搜索的文献全集作穷尽性主张；候选筛选是面向学习的定向覆盖。

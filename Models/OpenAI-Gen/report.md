@@ -1,6 +1,5 @@
 ---
 display_name: OpenAI 生成模型
-display_name: OpenAI 生成模型
 ---
 
 # OpenAI 生成模型系列研究报告

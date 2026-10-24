@@ -11,7 +11,7 @@ status: needs-review
 # 投机解码（Speculative Decoding）技术专题 · 深度调研
 
 > **声明**：本报告由 AI Agent 自动调研生成，未经官方确认；引用具体参数、日期或 benchmark 前请回溯原始来源。
-> **资料核查**：截至 2026-10-23；新增 HSD、Delayed Tree Expansion、CaDDTree 与 TLAR 四篇精读，补齐严格无损序列验证、分支时机、树预算成本和轨迹检索价值四条机制线。论文与源码固定版本及证据范围见[来源清单](sources/MANIFEST.md)。
+> **资料核查**：截至 2026-10-25；新增 DFlash、DFlare、DDTree、PRESTO 与 Spiffy 等扩散交叉方向精读，梳理“扩散作为 AR 草稿”“扩散模型自投机”和“近似桥接 AR 质量”三条不同路径。论文与源码固定版本及证据范围见[来源清单](sources/MANIFEST.md)。
 > **定位**：投机解码 = **用低成本草稿换 target 的并行验证**，在**输出分布可证等价（或明示有界风险）**的前提下降低解码 wall-clock；定义与保证边界见[验证专题](topics/verification-acceptance.md)。本条目管的是“**算法 + 验证 + 系统条件**”这一整条链，不把“草稿模型训练”单独抽出去。
 
 **证据等级约定（单一主等级）**：
@@ -25,6 +25,8 @@ status: needs-review
 
 **规则**：每条只给**一个主等级**；混合来源取**最弱**等级并在括号里注明来源类型。`[摘要级]` **不许升格**为 `[精读原文]`。
 
+扩散交叉阅读入口：[扩散语言模型与投机解码：草稿、验证和生成目标](topics/diffusion-drafters.md)。它把扩散模型作为生成器、AR 草稿器、扩散模型自投机对象及近似 AR 质量桥接分开比较。
+
 ---
 
 > **补充核验（2026-10-22）**：已重新核对有限分布拒绝采样、截断的接受率反例，以及固定 vLLM 源码中的 point-mass 恢复分支；其余论文实验和 legacy 素材尚未逐项重验，不能将此记录解释为整篇验收通过。
@@ -33,7 +35,7 @@ status: needs-review
 
 本条目采用三层结构：本页 = 入口 + 结论 + 谱系 + 总表；`papers/` = 逐篇精读；`topics/` = 横切专题。
 
-### 分册（`papers/`，14 篇论文笔记覆盖 16 篇论文，另有 2 份框架代码核验）
+### 分册（`papers/`，20 篇论文笔记覆盖 22 篇论文，另有 2 份框架代码核验）
 
 | # | 分册 | 系统 | 在谱系中的位置 | 行数 |
 | --: | :-- | :-- | :-- | --: |
@@ -53,14 +55,23 @@ status: needs-review
 | 14 | [2610.07350-tlar.md](papers/2610.07350-tlar.md) | TLAR | 复用当前生成轨迹，并按验证收益调度检索 | 54 |
 | 15 | [vllm-implementation.md](papers/vllm-implementation.md) | vLLM @ 2b85d9cb | 生产框架·draft/verify 两路径 | 220 |
 | 16 | [sglang-implementation.md](papers/sglang-implementation.md) | SGLang @ 2a08e261 | 生产框架·topk=1 拒绝采样 | 219 |
+| 17 | [2602.06036-dflash.md](papers/2602.06036-dflash.md) | DFlash | 块扩散 draft + target KV 注入 | 29 |
+| 18 | [2606.02091-dflare.md](papers/2606.02091-dflare.md) | DFlare | 每层融合 target 特征，扩展 draft 容量 | 25 |
+| 19 | [2604.12989-ddtree.md](papers/2604.12989-ddtree.md) | DDTree | 用 diffusion 边际候选建 target 验证树 | 25 |
+| 20 | [2607.22634-presto.md](papers/2607.22634-presto.md) | PRESTO | 用前缀信号校准扩散草稿树排序 | 26 |
 
-### 横切专题（`topics/`，3 篇）
+### 扩散交叉精读
+
+这些工作分别改变 draft 容量、候选树搜索、路径条件、target 类型或 AR 质量校正，不能混在单一加速排名里。详见[综合分析](topics/diffusion-drafters.md)及其 [DFlash](papers/2602.06036-dflash.md)、[DFlare](papers/2606.02091-dflare.md)、[DDTree](papers/2604.12989-ddtree.md)、[PRESTO](papers/2607.22634-presto.md)、[Spiffy](papers/2509.18085-spiffy.md)、[PoE-Bridge](papers/2606.08048-poe-bridge.md) 精读。
+
+### 横切专题（`topics/`，4 篇）
 
 | # | 专题 | 回答什么 | 行数 |
 | --: | :-- | :-- | --: |
 | 1 | [algorithm-families.md](topics/algorithm-families.md) | 四大家族、五根轴、选型判据 | 164 |
 | 2 | [verification-acceptance.md](topics/verification-acceptance.md) | 单链/树/有界风险的无损性准则、top-K 到底改变什么、指标口径 | 216 |
 | 3 | [systems-throughput-latency.md](topics/systems-throughput-latency.md) | batch×序列×硬件的相图、吞吐-延迟权衡、上线清单 | 168 |
+| 4 | [diffusion-drafters.md](topics/diffusion-drafters.md) | 扩散作为 AR 草稿、dLLM 自投机、近似 AR 质量桥接 |  |
 
 ### 历史素材层（legacy 素材，未按新标准校验）
 
@@ -78,13 +89,13 @@ status: needs-review
 2. **“无损”须按保证与算法形式区分**：严格分布保持与贪心等价需要各自证明；逐 token / 序列级是验证形式，不能另当正确性等级；typical acceptance 的经验质量也不能直接升级为分布偏移有界。新近 SecureSD 还测到：对有损 verifier，jailbreak/prompt-injection 指标可能比通用 utility 更早退化；这不推翻严格无损方法的等价证明。详见 [验证专题 §6](topics/verification-acceptance.md#6-无损需要区分保证与经验)与[SecureSD 精读](papers/2610.08678-secure-sd.md)。`[精读原文]`
 3. **T>0 的动态树必须分析候选选择条件**：不能从贪心 benchmark 推出所有采样配置的收益。对按 `q` 排序/剪枝的随机候选，需核对存活条件和实际提议分布；RheoSampling 给出一种特定构造。未核版本的默认配置不在此断言。`[精读原文]`
 4. **top-K 改变的是接受率，不是无偏性**：单链拒绝采样的 α* = Σ min(p,q) = 1 − TV；top-K 截断只要验证端用同一分布、残差用完整 p，输出仍严格等于 p。把“top-K 有偏”当结论是错的。`[精读原文]`
-5. **草稿来源的四族不是代际，而是并存选项**：独立 draft（SpecInfer）、自投机（EAGLE/Medusa）、免训练（Lookahead）、块/扩散（DFlash 一类）。选族先看“有没有 draft / 能不能训 / 输出是否模板化”。`[精读原文]`
+5. **草稿来源是并存选项，扩散也有不同角色**：独立 draft、自投机、免训练、diffusion-to-AR draft、dLLM self-speculation 和近似 target bridge 适用的目标不同。用[扩散交叉专题](topics/diffusion-drafters.md)先确认 target 与正确性保证，再比较延迟和任务条件。`[精读原文]`
 6. **高 batch 的结论要加第三维：序列长度**。短序列 + 大 batch 亏（SpecInfer/Medusa/vLLM 口径一致）；长序列 + 大 batch 可能赚（MagicDec：S≥4000 时加速随 batch 上升，最高 2.51×）。`[精读原文]`
 7. **指标必须成对**：`draft_acceptance_rate`（分母=提议草稿数）与 `mean_acceptance_length`（分母=验证步数，含 bonus）会反向移动；只报一个会得出相反结论。`[精读原文（vLLM 代码）]`
 8. **工程落地已经分叉成两种语义**：vLLM 用 `draft_sample_method ∈ {greedy, probabilistic}`；SGLang 用 `speculative_use_rejection_sampling` + `assert topk == 1`。两者都能把真实 `draft_probs` 传给验证，但适用形状不同。`[精读原文（代码）]`
 9. **历史 issue #10308 的准确结论**：issue 于 2025-09-11 开立、2026-01-03 以 `state_reason=completed` 由 `github-actions[bot]` 关闭，timeline 无 linked PR/commit；但它请求的“topk=1 采样验证”能力已在 SGLang 主线以 `draft_probs` + 拒绝采样开关实现，且**硬限制 topk=1**；tree topk>1 仍走 target-only kernel。`[精读原文（代码）]`
-10. **新近工作解决不同瓶颈**：HSD 改严格无损的序列级概率恢复；Delayed Tree 改分支时机；CaDDTree 改树预算的成本目标；DARTree 改扩散候选树路径；DLite 改草稿历史表征；SpecStream 改 KV 生命周期与数据移动；TLAR 改候选来源和检索调度。它们不是一条能按单一加速比排名的算法线，见 §2.4。
-11. **证据边界**：专题现含 [16 篇学术论文与 5 个固定版本代码快照](sources/MANIFEST.md)（含参考实现）；各新分册均记录固定版本、阅读锚点与实验范围。没有独立复现实验，性能数字均为作者或官方报告值。
+10. **新近工作解决不同瓶颈**：HSD 改严格无损的序列级概率恢复；Delayed Tree 改分支时机；CaDDTree 改树预算成本；DFlash 改块扩散草稿，DFlare 扩 draft 容量，DDTree/PRESTO/DARTree 改候选树利用方式；Spiffy 加速 dLLM 自身，PoE-Bridge 逼近 AR 质量。见[扩散交叉专题](topics/diffusion-drafters.md)。
+11. **证据边界**：专题现含 18 篇学术论文（22 项论文覆盖）与 5 个固定版本代码快照（含参考实现）；各新分册均记录固定版本、阅读锚点与实验范围。没有独立复现实验，性能数字均为作者或官方报告值。
 
 ---
 
@@ -110,7 +121,7 @@ status: needs-review
 | 自投机（Medusa / EAGLE / MTP / 层跳过） | ✅ | 当前工程实现代表 |
 | 免训练（Lookahead / PLD / REST / 字典） | ✅ | 独立一族，端侧/低资源重要 |
 | 树验证系统（SpecInfer / Sequoia） | ✅ | 验证侧的基础设施 |
-| 块/扩散草稿（DFlash / DSpark / BASTION） | ✅（谱系） | 扩散模型为自回归 target 生成待验证草稿；本专题只讨论该交叉机制，独立 diffusion LM 见 [LLM/DiffusionLM](../../LLM/DiffusionLM/report.md) |
+| 扩散与投机解码交叉（DFlash / DFlare / DDTree / DARTree / PRESTO / Spiffy / PoE-Bridge） | ✅ | 区分扩散 draft + AR target、dLLM self-speculation 和有限预算质量桥接；完整比较见[扩散交叉专题](topics/diffusion-drafters.md)。独立扩散生成机制见 [LLM/DiffusionLM](../../LLM/DiffusionLM/report.md) |
 | 纯量化 / 纯剪枝 / 纯 KV eviction | ❌ | 不产生“候选-验证”结构；归 `Infra/QuantizationEdge` |
 | 纯 batch 调度 / continuous batching | ❌ | 系统优化但不含投机；归 `Infra/TrainingInfra` 或框架条目 |
 | 扩散语言模型（非投机范式） | ❌ | 独立生成范式不是本条目主体；训练目标与去噪机制见 [LLM/DiffusionLM](../../LLM/DiffusionLM/report.md) |
@@ -177,9 +188,9 @@ flowchart LR
 | 2024 H1 | 并行头/树验证 | Medusa；Lookahead | [Medusa](papers/2401.10774-medusa.md)、[Lookahead](papers/2402.02057-lookahead.md) |
 | 2024 H2 | 特征级自投机 + 动态树 | EAGLE-1 / EAGLE-2 | [EAGLE 分册](papers/2401.15077-eagle-series.md) |
 | 2025 | 训练目标 + 数据 scaling | EAGLE-3 | 同上 |
-| 2026 H1 | 块扩散/预算感知 | DFlash / DSpark / BASTION | 谱系定位（无分册） |
+| 2026 H1 | 块扩散 draft、树验证、dLLM 自投机与质量桥接 | DFlash / DFlare / DDTree / PRESTO / Spiffy / PoE-Bridge | [精读与机制综合](topics/diffusion-drafters.md) |
 | 2026 H2 | T>0 正确性、安全边界与新系统瓶颈 | RheoSampling；SecureSD；SpecStream | [RheoSampling](papers/2609.21827-rheosampling.md)、[SecureSD](papers/2610.08678-secure-sd.md)、[SpecStream](papers/2609.33184-specstream.md) |
-| 2026 新近结构线 | 扩散草稿的分支校正；Agent 场景下复用 target 上下文 | DARTree；DLite | [DARTree](papers/2608.13524-dartree.md)、[DLite](papers/2610.23787-dlite.md) |
+| 2026 H2 | 扩散草稿的分支校正；Agent 场景复用 target 上下文 | DARTree；DLite | [DARTree](papers/2608.13524-dartree.md)、[DLite](papers/2610.23787-dlite.md) |
 | 2026 | 生产框架落地 | vLLM / SGLang | [vLLM](papers/vllm-implementation.md)、[SGLang](papers/sglang-implementation.md) |
 
 ### 2.3 五根可判定的轴
@@ -400,7 +411,7 @@ flowchart LR
 ### 6.3 证据边界
 
 1. **未独立复现**：所有论文分册数字均为论文/官方自报；RheoSampling 无公开代码。
-2. **未设分册的 2026 工作**（DFlash/DSpark/BASTION）只作谱系定位，数字不入表。
+2. **尚未精读的扩散交叉工作**（例如 DSpark、BASTION）只作谱系定位；数字不进主结论表。
 3. **素材层与分册冲突时以分册为准**（例：EAGLE 的 arXiv 编号）。
 4. **代码行为绑定 commit**：vLLM `2b85d9cb`、SGLang `2a08e261`；换版本需重核。
 
@@ -499,7 +510,7 @@ flowchart LR
 
 ## 9. 阅读范围与证据状态
 
-本专题汇总 12 篇学术论文（10 个论文分册，EAGLE 分册覆盖三篇）与 5 个固定版本代码快照：vLLM/SGLang 两个框架、DARTree/DLite 两个论文实现，以及 EAGLE 官方参考切面。逐篇版本、选择与排除理由见 [来源清单](sources/MANIFEST.md) 和 [选文记录](sources/CANDIDATES.md)。本轮新增 SecureSD、DARTree、SpecStream、DLite；阅读范围和代码可得性按论文分别注明，其他 legacy 素材未随本次补核升级。没有独立性能复现，所有加速数字仍应按原论文的硬件、batch、温度和序列条件理解。
+本专题汇总 22 篇学术论文（20 个论文精读分册，EAGLE 分册覆盖三篇）与 5 个固定版本代码快照。扩散交叉方向见[综合分析](topics/diffusion-drafters.md)；其精读分册覆盖 DFlash、DFlare、DDTree、DARTree、PRESTO、Spiffy 与 PoE-Bridge。逐篇版本和代码证据范围见 [来源清单](sources/MANIFEST.md)。没有独立性能复现，所有加速数字均为论文报告值，须按原文硬件、batch、温度、模型与序列条件理解。
 
 ## 10. 引用时的边界
 

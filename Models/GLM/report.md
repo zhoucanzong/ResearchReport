@@ -1,6 +1,5 @@
 ---
 display_name: GLM
-display_name: GLM
 ---
 
 # GLM 系列模型深度调研报告

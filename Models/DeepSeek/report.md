@@ -1,6 +1,5 @@
 ---
 display_name: DeepSeek
-display_name: DeepSeek
 ---
 
 # DeepSeek 系列模型深度调研报告
