@@ -15,14 +15,14 @@
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
-| **抗生素发现** | [AI 辅助小分子抗生素发现：从活性筛选到机制与动物模型](<AntibioticDiscovery/report.md>) | 48 行 |
+| **抗生素发现** | [AI 辅助小分子抗生素发现：从活性筛选到机制与动物模型](<AntibioticDiscovery/report.md>) | 58 行 |
 | **天文图像异常发现** | [巡天星系图像中的 AI 异常发现：DECaLS 近 390 万目标案例](<Astronomy/report.md>) | 59 行 |
 | **自主实验室** | [自主实验室：从自动化执行到科学闭环](<AutonomousLabs/report.md>) | 127 行 |
 | **化学反应条件优化** | [化学反应条件优化：历史数据怎样帮助新底物少做实验](<Chemistry/report.md>) | 89 行 |
-| **生成式材料设计** | [生成式材料设计：从晶体候选到实验验证](<MaterialsDiscovery/report.md>) | 66 行 |
+| **生成式材料设计** | [生成式材料设计：从晶体候选到实验验证](<MaterialsDiscovery/report.md>) | 76 行 |
 | **数学与算法发现** | [可验证的数学与算法发现：证明、程序搜索和方程恢复](<MathematicalDiscovery/report.md>) | 78 行 |
 | **神经活动表征与解码** | [神经活动到运动行为：跨记录会话的表征与解码](<Neuroscience/report.md>) | 113 行 |
-| **蛋白质与肽结合体设计** | [蛋白质 binder 发现：从复合物生成到候选筛选](<ProteinDesign/report.md>) | 80 行 |
+| **蛋白质与肽结合体设计** | [蛋白质 binder 发现：从复合物生成到候选筛选](<ProteinDesign/report.md>) | 94 行 |
 | **单细胞扰动预测** | [单细胞扰动预测：从“配对细胞”转向“群体响应”](<SingleCellPerturbation/report.md>) | 87 行 |
 | **天气与气候预测** | [AI 天气与气候预测：从天气状态外推到强迫响应](<WeatherClimate/report.md>) | 89 行 |
 

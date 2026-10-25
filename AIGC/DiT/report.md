@@ -4,9 +4,9 @@ display_name: 扩散 Transformer（DiT）
 
 # Diffusion Transformer (DiT) 架构演进研究报告
 
-> **报告日期**: 2026年6月6日  
+> **报告日期**: 2026年10月25日
 > **研究范围**: 从 U-Net 到 DiT 的生成模型架构范式转移（2020–2025）  
-> **核心主题**: 模型结构演进、Scaling Law、计算效率优化、多模态扩展
+> **核心主题**: 去噪骨干、条件交互、训练目标与视频时空扩展
 
 ---
 
@@ -15,14 +15,14 @@ display_name: 扩散 Transformer（DiT）
 1. [概述](#1-概述)
 2. [发展时间线](#2-发展时间线)
 3. [U-Net 时代：扩散模型的卷积基础](#3-u-net-时代扩散模型的卷积基础)
-4. [DiT 诞生：Transformer 进入扩散模型](#4-dit-诞生transformer-进入扩散模型)
-5. [PixArt-α/Σ：高效训练策略](#5-pixart-ασ高效训练策略)
+4. [DiT：潜变量 patch Transformer](#4-dit潜变量-patch-transformer)
+5. [PixArt-α/Σ：训练分解与文本条件](#5-pixart-ασ训练分解与文本条件)
 6. [SD3 / MMDiT：多模态 DiT](#6-sd3--mmdit多模态-dit)
-7. [FLUX：Flow Matching + Transformer](#7-fluxflow-matching--transformer)
-8. [SANA：Linear DiT 与实时生成](#8-sanalinear-dit-与实时生成)
-9. [视频 DiT：从图像到时空生成](#9-视频-dit从图像到时空生成)
+7. [FLUX：Rectified Flow 与多模态 Transformer](#7-fluxrectified-flow-与多模态-transformer)
+8. [SANA：压缩、注意力与采样协同](#8-sana压缩注意力与采样协同)
+9. [视频生成：时空表示与生成顺序的不同选择](#9-视频生成时空表示与生成顺序的不同选择)
 10. [架构对比总结](#10-架构对比总结)
-11. [Scaling Law 分析](#11-scaling-law-分析)
+11. [扩展性：当前证据能说明什么](#11-扩展性当前证据能说明什么)
 12. [挑战与未来方向](#12-挑战与未来方向)
 13. [参考链接](#13-参考链接)
 
@@ -30,43 +30,27 @@ display_name: 扩散 Transformer（DiT）
 
 ## 1. 概述
 
-Diffusion Transformer（DiT）代表了生成模型领域自 2023 年以来最深刻的架构范式转移之一。在 2020–2022 年间，扩散模型（Diffusion Models）的骨干网络几乎被 U-Net 垄断——从 DDPM、DDIM 到 Stable Diffusion（LDM），对称的编码器-解码器结构配合卷积操作成为标准范式。然而，U-Net 的卷积局部性、感受野限制以及难以随参数量扩展的特性，逐渐成为生成质量进一步提升的瓶颈。
+DiT（Diffusion Transformer）不是一种新的生成目标，而是把扩散模型的去噪网络从卷积 U-Net 换成处理潜变量 patch 的 Transformer。理解这条路线要分开三个问题：**去噪骨干如何扩展**（DiT、PixArt、SANA），**文本与图像条件如何交互**（adaLN、cross-attention、MMDiT），以及**训练目标和采样路径如何选择**（扩散、rectified flow）。这些维度经常一起出现，但并非同一项创新。
 
-2023 年，Peebles & Xie 在 ICCV 发表的 **DiT（Diffusion Transformer）** 首次系统性地证明了：将 Transformer 作为扩散模型的去噪网络（denoising network），不仅能达到与 U-Net 相当甚至更好的性能，而且展现出清晰的 **Scaling Law**——即模型参数量和数据量的增加能够稳定地提升生成质量。这一发现与 NLP 领域 GPT 系列的成功经验相呼应，标志着生成模型正式迈入"Transformer 时代"。
+DiT 原论文在类别条件 ImageNet 的 256²/512² 设置中，系统比较网络深度、宽度、patch size 与前向 FLOPs，并观察到所测模型 FLOPs 增大时 FID 通常下降。它证明 Transformer 去噪器在该实验范围内可扩展；它没有建立跨数据集、跨目标或无限规模成立的普遍 scaling law，也没有证明 U-Net 已到上限。
 
-此后，DiT 架构迅速演化出多个重要分支：
-- **PixArt-α/Σ**（华为诺亚，2023–2024）通过解耦文本编码和分阶段训练策略，实现了高效低成本训练；
-- **SD3 / MMDiT**（Stability AI，2024）引入多模态 Transformer，让文本和图像 token 在注意力层中深度交互；
-- **FLUX**（Black Forest Labs，2024）将 Flow Matching 与 Transformer 结合，以 12B 参数成为开源最强图像生成模型；
-- **SANA**（NVIDIA，2025）用 Linear Attention 替代标准二次复杂度注意力，配合深度压缩自编码器（DC-AE），在 0.6B 参数下实现消费级 GPU 实时生成；
-- **视频 DiT**（Sora、可灵、Veo、Wan，2024–2025）将 2D 空间注意力扩展为 3D 时空注意力，开启了视频生成的新纪元。
+后续研究回答的是不同瓶颈：PixArt 把训练拆成图像先验、文本对齐和美学质量阶段，并加入文本 cross-attention；SD3/MMDiT 让文本和图像 token 在共享注意力计算中交互；FLUX 将 rectified-flow 目标与双流/单流 Transformer 组合；SANA 同时压缩视觉 latent、替换注意力并改造文本编码与采样。视频工作则不能简单理解为把图像 DiT 的 token 轴加上帧数：潜空间压缩、时空注意力的分解、因果性和长程状态管理共同决定可扩展性。
 
-本报告将系统梳理这一架构演进脉络，重点分析每代模型的结构创新、计算复杂度特征以及 Scaling 行为，为理解当前生成模型的技术格局提供参考。
-
----
+以下按“骨干—条件—目标—时空扩展”梳理代表论文，重点区分作者实验直接支持的结论与尚未公开的工业模型内部设计。建议先读第 3–4 节理解 U-Net 与 DiT 的差异，再读第 5–8 节追踪文本条件、训练目标和效率取舍，最后用第 9–11 节对照视频扩展及证据边界。
 
 ## 2. 发展时间线
 
-| 时间 | 模型/工作 | 机构 | 核心架构创新 | 参数量 | 关键意义 |
-|------|-----------|------|-------------|--------|----------|
-| 2020.06 | DDPM | UC Berkeley | U-Net + ResNet + Time Embedding | ~100M | 扩散模型奠基，U-Net 成为标准骨干 |
-| 2020.10 | DDIM | Stanford | DDPM 加速采样，U-Net 结构不变 | ~100M | 确定性采样，50步→20步 |
-| 2021.12 | LDM (Stable Diffusion) | LMU Munich | U-Net + 潜空间扩散 (VAE 压缩) | ~890M | 潜空间计算效率突破，开源生态起点 |
-| 2022.08 | SD 1.4/1.5 | Stability AI | LDM U-Net + CLIP 文本条件 | ~890M | 文本到图像开源爆发 |
-| 2022.11 | SD 2.0 | Stability AI | U-Net + OpenCLIP 文本编码器 | ~890M | 更高分辨率，更强文本理解 |
-| 2023.07 | SDXL | Stability AI | 更大 U-Net + 双文本编码器 (CLIP+OpenCLIP) | ~2.6B (Base+Refiner) | U-Net 规模扩展的极限尝试 |
-| **2023.12** | **DiT** | **UC Berkeley / Meta** | **Transformer 替代 U-Net，adaLN 条件注入** | **0.6B–7B** | **范式转移起点，Scaling Law 验证** |
-| 2023.12 | PixArt-α | 华为诺亚 | DiT + T5 解耦文本编码 + 分阶段训练 | ~0.6B | 10M 数据达到 SDXL 水平 |
-| 2024.03 | PixArt-Σ | 华为诺亚 | PixArt-α 升级，更高分辨率，更强细节 | ~0.6B | 高效训练策略的进一步完善 |
-| 2024.06 | SD3 | Stability AI | MMDiT (Multimodal DiT)，文本/图像双路注意力 | ~3B | 多模态 DiT 的工业级实现 |
-| 2024.08 | FLUX.1 [dev/schnell] | Black Forest Labs | Flow Matching + Transformer，统一文本/图像流 | ~12B | 开源最强图像生成模型 |
-| 2024.12 | Sora (推测) | OpenAI | 3D DiT (空间+时序注意力)，大规模视频训练 | ~?B (推测 10B+) | 视频生成里程碑，DiT 扩展至时空 |
-| 2025.01 | 可灵 (Kling) | 快手 | 3D DiT + 因果时序注意力，长视频生成 | ~?B | 国产视频 DiT 代表，1080p 长视频 |
-| 2025.02 | Wan (万相) | 阿里巴巴 | 3D DiT + 双向时序注意力，开源视频模型 | ~?B | 开源视频 DiT，支持多种分辨率 |
-| 2025.03 | Veo 2 | Google | 3D DiT 变体，高质量视频生成 | ~?B | Google 视频生成旗舰 |
-| **2025.06** | **SANA** | **NVIDIA** | **Linear DiT + DC-AE (32x 压缩)** | **~0.6B** | **O(n) 复杂度突破，消费级实时生成** |
+| 路线 | 代表工作 | 主要解决的问题 | 阅读时应区分 |
+|---|---|---|---|
+| 潜空间扩散 + U-Net | LDM / Stable Diffusion（2021–22） | 将高分辨率像素扩散改在压缩 latent 上进行，以卷积多尺度骨干建模 | 潜空间计算收益来自表示压缩，不能全归因于 U-Net |
+| Transformer 去噪器 | DiT（2022 预印本；ICCV 2023） | 在类别条件 ImageNet 上比较 patch、深度/宽度、FLOPs 与质量 | 原论文的 scaling 证据来自特定数据集、分辨率和训练设置 |
+| 高效训练与文本条件 | PixArt-α/Σ（2023–24） | 数据标注密度、训练阶段分解、T5 与 cross-attention | 它不是“完全无 cross-attention 的标准 DiT” |
+| 多模态注意力 | SD3 / MMDiT（2024） | 让不同模态有专属投影，同时在联合注意力中交换信息 | 架构变化针对文本图像交互，不等同于更好的所有生成能力 |
+| 流目标 + Transformer | Rectified Flow / FLUX（2024） | 以流匹配训练路径与 Transformer 共同实现高分辨率生成 | 训练目标、骨干和模型规模是不同设计轴；闭源部分以公开材料为限 |
+| 视觉 token 效率 | SANA（2024 预印本，后续版本） | 32× 压缩 AE、Linear DiT、文本编码器与采样共同降成本 | 论文报告的速度/质量比较依赖具体分辨率、硬件、采样和基线 |
+| 视频时空建模 | Latte、CogVideoX、HunyuanVideo、Wan 等 | 在压缩视频 latent 中处理空间细节、运动与长程一致性 | 不同论文采用不同骨干/注意力设计，不能概括成一种“通用 3D DiT” |
 
----
+此时间线刻画公开研究问题的转移，不按厂商产品发布顺序排列。
 
 ## 3. U-Net 时代：扩散模型的卷积基础
 
@@ -136,7 +120,7 @@ Diffusion Transformer（DiT）代表了生成模型领域自 2023 年以来最�
 
 1. **卷积的局部性**：3×3 卷积核的感受野有限，虽然通过堆叠和 Skip Connection 可以扩大，但本质上仍是局部操作。全局依赖必须依赖少量插入的 Self-Attention 层。
 
-2. **难以 Scale**：U-Net 的参数量增加主要依赖增加通道数或深度，但通道数增加会导致显存消耗呈平方增长（因为特征图是 4D 张量）。SDXL 将 U-Net 扩展到约 2.6B 参数已接近工程极限，训练稳定性和收益都出现明显瓶颈。
+2. **难以 Scale**：U-Net 的参数量增加主要依赖增加通道数或深度，但通道数增加会导致显存消耗呈平方增长（因为特征图是 4D 张量）。SDXL 展示了更大 U-Net 的工程路线；但 DiT 论文没有通过 SDXL 规模比较来证明 U-Net 存在参数或质量上限。卷积特征图的显存/带宽开销与注意力 token 代价不同，实际取舍取决于分辨率、实现和训练预算。
 
 3. **计算效率低下**：U-Net 的对称结构意味着大量计算花在编码器-解码器的重复卷积上。Skip Connection 虽然保留细节，但也增加了显存带宽压力。
 
@@ -144,27 +128,22 @@ Diffusion Transformer（DiT）代表了生成模型领域自 2023 年以来最�
 
 ---
 
-## 4. DiT 诞生：Transformer 进入扩散模型
+## 4. DiT：潜变量 patch Transformer
 
 ### 4.1 核心思想
 
-2023 年，Peebles & Xie 在论文 *"Scalable Diffusion Models with Transformers"* 中提出 DiT，核心思想极其简洁：**用标准的 Vision Transformer (ViT) 替代 U-Net 作为扩散模型的去噪网络**。
+2022 年预印本、后发表于 ICCV 2023 的 Peebles & Xie 论文 *"Scalable Diffusion Models with Transformers"* 中提出 DiT，核心思想极其简洁：**用标准的 Vision Transformer (ViT) 替代 U-Net 作为扩散模型的去噪网络**。
 
-这一替换的动机来自两个观察：
-- 在 NLP 中，Transformer 的 Scaling Law 已被充分验证（GPT-3/4）
-- 在 CV 中，ViT 在分类任务上已证明可以替代 CNN
-- 那么，Transformer 是否也能在生成任务中替代 U-Net？
-
-DiT 的答案是肯定的，并且带来了意外的惊喜：**清晰的 Scaling Law**。
+论文的问题是：将 latent patch 输入标准 Transformer 去噪器后，质量是否会随模型计算量扩展？作者在类别条件 ImageNet 上回答了这个问题；结果支持该实验范围内的扩展性，并不依赖“GPT 的 scaling law 可直接迁移”这一前提。
 
 ### 4.2 架构结构
 
 ```
-输入: 噪声潜变量 z_t (4×32×32 或 4×64×64，取决于 VAE 压缩率)
+输入: 噪声潜变量 z_t (原论文使用 4×32×32 latent)
         ↓
     [Patchify]
     将空间特征图切分为 p×p 的 patch
-    例如: 4×32×32 → 每 patch 4×4×4=64 维 → 8×8=64 个 token
+    例如: 4×32×32 latent、patch=2 → 4×2×2=16 维输入 patch，16×16=256 个 token
         ↓
     [Patch Embedding]
     Linear 投影到 D 维 (如 768, 1024, 1536)
@@ -181,8 +160,7 @@ DiT 的答案是肯定的，并且带来了意外的惊喜：**清晰的 Scaling
     │    │         (adaLN-Zero 调制)            │
     │    └──────────────────────────────────┘  │
     │                                          │
-    │  关键: 无 Cross-Attention!                │
-    │  条件仅通过 adaLN 注入                   │
+    │  类别条件通过 adaLN-Zero 注入；类别条件不是文本条件 │
     └─────────────────────────────────────────┘
         ↓
     [Unpatchify]
@@ -220,7 +198,7 @@ LN(x) = γ · (x - μ) / σ + β
 ```
 adaLN(x, c) = γ(c) · (x - μ) / σ + β(c)
 ```
-其中 γ(c), β(c) 是由条件 c（时间步 t + 文本条件）通过 MLP 动态生成的。
+其中 γ(c), β(c) 是由条件 c（原论文为类别标签与时间步）通过 MLP 动态生成的。
 
 **adaLN-Zero**（DiT 采用）：
 - 在初始化时，将 adaLN 的 γ 参数初始化为 **0**
@@ -230,25 +208,20 @@ adaLN(x, c) = γ(c) · (x - μ) / σ + β(c)
 
 条件编码：
 ```
-c = [embedding(t); embedding(text)]  # 拼接时间步和文本 embedding
+c = embedding(t) + embedding(class label)  # 原论文的类别条件设置
 γ, β, α = MLP(c)  # 投影为缩放、偏移、门控参数
-adaLN-Zero(x, c) = (1 + γ) · LN(x) + β  # 残差前乘以门控 α
+adaLN-Zero 对注意力与 MLP 子层的调制量及残差门控均零初始化
 ```
 
-### 4.5 无 Cross-Attention 的设计选择
+### 4.5 条件注入的设计选择
 
-DiT 的一个显著特点是**完全摒弃 Cross-Attention**，所有条件信息仅通过 adaLN 注入。这一设计选择的影响：
+原论文以类别标签与扩散时间步作为条件，通过 adaLN-Zero 调制 Transformer 块。它没有对文本条件做对照，因而不能据此断言 adaLN 必然不适合文本，也不能把 PixArt 或 SD3 的改进单独归结为“修复 DiT 的文本缺陷”。PixArt 的 cross-attention 是文本到图像特征交互的显式通道；SD3 则令两种模态的 token 在联合注意力中双向交换信息，选择取决于条件信息量、计算开销和训练目标。
 
-- **优点**：架构简洁，与标准 ViT 完全一致，易于实现和扩展；注意力计算仅需 Self-Attention，无需处理异构模态的交互
-- **局限**：文本条件的信息量受限于 adaLN 的维度（仅通过 γ, β, α 三个向量调制），对于复杂文本描述的精细控制可能不足
+### 4.6 计算扩展证据的范围
 
-后续工作（如 SD3/MMDiT、FLUX）通过重新引入 Cross-Attention 或等效机制解决了这一局限。
+DiT 论文的核心实验贡献之一，是在类别条件 ImageNet 上系统改变 DiT 的规模与 patch 设置，研究计算量和样本质量之间的关系：
 
-### 4.6 Scaling Law：DiT 最重要的发现
-
-DiT 论文的核心贡献不仅是架构本身，更是**验证了扩散模型中的 Scaling Law**：
-
-原稿把不同patch、训练步数和CFG设置混成一张近似FID表。本次按[DiT v2 §5、表2及附录表4](https://arxiv.org/html/2212.09748v2)拆开：
+按[DiT v2 §§4–5、表2及附录](https://arxiv.org/html/2212.09748v2)拆开：
 
 | 模型与条件 | FID-50K↓ | 比较解释 |
 |---|---:|---|
@@ -260,22 +233,22 @@ DiT 论文的核心贡献不仅是架构本身，更是**验证了扩散模型�
 
 ---
 
-## 5. PixArt-α/Σ：高效训练策略
+## 5. PixArt-α/Σ：训练分解与文本条件
 
 ### 5.1 背景与动机
 
-DiT 虽然验证了 Scaling Law，但其训练成本仍然高昂。PixArt 系列（华为诺亚方舟实验室，2023–2024）的核心问题是：**能否用更少的数据和计算资源，训练出与 SDXL 相当的 DiT 模型？**
+DiT 的证据来自类别条件 ImageNet，而文本到图像还需要学习图文对齐。PixArt 系列（华为诺亚方舟实验室，2023–2024）的核心问题是：**能否用更少的数据和计算资源，训练出与 SDXL 相当的 DiT 模型？**
 
-答案是肯定的。PixArt-α 仅用 **10M 图像-文本对**（相比 LAION-5B 的 5B 规模）就达到了 SDXL 级别的生成质量，其核心在于**训练策略的分解设计**和**文本编码的解耦**。
+PixArt-α 把问题拆成模型结构、训练阶段与数据标注三部分。论文报告其在 10M 图文对训练后，在其选用的基准与评测中达到有竞争力的结果；这不能概括为仅以 1/500 数据普遍复现 SDXL，也不表示只靠数据量解释质量。
 
 ### 5.2 架构特点
 
-PixArt-α 的骨干是标准 DiT，但做了以下关键修改：
+PixArt-α 沿用 Transformer 去噪器思路，但不是原论文类别条件 DiT 的简单标准配置：它加入文本 cross-attention，并使用 T5 文本表示。
 
 **1. 解耦文本编码 (Decoupled Text Encoding)**：
 - 使用 **T5-XXL**（4.3B 参数）作为文本编码器，而非 CLIP
-- T5 的文本理解能力显著强于 CLIP，尤其是复杂句法和长文本
-- 文本编码与图像生成网络完全解耦：T5 预训练后冻结，仅输出文本 embedding 作为 DiT 的条件输入
+- T5-XXL 提供较长文本序列表示；其与 CLIP 的能力差异不能只由编码器规模概括
+- 文本编码与图像生成网络完全解耦：T5 输出文本表示供生成网络使用；报告比较需同时考虑文本编码、cross-attention、数据和训练阶段
 
 **2. 三阶段分解训练 (Decomposed Training)**：
 
@@ -288,7 +261,7 @@ PixArt-α 的骨干是标准 DiT，但做了以下关键修改：
 这一分解的关键洞察：
 - 像素依赖（图像本身的统计规律）与文本对齐（跨模态关联）是两种不同性质的学习任务
 - 先用无标签数据学习像素依赖，可以大幅减少后续文本对齐所需的配对数据量
-- Stage 1 相当于"自监督预训练"，Stage 2 相当于"指令微调"
+- 这些阶段分别针对无条件视觉分布、图文对齐和美学质量；类比“指令微调”会掩盖其图像生成目标与文本指令微调的差异
 
 ### 5.3 PixArt-Σ 的改进
 
@@ -297,107 +270,42 @@ PixArt-Σ 在 α 的基础上主要改进：
 - **细节增强**：引入更精细的 VAE 和更长的训练时间
 - **数据质量筛选**：使用美学评分模型筛选训练数据，提升生成图像的美学质量
 
-### 5.4 效率对比
+### 5.4 比较的适用范围
 
-| 指标 | PixArt-α | SDXL | 比值 |
-|------|----------|------|------|
-| 训练数据量 | 10M | ~5B (LAION+内部) | **1/500** |
-| 训练 GPU 小时 | ~3,000 A100 小时 | ~100,000+ A100 小时 | **1/30** |
-| 参数量 | ~0.6B | ~2.6B (Base+Refiner) | 1/4 |
-| 生成质量 (FID/人类偏好) | ≈ SDXL | 基准 | 相当 |
-
-PixArt 系列证明：DiT 架构配合聪明的训练策略，可以实现**数据效率和计算效率的双重突破**。
+PixArt-α 论文给出数据、训练成本与基准结果，并报告在若干文本到图像评测上具竞争力。此处不将其与 SDXL 的训练数据量、GPU 小时和质量并排换算比例：两者内部数据、训练目标、分辨率、评测协议与算力口径并不完全一致。学习重点是其分解训练和密集 caption 的机制，以及这些组件各自的消融，而不是把单个总指标理解成数据缩减的因果结果。
 
 ---
 
 ## 6. SD3 / MMDiT：多模态 DiT
 
-### 6.1 动机：DiT 的文本条件局限
+### 6.1 从条件调制到 token 交互
 
-DiT 的 adaLN 条件注入虽然简洁，但存在明显局限：文本信息仅通过 γ, β, α 三个向量调制每个 Transformer 层，对于复杂文本（如多个对象、空间关系、属性描述）的精细控制能力不足。SD3 的核心目标是：**让文本和图像在 Transformer 中实现更深度的交互**。
+原始 DiT 的实验使用类别条件；文本到图像模型需要把较长的文本序列与图像 latent 对齐。SD3 的 MMDiT 让文本和图像保留各自的特征投影，但在每个 joint-attention 层中允许图像 token 读取文本 token、文本 token 读取图像 token。与把文本压成少量全局调制向量相比，这能提供逐 token 的交互路径；代价是更长的联合序列和更多多模态计算。
 
-### 6.2 MMDiT 架构：Multimodal DiT
+### 6.2 结构与设计取舍
 
-SD3 提出了 **MMDiT (Multimodal Diffusion Transformer)**，其核心创新是**文本和图像 token 分别处理，通过注意力机制交互**：
+SD3 使用 CLIP 与 T5 等文本编码器形成文本表示。MMDiT 为图像、文本模态分别设置 attention 投影参数，再把两侧的 Q/K/V 组合进行联合注意力计算；两个分支的输出再各自经过相应变换。它不是“先各做 self-attention、再串接两个 cross-attention”的普通双塔结构，也不是完全共享一套投影的普通 self-attention。
 
-```
-文本输入: "a red cat sitting on a blue chair"
-        ↓
-    [文本编码器]
-    CLIP-L (77 token) + T5-XXL (256 token) → 双编码器融合
-        ↓
-    文本 Token 序列: T = [t_1, t_2, ..., t_M]  (M ≈ 333)
-        ↓
-    
-图像输入: 噪声潜变量 z_t
-        ↓
-    [Patchify]
-    图像 Token 序列: X = [x_1, x_2, ..., x_N]  (N = 16×16=256 for 32×32 latent)
-        ↓
+| 设计 | 对读者意味着什么 | 代价或边界 |
+|---|---|---|
+| 模态专属投影 | 模型可保留文本和视觉特征空间差异 | 参数量和实现复杂度增加 |
+| 联合注意力 | 双向跨模态信息可在多层传播 | 序列长度增加带来注意力开销；交互能力不等于空间关系必然正确 |
+| 多文本编码器 | 兼顾图文对齐与更丰富的语言表示 | 编码器成本较高，实际能力仍取决于训练数据和任务 |
 
-    ┌─────────────────────────────────────────┐
-    │  MMDiT Transformer × L 层                  │
-    │  ─────────────────────────────────────   │
-    │                                          │
-    │  每层包含两个并行的 Self-Attention:        │
-    │                                          │
-    │  图像分支:                               │
-    │    Q_X, K_X, V_X = Proj(X)               │
-    │    X' = Self-Attn(Q_X, K_X, V_X)         │
-    │       ↓                                  │
-    │    [Cross-Modal Attention]               │
-    │    Q_X' 与 K_T, V_T 交互                 │
-    │    (图像 Query 关注文本 Key/Value)       │
-    │                                          │
-    │  文本分支:                               │
-    │    Q_T, K_T, V_T = Proj(T)               │
-    │    T' = Self-Attn(Q_T, K_T, V_T)         │
-    │       ↓                                  │
-    │    [Cross-Modal Attention]               │
-    │    Q_T' 与 K_X, V_X 交互                 │
-    │    (文本 Query 关注图像 Key/Value)       │
-    │                                          │
-    │  两个分支的输出通过门控机制融合            │
-    │                                          │
-    └─────────────────────────────────────────┘
-        ↓
-    图像分支输出 → Unpatchify → 预测噪声
-    文本分支输出 → 丢弃（仅用于训练时的交互）
-```
+该机制是架构设计，不是质量保证。论文的文本理解、排版和人类偏好结果是在其训练数据、模型规模、采样配置和评测协议下获得；不能将单项能力提升解释为“联合注意力已解决组合绑定”。后续编辑、参考图和空间控制还需独立条件路径。
 
-### 6.3 双文本编码器
+### 6.3 与 DiT 的关系
 
-SD3 使用两个文本编码器的组合：
+| 维度 | DiT 原论文 | SD3 / MMDiT |
+|---|---|---|
+| 主要实验任务 | 类别条件 ImageNet | 文本到图像 |
+| 条件表示 | 类别与时间步的 adaLN-Zero | 文本/图像 token 与模态专属投影 |
+| 模态交互 | 原论文未研究图文 token 交互 | 联合注意力中的双向交互 |
+| 可比较结论 | 去噪 Transformer 在 ImageNet 设定中的计算扩展 | 多模态表示与高分辨率 T2I 训练设计 |
 
-| 编码器 | 参数量 | 最大 token 数 | 特点 | 作用 |
-|--------|--------|--------------|------|------|
-| CLIP-L | ~400M | 77 | 视觉-语言对齐强，全局语义 | 提供高层语义 embedding |
-| T5-XXL | ~4.3B | 256 | 文本理解深，长文本支持 | 提供细粒度文本特征 |
+任务与训练规模不同，所以不能把两篇论文当成只改变条件模块的严格对照实验。
 
-融合方式：将两个编码器的输出拼接后，通过 Linear 投影到统一的文本 token 维度。
-
-### 6.4 与 DiT 的关键差异
-
-| 特性 | DiT (2023) | MMDiT (SD3, 2024) |
-|------|-----------|-------------------|
-| 模态处理 | 仅图像 token | 图像 + 文本双路 token |
-| 注意力类型 | 纯 Self-Attention | Self-Attention + Cross-Modal Attention |
-| 条件注入 | adaLN-Zero (γ,β,α) | adaLN + 注意力交互 |
-| 文本编码器 | 无（或外部 CLIP） | CLIP-L + T5-XXL 双编码器 |
-| 文本 token 参与计算 | 否 | 是，与图像 token 共同进入 Transformer |
-| 参数量 | 0.6B–7B | ~3B |
-| 文本控制能力 | 中等 | 强（尤其是复杂描述） |
-
-### 6.5 3B 参数规模的意义
-
-SD3 的 ~3B 参数规模在当时是开源扩散模型中最大的之一。这一规模的选择反映了：
-- MMDiT 的双路结构增加了参数量（需要两套 Q/K/V 投影矩阵）
-- 更大的模型可以更好地利用双文本编码器的丰富信息
-- Scaling Law 的延续：从 DiT-XL (675M) 到 SD3 (3B)，质量持续提升
-
----
-
-## 7. FLUX：Flow Matching + Transformer
+## 7. FLUX：Rectified Flow 与多模态 Transformer
 
 ### 7.1 背景：从扩散到流匹配
 
@@ -408,11 +316,11 @@ Flow Matching 的核心思想：
 - Flow Matching 学习的是"向量场"（定义从噪声到数据的直线路径上的速度场）
 - 数学上，Flow Matching 是扩散模型的推广，但训练更稳定，采样更灵活
 
-FLUX 证明：Flow Matching 与 Transformer 的结合，可以释放出比传统扩散目标更强的生成能力。
+Flow Matching 是生成轨迹/训练目标的选择；Transformer 是去噪网络骨干。FLUX 将二者组合，但现有跨模型质量比较混有数据、模型容量、编码器与采样等差异，不能把质量差异单独归因于 Flow Matching。
 
 ### 7.2 架构：统一文本/图像流的 Transformer
 
-FLUX 的架构可以看作是 MMDiT 的进一步演化，但有一个关键区别：**文本和图像 token 不在两个独立分支中处理，而是在同一个统一的 Transformer 中混合处理**。
+FLUX 的公开实现采用双流块与单流块：前者保持文本/图像各自的投影路径并进行联合注意力，后者进一步合并 token 流。细节依据公开实现与相关技术材料；不据此推断 FLUX [pro] 等未公开版本的内部结构。
 
 ```
 文本输入 → T5 编码 → 文本 Token 序列 T
@@ -457,319 +365,114 @@ FLUX 的架构可以看作是 MMDiT 的进一步演化，但有一个关键区�
 - FLUX.1 [schnell]：约 12B 参数，4 步快速采样版本
 - FLUX.1 [pro]：更大规模（未公开具体参数），API 专用
 
-**3. 文本渲染能力**：
-- FLUX 在图像中生成可读文本的能力显著强于 SD3 和之前的模型
-- 这得益于：
-  - T5 编码器的强文本理解能力
-  - 文本 token 在 Transformer 中全程参与计算（而非仅在 Cross-Attention 层）
-  - Flow Matching 的训练目标可能更适合学习细粒度结构
+**3. 能力归因边界**：公开评测显示 FLUX 在若干文字渲染与提示遵循测试中表现较强，但数据、架构、规模、训练及采样同时变化，不能从这些观察识别出 T5、双流/单流结构或 Flow Matching 各自的因果贡献。
 
-### 7.4 FLUX 的性能定位
+### 7.4 阅读结果时的比较边界
 
-| 模型 | 参数量 | 开源 | 文本渲染 | 图像质量 | 采样步数 |
-|------|--------|------|----------|----------|----------|
-| SDXL | ~2.6B | 是 | 差 | 良好 | 20–50 |
-| SD3 | ~3B | 是 | 中等 | 良好 | 20–50 |
-| DALL-E 3 | ~?B | 否 | 良好 | 优秀 | 未知 |
-| Midjourney v6 | ~?B | 否 | 优秀 | 优秀 | 未知 |
-| **FLUX.1 [dev]** | **~12B** | **是** | **优秀** | **优秀** | **20–50** |
-| **FLUX.1 [schnell]** | **~12B** | **是** | **优秀** | **优秀** | **4** |
-
-FLUX.1 [dev] 被广泛认为是 2024 年开源最强的图像生成模型，其 12B 参数规模和 Flow Matching 训练目标的结合，将 DiT 架构的潜力推向了新的高度。
+FLUX 的公开报告展示了其在文本对齐、排版和人类偏好等方面的结果；这些结果应结合论文评测协议、公开模型版本、硬件和采样步数阅读。与 SD3、SDXL、DALL·E 或 Midjourney 的跨报告排名表无法控制训练数据、版本、评测器与推理预算，因此不用于判断哪种架构或训练目标单独更优。此处保留的结论是机制层面的：多模态 token 路径与 rectified-flow 训练共同构成系统设计，现有对照并未隔离其各自贡献。
 
 ---
 
-## 8. SANA：Linear DiT 与实时生成
+## 8. SANA：压缩、注意力与采样协同
 
-### 8.1 动机：注意力的二次复杂度瓶颈
+### 8.1 它要解决的不是单一的注意力问题
 
-DiT 及其后续变体（MMDiT、FLUX）的一个共同瓶颈是 **Self-Attention 的二次复杂度 O(N²)**：
-- 对于 32×32 的 latent（patch=2），N = 256，N² = 65,536 —— 可接受
-- 对于 64×64 的 latent（patch=2），N = 1024，N² = 1,048,576 —— 显著增加
-- 对于高分辨率生成或视频（时空 token 数可达 10K+），N² 成为不可承受的负担
+SANA 面向高分辨率图像生成的计算与延迟。其论文把 **32× Deep Compression Autoencoder（DC-AE）**、Linear DiT、文本编码器、数据筛选和少步采样组合起来。因此实验中的吞吐收益不能只归因于 Linear Attention；更高 latent 压缩会减少 token 数，采样器减少去噪步数，文本编码器与数据策略也会影响质量。
 
-SANA（NVIDIA，2025）的核心目标是：**在保持 DiT 生成质量的前提下，将注意力的复杂度从 O(N²) 降低到 O(N)**。
+### 8.2 线性注意力与表示压缩的作用
 
-### 8.2 架构创新：Linear DiT
+标准注意力构造 token 两两交互，主要注意力项随序列长度 $N$ 二次增长。SANA 使用 ReLU linear attention 共享键值聚合项，并以 Mix-FFN 的深度卷积补足局部信息；其分析在固定特征维度下将注意力复杂度对 $N$ 的增长降至线性。论文也报告线性注意力收敛更慢，说明效率优势伴有优化代价。其 NoPE 设计利用 Mix-FFN 注入局部位置信息。DC-AE 则通过更高压缩率降低 latent token 数，但压缩率增大也会提高重建损失风险，需要在 tokenizer/decoder 质量与 transformer 开销之间权衡。
 
-SANA 的架构包含两个核心创新：
+这组机制也包括 Mix-FFN 与 NoPE，不能简化为“Linear Attention + AE”两项。改动互补而非互相替代：压缩 AE 减少要处理的 token；Linear Attention 降低每 token 数变大时的注意力成本；Mix-FFN 用深度卷积聚合邻近 token 的局部信息。论文报告 SANA-0.6B 在其文本到图像基准、硬件和采样配置下相对 FLUX-12B 具有竞争力且推理更快。它不是跨任务“0.6B 等于 12B”的结论，也没有证明 Linear Attention 是长视频生成的必要条件。
 
-**1. Linear Attention (线性注意力)**：
+### 8.3 适用边界
 
-标准 Self-Attention 的计算：
-```
-Attention(Q, K, V) = softmax(QK^T / √d) · V
-复杂度: O(N² · d)  (因为 QK^T 是 N×N 矩阵)
-```
+| 阅读角度 | 可支持的结论 | 不应外推的结论 |
+|---|---|---|
+| 压缩表示 | 高压缩 AE 可显著减少图像 latent token | 压缩不会损害细节或可控性 |
+| 注意力 | 线性注意力可作为长序列效率方案 | 它在所有质量、分辨率和任务上都优于标准注意力 |
+| 端侧推理 | 论文展示特定 SANA 配置可在有限显存设备生成 | 任意 0.6B DiT 都能在消费级设备实时运行 |
+| 模型比较 | 论文报告其指定基准上的竞争力、吞吐和质量 | 跨论文分数/时间直接可比或模型规模单独决定胜负 |
 
-Linear Attention 的核心思想：利用矩阵乘法的结合律，改变计算顺序：
-```
-LinearAttn(Q, K, V) = φ(Q) · (φ(K)^T · V)
-                     = φ(Q) · (Σ_i φ(k_i)^T · v_i)
-复杂度: O(N · d²)  (先计算 K^T·V 的 d×d 矩阵，再与 Q 相乘)
-```
 
-其中 φ(·) 是核函数（如 ReLU、elu+1），将 Q/K 映射到特征空间。
 
-关键性质：
-- 当 d << N 时（典型 d=64, N=1024），O(N·d²) << O(N²·d)
-- 复杂度与序列长度 N 成**线性关系**，而非二次关系
-- 全局感受野仍然保留（所有 token 仍然互相可见）
+## 9. 视频生成：时空表示与生成顺序的不同选择
 
-**2. DC-AE (Deep Compression Autoencoder)**：
+图像 DiT 的结论不能直接移植到视频。视频先经时空 VAE 压缩，再由模型处理具有空间、时间和动作关系的 latent。帧数只是成本的一部分：空间/时间压缩率、patch 形状、注意力连接方式、是否双向生成、是否要流式输出都会影响质量和延迟。把原始像素帧数直接乘上图像 token 数会严重高估实际序列长度，也无法比较不同论文。
 
-标准 VAE（如 SD 使用的）将 512×512 图像压缩到 64×64 latent，压缩率 8×。
-SANA 引入 **DC-AE**，将压缩率提升到 **32×**：
-- 512×512 图像 → 16×16 latent（而非 64×64）
-- Token 数量从 1024 减少到 64
-- 即使使用标准注意力，N² 也从 1M 降到 4K
+### 9.1 代表路线与取舍
 
-DC-AE 的关键挑战和解决方案：
-- 更高压缩率通常导致信息损失和重建质量下降
-- SANA 通过更深的编码器-解码器结构和特殊的训练目标（结合感知损失和对抗损失）来缓解
+| 工作 | 表示/机制 | 它解决的问题 | 证据边界 |
+|---|---|---|---|
+| [Latte](https://arxiv.org/html/2401.03048) §3–4 | 在视频 latent 中构造时空 token，并比较空间/时间维度分解的 Transformer 变体 | 将图像 DiT 扩展到视频，同时控制 token 交互成本 | 论文在 FaceForensics、SkyTimelapse、UCF101、Taichi-HD 等数据集研究，不能直接代表开放域商业 T2V |
+| [CogVideoX](https://arxiv.org/html/2408.06072) §§2–4 | 3D causal VAE 压缩时空信息；DiT 中结合 expert AdaLN 与 3D RoPE | 让长时间与空间位置在压缩 latent 中建模，改善文本视频生成 | 结论针对公开模型/版本及论文评测设置；不是所有视频 DiT 的模板 |
+| [HunyuanVideo](https://arxiv.org/html/2412.03603) §§4.1–4.4 | 公开的 13B 视频 DiT 采用双流到单流的多模态 Transformer，联合文本/视频 token，并使用 3D RoPE | 统一多模态交互，并在视频生成任务中扩展模型容量 | 作者报告的基准和偏好评测属于其特定数据、模型和评测协议 |
+| [Wan](https://arxiv.org/html/2503.20314) §§4–5 | 时空 VAE、视频 DiT、数据/训练与推理优化共同组成开放视频模型 | 关注高压缩表示、较大规模训练及图像转视频、编辑等任务 | 技术报告覆盖多组件，质量和效率不能单独归因于 Transformer block |
+| [CausVid](https://arxiv.org/html/2412.07772) §§4–5 | 将双向视频扩散模型蒸馏为因果生成器，并使用 KV cache | 将一次性整段生成改成低延迟、可流式生成 | 论文在其模型上做双向教师→因果学生蒸馏；存在逐步误差积累与教师能力继承边界 |
 
-### 8.3 SANA 的架构概览
+这些路线体现两个相互关联的问题。第一，**全局一致性与流式响应之间有冲突**：双向 attention 可让整段视频共同去噪，但生成下一段前要看未来帧；因果模型能边生成边响应输入，却要控制历史条件和误差累积。第二，**压缩和运动细节之间有冲突**：时空 VAE 减少 token，但过度压缩会损失纹理、细动作和时间边界信息。将生成结果称为“物理模拟”也需要谨慎：论文中的连贯运动或特定物理场景样例并不等于显式物理状态建模或稳定规律保证。
 
-```
-输入图像: 512×512×3
-        ↓
-    [DC-AE 编码器]
-    压缩率 32× → 16×16×(C=32) latent
-        ↓
-    [Patchify]
-    patch=1 (已足够小) → 256 个 token (16×16)
-        ↓
-    ┌─────────────────────────────────────────┐
-    │  Linear DiT Transformer × L 层           │
-    │  ─────────────────────────────────────   │
-    │  每层:                                   │
-    │    ┌─→ LayerNorm ─→ Linear Self-Attention │
-    │    │         (adaLN 调制)                 │
-    │    └──────────────────────────────────┘  │
-    │    ┌─→ LayerNorm ─→ MLP                  │
-    │    │         (adaLN 调制)                 │
-    │    └──────────────────────────────────┘  │
-    │                                          │
-    │  复杂度: O(N·d²) ≈ O(256×64²) = 1M      │
-    │  对比标准 DiT: O(N²·d) = O(256²×64) = 4M │
-    │  (当 N 更大时，差距更显著)                │
-    └─────────────────────────────────────────┘
-        ↓
-    [Unpatchify] → DC-AE 解码器 → 输出图像
-```
+### 9.2 闭源系统的证据范围
 
-### 8.4 性能：0.6B 匹敌 12B
+Sora 技术报告用时空 patches 描述视频表示和训练方式，但未公开完整网络与训练配方；其展示的模拟能力不等于物理一致性保证。Veo、可灵等系统若没有公开一手技术材料，内部骨干、注意力形式和参数规模仍未知，不能由生成样例或产品规格反推。
 
-SANA 最惊人的结果是：**0.6B 参数的 Linear DiT，在图像质量上匹敌 12B 参数的 FLUX**。
+### 9.3 读论文时关注的评测
 
-| 模型 | 参数量 | 注意力复杂度 | 单张 512×512 生成时间 (RTX 4090) | 质量 (FID/CLIP) |
-|------|--------|-------------|----------------------------------|----------------|
-| FLUX.1 [dev] | ~12B | O(N²) | ~15–30 秒 | 优秀 (基准) |
-| SD3 | ~3B | O(N²) | ~5–10 秒 | 良好 |
-| PixArt-Σ | ~0.6B | O(N²) | ~3–5 秒 | 良好 |
-| **SANA** | **~0.6B** | **O(N)** | **~0.5–1 秒** | **≈ FLUX** |
+视频论文通常分别评估文本对齐、单帧视觉质量、运动幅度/连贯性和人类偏好；单一聚合分数可能掩盖镜头运动、主体身份、短时细节或长时间一致性退化。阅读结果时需同时记录数据集、视频长度/帧率、分辨率、采样步数、评测器和比较基线。当前公开基准仍难充分测量长程因果、物体持续性和物理规律，因此展示样例不应替代系统评测。
 
-这一结果的启示：
-1. **架构效率 > 纯参数量**：通过 Linear Attention 和深度压缩，小模型可以实现大模型的效果
-2. **实时生成成为可能**：0.5–1 秒的生成时间使消费级 GPU 实时交互成为现实
-3. **O(N) 复杂度是扩展的关键**：对于视频（N 可达 10K+），Linear Attention 几乎是必需的
 
----
-
-## 9. 视频 DiT：从图像到时空生成
-
-### 9.1 核心挑战：从 2D 到 3D
-
-将 DiT 从图像生成扩展到视频生成，核心挑战是**时序维度的引入**：
-- 图像：2D 空间 (H×W)
-- 视频：3D 时空 (T×H×W)，其中 T 是帧数
-- 如果直接展平为 1D token 序列，N = T × (H/p) × (W/p)
-- 对于 1 秒视频（24 帧），512×512，patch=2：N = 24 × 256 × 256 = 1,572,864 个 token
-- 标准注意力的 N² 复杂度完全不可行
-
-### 9.2 3D DiT 架构：空间注意力 + 时序注意力
-
-视频 DiT 的通用架构采用**分解的 3D 注意力**：
-
-```
-输入: 噪声视频潜变量 z_t ∈ R^{C×T×H×W}
-        ↓
-    [3D Patchify]
-    将时空体切分为 3D patch (t_p × p × p)
-    例如: 每帧 4×32×32 latent, 8 帧
-    → 8 × 16 × 16 = 2048 个 3D token
-        ↓
-    ┌─────────────────────────────────────────┐
-    │  3D DiT Transformer × L 层               │
-    │  ─────────────────────────────────────   │
-    │                                          │
-    │  每层包含两种注意力（顺序或交替）:         │
-    │                                          │
-    │  1. 空间注意力 (Spatial Self-Attention)    │
-    │     - 同一帧内的 patch 互相注意力         │
-    │     - 复杂度: O((H·W/p²)² · d) 每帧      │
-    │     - 捕获单帧内的空间关系                │
-    │                                          │
-    │  2. 时序注意力 (Temporal Self-Attention) │
-    │     - 同一空间位置的 patch 跨帧注意力     │
-    │     - 复杂度: O(T² · d) 每位置           │
-    │     - 捕获帧间的时间动态                  │
-    │                                          │
-    │  两种注意力可以:                          │
-    │    - 顺序执行 (先空间后时序，或反之)      │
-    │    - 交替执行 (层间交替)                  │
-    │    - 联合执行 (3D 全注意力，但极昂贵)     │
-    │                                          │
-    └─────────────────────────────────────────┘
-        ↓
-    [3D Unpatchify] → 预测噪声/速度场
-```
-
-### 9.3 时序注意力的变体
-
-| 类型 | 机制 | 复杂度 | 特点 | 代表模型 |
-|------|------|--------|------|----------|
-| 双向时序注意力 | 所有帧互相可见 | O(T²·d) | 全局时序依赖，适合短视频 | Wan, 部分 Sora 推测 |
-| 因果时序注意力 | 仅当前帧及之前帧可见 | O(T²·d) | 适合自回归生成，长视频 | 可灵 (Kling) |
-| 滑动窗口时序注意力 | 仅邻近 K 帧可见 | O(T·K·d) | 局部时序依赖，可扩展 | 部分高效视频模型 |
-| 线性时序注意力 | 核技巧降复杂度 | O(T·d²) | 可扩展至长视频 | 推测未来方向 |
-
-### 9.4 代表模型分析
-
-**Sora (OpenAI, 2024.12)**：
-- 推测架构：3D DiT + 双向时序注意力
-- 推测规模：10B+ 参数
-- 关键能力：
-  - 生成 1 分钟 1080p 视频
-  - 物理世界模拟（流体、刚体碰撞）
-  - 长时序一致性（角色、场景保持）
-- 推测技术：
-  - 使用视频-文本对的大规模预训练
-  - 可能采用级联生成（低分辨率→高分辨率）
-  - 可能结合深度估计或 3D 先验
-
-**可灵 (Kling, 快手, 2025.01)**：
-- 架构：3D DiT + 因果时序注意力
-- 特点：
-  - 支持 2 分钟 1080p 视频生成
-  - 因果注意力支持自回归扩展（先生成前 N 帧，再续接）
-  - 强大的运动幅度和物理合理性
-- 训练策略：
-  - 大规模视频-文本对预训练
-  - 高质量视频微调
-
-**Wan (万相, 阿里巴巴, 2025.02)**：
-- 架构：3D DiT + 双向时序注意力
-- 特点：
-  - 开源视频生成模型
-  - 支持多种分辨率（480p, 720p, 1080p）
-  - 支持文本到视频、图像到视频
-- 意义：开源社区的视频 DiT 基准
-
-**Veo 2 (Google, 2025.03)**：
-- 架构：3D DiT 变体（具体细节未公开）
-- 特点：
-  - 高质量视频生成
-  - 与 Google 生态深度整合
-
-### 9.5 视频 DiT 的计算挑战
-
-| 场景 | 帧数 T | 空间 token/帧 | 总 token N | 标准注意力 N² | 可行性 |
-|------|--------|--------------|-----------|--------------|--------|
-| 图像 | 1 | 256 (32×32) | 256 | 65K | ✓ |
-| 短视频 (2s @ 8fps) | 16 | 256 | 4,096 | 16.7M | 勉强 |
-| 中视频 (5s @ 24fps) | 120 | 256 | 30,720 | 943M | ✗ |
-| 长视频 (10s @ 24fps) | 240 | 256 | 61,440 | 3.77B | ✗ |
-| 长视频 (60s @ 24fps) | 1,440 | 256 | 368,640 | 136B | ✗ |
-
-上表说明：对于超过几秒的视频，标准二次注意力的计算量完全不可行。解决方案包括：
-1. **分解注意力**（空间+时序分离）：将 O(N²) 降为 O((HW)² + T²)
-2. **Linear Attention**：将时序注意力降为 O(T·d²)
-3. **稀疏注意力**：仅计算关键帧或采样帧的注意力
-4. **级联生成**：先生成低帧率/低分辨率，再插帧/超分
-5. **潜空间压缩**：使用 3D VAE 进一步压缩时空维度
-
----
 
 ## 10. 架构对比总结
 
-### 10.1 U-Net vs DiT：核心差异
+### 10.1 U-Net 与 DiT 的取舍
 
-| 维度 | U-Net (DDPM/LDM/SD) | DiT (及其变体) |
-|------|----------------------|----------------|
-| **骨干网络** | 卷积编码器-解码器 | Transformer Encoder |
-| **基本操作** | 3×3 卷积, ResNet | Self-Attention, MLP |
-| **感受野** | 局部（卷积核大小）+ 少量全局注意力 | 全局（每层的 Self-Attention） |
-| **条件注入** | AdaGN / Cross-Attention | adaLN-Zero / Cross-Modal Attention |
-| **对称结构** | 是（Skip Connections） | 否（纯编码器结构） |
-| **参数量扩展** | 困难（通道数↑→显存平方↑） | 容易（与 NLP Transformer 相同） |
-| **Scaling Law** | 不明显（SDXL 2.6B 接近极限） | 清晰（0.6B→12B+ 持续提升） |
-| **训练稳定性** | 较好（归纳偏置强） | 需要技巧（adaLN-Zero, 初始化） |
-| **归纳偏置** | 强（平移等变性来自卷积） | 弱（需从数据学习空间关系） |
-| **数据效率** | 较高（卷积的局部先验） | 较低（需更多数据学习空间关系） |
-| **文本控制** | Cross-Attention（特定层） | adaLN（全层）或 Cross-Modal（全层） |
-| **典型参数量** | 100M–2.6B | 0.6B–12B+ |
+| 维度 | 卷积 U-Net | Transformer 去噪器 |
+|---|---|---|
+| 空间归纳偏置 | 多尺度卷积提供局部与平移等变先验 | 全局 token 交互更直接，但需学习空间关系 |
+| 条件路径 | 时间调制、跨注意力、跳连等可组合 | adaLN、cross-attention、joint attention 均可用，取决于具体模型 |
+| 高分辨率成本 | 特征图卷积与 skip connection 占用较多激活/带宽 | 注意力对 token 数敏感，patch 与 latent 压缩决定成本 |
+| 证据 | 长期用于扩散并可形成高质量系统 | DiT 在类别条件 ImageNet 上给出受控扩展实验；T2I 发展需另看 PixArt、SD3 等 |
 
-### 10.2 DiT 变体对比
+不存在基于这些论文即可宣布的单一胜者或 U-Net 的统一规模上限。
 
-| 模型 | 年份 | 核心变体 | 注意力类型 | 条件注入 | 文本编码器 | 参数量 | 关键创新 |
-|------|------|----------|-----------|----------|-----------|--------|----------|
-| DiT | 2023 | 标准 DiT | Self-Attention | adaLN-Zero | 无/外部 | 0.6B–7B | Scaling Law 验证 |
-| PixArt-α/Σ | 2023–24 | 标准 DiT | Self-Attention | adaLN | T5-XXL | ~0.6B | 分阶段训练，数据效率 |
-| SD3 / MMDiT | 2024 | 多模态 DiT | Self + Cross-Modal | adaLN + 注意力 | CLIP+T5 | ~3B | 文本-图像深度交互 |
-| FLUX | 2024 | 统一流 Transformer | 统一 Self-Attention | adaLN | T5-XXL | ~12B | Flow Matching + 统一处理 |
-| SANA | 2025 | Linear DiT | Linear Self-Attention | adaLN | T5-XXL | ~0.6B | O(N) 复杂度，实时生成 |
-| Sora (推测) | 2024 | 3D DiT | 空间+时序注意力 | adaLN | 推测 T5/CLIP | 10B+ | 视频生成，物理模拟 |
+### 10.2 代表模型的机制对照
 
-### 10.3 计算复杂度对比
+| 工作 | 去噪骨干/条件路径 | 训练或效率侧重点 | 关键边界 |
+|---|---|---|---|
+| DiT | latent patch Transformer；类别/时间步 adaLN-Zero | 在 ImageNet 研究 FLOPs、深度/宽度和 patch | 类别条件结果不能直接解释开放文本生成 |
+| PixArt-α | T2I Transformer + 文本 cross-attention + T5 | 训练分解、密集 caption 与高效数据/训练流程 | 其对照涉及训练配方与数据，非单变量架构比较 |
+| SD3 / MMDiT | 模态专属投影 + 文本/图像 joint attention | 多模态交互和高分辨率 rectified-flow 训练 | joint attention 不自动保证准确计数/空间绑定 |
+| FLUX | 双流/单流 Transformer；rectified-flow 目标 | 模态交互与采样/训练路径 | 不能从模型总体表现拆出目标函数的单独贡献 |
+| SANA | Linear DiT + 高压缩 AE | 减少 token 与注意力成本，并调整编码/采样 | 多项改动共同贡献效率 |
+| Latte / CogVideoX / HunyuanVideo / Wan | 视频 latent 上的不同空间、时间或多模态 token 交互 | 建模时序、压缩与视频任务扩展 | “视频 DiT”不是单一架构，按论文与版本比较 |
 
-| 操作 | 标准 U-Net | 标准 DiT | MMDiT | Linear DiT (SANA) |
-|------|-----------|----------|-------|-------------------|
-| 卷积/投影 | O(C²·H·W) | O(D·C·p²·N) | O(D·C·p²·N + D·M) | O(D·C·p²·N) |
-| 注意力 | O((H·W)²·d) (仅低层) | O(N²·D) | O((N+M)²·D) | O(N·D²) |
-| 总复杂度 (512×512, 32×32 latent) | ~O(10⁸) | ~O(10⁸) | ~O(10⁸–10⁹) | ~O(10⁷) |
-| 总复杂度 (视频, 120帧) | 不适用 | O(10¹²) | O(10¹²) | O(10⁹) |
-| 显存占用 | 中等 | 高 (N² 注意力矩阵) | 更高 (双路) | 低 (线性核) |
 
-注：N = token 数量, D = 模型维度, d = 头维度, M = 文本 token 数, C = 通道数, H,W = 空间尺寸, p = patch 大小
 
----
+### 10.3 计算量的主要来源
 
-## 11. Scaling Law 分析
+- U-Net 的卷积开销随特征图空间尺寸、通道数和层数增长；多尺度下采样能控制部分高分辨率计算，但 skip feature 需要额外存储/带宽。
+- 标准 Transformer 的注意力项约随 token 数 (N) 的平方增长，MLP 与投影则随 (N) 线性增长并依赖隐藏维度。减小 patch 会增加 token 数，即使参数量变化不大，也会显著改变注意力成本。
+- MMDiT 把文本 token 与图像 token 纳入联合注意力，计算取决于两种 token 总长度及模态投影；多模态表示能力需与这笔开销一起衡量。
+- Linear DiT 改变注意力计算形式；SANA 同时降低视觉 token 数，所以不能把其效率简单归因于线性注意力一项。
+- 视频模型需将时空 VAE 压缩率、空间/时间 token 数、注意力图样及去噪步数一起纳入；不能用原始像素帧数直接宣称统一的 FLOPs 数值。
 
-### 11.1 扩散模型中的 Scaling Law
+这些复杂度关系适合解释设计动机，不代替针对具体实现、分辨率、精度和硬件的实测。
 
-DiT 论文首次系统验证了扩散模型中的 Scaling Law，其形式与 NLP 中的类似：
+## 11. 扩展性：当前证据能说明什么
 
-```
-Loss ∝ C^(-α)  或  FID ∝ C^(-β)
-```
+### 11.1 DiT 的受控结果
 
-其中 C 是计算量（FLOPs），α, β 是幂律指数。
+DiT 原论文在类别条件 ImageNet 256²/512² 比较不同深度、宽度、patch size 和训练计算。其观察是：在报告的模型集合与训练设定内，更高前向 FLOPs 通常伴随更低 FID；减少 patch size 会增加 token 和计算，即使参数量相近也可改变质量。作者没有建立跨数据规模、文本条件、视频任务和无限计算范围的通用幂律，也没有从 DiT 与 PixArt/SD3/FLUX 的跨论文数字推导一条可比的“规模轨迹”。
 
-**关键观察**：
-1. **模型大小 Scaling**：固定训练步数，增加模型参数量 → Loss 平滑下降
-2. **数据 Scaling**：固定模型大小，增加训练数据 → Loss 平滑下降
-3. **计算 Scaling**：同时增加模型大小和数据量（遵循 Chinchilla 最优比例）→ 最优效率
+FID 还会受采样器、引导强度、训练步数、VAE 和评测实现影响。DiT 论文表格中的训练预算与 CFG 设置不同，因而直接并列单个 FID 会混合架构、训练时长和推理条件；引用时必须保留条件。
 
-### 11.2 从 DiT 到 FLUX 的 Scaling 轨迹
+### 11.2 结构扩展与任务扩展
 
-| 模型 | 参数量 | 估计训练数据量 | 估计计算量 (FLOPs) | 质量指标 |
-|------|--------|---------------|-------------------|----------|
-| DiT-S | 33M | ImageNet (1.3M) | ~10¹⁸ | FID ~20 |
-| DiT-XL | 675M | ImageNet (1.3M) | ~10²⁰ | FID ~8 |
-| PixArt-α | 0.6B | 10M | ~10²¹ | ≈ SDXL |
-| SD3 | 3B | ~?M (推测 100M+) | ~10²² | 优于 SDXL |
-| FLUX | 12B | ~?M (推测 1B+) | ~10²³ | 开源最优 |
+对 T2I，增加参数只是因素之一；更丰富的 caption、文本编码器、模态交互、图像 latent 质量和偏好优化都可能改变结果。对视频，数据筛选、时空 VAE、视频长度、运动覆盖、时空注意力与推理缓存同样重要。跨论文模型规模表通常无法控制这些条件，因此不应将未知训练数据量、估算 FLOPs 或未经统一评测的质量排名拼成 scaling law。
 
-### 11.3 Scaling 的边界与挑战
+更有解释价值的研究问题是：固定数据与训练预算时，哪项改变提高目标能力；在质量相当时，哪项改变降低采样成本；压缩或因果化引入的失败是否可检测并纠正。当前报告以论文各自的 ablation 和测试条件回答这些问题，不做跨系统重算。
 
-1. **数据瓶颈**：高质量图像-文本对的数量可能不如文本数据丰富，数据 Scaling 可能先于模型 Scaling 触及天花板
-2. **计算成本**：12B 模型的训练成本已达数百万美元，100B 规模可能需要数十亿美元
-3. **推理成本**：大模型的推理延迟是部署瓶颈，SANA 的 Linear DiT 路线可能是解决方案
-4. **质量饱和**：FID 等指标可能饱和，人类偏好的提升更难量化
 
----
 
 ## 12. 挑战与未来方向
 
@@ -866,26 +569,36 @@ Loss ∝ C^(-α)  或  FID ∝ C^(-β)
 13. **Latte**: Ma et al. "Latte: Latent Diffusion Transformer for Video Generation." arXiv 2024.  
     https://arxiv.org/abs/2401.03048
 
+14. **CogVideoX**: Yang et al. "CogVideoX: Text-to-Video Diffusion Models with An Expert Transformer." arXiv 2024.
+    https://arxiv.org/abs/2408.06072
+
+15. **HunyuanVideo**: Kong et al. "HunyuanVideo: A Systematic Framework For Large Video Generation Model." arXiv 2024.
+    https://arxiv.org/abs/2412.03603
+
+16. **Wan**: Wan Team. "Wan: Open and Advanced Large-Scale Video Generative Models." arXiv 2025.
+    https://arxiv.org/abs/2503.20314
+
+17. **CausVid**: Yin et al. "From Slow Bidirectional to Fast Autoregressive Video Diffusion Models." arXiv 2024.
+    https://arxiv.org/abs/2412.07772
+
 ### 技术博客与资源
 
-14. **DiT GitHub**: https://github.com/facebookresearch/DiT
-15. **PixArt GitHub**: https://github.com/PixArt-alpha/PixArt-alpha
-16. **FLUX GitHub**: https://github.com/black-forest-labs/flux
-17. **SANA GitHub**: https://github.com/NVlabs/Sana
-18. **Hugging Face Diffusers**: https://github.com/huggingface/diffusers
+18. **DiT GitHub**: https://github.com/facebookresearch/DiT
+19. **PixArt GitHub**: https://github.com/PixArt-alpha/PixArt-alpha
+20. **FLUX GitHub**: https://github.com/black-forest-labs/flux
+21. **SANA GitHub**: https://github.com/NVlabs/Sana
+22. **Hugging Face Diffusers**: https://github.com/huggingface/diffusers
 
 ### 综述与教程
 
-19. **Diffusion Models Survey**: Yang et al. "Diffusion Models: A Comprehensive Survey of Methods and Applications." ACM Computing Surveys 2023.  
+23. **Diffusion Models Survey**: Yang et al. "Diffusion Models: A Comprehensive Survey of Methods and Applications." ACM Computing Surveys 2023.
     https://arxiv.org/abs/2209.00796
 
-20. **Flow Matching Survey**: Tong et al. "Flow Matching Tutorial." 2024.  
+24. **Flow Matching Survey**: Tong et al. "Flow Matching Tutorial." 2024.
     https://flow-matching.github.io/
 
 ---
 
-> **报告结语**: 从 2020 年 U-Net 垄断扩散模型，到 2023 年 DiT 开启 Transformer 时代，再到 2025 年 Linear DiT 实现实时生成，DiT 架构的演进展现了生成模型领域"架构创新 + Scaling Law + 效率优化"的三重驱动。未来，随着视频生成、多模态统一和世界模型的需求增长，DiT 及其变体将继续扮演核心角色，而 Linear Attention 等效率突破将是扩展至更长序列、更高分辨率的关键。
+> **报告结语**：这条路线不是 U-Net 被 Transformer 线性替代的单向故事。DiT 提供了特定图像任务中的计算扩展证据；PixArt、SD3、FLUX 和 SANA 分别改变数据/条件交互、模态注意力、训练目标和 token 效率；视频论文又将时空压缩、长程一致性与因果生成带入问题。比较工作时先分清目标、表示、条件机制和评测范围，才能判断一项改动解决了什么问题、付出了什么代价。
 
 ---
-
-*报告完成日期: 2026年6月6日*

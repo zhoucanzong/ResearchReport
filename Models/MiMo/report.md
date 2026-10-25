@@ -7,7 +7,7 @@ display_name: MiMo
 > 文档定位：本报告聚焦小米（Xiaomi）大语言模型核心团队（LLM-Core Team）自 2025 年 4 月以来公开发布的 MiMo 系列模型，覆盖基座、推理、视觉-语言、语音、具身、MoE 旗舰等多条产品线，并梳理其技术演进、关键创新与商业化战略。撰写时间：2026 年 6 月（初版）；**最近更新：2026-10-23** —— 增量增补 **§九 MiMo-V2.6 系列**（独立章节）与 **§十 MiMo-V3 / HySparse2「架构公开、模型未发布」**，并同步 §1.1 时间线、§十二 结论与参考文献；技术报告另见 [精读分册](<papers/2610.11959-mimo-v2-6.md>)。**覆盖到的最新已发布模型：2026-09-22 的 MiMo-V2.6 系列**（V3 只有架构公开，见 §十）。
 > 信息可信度：标注「确认」表示来自 arXiv 技术报告 / 官方 GitHub / Hugging Face 模型卡 / 小米官方发布；标注「推测」表示根据公开二手信息整合，可能存在误差。
 >
-> **证据等级映射（2026-10 起，仅加说明、不改旧行）**：旧文「确认」⇋ 新等级「**精读原文**」（一手页面 / 论文 / 模型卡 / 官方发布记录原文）；旧文「推测」⇋「**二手**」或「**未确证**」。注意旧「确认」中有个别条目实际来源是媒体转述（如财新），按新口径应记「二手」——本轮只做映射说明，**不追溯改写既有正文**（仅文首覆盖说明按本轮更新；原 §九/§十 因新增两章顺延为 §十一/§十二，正文内容未改）。本轮新增内容一律使用**单一主等级**：精读原文 / 摘要级 / 二手 / 受限核验（同一处混合多源时取最弱）；厂商自报数字一律写明「**厂商自报**」，拿不到实证的写「**未确证**」。
+> **证据标注**：正文区分一手论文、官方页面、媒体转述与尚未确证的说法；官方自报数字标明其来源。混合来源的结论按较弱的证据类型理解。
 
 ---
 
@@ -503,7 +503,7 @@ graph LR
 | 音频编码器 | AudioTokenizer 308M（24 层，20 层 RVQ）+ patch encoder 127M（25 Hz→6.25 Hz） | 同左 |
 | 预训练 token | 30T（27T 文本 + 3T 全模态） | 48T（26T 文本 + 22T 全模态） |
 
-> **口径说明（不覆盖旧值）**：Flash 总参在技术报告引言与表 1 均为 **310B**，而 HF 模型卡写 **309B**；两仓库 safetensors 汇总分别为 310.76B（Flash）与 1.024T（Pro）。正文取 **310B**，并保留模型卡原值 309B 备查——这是官方内部两处口径不一致，**不是本轮修正旧数据**。
+> **参数口径差异**：Flash 总参在技术报告引言与表 1 均为 **310B**，而 HF 模型卡写 **309B**；两仓库 safetensors 汇总分别为 310.76B（Flash）与 1.024T（Pro）。正文取 **310B**，并保留模型卡原值 309B 备查——这是官方材料内部的口径不一致。
 
 ### 9.4 上下文与训练配方
 
@@ -590,7 +590,7 @@ graph LR
 4. **长上下文评测有限**：§9.5 未含 1M 端到端长上下文基准；1M 能力主要由 mid-training 与报告叙述支撑。
 5. **RL 基础设施长尾**：报告 §5.5 记录 GPU DBE、Kubernetes 故障、grader 网络不可达、partial rollout 长度偏差、MoE 负载尖峰导致的 OOM、CPU OOM 等中断——「6 天跑完」是恢复后的统计，不是无故障时长。
 6. **reward hacking 未被消除**：官方用 mid-training 对齐、环境清理、hack agent 与审计多层防御（报告 §4.2.6），这是持续对抗，不是已解决问题。
-7. **与闭源的差距仍在**：官方自己承认与 Claude Fable 5.1 / GPT-6 Astra 有差距；AA 页面上 Pro 为 46、Opus 5.5 为 58（TNW 转述 AA，未在本轮复核）。
+7. **与闭源的差距仍在**：官方自己承认与 Claude Fable 5.1 / GPT-6 Astra 有差距；AA 页面上 Pro 为 46、Opus 5.5 为 58（TNW 转述 AA，未独立核验）。
 
 **未确证 / 待跟踪**
 
@@ -614,7 +614,7 @@ graph LR
 
 > **状态（截至 2026-10-17）：架构已公开，模型未发布。** 本章只写论文公开的架构与作者声称的收益，**不构成任何发布信息**；请勿把本章数字读作 MiMo-V3 的实测结果。
 
-> **证据等级：精读原文**（HySparse2 论文原文，arXiv:2609.26368 v1，2026-09-22；作者含 Xiaomi LLM-Core 的 Fuli Luo、Shijie Cao 等 15 人）。「V3 将采用 HySparse2」一句为**二手**（环球网 2026-09-24 转述罗福莉发言，未见官方一手页面）。**未发布核验（2026-10-17）**：HF `XiaomiMiMo` 组织页最新权重为 2026-09-21 上传的 V2.6 系列，无 V3 仓库；官方更新时间线最新条目为 2026-09-22 的 V2.6；官方文档 sitemap（180 条 URL）无 V3 / HySparse 页面；arXiv 检索无「MiMo-V3」论文。
+> **证据等级：精读原文**（HySparse2 论文原文，arXiv:2609.26368 v1，2026-09-22；作者含 Xiaomi LLM-Core 的 Fuli Luo、Shijie Cao 等 15 人）。「V3 将采用 HySparse2」一句为**二手**（环球网 2026-09-24 转述罗福莉发言，未见官方一手页面）。**截至 2026-10-17 的公开发布状态**：HF `XiaomiMiMo` 组织页最新权重为 2026-09-21 上传的 V2.6 系列，无 V3 仓库；官方更新时间线最新条目为 2026-09-22 的 V2.6；官方文档 sitemap（180 条 URL）无 V3 / HySparse 页面；arXiv 检索无「MiMo-V3」论文。
 
 ### 10.1 机制：两级 KV 共享
 
@@ -701,7 +701,7 @@ MiMo 系列只用了不到一年时间，就从「内部 MiLM」走到了「业�
 
 对于研究者，MiMo-7B 是目前研究「base model reasoning potential 与 RL 上限关系」的最佳开源样本；对于工程团队，MiMo-V2-Flash 与 Pro 提供了以国产开源 MoE + 1M 上下文构建低成本 Agent 系统的现实选择；**V2.5 系列则进一步将全模态感知与高强度 Agent 能力推向开源前沿**。
 
-**2026-09 的增量（本轮，§九 / §十）**：MiMo-V2.6 保留了上一代的「MoE + 1M 上下文」骨架（Pro 与 V2.5-Pro、Flash 与 V2.5 的 `config.json` 骨架逐项相同），把 Pro 从纯文本升级为原生全模态，并用一次混合 RL 在 6 天内完成 30 步训练。官方给出的 out-of-sample 提升为 DeepSWE v1.1 **+14.2（Pro，58.4→72.6）**与 **+17.0（Flash，48.8→65.7）**；第三方 AA Intelligence Index **46** 使其成为该指数下开放权重类内最高分（AA 口径，§9.6）。**V3 的 HySparse2 则把「效率」再往前推**：两级 KV 共享 + token 级稀疏 + prefill 早退，论文在 80B-A3B 验证模型上报告 1M 预填充 FLOPs 较 Hybrid SWA 低 5.02×、KV cache 2.69 GB——但 **V3 尚未发布**（架构公开、无权重 / API / 模型卡），这些收益不能算到任何已发布模型头上。
+**MiMo-V2.6 的路线变化**：MiMo-V2.6 保留了上一代的「MoE + 1M 上下文」骨架（Pro 与 V2.5-Pro、Flash 与 V2.5 的 `config.json` 骨架逐项相同），把 Pro 从纯文本升级为原生全模态，并用一次混合 RL 在 6 天内完成 30 步训练。官方给出的 out-of-sample 提升为 DeepSWE v1.1 **+14.2（Pro，58.4→72.6）**与 **+17.0（Flash，48.8→65.7）**；第三方 AA Intelligence Index **46** 使其成为该指数下开放权重类内最高分（AA 口径，§9.6）。**V3 的 HySparse2 则把「效率」再往前推**：两级 KV 共享 + token 级稀疏 + prefill 早退，论文在 80B-A3B 验证模型上报告 1M 预填充 FLOPs 较 Hybrid SWA 低 5.02×、KV cache 2.69 GB——但 **V3 尚未发布**（架构公开、无权重 / API / 模型卡），这些收益不能算到任何已发布模型头上。
 
 ---
 
@@ -745,7 +745,7 @@ MiMo 系列只用了不到一年时间，就从「内部 MiLM」走到了「业�
 26. 两仓库 `config.json`（层数 / 专家 / heads / 上下文 / 模态的一手出处）：`MiMo-V2.6-Pro-RL/raw/main/config.json`、`MiMo-V2.6-Flash-RL/raw/main/config.json`；对照用 V2.5 配置：`MiMo-V2.5-Pro/raw/main/config.json`、`MiMo-V2.5/raw/main/config.json`
 27. HF 合集：[MiMo-V2.6](https://huggingface.co/collections/XiaomiMiMo/mimo-v26)
 28. Jianyu Wei, Yizhao Gao, … Fuli Luo. [HySparse2: Hybrid Sparse Attention with Two-Level KV Sharing](https://arxiv.org/abs/2609.26368). arXiv:2609.26368（v1 2026-09-22）｜[PDF](https://arxiv.org/pdf/2609.26368)
-29. **未发布核验的负证据**：[HF 组织页](https://huggingface.co/XiaomiMiMo)（2026-10-17 最新为 V2.6 系列）、官方时间线（第 22 条）、[官方文档 sitemap](https://mimo.mi.com/sitemap.xml)（180 条 URL，无 V3 / HySparse 页面）
+29. **V3 尚未公开发布的证据**：[HF 组织页](https://huggingface.co/XiaomiMiMo)（2026-10-17 最新为 V2.6 系列）、官方时间线（第 22 条）、[官方文档 sitemap](https://mimo.mi.com/sitemap.xml)（180 条 URL，无 V3 / HySparse 页面）
 
 **二手 / 第三方**
 
@@ -758,4 +758,4 @@ MiMo 系列只用了不到一年时间，就从「内部 MiLM」走到了「业�
 
 方法边界：发布页将重复率定义为同一轮中工具名和 JSON 规范化参数完全相同的调用比例，明确这是可回放的下界，不覆盖跨轮重复、语义近似调用或隐藏在 exec 脚本内的工具调用。报告披露的是厂商内部日志与回放集，结果不等于独立复现。
 
-来源与锚点：Xiaomi MiMo Team，[Diagnosing and Mitigating Tool-Call Repetition in MiMo-V2.6](https://mimo.xiaomi.com/blog/mimo-v2-6-tool-call-repetition)，2026-09-27，“Tracing the Source”§§3–4、“A More Efficient and Generalizable Solution”及 MOPD 段，尤其指标定义、实验表格、图示和训练步骤说明；配套技术报告 §5.6。当前发布页列明方法和指标，但本文未独立下载并核验 HF MOPD checkpoint。
+来源与锚点：Xiaomi MiMo Team，[Diagnosing and Mitigating Tool-Call Repetition in MiMo-V2.6](https://mimo.xiaomi.com/blog/mimo-v2-6-tool-call-repetition)，2026-09-27，“Tracing the Source”§§3–4、“A More Efficient and Generalizable Solution”及 MOPD 段，尤其指标定义、实验表格、图示和训练步骤说明；配套技术报告 §5.6。发布页列出方法和指标，但没有独立权重结果可确认 HF MOPD checkpoint 的存在或表现。

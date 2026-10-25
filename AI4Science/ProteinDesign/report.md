@@ -34,6 +34,20 @@ status: completed
 
 这些环节使用的 benchmark 和数据源不相同。APM 的 RAbD、PepBench/LNR 结果，PepEDiff 的 TIGIT 计算案例、短名单论文从公开实验结果汇总的 hit labels，以及 Bits to Binders 的单一靶标 CAR-T 实验，均须按各自 split、assay 和指标分别阅读。
 
+## 论文关系：生成、排序与功能测定是三个不同决策点
+
+APM 与 PepEDiff 都提出候选，但它们选择的设计空间不同。APM 在同一生成框架中共同建模氨基酸序列与 backbone，再补 sidechain 并做全原子 refinement；作者将 sidechain 拆成后续模块，是因为它的监督需要真实序列，而 flow matching 中的序列/结构处于加噪状态，直接联合会泄漏序列信息或使侧链训练不稳定。[APM §3.2、Fig. 2](https://arxiv.org/html/2504.13075v3) PepEDiff 则在 ProtT5 embedding 中扩散生成肽序列；它免去了生成阶段的显式复合物坐标，但 TIGIT 案例仍通过 Boltz-2 预测结构，再经 Rosetta/MD 计算评估。因此“结构-free generation”表示生成器不预测结构，不表示证据链不依赖结构模型。[PepEDiff §§2–4](https://arxiv.org/html/2601.13327v2)
+
+后两项工作把问题往实验资源端推进。Shortlisting 将预生成的候选池视为固定输入，学习怎样用多种结构/界面代理排序；它没有提升候选生成本身，也没有新增实验验证。[Shortlisting §§3–7](https://arxiv.org/html/2608.20755v2) Bits to Binders 则以一个统一 CAR scaffold 对 CD20 binder 进行细胞实验，发现 pooled enrichment、单独扩增/细胞因子、结合和杀伤并非同一终点。由此可见，这四篇研究不是按分数递增的模型竞赛：生成空间、排序目标、湿实验构建和验证终点均不同，比较应沿候选从模型到功能的接口进行。
+
+### 表示选择如何改变验证链
+
+APM 和 PepEDiff 都试图扩大可搜索的 binder 空间，但将序列—结构耦合放在不同位置。APM 在 Seq&BB 中联合生成序列与主链，再用 Sidechain 补 torsion，并以 Refine 将全原子信息送回序列/主链；作者把侧链拆成后续模块，是因为准确的侧链标签要求真实序列，而 flow 输入是受噪的序列/结构，直接把两者同一时刻生成会引入序列泄漏。这个分解提高了原子级建模的连贯性，却没有消除预测结构与真实结合的距离。[APM §3.2、Fig. 2](https://arxiv.org/html/2504.13075v3)
+
+PepEDiff 则只在 ProtT5 连续 embedding 中生成 peptide 序列：受体表征由口袋残基 mask 调制，denoiser 用 noise-MSE 与 residue-wise cosine loss 学条件生成；作者再向已知 peptide embedding 注入不同尺度噪声，尝试离开训练序列邻域。这里结构不是生成器的中间状态，而是候选生成后的验证工具——TIGIT 结果需经过 Boltz-2、Rosetta、MD 和 umbrella sampling。因此它减少了结构生成链，但没有取消结构推断不确定性或实验验证缺口。[PepEDiff §§2.2–2.4、§3.3](https://arxiv.org/html/2601.13327v2)
+
+短名单论文把问题再往下游移动：它接收已生成候选与 17 个结构/界面 proxy features，输出 top-K 实验队列；它并不改造 APM、PepEDiff 或上游生成器。其 Recall@10 分母是 `min(10, n_binders)`，并先按 target pool 计算再平均；这衡量“既有实验阳性候选是否排入前十”，与 Bits to Binders 的 pooled enrichment、单独 CAR-T 增殖/杀伤读数不是同一指标。比较时应沿候选漏斗读分母、数据 split 和 assay，而不是把 0.589、活性率和功能阳性比例排成一个模型排名。[Shortlisting §5.2、Table 3](https://arxiv.org/html/2608.20755v2) [Bits to Binders Figs. 2–3、Discussion](https://doi.org/10.1038/s44320-026-00246-1)
+
 ## 代表工作
 
 ### 1. APM：多链、全原子复合物生成

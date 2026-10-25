@@ -10,21 +10,17 @@ status: needs-review
 
 # WorldModels 技术专题调研
 
-> **声明**：本报告由 AI Agent 自动调研生成，未经官方确认；引用具体参数、日期或 benchmark 前请回溯原始来源。
-> **调研日期**：2026-10-16（第一、二轮）→ 2026-10-17（第三轮：**深度加厚**——新增 `papers/` 10 篇逐篇精读 + `topics/` 3 篇横切专题，正文级证据）。
-> **定位**：WorldModels（世界模型）在本专题指**从数据学得状态转移、可由动作驱动、并用于训练/规划/评测**的模型；像素渲染是另一个能力维度，不作为所有模型的共同必要条件。本专题为其判据、架构谱系、交互性机制、代表系统、评测与应用边界建立框架与证据索引。
+**范围**：本条目将世界模型操作性地指为“从数据学习环境状态转移，并可被动作驱动、供规划、训练或评测调用”的模型。像素渲染是一种表示和接口路线，不是所有世界模型的必要条件；世界模型、视频生成模型、策略模型和规则模拟器需按交付物与动力学来源区分。
 
-> **2026-10-22 核验范围**：已回 MuZero v2 核对方法、Figure 2–3 与 Reanalyze；已回 DreamerV3 v2 核对 free bits 的损失截断解释。其余分册继承既有阅读记录，未逐项重验。分册存在不是证据充分的证明；本页“已精读”不得解释为全部数字已在本次复核通过。
-
-**证据等级约定（单一主等级）**：`[精读原文]` 已抓取一手正文并**定位到对应数值/结论段落**（第三轮起为逐篇正文精读）；**既有范围记录（第三轮）**：`[精读原文]` **仅授予有对应 `papers/` 分册的论文**——正文级引用但未产出分册的一律标 `[摘要级]`（宁可低估，不可升格）；`[摘要级]` 仅核验官方摘要 / 官方页面 / 项目页（题名、作者、日期、摘要断言），**未通读正文，细节不得当作已成立事实**；`[二手]` 第三方转述；`[受限核验]` 一手对象无法直接抓取，只能经镜像 / API 间接确证。每条只给**一个主等级**。
+**阅读提示**：本页负责串起研究路线与跨论文比较；`papers/` 放代表性工作的逐篇机制和实验，`topics/` 比较横切问题。数字均应按论文的模型、环境、数据、硬件和评测协议理解；本文未复现实验。
 
 ---
 
-## 深度阅读导航（第三轮新增）
+## 阅读入口
 
-本条目采用三层结构：本页 = 入口 + 结论 + 谱系；`papers/` = 逐篇精读；`topics/` = 横切专题。
+建议先用本页建立路线，再按问题阅读 `papers/` 中的逐篇机制与实验，最后用 `topics/` 比较跨论文设计轴。
 
-**逐篇精读（`papers/`，10 篇，每篇含方法细节 / 实验数字 / 失效边界 / 可判定对比 / 对条目结论的影响）**
+**逐篇论文阅读**
 
 | 分册 | 系统 | 在谱系中的位置 |
 | :-- | :-- | :-- |
@@ -39,7 +35,7 @@ status: needs-review
 | [2501.09038-physics-iq.md](papers/2501.09038-physics-iq.md) | Physics-IQ（2025） | 真实拍摄物理基准，视觉真实感≠物理理解 |
 | [2503.21755-vbench-2.md](papers/2503.21755-vbench-2.md) | VBench-2.0（2025） | 内在真实性评测（5 维 18 子维），不测交互 |
 
-**横切专题（`topics/`，3 篇）**
+**跨论文专题**
 
 | 专题 | 回答什么 |
 | :-- | :-- |
@@ -54,10 +50,10 @@ status: needs-review
 1. **术语尚未收敛**：至少存在三种用法——(i) 认知科学/RL 意义的环境内部模拟器（Ha & Schmidhuber 2018）；(ii) 生成式视频/3D 模型（可交互视频世界建模）；(iii) 面向 Physical AI 的 foundation model 平台（Cosmos 一类）。本专题取「判据可判定」的操作性定义，而非单一作者定义。`[摘要级]`
 2. **三条判据缺一不可**：`(a) action-conditioned` + `(b) 系统可调用` + `(c) 环境动力学从数据学得` 同时满足才纳入本专题。`[摘要级]`
 3. **规则模拟器被排除**：MuJoCo / Atari / Doom 一类满足 (a)(b) 但动力学为人工硬编码、缺 (c)，**不入 WorldModels**，仅作评测环境与数据来源。`[摘要级]`
-4. **三条架构主线并行**：action 条件化视频/3D 生成、潜空间预测模型（JEPA / Dreamer）、world foundation model 平台化。**第三轮经逐篇精读证实**：三条主线可进一步拆成「动作注入层 × 预测目标 × 行为派生 × 治漂移手段」四根可判定的轴（见 [topics/dynamics-and-action-conditioning.md](topics/dynamics-and-action-conditioning.md)）。`[精读原文]`
-5. **交互性瓶颈在长时程一致性与 action-following 响应延迟**，而非单帧画质；评测仍呈碎片化（各应用域各自 benchmark，缺统一口径）。**第三轮经逐篇精读证实**：三套基准口径互不重叠且都不测交互（见 [topics/incomparability-checklist.md](topics/incomparability-checklist.md)）。`[精读原文]`
+4. **三条架构主线并行**：action 条件化视频/3D 生成、潜空间预测模型（JEPA / Dreamer）、world foundation model 平台化。三条主线可进一步拆成「动作注入层 × 预测目标 × 行为派生 × 治漂移手段」四根可判定的轴（见 [topics/dynamics-and-action-conditioning.md](topics/dynamics-and-action-conditioning.md)）。`[精读原文]`
+5. **交互性瓶颈在长时程一致性与 action-following 响应延迟**，而非单帧画质；评测仍呈碎片化（各应用域各自 benchmark，缺统一口径）。三套基准口径互不重叠且都不测交互（见 [topics/incomparability-checklist.md](topics/incomparability-checklist.md)）。`[精读原文]`
 
-> 第三轮把 #4、#5 升格为 `[精读原文]`（已有逐篇正文证据）；#1–#3 为本专题的框架性判据主张，仍标 `[摘要级]`（它们是可判定的设计，而非外部事实断言）。
+> 前三条是本报告采用的操作性范围判据，而非领域统一定义；后三条是从所引论文机制与评测条件归纳出的研究判断。
 
 ---
 
@@ -90,33 +86,33 @@ status: needs-review
 | π0 类策略本体（action head） | — 输出是策略 | ✓ 但交付物非环境 | ✓ | **Embodied**，不因「用了世界模型」改判 |
 | WorldVLA / V-JEPA 2-AC | ✓ | ✓ | ✓ | **按交付物拆分**：world 分支引 WorldModels，action 分支归 Embodied |
 
-### 1.4 本章待办
+### 1.4 边界仍需明确的问题
 
-- 定义谱系仍需回到原始一手正文核对（结论 1）；`(c)` 的判定需要可操作阈值（学到 vs 混合）：留待第三轮。
-
----
-
-## 2. 架构谱系
-
-**本章要回答**：三条主线各自的代表架构、训练目标与分界是什么？action 条件化生成与潜空间预测在表示、目标函数、可控性上如何取舍？平台化路线（foundation model + post-train）与单系统路线差异在哪？
-
-**计划证据来源**：参考文献 2–17（PlaNet / Dreamer 系 / MuZero / I-JEPA / V-JEPA 系 / IRIS / Genie / GameNGen / Matrix-Game / Hunyuan-GameCraft / Cosmos 及官方仓库）。
-
-> **第三轮已展开**：三条主线的机制差异（动作注入层 × 预测目标 × 行为派生 × 治漂移手段）见横切专题 [topics/dynamics-and-action-conditioning.md](topics/dynamics-and-action-conditioning.md)；逐篇正文级证据见 `papers/` 对应分册（World Models / PlaNet / MuZero / Dreamer / DreamerV3 / V-JEPA / GameNGen）。`[精读原文]`
-
-## 3. 交互性机制与指标
-
-**本章要回答**：长时程一致性、记忆、action-following 响应延迟如何度量？自回归/扩散的误差累积如何缓解（teacher forcing 偏差、few-step 蒸馏）？实时性（帧率、首帧延迟）与保真度如何权衡？
-
-**计划证据来源**：参考文献 18–19（CausVid、Self Forcing）、14–16、以及 37 的 benchmark 章节。
-
-> **第三轮已展开**：治漂移 / 治误差工具箱（温度 τ、latent overshooting、free bits、噪声增强、few-step 蒸馏、shortcut forcing）的分层对照见 [topics/dynamics-and-action-conditioning.md](topics/dynamics-and-action-conditioning.md) §4；帧率/一致性时长的可比性分析见 [topics/incomparability-checklist.md](topics/incomparability-checklist.md) §1.1。`[精读原文]`
+- 混合系统中，何种程度的规则模拟、外部状态或人工先验仍可称为“学得的动力学”？需说明状态转移中哪些部分来自数据、哪些由规则给定。
 
 ---
+
+## 2. 架构谱系：模型预测什么
+
+World Models、PlaNet 与 Dreamer 从观测中编码潜状态并学习状态如何随动作变化。World Models 将 VAE 视觉压缩、MDN-RNN 潜动力学和线性控制器拆成三块，并展示可以在模型生成的“dream”里训练控制器；PlaNet 用 RSSM 同时维护确定性记忆和随机状态，并通过 latent overshooting 训练多步预测，再用 CEM 做在线 MPC；Dreamer 则让 actor-critic 在想象出的 latent trajectory 上学习。它们都用学得的转移支持行为，但观测重构、规划搜索和策略学习承担的作用并不相同。详见 [World Models](papers/1803.10122-world-models.md)、[PlaNet](papers/1811.04551-planet.md)、[Dreamer](papers/1912.01603-dreamer.md) 与 [DreamerV3](papers/2301.04104-dreamerv3.md)。
+
+这几种方法回答“模型要预测什么”的方式不同：像素或潜状态重构提供感知一致性，reward/value 预测服务于行动选择，多步 latent prediction 试图让内部规划状态可滚动。画面更像真实观测不自动代表更适合控制；只预测规划量则能支持搜索，却没有可查看的未来观测。
+
+MuZero 把“规划模型是否必须重构像素”推到另一端：它的 recurrent model 迭代预测 reward、policy 和 value，供 MCTS 使用；训练不要求像素解码器，因此学的是规划充分信息而非可视模拟器。将 MuZero 的搜索表现和 GameNGen 的视频保真放在一个排行榜上会混淆交付物：前者关心行动选择，后者关心动作条件化生成。[MuZero §3–4](papers/1911.08265-muzero.md)
+
+JEPA/V-JEPA 路线又改变了预测目标：从 context 预测被遮挡的 target 表征，而非重构像素。这样可把学习压力放在语义/时序表示，避免追逐所有低层像素细节；但 action-free 表征不能单独回答“执行动作 a 后环境会怎样”，需要额外动作条件化模型或策略学习。从此处向像素/视频 rollout 的路线，GameNGen/Genie 将动作作为显式条件生成后续观测，提供可查看的交互接口，也承受长时程误差积累。UniSim/Cosmos 等多源平台扩大了数据与环境接口，但需区分真实观测、合成训练、规划和评测角色。更细的设计轴见[动作条件化与动力学专题](topics/dynamics-and-action-conditioning.md)。
+
+## 3. 交互性与误差：用途决定评测边界
+
+“可调用模型”不等于模型能稳定支撑行为。作为**在线规划器**（PlaNet/MuZero），一步预测误差会改变搜索树中候选动作的排序；作为**想象训练环境**（Dreamer 系），策略在模型自己生成的状态上反复训练，若模型高估异常状态回报，策略可能利用漏洞；作为**动作条件化视频 rollout**（GameNGen/Genie），生成帧又成为后续输入，局部错误会逐步变成场景漂移。相同的预测误差在三种闭环中传播路径不同，不能用一个“模型准确率”概括。
+
+误差控制也对应不同失效来源：PlaNet 的 latent overshooting 约束多步潜状态预测；Dreamer 用 reward/value 学习和 imagined actor-critic 控制策略目标；DreamerV3 用 balanced KL、free bits、symlog/twohot 等方法稳定跨任务训练；视频生成路线研究 noise augmentation、蒸馏或训练/推理分布对齐。比较这些办法时，应识别被控制的是潜状态漂移、奖励尺度、策略利用漏洞，还是视频 rollout 误差，再看各论文相应消融和目标函数（见[专题 §4](topics/dynamics-and-action-conditioning.md)）。
+
+评测应分别报告单帧保真、动作跟随、短时因果一致性、长任务成功、策略是否钻模型漏洞及真实环境外推。FPS 需绑定分辨率、硬件和生成模式；一致性时长要交代动作轨迹与失败标准；规划成功率依赖环境、控制器和搜索预算。视频、游戏和机器人 benchmark 的构念不重叠，应结合[评测不可比性专题](topics/incomparability-checklist.md)逐项判断。
 
 ## 4. 代表系统逐案
 
-### 4.1 本章结论
+### 4.1 代表系统揭示的取舍
 
 1. **公开指标集中在「分辨率 × 帧率 × 一致性时长」三角，三者不可同时拉满**：Genie 3 官方称 720p / 24 FPS / 维持数分钟（[Genie 3 官方博客](https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/)）；GameNGen 在 DOOM 上以 320×240、20 FPS 达成数分钟稳定（PSNR 29.43，[arXiv:2408.14837v2 摘要 / §5](https://arxiv.org/html/2408.14837v2)），分辨率与场景复杂度显著更低。`[摘要级]`（Genie 3 官方博客）+ `[精读原文]`（GameNGen 分册及正文）
 2. **潜空间路线不追像素级实时渲染，而追「想象中训练」的可扩展性**：Dreamer 4 以 shortcut forcing 实现**单 GPU 实时交互推理**，并首次做到纯离线数据在 Minecraft 取得钻石（[arXiv:2509.24527](https://arxiv.org/abs/2509.24527)）。`[摘要级]`
@@ -124,7 +120,7 @@ status: needs-review
 4. **平台化路线把世界模型做成可被下游 fine-tune 的基础设施**：Cosmos 开源因果视频 tokenizer 与 Predict1 多规格模型（7B / 12B / 13B / 14B）。`[摘要级]`
 5. **可复核的公开数字多为作者自述、评测条件互不统一**，跨系统横向比较必须先回到各自 benchmark 定义（见章 5）。`[精读原文]`
 
-### 4.2 机制/证据（逐条注明来源与等级）
+### 4.2 代表系统的机制和证据
 
 | 系统 | 关键实测数字 | 出处 | 主等级 |
 | :-- | :-- | :-- | :-- |
@@ -140,13 +136,7 @@ status: needs-review
 | **Genie（2024）** | **11B 参数**；无标注互联网视频无监督训练；潜动作模型（latent action model） | [arXiv:2402.15391](https://arxiv.org/abs/2402.15391) 摘要 | `[摘要级]` |
 | **DIAMOND** | 图像空间扩散世界模型，可作环境 **drop-in 替代**；**3 NFE/帧**（对比 IRIS 的 16 NFE/帧） | [arXiv:2405.12399](https://arxiv.org/abs/2405.12399) 正文 | `[摘要级]` |
 
-**本轮新发现（归属本专题，供章 2/3 第三轮使用）**：帧率数字的**评测口径差异极大**——20 FPS（GameNGen，320×240，单 TPU）与 24 FPS（Genie 3，720p，官方博客）不可直接比较；Self Forcing 的 17.0 FPS 与 Hunyuan-GameCraft 的 6.6 FPS 属不同分辨率/任务设定，横向对比须同时给出分辨率与硬件。`[摘要级]`
-
-### 4.3 本章链接核验
-
-见文末「链接核验清单」：参考文献 13（GameNGen）、10（Dreamer 4）、9（V-JEPA 2）、16（Cosmos）、14（Matrix-Game）、15（Hunyuan-GameCraft）、18（CausVid）、19（Self Forcing）、12（Genie）、42（DIAMOND）、20（Genie 3 博客）。
-
----
+**跨系统比较**：帧率数字的**评测口径差异极大**——20 FPS（GameNGen，320×240，单 TPU）与 24 FPS（Genie 3，720p，官方博客）不可直接比较；Self Forcing 的 17.0 FPS 与 Hunyuan-GameCraft 的 6.6 FPS 属不同分辨率/任务设定，横向对比须同时给出分辨率与硬件。`[摘要级]`
 
 ## 5. 评测与基准
 
@@ -157,7 +147,7 @@ status: needs-review
 3. **具身侧已出现世界模型专用评测**：EWMBench（Genie Envisioner）测视觉保真、物理一致性、指令-动作对齐；游戏侧有 GameWorld Score（Matrix-Game）。`[摘要级]`
 4. **规则模拟器 benchmark 在本专题只作环境，不作世界模型评测口径**（章 1.2 排除口径一致）。`[精读原文]`
 
-### 5.2 机制/证据：benchmark 对照
+### 5.2 基准测量的构念与边界
 
 | benchmark | 维度 / 指标 | 面向对象 | 主等级 | 来源 |
 | :-- | :-- | :-- | :-- | :-- |
@@ -169,15 +159,7 @@ status: needs-review
 | **EWMBench** | 视觉保真 / 物理一致性 / 指令-动作对齐 | 机器人操作世界模型 | `[精读原文]` | [arXiv:2508.05635](https://arxiv.org/abs/2508.05635) 正文 |
 | 系统自报指标 | FPS / 一致性时长 / PSNR / LPIPS | 各交互式系统 | `[精读原文]` | 见章 4.2 |
 
-**缺口清单（本轮结论）**：① 跨域统一口径缺失（视频 / 游戏 / 机器人各说各话）；② **交互性**（action-following 延迟、可交互时长）的统一跨域基准尚未在本专题完成核验；③ 长时程记忆无可比指标；④ sim-to-real 对齐度指标缺位（与 EmbodiedVLA 条目章 5 的「仿真分数不足以替代真机结论」互为佐证）。`[精读原文]`
-
-### 5.3 本章链接核验
-
-见文末清单：参考文献 25（VBench）、26（VBench-2.0）、27（WorldScore）、28（Physics-IQ）、14（GameWorld Score）、40（EWMBench）。
-
-> **第三轮加深**：「评测碎片化 / 不可比性」的机制级拆解（帧率口径 / 指标口径 / 训练-推理错配口径 / 交互性空白）见横切专题 [topics/incomparability-checklist.md](topics/incomparability-checklist.md)。`[精读原文]`
-
----
+**当前不可比缺口**：① 视频、游戏、机器人评测口径不同；② action-following 延迟与可交互时长缺少统一跨域指标；③ 长时程记忆缺少可比测量；④ sim-to-real 对齐证据不能由仿真成功率替代。
 
 ## 6. 应用域
 
@@ -189,7 +171,7 @@ status: needs-review
 4. **UniSim 与 Cosmos 代表两种平台化姿态**：前者主张「学一个真实世界交互的通用模拟器，使具身 agent 纯在模拟中训练后直接部署」；后者把世界模型做成 Physical AI 的**世界数字孪生**（digital twin of the world，与政策模型并列）。`[摘要级]`
 5. **归属**：本节对象的世界模型/环境侧归本专题，策略/动作侧归 `EmbodiedVLA`（见章 7 互引）。`[精读原文]`
 
-### 6.2 机制/证据：具身与机器人（世界模型作为环境/训练信号）
+### 6.2 具身与机器人：模型作为环境和训练信号
 
 | 对象 | 作为环境的角色 | 关键事实 | 主等级 |
 | :-- | :-- | :-- | :-- |
@@ -209,19 +191,12 @@ status: needs-review
 | GameWorld Score | benchmark | 游戏世界交互 | 游戏 | `[精读原文]` |
 | VBench / VBench-2.0 / WorldScore / Physics-IQ | benchmark | 见章 5.2 | 通用视频 / 世界生成 | 见章 5.2 |
 
-### 6.3 其他应用域（本轮只登记，不展开）
+### 6.3 相邻应用域的归属
 
 - **游戏引擎**：Genie 3（官方博客）、GameNGen、Matrix-Game、Hunyuan-GameCraft —— 已在章 4 给出实测数字。
-- **自动驾驶**：GAIA-1、GAIA-2、Vista（参考文献 30–32）—— 本轮登记，第三轮展开（`[摘要级]`）。
+- **自动驾驶**：GAIA-1、GAIA-2、Vista（参考文献 30–32）—— 作为相邻方向补充阅读（`[摘要级]`）。
 - **开放世界探索**：由 38（交互式视频世界建模综述）的 domain 章节给出索引（`[摘要级]`）。
 
-### 6.4 本章链接核验
-
-见文末清单：参考文献 10、41（UniSim）、40（Genie Envisioner）、16（Cosmos）、9（V-JEPA 2）、14（Matrix-Game）、30–32。
-
-> **第三轮加深**：「世界模型作训练 / 评测环境」这条线的机制级拆解（梦境训练 → 想象训练 → 通用模拟器 → 纯离线；两个失效模式；「域内 vs 跨域零样本」限定）见横切专题 [topics/world-model-as-env.md](topics/world-model-as-env.md)。`[精读原文]`
-
----
 
 ## 7. 与 AIGC / Embodied / LLM 的边界及交叉引用
 
@@ -231,9 +206,9 @@ status: needs-review
 2. **π0 类 action head → Embodied**：输出为动作策略，不因「内置世界模型或流匹配」改判。`[摘要级]`（arXiv:2410.24164 摘要）
 3. **WorldVLA → 按交付物拆分**：其动作分支归 `EmbodiedVLA`，未来帧预测（world）分支归本专题。`[摘要级]`（arXiv:2506.21539 摘要）
 4. **V-JEPA 2-AC → world 侧归本专题**：其交付物是 **action-conditioned 潜空间世界模型**（预测未来表示）；在 Franka 上的抓放部署属应用验证，不改变归属。`[摘要级]`
-5. **与 EmbodiedVLA 的口径一致性已确认**：两侧均以「交付物判定」为最高裁决规则；冲突时以交付物为准并同步修订。`[精读原文]`
+5. **与 EmbodiedVLA 的边界按交付物划分**：输出动作的策略归具身策略，预测环境状态演化的模型归本专题；联合系统按不同分支分别讨论。
 
-### 7.2 机制/证据：判据落到具体工作
+### 7.2 判据如何作用于具体工作
 
 | 具体工作 | (a) | (b) | (c) | 归属判定 | 主等级 |
 | :-- | :-- | :-- | :-- | :-- | :-- |
@@ -243,12 +218,12 @@ status: needs-review
 | **V-JEPA 2-AC** | ✓ | ✓ | ✓ | **WorldModels**（本专题章 2/4）；机器人应用登记在章 6 | `[摘要级]` |
 | **Dreamer 4** | ✓ | ✓ | ✓ | **WorldModels**；其 agent 训练属具身应用（章 6） | `[摘要级]` |
 | **Genie 3 / GameNGen** | ✓ | ✓ | ✓ | **WorldModels** | `[摘要级]` / `[摘要级]` |
-| **Sora 2 / Veo** | ✗ | ✗ | ✓ | **AIGC** | `[二手]`（OpenAI 页面反爬，见文末清单） |
+| **Sora / Veo** | ✗ | ✗ | ✓ | **AIGC** | `[摘要级]`（官方产品页，仅作类别示例） |
 | **MuJoCo / Atari / Doom / Isaac / LIBERO / SIMPLER** | ✓ | ✓ | ✗ 硬编码 | **排除**；仅作评测环境/数据来源 | `[摘要级]` |
 
-### 7.3 与 `EmbodiedVLA` 的显式互引（避免重复劳动）
+### 7.3 与 `EmbodiedVLA` 的阅读接口
 
-> 互引对象路径：`../EmbodiedVLA-research/report.md`（该条目已合入 main）。
+> 具身策略的逐篇分析见 [`EmbodiedVLA`](../EmbodiedVLA/report.md)。
 
 | 交叉对象 | 本专题处理 | EmbodiedVLA 条目处理 |
 | :-- | :-- | :-- |
@@ -259,20 +234,14 @@ status: needs-review
 | **Cosmos WFM** | 章 2、4、6.2 平台化 | 该条目 §4.3 接口①工业化形态 |
 | **Genie 3 / GameNGen 等交互式世界模型** | 章 2、4 | 该条目明确**不在其内出现**（无动作交付物） |
 | **规则模拟器（MuJoCo / Isaac / LIBERO / SIMPLER 等）** | 章 1.2 排除出 WorldModels，仅作评测环境 | 该条目章 4.2、5 按评测环境引用——**口径一致** |
-| **自动驾驶世界模型（GAIA-1/2、Vista）** | 章 6.3 登记，第三轮展开 | 该条目章 6 仅登记「不展开」 |
+| **自动驾驶世界模型（GAIA-1/2、Vista）** | 章 6.3 作为相邻方向提及 | 该条目章 6 介绍其应用背景 |
 
-> **互引落点（精确到章）**：本报告章 1.2 / 1.3 / 7 ↔ `EmbodiedVLA` 章 1.3 / 4.3 / 7.1。两侧若冲突，以「交付物判定」为准并同步修订（与对方 §7.2 的约定一致）。
+> 两个专题的交叉阅读位置：本报告第 1、7 章与 [`EmbodiedVLA`](../EmbodiedVLA/report.md) 第 1、4、7 章。联合系统按动作策略与环境模型的具体交付物分别分析。
 
 ### 7.4 与 AIGC / LLM 的交叉
 
 - **AIGC**：纯视频/图像生成归 `VideoGen` / `OpenAI-Gen`；本专题只收「可交互 + 系统可调用」的部分，章 1.2 已给出排除口径。
 - **LLM**：无环境状态演化的理解与规划归 `ReasoningModels`；Agent 外层循环归 `Agent`。
-
-### 7.5 本章链接核验
-
-见文末清单：相对链接 `../EmbodiedVLA-research/report.md` → **存在（回测通过）**；参考文献 34（π0）、35（OpenVLA）、36（WorldVLA）、9、10、12、13。
-
----
 
 ## 8. 未决问题
 
@@ -280,11 +249,11 @@ status: needs-review
 
 **计划证据来源**：参考文献 37–38（两篇 2026 综述与 2411.14499）、以及第 5.2 节缺口清单。
 
-> 本轮新增待决项：① 「帧率」类指标须与分辨率/硬件绑定后才可比较（章 4.2）；② 交互性第三方基准缺位（章 5.2）；③ 章 0 结论全部仍为 `[摘要级]`，需第三轮升级。
+> 尚待研究的问题包括：① 「帧率」类指标须与分辨率/硬件绑定后才可比较（章 4.2）；② 交互性第三方基准缺位（章 5.2）；③ 术语定义和范围判据是本专题的操作约定，不是单篇论文直接给出的结论。
 
 ---
 
-## 9. 跨系统对比总表（第三轮补，10 篇精读汇总）
+## 9. 跨系统对比：目标、动作和行为派生
 
 > **读法**：本表只做**定性对照**，不做排行榜；每行的数字都**带条件**（环境/步数/硬件），脱离条件引用即为不可比（判据见 [topics/incomparability-checklist.md](topics/incomparability-checklist.md)）。所有单元格均可回溯到 `papers/` 对应分册。
 
@@ -352,7 +321,7 @@ status: needs-review
 
 ---
 
-## 11. 演进时间线（每个节点"新增了什么判据/机制"）
+## 11. 研究路线：不同工作改变了什么问题
 
 | 年 | 节点 | 新增机制 | 对判据的贡献 |
 | :-- | :-- | :-- | :-- |
@@ -387,37 +356,19 @@ status: needs-review
 
 ---
 
-## 13. 选文说明（第三轮）
+## 13. 阅读路线：从预测目标到可用证据
 
-- **候选池 22 篇 → 入选 10 篇 → 排除 12 篇**；入选门槛与淘汰标准、逐条排除理由见 [sources/CANDIDATES.md](sources/CANDIDATES.md)；
-- **原文出处与许可证提示**见 [sources/MANIFEST.md](sources/MANIFEST.md)：本仓库**只存清单与我们的精读分册，不存论文全文**；
-- **下一轮首选补的候选**：Genie（`2402.15391`，生成式可交互环境）、Cosmos（`2501.03575`，世界基础模型平台）、TD-MPC2（`2310.16828`，无解码器规划线，可作判据 (a) 的对照）。
+初读可按“模型究竟要预测什么”建立主线：先读 [World Models](papers/1803.10122-world-models.md) 与 [PlaNet](papers/1811.04551-planet.md)，看潜状态如何从观测中形成、如何用想象或在线规划利用动力学；再读 [Dreamer](papers/1912.01603-dreamer.md) 与 [DreamerV3](papers/2301.04104-dreamerv3.md)，理解世界模型误差怎样进入策略训练，以及稳定训练所需的目标与损失设计。随后读 [MuZero](papers/1911.08265-muzero.md)，比较“预测可规划的量”与“重构可观看的未来”两种目标。
 
----
+若关注生成式交互环境，接着读 [GameNGen](papers/2408.14837-gamengen.md) 和 [UniSim](papers/2310.06114-unisim.md)，并对照[动作条件化与动力学专题](topics/dynamics-and-action-conditioning.md)：重点看动作如何进入生成过程、生成轨迹如何继续作为下一步状态，以及训练数据与真实环境之间的差距。若关注表征是否必须重构像素，读 [V-JEPA](papers/2404.08471-vjepa.md)；若关注评测，读 [Physics-IQ](papers/2501.09038-physics-iq.md)、[VBench-2.0](papers/2503.21755-vbench-2.md) 与[评测不可比性专题](topics/incomparability-checklist.md)。机器人策略与训练环境的接口另见[世界模型到 VLA 迁移专题](../EmbodiedVLA/topics/world-model-to-vla-transfer.md)。
 
-## 14. 本轮增量、证据一致性说明与下轮计划
+## 14. 跨论文综合：预测目标决定模型能回答的问题
 
-部署期用世界模型筛选候选机器人动作已整理为独立的[具身预测规划专题](../EmbodiedPlanning/report.md)，与本条目的模型内规划/训练和 `EmbodiedVLA` 的执行闭环分开阅读。
+世界模型的关键分歧不是“谁的模型更大”，而是为了让下游系统做什么，模型需要保留什么信息。World Models、PlaNet 与 Dreamer 保留潜状态的可预测性，以降低规划或想象训练的交互成本；MuZero 进一步舍弃像素重构，只预测搜索所需的 reward、policy 和 value，因此不能把它当作可视模拟器。V-JEPA 的特征预测避免为无关像素细节付出重构代价，却没有动作条件化转移时也不能回答行动后果。GameNGen、Genie 等视频路线提供可观察的后续帧和动作接口，但把视觉生成误差带入后续 rollout。
 
-**本轮（第三轮）增量**
-1. `papers/` **10 篇逐篇精读**（每篇 ≥200 行：方法细节 / 实验数字带条件 / 消融 / 失效边界 / 对条目结论的影响；开头含「亮点与差异」四行）；
-2. `topics/` **3 篇横切专题**（机制轴 / 作环境 / 不可比性，各 150–300 行）；
-3. 本页新增 **§9 跨系统对比总表 · §10 失效边界综述 · §11 演进时间线 · §12 选型指引 · §13 选文说明**，把"逐篇证据"收敛成可查阅的总纲；
-4. `sources/` 新增 **MANIFEST（原文清单）** 与 **CANDIDATES（候选与排除）**。
+由此，评估必须跟交付物匹配：规划模型看模型误差是否改变动作排序与任务结果；想象训练模型看策略是否利用模型漏洞、并能否回到真实环境；可交互视频模型看动作响应、长时程一致性和场景状态保持；特征模型看下游任务是否能从表示中恢复所需状态信息。VBench-2.0、Physics-IQ、WorldScore 分别覆盖视频内在真实性、若干物理预测任务、世界生成的控制/质量/动态维度，不能相互替代，也都不足以单独证明长时程闭环能力。具体条件见第 4–6 章及 [评测不可比性专题](topics/incomparability-checklist.md)。
 
-**证据一致性说明（已修复，2026-10-17 04:1x）**
-- 原问题：章 2/4/6 与参考文献把 **V-JEPA 2（`2506.09985`）**、**Dreamer 4（`2509.24527`）** 等**无 `papers/` 分册**的外部工作标为 `[精读原文]`，与 `topics/*` 里按 `[摘要级]` 引用的写法**自相矛盾**；
-- 处理：依「**`[精读原文]` 仅授予有对应分册的论文**」的范围规则（见文首约定），把**所有无分册的正文级引用统一下调为 `[摘要级]`**（V-JEPA 2 / Dreamer 4 / Cosmos / Matrix-Game / Hunyuan-GameCraft / CausVid / Self Forcing / DIAMOND / WorldScore / Genie Envisioner 等），正文共调整 **36 处**；同时把**有分册但此前标成 `[摘要级]`** 的 6 条（World Models / PlaNet / MuZero / Dreamer / DreamerV3 / V-JEPA）**升回 `[精读原文]`**；
-- 调整后**参考文献按主等级统计：`[精读原文]` 10 条 = 10 篇分册（一一对应）；`[摘要级]` 31 条；`[二手]` 1 条；`[受限核验]` 0 条**（合计 42 条，可逐条核对）；
-- 影响：这些工作的**具体数字不再进入精读级结论**，仅作为"存在该路线/该量级"的线索；10 篇入选论文的 `[精读原文]` 等级不变；
-- 复核依据：独立复验中把这处"证据升格"列为合并前必改项（本页 §14 保留记录，便于回溯）。
-
-
-**下轮计划**
-- 补 Genie / Cosmos / TD-MPC2 三篇（见 §13）；
-- 若确认要做"世界模型作评测环境"，需先解决 §10.6 的口径问题（否则在模型里测出的分数不可信）。
-
----
+本文与[具身预测规划专题](../EmbodiedPlanning/report.md)的边界是：部署时用模型预测候选机器人动作属于预测规划；本专题聚焦作为模型本身的学得动力学、想象训练和可交互环境。与 [EmbodiedVLA](../EmbodiedVLA/report.md) 的关系则是环境/状态演化与动作策略的接口，不能把策略成功率直接解释成世界模型精度。
 
 ## 15. 术语表（读本条目所需的最小集合）
 
@@ -479,33 +430,22 @@ status: needs-review
 | **做技术选型**（要可渲染/要规划/要训练环境） | §9 对比总表 → §12 选型指引 → 对应 `papers/` 分册 §2 | 该选哪条线、代价是什么、需要什么数据 |
 | **评估某个宣称"世界模型"的系统** | §1 判据 → §7 边界 → [topics/dynamics-and-action-conditioning.md](topics/dynamics-and-action-conditioning.md) §7（走判据） | 它算不算世界模型、缺哪一条判据 |
 | **引用具体数字/做对比** | §16 可引用事实清单 → [topics/incomparability-checklist.md](topics/incomparability-checklist.md) 六问 | 这个数字能不能引用、必须带什么限定 |
-| **做研究选题** | §8 未决问题 → §13 选文说明（下一轮候选） | 哪些需要补证（评测环境、交互基准、跨域零样本） |
+| **寻找后续问题** | §8 未决问题、§19 开放问题 | 评测环境、交互基准、跨域零样本和 sim-to-real 仍有哪些证据边界 |
 | **要看机制细节** | 对应 `papers/` 分册（方法/实验/消融/失效边界） | 该系统的具体设计、关键超参、失效条件 |
 
 ---
 
-## 18. 本轮方法学注记（证据是怎么处理的）
+## 18. 证据读法
 
-第三轮共处理 10 篇精读 + 3 篇专题，过程中有五类证据问题与对应的处理方式——**记在这里，便于复核与复用**：
+文中 FPS、成功率、环境步数和数据规模均为论文或官方材料在对应条件下报告的结果，应连同模型版本、环境、分辨率/控制频率、数据、训练或评测预算阅读。不同来源的 FPS、PSNR、奖励和真机成功率不是同一指标。固定版本仓库的源码事实只支持该版本中可见的实现行为，不能单独证明论文训练、权重或线上服务完全采用相同路径。
 
-1. **术语歧义（"世界模型"三种用法）**：不追求唯一定义，改用**可判定的三判据 (a)(b)(c)** 做筛选，把 MuZero/V-JEPA 明确标为"边界样本"而非"不合格"。
-2. **同一系统多篇论文（Dreamer 系）**：按**论文**计数而非系统计数（Dreamer、DreamerV3 各占一篇分册），避免"同一系统记两次"；DreamerV2 因被 V3 取代而进排除清单（见 [sources/CANDIDATES.md](sources/CANDIDATES.md)）。
-3. **"提到了但没精读"的引用**：章 2/4/6 出现过 V-JEPA 2 与 Dreamer 4；本轮**不擅自改他人标注**，而是在 §14 登记一致性说明，并在本页/topics 引用时按 `[摘要级]` 处理——**宁可低估，不可升格**。
-4. **数字可比性**：凡是跨系统的数字对照，一律先过"六问"（分辨率+硬件、指标口径、训练-推理错配、数据域、评测协议、感知 vs 物理）；不满足就写"条件不同，不作直接比较"。
-5. **总纲与分册的边界**：分册给**证据**（方法/数字/失效），总纲给**对照与判定**（§9 表、§10 归类、§12 选型）；同一内容**不在两处重复展开**，只做指向。
+逐篇论文的方法细节和条件见对应 `papers/`；跨论文问题见 `topics/`。摘要和官方博客只支持其公开披露，不足以推断未公开的训练架构。本文未独立重算或复现实验。
 
-**可复用的三条做法**（供后续条目套用）：
-- **先筛选后精读**：候选池 → 排除留痕 → 入选分册（见 `sources/CANDIDATES.md`）；
-- **每篇分册开头四行「亮点与差异」**：一句话亮点 / 新在哪 / 证据强度 / 值不值得引用；
-- **失效边界单列**：每篇必须有独立"失效条件"小节，总纲再做跨篇归类（§10）。
+## 19. 开放问题：评测、数据与部署
 
----
+> 下列问题限制当前结果的外推范围；尚未找到统一协议不等于证明某种能力不存在。
 
-## 19. 三张缺口清单（评测 / 数据 / 部署）
-
-> 与 §8「未决问题」的分工：§8 记**问题**，本清单记**可执行的缺口**（缺什么、证据在哪、补的入口是什么）。
-
-### 19.1 评测缺口
+#### 评测缺口
 
 | 缺口 | 现状证据 | 补的入口 |
 | :-- | :-- | :-- |
@@ -513,7 +453,7 @@ status: needs-review
 | **感知与物理不可互换** | Physics-IQ 证明视觉真实感 ≠ 物理理解（8 模型 / 5 类物理 / 66 场景） | 任何"更真 ⇒ 更懂物理"的推论都要附真实拍摄验证 |
 | **"在模型里评测"不可信** | 见 [topics/world-model-as-env.md](topics/world-model-as-env.md) §5：模型误差 → 评测分数不可信 | 先解决模型误差上界，再谈"模型即评测环境" |
 
-### 19.2 数据缺口
+#### 数据缺口
 
 | 缺口 | 现状证据 | 补的入口 |
 | :-- | :-- | :-- |
@@ -521,7 +461,7 @@ status: needs-review
 | **多源信息鸿沟** | UniSim：不同社区为不同目的采集，信息发散是**物理上限** | 数据编排之外，需要"信息补齐"的技术（不只是拼接） |
 | **跨域零样本无证据** | 现有最强证据（UniSim）是**域内**零样本 | 明确设计跨域实验（不同真机域/不同仿真器） |
 
-### 19.3 部署缺口
+#### 部署缺口
 
 | 缺口 | 现状证据 | 补的入口 |
 | :-- | :-- | :-- |
@@ -535,7 +475,7 @@ status: needs-review
 
 ## 参考文献
 
-> 体例：编号 + 标题 + 一手来源链接 + 证据等级 + 归属章节。**共 42 条（按每条主等级统计）：`[精读原文]` 10 条 + `[摘要级]` 31 条 + `[二手]` 1 条 + `[受限核验]` 0 条**。**范围规则**：`[精读原文]` 仅授予**有 `papers/` 分册**的论文（第三轮起）；无分册的正文级引用一律 `[摘要级]`。
+> 体例：编号 + 标题 + 一手来源链接 + 归属章节。
 
 1. World Models (Ha & Schmidhuber, 2018) — [arXiv:1803.10122](https://arxiv.org/abs/1803.10122) — `[精读原文]` — 章1
 2. Learning Latent Dynamics for Planning from Pixels (PlaNet) — [arXiv:1811.04551](https://arxiv.org/abs/1811.04551) — `[精读原文]` — 章2
@@ -575,39 +515,13 @@ status: needs-review
 36. WorldVLA: Towards Autoregressive Action World Model — [arXiv:2506.21539](https://arxiv.org/abs/2506.21539) — `[摘要级]` — 章7
 37. World Models: A Comprehensive Survey of Architectures, Methodologies, Reasoning Paradigms, and Applications (2026-05-28) — [arXiv:2606.00133](https://arxiv.org/abs/2606.00133) — `[摘要级]` — 章1
 38. Towards Interactive Video World Modeling: Frontiers, Challenges, Benchmarks, and Future Trends (2026-05-31) — [arXiv:2606.01164](https://arxiv.org/abs/2606.01164) — `[摘要级]` — 章1/3
-39. Sora: A Review on Background, Technology, Limitations, and Opportunities of Large Vision Models — [arXiv:2402.17177](https://arxiv.org/abs/2402.17177) — `[二手]` — 章7（Sora 事实的**二手**来源；OpenAI 官方页面反爬，故不称一手）
+39. Sora: A Review on Background, Technology, Limitations, and Opportunities of Large Vision Models — [arXiv:2402.17177](https://arxiv.org/abs/2402.17177) — `[二手]` — 章 7（仅作视频生成背景，不用于判断具体产品的内部架构）
 40. Genie Envisioner: A Unified World Foundation Platform for Robotic Manipulation — [arXiv:2508.05635](https://arxiv.org/abs/2508.05635) — `[摘要级]` — 章5/6
 41. Learning Interactive Real-World Simulators (UniSim) — [arXiv:2310.06114](https://arxiv.org/abs/2310.06114) — `[精读原文]` — 章6
 42. Diffusion for World Modeling: Visual Details Matter in Atari (DIAMOND) — [arXiv:2405.12399](https://arxiv.org/abs/2405.12399) — `[摘要级]` — 章4
 
 ---
 
-## 链接核验清单
+## 来源范围
 
-> 核验方式：arXiv 条目经 `export.arxiv.org` Atom API 逐条比对**编号 ↔ 题名 ↔ 发布日期**；非 arXiv 条目经 HTTP 状态码探测；**新增 19 篇 arXiv HTML 正文抓取**用于定位章 4/5/6 的数值。核验时间：2026-10-16（第二轮）。
-
-| 链接 | 核验方式 | 结果 |
-| :-- | :-- | :-- |
-| 参考文献 1–16、18–19、25–28、30–39、42 的 arXiv 链接 | arXiv Atom API 批量比对题名/发布日期 | **全部通过**（题名与编号一致，无错配） |
-| 参考文献 40–41（新增） | 同上 | **通过**（Genie Envisioner / UniSim） |
-| 章 4/5/6 数值对应的 arXiv HTML 正文抓取 | 抓取 `arxiv.org/html/<id>` 并定位数值段落 | **18 次抓取／16 篇成功**；2 篇无可用 HTML 版本（2311.17982、2402.15391）→ **处置：退回官方摘要页核验**（VBench 16 维、Genie 11B 参数标 `[摘要级]`） |
-| [https://github.com/nvidia-cosmos/cosmos-predict1](https://github.com/nvidia-cosmos/cosmos-predict1) | HTTP 状态码 | 200 |
-| [https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/](https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/) | HTTP 状态码 + 正文抓取 | 200；正文含「24 frames per second / 720p / a few minutes」 |
-| [https://deepmind.google/models/genie/](https://deepmind.google/models/genie/) | HTTP 状态码 | 200 |
-| [https://gamengen.github.io/](https://gamengen.github.io/) | HTTP 状态码 | 200 |
-| [https://danijar.com/dreamer4/](https://danijar.com/dreamer4/) | HTTP 状态码 | 200 |
-| [https://github.com/facebookresearch/vjepa2](https://github.com/facebookresearch/vjepa2) | HTTP 状态码 | 200 |
-| [https://github.com/liujiuming123/Awesome-Interactive-World-Model](https://github.com/liujiuming123/Awesome-Interactive-World-Model) | HTTP 状态码 | 200 |
-| [../EmbodiedVLA-research/report.md](../EmbodiedVLA/report.md)（章 7.3 互引，**相对链接**） | 本仓相对链接回测 | **通过（目标文件存在）** |
-
-**不可达 / 反爬条目及处置**
-
-| 链接 | 结果 | 处置 |
-| :-- | :-- | :-- |
-| [https://openai.com/index/sora-2/](https://openai.com/index/sora-2/) | **403 反爬** | 剔除一手引用；Sora 相关事实改引 `[二手]`（参考文献 39）并显式标注二手，**不拿二手充一手** |
-| [https://openai.com/index/video-generation-models-as-world-simulators/](https://openai.com/index/video-generation-models-as-world-simulators/) | **403 反爬** | 同上，本轮不作为参考文献列出 |
-| [https://arxiv.org/html/2311.17982v2](https://arxiv.org/html/2311.17982v2)、[https://arxiv.org/html/2402.15391v2](https://arxiv.org/html/2402.15391v2) | **无可用 HTML 版本**（返回占位页） | 退回官方摘要页核验，相关条目降级为 `[摘要级]` |
-
----
-
-*第三轮范围：新增 `papers/`（10 篇逐篇精读）与 `topics/`（3 篇横切专题），把两个重点方向写实——① 环境动力学 / 动作条件化的机制差异（逐案精读对比）；② 把世界模型当训练 / 评测环境这条线。章 0 结论 #4/#5 升格为 `[精读原文]`，其余已核验结论不改。策略与动作侧归 `EmbodiedVLA`。*
+本文优先引用论文正文、官方技术报告和固定版本代码。跨论文比较保留各自原始任务、模型和硬件条件；未公开的内部结构不作推断，正文列出的数字均为作者报告结果，未独立复现。

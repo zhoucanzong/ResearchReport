@@ -28,18 +28,18 @@
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
-| **模型对齐与后训练** | [模型对齐与后训练：方法、目标与证据边界](<Alignment/report.md>) | 115 行 |
+| **模型对齐与后训练** | [模型对齐与后训练：方法、目标与证据边界](<Alignment/report.md>) | 110 行 |
 | **决策模型（Decision Models）** | [Decision Models（System One / Typed Decision Model）技术专题调研](<DecisionModels/report.md>) | 875 行 |
 | **扩散语言模型** | [扩散语言模型：从随机遮盖到大规模并行生成](<DiffusionLM/report.md>) | 76 行 |
-| **OCR 与文档解析** | [OCR 与文档解析：从字符识别到结构还原](<DocumentParsing/report.md>) | 102 行 |
-| **长上下文** | [长上下文（Long Context）技术研究报告](<LongContext/report.md>) | 610 行 |
-| **混合专家模型（MoE）** | [混合专家模型（Mixture of Experts, MoE）架构演进研究报告](<MoE/report.md>) | 406 行 |
+| **OCR 与文档解析** | [OCR 与文档解析：从字符识别到结构还原](<DocumentParsing/report.md>) | 116 行 |
+| **长上下文** | [长上下文：从可接收长度到有效利用](<LongContext/report.md>) | 176 行 |
+| **混合专家模型（MoE）** | [混合专家模型：路由、负载均衡与系统通信](<MoE/report.md>) | 139 行 |
 | **大模型辅助运筹建模与求解** | [大模型辅助运筹建模与求解：从自然语言到可验证的决策](<OperationsResearch/report.md>) | 90 行 |
-| **检索增强生成（RAG）** | [检索增强生成（Retrieval-Augmented Generation, RAG）技术研究报告](<RAG/report.md>) | 835 行 |
-| **推理模型与推理时计算** | [推理模型（Reasoning Models）与 Test-Time Compute 研究报告](<ReasoningModels/report.md>) | 676 行 |
+| **检索增强生成（RAG）** | [检索增强生成：检索误差怎样传到答案](<RAG/report.md>) | 153 行 |
+| **推理模型与测试时计算** | [推理模型：测试时计算怎样变成更可靠的解题](<ReasoningModels/report.md>) | 152 行 |
 | **LLM 后训练中的强化学习** | [LLM 后训练中的强化学习：轨迹从哪里来，策略何时更新](<ReinforcementLearning/report.md>) | 107 行 |
-| **训练数据策展** | [训练数据策展：筛选、去重与配比如何改变训练结果](<TrainingData/report.md>) | 60 行 |
-| **视觉语言模型（VLM）** | [多模态大模型（Vision-Language Models, VLM）研究报告](<VLM/report.md>) | 521 行 |
+| **训练数据策展** | [训练数据策展：筛选、去重与配比如何改变训练结果](<TrainingData/report.md>) | 73 行 |
+| **视觉语言模型（VLM）** | [视觉语言模型：视觉表示如何进入语言模型](<VLM/report.md>) | 131 行 |
 
 ## 📎 子文档
 

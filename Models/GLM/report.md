@@ -2,740 +2,173 @@
 display_name: GLM
 ---
 
-# GLM 系列模型深度调研报告
+# GLM：预训练目标、推理后训练与多模态分支
 
-> 调研对象：智谱 AI（Zhipu AI / Z.ai）与清华大学 KEG 实验室（THUDM）联合研发的 GLM/ChatGLM/CogVLM/CogVideoX/GLM-Z1/GLM-4.5 等模型家族
-> 时间跨度：2021 年 CogView 至 2026 年 8 月 GLM-5.3 / GLM-5.3-Flash
-> 调研日期：2026-06-05 ｜ **最近更新：2026-10-17**（增量增补 GLM-5.2 / GLM-5.3 / GLM-5.3-Flash 三个新版本，新增 §2.9、§2.10；并据官方发布记录校正 GLM-5.1 上线日期；既有结论未改动）
-> 资料来源：arXiv 论文、Z.ai 官方博客与文档（z.ai / bigmodel.cn）、GitHub（THUDM、zai-org）、Hugging Face、ICLR/NeurIPS/ACL 等会议论文
+> GLM 是同一研究团队持续探索的模型家族，不是一套架构从小到大的连续放大。本报告沿四个相互关联的问题阅读：如何把双向理解与生成放在同一预训练目标中；为什么后来转向标准因果语言模型；如何把模型能力从对话扩展到推理、工具和代码任务；视觉理解与视觉生成分别选择了哪些融合方式。
+>
+> 阅读路线：先看 GLM 的自回归填空及 GLM-130B 的训练稳定性，再看 ChatGLM/GLM-4 的目标与推理工程变化；随后比较 GLM-4.5 的 MoE 和 Agent 后训练、CogVLM 的深度视觉融合，以及 CogView/CogVideoX 的生成架构。论文未公开的模型不由前代实现外推。
 
----
+## 研究地图：不是一条版本时间线，而是四条问题线
 
-## 一、概述
-
-智谱 AI（前身：清华大学 KEG 实验室孵化的中国 AI 独角兽）是国内最早系统性自研基础大模型并开源的机构之一。其模型家族覆盖：
-
-- **基座语言模型**：GLM (2021/22) → GLM-130B (2022) → ChatGLM-6B / ChatGLM2-6B / ChatGLM3-6B (2023) → GLM-4 / GLM-4-9B / GLM-4-32B-0414 (2024–2025) → GLM-4.5 / GLM-4.5-Air / GLM-4.6 / GLM-4.7 / GLM-5 (2025–2026)
-- **推理（深度思考）模型**：GLM-Z1-9B/32B-0414、GLM-Z1-Rumination-32B、GLM-4.5 Thinking Mode (2025)
-- **视觉语言模型 (VLM)**：CogVLM-17B (2023) → CogVLM2 / CogVLM2-Video (2024) → GLM-4V-9B (2024) → GLM-4.1V-Thinking (2025) → GLM-4.5V / GLM-4.6V / GLM-5V-Turbo (2025–2026)
-- **图像生成**：CogView (NeurIPS 2021) → CogView2 (NeurIPS 2022) → CogView3 / CogView-3-Plus (2024) → CogView4 (2025)
-- **视频生成**：CogVideo (2022) → CogVideoX-2B/5B (ICLR 2025)
-
-GLM 系列的独特之处在于：早期（2021–2023）坚持自主路线 —— 采用 **Prefix LM + 自回归填空 (Autoregressive Blank Infilling)** 的混合预训练目标，与 GPT 风格 Causal LM 截然不同；从 ChatGLM2 开始逐步收敛到主流 Causal LM 范式（RoPE + RMSNorm + SwiGLU + GQA），并在 GLM-4.5 转向 MoE 与 Hybrid Reasoning 路线。本报告以"架构演进 + 关键创新"双线索梳理这一脉络。
-
-### 1.1 时间线总览
-
-| 时间 | 模型 | 关键特征 |
+| 研究线 | 代表工作 | 需要理解的变化 |
 |---|---|---|
-| 2021-05 | CogView | 4B 参数，Transformer + dVAE，文本→图像生成（NeurIPS 2021） |
-| 2021-12 | GLM (论文 v1) | 提出"自回归填空"预训练目标；2D 位置编码；ACL 2022 |
-| 2022-04 | CogView2 | 层次化生成 + Cross-modal General LM，10× 加速 |
-| 2022-05 | CogVideo | 9B，首个开源大规模文生视频模型，多帧生成 |
-| 2022-08 | GLM-130B | 1300 亿参数双语模型；INT4 量化首次在百亿级实现（ICLR 2023） |
-| 2023-03 | ChatGLM-6B | 首个对外开源的中文对话模型，6.2B，GLM 架构 + SFT/RLHF |
-| 2023-06 | ChatGLM2-6B | 切换到 GLM 混合目标 + FlashAttention + Multi-Query Attention，32K 上下文 |
-| 2023-10 | ChatGLM3-6B | 3D-RoPE / MQA / Causal-only mask；支持工具调用与代码解释器 |
-| 2023-11 | CogVLM-17B | "Visual Expert"机制：在每层 Attention/FFN 中并行视觉专家 |
-| 2024-01 | GLM-4 (闭源旗舰) | 对标 GPT-4；GLM-4 All Tools |
-| 2024-05 | CogVLM2 / GLM-4V-9B | 切换到 LLaMA3-8B 底座；图像 1344×1344；19B 总参 |
-| 2024-06 | GLM-4-9B 开源 + ChatGLM 综述论文 (arXiv 2406.12793) | 10T tokens 预训练 |
-| 2024-08 | CogVideoX (2B/5B) | 3D Causal VAE + Expert Transformer + Expert AdaLN |
-| 2024-09 | CogView3 / CogView-3-Plus | Relay Diffusion（级联扩散），DiT 路线 |
-| 2025-03 | CogView4-6B | 进一步扩展到中文原生 DiT |
-| 2025-04 | GLM-4-32B-0414 + GLM-Z1-32B + GLM-Z1-Rumination-32B | 首个开源旗舰级稠密模型 + 深度思考 + 反刍模型 |
-| 2025-07 | GLM-4.1V-9B-Thinking | VLM 引入 RL 训练的"Thinking"链 |
-| 2025-07 | **GLM-4.5 / GLM-4.5-Air** | MoE 355B/A32B 与 106B/A12B；Hybrid Reasoning；slime RL 框架 |
-| 2025-08 | GLM-4.5V | 基于 GLM-4.5-Air 的 106B MoE VLM |
-| 2025-09 | GLM-4.6 | 357B MoE，200K 上下文，Agent/Coding 强化 |
-| 2025-12 | GLM-4.7 | "Preserved Thinking"，专注自主编程 |
-| 2025-12 | GLM-4.6V-Flash | 9B 端侧 VLM |
-| 2025-12-20 | **智谱 AI 香港上市 (IPO)** | 港股主板挂牌，募资约 30 亿港元 |
-| 2026-01-12 | **GLM-4.7 正式发布** | 官方正式版上线 bigmodel.cn 与 Z.ai |
-| 2026-02 | **GLM-5** | 744B MoE，SWE-bench 77.8%，继续基于 slime RL 框架 |
-| 2026-03-04 | **API 价格大幅上调** | 全线 API 价格上涨 30–100% |
-| 2026-04 | **GLM-5V-Turbo** | 基于 GLM-5 底座的旗舰视觉模型，多模态推理增强（官方上线日 2026-04-02） |
-| 2026-04-07 | **GLM-5.1** 上线 | 长程任务强化，单次任务可持续自主工作约 8 小时；官方称综合能力对齐 Claude Opus 4.6（日期取自官方发布记录，详见 §2.8 校正说明） |
-| 2026-05 | **API 调用量翻倍** | 官方披露日调用量较 2025 年底翻倍 |
-| 2026-06-16 | **GLM-5.2** 上线 | 1M 上下文；IndexShare 跨层复用 indexer；MIT 许可。HF 权重仓库 `createdAt` 同为该日（详见 §2.9.1） |
-| 2026-08-19 | **GLM-5.3** 上线 | 与 GLM-5.2 **同一基座**，全部增益来自后训练（IndexShare + SAO + slime）；编码与网络安全能力大幅提升。详见 §2.9.2 |
-| 2026-08-25 | **GLM-5.3 / 5.3-Flash 的 HF 仓库创建** | 官方称「发布两周后开放模型权重」，此前需完成安全评估与模型加固；HF 仓库 `createdAt` 为 2026-08-25（权重实际开放时点未在官方记录中单列） |
-| 2026-08-26 | **GLM-5.3-Flash / FlashX** 上线 | GLM-5 系列首个**原生多模态**成员：320B 总 / 18B 激活，稀疏+线性注意力混合架构，mHC。详见 §2.9.3 |
+| 语言预训练 | GLM → GLM-130B → ChatGLM → GLM-4 | 从双向可见的 blank infilling 目标，逐渐转到更易延续的 decoder-only 因果生成 |
+| 能力后训练 | GLM-4 / GLM-Z1 → GLM-4.5 | 从指令对齐和工具调用，转向将推理、代码、Agent 任务与强化学习共同组织 |
+| 视觉理解 | CogVLM → CogVLM2 → GLM-V | 从每层加入视觉专家的深融合，到不同视觉/语言底座和推理后训练的权衡 |
+| 视觉生成 | CogView → CogView2 → CogView3/4；CogVideo → CogVideoX | 从离散图像 token 的自回归生成，转向分级生成、扩散；视频另需时间压缩和跨模态时序建模 |
 
-> 注：智谱 2025 年起将海外品牌名启用 **Z.ai**，开源仓库迁至 **github.com/zai-org**（原 THUDM 仓库部分仍保留）。
+这些支线有共同主题：语言生成需要处理“输入上下文可见到什么”，视觉理解需要处理“图像信息怎样进入语言模型”，视觉生成则需要决定“图像/视频应被表示成离散序列还是连续 latent”。理解 GLM 的演进，关键是这些设计问题如何变化，而不是型号数量。
 
----
+## 一、语言模型：从 blank infilling 到标准因果生成
 
-## 二、基座语言模型演进
+### 1.1 GLM：用一个目标兼顾填空和生成
 
-### 2.1 GLM（General Language Model，2021–2022）
+GLM 论文针对当时三类常见预训练方式的分工：BERT 的双向上下文利于理解，GPT 的因果预测适合连续生成，T5/BART 用编码器—解码器处理条件生成。GLM 希望在一个模型里覆盖三类任务，于是将输入文本中若干 span 替换成空白，再按随机顺序自回归填回去。[GLM, §§1–2.1]
 
-**核心论文**：Du et al., *GLM: General Language Model Pretraining with Autoregressive Blank Infilling*, ACL 2022（arXiv:2103.10360）。
+可以把它想成“带空格的上下文补写”：可见的 Part A 双向互看；被遮住的 span 组成 Part B，按自回归方式逐 token 生成。通过改变空白的位置、数量和长度，同一模型可以训练短 span 的理解式补全，也能训练长 span、句尾空白的生成任务。不同 span 预测顺序随机化，使模型不只依赖固定的左到右次序。[§2.1.1–2.1.2]
 
-**动机**：当时主流预训练范式分为三类——自编码（BERT，擅长 NLU）、自回归（GPT，擅长生成）、Encoder-Decoder（T5/BART，擅长 Seq2Seq）。GLM 旨在用一个统一架构同时适配三类下游任务。
+2D 位置编码把“空白在原文哪里”和“填入内容内部的第几个 token”分开表示。被遮挡 span 的所有 token 共用原文位置坐标，另一个坐标表示 span 内部顺序；这样模型在生成前不会通过位置编号提前得知答案长度。它的取舍是，训练目标更通用，却要复杂处理注意力掩码和位置编码；如果部署任务主要是普通自回归续写，这种额外灵活性未必值得保留。[§2.2.1]
 
-**核心设计**：
+这两个位置坐标也对应了 GLM 的核心因果结构：Part A 中未遮挡 token 可双向互看；Part B 以自回归 mask 逐 token 生成，但不同 span 的生成顺序可以打乱。模型既看到填空周围的左右上下文，也必须在 span 内保持生成因果性。论文消融显示，去掉第二个位置维度会损害长文本生成，这说明位置编码不是实现细节，而是该训练目标能否区分“原文位置”和“生成内部顺序”的关键条件。[§3.4]
 
-1. **自回归填空 (Autoregressive Blank Infilling)**：从输入序列中随机采样若干 span 用 `[MASK]` 替换，剩余部分构成 Part A（双向可见），被 mask 的 spans 拼成 Part B（自回归生成）。模型在 Part A 上做双向编码，在 Part B 上做自回归解码——这本质上是一种 **Prefix LM**（Part A 全可见 + Part B 因果可见）。
-2. **2D Positional Encoding**：每个 token 用 (position1, position2) 双坐标编码 —— position1 是其在原文中的绝对位置（被 mask 的 span 共享同一个位置 id），position2 是 span 内部的相对位置。这一设计使被填充内容的长度对模型不可见（避免信息泄漏）。
-3. **Span 顺序随机化**：训练时打乱 spans 的预测顺序，强迫模型学习双向依赖。
-4. **多任务预训练**：短 span（句中 mask，类 BERT）+ 长 span（句尾 mask，类 GPT）联合训练，使同一参数体可在 NLU、有条件/无条件生成任务上微调。
+论文在同等模型规模与数据下比较 GLM、BERT、T5、GPT，并报告 GLM 在多类下游任务上的优势。这些结果说明 blank-infilling 能成为通用预训练目标，不代表它对所有后续任务都优于纯 decoder-only。模型规模、任务转换和训练配方均是对照的一部分。[§3]
 
-**模型规模**：GLM-Base (110M)、GLM-Large (335M)、GLM-XL (10B)、GLM-XXL (515M+)。
+GLM 的实验还把“目标是否有帮助”与“任务混合是否有帮助”分开：不同长度 span 会改变任务在训练中更像句内理解、条件生成还是续写；span 顺序打乱则改变模型是否必须适应多种生成次序。该设计意图是让一个模型在相同参数里兼容更广任务，而不是给 NLU 和生成各训练一套模型。相应代价是预训练目标和注意力 mask 更复杂，实际下游部署还需要决定如何把输入整理成特定的空白填充形式。[§2.1–2.3、§3.3–3.4]
 
-**架构细节**：基于 Transformer，但相比原始 BERT 做了两点改动：(a) 重排 LayerNorm 与残差连接的顺序（Post-LN→Pre-LN 思路）；(b) 输出 token 预测使用单层线性层；(c) 用 GeLU 替换 ReLU。
+### 1.2 GLM-130B：目标不变，百亿级训练的瓶颈转为稳定性
 
-### 2.2 GLM-130B（2022-08，ICLR 2023）
+GLM-130B 延续自回归填空目标，研究重心从“统一目标能否工作”转向“百亿级双语模型如何稳定训练”。论文记录训练中的 loss spike、发散和数值精度问题，并围绕 DeepNorm、嵌入梯度收缩、混合精度及并行策略调整工程方案。[GLM-130B, §§2–3、附录B]
 
-**核心论文**：Zeng et al., *GLM-130B: An Open Bilingual Pre-Trained Model*, ICLR 2023（arXiv:2210.02414）。
+需要注意，这一代并非原封不动地放大 GLM-Base。它仍保留 blank-infilling/PREFIX LM 目标，但 GLM-130B 使用 RoPE 替代早期可学习的二维位置表示，并调整归一化和前馈网络，以适配更深、更宽的 Transformer 训练。也就是说，家族的研究身份来自“GLM 目标”，而非所有世代都共享相同的 positional encoding 或参数层定义。[GLM-130B, §2.1、附录B.2–B.3]
 
-**目标**：训练一个达到 GPT-3 (davinci, 175B) 水平的双语（中英）开源百亿级模型，并公开训练日志。
+这说明模型架构与训练稳定性不能分开读：扩大参数并不会自动把较小模型的训练配方等比例放大。GLM-130B 的工程经验（包括无需后训练的 INT4 权重量化尝试）是这项工作的主要教学价值，而“接近 GPT-3”之类的横向结论必须保留各论文自己的任务、数据与评测设置，不能直接视为同规模受控对照。[§3–5、附录B.7–B.10]
 
-**架构选择**（与 GLM-Base 相同的预训练目标，但工程上做了多项关键决定）：
+更具体地看，论文把大规模训练中的不稳定拆成数值范围、残差传播和词嵌入梯度等问题，而不是只靠“换更大集群”解决。DeepNorm 调整残差支路初始化与层数增长之间的关系；Embedding Gradient Shrink 则针对输入 embedding 梯度过大造成的 loss spike。作者还展示了训练损失尖峰与发散事件的诊断过程。这些工程手段本身并非 GLM 专属的语言建模目标，却说明 100B 级训练的实际方法创新常发生在优化稳定性和并行系统中。[§3、附录B.2、B.6、B.10]
 
-| 设计点 | GLM-130B 选择 | 备注 |
-|---|---|---|
-| 主架构 | GLM 自回归填空（Prefix LM） | 沿用 GLM 论文 |
-| 层数 / 隐藏维度 | 70 层 / 12,288 hidden / 96 heads | 130B 参数 |
-| 上下文长度 | 2,048 | 当时主流 |
-| 位置编码 | **RoPE (Rotary Positional Embedding)** | 已抛弃 GLM-Base 的 2D learnable PE |
-| 激活函数 | **GeGLU** | GLU 家族 |
-| LayerNorm | **DeepNorm**（自研） | 解决 100B 级训练发散 |
-| 训练精度 | FP16 主体 + 梯度累加 FP32 | FlashAttention 之前的方案 |
-| 推理量化 | **INT4**（无后训练） | 首个达到 INT4 几乎无损的 100B+ 模型，可在 4×RTX 3090 上推理 |
+### 1.3 ChatGLM 到 GLM-4：从目标创新转向推理、上下文和接口
 
-**训练**：在 96×A100 集群上耗时 60 天，预训练 400B tokens（200B 中文 + 200B 英文）。论文重点报告了训练稳定性（loss spike 与 divergence）的工程经验：嵌入梯度收缩 (Embedding Gradient Shrink, EGS)、混合精度策略调整、DeepNorm 替换 Pre/Post-LN 等。
+ChatGLM 系列的设计逐渐接近标准 decoder-only 语言模型。ChatGLM2 使用 Multi-Query Attention（MQA）：多个 query head 共享较少的 key/value 投影，减少自回归生成中 KV cache 的体积；其工程收益主要出现在长上下文和并发推理。ChatGLM3 又以更直接的因果 mask 和工具消息模板加强多轮对话、函数调用与代码解释器协作。[ChatGLM report, §2]
 
-**评测**：在 MMLU、LAMBADA、BIG-bench-Lite 上接近或超过 GPT-3 davinci；在中文 CLUE/FewCLUE 上显著超过 ERNIE-Titan-3.0 260B。
+这一转向包括多种相互配合的工程变化：上下文长度扩展使注意力的 KV 状态更昂贵，MQA 以共享 KV head 降低每 token 的缓存；FlashAttention 减少注意力计算中显存读写；工具调用则要求输出格式能被解析为 action、接收 observation，再继续生成。它们分别作用于内存、算子和交互协议，不应概括成一个“架构升级”。ChatGLM2/3 技术材料将这些变化放在轻量模型和长上下文服务条件中讨论；相同速度或上下文数字若脱离硬件、批量和推理实现，就不宜跨实现对比。[ChatGLM report, §2]
 
-> **重要**：GLM-130B 是该家族**仍然采用 Prefix LM 双向+单向混合**的最后一代百亿级模型。下一代 ChatGLM 系列在工程上继续兼容 GLM 目标，但从 ChatGLM3 开始已逐步向标准 Causal LM 收敛。
+这不是单纯“GLM 放弃了原始目标”。blank infilling 解决的是预训练任务的统一表达；ChatGLM 后续更重视对话服务、长上下文、缓存占用和工具交互，架构选择随产品化任务改变。MQA 帮助降低缓存开销，但不是免费扩展上下文：模型的有效检索和多步推理仍要单独评价。
 
-### 2.3 ChatGLM-6B / ChatGLM2-6B / ChatGLM3-6B（2023）
+若把三代 ChatGLM 压缩成方法变化，可看到目标、注意力和接口不是同步切换：首代继续用 GLM 的填空式任务组织；ChatGLM2 引入 MQA 并扩长上下文；ChatGLM3 将工具和代码执行消息纳入对话协议。对话模型因此不再只被评价为“下一条回复写得好不好”，还要在工具调用格式和 observation 后继续正确响应。长上下文长度从 2K、32K 到一些 128K 版本的变化，是模型配置与推理实现共同作用的结果，不能仅靠位置编码升级解释。[ChatGLM report, §2]
 
-| 维度 | ChatGLM-6B (2023.03) | ChatGLM2-6B (2023.06) | ChatGLM3-6B (2023.10) |
+GLM-4 论文将能力归纳为中文/英文对话、长上下文、指令遵循和 All Tools。All Tools 的核心变化是模型不只产出答案，还须决定何时调用浏览器、Python、图像生成或用户函数，并将工具结果纳回对话。论文报告预训练约 10T tokens、经过多阶段 SFT 与人类反馈对齐；其中长上下文、知识问答和工具表现各对应不同评测，不应把某项公开分数当成通用 Agent 能力的充分证明。[ChatGLM report, §§2–4]
+
+GLM-Z1-32B 是从 GLM-4-32B-0414 继续训练出的推理分支。官方模型卡将其训练描述为 cold start、延长的强化学习，以及面向数学、代码、逻辑的进一步训练；另加入 pairwise ranking feedback 的通用强化学习，以尝试兼顾推理能力和一般回答质量。相较于基础 ChatGLM 对话线，这条分支把主要训练预算放在更长推理轨迹和可验证题目上。[GLM-Z1 model card]
+
+GLM-Z1-Rumination 则把工具使用加入更开放的深度研究任务：官方卡描述它使用搜索工具，并以多种规则奖励进行端到端强化学习，针对综合检索、资料比较和研究式写作。这里重要的技术变化不是“思考更久”本身，而是 reward 试图覆盖工具调用过程与最终回答；但公开材料不足以说明搜索策略如何训练、来源质量如何评估，以及长篇报告的事实错误怎样被奖励函数捕捉。因此应视为早期的研究型 agent 训练路径，而非已解决 Deep Research 可靠性的证明。[GLM-Z1-Rumination model card]
+
+## 二、GLM-4.5：能力研究转向可交互任务
+
+GLM-4.5 的技术报告把目标明确为 Agentic、Reasoning、Coding（ARC）。它采用 MoE：总参数分布在多个前馈专家中，每个 token 由路由器选取少数专家参与计算。与稠密模型相比，这让总容量和单 token 激活计算可以分开扩展；相应代价是专家路由、负载均衡和多机通信成为训练及部署问题。[GLM-4.5, §§1–2]
+
+论文给出的 MoE 细节比“每个 token 激活若干专家”更值得读：它采用 sigmoid gate 和 loss-free balance routing，通过更新路由偏置来控制专家负载，而非把传统辅助负载均衡损失直接加到语言模型总损失中。作者还报告只在训练前段更新平衡偏置、后段停止更新，并保留较小的 sequence-level balance loss，防止单个序列内部出现极端不均。模型相对部分同期 MoE 采用“更深、较窄”的层数/专家宽度选择，报告称更深结构对推理表现有帮助。这里的取舍是：路由均衡不仅关系硬件利用，也会改变 token 如何分配到专家；若过度平衡，可能干扰任务损失，若放任分布，则可能形成计算热点。[§2.1、§2.4]
+
+报告的多阶段训练包含预训练、中训练和后训练。中训练针对代码仓库、长上下文和 Agent 数据；后训练先通过专家模型迭代构建高质量 SFT 数据，再分别强化 reasoning 与 agentic 行为。Agent 任务的反馈来自环境交互和可执行结果，因此报告同时讨论 rollout、工具交互轮数和评测环境。相比只用最终文本偏好，这种做法让“答案是否正确”能通过任务环境部分验证，但评测结果也会依赖工具、提示模板和运行时限。[§2.3、§3]
+
+这与 GLM-4 的 All Tools 形成一条重要的训练路线：早期工具能力更多表现为消息格式、函数调用模板和模型学习何时输出工具请求；GLM-4.5 把工具行动进一步放进训练轨迹和 RL 环境，让模型学习“采取操作—观察结果—继续操作”。任务反馈在代码测试、函数调用和网站浏览中可更直接地判对错，但环境本身也决定可学习的行为集合：如果模拟器、工具错误处理或最大交互轮数不同，能力结果就不可直接互换。[GLM-4.5, §§3–4]
+
+GLM-4.5 还允许 thinking 与 direct-response 两种模式：复杂问题可以投入较多生成过程，常规问题可短答。它把“推理时间”暴露为模型行为的一部分，但报告不支持把它解释成模型内部一定采用树搜索、显式 verifier 或某种未披露的推理算法。官方报告摘要给出 TAU-Bench、AIME 24 和 SWE-bench Verified 的结果；阅读 SWE-bench 时要一并看 §4 的 scaffold、任务实例和执行条件，避免把代理框架成绩误当成裸模型准确率。[§1、§4]
+
+后训练流程把不同专家模型作为中间教师，再将能力蒸馏进同时支持思考与直接响应的通用模型。Reasoning RL 采用难度课程和长输出上限；Agent RL 则在环境内产生多轮工具交互，论文讨论 outcome supervision、格式约束、迭代自蒸馏和交互轮数对能力的影响。相比只对最终文本作偏好排序，这让模型能依据任务执行成功与否获得反馈；与此同时，系统结果由模型、工具、提示模板、环境状态和轮数预算共同决定。[§3.1–3.5]
+
+作者报告对 AIME 24 使用 32 次采样平均准确率，对 GPQA 使用 8 次采样平均准确率；SWE-bench Verified 则用指定 Agent scaffold 和执行环境。报告摘要的 91.0% AIME 24、64.2% SWE-bench Verified 等结果是这些特定设置下的模型报告值，不应写成单次采样或不依赖环境的能力属性。[§4.2]
+
+GLM-4.6/4.7 与 GLM-5 系列延续了 MoE、长上下文、工具调用和后训练路线。较新的官方模型卡/发布材料能确认能力接口或作者报告的结果，但目前公开的细节不等同于 GLM-4.5 这类较完整技术报告。因而本报告用它们标记研究路线仍在延伸，不把型号和 benchmark 的逐月更新当作新的架构阶段。
+
+## 三、视觉理解：浅投影与每层视觉专家解决不同问题
+
+### 3.1 CogVLM：视觉信息不只在输入端对齐一次
+
+早期常见 VLM 将视觉编码器输出经 Q-Former 或 MLP 投影到语言模型输入空间，再主要依靠语言模型读取图像 token。CogVLM 的判断是：对于 OCR、局部定位和细粒度关系，单次输入映射可能让视觉信息在深层语言推理中逐渐变弱。它在 Transformer 各层加入可训练 Visual Expert：视觉 token 走视觉专家的 QKV/FFN，文本 token 继续走原语言模型参数，跨模态注意力让两类 token 交互。[CogVLM, §§1–3]
+
+视觉专家与语言分支在 attention 计算前分别投影 query/key/value，拼接后仍进行跨模态 self-attention；在 FFN 阶段再按 token 模态分流。这样图片特征在每一层都能适配语言模型的语义空间，而不是只在输入端做一次映射。论文说明它为图像支路增加了大量参数，却因为文本 token 不走视觉 expert 而没有按相同比例增加 FLOPs；同时冻结原始 LLM，保持纯文本能力的出发点更清晰。[§2.1]
+
+它冻结大部分语言模型主干，训练视觉专家、视觉编码器和 adapter。这一设计尝试同时做到深度融合与文本能力保持；代价是视觉侧在每层增加参数和计算。论文在多项图像问答、grounding、caption benchmark 上报告结果，但这些结果支持的是指定测试集上的视觉理解改善，不意味着视觉专家是所有 VLM 都应采用的结构。[§4]
+
+作者的结构消融比较了只训练 adapter、训练 LLM 加 adapter、每隔数层加视觉专家、仅用 FFN 专家，以及完整视觉专家等方案。浅层 adapter 在多项图像理解/grounding 测试中明显较弱；完整专家方案在作者给出的 VQAv2、TextVQA、OKVQA 等数据上表现更强。这个对照说明深融合对该训练配方有贡献，但不同结构的可训练参数、初始化和预训练图像编码器同时变化，不能把总榜单差异全部归因于单一 attention 层。[§3.5，表4]
+
+论文消融提供了比榜单更直接的机制证据：只训练输入端 MLP adapter 的浅对齐设置，在多个 VQA/grounding 数据集上低于每层加入视觉专家的方案；只在部分层插入专家、或只给 FFN 增加视觉专家，表现也会变化。作者报告视觉专家对 OCR 等图像细节任务尤其有帮助，并且文本 token 继续使用冻结的语言模型路径。由此能支持“逐层视觉适配提高图文特征交互”的判断，但消融仍是具体数据和训练步数下的局部比较。[§3.5，表4]
+
+### 3.2 CogVLM2 与 GLM-V：结构复用之外，强化学习成为新变量
+
+CogVLM2 将视觉专家路径扩展到高分辨率图像和视频理解，使用更强的文本底座、视觉编码器与时间标注数据。视频路线增加时间定位和跨帧问答，区别于单张图像的空间理解；这类结果受到视频片段采样、帧数和时间标注方式影响。[CogVLM2, arXiv:2408.16500]
+
+GLM-4.1V-Thinking 与 GLM-4.5V 的报告把关注点转向推理型后训练：先构造具备通用视觉理解能力的底座，再用 Reinforcement Learning with Curriculum Sampling（RLCS）逐步提高任务难度，强化 STEM、视频理解、grounding、GUI 操作和长文档理解。这里的研究变化不只是更换视觉编码器，而是把“模型是否能从图像读到信息”与“能否多步推断并采取动作”拆成预训练能力与后训练能力。[GLM-4.1V/4.5V, §§2–4]
+
+RLCS 的课程采样意图是避免一开始就用高难度样本训练，使策略在奖励稀疏、推理链较长的视觉任务上难以获得稳定反馈。由易到难的采样配合推理任务奖励，让模型逐渐学会何时识别文字/图表、何时定位图像区域、何时调用多步解释。论文结果覆盖 42 个公开视觉语言基准，但广覆盖汇总无法替代逐类分析；GUI agent 还依赖动作空间、截图频率和环境接口，视频理解则依赖帧采样与时长。[GLM-4.1V/4.5V, §§3–4]
+
+跨论文比较时要区分两类问题：Visual Expert 试图改善视觉信息在语言层中的融合深度；RLCS 试图使模型学会多步处理困难视觉任务。它们可以结合，但一方的 benchmark 增益不能直接证明另一方机制有效。GLM-4.5V 的 42 项 benchmark 汇总是作者报告的广覆盖证据；对具体 GUI 或视频任务仍应回到任务拆分、基线与交互流程。[§4]
+
+## 四、视觉生成：离散序列、层次化生成与扩散路线
+
+### 4.1 CogView 与 CogView2：先把像素变成 Transformer 能预测的序列
+
+CogView 将图像通过 VQ-VAE 压成离散视觉 token，再与文本表示组成序列，以 GPT-style Transformer 自回归生成。这样图像生成能够复用语言建模的 next-token 目标，同时把图文关系放在同一个序列任务中。代价是高分辨率图像会变成很长的离散序列，逐 token 生成速度和视觉压缩质量共同限制最终效果。[CogView, §§2–4]
+
+离散 token 的优势是生成目标和语言模型一致：训练时预测下一个 code，推理时按顺序产生视觉序列；图文之间可以共享 Transformer 的序列建模。但 VQ-VAE 的码本压缩会把连续纹理和空间几何映射为有限的离散码，且序列长度随图像分辨率快速增长。CogView 还探索了超分、风格微调和图文排序等组件，说明基础生成质量、筛选/排序和任务适配在早期图像系统中是分开的环节。[CogView, §§2–5]
+
+CogView2 试图解决这一生成效率瓶颈：以 Cross-modal General Language Model（CogLM）预训练图文模型，再采用分层图像生成和局部并行自回归生成，先形成较粗图像，再逐级提高分辨率。它的主要研究贡献是把“图像 token 的生成成本”交给层次结构分担，而不只是增大单个 Transformer。[CogView2, §§2–4]
+
+分层生成也改变了错误传播方式：如果低分辨率阶段的布局、对象数量或语义错了，超分辨率阶段通常只能把错误细化，而不能可靠纠正整体构图；因此高分辨率图像需要分别评价低频结构与高频纹理。CogView2 将图像生成和交互式局部编辑放在同一路线中，但细化级联的质量仍依赖初始布局。[§3–4]
+
+### 4.2 CogView3 与 CogView4：转向连续 latent 扩散
+
+CogView3 改走扩散路线：先由低分辨率扩散阶段形成主体布局，再以 Relay Diffusion 级联超分辨率阶段细化细节。作者报告在人评、推理耗时上相对 SDXL 的比较结果，但应按论文中的提示集、人评方式和蒸馏配置理解。这项工作不是由自回归转扩散的简单更替，而是表明大图生成可以拆成“布局/主体”和“纹理/分辨率”两种阶段处理。[CogView3, §§2–4]
+
+CogView4-6B 后来以开源权重发布，使用 GLM 系列文本编码器与 DiT 生成骨干，强调中英文提示和原生较高分辨率。但没有对应的完整技术报告可支撑与 CogView3 相同深度的训练机制比较；故仅把它列为公开模型路线的后续，不由模型卡规格推断性能来源。
+
+## 五、视频：CogVideoX 将时间压缩纳入生成骨干
+
+CogVideo 早期将图像生成 Transformer 扩展到多帧，但视频 token 数和时间连贯性让高质量长视频变得困难。CogVideoX 的研究问题是如何降低视频 latent 体积，同时让文本条件在空间和时间上都能影响生成。[CogVideoX, §§1–3]
+
+3D causal VAE 在时间和空间维度共同压缩视频，并用因果卷积约束时间信息方向；它将多个像素帧变成更短的时空 latent 序列，减少后续 DiT 的计算。生成主干使用 Expert Transformer 和 Expert AdaLN，使文本与视觉 token 在同一 Transformer 中融合但保留模态特定调制。训练再逐步增加分辨率、帧率和视频长度，并通过更准确的视频 caption 对齐文本与动态事件。[§2–4]
+
+和逐帧使用图像 VAE 相比，3D VAE 在 latent 里同时编码时间连续性，论文将其与减少闪烁、提高时序重建质量联系起来；CogVideoX 报告的实现对时间和空间分别压缩，降低了视频像素序列的数量级。与此同时，过强压缩也可能抹掉短促动作或局部纹理，因此 VAE 的重建质量会成为 DiT 后续可生成细节的上限。Expert AdaLN 让文本与视觉有不同调制参数，但仍由同一 Transformer 主干进行注意力计算；这与 CogVLM 在每层加入视觉专家的语言理解路线相关，却不是同一个模块设计。[CogVideoX, §§2–3]
+
+作者报告 CogVideoX 可生成约 10 秒、16fps 视频，但这一数字描述其模型设置，不代表长时视频已经解决。视频中的跨镜头身份、复杂物理交互、长程因果和声音都不是单靠时空 VAE 或文本对齐可以保证的。更重要的是，论文公开模型权重和部分组件，能让读者检查架构与训练路径；闭源 GLM-V 后续版本的内部机制则不能由 CogVideoX 直接外推。
+
+## 六、跨代综合：同名 GLM 代表不同的技术选择
+
+| 设计问题 | 较早选择 | 后续变化 | 取舍 |
 |---|---|---|---|
-| 参数 | 6.2B（28 GLM Block） | 6.2B | 6.2B |
-| 预训练目标 | **GLM 自回归填空（Prefix LM）** | GLM 混合目标，1.4T 双语 tokens | 与 ChatGLM2 类似，更大规模数据 |
-| 位置编码 | RoPE | RoPE（单维改造） | RoPE |
-| Attention | 标准 MHA | **Multi-Query Attention (MQA)** | MQA |
-| 激活 | GeLU | **SwiGLU**（部分版本仍 GeLU；社区资料口径不一） | SwiGLU |
-| LayerNorm | RMSNorm | RMSNorm | RMSNorm |
-| 上下文 | 2K | **32K**（FlashAttention） | **128K**（ChatGLM3-6B-128K） |
-| 对齐 | SFT + RLHF（小规模） | SFT + Human Preference Alignment | SFT + DPO 风格对齐 |
-| 工具能力 | — | — | **原生 Function Call / Code Interpreter / Agent** Prompt |
-| 开源 | 首发开源，引爆国内开源浪潮 | 推理速度提升 42%，KV cache 显存降至 1/8 | 兼容三种 prompt：chat、tool、code |
-
-**关键演进**：
-
-1. ChatGLM2 引入 **MQA**（所有 head 共享同一组 K/V，仅 Query 多头）大幅压缩 KV cache，显存占用降为 MHA 的约 1/N；为后来 GQA 在国产大模型中的普及打下工程基础。
-2. ChatGLM2 启用 **FlashAttention**（v1）+ 上下文从 2K→32K。
-3. ChatGLM3 重点布局**工具能力（Tools）**：模板支持 system / user / assistant / observation / tool 多角色，可被视为后续 GLM-4 All Tools 的前身。
-4. 三代 ChatGLM-6B 在 Hugging Face 累计下载量在 2023 年突破千万，是中文开源生态的标志性模型。
-
-### 2.4 GLM-4（2024）
-
-**官方综述**：Team GLM, *ChatGLM: A Family of Large Language Models from GLM-130B to GLM-4 All Tools*, arXiv:2406.12793 (2024-06)。
-
-**模型矩阵**：
-
-| 模型 | 类型 | 上下文 | 备注 |
-|---|---|---|---|
-| GLM-4 | API 旗舰（闭源） | 128K | 对标 GPT-4 |
-| GLM-4-Air | API 轻量 | 128K | 高性价比 |
-| GLM-4-9B | 开源 base | 8K | 2024-06 开源 |
-| GLM-4-9B-Chat | 开源 chat | 128K / 1M | 长上下文版本 |
-| GLM-4V-9B | 开源 VLM | 8K | 见第三章 |
-
-**训练规模**：GLM-4 系列预训练 **10T tokens**（中英为主，少量 24 语种），多阶段后训练（SFT + 来自人类反馈的强化学习/偏好对齐）。
-
-**评测**（论文摘要）：
-- **MMLU / GSM8K / MATH / BBH / GPQA / HumanEval**：与 GPT-4 持平或略优；
-- **IFEval（指令跟随）**：接近 GPT-4-Turbo；
-- **AlignBench（中文对齐）**：超过 GPT-4。
-
-**GLM-4 All Tools**：模型自主决定何时调用 web browser / Python interpreter / Text-to-Image / 用户自定义函数，在线访问与数学求解上匹敌 GPT-4 All Tools。这是国内最早系统化 Function-Calling Agent 化的旗舰模型之一。
-
-### 2.5 GLM-4-32B-0414 与 GLM-Z1（2025-04）
-
-2025-04-14 智谱发布 **GLM-4-0414 系列**，将开源主线从 9B 跳到 32B，并首次系统性开源推理模型。
-
-| 模型 | 类型 | 上下文（YaRN 扩展） | 说明 |
-|---|---|---|---|
-| GLM-4-32B-Base-0414 | Base | 32K → 128K | 32B 稠密底座 |
-| GLM-4-32B-0414 | Chat | 32K → 128K | 通用对话/Agent |
-| GLM-Z1-32B-0414 | Reasoning | 32K → 128K | "深度思考"模型 |
-| GLM-Z1-Rumination-32B-0414 | Deep Research | 128K | "反刍/沉思"模型，对标 OpenAI Deep Research |
-| GLM-4-9B-0414 | Chat | 32K → 128K | 轻量批量任务 |
-| GLM-Z1-9B-0414 | Reasoning | 32K → 128K | 9B 推理"惊喜版" |
-
-特性：
-- **YaRN RoPE Scaling**：当输入 + 输出超过 32K 时启用 `factor=4.0` 的 YaRN，扩展到 128K；
-- **GLM-4-32B-0414 函数调用 / Agent**：在 BFCL-v3 (69.6)、TAU-Bench Retail (68.7)、Airline (51.2)、IFEval (87.6) 等指标上反超 DeepSeek-V3-0324 与 GPT-4o-1120；
-- **SWE-bench Verified**：搭配 Moatless 框架达到 33.8（同等规模开源 SOTA）；
-- 推理速度（在线）最高达 **200 tokens/s**。
-
-详见第五章"推理模型"。
-
-### 2.6 GLM-4.5 / GLM-4.5-Air（2025-07）—— MoE 与 Hybrid Reasoning
-
-**核心论文**：*GLM-4.5: Agentic, Reasoning, and Coding (ARC) Foundation Models*, arXiv:2508.06471 (2025-08)。
-
-**架构关键参数**：
-
-| 模型 | 总参数 | 激活参数 | 上下文 | 最大输出 |
-|---|---|---|---|---|
-| GLM-4.5 | 355B | 32B | 128K | 96K |
-| GLM-4.5-Air | 106B | 12B | 128K | 96K |
-| GLM-4.5-X / AirX / Flash | API 变体（速度/价格不同档） | — | 128K | 96K |
-
-**架构设计要点**（与 DeepSeek-MoE 同源、有所改造）：
-1. **Mixture-of-Experts**：每层多个 FFN 专家，每 token 动态路由到 Top-K；
-2. **Loss-free Balance Routing**：替代经典的 auxiliary load-balancing loss，避免对主任务 loss 的负面干扰；
-3. **Sigmoid 路由 + 共享专家**（部分细节与 DeepSeek 相似）；
-4. **Hybrid Reasoning**：模型同时支持 Thinking Mode（带显式 reasoning_content）与 Non-Thinking Mode，通过 API 参数 `thinking.type = enabled / disabled` 切换；
-5. **训练管线**：15T tokens 通用预训练 → 代码/推理/Agent 任务定向后训练 → RL（slime 框架）增强；技术报告中的总训练 token 数为 **23T**（含后训练 RL rollout）。
-
-**slime（强化学习框架）**：智谱自研、开源（github.com/THUDM/slime），是 GLM-4.5/4.6/4.7/5/5.1 系列共同的 RL 后训练基础设施。核心特性：
-- **Hybrid 同步/异步训练架构**：支持 sync 与 fully-asynchronous decoupled rollouts；
-- 把 RL rollout 视为"在线数据集生成器"，rollout 与 trainer 解耦扩缩容；
-- 支持百亿级 MoE 的大规模 RL。
-
-**性能**（来自官方与第三方报告）：
-- 在 **MMLU Pro / AIME24 / MATH 500 / SciCode / GPQA / HLE / LiveCodeBench / SWE-Bench Verified / Terminal-bench / TAU-Bench / BFCL-v3 / BrowseComp** 12 项基准的综合平均分，**全球排名第 2、开源第 1**；
-- GLM-4.5-Air（106B/A12B）在多项推理基准上**超越 Gemini 2.5 Flash、Qwen3-235B、Claude 4 Opus**；
-- API 价格：输入 \$0.2 / M tokens、输出 \$1.1 / M tokens；高速版生成速度 100+ tokens/s。
-
-### 2.7 GLM-4.6（2025-09）
-
-**架构**：MoE，**357B 总参 / 32B 激活**（与 GLM-4.5 同代但参数微调），**上下文 200K**（GLM-4.5 为 128K），最大输出 131K。
-
-**重点改进**（来自 Hugging Face zai-org/GLM-4.6 与第三方评测）：
-- 推理性能显著提升，并支持**推理过程中调用工具**（thinking + tool use 交错）；
-- Coding（特别是 Agentic Coding）相对 GLM-4.5 大幅提升；
-- 在 8 项公开 Agent / Reasoning / Coding 基准上系统性优于 GLM-4.5；
-- 与 Claude Sonnet 4.5 在编码与推理上"近平价"，但成本显著更低。
-
-### 2.8 GLM-4.7 与 GLM-5（2025-12 起）
-
-- **GLM-4.7**（2025-12 预览，2026-01-12 正式发布）：定位**自主编程**，引入 *Preserved Thinking* —— 在多轮工具调用之间保留思考链，避免 reasoning 被截断；在 SWE-bench 等编程基准上较 GLM-4.6 进一步提升；
-- **GLM-5**（2026-02）：智谱新一代旗舰基座模型，**744B MoE / 40B 激活**（官方技术博客确认），继续基于 slime RL 框架训练。关键指标：
-  - **SWE-bench Verified 77.8%**（开源模型最高水准之一）；
-  - 在 MMLU Pro、AIME 2025、GPQA、LiveCodeBench 等 12 项综合基准上保持全球前 3；
-  - 上下文 200K，最大输出 131K；
-  - API 价格随 2026-03 调价上涨，但性价比仍优于同性能闭源竞品；
-- **GLM-5.1**（**2026-04-07 上线**，本轮据官方发布记录校正）：GLM-5 的迭代版本，强化 Agent 与长程任务能力。官方口径：单次任务可持续自主工作约 **8 小时**；综合与 Coding 能力**整体对齐 Claude Opus 4.6**。带条件数字见 §2.9.0。
-- **GLM-5V-Turbo**（2026-04）：基于 GLM-5 底座的旗舰视觉语言模型，继承 GLM-4.5V/4.6V 的 Encoder + Projector + LLM 架构，在多模态推理与长视频理解上进一步突破。技术报告见 arXiv:2604.26752（v3 2026-05-12）。
-
-> **校正说明（本轮）**：原文写作「GLM-5.1（2026 初）」。智谱官方发布记录给出 **GLM-5.1 上线日期为 2026-04-07**（`docs.bigmodel.cn/cn/update/new-releases`），HuggingFace 仓库 `zai-org/GLM-5.1` 的 `createdAt` 为 2026-04-03。此处以官方发布记录为准。同理，GLM-4.7 官方记录为 **2025-12-22 上线**（原文记「2026-01-12 正式发布」，两者可能分别指 API 上线与正式版发布，本轮**不改原文**，仅在此标注口径差异）。
-
-### 2.9 GLM-5.2 / GLM-5.3 / GLM-5.3-Flash（2026-06 起）
-
-> **证据等级：精读原文（HuggingFace 官方模型卡 + 智谱官方文档原文 + 官方发布记录）**。z.ai / docs.z.ai 在本环境 **TLS 不可达**（`web_fetch` 与 `curl` 均失败），因此本节全部数字改用 **HF 官方模型卡**与 **docs.bigmodel.cn 官方文档**核验，均为**厂商自报**；依赖 z.ai 博客原文的项一律标注「核验受限」。
-
-#### 2.9.0 GLM-5.1 的带条件数字（为 §2.9 的对照基线）
-
-来源：[HF 模型卡 `zai-org/GLM-5.1`](https://huggingface.co/zai-org/GLM-5.1)（MIT 许可）。官方自报，同表内 9 个模型同条件对照：
-
-| 基准 | GLM-5.1 | GLM-5 | Claude Opus 4.6 | Gemini 3.1 Pro | 条件/说明 |
-| --- | --- | --- | --- | --- | --- |
-| SWE-Bench Pro | **58.4** | 55.1 | 57.3 | 54.2 | 官方称「刷新全球最佳表现」 |
-| NL2Repo | 42.7 | 35.9 | **49.8** | 33.4 | 仓库生成 |
-| Terminal-Bench 2.0 (Terminus-2) | 63.5 | 56.2 | 65.4 | **68.5** | 同 harness |
-| CyberGym | **68.7** | 48.3 | 66.6 | 38.8 | 漏洞发现 |
-| BrowseComp（带上下文管理） | 79.3 | 75.9 | 84.0 | **85.9** | 两个口径分列（无/有上下文管理） |
-| τ³-Bench | 70.6 | 69.2 | 72.4 | 67.1 | 工具/agent 场景 |
-
-另（官方 docs 表述，带条件）：**KernelBench Level 3** 上经千轮工具调用优化真实 ML 负载，实现 **3.6× 几何平均加速**，对比 `torch.compile` max-autotune 的 **1.49×**；典型案例中 8 小时内从零构建完整 Linux 桌面系统、或在向量数据库上完成 655 轮迭代把查询吞吐提到初始正式版的 **6.9×**。这些是**官方选取的案例**，不是基准分布。
-
-#### 2.9.1 GLM-5.2（2026-06-16 上线并开源）
-
-**发布信息**
-
-- **日期**：官方发布记录 **2026-06-16**；HuggingFace 仓库 `zai-org/GLM-5.2` 的 `createdAt` 同为 **2026-06-16**（两条一手源互证）。
-- **形态**：**开源权重，MIT 许可**（模型卡 `license: mit`，官方称「Pure Open — no regional limits, technical access without borders」）。前代 GLM-5.1 的模型卡同为 `license: mit`；**MIT 状态维持到 GLM-5.2 为止，GLM-5.3 起改为自定义许可**（见 §2.9.2）。
-- **上下文**：**1M tokens**（官方称「solid 1M context」）；文档口径最大输出 128K。
-- **与前代的定位差**：从 GLM-5.1 的「200K + 8 小时长程」推到「**1M + 项目级工程上下文**」。
-
-**新增架构：IndexShare（跨层复用稀疏注意力索引）**
-
-- 官方模型卡表述：提出 **IndexShare**，**在每 4 层稀疏注意力之间复用同一个 indexer**，在 1M 上下文下把**每 token FLOPs 降低 2.9×**。
-- 模型卡把 IndexShare 链接到 **arXiv:2603.12201**，该论文题目为 *IndexCache: Accelerating Sparse Attention via Cross-Layer Index Reuse*（v1 2026-03-12）。论文侧的数字与模型卡不同口径，须并列记录：**在 30B DSA 模型上移除 75% 的 indexer 计算**、质量退化可忽略，**prefill 1.82× / decode 1.48× 加速**（相对标准 DSA），并在**生产级 GLM-5** 上做了初步验证。→ 引用时务必区分「论文的 30B 实验数字」与「GLM-5.2 模型卡的 1M 上下文 2.9× FLOPs」。
-- 另一项改动：改进 **MTP（multi-token prediction）层**用于投机解码，**接受长度提升最多 20%**。
-
-**能力与基准（官方模型卡，全表 8 模型同条件）**
-
-| 基准 | **GLM-5.2** | GLM-5.1 | DeepSeek-V4-Pro | Claude Opus 4.8 | GPT-5.5 | Gemini 3.1 Pro | 条件（官方脚注要点） |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| HLE | 40.5 | 31 | 37.7 | 49.8\* | 41.4\* | 45 | temp 1.0 / top_p 0.95，最大生成 163,840；默认 text-only 子集，\* 为全量集 |
-| HLE (w/ Tools) | 54.7 | 52.3 | 48.2 | 57.9\* | 52.2\* | 51.4\* | 最大上下文 300K，**不做上下文管理** |
-| GPQA-Diamond | 91.2 | 86.2 | 90.1 | 93.6 | 93.6 | 94.3 | 同上采样参数 |
-| SWE-bench Pro | 62.1 | 58.4 | 55.4 | 69.2 | 58.6 | 54.2 | OpenHands；temp 1 / top_p 1 / max_new 32k / **400K 上下文** |
-| NL2Repo | 48.9 | 42.7 | 35.5 | 69.7 | 50.7 | 33.4 | temp 1.0 / top_p 1.0 / max_new 48k / 400K 上下文 + 反作弊（规则 + LLM 判定） |
-| DeepSWE | 46.2 | 18 | 8 | 58 | 70 | 10 | 官方 pier 框架 + **mini-swe-agent**；temp 1.0 / top_p 1.0 / timeout 2h / **400K 上下文**；每任务隔离容器 2 CPU / 8GB / 无网 |
-| ProgramBench | 63.7 | 50.9 | 47.8 | 71.9 | 70.8 | 39.5 | Claude-Code 2.1.156；max_tokens 64k / max_turns 2000 / sample_timeout 6h / reasoning_effort=max / 400K 上下文 |
-| Terminal Bench 2.1 (Terminus-2) | 81.0 | 63.5 | 64 | 85 | 84 | 74 | Terminus-2：parser=json / timeout 4h / max_new 48k / max_episodes 500 / **256K 上下文** |
-| Terminal Bench 2.1 (Best Harness) | 82.7 | 69 | — | 78.9 | 83.4 | 70.7 | Claude Code 2.1.167；max_new_tokens 131,072、5 次平均、取消 wall-clock 限制 |
-| FrontierSWE (Dominance) | 74.4 | 30.5 | 29.0 | 75.1 | 72.6 | 39.6 | **第三方 Proximal 评测**，1M 上下文 / max effort / 128K 输出，**分数截至 2026-06-16** |
-| PostTrainBench | 34.3 | 20.1 | — | 37.2 | 28.4 | 21.6 | **第三方 PostTrainBench 评测**，1M 上下文 / max effort / 128K 输出 |
-| SWE-Marathon | 13.0 | 1.0 | — | 26.0 | 12.0 | 4.0 | **第三方 Abundant AI 评测**，同 1M/max/128K 设定 |
-| MCP-Atlas (Public Set) | 76.8 | 71.8 | 73.6 | 77.8 | 75.3 | 69.2 | 500 任务公开子集，think 模式，每任务 10 分钟超时，**Gemini-3.0-Pro 作裁判** |
-| Tool-Decathlon | 48.2 | 40.7 | 52.8 | 59.9 | 55.6 | 48.8 | 官方评测服务，max_token 128K |
-
-**与前代的可判定差异（GLM-5.1 → GLM-5.2）**
-
-1. **上下文 200K → 1M**，且官方文档给了「累计处理 **>85 万 tokens**、接近用满 1M 窗口」的实际案例（一次连续长程任务完成 Web/移动端/小程序交付）——这是**上下文能力的可用性证据**，不是基准分数。
-2. **DeepSWE 18 → 46.2、FrontierSWE 30.5 → 74.4、SWE-Marathon 1.0 → 13.0、PostTrainBench 20.1 → 34.3**：官方表内同条件对照，可判定。
-3. **effort 可调**：官方称提供**多档 thinking effort**以平衡性能与延迟（GLM-5.3 起进一步固化为 `low/high/max`）。
-4. **许可**：旗舰线维持 **MIT**（GLM-5.3 起改自定义许可，是该系列的一次转向）。
-
-**失效边界**
-
-- **仍落后最强闭源**：SWE-Marathon 13.0 vs Claude Opus 4.8 的 26.0；NL2Repo 48.9 vs 69.7；Terminal Bench 2.1 81.0 vs 85。
-- **部分指标靠第三方评测**：FrontierSWE / PostTrainBench / SWE-Marathon 三行明确写「evaluation was conducted by …」，其口径（1M 上下文 / max effort / 128K 输出）与官方自跑项**不同**，不能与其他行混算平均。
-- **IndexShare 的收益是分层的**：模型卡的 **2.9× FLOPs（1M）** 与论文的 **75% indexer 计算移除 / 1.82× prefill（30B）** 是**不同模型、不同口径**的两个结论，互相不能替代。
-- **核验受限**：官方 `z.ai/blog/glm-5.2` 原文本环境不可达，模型卡中「Check out the GLM-5.2 blog」的链接目标内容未直读；模型卡内的 `bench_52.png`（另一张基准图）为图片，未做 OCR 取值。
-
-#### 2.9.2 GLM-5.3（2026-08-19 上线 / 2026-08-25 权重）
-
-**发布信息**
-
-- **日期**：官方发布记录 **2026-08-19**（「GLM-5.3 新一代旗舰模型上线」）；HuggingFace 仓库 `zai-org/GLM-5.3` 的 `createdAt` 为 **2026-08-25**，与官方「发布两周后开放模型权重（此前完成安全评估与模型加固）」的表述一致。
-- **形态**：开源权重，但许可**不再是 MIT**——模型卡 `license: other` / `license_name: glm-5.3`（自定义许可）。对比：同期的 GLM-5.3-Flash 是 **MIT**。
-- **上下文**：官方文档 **1M 上下文窗口，最大输出 128K**；仅支持文本模态。
-- **思考模式**：**始终启用**，`reasoning_effort` 三档 `low/high/max`（默认 `max`）；**不再支持禁用思考**。迁移提示（官方原文）：若应用原先用 `thinking.type: "disabled"`，必须先改为 `enabled` 并把 `reasoning_effort` 设为 `low`，否则请求失败。
-
-**最关键的一条：与 GLM-5.2 同一基座，全部增益来自后训练**
-
-官方中英文口径一致——「GLM-5.3 uses the same base model as GLM-5.2 — every gain comes from post-training」。相对 GLM-5.2 的后训练改动是：**更大的任务环境规模化**（数十倍的长程任务环境、更多环境类型、更长后训练时间）、**IndexShare + SAO（结合上下文压缩）+ 持续演进的新一代 Slime 框架**。
-
-- **任务环境规模化（官方描述，可迁移的方法论）**：训练任务不再是「编程题」，而是**接近专家真实工作单元的完整环境**（例如给模型计算集群、存储、内部文档、代码库与实验结果，要求定位训练栈瓶颈、实施优化、跑实验、在保证正确性前提下拿到可量化端到端加速）。难点从模型转移到**环境**：环境必须可执行、可验证、贴近真实工作。为此他们建了**端到端合成任务环境**的流水线，并为部分任务**自动生成 RL 奖励信号**；验证器在**不访问参考解法**的前提下生成，并用求解轨迹识别、消除 reward shortcut；**只有同时通过 Oracle / 空操作 / 未解决状态三类检查的验证器**，其二值奖励才允许用于训练。
-
-**能力与基准（官方模型卡，全表 9 模型同条件）**
-
-| 基准 | **GLM-5.3** | GLM-5.2 | Kimi K3 | Claude Opus 4.8 | Claude Fable 5 (w/ fallback) | GPT-5.6 Sol | 条件（官方脚注要点） |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Terminal Bench 2.1 | 88.2 | 81.0 | 88.3 | 85.0 | 88.0 | **88.8** | Claude Code 2.1.207；temp 1.0 / top_p 1 / max_new 65,536；**6h 超时** |
-| Terminal Bench 3.0 | 28.3 | 4.6 | 17.4 | 21.1 | 33.7 | **34.6** | Claude Code 2.1.207，max effort，**400K 上下文 / 128K 输出**，**avg@3**；每 rollout 独立容器、600 agent turns、10h 超时；关闭 Tool Search，由任务官方 verifier 打分 |
-| DeepSWE (v1.1) | 66.9 | 46.2 | 67.5 | 58.0 | 69.7 | **72.7** | mini-swe-agent；temp 0.95 / top_p 1.0 / timeout **6h** / 400K 上下文 |
-| NL2Repo | 58.0 | 48.9 | 58.0 | **69.7** | — | — | temp 1.0 / top_p 1.0 / max_new 64k / **1M 上下文** + 反作弊 |
-| ProgramBench (Almost Solved) | 19.0 | 9.5 | 17.5 | 15.5 | **33.0** | 23.0 | 「Almost Solved」子集口径（与 GLM-5.2 卡的 63.7 不是同一个指标） |
-| FrontierSWE | 78.1 | 67.5 | — | 66.5 | **88.2** | — | 第三方 Proximal，1M / max effort / 128K 输出，**分数截至 2026-08-14** |
-| SWE-Marathon (v1.1) | 42.5 | 19.4 | 48.1 | **48.8** | 33.1 | 42.5 | Claude Code 2.1.207，1M 上下文 / 128K 输出；官方说明修改了 2 处过严反作弊/镜像构建问题 |
-| PostTrainBench | 39.8 | 31.7 | 32.0 | 32.9 | **41.8** | 36.2 | Claude Code 2.1.207，1M 上下文，3 次加权平均；失败运行回落到官方 zero-shot 基线分 |
-| CyberGym | **84.5** | 77.2 | 80.0 | 78.1 | 83.8 | 83.6 | Claude Code 2.1.207，max effort，**无 web 工具**，temp 1.0 / top_p 1.0 / max_new 128,000；**不限超时**，1,507 任务单次 pass@1；agent 置于任务容器内，**移除全部 Git 信息 + 域名白名单**防作弊 |
-| ExploitGym (2h / 6h) | 105 / 130 | 29 / 39 | 36 / 70 | 80 / 120 | 181 / 247 | **216 / 293** | 869 任务单次 pass@1；**按各模型 TPS 折算 API 推理时间**（GLM-5.3 115 TPS / K3 40 TPS / Qwen3.8 Max 47 TPS）+ 非 API 开销 |
-| ExploitBench | 54.4 | 24.4 | 32.2 | 40.0 | **78.0** | 76.5 | 41 任务 3 轮，最多 300 轮交互，取覆盖能力并集后平均 |
-| Toolathlon Verified | 73.0 | 59.9 | **76.5** | 76.2 | 74.7 | 74.9 | 官方评测服务，pass@1 三次平均 |
-| AutomationBench (v1.0.6) | **48.2** | 26.2 | 46.7 | 41.0 | 46.2 | 45.8 | v1.0.6（含修复 `null` 类型处理的 PR #13） |
-| Agents' Last Exam (ALE-CLI) | 28.5 | 23.8 | 27.6 | 25.7 | 23.8 | **28.6** | 官方协议，Claude Code harness，max effort，**1M 上下文 / 64K 输出**；105 任务，隔离 Docker，默认 4h 超时（个别最长 8h），关闭 Tool Search |
-| HLE w/ Tools | 62.5 | 54.7 | 59.8 | 57.9 | 63.9 | **64.5** | temp 1.0 / top_p 0.95，最大生成 163,840；**300K 上下文 + 上下文管理策略**；裁判 GPT-5.6-luna (medium) |
-| GDPval-AA v2 (Elo) | **1769** | 1508 | 1682 | 1588 | 1743 | 1730 | **由 Artificial Analysis 评测**（非厂商自跑） |
-
-**与 GLM-5.2 的可判定差异（同基座、纯后训练，因此归因最干净）**
-
-因为**基座相同**，这一组对比是本次更新里**归因最干净的 A/B**——同一基座、同一 harness、同一采样参数，差异只来自后训练：
-
-1. **Terminal Bench 3.0：4.6 → 28.3**（+23.7 分，约 6 倍）。这是本轮最大的单点跃迁。
-2. **DeepSWE v1.1：46.2 → 66.9**；**ALE-CLI：23.8 → 28.5**（官方文档另给 23.8→28.5，模型卡同）。
-3. **网络安全能力是「涌现」而非定向优化**（官方原话承认「我们原本预计……令人意外的是，随着训练规模持续扩大，这项能力也迅速演进」）：CyberGym **77.2 → 84.5**（官方称该基准当前最佳，超过 Mythos 5 的 83.8 与 GPT-5.6 Sol 的 83.6）；ExploitBench **24.4 → 54.4**（翻倍以上）；ExploitGym 2h/6h **29/39 → 105/130**。官方给出的规律：**漏洞利用链越往深处，相对 GLM-5.2 的提升越大，同时与闭源前沿的差距也越大**。
-4. **真实场景侧证**：官方称自 GLM-5.2 起与中国多家安全团队合作，在 **269 个项目**中发现 **2,436 个漏洞**（其中 **1,097 个中高危**），涵盖内核、操作系统、浏览器引擎、开源基础设施、Web 应用与网络协议；存在时间最长的漏洞在代码库中约 **40 年**。
-5. **Token 效率同时改善**（官方内部 Z.ai Code Bench）：Max 档准确率 **34.5%**（GLM-5.2 为 **23.4%**），而每任务平均输出约 **7.5 万** token（GLM-5.2 约 **9.6 万**）——**分更高、token 更少**。
-
-**失效边界**
-
-- **编程之外不一定同向**：官方自己给的对照中说，Max 档准确率 34.5% **仍低于 Claude Fable 5 的 39.5%**；ExploitBench 54.4% 远低于 Mythos 5 的 78.0% 与 GPT-5.6 Sol 的 76.5%。
-- **部分基准的「提升」口径要小心**：GLM-5.2 卡里的 ProgramBench 是 **63.7**，GLM-5.3 卡里的 ProgramBench 是「**Almost Solved** 19.0」——**不是同一子集/指标**，两者不能相减。
-- **`license_name: glm-5.3` 是自定义许可**，条款未逐条核验 → 不能默认等同 MIT 使用范围（见 §2.10）。
-- **代码安全能力的双面性（官方自述）**：官方在 GLM-5.3 中文稿中说明开源权重前需「完成必要的安全加固，尽可能限制其潜在攻击能力，保留其防御价值」——这意味着**发布版与内部版在攻击性上存在人为差异**，复现「未加固」表现不可行。
-- **核验受限**：`z.ai/blog/glm-5.3` 原文本环境不可达；官方中文研究页（`zhipuai.cn/zh/research/161`）可读，作为中文侧补充源。
-
-#### 2.9.3 GLM-5.3-Flash / FlashX（2026-08-26 上线）：GLM-5 系列首个原生多模态
-
-**发布信息**
-
-- **日期**：官方发布记录 **2026-08-26**（「GLM-5.3-Flash 原生多模态模型上线」）；HuggingFace 仓库 `createdAt` 为 **2026-08-25**。
-- **形态**：**开源权重，MIT 许可**（模型卡 `license: mit`）；**原生多模态**（输入 视频 / 图像 / 文本 / 文件；输出文本）——GLM-5 系列第一个原生多模态成员。
-- **规模**：**320B 总参数 / 18B 激活参数**。
-- **上下文**：**1M**；最大输出 **128K**。
-- **推理档位**：`reasoning_effort` `low/high/max`（默认 `max`），`thinking.type` **仅支持 enabled**。
-- **Flash vs FlashX**：`glm-5.3-flash` / `glm-5.3-flashx` 两个模型 ID；**FlashX 推理速度 200 tokens/s**（官方文档）。Coding Plan 当前**未开放 FlashX**。
-
-**关键架构变化（与前两代不是同一基座）**
-
-官方模型卡明确：GLM-5.3-Flash **starts from a newly trained base model**（新训基座），架构与训练配方围绕能力与效率重设计。三项：
-
-1. **稀疏注意力 + 线性注意力的混合架构**——官方称是「**首个采用该混合架构的开源前沿模型**」；相比 GLM-5.3，**注意力计算量降低 3.01×、KV cache 降低 4.44×**。
-2. **mHC（Manifold-Constrained Hyper-Connections）**——用于进一步提升 scaling 效率。
-3. **30T token 多模态预训练语料**。
-
-> ⚠️ 与 GLM-5.3 的关系要说清：**GLM-5.3 是「同一基座 + 后训练」；GLM-5.3-Flash 是「新基座 + 新架构」**。两者只共享「后训练方法论（SAO / slime / 任务环境规模化）」与命名，**不是同一模型的蒸馏版**。
-
-**能力与基准**
-
-官方文档给出的带条件数字/表述：
-
-- **Artificial Analysis Intelligence Index：57 分**，**超过 GLM-5.2**，与 **Claude Opus 4.8 持平**（官方自报，非第三方直读）。
-- **Z.ai Code Bench**：编程表现与 **Claude Opus 4.8 相当**（官方自报，非公开基准）。
-- **价格**：**GLM-5.3 的 1/10**（限时折扣内 **1/20**；为 Opus 4.8 的 **1/40**）——这是官方主打的性价比论点。
-- 官方还宣称拓展到 Office 文档与金融研究工作流，可交付 PPTX / PDF / DOCX / XLSX。
-
-**失效边界**
-
-- **基准表是图片**：模型卡只嵌了 `bench_53.png`，**未提供可解析的基准表**；官方文档也只给「AA II 57 / Z.ai Code Bench 与 Opus 4.8 相当」这类表述。因此本条目**不列 GLM-5.3-Flash 的逐项基准数字**——图片未做 OCR 取值，属**核验受限**。
-- **「与 Opus 4.8 持平」是官方口径**，且是在 **AA Index（单一综合分）** 上的持平，不等于逐任务持平。
-- **原生多模态的评测覆盖未知**：文档只提到视觉 coding 与 Office/金融场景，**未见多模态基准的逐项分数**。
-- **FlashX 的 200 tokens/s** 是官方给出的推理速度，**未说明测量条件**（batch / 硬件 / 上下文长度 / 输出长度），不可直接与别家吞吐对比。
-
-### 2.10 未确证与待跟踪（2026-06 以来）
-
-以下条目**未进入正文**，仅登记待核：
-
-| 事项 | 现状 | 处置 |
-| --- | --- | --- |
-| GLM-5.3 的自定义许可 `glm-5.3` 条款 | HF 仅标 `license: other` / `license_name: glm-5.3` | 待读 LICENSE 原文；在读到前不称「可商用等同于 MIT」 |
-| z.ai 官方博客原文（glm-5.2 / glm-5.3 / glm-5.3-flash） | 本环境 TLS 不可达（`web_fetch` + `curl` 均失败） | 数字改用 HF 模型卡与 bigmodel 官方文档核验；博客原话未逐字核对 |
-| GLM-5.2 / 5.3 的精确总参/激活参 | 官方文档与模型卡**均未给** GLM-5.2、GLM-5.3 的参数量 | 不沿用此前「744B/40B 属 GLM-5」以外的推测；待官方披露 |
-| GLM-5.3-Flash 的逐项基准 | 模型卡只有 `bench_53.png` 图片 | 待从可解析来源取得后再入表 |
-| GLM-5.3-Flash 的 mHC 细节 | 官方只给名称与「提升 scaling 效率」 | 是否有独立技术报告待跟踪（检索到 `Manifold-Constrained Hyper-Connections` 方向的论文，但未确认与 GLM 实现的对应关系） |
-| GLM-5.3-FlashX 的 200 tokens/s | 无测量条件 | 待官方补 benchmark 口径 |
-| GLM-OCR / GLM-Image / GLM-TTS / GLM-5-Turbo | 分别于 2026-02-03 / 2026-01-14 / 2025-12 / 2026-03-15 上线，**早于本轮「2026-06 起」窗口**，且本条目此前未覆盖 | 本轮不补写（避免超出「增量补充 2026-06 起」的范围）；若需扩容再另立一段 |
-| 智谱「IndexShare」与论文「IndexCache」的命名对应 | 模型卡用 IndexShare，链接指向 arXiv:2603.12201 *IndexCache* | 正文已并列标注两种名称与各自数字口径；名称是否等价未获官方文字确认 |
-
----
-
-## 三、视觉语言模型 (VLM) 演进
-
-### 3.1 CogVLM（2023-11）—— Visual Expert 机制
-
-**核心论文**：Wang et al., *CogVLM: Visual Expert for Pretrained Language Models*, NeurIPS 2024（arXiv:2311.03079）。
-
-**核心动机**：当时主流多模态范式（BLIP-2、LLaVA、MiniGPT-4）多采用 **shallow alignment**——把图像特征通过 Q-Former / 简单 MLP 投到 LLM 的输入 embedding 空间，LLM 主体冻结。CogVLM 团队认为这种"浅对齐"会损害视觉细节（OCR、grounding、细粒度物体）。
-
-**架构**（CogVLM-17B = ViT 4.4B + LLM 7B + Visual Expert ~5B）：
-
-```
-                ┌─────────────────────────────┐
-                │      ViT (EVA-CLIP-E/14)    │
-                └──────────────┬──────────────┘
-                               │ patch tokens
-                ┌──────────────▼──────────────┐
-                │  MLP Adapter (2-layer)       │
-                └──────────────┬──────────────┘
-                               │ visual tokens (concat with text)
-   ┌───────────────────────────▼───────────────────────────┐
-   │  每一层 Transformer Block (Vicuna-7B 主干)              │
-   │  ┌───────────────────────────────────────────────┐    │
-   │  │   Self-Attention                              │    │
-   │  │   Q/K/V = [Q_text/K_text/V_text  ‖            │    │
-   │  │            Q_visual/K_visual/V_visual]        │    │
-   │  │   注意力矩阵跨 modality 共享                    │    │
-   │  └───────────────────────────────────────────────┘    │
-   │  ┌───────────────────────────────────────────────┐    │
-   │  │   FFN_text  (frozen LLM expert)               │    │
-   │  │   FFN_visual (Visual Expert，trainable)        │    │
-   │  │   token 是 visual 走 FFN_visual，否则 FFN_text  │    │
-   │  └───────────────────────────────────────────────┘    │
-   └────────────────────────────────────────────────────────┘
-```
-
-**关键点**：
-1. **每一层都注入"视觉专家" QKV+FFN**，参数数量约等于该层原本的 QKV+FFN，相当于在每层并行一个"视觉副本"；
-2. **token 路由**：text token 走 LLM 原参数，visual token 走视觉专家；attention 层跨模态共享 Q/K/V 计算（拼接后 softmax）；
-3. **冻结 LLM 主参数**，只训练 Visual Expert + ViT + MLP adapter，**完全不损害原 LLM 的纯文本性能**（这是与 LLaVA 等"开放 LLM 训练"路线的最大区别）；
-4. **深度融合（Deep Fusion）**：与浅对齐相比，视觉信号在每一层都参与 attention，提升 OCR / grounding / 细粒度推理。
-
-**评测**：CogVLM-17B 在 NoCaps、Flickr30k captioning、RefCOCO/+/g、Visual7W、GQA、ScienceQA、VizWiz VQA、TDIUC 共 **10 个跨模态基准上达到 SOTA**，并在 VQAv2、OKVQA、TextVQA、COCO captioning 上仅次于 PaLI-X 55B（参数量约为 1/3）。
-
-### 3.2 CogVLM2 / CogVLM2-Video / GLM-4V-9B（2024-05 / 08）
-
-**核心论文**：Hong et al., *CogVLM2: Visual Language Models for Image and Video Understanding*, arXiv:2408.16500 (2024-08)。
-
-CogVLM2 家族继续采用 **Visual Expert 架构**，但做了多项工程升级：
-
-| 维度 | CogVLM-17B | CogVLM2-19B (llama3-chat-19B) | GLM-4V-9B |
-|---|---|---|---|
-| LLM 底座 | Vicuna-7B | **Meta-Llama-3-8B-Instruct** | **GLM-4-9B** |
-| 视觉编码器 | EVA-CLIP-E/14 | **SigLIP / EVA-CLIP** 改造版 | 同 CogVLM2 |
-| MLP Adapter | 2 层 MLP | **2×2 卷积 + SwiGLU** | 同 CogVLM2 |
-| 图像分辨率 | 490² | **1344×1344** | 1120/1344 |
-| 上下文 | 2K | **8K** | 8K |
-| 总参 | 17B | 19B（8B LLM + 11B 视觉专家） | 13B 级 |
-| 中文 | — | cogvlm2-llama3-chinese-chat-19B | 原生中英 |
-
-**CogVLM2-Video**（2024-07）：
-- 在 CogVLM2 基础上增加**时间 grounding** 数据构建管线，自动生成 30K 时间相关 QA；
-- 支持分钟级视频理解；
-- 在多项 video QA 基准上 SOTA（同期开源）。
-
-**GLM-4V-9B**：作为 GLM-4 主线的视觉版本，继承 CogVLM2 的视觉专家结构，绑定 GLM-4-9B 文本基座，是 ChatGLM 综述论文中正式列入的开源 VLM。
-
-### 3.3 GLM-4.1V-Thinking / GLM-4.5V / GLM-4.6V（2025）
-
-**核心论文**：*GLM-4.5V and GLM-4.1V-Thinking: Towards Versatile Multimodal Reasoning with a Family of VLMs*, arXiv:2507.01006 (2025-07，多次修订至 v6 含 GLM-4.6V)。
-
-**统一架构**（三代共享）：
-
-```
-Vision Encoder  →  MLP Projector  →  LLM (GLM-4-9B / GLM-4.5-Air / GLM-4.6 base)
-```
-
-变化要点：
-1. **抛弃 Visual Expert**：从 GLM-4.1V 开始回归到主流 **vision encoder + projector + LLM** 结构，更易复用 LLM 基座的 RL 后训练成果；
-2. **强化学习"Thinking"链**：大量使用强化学习 + curriculum 教模型在视觉推理上"显式思考"；GLM-4.1V-9B-Thinking 用 RL 让 9B 模型在复杂多模态推理基准上击败 72B 量级闭源模型；
-3. **GLM-4.5V (2025-08)**：基于 **GLM-4.5-Air (106B/A12B)** 底座，继承 4.1V 思路；在 **42 项公开视觉-语言基准上达到同规模 SOTA**；支持图像、视频、长文档与 GUI Agent；
-4. **GLM-4.6V**（2025 Q4）：升级到 GLM-4.6 底座，进一步扩展多模态推理与长视频；
-5. **GLM-4.6V-Flash 9B**（2025-12）：端侧/低成本版本；
-6. **GLM-5V-Turbo**（2026-04）：基于 **GLM-5 (744B/40B)** 底座的旗舰 VLM，在多模态推理、长文档理解、GUI Agent 与视频分析上达到新高度，是智谱视觉模型线的最新旗舰。
-
----
-
-## 四、视觉生成模型
-
-### 4.1 CogView 系列（图像生成）
-
-| 模型 | 时间 | 关键技术 | 参数 |
-|---|---|---|---|
-| **CogView** | 2021-05 (NeurIPS 2021) | dVAE 离散 token + 4B GPT-style Transformer 自回归生成；首个开源中文文生图大模型 | 4B |
-| **CogView2** | 2022-04 (NeurIPS 2022) | **Cross-modal General LM (CogLM)**：多任务 + 层次化生成；先生成低分辨率图像 token，再用 super-resolution 模块迭代细化；相对 DALL·E-2 提供 ~10× 生成加速 | 6B |
-| **CogView3 / CogView-3-Plus** | 2024-03 (arXiv:2403.05121) | 转向**扩散模型**路线；提出 **Relay Diffusion** 级联框架——低分辨率 latent 扩散 + 高分辨率 relay refiner | 3B |
-| **CogView4-6B** | 2025-03 | 中文原生 **DiT (Diffusion Transformer)**，宽高 512–2048（32 整除），BF16 | 6B |
-
-CogView 路线显著的"风格"是：从早期 GPT-style 自回归逐步**迁移到 DiT/扩散**，与同期 DALL·E、Stable Diffusion、Imagen 演进路径相似，但保持与 GLM 主家族的工程协同（共享 tokenizer、训练框架）。
-
-### 4.2 CogVideoX（视频生成）
-
-**核心论文**：Yang et al., *CogVideoX: Text-to-Video Diffusion Models with An Expert Transformer*, ICLR 2025（arXiv:2408.06072）。
-
-**预演**：CogVideo (2022, ICLR 2023) 是首个开源 9B 文生视频模型，基于 CogView2 扩展时间维度，但生成时长与运动质量有限。
-
-**CogVideoX 关键创新**：
-
-1. **3D Causal VAE**：沿空间和时间两个维度对视频压缩，时间上采用 **causal**（仅看历史帧）以支持任意长度；显著降低 token 数量同时保持高保真重建；2024-08 单独开源。
-2. **Expert Transformer + Expert Adaptive LayerNorm (Expert AdaLN)**：
-   - 视频 latent token 与文本 token 拼接进入同一 Transformer，但 LayerNorm 的 affine 参数 (γ, β) 对**两种模态使用不同的 expert**；
-   - 这种"按模态分通道、共享 self-attention"的范式，与 Stable Diffusion 3 的 MMDiT、与 CogVLM 的 Visual Expert 思路一脉相承——**深度融合不浅化任一模态**；
-3. **Progressive Training + Multi-Resolution Frame Pack**：训练时混合不同分辨率/时长视频，用 frame pack 高效填充 batch；
-4. **数据管线**：自研视频字幕模型 + 多阶段过滤；与字幕模型和 3D VAE 一同开源；
-5. **生成能力**：10 秒、16 fps、768×1360 分辨率，连续叙事，运动幅度大。
-
-**开源版本**：CogVideoX-2B（基础）/ CogVideoX-5B / CogVideoX-5B-I2V（图生视频）/ CogVideoX-1.5。在国产文生视频开源生态（与 Wan / HunyuanVideo / Open-Sora 并列）中是最早达到工业级长视频质量的模型之一。
-
----
-
-## 五、推理模型（Reasoning / Deep Thinking）
-
-### 5.1 GLM-Z1-32B-0414
-
-- 基于 GLM-4-32B-0414 通过 **冷启动 + 大规模强化学习** 微调；
-- 训练任务包括数学、代码、逻辑（含 AIME、MATH、GSM8K、LiveCodeBench、Codeforces 类问题）；
-- 引入**基于 pairwise ranking 反馈的通用 RL**，避免推理能力提升以损失通用对话能力为代价；
-- 在线推理速度 200 tokens/s；
-- 在 AIME / MATH / GPQA / LiveCodeBench 上接近或超越同期 DeepSeek-R1-Distill-Llama-70B 等模型。
-
-### 5.2 GLM-Z1-Rumination-32B-0414（"反刍模型"）
-
-定位为对标 OpenAI **Deep Research**：
-- "反刍 (Rumination)"：相对普通"思考"，可进行更长、更开放、更循环的搜索-思考-搜索；
-- 训练通过端到端 RL 扩展，奖励信号来自 **ground-truth 答案 / rubrics**；
-- 模型在思考过程中调用外部工具：`search` / `click` / `open` / `finish`（固定四工具集，外接搜索引擎）；
-- 显著提升研究型写作（如"分析两座城市 AI 发展并撰写比较报告"）。
-
-### 5.3 GLM-Z1-9B-0414 与 GLM-4.5 Hybrid Reasoning
-
-- **GLM-Z1-9B**：用同套 RL 技术训练 9B 小模型，在数学推理与通用任务上是同尺寸开源模型 Top；
-- **GLM-4.5 Thinking Mode**：把推理能力作为 MoE 旗舰内置模式，以 `thinking.type` 显式开关；这是从"独立推理模型"到"统一基座 + 推理模式"的范式转变（2024-09 OpenAI o1 之后业界主流方向，GLM-4.5 是开源端较早实现 hybrid reasoning 的 MoE 旗舰）。
-
----
-
-## 六、跨代技术演进分析（重点：从 Prefix LM 到 Causal LM 的架构转型）
-
-GLM 家族最具特色的演进，是从最初坚持"自回归填空"独特路线，逐步在保留品牌名"GLM"的同时，**事实上转向标准 Decoder-only Causal LM**。这一过程并非一次性切换，而是分阶段渐进：
-
-### 6.1 关键演进节点
-
-| 阶段 | 时间 | 代表模型 | 预训练目标 | Attention Mask | 位置编码 | Norm | 激活 |
-|---|---|---|---|---|---|---|---|
-| Prefix LM 时代 | 2021–2022 | GLM-Base/Large/XL/XXL | 自回归填空 (Part A 双向 + Part B 因果) | 混合 mask（Part A 全可见，Part B 因果） | **2D 可学习 PE** | Pre-LN | GeLU |
-| 工程化双语 | 2022 | GLM-130B | 自回归填空 | 混合 mask | **RoPE** | **DeepNorm** | **GeGLU** |
-| 对话化过渡 | 2023.03 | ChatGLM-6B | GLM 自回归填空 | 混合 mask | RoPE | RMSNorm | GeLU |
-| MQA + 长上下文 | 2023.06 | ChatGLM2-6B | GLM 混合目标（同时含 BERT 风格 / GPT 风格 span） | 混合 mask（部分版本简化） | RoPE | RMSNorm | SwiGLU（部分） |
-| 实质 Causal | 2023.10 | ChatGLM3-6B | 类 Causal LM（逐步弱化 blank infilling） | **Causal-only**（社区分析；官方文档不再强调 Prefix LM） | RoPE | RMSNorm | SwiGLU |
-| 标准 Causal LM | 2024 | GLM-4 / GLM-4-9B | Causal LM | Causal | RoPE + YaRN 扩展 | RMSNorm | SwiGLU |
-| 稠密旗舰 | 2025.04 | GLM-4-32B-0414 | Causal LM | Causal | RoPE + YaRN | RMSNorm | SwiGLU |
-| MoE Hybrid Reasoning | 2025.07+ | GLM-4.5 / 4.6 / 4.7 | Causal LM + MoE + RL | Causal | RoPE | RMSNorm | SwiGLU + MoE FFN |
-
-### 6.2 转型动因
-
-1. **Causal LM 的"All-in-One"成熟**：GPT-3/4 用纯 Causal LM 同时把 NLU、生成、推理统一；T5/BART 这类编码-解码范式逐渐让位。Prefix LM 在工程上开发链路更复杂（需要为 Part A/B 维护混合 mask），而其相对 Causal LM 的下游优势在 SFT/RLHF 时代被逐步抹平。
-2. **生态兼容**：迁移到标准 Causal LM 后可直接复用 Hugging Face transformers / vLLM / FlashAttention / FlashInfer / TensorRT-LLM 等基础设施，工程成本骤降。
-3. **长上下文需求**：Prefix LM 的混合 mask 与 KV cache 优化（如 paged attention、prefix caching）耦合度低，移植成本高；切换到 Causal LM 后可享受现代推理框架的所有优化。
-4. **对齐流水线**：DPO / RLHF / GRPO / RL-with-verifier 几乎清一色为 Causal LM 设计；继续坚持 Prefix LM 会在每个新 RL 算法上付出额外适配成本。
-5. **推理范式（CoT / o1-like）**：思考链是天然的因果生成，Causal LM 与 Thinking Mode / Tool Use / Agent 的契合度最高。
-
-### 6.3 GLM 路线"被取舍"的设计
-
-- **2D Positional Encoding** 在 GLM-130B 即被 RoPE 替换；
-- **Span shuffling** 在 ChatGLM2/3 被淡化；
-- **Part A 双向 attention** 在 ChatGLM3 之后基本不再强调；
-- **保留下来的 GLM 元素**：仅"GLM 品牌 + 训练数据/对齐 know-how + 工程框架（slime、SAT、SwissArmyTransformer）"。
-
-可以理解为：**GLM 已从"特定预训练目标"演化为"团队/家族标识"**，现代 GLM-4.5 在架构上更接近 DeepSeek-MoE / Qwen3-MoE，而非最初的 GLM 论文。
-
----
-
-## 七、商业与市场动态（2025–2026）
-
-### 7.1 智谱 AI 香港上市（2025-12-20）
-
-智谱 AI（Zhipu AI）于 2025 年 12 月 20 日在香港交易所主板挂牌上市，成为继商汤之后第二家以基础大模型为核心业务的港股 AI 上市公司。此次 IPO 募资约 30 亿港元，估值区间反映市场对国产开源基座模型商业化前景的认可。招股书披露：
-- 2025 年 API 与 MaaS 收入同比增长超过 200%；
-- 开源模型（GLM-4-9B/32B 系列）Hugging Face 累计下载量突破 5000 万次；
-- 企业客户覆盖金融、政务、汽车、教育四大垂直领域。
-
-### 7.2 API 价格大幅上调（2026-03-04）
-
-2026 年 3 月 4 日，智谱宣布对 bigmodel.cn 与 Z.ai 海外平台的 API 定价进行**全线上调 30–100%**。调价背景与影响：
-- **背景**：GLM-5 及后续旗舰模型训练与推理成本显著上升（744B MoE 激活 40B，推理集群以 H100/H20 为主）；同时公司上市后面临盈利压力；
-- **涨幅**：GLM-4.5 系列输入 \$0.2→\$0.35/M tokens（+75%），输出 \$1.1→\$2.0/M tokens（+82%）；GLM-5 系列定价输入 \$0.5/M、输出 \$3.5/M；
-- **市场反应**：部分中小开发者转向 GLM-4-9B/32B 开源自托管方案，但企业级客户对旗舰 API 依赖度较高，迁移成本大；
-- **竞品对比**：调价后 GLM-5 价格仍低于 GPT-5.5（\$5/\$30）与 Claude 4 Opus，但差距缩小。
-
-### 7.3 API 调用量翻倍（2026-05）
-
-据智谱 2026 年 5 月官方披露，bigmodel.cn 平台日 API 调用量较 2025 年底**翻倍**，主要驱动因素：
-- GLM-5 系列在 SWE-bench、Agent 编码等场景的企业采用率提升；
-- GLM-Z1 推理模型在科研、金融分析等长思考任务上的渗透；
-- 开源生态反哺：GLM-4-32B-0414 等开源模型带动社区应用，进而转化为商业 API 用户。
-
-### 7.4 GLM Coding Plan 与「低价 + 高额度」打法（2026-04 起，本轮新增）
-
-这条线与模型发布同等重要，是 GLM-5.x 三代共同的商业化载体：
-
-- **2026-04-07**：GLM Coding Plan 随 GLM-5.1 上线（个人版）；
-- **2026-05-29**：GLM Coding Plan **团队版**上线，支持席位/权限/用量/预算统一管理、集中账单与统一开票，官方承诺**默认不将代码、提示词与对话内容用于模型训练**，高级版首发接入最新旗舰；
-- **2026-08-19 / 08-26**：GLM-5.3 与 GLM-5.3-Flash **全量进入** Coding Plan；Flash 的可用额度为 GLM-5.3 的 **3 倍**（官方口径）；
-- **计费机制变化**：新版 Coding Plan 改为**基于积分的配额系统**，官方称额度公开透明；**非高峰时段（含周末全天）的调用只消耗标准积分的 50%**。
-
-**定价叙事的变化值得记一笔**：GLM-5.3-Flash 官方定价为 **GLM-5.3 的 1/10**（限时折扣内 **1/20**）、**Opus 4.8 的 1/40**。这与 §7.2 记录的 2026-03「全线上调 30–100%」方向相反——**旗舰涨价、轻量档大幅降价**，用同一家族内的价格分层来同时守毛利与抢用量。这是本轮最值得跟踪的商业信号（能否兑现取决于 Flash 的实际质量，见 §2.9.3 的核验受限说明）。
-
----
-
-## 八、关键创新点汇总
-
-| # | 创新 | 出处 | 影响 |
-|---|---|---|---|
-| 1 | **自回归填空 (Autoregressive Blank Infilling)** | GLM 2021 / ACL 2022 | 用单一目标统一 NLU + 有/无条件生成；启发后续 UL2 等多任务预训练 |
-| 2 | **2D 位置编码** | GLM 2021 | 解决 mask span 长度泄漏；后被 RoPE 取代 |
-| 3 | **DeepNorm** | GLM-130B | 解决 100B+ 训练稳定性，被 BLOOM 等借鉴 |
-| 4 | **INT4 量化无损推理（百亿级）** | GLM-130B | 首次让 130B 模型可在消费卡上推理（4×3090） |
-| 5 | **Multi-Query Attention 国产化落地** | ChatGLM2-6B | 推动 MQA/GQA 在中文社区普及 |
-| 6 | **All Tools Agent 范式** | GLM-4 | 模型自主决定调用 web/Python/T2I/自定义函数 |
-| 7 | **Visual Expert** | CogVLM | 在每层 attention/FFN 并行视觉副本，深度融合而不损害纯文本能力 |
-| 8 | **3D Causal VAE + Expert AdaLN** | CogVideoX | 长视频的高效 latent 表征 + 文本-视频深度融合 |
-| 9 | **Relay Diffusion** | CogView3 | 级联扩散，低→高分辨率 relay |
-| 10 | **Rumination（反刍）模型** | GLM-Z1-Rumination | 对标 Deep Research，工具调用 + RL 训练长程研究 |
-| 11 | **Hybrid Reasoning (Thinking/Non-Thinking 单模型双模式)** | GLM-4.5 | 通过 API 参数即可切换；MoE 上较早实现 |
-| 12 | **slime RL 框架** | GLM-4.5+ | 异步 rollout/trainer 解耦；GLM-4.5/4.6/4.7/5/5.1 共用 |
-| 13 | **Loss-free Balance Routing**（在 GLM-4.5 MoE 中） | GLM-4.5 | 替代 auxiliary load loss，提升 MoE 训练稳定性 |
-| 14 | **Preserved Thinking** | GLM-4.7 | 在多轮工具调用之间保留思考链，提升自主编程 |
-| 15 | **GLM-5 大规模 MoE 基座** | GLM-5 (2026-02) | 744B/40B 激活，SWE-bench 77.8%，开源旗舰新标杆 |
-| 16 | **IndexShare（跨层复用稀疏注意力 indexer）** | GLM-5.2 (2026-06) | 每 4 层稀疏注意力复用同一 indexer，1M 上下文下每 token FLOPs −2.9×（官方口径）；对应论文 arXiv:2603.12201 *IndexCache* |
-| 17 | **MTP 层改进（投机解码接受长度 +≤20%）** | GLM-5.2 (2026-06) | 直接提升长程任务的解码效率 |
-| 18 | **「同基座 + 极致后训练 Scaling」范式** | GLM-5.3 (2026-08) | 首次公开宣称旗舰代际提升**全部来自后训练**（基座与 GLM-5.2 相同）；Terminal Bench 3.0 4.6→28.3 |
-| 19 | **稀疏 + 线性注意力混合架构（开源前沿首个）** | GLM-5.3-Flash (2026-08) | 320B/18B；注意力计算 −3.01×、KV cache −4.44×（相对 GLM-5.3）；结合 mHC 与 30T 多模态语料，原生多模态 |
-
----
-
-## 九、对比小结
-
-### 8.1 基座模型横向对比
-
-| 模型 | 时间 | 架构类别 | 总参 / 激活 | 上下文 | 训练 tokens | 典型评测亮点 |
-|---|---|---|---|---|---|---|
-| GLM-130B | 2022.08 | Prefix LM (稠密) | 130B | 2K | 400B | LAMBADA SOTA、INT4 推理 |
-| ChatGLM-6B | 2023.03 | Prefix LM (稠密) | 6.2B | 2K | ~1T | 中文对话开源里程碑 |
-| ChatGLM2-6B | 2023.06 | Prefix LM + MQA | 6.2B | 32K | 1.4T | MMLU +23%、CEval +33% |
-| ChatGLM3-6B | 2023.10 | ≈Causal LM + MQA | 6.2B | 32K / 128K | — | 工具/代码原生模板 |
-| GLM-4-9B-Chat | 2024.06 | Causal LM | 9B | 128K / 1M | 10T | 接近 GPT-4 子项 |
-| GLM-4-32B-0414 | 2025.04 | Causal LM (稠密) | 32B | 32K → 128K (YaRN) | — | BFCL 69.6、IFEval 87.6 |
-| GLM-Z1-32B-0414 | 2025.04 | Causal LM + RL | 32B | 128K | — | 200 tok/s、AIME/MATH 接近 R1 |
-| GLM-4.5 | 2025.07 | MoE + Hybrid Reasoning | 355B / 32B | 128K | 23T | 12 项基准均分全球第 2 |
-| GLM-4.5-Air | 2025.07 | MoE | 106B / 12B | 128K | 23T | 超越 Gemini 2.5 Flash / Qwen3-235B |
-| GLM-4.6 | 2025.09 | MoE | 357B / 32B | **200K** | — | 与 Claude Sonnet 4.5 近平价 |
-| GLM-4.7 | 2025.12 / 2026.01 | MoE + Preserved Thinking | 同代 | 200K | — | 自主编程方向 |
-| GLM-5 | 2026.02 | MoE | **744B / 40B** | 200K | — | SWE-bench 77.8%，12 项基准全球前 3 |
-| GLM-5.1 | 2026.04.07 | MoE（承 GLM-5） | 官方未披露 | 200K | — | SWE-Bench Pro 58.4（官方称全球最佳）；8 小时长程（详见 §2.9.0） |
-| GLM-5.2 | 2026.06.16 | MoE + IndexShare + 改进 MTP | 官方未披露 | **1M** | — | DeepSWE 46.2、FrontierSWE 74.4、SWE-Marathon 13.0（带条件，见 §2.9.1）；MIT |
-| GLM-5.3 | 2026.08.19 | **与 GLM-5.2 同一基座**（纯后训练） | 同 GLM-5.2 | 1M | — | Terminal Bench 3.0 28.3、DeepSWE 66.9、CyberGym 84.5（带条件，见 §2.9.2）；自定义许可 |
-| GLM-5.3-Flash | 2026.08.26 | **稀疏+线性注意力混合 + mHC**（新训基座） | **320B / 18B** | 1M | 30T（多模态语料） | 原生多模态；AA II 57；价格为 GLM-5.3 的 1/10（见 §2.9.3）；MIT |
-
-> ⚠️ 本表「典型评测亮点」列只做条目指路，**不构成跨厂商排名**；每个数字的 harness / 上下文 / effort / 是否第三方评测各不相同，引用前必须回看 §2.9 的对应条件列。
-> 另一处口径提示：GLM-5.2 与 GLM-5.3 的**总参/激活参官方均未披露**（本表据实写「官方未披露」，不沿用 GLM-5 的 744B/40B 推测）。
-
-### 9.2 多模态模型横向对比
-
-| 模型 | 时间 | 视觉编码器 | 融合方式 | LLM 底座 | 总参 | 亮点 |
-|---|---|---|---|---|---|---|
-| CogVLM-17B | 2023.11 | EVA-CLIP-E/14 | **Visual Expert（每层并行）** | Vicuna-7B | 17B | 10 项 SOTA |
-| CogVLM2-19B | 2024.05 | SigLIP/EVA | Visual Expert | LLaMA3-8B | 19B | 1344² / 8K |
-| GLM-4V-9B | 2024.06 | 同上 | Visual Expert | GLM-4-9B | ~13B | GLM 主家族绑定 |
-| GLM-4.1V-9B-Thinking | 2025.07 | 视觉编码器 + MLP | **Encoder + Projector + LLM**（弃用 Visual Expert） | GLM-4-9B | 9B | RL Thinking 链 |
-| GLM-4.5V | 2025.08 | 同上 | Encoder + Projector + LLM | GLM-4.5-Air (MoE) | 106B / 12B | 42 项基准 SOTA |
-| GLM-4.6V / 4.6V-Flash | 2025 Q4–12 | 同上 | Encoder + Projector + LLM | GLM-4.6 / 9B | 357B / 9B | 200K + 端侧 |
-| GLM-5V-Turbo | 2026.04 | 同上 | Encoder + Projector + LLM | GLM-5 (MoE) | 744B / 40B | 旗舰 VLM，多模态推理新高度；技术报告 arXiv:2604.26752（v3 2026-05-12） |
-| **GLM-5.3-Flash / FlashX** | 2026.08.26 | 官方未披露（**原生多模态**，非「LLM + 后接编码器」的拼接式） | 视觉原生融入同一主干（官方口径：视觉进入 coding 循环） | 新训基座（稀疏+线性注意力混合 + mHC） | **320B / 18B** | GLM-5 系列首个原生多模态；AA II 57；FlashX 200 tokens/s（见 §2.9.3） |
-
----
-
-## 十、参考文献
-
-### 论文（按时间）
-
-1. Ding M., Yang Z., Hong W., et al. **CogView: Mastering Text-to-Image Generation via Transformers**. NeurIPS 2021. arXiv:2105.13290. https://keg.cs.tsinghua.edu.cn/jietang/publications/NeurIPS21-Ding-et-al-CogView.pdf
-2. Du Z., Qian Y., Liu X., Ding M., Qiu J., Yang Z., Tang J. **GLM: General Language Model Pretraining with Autoregressive Blank Infilling**. ACL 2022. arXiv:2103.10360. https://aclanthology.org/2022.acl-long.26/
-3. Hong W., Ding M., Zheng W., Liu X., Tang J. **CogVideo: Large-scale Pretraining for Text-to-Video Generation via Transformers**. ICLR 2023. arXiv:2205.15868.
-4. Ding M., Zheng W., Hong W., Tang J. **CogView2: Faster and Better Text-to-Image Generation via Hierarchical Transformers**. NeurIPS 2022. arXiv:2204.14217.
-5. Zeng A., Liu X., Du Z., et al. **GLM-130B: An Open Bilingual Pre-trained Model**. ICLR 2023. arXiv:2210.02414. https://arxiv.org/abs/2210.02414
-6. Wang W., Lv Q., Yu W., et al. **CogVLM: Visual Expert for Pretrained Language Models**. NeurIPS 2024. arXiv:2311.03079. https://arxiv.org/abs/2311.03079
-7. Zheng W., Teng J., Yang Z., et al. **CogView3: Finer and Faster Text-to-Image Generation via Relay Diffusion**. arXiv:2403.05121 (2024).
-8. Team GLM (Zeng A., Xu B., et al.). **ChatGLM: A Family of Large Language Models from GLM-130B to GLM-4 All Tools**. arXiv:2406.12793 (2024). https://arxiv.org/abs/2406.12793
-9. Hong W., Wang W., Ding M., et al. **CogVLM2: Visual Language Models for Image and Video Understanding**. arXiv:2408.16500 (2024). https://arxiv.org/abs/2408.16500
-10. Yang Z., Teng J., Zheng W., et al. **CogVideoX: Text-to-Video Diffusion Models with An Expert Transformer**. ICLR 2025. arXiv:2408.06072. https://arxiv.org/abs/2408.06072
-11. Team GLM-V. **GLM-4.1V-Thinking & GLM-4.5V & GLM-4.6V: Towards Versatile Multimodal Reasoning with a Family of VLMs**. arXiv:2507.01006 (2025).
-12. Team GLM. **GLM-4.5: Agentic, Reasoning, and Coding (ARC) Foundation Models**. arXiv:2508.06471 (2025-08).
-13. Z.ai Blog. **GLM-5: Scaling Reasoning and Coding with 744B MoE**. 2026-02.
-14. Team GLM. **GLM-5: from Vibe Coding to Agentic Engineering**. arXiv:2602.15763（**v1 2026-02-17 / v2 2026-02-24**）。GLM-5 / GLM-5.1 / GLM-5.2 / GLM-5.3 的模型卡均引用此报告。
-15. Team GLM. **IndexCache: Accelerating Sparse Attention via Cross-Layer Index Reuse**. arXiv:2603.12201（v1 **2026-03-12**）。GLM-5.2 模型卡以 **IndexShare** 之名引用；论文主实验为 30B DSA 模型。
-16. Team GLM. **GLM-5V-Turbo: Toward a Native Foundation Model for Multimodal Agents**. arXiv:2604.26752（**v1 2026-04-29 / v3 2026-05-12**）。
-17. Z.ai Blog. **GLM-5V-Turbo: Multimodal Reasoning at Scale**. 2026-04.
-18. 智谱 AI 招股书 / 港交所公告. **Zhipu AI 香港主板上市**. 2025-12-20.
-19. bigmodel.cn 官方公告. **API 价格调整通知**. 2026-03-04.
-
-> 版本口径（本轮）：第 14–16 条 arXiv ID 的标题、版本号、版本日期均于 2026-10-17 回查 `export.arxiv.org/api`；GLM-5 报告作者列为 `GLM-5-Team`（模型卡 bibtex 可见完整作者表）。
-
-### 官方资源
-
-20. Z.AI 官网与开发者文档：https://z.ai ｜ https://docs.z.ai（**注：`z.ai` 与 `docs.z.ai` 在本次核对环境（2026-10-17）TLS 不可达，未能直读博客原文**）
-21. 智谱 AI 开放平台 / bigmodel.cn：https://open.bigmodel.cn ｜ https://www.bigmodel.cn
-22. **智谱官方发布记录（日期的一手出处）**：https://docs.bigmodel.cn/cn/update/new-releases —— GLM-5（2026-02-12 / 02-03 GLM-OCR）、GLM-5-Turbo（2026-03-15）、GLM-5V-Turbo（2026-04-02）、GLM-5.1（2026-04-07）、GLM-5.2（2026-06-16）、GLM-5.3（2026-08-19）、GLM-5.3-Flash（2026-08-26）的上线日期均取自此页
-23. **智谱官方模型文档页**：`docs.bigmodel.cn/cn/guide/models/text/glm-5.2`、`…/glm-5.3`、`…/vlm/glm-5.3-flash`、`…/glm-5.1`、`…/glm-5`（本轮 §2.9 的上下文/输出/思考模式/定价口径来源）
-24. Z.AI / 智谱 GitHub 组织：https://github.com/zai-org （含 GLM-130B、GLM-4、GLM-4.5、GLM-V、CogVLM2、CogVideo、CogView4、slime、GLM-5 等仓库）
-25. THUDM GitHub 组织：https://github.com/THUDM （含 GLM、ChatGLM-6B、ChatGLM2-6B、ChatGLM3、GLM-4、slime 等历史仓库）
-26. Hugging Face：https://huggingface.co/zai-org （GLM-5.3-Flash / GLM-5.3 / GLM-5.2 / GLM-5.1 / GLM-5 等权重）
-27. **GLM 官方模型卡（本轮新增内容的核验主源）**：`huggingface.co/zai-org/GLM-5.2`（createdAt 2026-06-16）、`…/GLM-5.3`（2026-08-25）、`…/GLM-5.3-Flash`（2026-08-25）、`…/GLM-5.1`（2026-04-03）、`…/GLM-5`
-28. **智谱中文官方研究页**：https://www.zhipuai.cn/zh/research/161 （GLM-5.3 发布文，含任务环境规模化与安全能力叙述）
-29. GLM-130B 官方博客：https://keg.cs.tsinghua.edu.cn/glm-130b/
-30. CogVLM2-Video 项目页：https://cogvlm2-video.github.io/
-31. slime（RL 后训练框架）：https://github.com/THUDM/slime
-
-### 第三方分析（参考）
-
-32. Z.ai Blog. **GLM-4.5: Reasoning, Coding, and Agentic Abililties**. https://z.ai/blog/glm-4.5
-33. APXML. *GLM-4.5 / GLM-4.6 Specifications and GPU VRAM Requirements*. https://apxml.com/models/glm-45 ｜ https://apxml.com/models/glm-46
-34. The Decoder (2025-12). *Zhipu AI challenges Western rivals with low-cost GLM-4.7*.
-35. vLLM 官方博客 (2025-08-19). *GLM-4.5 Meets vLLM: Built for Intelligent Agents*.
-
----
-
-> 编纂说明：本报告以官方论文与发布信息为主要依据，对于社区流出的部分参数（如 GLM-4.7 / GLM-5 系列的精确激活/总参）已做标注；ChatGLM2/3 在"是否仍为 Prefix LM"上社区描述存在口径不一，本报告以官方仓库 README 与 ChatGLM 综述论文 (arXiv:2406.12793) 的最终归纳为准，并在第六章给出渐进式转型的判断。
-
-> **2026-10-17 增量说明**：本轮只做增补与修正，不改动 2026-06 前已核验的结论。新增内容集中在 **§2.9**（GLM-5.2 / GLM-5.3 / GLM-5.3-Flash，含 §2.9.0 为对照基线补的 GLM-5.1 带条件数字）、**§2.10**（未确证与待跟踪，9 项，均不入正文）、**§7.4**（Coding Plan 与价格分层）；同步更新 §1.1 时间线、§8 创新点表（+4 项）、§9.1/§9.2 横向对比表、§10 参考文献与官方资源编号（原「官方资源」编号与论文列表重复，本轮一并重排）。**证据分级口径**：精读原文（官方模型卡 / 官方文档 / 官方发布记录原文）、摘要级（仅读 arXiv 摘要与元数据）、二手（第三方页面或他人转述）、受限核验（原始页面在本环境不可达）。本轮 GLM-5.2 / 5.3 / 5.3-Flash 的主体数字均为「精读原文」；**受限核验项（z.ai 博客原文、GLM-5.3-Flash 基准图为图片）已明确标注，不参与结论**。
+| 预训练上下文如何组织 | GLM 用双向可见区 + 自回归 span 预测 | ChatGLM/GLM-4 更接近因果生成 | 前者统一填空与生成，后者简化续写和服务接口 |
+| 增加能力的成本是什么 | GLM-130B 在稠密大模型上攻训练稳定性 | GLM-4.5 以 MoE 分开总容量与激活计算 | MoE 降低每 token 激活计算，但增加路由、通信与专家负载问题 |
+| 视觉如何进入 LLM | CogVLM 每层视觉专家深融合 | GLM-V 把更多收益放到推理后训练与任务课程 | 结构改造和后训练各自针对不同失效，不能用单一总分归因 |
+| 生成表示如何选择 | CogView 用 VQ-VAE 离散 token 自回归 | CogView3 使用 relay diffusion，CogVideoX 使用时空 latent DiT | 序列预测统一了 token 目标；扩散/DiT 将重点转为连续空间去噪及多尺度效率 |
+| 能力如何从对话迁移到任务 | GLM-4 All Tools 加入工具调用 | GLM-4.5 将代码、推理、Agent 交互纳入 mid/post-training | Agent 成绩同时依赖模型、环境、工具与执行预算 |
+
+由此可以看到，GLM 最初的核心不是“中国版 GPT”，而是尝试用不同于标准 causal LM 的目标兼顾理解与生成。随着模型进入长上下文对话、工具和推理任务，团队逐渐采用更成熟的 decoder-only、注意力效率和后训练路线。视觉分支没有简单沿用文本基座：CogVLM 的视觉专家与 CogView 的离散生成都说明，多模态任务可能需要为输入/输出表示做专门设计。
+
+## 失效边界与开放问题
+
+- **预训练目标与服务目标是否真的冲突？** ChatGLM 的转向表明因果 LM 更易部署和拓展，但并未证明 blank-infilling 在知识理解上没有剩余价值。需要同规模、同数据和同后训练条件的比较。
+- **MoE 的“激活参数少”不等于部署开销小。** 权重仍需存储和分发；专家并行、路由负载及通信会改变真实吞吐。论文性能表不能替代具体硬件和 serving 条件。
+- **推理基准和 Agent 成绩受环境影响。** 工具可用性、浏览器状态、软件版本、最大交互轮数和提示模板都会影响任务完成率；跨论文分数若 scaffold 不同，不能直接排榜。
+- **视觉模型仍受评测覆盖限制。** OCR、细粒度 grounding、长视频理解、GUI 执行的失败模式不同；“42 项 benchmark”不能代替对困难类别的分析。
+- **扩散生成与理解模型的协同尚未统一。** CogView4 使用 GLM 文本编码器，但模型卡没有给出足以说明编码器与图像 DiT 如何联合训练的细节；不应仅凭共享品牌把它称为统一多模态模型。
+
+## 推荐阅读顺序
+
+1. Du et al., GLM §§2.1–2.4：理解 blank infilling、双坐标位置和目标统一。
+2. Zeng et al., GLM-130B §§2–3、附录B：看目标如何在百亿级训练中遇到稳定性问题。
+3. Team GLM, ChatGLM §§2–4：观察 ChatGLM/GLM-4 的架构工程、后训练与工具评价。
+4. GLM-4.5 §§2–4：沿 ARC 路线看 MoE、专家迭代和 Agent/RL 训练。
+5. CogVLM §§2–4 与 GLM-4.1V/4.5V §3：比较视觉结构改造与推理后训练。
+6. CogView/CogView2 → CogView3，再读 CogVideoX §§2–4：对照离散自回归、层次扩散和时空 DiT。
+
+## 主要来源与原文定位
+
+- Du et al., [GLM: General Language Model Pretraining with Autoregressive Blank Infilling](https://arxiv.org/abs/2103.10360v2), ACL 2022，§§2–3。
+- Zeng et al., [GLM-130B: An Open Bilingual Pre-trained Model](https://arxiv.org/abs/2210.02414), ICLR 2023，§§2–5、附录B。
+- Team GLM, [ChatGLM: A Family of Large Language Models from GLM-130B to GLM-4 All Tools](https://arxiv.org/abs/2406.12793v2), §§2–4。
+- Team GLM, [GLM-4.5: Agentic, Reasoning, and Coding (ARC) Foundation Models](https://arxiv.org/abs/2508.06471), §§2–4。
+- Wang et al., [CogVLM: Visual Expert for Pretrained Language Models](https://arxiv.org/abs/2311.03079), §§2–4。
+- GLM-V Team, [GLM-4.1V-Thinking and GLM-4.5V](https://arxiv.org/abs/2507.01006), §§2–4。
+- Ding et al., [CogView](https://arxiv.org/abs/2105.13290), NeurIPS 2021；Ding et al., [CogView2](https://arxiv.org/abs/2204.14217), §§2–4；Zheng et al., [CogView3](https://arxiv.org/abs/2403.05121), §§2–4。
+- Yang et al., [CogVideoX: Text-to-Video Diffusion Models with An Expert Transformer](https://arxiv.org/abs/2408.06072), §§2–4。
+- GLM-4-32B-0414 / GLM-Z1 / GLM-Z1-Rumination 的[官方模型说明](https://github.com/zai-org/GLM-4)用于确认公开训练路线；无独立技术报告的部分只作为厂商说明，不当作可复核论文机制。
+- CogView4-6B 的[官方权重卡](https://huggingface.co/zai-org/CogView4-6B)和[官方仓库](https://github.com/zai-org/CogView4)说明了公开模型信息；因没有单独技术报告，这些材料仅支持发布状态与结构标签。

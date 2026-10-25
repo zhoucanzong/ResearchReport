@@ -5,7 +5,7 @@ display_name: DeepSeek
 # DeepSeek 系列模型深度调研报告
 
 > 调研范围：DeepSeek 六条模型研究线；历史主体保留至 2026 年 4 月 V4 Preview，近期分批补核到 2026-10-23，涉及 V4.1-Flash-1017 身份、训练/部署证据及分块 KV 压缩相位敏感性；见 §2.8、§11.10。各批只覆盖标明的范围，不代表六条研究线全量新型号扫描。
-> 原调研时点：2026-06；本批更新截止：**2026-10-23（Asia/Shanghai）**。
+> 覆盖范围：DeepSeek 系列截至 **2026-10-23（Asia/Shanghai）**可获得的模型与技术材料。
 > 历史主体基于两份子报告整合：[纯文本基座模型](deepseek-text-models.md) 与 [多模态与专业模型](deepseek-multimodal-and-specialized.md)，并提炼跨方向的整合性洞察。
 
 ---
@@ -153,7 +153,7 @@ V3 在 V2 架构骨架上叠加了系统级创新；论文报告其完整训练�
 | 训练精度 | BF16 | BF16 | **FP8 (E4M3) + 高精度累加 + tile/block 量化** | FP8 | FP8（推断） |
 | 流水/通信 | 标准 ZeRO + PP | 16-way zero-bubble PP + 8-way EP + ZeRO-1 | **DualPipe** + 跨节点 all-to-all | 同 V3 | 同 V3.x |
 | 上下文 | 4K | 128K（YaRN） | 128K | 128K | **1M 默认** |
-| 预训练 tokens | 2T | 8.1T | 14.8T | 14.8T 之上继续训练 | >32T（本批固定的预览模型卡口径） |
+| 预训练 tokens | 2T | 8.1T | 14.8T | 14.8T 之上继续训练 | >32T（固定预览模型卡口径） |
 | 训练计算量（论文报告） | — | 每 1T tokens 172.8K H800·h | **2.788M H800·h** | 未单独披露 | 未单独披露 |
 | 后训练 | SFT + DPO | SFT + GRPO | SFT + RL（含 R1 蒸馏） | RLVR + 生成式 reward + GRPO 升级 | RLVR + Agentic 任务合成 |
 | 推理形态 | Base + Chat | Base + Chat | Base + Chat（V3.1 起 hybrid） | hybrid + Speciale 扩展思考 | Pro/Flash + 三档思考 |
@@ -163,32 +163,32 @@ V3 在 V2 架构骨架上叠加了系统级创新；论文报告其完整训练�
 
 ### 2.8 DeepSeek-V4.1-Flash：研究版本与技术证据
 
-#### 2.8.1 本批研究对象与论文时间
+#### 2.8.1 V4.1-Flash 的论文与版本
 
 | 模型/资料 | 时间 | 对研究的作用 |
 |---|---|---|
 | V4-Flash-0731、V4-Pro-0813 | 2026-07-31、2026-08-13 | V4正式版阶段的两个模型版本，和4月Preview分开 |
-| V4.1-Flash | 2026-09-10 | 本批技术分析的原始模型版本，支持图文输入 |
+| V4.1-Flash | 2026-09-10 | 本报告用于技术分析的版本，支持图文输入 |
 | 技术报告 `2609.19969v1` | 2026-09-17提交 | 晚于模型发布；用于解释方法，不把论文提交日当模型首发日 |
 | V4.1-Flash-1017 | 2026-10-17更新 | 后续模型卡沿用同一技术报告，不是新论文 |
 
-固定模型卡与权重索引的具体版本、来源覆盖范围见[来源清单](sources/MANIFEST.md)。本批未下载权重或运行模型；静态配置相同不能证明权重或训练过程相同。
+固定模型卡与权重索引的具体版本、来源覆盖范围见[来源清单](sources/MANIFEST.md)。静态配置相同不能证明权重或训练过程相同；本文没有权重运行结果。
 
 #### 2.8.2 新架构的证据边界
 
-[4.1 原版技术报告 **2609.19969v1**](https://arxiv.org/abs/2609.19969v1) 的提交日是 **2026-09-17**，晚于 9 月 10 日模型公告；1017 模型卡引用这份既有研究，不代表 10 月 17 日发布了一篇新的独立技术报告。本批固定 arXiv PDF 与固定 HF revision 内 PDF，两者字节哈希不同，分别保留，不默认为同一文件版本。
+[4.1 原版技术报告 **2609.19969v1**](https://arxiv.org/abs/2609.19969v1) 的提交日是 **2026-09-17**，晚于 9 月 10 日模型公告；1017 模型卡引用这份既有研究，不代表 10 月 17 日发布了一篇新的独立技术报告。固定 arXiv PDF 与固定 HF revision 内 PDF 是不同文件版本，不能默认视为同一版本。
 
 论文摘要、§2/§4.2.1 和固定的原版模型卡支持以下变化：**552B 是 backbone 参数口径**，另有 196B Engram 条件记忆参数；40 层 Causal Encoder-Decoder 把 prefill 与 decode 的激活参数分别记为 **8B / 16B**。不能把 HF 权重页面的整体规模、backbone 参数和单 token 激活参数放进同一列，也不能由小激活量推出整套权重可装进一张显卡。
 
-CSA2 的跨层 KV/索引复用与 FP4 KV 缓存把**全局 KV**记录为 890 bytes/token、约为旧 V4-Flash 的 1/4；SWA Bounded Replay 针对的是**持久缓存**，作者给出的比例约为 1/8。这两种缓存口径和固定长度下的比较不能改写为整机显存分别下降 4 倍/8 倍，或所有请求时延都同比下降。论文 §6 还承认 CSA2 选择错误、cache 恢复边界上的近似状态重建可能在未测极端条件下损害能力；本批没有独立验证这些边界。
+CSA2 的跨层 KV/索引复用与 FP4 KV 缓存把**全局 KV**记录为 890 bytes/token、约为旧 V4-Flash 的 1/4；SWA Bounded Replay 针对的是**持久缓存**，作者给出的比例约为 1/8。这两种缓存口径和固定长度下的比较不能改写为整机显存分别下降 4 倍/8 倍，或所有请求时延都同比下降。论文 §6 还指出 CSA2 选择错误、cache 恢复边界上的近似状态重建可能在极端条件下损害能力；这些失效条件没有独立验证。
 
-原版与 1017 两个固定仓库的 `config.json` 字节一致（同为 40 层、词表 129,280），权重索引列出的分片数与映射规模相同；这只确认公开静态配置一致，**不能证明权重相同，也不能证明训练变更全部已披露**。本批未下载分片或运行推理。
+原版与 1017 两个固定仓库的 `config.json` 字节一致（同为 40 层、词表 129,280），权重索引列出的分片数与映射规模相同；这只确认公开静态配置一致，**不能证明权重相同，也不能证明训练变更全部已披露**。权重分片没有下载或运行推理，因此不能据此确认权重相同或运行效果。
 
 #### 2.8.3 评测、harness 与推理强度不能跨版本继承
 
-1017 固定模型卡与更新日志列出 HLE 无工具 **42.6**（**44.0** 另指纯文本子集）、Terminal-Bench **4.0** 为 **42.3**、DeepSWE **v1.1** 为 **77.0**；后两项分别使用 **Claude Code** 与 **Mini-SWE-V2**。ZeroBench-main 的 **51.0** 是带工具 **Pass@5**。这些均为厂商报告，不是本批独立复跑。[1017 固定模型卡](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017/blob/1bae0e1088993b9b82de08f59de5be5a34e42170/README.md)；[官方脚注](https://api-docs.deepseek.com/updates/)
+1017 固定模型卡与更新日志列出 HLE 无工具 **42.6**（**44.0** 另指纯文本子集）、Terminal-Bench **4.0** 为 **42.3**、DeepSWE **v1.1** 为 **77.0**；后两项分别使用 **Claude Code** 与 **Mini-SWE-V2**。ZeroBench-main 的 **51.0** 是带工具 **Pass@5**。这些均为厂商报告值，未独立复跑。[1017 固定模型卡](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017/blob/1bae0e1088993b9b82de08f59de5be5a34e42170/README.md)；[官方脚注](https://api-docs.deepseek.com/updates/)
 
-原版 4.1 论文/卡片的代码评测通常用 DeepSeek Harness Minimal，DeepSWE 另用 mini-SWE；不能把旧表到 1017 新表的分差都归因于 checkpoint 更新。新增报告没有给足逐项采样重复、全部模型预算和失败分布，本批不据这些数字写全场景排名，也不将“更短输出、更快任务”变成缺硬件/任务条件的固定倍数。
+原版 4.1 论文/卡片的代码评测通常用 DeepSeek Harness Minimal，DeepSWE 另用 mini-SWE；不能把旧表到 1017 新表的分差都归因于 checkpoint 更新。现有报告没有提供完整的逐项采样重复、模型预算和失败分布，因此这些数字不足以支持全场景排名，也不能转换成缺少硬件和任务条件的固定速度倍数。
 
 论文报告中的 reasoning-effort 设置属于该论文评测条件；它不代表所有托管产品都采用相同默认推理强度。输入窗口与输出预算也不能替代长上下文准确率评估。
 
@@ -423,7 +423,7 @@ R1-Zero 的纯 RL 路线在 LLM 史上有特殊地位：
 - **奖励 hacking 防御**：完全规则化奖励 + 格式奖励，避免了"奖励模型 hack 奖励模型"的常见失败模式。
 - **后续路线分叉**：R1（双轨）→ V3.1（混合推理）→ V4（三档思考强度）显示 DeepSeek 已在尝试把推理能力**收编进通用基座**而非永远保持双模型，这是 2025 下半年开源社区的主流方向。
 
-一个独立的 2026 年预印本为“基座已有能力与 RL 后训练”的关系提供了可比较的实验视角：Wang 等人在 Olmo-3-7B 与 Qwen3-14B 上发现，固定回复开头 cue 可使若干数学基准成绩接近直接从基座进行的 RL 对照；例如 Qwen3-14B 的 MATH-500 pass@1 从 72% 升到 87%，与其 GRPO 对照相当。作者还在 Olmo 与 SmolLM3 的受控中训练数据改写中改变 cue 行为。该结果不是 DeepSeek 模型实验，也不验证 R1-Zero 的训练因果解释；多阶段后训练和模型间差异仍可能超出 cue 效应。详见[逐篇精读](papers/2610.06851-base-model-cues.md)及[本次来源记录](sources/MANIFEST.md#9-base-model-cues-preprint-2026-10-23)。
+一个独立的 2026 年预印本为“基座已有能力与 RL 后训练”的关系提供了可比较的实验视角：Wang 等人在 Olmo-3-7B 与 Qwen3-14B 上发现，固定回复开头 cue 可使若干数学基准成绩接近直接从基座进行的 RL 对照；例如 Qwen3-14B 的 MATH-500 pass@1 从 72% 升到 87%，与其 GRPO 对照相当。作者还在 Olmo 与 SmolLM3 的受控中训练数据改写中改变 cue 行为。该结果不是 DeepSeek 模型实验，也不验证 R1-Zero 的训练因果解释；多阶段后训练和模型间差异仍可能超出 cue 效应。详见[逐篇精读](papers/2610.06851-base-model-cues.md)及[来源记录](sources/MANIFEST.md#9-base-model-cues-preprint-2026-10-23)。
 
 ### 4.8 DeepSeek-R2：延迟发布与未确认传闻
 
@@ -681,20 +681,20 @@ DeepSeek 的开源策略不仅体现在权重与技术报告上，还体现在�
 
 ### 10.1 平台集成信息的时间边界
 
-原稿把 V4 写进多个平台的早期上线表，但未提供各平台的原始接入公告，本批撤回这些未经证实的日期与统一支持表。上游权重公开不能证明第三方平台已完成适配。
+官方材料没有提供各平台接入 V4 的公告，因此不能确认早期上线日期或将其列成统一支持表。上游权重公开不能证明第三方平台已完成适配。
 
 各第三方平台的支持情况仍需其原始说明；本报告不据上游公告推定其部署状态。
 
 ### 10.2 开源社区与下游生态
 
 - **框架适配**：vLLM、SGLang、TensorRT-LLM、llama.cpp 均已原生支持 DeepSeek-V3/V4 的 MLA + DeepSeekMoE 架构。vLLM 在 2025-12 版本中加入了对 DSA 稀疏注意力的初步支持。
-- **量化与部署**：本批读取了公开 V4.1 仓库的配置和权重索引，未下载权重或测试 GPU。激活参数不等于要存储的全部权重；原稿没有来源支撑的“V4-Flash 在单卡 H100 80GB 上以 FP8 运行1M”撤回，不用新模型的小激活量延续这一部署结论。
-- **Agent 集成**：1017 公告特别建议 DeepSeek Harness 0.2.1-rc.1 或更新版本，并点名 CodeBuddy / WorkBuddy 适配；这是官方建议，不等同于本批已在这些平台运行，也不支持原稿“所有主流框架默认后端”的结论。
+- **量化与部署**：公开 V4.1 仓库的配置与权重索引显示，激活参数不等于要存储的全部权重；现有证据不支持“V4-Flash 在单卡 H100 80GB 上以 FP8 运行1M”的部署说法，不能从较小激活量推出该结论。
+- **Agent 集成**：1017 公告建议使用 DeepSeek Harness 0.2.1-rc.1 或更新版本，并点名 CodeBuddy / WorkBuddy 适配。这是官方建议，不代表所有主流框架都将其设为默认后端，也不等同于这些平台上的独立运行结果。
 - **蒸馏生态**：R1-Distill 模式持续扩展，社区基于 V4-Flash 蒸馏出多个 7B–32B 级别的小模型，在数学与代码任务上保持接近原版的性能。
 
 ### 10.3 企业采用与行业落地
 
-- **编程工具适配**：V4.1/1017 的官方适配说明见 §2.8；原稿将 V4 接入提前到2025下半年的无源叙述撤回。具体工具可配置为某个 API 后端，不证明已对每个模型版本的工程任务效果作独立验证。
+- **编程工具适配**：V4.1/1017 的官方适配说明见 §2.8。工具可以配置某个 API 后端，但这不能证明每个模型版本都经过独立工程任务评测；现有材料也不足以支持 V4 在 2025 下半年已接入这些工具。
 - **金融与投研**：幻方量化（DeepSeek 母公司）自身持续使用 DeepSeek 模型进行量化策略研究与报告生成，形成"自研自用"闭环。
 - **教育与科研**：多所高校将 R1/V4 用于数学证明辅助、代码教学、论文写作辅助；DeepSeek-Math-V2 的自验证能力被用于自动阅卷系统。
 - **政务与公共部门**：部分地方政府将 DeepSeek-V3/V4 部署于私有云，用于公文处理、政策问答与数据分析。
@@ -747,13 +747,13 @@ DeepSeek 的开源策略不仅体现在权重与技术报告上，还体现在�
 
 ### 11.7 官方公告与 Changelog
 
-25. DeepSeek API Docs – [Change Log](https://api-docs.deepseek.com/updates/)，本批读取至2026-10-17条目；动态页面取证日期2026-10-22，内容哈希与快照见来源清单。
+25. DeepSeek API Docs – [Change Log](https://api-docs.deepseek.com/updates/)，动态页面列有截至2026-10-17的条目；页面状态与快照信息见来源清单。
 26. DeepSeek API Docs – DeepSeek-V3.1 Release (2025-08-21). https://api-docs.deepseek.com/news/news250821
 27. DeepSeek API Docs – DeepSeek-V3.1-Terminus (2025-09-22). https://api-docs.deepseek.com/news/news250922
 28. DeepSeek API Docs – Introducing DeepSeek-V3.2-Exp (2025-09-29). https://api-docs.deepseek.com/news/news250929
 29. DeepSeek API Docs – DeepSeek-V4 Preview Release (2026-04-24). https://api-docs.deepseek.com/news/news260424
 
-本批更新的一手取证：[V4.1-Flash-1017公告](https://api-docs.deepseek.com/news/news261017/)、[V4.1原版论文2609.19969v1](https://arxiv.org/abs/2609.19969v1)、[1017固定模型卡](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017/blob/1bae0e1088993b9b82de08f59de5be5a34e42170/README.md)、[原版固定模型卡](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/314113f8a7dadb388215396ba5fbee2c610a04d6/README.md)、[Pro-0813固定模型卡](https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro-0813/blob/72e1d3230f6c080a530b0a1d46f8eb4602340597/README.md)。完整来源身份/论文与权重日期/未解决冲突见 [sources/MANIFEST.md](sources/MANIFEST.md)。
+V4.1 更新涉及的一手来源：[V4.1-Flash-1017公告](https://api-docs.deepseek.com/news/news261017/)、[V4.1原版论文2609.19969v1](https://arxiv.org/abs/2609.19969v1)、[1017固定模型卡](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017/blob/1bae0e1088993b9b82de08f59de5be5a34e42170/README.md)、[原版固定模型卡](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/314113f8a7dadb388215396ba5fbee2c610a04d6/README.md)、[Pro-0813固定模型卡](https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro-0813/blob/72e1d3230f6c080a530b0a1d46f8eb4602340597/README.md)。完整来源身份/论文与权重日期/未解决冲突见 [sources/MANIFEST.md](sources/MANIFEST.md)。
 
 ### 11.8 第三方综述与交叉验证
 
@@ -777,4 +777,4 @@ ByteDance Seed 团队于 2026-09-28 发布 [*Periodic Weak Spots: Phase Sensitiv
 
 > *本报告基于 [deepseek-text-models.md](deepseek-text-models.md)（纯文本基座模型）与 [deepseek-multimodal-and-specialized.md](deepseek-multimodal-and-specialized.md)（多模态与专业模型）两份子报告整合提炼。如需查看某一方向的更详细技术细节（如训练超参、消融实验、benchmark 完整数值），请回到子报告。*
 
-> **本批范围（2026-10-22）**：只核 V4 正式版本→V4.1-Flash-1017 更新身份和受影响的主报告断言；原文实读范围、固定revision及未解决项在来源清单。两份历史子报告字节未改；不能用本批当前路由映射覆盖其历史论文证据，也不能将此记录称为DeepSeek整篇逐事实通过。
+> **V4.1 更新范围**：本文聚焦 V4 正式版本至 V4.1-Flash-1017 的版本身份及相关主报告结论；原文覆盖范围、固定 revision 与未解决项见来源清单。历史子报告与当前路由映射属于不同证据范围，不应相互替代。

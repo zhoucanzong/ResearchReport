@@ -72,7 +72,7 @@ LLaDA 2.2 在此基础上增加**局部长度变化**：以 draft/target 的最�
 
 建议按问题阅读：先读 [LLaDA](papers/2502.09992-llada.md)理解随机 mask objective 和固定长度反向采样；接着读 [LLaDA 1.5](papers/2505.19223-llada-1.5-vrpo.md)看扩散概率估计怎样影响 DPO；再读 [LLaDA 2.0](papers/LLaDA2.0-Scaling-to-100B.md)看模型转换与大规模训练；最后依次读 [LLaDA 2.1](papers/LLaDA2.1-Token-Editing.md)与 [LLaDA 2.2](papers/LLaDA2.2-Levenshtein-Editing.md)，比较替换修订与插入/删除编辑。Block Diffusion、SDAR 与 CARD 用来比较不同条件化和生成顺序，而不是扩充模型名录。
 
-纳入边界：视觉生成 diffusion 不属于本专题；以 diffusion drafter 为 AR target 加速、对 dLLM 自身做 self-speculation、或用 DLM 候选逼近 AR 质量的工作，统一见[投机解码的扩散交叉专题](../../Infra/SpeculativeDecoding/topics/diffusion-drafters.md)。本报告继续聚焦扩散模型本身的训练目标、去噪/块机制、长度控制和编辑能力。若论文只在 related work 提及 LLaDA，或只给速度数字却未交代任务与计时条件，不作为主线证据。候选范围与暂缓理由见 [CANDIDATES](sources/CANDIDATES.md)。
+纳入边界：视觉生成 diffusion 不属于本专题；以 diffusion drafter 为 AR target 加速、对 dLLM 自身做 self-speculation、或用 DLM 候选逼近 AR 质量的工作，统一见[投机解码的扩散交叉专题](../../Infra/SpeculativeDecoding/topics/diffusion-drafters.md)。本报告继续聚焦扩散模型本身的训练目标、去噪/块机制、长度控制和编辑能力。若论文只在 related work 提及 LLaDA，或只给速度数字却未交代任务与计时条件，不作为主线证据。
 
 ## 尚未解决的问题
 
@@ -82,4 +82,4 @@ LLaDA 2.2 在此基础上增加**局部长度变化**：以 draft/target 的最�
 - 扩散模型的可变长度生成、EOS 学习、长上下文和工具调用稳定性，能否在同一开放评测协议里检验？这些边界在 [LLaDA](papers/2502.09992-llada.md) 与 [LLaDA2.2 技术报告](papers/LLaDA2.2-Levenshtein-Editing.md) 中已有局部证据，但尚非同协议对照。
 - 大规模 LLaDA 转换结果中，哪些增益来自扩散目标，哪些来自新增数据、RL、采样器、服务内核与评测预算？
 
-本专题精读范围、版本、许可、缓存路径、具体表图位置及未复现事项见 [来源清单](sources/MANIFEST.md)。
+论文版本、许可、原文定位与证据范围见[来源清单](sources/MANIFEST.md)。

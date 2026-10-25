@@ -19,6 +19,8 @@ ResearchReport 是面向阅读学习的 AI 研究图书馆。研究工作优先�
 
 不要求每个专题创建上述全部目录。七问只作思考提示：研究问题、核心机制、关键设计选择、支持性证据、与相邻方法的关系、失效条件、开放问题。按主题自然组织，不机械逐项作答、不设置固定章节，也不为填满目录而扩写。
 
+主报告按**综述式学习入口**撰写：让读者看清该方向的问题版图、关键机制如何演进、论文间的设计取舍与分歧、证据支持到哪里，以及哪些失败和开放问题仍未解决。主报告必须有自己的跨论文综合，不能只是简短摘要和链接集合；代表论文的逐篇机制细读可放在 `papers/`，主报告负责解释它们为什么构成这条研究路线。可按“问题地图 → 方法发展路径 → 代表工作比较 → 证据与失效边界 → 推荐阅读和开放问题”组织，不要求固定章节，也不按行数、模型名单或引文数验收。研究问题窄、原始材料少时可写得短，但要把范围和证据缺口说清，不能用通用套话填长。
+
 ## 行文与分析
 
 - 用读者熟悉的例子、图或短推导先解释直觉，再引入必要术语、公式和实现细节。
@@ -45,7 +47,7 @@ ResearchReport 是面向阅读学习的 AI 研究图书馆。研究工作优先�
 
 | 工作 | Skill | 项目约定 | 官方仓库 |
 |---|---|---|---|
-| 论文与领域研究 | `researcher` | 默认 deep；deep 指原文理解和分析深度，不指日志或篇幅 | [zhoucanzong/researcher](https://github.com/zhoucanzong/researcher) |
+| 论文与领域研究 | `researcher deep` | 主报告与系统性专题更新显式使用 deep；逐篇读代表原文并形成比较综合。deep 指理解与分析深度，不指日志或篇幅。不要依赖不带 `deep` 的快速默认路径 | [zhoucanzong/researcher](https://github.com/zhoucanzong/researcher) |
 | 获取论文原文 | `paper-fetcher` | 先读完整在线原文，PDF 按需获取 | [zhoucanzong/paper-fetcher](https://github.com/zhoucanzong/paper-fetcher) |
 | 代码库研究 | `code-researcher` | 以固定源码版本为准，重要行为给文件与行号 | [zhoucanzong/code-researcher](https://github.com/zhoucanzong/code-researcher) |
 

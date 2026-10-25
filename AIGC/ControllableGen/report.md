@@ -4,9 +4,8 @@ display_name: 可控生成
 
 # 可控生成（Controllable Generation）技术研究报告
 
-> 报告日期：2026年6月6日
 > 研究领域：Diffusion Model / Controllable Image & Video Generation
-> 核心主题：从 ControlNet 到 DiT 原生控制的架构演进
+> 核心问题：控制信号如何表示、注入，以及多条件怎样共同作用
 
 ---
 
@@ -15,45 +14,37 @@ display_name: 可控生成
 1. [概述](#1-概述)
 2. [发展时间线](#2-发展时间线)
 3. [核心方法架构详解](#3-核心方法架构详解)
-4. [架构演进对比](#4-架构演进对比)
-5. [与 DiT / Flow Matching 的结合](#5-与-dit--flow-matching-的结合)
-6. [ComfyUI 工作流生态](#6-comfyui-工作流生态)
-7. [挑战与未来方向](#7-挑战与未来方向)
-8. [参考链接](#8-参考链接)
+4. [控制信号与条件冲突](#4-控制信号如何进入模型何时会冲突)
+5. [方法设计的跨论文比较](#5-方法设计的跨论文比较)
+6. [控制信号进入 DiT / Flow Matching](#6-控制信号进入-dit--flow-matching)
+7. [工具实现与研究边界](#7-工具实现与研究边界)
+8. [挑战与开放问题](#8-挑战与开放问题)
+9. [参考原文](#9-参考原文与工具)
 
 ---
 
 ## 1. 概述
 
-可控生成（Controllable Generation）是扩散模型（Diffusion Model）走向实际应用的关键技术路径。自 2022 年 Stable Diffusion 开源以来，社区对"如何精确控制生成结果"的需求催生了大量研究工作。从早期的文本提示词（Text Prompt）控制，到后来的空间条件控制（canny edge、depth map、human pose、semantic segmentation 等），再到风格一致性、角色一致性、多条件组合控制，可控生成技术经历了从"外挂模块"到"原生集成"、从"单一条件"到"多条件统一"的深刻演进。
+“可控”不是一种单独的模型结构。不同工作向生成过程提供不同信号：文本说明语义，边缘/深度/姿态提供空间布局，参考图像提供外观或主体线索；LoRA 则通常修改模型参数以适应风格/概念，并不等同于推理时输入的结构条件。方法之间最关键的差异是：信号如何表达、注入到哪一层、哪些原模型权重被冻结、以及多个信号同时出现时是否有机制处理冲突。
 
-本报告系统梳理 2023-2026 年间可控生成领域的关键技术架构，重点分析模型结构的演进脉络：
+路线围绕这些问题展开：从 ControlNet 的冻结主干与旁路残差，到 T2I-Adapter 的多尺度特征、IP-Adapter 的图像 cross-attention、LoRA 的参数偏移、Uni-ControlNet 的局部/全局分组，再到 ControlNet++ 的控制反馈与 DiT 上的 OminiControl。它们不是一条“外挂逐步被原生统一取代”的线性进化链；新骨干改变条件注入的接口，但并不自动解决空间对齐、条件冲突或输出是否服从条件的问题。
 
-**旁路 U-Net (ControlNet) → 轻量卷积 (T2I-Adapter) → 解耦注意力 (IP-Adapter) → 低秩微调 (LoRA) → 统一多条件 (Uni-ControlNet) → DiT 原生控制**
-
-这一演进反映了社区对"控制精度"与"计算效率"之间平衡的持续追求，也预示着下一代生成模型（基于 DiT / Flow Matching）将原生支持多条件控制，逐步摆脱对外挂适配器的依赖。
+理解一个可控系统时，至少分开看：**条件可读性**（信号是否准确表达想要的内容）、**注入/学习机制**（模型能否从信号中抽取相应信息）、**输出忠实度**（结果是否跟随条件）、**非目标保持**（未要求改变的区域/属性是否保留）。控制权重调高，只是改变条件影响强度，并不等于解决了条件互相矛盾。建议先按第 3 节逐篇读懂控制模块，再用第 4–6 节比较条件接口、冲突和 DiT 迁移；第 7 节介绍常见工作流的实现边界。
 
 ---
 
 ## 2. 发展时间线
 
-| 时间 | 方法 | 机构/作者 | 核心贡献 | 参数量占比 |
-|------|------|-----------|----------|-----------|
-| 2022.06 | LoRA | Hu et al. (Microsoft) | 低秩适配，W' = W + BA | 0.1% - 1% |
-| 2022.10 | LyCORIS | KohakuBlueleaf | LoRA 扩展，支持更多分解形式 | 0.1% - 5% |
-| 2023.02 | **ControlNet** | Zhang et al. (Stanford) | 冻结 U-Net + 可训练旁路 U-Net | ~50% (旁路) |
-| 2023.02 | T2I-Adapter | Tencent ARC Lab | 轻量级卷积适配器，论文约77M参数 | 不采用未固定分母的1% |
-| 2023.08 | IP-Adapter | Tencent ARC Lab | 解耦 Cross-Attention，图像提示适配 | ~5% |
-| 2023.10 | Multi-ControlNet | SD WebUI 社区 | 多个 ControlNet 并行组合 | N × ~50% |
-| 2023.12 | Reference-Only | SD WebUI 社区 | 参考图像通过 attention 注入 | 无额外参数 |
-| 2024.01 | ReferenceNet | Alibaba (AnimateAnyone) | 独立 Reference Encoder 提取参考特征 | ~30% |
-| 2023.05 | Uni-ControlNet | Zhao等 | 两个adapter分别处理local/global | 不引用未固定分母的15% |
-| 2024.06 | ControlNet++ | 后续改进工作 | 更高效的控制注入机制 | ~25% |
-| 2024.12 | ControlNeXt | 后续改进工作 | 轻量化控制，适配视频生成 | ~5% |
-| 2025.03 | DiT-Control | 社区/研究界 | ControlNet 适配到 DiT 架构 | ~20% |
-| 2025.06 | Flow-Control | 社区/研究界 | 条件注入 Flow Matching Transformer | ~10% |
-| 2025.12 | Native Multi-Condition DiT | 主流模型厂商 | 模型原生支持多条件控制 | 0% (外挂) |
-| 2026.03 | End-to-End Controllable Gen | 研究前沿 | 端到端训练，无需外挂适配器 | 0% (外挂) |
+| 时间 | 代表工作 | 条件类型 / 方法变化 | 学习问题 |
+|---|---|---|---|
+| 2021 | LoRA | 对预训练参数加低秩偏移 | 如何以较少可训练参数适配任务/概念 |
+| 2023.02 | ControlNet、T2I-Adapter | 边缘、深度、姿态等空间信号；旁路残差 vs 多尺度特征注入 | 怎样保持大型文本到图像主干，同时注入空间结构 |
+| 2023.05 | Uni-ControlNet | 将多种局部控制与全局图像条件归为两类共享 adapter | 如何共享控制分支并提高局部/全局条件组合能力 |
+| 2023.08 | IP-Adapter | 参考图经 CLIP 编码，单独 cross-attention 注入 | 怎样让图像条件与原文本条件并存 |
+| 2023.11 | AnimateAnyone / ReferenceNet | 参考外观、姿态序列和时序模块分别处理 | 视频中如何拆分外观保持、动作控制和时间连续 |
+| 2024.04 | ControlNet++ | 用生成后条件提取器形成一致性反馈 | 结构控制模型为何仍会偏离输入条件，如何再校准 |
+| 2024.08 | ControlNeXt | 简化控制模块并提出 Cross Normalization | 如何减小控制支路训练/推理成本，兼顾图像与视频 |
+| 2025 | OminiControl / OminiControl2 | 在 DiT 中重用视觉编码与 token 序列，并压缩/复用条件特征 | Transformer 条件控制的参数与长条件处理如何设计 |
 
 ---
 
@@ -61,42 +52,38 @@ display_name: 可控生成
 
 ### 3.1 ControlNet (2023.02, Zhang et al.)
 
-ControlNet 是可控生成领域最具影响力的工作，由斯坦福大学 Lvmin Zhang 等人提出，首次系统性地解决了"如何在不影响预训练模型生成能力的前提下，注入空间条件控制"的问题。
+ControlNet 是可控生成领域的重要工作，由 Lvmin Zhang 等人提出。它提出一种可复用的设计：冻结预训练扩散主干，在对应 block 建立可训练副本，通过零初始化卷积逐步注入空间条件残差。
 
 #### 3.1.1 核心思想
 
-ControlNet 的核心思想是：**冻结预训练的 U-Net，在其旁路创建一个可训练的 U-Net 副本，通过 zero convolution 将旁路输出逐步注入主网络**。
+ControlNet 的核心思想是：**冻结预训练主干，在需要接入条件的 block 旁建立对应的可训练副本，通过 zero convolution 将旁路残差逐步注入主网络**。Stable Diffusion 实例中，副本覆盖编码器与中间层；不能简化为“完整复制 U-Net 后只相加最终输出”。
 
 这一设计的精妙之处在于：
-- **训练初期**：zero convolution 的输出接近零，旁路不影响主网络，保证生成质量不下降
+- **训练初期**：zero convolution 的输出为零，副本残差不改变冻结主网络 block 的输出
 - **训练后期**：旁路学习到条件控制信息，逐步影响主网络的生成过程
 - **始终冻结主网络**：保留预训练模型的生成先验知识
+
+零初始化的两个 1×1 卷积分别把条件写入副本输入，并把副本输出形成的残差接回主路径。训练初期该残差为零，之后才逐渐影响主干特征。这能降低直接微调产生遗忘的风险，但代价是训练/部署仍需运行相应的可训练副本。[原文 §3.1–3.2；ControlNet arXiv v3](https://arxiv.org/html/2302.05543v3)
 
 #### 3.1.2 架构结构
 
 ```
-输入侧：
-  文本提示词 (Text Prompt) ──→ CLIP Text Encoder ──→ Text Embedding
-  条件图 (Condition Image) ──→ ControlNet Encoder ──→ Condition Features
-
-主网络（冻结）：
-  噪声图 (Noisy Image) ──→ U-Net Encoder ──→ U-Net Middle ──→ U-Net Decoder ──→ 预测噪声
-                              ↑                    ↑                  ↑
-                              │                    │                  │
-旁路网络（可训练）：          │                    │                  │
-  条件图 ──→ ControlNet Encoder (copy of U-Net Encoder)
-                │
-                ↓
-           Zero Convolution (1×1 conv, weight/bias initialized to 0)
-                │
-                ↓
-           加到主网络对应层
+输入：噪声 latent、文本 token、空间条件图
+  ├─ 文本 ─→ 原文本编码器 ──────────────┐
+  ├─ 噪声 latent ─→ 冻结主 U-Net block ─┼─→ 原去噪预测
+  └─ 空间条件 ─→ 0 初始化投影 ─┐       │
+                              ↓       │
+       主干 block 的冻结副本接收隐特征 + 条件特征
+                              ↓
+              zero conv residual ────→ 加回主路径
 ```
+
+控制信号的作用位置与主文本条件并不相同：文本经原有 cross-attention 提供语义，边缘/姿态/深度等条件由旁路特征逐层注入。论文还讨论把条件信号放入有条件分支、无条件分支或两者对 classifier-free guidance 的影响，因此“多条件相加”不应理解为有优先级的硬约束。[原文 §3.2、§3.4](https://arxiv.org/html/2302.05543v3)
 
 #### 3.1.3 关键组件
 
-**旁路 U-Net Encoder**
-- 结构：与预训练 U-Net 的 Encoder 完全相同（通常 12 个 block，对应 SD 1.5 的 down blocks + middle block）
+**旁路 block**
+- 结构：对选定主干 block 建立可训练副本；Stable Diffusion 实现对编码路径/中间层进行复制并以零卷积连接
 - 输入：条件图（canny edge、depth map、normal map、human pose、semantic segmentation 等）
 - 输出：多尺度特征图，通过 zero convolution 后加到主网络对应层
 
@@ -111,11 +98,11 @@ ControlNet 的核心思想是：**冻结预训练的 U-Net，在其旁路创建�
 
 #### 3.1.4 训练细节
 
-- **可训练参数**：仅旁路 U-Net Encoder + zero convolution 层
+- **可训练参数**：条件 embedding、ControlNet 的副本 block 和 zero convolution 层；原模型对应权重保持冻结
 - **冻结参数**：预训练 U-Net 全部参数（包括 Encoder、Middle、Decoder、Attention）
 - **训练数据**：条件图-目标图配对数据（如 canny edge → 原图、depth map → 原图）
 - **损失函数**：与标准扩散模型相同，预测噪声的 MSE 损失
-- **训练效率**：由于主网络冻结，训练速度接近全量微调的 50%，但参数量也约为 50%
+- **证据边界**：冻结主干可保留其预训练权重并限制遗忘，但不意味着训练成本或显存减半；实际开销取决于复制了哪些 block、模型版本和训练配置。
 
 #### 3.1.5 条件类型支持
 
@@ -140,7 +127,7 @@ ControlNet 支持多种条件输入，每种条件训练独立的模型权重：
 - 成为后续所有可控生成工作的基准对比方法
 
 **局限**：
-- 参数量大（旁路 U-Net Encoder 约占原模型 50% 参数）
+- 可训练分支仍然较大；参数比例依采用的 U-Net 版本和复制范围而变
 - 每种条件需要独立训练模型
 - 多条件组合需要多个 ControlNet 并行，显存开销大
 - 仅适用于 U-Net 架构，不直接适配 DiT
@@ -149,11 +136,11 @@ ControlNet 支持多种条件输入，每种条件训练独立的模型权重：
 
 ### 3.2 T2I-Adapter (2023, Tencent ARC Lab)
 
-T2I-Adapter 由腾讯 ARC Lab 提出，旨在解决 ControlNet 参数量过大的问题，提出了一种轻量级的条件注入方案。
+T2I-Adapter 由腾讯 ARC Lab 提出，研究问题是如何用小型 adapter 把条件图与预训练 T2I 模型已经学到的结构知识对齐；它减少额外参数，但不是不改变画面的“安全附件”。生成时，条件特征会直接改变 U-Net 多尺度中间表示，因此控制强度、条件质量和文本语义仍会相互影响。
 
 #### 3.2.1 核心思想
 
-T2I-Adapter 的核心思想是：**不需要复制整个 U-Net Encoder，只需要一个小型卷积网络提取条件特征，然后将特征图直接注入 U-Net 的对应层级**。
+T2I-Adapter 的核心思想是：**不复制整个 U-Net 编码器，而用小型卷积网络提取不同尺度的条件特征，并加到冻结 U-Net 对应的编码器特征上**。相较 ControlNet，它把更大的、与条件相关的去噪能力留给原主干；adapter 主要负责把外部条件编码成可被主干利用的特征。[原文 §3.2–3.4；T2I-Adapter arXiv v2](https://arxiv.org/html/2302.08453v2)
 
 #### 3.2.2 架构结构
 
@@ -162,7 +149,7 @@ T2I-Adapter 的核心思想是：**不需要复制整个 U-Net Encoder，只需�
   条件图 (Condition Image, 如 canny/depth/pose)
        │
        ↓
-  T2I-Adapter Network (小型卷积网络)
+  T2I-Adapter Network (四个特征提取块 + 多尺度下采样)
        │
        ├──→ 特征图 Level 1 (高分辨率) ──→ 注入 U-Net Encoder Block 1
        ├──→ 特征图 Level 2 (中分辨率) ──→ 注入 U-Net Encoder Block 2
@@ -197,27 +184,27 @@ T2I-Adapter 的一个重要特性是**可组合性**：
   Pose Adapter ───→ 特征图 ──┘
 ```
 
-- 每个 Adapter 独立训练
-- 推理时多个 Adapter 的特征图相加后统一注入
-- 组合方式简单，无需修改网络结构
+- 论文展示为不同结构/颜色条件分别训练 adapter，并研究多种 adapter 的组合。
+- 多个特征可相加接入冻结 U-Net，但组合后的条件可能互相支持，也可能不一致；该加法本身不包含自动检测冲突或决定条件优先级的逻辑。
+- 对照 Uni-ControlNet 的实验时要区分预训练的独立 adapter 直接组合，与联合训练的 adapter/fuser 组合；两种设置的结果不能混称“无需修改且总能组合”。[原文 §4.3](https://arxiv.org/html/2302.08453v2)
 
 #### 3.2.5 与 ControlNet 对比
 
 | 维度 | ControlNet | T2I-Adapter |
 |------|------------|-------------|
-| 参数量 | ~50% 原模型 | 约77M；相对比例依分母 |
-| 结构 | 复制 U-Net Encoder | 小型卷积网络 |
-| 训练目标 | 条件扩散去噪损失 | 注入特征后以扩散去噪损失训练Adapter（不是直接匹配某个目标特征） |
-| 多条件组合 | 多个模型并行 | 特征相加 |
-| 控制精度 | 高 | 中等 |
-| 推理速度 | 慢（大模型） | 快（小模型） |
-| 社区采用 | 广泛 | 中等 |
+| 比较点 | ControlNet | T2I-Adapter |
+|---|---|---|
+| 条件表征 | 空间条件图进入零初始化连接的可训练 block 副本 | 条件图编码为四尺度特征，与冻结 U-Net encoder 特征相加 |
+| 可训练部分 | 复制的主干 block 与零卷积；冻结原模型 | 轻量卷积 adapter；冻结原模型 |
+| 论文报告参数 | 取决于复制的底模和 block 范围 | adapter 约 77M 参数；相对占比须给出明确底模分母 |
+| 多条件方式 | 多个已训练 ControlNet 的输出叠加 | 不同 adapter 特征组合；组合效果取决于条件及训练设定 |
+| 主要设计取舍 | 表达力较大的深层旁路带来额外参数与计算 | 更小的特征对齐模块降低开销，但可控制的关系受其特征注入方式限制 |
 
 ---
 
 ### 3.3 IP-Adapter (2023, Tencent ARC Lab)
 
-IP-Adapter（Image Prompt Adapter）同样由腾讯 ARC Lab 提出，但解决的是与 ControlNet/T2I-Adapter 不同的问题：**不是空间结构控制，而是图像风格/内容提示控制**。
+IP-Adapter（Image Prompt Adapter）同样由腾讯 ARC Lab 提出，解决的是与 ControlNet/T2I-Adapter 不同的控制问题：它从参考图像提取全局语义/外观提示，适合提供主体或风格线索；边缘、姿态等空间对齐关系仍主要由其他空间条件方法承担。它不承诺像素级复制人物或无冲突地服从所有其他条件。
 
 #### 3.3.1 核心思想
 
@@ -243,16 +230,13 @@ Attention(Q, K_text, V_text) + Attention(Q, K_image, V_image)  ← 文本 + 图�
   CLIP Image Encoder (冻结)
        │
        ↓
-  图像特征 (Image Embedding, 全局特征 + 局部 patch 特征)
+  全局图像 embedding
        │
        ↓
-  Image Projection Network (可训练，将图像特征投影到与文本 embedding 相同空间)
-       │
-       ├──→ 全局图像提示 (Global Image Prompt)
-       └──→ 局部图像提示 (Local Image Prompts, per-patch)
+  Image Projection Network (可训练，映射为 N 个图像提示 token；论文设置 N=4)
        │
        ↓
-  注入 U-Net Cross-Attention 层
+  新增的图像 Cross-Attention 分支
 
 文本提示路径（原有，冻结）：
   文本提示词 ──→ CLIP Text Encoder ──→ Text Embedding ──→ Cross-Attention
@@ -270,13 +254,13 @@ Attention(Q, K_text, V_text) + Attention(Q, K_image, V_image)  ← 文本 + 图�
 
 **CLIP Image Encoder**
 - 使用预训练 CLIP ViT-H/14 的图像编码器
-- 提取全局图像特征（CLS token）和局部 patch 特征
+- 提取全局图像 embedding
 - **冻结**，不参与训练
 
 **Image Projection Network**
 - 结构：轻量级 MLP（2-3 层线性变换 + LayerNorm）
 - 作用：将 CLIP 图像特征投影到与文本 embedding 相同维度
-- 输出：1 个全局图像提示 + N 个局部图像提示（N 通常为 4 或 16）
+- 输出：论文设置为 4 个图像提示 token，由 projection network 从 CLIP 全局图像 embedding 映射得到；它们不是视觉 encoder 的局部 patch token
 
 **解耦 Cross-Attention Layer**
 - 在 U-Net 的每个 Cross-Attention 层中新增一个并行的图像 Cross-Attention
@@ -306,9 +290,9 @@ Attention(Q, K_text, V_text) + Attention(Q, K_image, V_image)  ← 文本 + 图�
 
 ---
 
-### 3.4 LoRA / LyCORIS (2022-2023)
+### 3.4 LoRA / LyCORIS：权重适配不是一种空间条件
 
-LoRA（Low-Rank Adaptation）虽然不是专门为可控生成设计，但已成为可控生成生态中不可或缺的技术，特别是在风格迁移和角色训练方面。
+LoRA（Low-Rank Adaptation）最初是参数高效微调方法，不应与边缘图、深度图或参考图这样的推理时条件等同。它把训练得到的参数偏移压缩为低秩矩阵，适用于把底模适配到特定风格、人物或视觉域；除非配合额外输入/模型机制，LoRA 本身不表示“把目标姿态/布局作为输入并严格遵循”。它与 ControlNet、IP-Adapter 更常互补：一个改变模型参数，一个在推理时额外提供条件。
 
 #### 3.4.1 核心思想
 
@@ -342,12 +326,12 @@ LoRA 适配后：
 
 LoRA 通常应用于扩散模型的以下层：
 
-| 目标层 | 作用 | 典型 rank |
+| 目标层 | 可能影响的生成行为 | rank 设定 |
 |--------|------|-----------|
-| U-Net Cross-Attention Q/K/V 投影 | 影响文本-图像对齐 | 4-16 |
-| U-Net Self-Attention Q/K/V 投影 | 影响空间结构 | 4-16 |
-| U-Net ResNet 卷积层 | 影响风格/纹理 | 8-64 |
-| Text Encoder 线性层 | 影响概念理解 | 4-16 |
+| U-Net Cross-Attention Q/K/V 投影 | 可能改变文本/条件与视觉特征的关联 | 由底模、目标域和训练预算决定 |
+| U-Net Self-Attention Q/K/V 投影 | 可能改变视觉 token 间的信息流 | 同上 |
+| U-Net ResNet / 其他线性层 | 可能改变外观、纹理或领域特征 | 同上 |
+| Text Encoder 线性层 | 可能改变文本表征与生成的对应关系 | 同上 |
 
 #### 3.4.4 LyCORIS 扩展
 
@@ -364,16 +348,14 @@ LyCORIS（LoRA beYond Conventional methods, Other Rank adaptation Implementation
 #### 3.4.5 与 ControlNet 的本质区别
 
 | 维度 | LoRA | ControlNet |
-|------|------|------------|
-| 修改方式 | 修改模型权重 | 旁路注入特征 |
-| 参数量 | 0.1% - 5% | ~50% |
-| 训练目标 | 端到端微调 | 条件控制 |
-| 适用场景 | 风格/角色/概念 | 空间结构控制 |
-| 可叠加性 | 多个 LoRA 权重相加 | 多个 ControlNet 并行 |
-| 对原模型影响 | 直接修改权重 | 不影响原权重 |
-| 推理方式 | 合并权重后单模型推理 | 双模型并行推理 |
+|---|---|---|
+| 适配方式 | 将训练得到的低秩权重偏移加到选定层 | 冻结主干，旁路网络把输入条件转换为逐层残差 |
+| 是否是推理时输入控制图 | 否；通常承载训练时学到的风格/概念/身份偏移 | 是；条件图在推理时输入 |
+| 典型适用问题 | 底模向特定域或概念适配 | 用结构条件约束当前生成任务 |
+| 可组合边界 | 多个权重偏移可能叠加或冲突，效果依训练组合 | 多条件旁路可合成，但输出残差不提供逻辑冲突消解 |
+| 推理行为 | 权重可合并，具体开销依实现 | 要运行控制支路，额外计算依底模和控制配置 |
 
-**关键区别**：LoRA 修改的是模型本身的权重，因此训练后的 LoRA 权重可以与基础模型合并（merge），推理时不需要额外计算；ControlNet 是旁路注入，推理时需要同时加载基础模型和 ControlNet 模型。
+**关键区别**：LoRA 的输入信息主要体现在训练好的权重偏移中，不能把“加载了一个风格 LoRA”当成“模型读懂并遵循了空间控制图”。ControlNet 将条件图显式映射成去噪残差；两种方法的成功标准、训练数据和组合风险都不同。
 
 ---
 
@@ -399,460 +381,176 @@ Reference-Only 和 ReferenceNet 解决的是"参考图像特征如何有效注�
 - 效果依赖预训练模型的先验知识
 - 控制精度有限
 
-#### 3.5.2 ReferenceNet (AnimateAnyone, 2024)
+#### 3.5.2 ReferenceNet：外观条件要与动作信号分工
 
-ReferenceNet 是阿里巴巴在 AnimateAnyone 工作中提出的参考图像编码方案，后被广泛应用于视频生成、虚拟试衣等任务。
+AnimateAnyone 面向图像到视频角色动画，而不是一般 T2I 空间控制。它把参考图像的外观编码、姿态序列、视频时间连续拆成 ReferenceNet、Pose Guider、Temporal Layer 三条职责：ReferenceNet 通过 spatial attention 融入参考细节，Pose Guider 处理动作控制，Temporal Layer 建模帧间连续。该例说明“参考图”与“空间控制图”虽然都是图像输入，但表达的约束不同：前者主要保留人物外观，后者主要指定生成的几何布局/动作。[AnimateAnyone §3.2–3.3；arXiv v3](https://arxiv.org/html/2311.17117v3)
 
-**架构结构**：
-```
-参考图像路径：
-  参考图像 (Reference Image)
-       │
-       ↓
-  Reference Encoder (结构与 U-Net Encoder 相同，独立权重)
-       │
-       ↓
-  多尺度参考特征 (Reference Features)
-       │
-       ├──→ 通过 Spatial Attention 注入 Pose Encoder
-       ├──→ 通过 Temporal Attention 注入视频生成模块
-       └──→ 通过 Cross-Attention 注入主生成网络
+ReferenceNet 不是一个跨任务统一的通用插件，也不能仅凭名称就推出其身份保真效果。需看具体系统怎样将参考特征与去噪 latent 融合、Pose Guider 如何提供运动、Temporal Layer 的窗口和训练设置如何约束跨帧漂移；有关视频角色一致性的精读可在 [数字人与 Avatar 专题](../AvatarGen/report.md) 延伸阅读。
 
-生成路径：
-  姿态条件 (Pose Condition)
-       │
-       ↓
-  Pose Encoder (提取姿态特征)
-       │
-       ↓
-  与参考特征融合 ──→ 主生成网络 ──→ 生成结果
-```
+#### 3.5.3 与前述条件接口的关系
 
-**关键设计**：
-- **Reference Encoder**：与主网络 U-Net Encoder 结构相同，但权重独立
-- **Spatial Attention**：参考特征与生成特征在空间维度上对齐和融合
-- **特征复用**：参考特征在多个生成步骤中复用，保证一致性
-
-#### 3.5.3 代表工作
-
-| 工作 | 时间 | 机构 | 应用场景 | 核心特点 |
-|------|------|------|----------|----------|
-| AnimateAnyone | 2023.12 | Alibaba | 角色动画 | ReferenceNet + Pose Guider + Temporal Module |
-| MagicAnimate | 2024.01 | 多机构 | 角色动画 | 改进的 ReferenceNet + 更好的时序建模 |
-| OutfitAnyone | 2024.02 | Alibaba | 虚拟试衣 | 参考服装图像 + 人物姿态 |
-| DreamPose | 2023 | 学术 | 时尚图像 | 参考图像 + 姿态控制 |
-| Disentangled Control | 2024 | 学术 | 多条件分离 | 外观与姿态完全解耦 |
+| 条件 | 代表性输入表示 | 解决的主要问题 | 不应默认推断 |
+|---|---|---|---|
+| 边缘/深度/分割/姿态 | 与目标画面对齐的空间图或关键点 | 约束几何、布局、轮廓或姿势 | 条件像素与目标一定一致，或模型会自行校正错误条件 |
+| 参考图像 | 全局图像 embedding、参考特征图或参考 token | 提供外观、身份/风格的提示 | 精确复制局部像素、严格保持未提示区域 |
+| 文本指令 | token embedding / cross-attention | 提供语义与属性说明 | 精确描述对象位置、数量和优先级 |
+| LoRA 等权重适配 | 低秩权重偏移或模块参数 | 适配风格/域/概念先验 | 等价于显式的空间条件输入 |
 
 ---
 
-### 3.6 Uni-ControlNet / Multi-ControlNet (2023-2024)
+### 3.6 多条件组合：并联并不等于化解冲突
 
-随着单一条件控制技术的成熟，社区自然产生了"多条件同时控制"的需求，催生了 Multi-ControlNet 和 Uni-ControlNet 等工作。
+推理时并联多个 ControlNet 是一种组合工程方式：各分支分别将条件图转成主干残差，最终相加。它避免为“姿态+边缘”专门训练一个新主干，但各支路通常独立学习；若条件本身不一致（例如姿态暗示手臂在前，深度图把该手臂放到后景），相加不会自动推理出哪个条件应该优先。手动调低某一支路权重能改变影响强度，却不是冲突消解器。[ControlNet §3.4](https://arxiv.org/html/2302.05543v3)
 
-#### 3.6.1 Multi-ControlNet (社区方案)
+**Uni-ControlNet** 把条件分为两类，并据此只训练两个 adapter：local controls（边缘、姿态、深度、分割等空间对齐条件）进入多尺度局部路径；global control（论文示例为 CLIP 图像 embedding）通过全局图像条件路径参与生成。它的目标是让不同任务的控制可以组合，并减少每增加一种条件就新增整套支路的需求；论文实验只支持其测试的条件类型、组合和数据设置，不能概括为“任意条件数量都能无冲突统一”。[原文 §3.2–3.3、§4；Uni-ControlNet arXiv v3](https://arxiv.org/html/2305.16322v3)
 
-**核心思想**：多个 ControlNet 模型并行运行，各自处理不同条件，输出相加后注入主网络。
+**ControlNet++** 则针对另一件事：已有图像控制模型在输出端仍会偏离输入条件。它用预训练判别器从生成图中重新提取控制（例如分割、边缘或深度），对输入条件与重提取条件做 cycle-consistency 反馈，再用单步近似去噪降低反向传播穿过完整采样链的成本。它主要改进训练目标/反馈，不是新一代 U-Net 旁路结构；作者分别在分割 mIoU、线稿 SSIM 和深度 RMSE 的指定基准报告相对 ControlNet 的提升，不能由此推出所有控制种类都获得同等收益。原文也讨论某些控制类型的可用性限制。[原文 §3、§4、§5；ControlNet++ arXiv v2](https://arxiv.org/html/2404.07987v2)
 
-**架构结构**：
-```
-条件输入：
-  Canny Edge ──→ ControlNet-Canny ──→ 特征输出 ──┐
-  Depth Map ───→ ControlNet-Depth ──→ 特征输出 ──┼──→ 特征相加 ──→ 注入 U-Net
-  Human Pose ──→ ControlNet-Pose ───→ 特征输出 ──┘
+**ControlNeXt** 面向图像和视频控制，以轻量控制模块与 Cross Normalization 替代部分旁路/Zero Convolution 设计。作者在所测模型和任务中报告可训练参数最多减少约 90%；幅度取决于比较配置，不能解释为固定参数占比或外推到所有视频 DiT。[原文 §3–4；ControlNeXt arXiv v3](https://arxiv.org/html/2408.06070v3)
 
-注入方式：
-  U-Net 层输入 = 原输入 + α₁·ControlNet₁输出 + α₂·ControlNet₂输出 + α₃·ControlNet₃输出
-  
-  其中 α₁, α₂, α₃ 为可调的权重系数
-```
+## 4. 控制信号如何进入模型、何时会冲突
 
-**特点**：
-- 实现简单，直接复用现有 ControlNet 模型
-- 显存开销大（N 个 ControlNet 需要 N 倍旁路参数量）
-- 条件间可能存在冲突（如 pose 和 depth 不一致）
-- 权重系数需要手动调优
+把方法只按模型名排列，会掩盖它们控制的对象不同。可以先问两件事：条件描述的是**什么**，以及模型在**哪一处**接收它。
 
-#### 3.6.2 Uni-ControlNet (2024)
+| 条件 / 参数化 | 典型表示 | 注入位置 | 擅长控制 | 主要限制 |
+|---|---|---|---|---|
+| 语义提示 | 文本 token / embedding | 原模型 cross-attention、adaLN 或联合 token attention | 类别、属性、场景语义 | 多对象绑定、精确位置/数量/先后关系仍可能不稳 |
+| 空间结构 | 边缘、深度、姿态、分割图 | ControlNet 残差、T2I-Adapter 多尺度特征 | 布局、轮廓、姿势等与像素对齐的内容 | 预处理误差会成为条件误差；空间图并不告诉模型纹理/语义 |
+| 参考图像 | CLIP embedding、参考特征/token | IP-Adapter 独立 cross-attention，或 ReferenceNet 空间 attention | 外观、风格、主体线索 | 全局图像提示不等于精确身份锁定；与结构条件可能拉扯 |
+| 参数适配 | LoRA / LyCORIS 权重偏移 | 选定的线性层/注意力/卷积层 | 训练域、风格或概念的适配 | 通常不是逐样本空间控制输入；不同 adapter 相加可能互相干扰 |
 
-**核心思想**：设计一个统一的控制网络，同时处理多种条件，通过条件类型编码区分不同条件。
+因此，“多条件”至少有三种含义：同时接入多个信号、在训练中让一个网络覆盖多类条件、以及推理时将多个控制结果组合。三者不等价。组合前应检查条件在语义、空间坐标、时间或对象层级上是否一致；冲突时更需要澄清目标或修改输入，而非假设网络会自动判断优先级。
 
-**架构结构**：
-```
-多条件输入：
-  条件图 1 (Canny) ──┐
-  条件图 2 (Depth) ──┼──→ 统一 Encoder ──→ 条件类型 Embedding ──→ 融合特征
-  条件图 3 (Pose) ───┘      (共享权重)      (区分条件类型)
-       │
-       ↓
-  多分支特征提取 (每个条件类型有轻量分支)
-       │
-       ↓
-  特征融合模块 (注意力机制融合多条件)
-       │
-       ↓
-  统一注入 U-Net
-```
-
-**原文机制**：[Uni-ControlNet v3 §3.2](https://arxiv.org/html/2305.16322v3)设置local与global两个adapter。local路径以多尺度特征去归一化注入局部条件；global路径将图像条件映射为额外token并与文本条件一起注入。不同条件数不需要逐一新增整套ControlNet。原稿“每类轻量分支+统一注意力融合”不能准确对应这两个路径。
-
-**比较边界**：条件组合的效果由论文的实验和消融支持；原稿15% vs N×50%未固定主干与参数统计范围，撤下这一数量比较。参数和质量比较需使用同一backbone、控制组合与评价集。
+注入位置也决定信息瓶颈：ControlNet/T2I-Adapter 提供多尺度局部特征，适合空间结构；IP-Adapter把图像特征放到额外 cross-attention 路径，适合与文本并存的参考提示；LoRA 改的是模型映射本身，提供的是任务/风格偏移。没有哪一种仅凭架构标签就能保证条件忠实度。条件强度（如 conditioning scale、CFG scale）、训练条件 dropout、预处理器和任务数据都会影响结果。[ControlNet §3.4；IP-Adapter §3.2–3.3；T2I-Adapter §3.2–3.4]
 
 ---
 
-## 4. 架构演进对比
+## 5. 方法设计的跨论文比较
 
-### 4.1 核心方法综合对比表
+### 5.1 核心方法综合对比表
 
-| 维度 | ControlNet | T2I-Adapter | IP-Adapter | LoRA | ReferenceNet | Uni-ControlNet |
-|------|------------|-------------|------------|------|--------------|----------------|
-| **提出时间** | 2023.02 | 2023.02 | 2023.08 | 2021预印本/2022会议 | 2023.12 | 2023.05 |
-| **机构** | Stanford | Tencent ARC | Tencent ARC | Microsoft | Alibaba | 多机构 |
-| **控制目标** | 空间结构 | 空间结构 | 风格/内容/角色 | 风格/角色/概念 | 外观一致性 | 多条件统一 |
-| **架构类型** | 旁路 U-Net | 轻量卷积 | 解耦 Attention | 低秩权重修改 | 独立 Encoder | 统一多分支 |
-| **注入位置** | U-Net Encoder | U-Net 各层 | Cross-Attention | 全模型 | U-Net/Attention | U-Net Encoder |
-| **参数量占比** | ~50%（版本待核） | 77M；比例依分母 | ~5% | 0.1%-5% | ~30%（版本待核） | 以原文两个adapter和主干分别计数，不给无依据百分比 |
-| **是否冻结原模型** | 是 | 是 | 是（部分） | 否（权重修改） | 是 | 是 |
-| **训练数据需求** | 条件-图像对 | 条件-图像对 | 图像-文本对 | 目标域图像 | 参考-目标对 | 多条件-图像对 |
-| **多条件组合** | 多模型并行 | 特征相加 | 与 ControlNet 联用 | 权重相加 | 单一参考 | 原生支持 |
-| **推理速度** | 慢 | 快 | 中等 | 快（合并后） | 中等 | 中等 |
-| **社区采用度** | ★★★★★ | ★★★ | ★★★★ | ★★★★★ | ★★★ | ★★ |
-| **代表应用** | 线稿上色 | 快速控制 | 风格迁移 | 角色训练 | 角色动画 | 复杂场景 |
+| 工作 | 条件类型 | 注入/适配机制 | 主要设计取舍 |
+|---|---|---|---|
+| [ControlNet](https://arxiv.org/html/2302.05543v3) | 空间对齐条件图 | 冻结主干块的可训练副本、zero-conv residual | 条件解释能力强；副本增加训练和推理成本；并联输出不解决冲突 |
+| [T2I-Adapter](https://arxiv.org/html/2302.08453v2) | 空间图、颜色布局等 | 四尺度 CNN 特征加到 U-Net encoder features | 额外网络更小；条件—主干知识对齐是核心学习目标 |
+| [IP-Adapter](https://arxiv.org/html/2308.06721v1) | 参考图像 | 另加 image cross-attention，与 text cross-attention 解耦 | 文本和图像提示可并存；全局图像 embedding 不是像素级锁定 |
+| [LoRA](https://arxiv.org/abs/2106.09685) / LyCORIS | 训练数据中体现的域/概念 | 低秩权重偏移 | 适合底模个性化；不等于逐样本结构条件 |
+| [Uni-ControlNet](https://arxiv.org/html/2305.16322v3) | 多种 local controls + global image condition | 两个 adapter 分别承担局部与全局条件 | 共享条件类别减少逐条件复制；组合结论依其训练和测试设置 |
+| [ControlNet++](https://arxiv.org/html/2404.07987v2) | 已有条件模型的输出 | 通过生成结果重提取条件，优化 cycle consistency | 直接监督输出控制忠实度；依赖预训练条件提取器覆盖目标条件 |
+| [ControlNeXt](https://arxiv.org/html/2408.06070v3) | 图像/视频控制信号 | 精简控制模块、选择性训练及 Cross Normalization | 针对论文所测基座降低额外参数；不等于所有基座上的固定比例 |
+| [OminiControl](https://openaccess.thecvf.com/content/ICCV2025/papers/Tan_OminiControl_Minimal_and_Universal_Control_for_Diffusion_Transformer_ICCV_2025_paper.pdf) / [OminiControl2](https://arxiv.org/html/2503.08280) | 对齐/非对齐图像条件 | DiT token 序列复用；后续用条件 token 压缩与缓存 | 针对指定 DiT 和多条件图像任务验证，不能视为“DiT 原生已解决控制” |
 
-### 4.2 架构演进路线图
+### 5.2 方法不是单一路线上的替代关系
 
-```
-2022 ──────────────────────────────────────────────────────────────────────► 2026
+这些工作分别回答不同问题，而非按发表年份互相替代：ControlNet/T2I-Adapter 对空间图条件编码；IP-Adapter 对图像语义提示与文本并存；LoRA 学习底模的参数偏移；ReferenceNet 让参考外观进入视频生成；Uni-ControlNet 共享局部/全局条件通路；ControlNet++ 用输出反馈检查输入条件是否落实；OminiControl 则探索将图像条件 token 直接纳入特定 DiT。一个工作可组合多种机制，单个系统是否“更可控”应按条件类型、目标区域和评测任务来判断。
 
-  LoRA (低秩适配)
-     │
-     │    ControlNet (旁路 U-Net, 50% 参数)
-     │       │
-     │       ├──→ 社区生态爆发 (WebUI/ComfyUI)
-     │       │
-     │       ├──→ Multi-ControlNet (多模型并行)
-     │       │
-     │       └──→ T2I-Adapter (轻量卷积, 约77M参数)
-     │              │
-     │              └──→ 更高效的单条件控制
-     │
-     ├──→ IP-Adapter (解耦 Attention, 图像提示)
-     │       │
-     │       └──→ 风格/角色一致性控制
-     │
-     ├──→ LyCORIS (LoRA 扩展)
-     │       │
-     │       └──→ 更多低秩分解形式
-     │
-     └──→ ReferenceNet (独立 Encoder)
-             │
-             ├──→ AnimateAnyone (角色动画)
-             ├──→ MagicAnimate (视频生成)
-             └──→ OutfitAnyone (虚拟试衣)
+### 5.3 条件注入接口对照
 
-  2024 ─────────────────────────────────────────────────────────────────────►
-
-     Uni-ControlNet (local/global 两个adapter)
-        │
-        ├──→ 多条件原生融合
-        │
-        └──→ ControlNet++ / ControlNeXt (更轻量)
-               │
-               └──→ 视频生成适配
-
-  2025 ─────────────────────────────────────────────────────────────────────►
-
-     DiT-Control (ControlNet → DiT 适配)
-        │
-        ├──→ 将旁路注入适配到 Transformer block
-        │
-        └──→ Flow-Control (Flow Matching 条件注入)
-               │
-               └──→ 条件注入到 Flow Matching 的向量场
-
-  2026 ─────────────────────────────────────────────────────────────────────►
-
-     Native Multi-Condition DiT (原生多条件)
-        │
-        └──→ 模型原生支持多条件，无需外挂适配器
-               │
-               └──→ End-to-End Controllable Generation
-```
-
-### 4.3 注入机制演进
-
-| 阶段 | 代表方法 | 注入机制 | 特点 |
-|------|----------|----------|------|
-| 阶段 1 | ControlNet | 旁路 U-Net Encoder → 特征图相加 | 结构复杂，效果稳定，参数大 |
-| 阶段 2 | T2I-Adapter | 轻量卷积 → 特征图相加 | 结构简单，速度快，参数小 |
-| 阶段 3 | IP-Adapter | 解耦 Cross-Attention | 不修改特征图，只扩展 Attention，灵活性高 |
-| 阶段 4 | LoRA | 低秩权重修改 W' = W + BA | 直接修改模型，推理高效 |
-| 阶段 5 | Uni-ControlNet | 统一多分支 → 注意力融合 | 多条件统一处理，参数共享 |
-| 阶段 6 | DiT-Control | 旁路 Transformer → 特征相加/Attention | 适配新架构 |
-| 阶段 7 | Native DiT | 条件 Token 直接输入 Transformer | 原生集成，无外挂 |
+| 接口 | 信号流 | 通常在什么情况下更合适 | 需单独验证 |
+|---|---|---|---|
+| 特征残差注入 | condition encoder → 多尺度/逐层 residual → denoiser | 控制图与目标空间对齐、需要保留底模生成先验 | 残差权重、条件图误差与文本条件冲突 |
+| 多尺度特征相加 | condition adapter → encoder feature maps | 轻量结构/颜色提示 | 多 adapter 简单相加是否仍保持每个条件 |
+| 独立 cross-attention | 图像 prompt → image K/V，与 text K/V 分路 | 参考图提供外观/内容语义 | 能否保住身份细节、与空间条件如何组合 |
+| 权重偏移 | LoRA / LyCORIS ΔW | 适配风格/概念/特定领域 | 多个权重偏移叠加后的退化与底模兼容 |
+| 局部/全局条件分组 | local features 与 global tokens 两路 | 同时需要布局约束与整体参考 | 两种条件编码的作用范围是否清楚 |
+| DiT 序列条件 | condition token 与 image token 联合建模 | token 对齐可定义，或 condition 可压缩/复用 | 序列长度、位置编码、不同模态间干扰 |
 
 ---
 
-## 5. 与 DiT / Flow Matching 的结合
+## 6. 控制信号进入 DiT / Flow Matching
 
-### 5.1 背景：从 U-Net 到 DiT
+### 6.1 骨干改变，不等于条件问题消失
 
-2023-2024 年，扩散模型的骨干网络经历了从 U-Net 到 DiT（Diffusion Transformer）的范式转移：
+DiT 把去噪 latent 切成 patch token，用 Transformer block 处理；U-Net 中“对齐分辨率的特征图相加”不再是唯一直接接口。条件可以变成额外 token、经 cross-attention 读取、调制 adaLN，或经小型条件 encoder 与主 token 交互。但 DiT 不会自动知道一张图是姿态、边缘还是身份参考，条件类型、坐标系和训练目标仍需由具体架构定义。
 
-| 维度 | U-Net (Stable Diffusion) | DiT (SD3/Flux/Hunyuan) |
-|------|--------------------------|------------------------|
-| 架构 | CNN + Self-Attention | Pure Transformer |
-| 特征表示 | 2D 特征图 | 1D Token 序列 |
-| 空间关系 | 卷积隐式编码 | Patch Embedding + 位置编码 |
-| 文本交互 | Cross-Attention | 文本 Token 与图像 Token 拼接 |
-| 代表模型 | SD 1.5, SDXL | SD3, Flux, HunyuanDiT, CogView |
+同样，Flow Matching 改变的是从噪声到数据的概率路径与模型预测参数化（例如学习速度场），不是一类独立的空间控制结构。文字/图像/姿态可以通过 token 或特征进入 vector-field 网络；控制忠实度仍取决于条件表示、模型注入和训练/反馈损失。因此不把“Flow-Control”当作一种已统一的、独立于架构的控制方法。[Rectified Flow §3；SD3 §2–4](https://arxiv.org/html/2403.03206)
 
-这一转变对可控生成技术提出了新的挑战：ControlNet 的旁路 U-Net 设计无法直接应用于 DiT。
+### 6.2 DiT 条件注入的已公开实例
 
-### 5.2 ControlNet 适配到 DiT
+OminiControl 在 ICCV 2025 论文中研究图像条件如何进入预训练 DiT：它复用底模的 VAE encoder 与 transformer blocks，将条件 token 与图像 token 组成统一序列，并以动态位置索引区分空间对齐条件与主体/外观类非对齐条件。作者报告额外参数占比约 0.1%，但这对应 FLUX.1 基座、论文任务和实现设置。其意义是给出一种具体的 DiT 条件接口，不是证明所有 DiT 都能不经专门训练直接接受任意控制图。[原文 §2–4；OminiControl ICCV 2025](https://openaccess.thecvf.com/content/ICCV2025/papers/Tan_OminiControl_Minimal_and_Universal_Control_for_Diffusion_Transformer_ICCV_2025_paper.pdf)
 
-#### 5.2.1 核心挑战
+OminiControl2 处理的则是条件输入较长时，token 数和跨 denoising steps 重复编码的开销：论文提出动态保留更有语义信息的条件 token，以及缓存/复用条件特征；作者在其多条件 image-conditioned 任务报告处理开销和推理速度改善。它是在具体 OminiControl/DiT 路线上对条件处理做效率优化，不是已解决不同模态冲突的通用“原生控制”。[原文 §3–4；OminiControl2 arXiv](https://arxiv.org/html/2503.08280)
 
-- U-Net 有明确的 Encoder-Decoder 层级结构，旁路可以逐层对应
-- DiT 是统一的 Transformer block 堆叠，没有明显的层级对应关系
-- DiT 使用 AdaLN（Adaptive LayerNorm）进行条件注入，而非直接的特征相加
+ControlNeXt 是另一个对照：它研究轻量 control module、选择性训练主干层与 Cross Normalization，并在论文测试的图像/视频基座上评估。ControlNet++ 则把优化目标放在生成结果反提取出的边缘/深度/分割条件是否与输入一致。两者说明“条件架构怎么做”和“输出怎样反馈校正条件忠实度”是不同轴；参数更少不等同控制更准，DiT token 化也不自动带来控制一致性。[ControlNeXt §3–4；ControlNet++ §3–5](https://arxiv.org/html/2408.06070v3)
 
-#### 5.2.2 适配方案
+### 6.3 读 DiT 控制论文时保留的对照维度
 
-**方案 1：旁路 Transformer（DiT-Control）**
-```
-主 DiT（冻结）：
-  图像 Tokens ──→ DiT Block 1 ──→ DiT Block 2 ──→ ... ──→ DiT Block N ──→ 输出
-                      ↑                 ↑                  ↑
-                      │                 │                  │
-旁路 DiT（可训练）：   │                 │                  │
-  条件 Tokens ──→ Control DiT Block 1 ─┴→ Control DiT Block 2 ─┴→ ... ─┘
-                      │
-                      └──→ 输出与主网络对应层相加/拼接
-```
+| 维度 | 需要确认的问题 |
+|---|---|
+| 底模与任务 | 文生图、图生图、视频、主体一致性还是局部几何控制？基座及 VAE 是否相同？ |
+| 条件表示 | 图像被编码成 feature map、patch token、全局 embedding 还是逐像素条件？是否保留坐标对应？ |
+| 注入层级 | input concat、cross-attention、joint attention、adapter residual 或 adaLN 调制？ |
+| 条件冲突 | 文本、主体参考、边缘/深度相互矛盾时如何训练、调权或评估？ |
+| 评价目标 | 只报告画质，还是分开衡量文本遵循、条件一致、编辑强度和非目标区域保持？ |
 
-- 旁路结构与主 DiT 相同（或简化版）
-- 条件输入通过独立的 Patch Embedding 转换为条件 Tokens
-- 旁路输出与主网络对应层的 Tokens 相加或拼接
-- 挑战：DiT block 数量多（通常 20-40 层），旁路参数量仍然较大
-
-**方案 2：条件 Token 拼接（Condition Token Concatenation）**
-```
-输入序列：
-  [条件 Tokens] + [图像 Tokens] + [文本 Tokens]
-       │              │              │
-       └──────────────┴──────────────┘
-                      ↓
-              统一输入 DiT
-              
-  条件 Tokens 通过独立的 Patch Embedding 从条件图提取
-  所有 Tokens 在 Self-Attention 中自然交互
-```
-
-- 不需要旁路网络，直接将条件作为额外 Token 输入
-- 条件与图像、文本在 Self-Attention 中自然融合
-- 参数量增加有限（仅条件 Patch Embedding）
-- 代表：SD3 的部分条件控制实现
-
-**方案 3：AdaLN 条件注入（AdaLN Control）**
-```
-DiT Block 内部：
-  输入 Tokens
-       │
-       ├──→ LayerNorm ──→ Self-Attention ──┐
-       │                                   ├──→ 残差连接 ──→ 输出
-       └──→ LayerNorm ──→ FFN ────────────┘
-              ↑
-              │
-         AdaLN 调制参数 (γ, β)
-              ↑
-              │
-         从条件特征 MLP 投影
-              ↑
-              │
-         条件 Tokens 全局池化
-```
-
-- 将条件特征通过 MLP 投影为 AdaLN 的调制参数
-- 影响每个 DiT block 的 LayerNorm 行为
-- 参数量小，但控制精度可能不如直接特征注入
-
-### 5.3 与 Flow Matching 的结合
-
-Flow Matching 是 2023-2024 年兴起的扩散模型新训练范式（代表：Stable Diffusion 3、Flux、Stable Diffusion 3.5），其核心是直接从数据分布学习向量场（Vector Field），而非逐步去噪。
-
-#### 5.3.1 Flow Matching 基础
-
-```
-标准扩散模型：
-  x_t = √(α_t)·x_0 + √(1-α_t)·ε
-  模型预测：ε_θ(x_t, t, c)
-
-Flow Matching：
-  dx_t/dt = v_t(x_t, c)
-  模型预测：v_θ(x_t, t, c)  (向量场)
-  
-  训练目标：||v_θ(x_t, t, c) - v_t||²
-  其中 v_t = x_1 - x_0 (从噪声到数据的直线路径)
-```
-
-#### 5.3.2 条件注入到 Flow Matching
-
-在 Flow Matching 框架下，条件注入的方式与扩散模型类似，但有一些特殊考虑：
-
-**方式 1：条件作为额外输入 Token（与 DiT 相同）**
-```
-输入：
-  [条件 Tokens] + [图像 Tokens] + [文本 Tokens]
-  
-模型预测：
-  v_θ([条件; 图像; 文本], t)
-```
-
-**方式 2：条件调制向量场（Condition Modulated Vector Field）**
-```
-基础向量场：v_base = Transformer(图像 Tokens, 文本 Tokens, t)
-条件调制：   v_cond = v_base + MLP(条件特征)
-
-模型预测：   v_θ = v_cond
-```
-
-**方式 3：引导式 Flow Matching（Guided Flow Matching）**
-```
-无条件向量场：v_θ(x_t, t, ∅)
-有条件向量场：v_θ(x_t, t, c)
-
-Classifier-Free Guidance (CFG)：
-  v_guided = v_θ(x_t, t, ∅) + s · (v_θ(x_t, t, c) - v_θ(x_t, t, ∅))
-  
-  其中 s 为 guidance scale
-```
-
-- Flow Matching 天然支持 CFG，因为条件 c 可以作为模型输入的一部分
-- 空间条件（如 pose/depth）需要额外的注入机制
-
-### 5.4 2025-2026 新方向
-
-#### 5.4.1 ControlNet++ / ControlNeXt
-
-- **更轻量的控制网络**：将旁路参数量从 50% 降低到 5-10%
-- **视频生成适配**：针对视频 DiT（如 CogVideoX、Wan 2.1）设计时序感知的控制注入
-- **与 Flow Matching 深度集成**：控制信号直接调制向量场
-
-#### 5.4.2 端到端可控生成
-
-- **原生多条件支持**：模型在预训练阶段就学习处理多种条件
-- **无需外挂适配器**：条件直接作为模型输入的一部分
-- **代表方向**：
-  - 多模态预训练（图像-文本-条件联合训练）
-  - 指令跟随生成（Instruction-following Generation）
-  - 世界模型（World Model）中的可控生成
-
-#### 5.4.3 与 MLLM（多模态大语言模型）结合
-
-- 利用 MLLM 的理解能力解析复杂控制指令
-- 将自然语言描述的控制需求转换为模型可理解的结构化条件
-- 代表：GPT-4o 图像生成、Gemini 图像生成中的自然语言控制
+目前公开证据覆盖的模型、条件和数据仍有限。对商业系统，如果未公开技术报告或固定源码，只能将其模型结构标为未知，不从产品控制面板或生成效果推断具体 attention、tokenizer 或训练路径。
 
 ---
 
-## 6. ComfyUI 工作流生态
+## 7. 工具实现与研究边界
 
-ComfyUI 是可控生成技术最重要的开源应用平台之一，其节点式工作流设计完美契合了多条件组合控制的需求。
+ComfyUI、Diffusers 等工具把预处理器、控制分支和采样过程连成工作流，便于试验条件组合。工作流“能连线运行”不等于组合后的约束一致，也不等于论文所声称的控制能力已被独立验证。
 
-### 6.1 ComfyUI 中的可控生成节点
+### 7.1 ComfyUI 中的可控生成节点
 
-| 节点类型 | 功能 | 代表节点/插件 |
-|----------|------|---------------|
-| ControlNet 应用 | 加载和应用 ControlNet 模型 | ControlNetApply, ControlNetLoader |
-| ControlNet 预处理 | 将图像转换为条件图 | CannyEdgePreprocessor, DepthAnythingPreprocessor, OpenPosePreprocessor |
-| IP-Adapter 应用 | 图像提示适配 | IPAdapterApply, IPAdapterModelLoader |
-| T2I-Adapter 应用 | 轻量条件控制 | T2IAdapterApply |
-| LoRA 加载 | 加载 LoRA 权重 | LoraLoader, LoraLoaderModelOnly |
-| 条件组合 | 多条件融合 | ConditioningCombine, ConditioningAverage |
-| 参考图像 | Reference-only 控制 | ReferenceOnlySimple, StyleModelApply |
+| 节点类别 | 在工作流中负责什么 | 研究解释时要分开的东西 |
+|---|---|---|
+| 条件预处理 | 从源图生成边缘、深度、关键点或分割图 | 预处理器预测错误会成为条件误差，不是去噪器本身的能力 |
+| 空间条件模型 | 将结构图编码后注入 denoiser | 需观察目标条件是否满足、主体/风格是否仍合理 |
+| 参考图 adapter | 把参考图编码为外观或语义提示 | 不能仅凭参考相似度推断细节完全保持 |
+| LoRA/权重模块 | 改变底模在某个域或概念上的生成倾向 | 这属于参数适配，不是逐样本结构输入 |
 
-### 6.2 典型工作流示例
+### 7.2 典型工作流示例
 
-**工作流 1：ControlNet + IP-Adapter 组合**
-```
-[文本提示词] ──┐
-               ├──→ [CLIP 文本编码] ──→ [条件组合] ──→ [KSampler] ──→ [VAE 解码] ──→ 输出图像
-[IP-Adapter] ──┤         ↑                                    ↑
-(参考图像)     │         │                                    │
-               │    [ControlNet] ──────────────────────────────┘
-               │    (条件图: canny/depth/pose)
-               │
-[LoRA] ────────┘
-(风格/角色权重)
-```
-
-**工作流 2：多条件 ControlNet**
-```
-[原始图像] ──→ [Canny 预处理] ──→ [ControlNet-Canny] ──┐
-              [Depth 预处理] ──→ [ControlNet-Depth] ────┼──→ [ControlNet 堆叠] ──→ [KSampler]
-              [Pose 预处理] ───→ [ControlNet-Pose] ─────┘
-```
-
-**工作流 3：角色一致性动画**
-```
-[参考图像] ──→ [ReferenceNet/IP-Adapter] ──┐
-                                           ├──→ [AnimateDiff/视频模型] ──→ [视频输出]
-[姿态序列] ──→ [OpenPose 预处理] ──→ [ControlNet-Pose] ──┘
-```
-
-### 6.3 社区生态发展
-
-- **自定义节点**：ComfyUI 社区开发了数百个可控生成相关的自定义节点
-- **模型共享**：CivitAI、HuggingFace 上有大量 ControlNet、LoRA、IP-Adapter 模型
-- **工作流分享**：用户分享复杂的多条件控制工作流，降低了技术门槛
-- **与商业工具竞争**：ComfyUI 的灵活性使其在专业用户中比 Midjourney、DALL-E 等商业工具更受欢迎
+一个常见组合是“文本 + 姿态/边缘 + 参考图”：文本提供语义，空间条件给位置/形状，IP-Adapter 提供参考外观，LoRA 调整风格先验。要判断这条工作流是否有效，需分别比较：去掉各条件后的输出、每个条件自己的遵循度，以及条件之间矛盾时哪一项被牺牲。节点图只是实验配置的可视化，不是条件正确性证据。
 
 ---
 
-## 7. 挑战与未来方向
+## 8. 挑战与开放问题
 
-### 7.1 当前挑战
+### 8.1 当前挑战
 
-| 挑战 | 描述 | 解决方向 |
-|------|------|----------|
-| 多条件冲突 | 多个条件同时控制时可能冲突（如 pose 要求举手但 depth 要求背景），导致生成质量下降或某一条件被忽略 | 条件优先级机制、一致性约束损失、端到端训练学习条件融合 |
-| 控制精度与生成质量权衡 | 控制强度过高导致过度拟合条件，过低则条件被忽略，需精细调优 | 自适应控制强度、基于生成质量的动态调整、更好的条件注入机制（如 IP-Adapter 的解耦设计） |
-| 计算效率 | ControlNet 推理需同时加载两个大模型，多条件组合进一步增加显存和计算开销，实时应用受限 | 更轻量的控制网络（T2I-Adapter、ControlNeXt 方向）、模型量化与蒸馏、控制网络与基础模型融合 |
-| 架构迁移 | 大量 ControlNet 模型基于 SD 1.5/SDXL 训练，迁移到 DiT/Flow Matching 需重新训练，社区生态迁移成本高 | 架构无关的控制表示、自动架构迁移工具、新架构的原生控制支持 |
+| 挑战 | 为什么难 | 如何验证进步 |
+|---|---|---|
+| 条件冲突 | 文本、参考外观、姿态/深度可能约束不同对象、坐标或尺度；叠加残差不定义逻辑优先级 | 构造冲突对照，报告每路条件分别遵循程度，并记录条件权重 |
+| 条件输入噪声 | 控制图由估计器生成，误差会传到生成模型 | 对条件加噪、遮挡或替换预处理器，测控制忠实度对输入质量的敏感性 |
+| 控制与非目标保持 | 强调条件可能改变未要求的区域；整体 CLIP 相关度掩盖局部偏差 | 同时报条件成功、编辑强度、非目标区域/身份保持与整体图像质量 |
+| 模块开销 | 额外分支或多组 condition tokens 增加计算；减小模块又可能丢低层细节 | 在相同底模、条件集、分辨率和硬件上比较参数、延迟和条件保真 |
+| 架构迁移 | U-Net feature maps 与 DiT tokens 的尺度和接口不同 | 对每种迁移方案说明底模、VAE、tokenizer、训练集和条件编码，不把个别成功推广成通用原生控制 |
 
-### 7.2 未来方向
+### 8.2 开放问题
 
-| 方向 | 描述 | 代表工作/趋势 |
-|------|------|---------------|
-| 原生可控生成模型 | 下一代 DiT/Flow Matching 模型将原生支持多条件控制，预训练阶段就包含多种条件数据，条件作为模型输入的自然组成部分，无需外挂 ControlNet/Adapter | 世界模型（World Model）中的可控生成、多模态统一模型（GPT-4o、Gemini）的图像生成能力、端到端训练的可控视频生成模型 |
-| 智能条件理解 | 从"精确的条件图输入"到"灵活的自然语言/参考图像控制"：自然语言描述控制需求、参考图像的语义理解、多模态条件融合（文本 + 图像 + 草图 + 3D 模型） | MLLM 驱动的条件解析、指令跟随生成（Instruction-following Generation） |
-| 实时与交互式控制 | 实时绘画辅助（实时将草图转换为精细图像）、交互式编辑（拖拽、涂抹等直观操作）、视频生成的实时控制 | 流式生成、增量式控制、WebGPU/端侧推理优化 |
-| 3D 与 4D 控制 | 从 2D 图像控制扩展到 3D 场景控制、4D（3D + 时间）视频生成控制、与 NeRF、3D Gaussian Splatting 结合 | 3D-aware ControlNet、4D 视频一致性控制 |
-| 个性化与隐私 | 本地化的个性化控制（不依赖云端）、隐私保护的条件控制（加密条件输入）、联邦学习框架下的可控生成 | 端侧 LoRA 训练、差分隐私生成、联邦扩散模型 |
+| 开放问题 | 需要回答的问题 | 现有证据边界 |
+|---|---|---|
+| 条件可靠度 | 条件抽取器的错误如何在图像里显现；模型何时应当拒绝不可信条件？ | ControlNet++ 在特定可提取条件上优化 cycle consistency，不能覆盖所有语义条件 |
+| 组合泛化 | 一个模型在不同条件单独训练后，是否仍能处理未见组合？ | 多条件 benchmark 和训练/测试组合定义不统一，报告需分开 single-condition 与 compositional results |
+| 局部控制与全局语义 | 如何保证空间条件不遮蔽文本对象属性，同时外观参考不覆盖姿态/布局？ | Uni-ControlNet 和 IP-Adapter 解决不同子问题，不存在由单一架构自动保证的优先级 |
+| 跨骨干接口 | 不同 VAE/patch/token 表示如何复用控制信号？ | OminiControl 仅覆盖其论文的 DiT 与任务，尚未证明跨架构无损迁移 |
+| 面向编辑的评测 | 如何分别评价目标变化是否成功、未编辑区域是否保持？ | 条件生成 benchmark 常以条件一致性为主，编辑/重建必须增加非目标保持指标 |
 
 ---
 
-## 8. 参考链接
+## 9. 参考原文与工具
 
-### 8.1 核心论文
+### 9.1 核心论文
 
-| 论文 | 作者 | 年份 | 链接 |
-|------|------|------|------|
-| Adding Conditional Control to Text-to-Image Diffusion Models (ControlNet) | Lvmin Zhang et al. | 2023 | https://arxiv.org/abs/2302.05543 |
-| T2I-Adapter: Learning Adapters to Dig out More Controllable Ability for Text-to-Image Diffusion Models | Chong Mou et al. | 2023 | https://arxiv.org/abs/2302.08453 |
-| IP-Adapter: Text Compatible Image Prompt Adapter for Text-to-Image Diffusion Models | Hu Ye et al. | 2023 | https://arxiv.org/abs/2308.06721 |
-| LoRA: Low-Rank Adaptation of Large Language Models | Edward J. Hu et al. | 2022 | https://arxiv.org/abs/2106.09685 |
-| LyCORIS: A Generalized LoRA | KohakuBlueleaf | 2023 | https://github.com/KohakuBlueleaf/LyCORIS |
-| AnimateAnyone: Consistent and Controllable Image-to-Video Synthesis for Character Animation | Li Hu et al. | 2023 | https://arxiv.org/abs/2311.17117 |
-| MagicAnimate: Temporally Consistent Human Image Animation Using Diffusion Model | Zhongcong Xu et al. | 2023 | https://arxiv.org/abs/2311.16498 |
-| Uni-ControlNet: All-in-One Control to Text-to-Image Diffusion Models | Shihao Zhao et al. | 2023 | https://arxiv.org/html/2305.16322v3 |
-| Scalable Diffusion Models with Transformers (DiT) | William Peebles, Saining Xie | 2023 | https://arxiv.org/abs/2212.09748 |
-| Flow Matching for Generative Modeling | Yaron Lipman et al. | 2023 | https://arxiv.org/abs/2210.02747 |
-| Stable Diffusion 3: Scaling Rectified Flow Transformers for High-Resolution Image Synthesis | Stability AI | 2024 | https://arxiv.org/abs/2403.03206 |
-| Flux: A Family of Open Diffusion Models | Black Forest Labs | 2024 | https://blackforestlabs.ai/ |
-| ControlNeXt: Powerful and Efficient Control for Image and Video Generation | 多机构 | 2024 | https://github.com/dvlab-research/ControlNeXt |
+| 论文/报告 | 版本与定位 | 阅读重点 |
+|---|---|---|
+| [ControlNet](https://arxiv.org/html/2302.05543v3) | arXiv v3，§3.1–3.4 | 冻结网络块、zero-conv residual、CFG 与并联条件 |
+| [T2I-Adapter](https://arxiv.org/html/2302.08453v2) | arXiv v2，§3.2–3.4、§4.3 | 多尺度条件特征对齐与多 adapter 组合 |
+| [IP-Adapter](https://arxiv.org/html/2308.06721v1) | arXiv v1，§3.2–3.3 | 全局图像 embedding、投影 token、解耦 cross-attention |
+| [LoRA](https://arxiv.org/abs/2106.09685) | arXiv (2021)，§4–5 | 低秩权重偏移及其作为参数适配而非空间输入条件 |
+| [Uni-ControlNet](https://arxiv.org/html/2305.16322v3) | arXiv v3，§3–4 | local/global 控制分组及其组合消融 |
+| [AnimateAnyone](https://arxiv.org/html/2311.17117v3) | arXiv v3，§3.2–3.3 | ReferenceNet、Pose Guider 和时间模块的职责拆分 |
+| [ControlNet++](https://arxiv.org/html/2404.07987v2) | arXiv v2，§3–5 | 用输出条件重提取与一致性反馈训练 |
+| [ControlNeXt](https://arxiv.org/html/2408.06070v3) | arXiv v3，§3–4 | 图像/视频控制模块、Cross Normalization 和指定设置下的效率 |
+| [DiT](https://arxiv.org/html/2212.09748v2) | arXiv v2，§3–5 | ImageNet latent patch、adaLN 设计及测量到的 FLOPs/FID 关系 |
+| [SD3 / Rectified Flow Transformer](https://arxiv.org/html/2403.03206) | arXiv HTML，§3–5 | Flow Matching 目标与多模态 transformer 表示 |
+| [OminiControl](https://openaccess.thecvf.com/content/ICCV2025/papers/Tan_OminiControl_Minimal_and_Universal_Control_for_Diffusion_Transformer_ICCV_2025_paper.pdf) | ICCV 2025，方法与实验 | DiT 自身 VAE/Transformer 复用和图像条件 token 接入 |
+| [OminiControl2](https://arxiv.org/html/2503.08280) | arXiv HTML，§3–4 | 长条件 token 压缩与跨采样步特征复用 |
+| [Flow Matching for Generative Modeling](https://arxiv.org/abs/2210.02747) | arXiv (2022)，§2–3 | 生成目标/路径参数化与条件注入是不同设计轴 |
 
-### 8.2 开源项目与工具
+### 9.2 开源项目与工具
 
 | 项目 | 说明 | 链接 |
 |------|------|------|
@@ -867,7 +565,7 @@ ComfyUI 是可控生成技术最重要的开源应用平台之一，其节点式
 | CivitAI | 模型分享平台 | https://civitai.com/ |
 | HuggingFace Diffusers | 扩散模型工具库 | https://github.com/huggingface/diffusers |
 
-### 8.3 条件预处理工具
+### 9.3 条件预处理工具
 
 | 工具 | 功能 | 链接 |
 |------|------|------|
@@ -880,7 +578,7 @@ ComfyUI 是可控生成技术最重要的开源应用平台之一，其节点式
 | Depth Anything | 更鲁棒的深度估计 | https://github.com/LiheYoung/Depth-Anything |
 | DWPose | 改进的人体姿态估计 | https://github.com/IDEA-Research/DWPose |
 
-### 8.4 综述与博客
+### 9.4 综述与博客
 
 | 资源 | 说明 | 链接 |
 |------|------|------|
@@ -915,6 +613,3 @@ ComfyUI 是可控生成技术最重要的开源应用平台之一，其节点式
 | 解耦注意力 | Decoupled Attention | 将不同类型的条件通过独立的 Attention 路径注入 |
 
 ---
-
-> 本报告由 Kimi Code CLI 自动生成，日期：2026年6月6日。
-> 报告内容基于公开论文、开源项目和技术博客整理，仅供学术研究参考。

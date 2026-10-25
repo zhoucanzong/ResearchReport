@@ -26,15 +26,15 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [AIGC/3DGen/report.md](<../AIGC/3DGen/report.md>) | 3D 生成技术研究报告：从 DreamFusion SDS 蒸馏到 Tripo3D DiT 原生 3D 生成 | — | — | — |
-| [AIGC/AudioGen/report.md](<../AIGC/AudioGen/report.md>) | 音频/音乐生成技术研究报告 | — | — | — |
-| [AIGC/AvatarGen/report.md](<../AIGC/AvatarGen/report.md>) | 数字人与 Avatar 生成技术研究报告 | — | — | — |
+| [AIGC/3DGen/report.md](<../AIGC/3DGen/report.md>) | 3D 生成研究：表示、监督与几何一致性 | — | — | — |
+| [AIGC/AudioGen/report.md](<../AIGC/AudioGen/report.md>) | 音频与音乐生成：从压缩表示到可控长序列 | — | — | — |
+| [AIGC/AvatarGen/report.md](<../AIGC/AvatarGen/report.md>) | 数字人与 Avatar：身份、动作和声音如何合成到同一段视频 | — | — | — |
 | [AIGC/ControllableGen/report.md](<../AIGC/ControllableGen/report.md>) | 可控生成（Controllable Generation）技术研究报告 | — | — | — |
 | [AIGC/DiT/report.md](<../AIGC/DiT/report.md>) | Diffusion Transformer (DiT) 架构演进研究报告 | — | — | — |
 | [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) | 扩散模型（Diffusion Models）基础框架与架构演进研究报告 | — | — | — |
-| [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) | 图像编辑与修复技术研究报告 | — | — | — |
+| [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) | 图像编辑与修复：让目标变化与原图保留同时成立 | — | — | — |
 | [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) | 图像生成：表示、生成目标、条件控制与评测 | — | — | — |
-| [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) | 视频生成技术研究报告 | — | — | — |
+| [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) | 视频生成：从图像先验到时空建模 | — | — | — |
 
 ## Agents (3)
 
@@ -49,14 +49,14 @@
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) | 评测科学：分数何时支持“模型更好”或“能力泛化” | research | 2026-10-23 | current |
-| [Evaluation/ScientificDiscovery/report.md](<../Evaluation/ScientificDiscovery/report.md>) | AI for Science：怎样判断闭环实验带来了发现 | research | 2026-10-24 | current |
+| [Evaluation/ScientificDiscovery/report.md](<../Evaluation/ScientificDiscovery/report.md>) | AI for Science：从回顾性基准到闭环实验，怎样判断“发现” | research | 2026-10-24 | current |
 
 ## Infra (6)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [Infra/KVCachePD/report.md](<../Infra/KVCachePD/report.md>) | KV Cache 服务与 Prefill/Decode 分离：什么时候复用，什么时候传输 | research | 2026-10-23 | current |
-| [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | MoE 执行：token 如何抵达专家，又如何回到原序 | repo-research | 2026-10-24 | completed |
+| [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | MoE 执行：从专家路由到跨设备回收 | repo-research | 2026-10-24 | current |
 | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 模型量化与边缘部署研究报告 | topic-research | 2026-10-22 | needs-review |
 | [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) | 在线 LLM Serving：SLO、Goodput 与请求完整性 | research | 2026-10-24 | current |
 | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-22 | needs-review |
@@ -70,26 +70,26 @@
 | [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | Decision Models（System One / Typed Decision Model）技术专题调研 | — | — | — |
 | [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 扩散语言模型：从随机遮盖到大规模并行生成 | topic-research | 2026-10-23 | current |
 | [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) | OCR 与文档解析：从字符识别到结构还原 | research | 2026-10-25 | current |
-| [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 长上下文（Long Context）技术研究报告 | — | — | — |
-| [LLM/MoE/report.md](<../LLM/MoE/report.md>) | 混合专家模型（Mixture of Experts, MoE）架构演进研究报告 | — | — | — |
+| [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 长上下文：从可接收长度到有效利用 | — | — | — |
+| [LLM/MoE/report.md](<../LLM/MoE/report.md>) | 混合专家模型：路由、负载均衡与系统通信 | — | — | — |
 | [LLM/OperationsResearch/report.md](<../LLM/OperationsResearch/report.md>) | 大模型辅助运筹建模与求解：从自然语言到可验证的决策 | research | 2026-10-25 | current |
-| [LLM/RAG/report.md](<../LLM/RAG/report.md>) | 检索增强生成（Retrieval-Augmented Generation, RAG）技术研究报告 | — | — | — |
-| [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) | 推理模型（Reasoning Models）与 Test-Time Compute 研究报告 | — | — | — |
+| [LLM/RAG/report.md](<../LLM/RAG/report.md>) | 检索增强生成：检索误差怎样传到答案 | — | — | — |
+| [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) | 推理模型：测试时计算怎样变成更可靠的解题 | — | — | — |
 | [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | LLM 后训练中的强化学习：轨迹从哪里来，策略何时更新 | research | 2026-10-23 | current |
 | [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 训练数据策展：筛选、去重与配比如何改变训练结果 | research | 2026-10-24 | current |
-| [LLM/VLM/report.md](<../LLM/VLM/report.md>) | 多模态大模型（Vision-Language Models, VLM）研究报告 | — | — | — |
+| [LLM/VLM/report.md](<../LLM/VLM/report.md>) | 视觉语言模型：视觉表示如何进入语言模型 | — | — | — |
 
 ## Models (23)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) | 阿里巴巴通义万相（Wan）视频生成模型研究报告 | — | — | — |
-| [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) | 字节跳动生成模型系列研究报告 | — | — | — |
+| [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) | ByteDance Seed 生成模型：从双语图像生成到多模态视听创作 | — | — | — |
 | [Models/Claude/report.md](<../Models/Claude/report.md>) | Anthropic Claude 系列模型深度调研报告 | — | — | — |
 | [Models/DeepSeek/report.md](<../Models/DeepSeek/report.md>) | DeepSeek 系列模型深度调研报告 | — | — | — |
 | [Models/Doubao-Seed/report.md](<../Models/Doubao-Seed/report.md>) | Doubao/Seed系列模型深度调研报告 | — | — | — |
-| [Models/GLM/report.md](<../Models/GLM/report.md>) | GLM 系列模型深度调研报告 | — | — | — |
-| [Models/GPT/report.md](<../Models/GPT/report.md>) | OpenAI GPT 系列模型深度调研报告 | — | — | — |
+| [Models/GLM/report.md](<../Models/GLM/report.md>) | GLM：预训练目标、推理后训练与多模态分支 | — | — | — |
+| [Models/GPT/report.md](<../Models/GPT/report.md>) | GPT：从生成式预训练到推理与多模态系统 | — | — | — |
 | [Models/Gemini/report.md](<../Models/Gemini/report.md>) | Google Gemini系列模型深度调研报告 | — | — | — |
 | [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>) | Google / DeepMind 生成模型系列研究报告 | — | — | — |
 | [Models/Grok/report.md](<../Models/Grok/report.md>) | xAI Grok 系列模型深度调研报告 | — | — | — |
@@ -100,7 +100,7 @@
 | [Models/MiMo/report.md](<../Models/MiMo/report.md>) | 小米 MiMo 系列模型深度调研报告 | — | — | — |
 | [Models/Midjourney/report.md](<../Models/Midjourney/report.md>) | Midjourney 模型与产品演进研究报告 | — | — | — |
 | [Models/MiniMax/report.md](<../Models/MiniMax/report.md>) | MiniMax 系列模型研究报告：以 Lightning Attention 重写 Transformer 的扩展曲线 | — | — | — |
-| [Models/Mistral/report.md](<../Models/Mistral/report.md>) | Mistral AI 系列模型深度调研报告 | — | — | — |
+| [Models/Mistral/report.md](<../Models/Mistral/report.md>) | Mistral：高效稠密模型、稀疏专家与任务专门化 | — | — | — |
 | [Models/Nemotron/report.md](<../Models/Nemotron/report.md>) | NVIDIA Nemotron 系列研究脉络 | — | — | — |
 | [Models/OpenAI-Gen/report.md](<../Models/OpenAI-Gen/report.md>) | OpenAI 生成模型系列研究报告 | — | — | — |
 | [Models/Qwen/report.md](<../Models/Qwen/report.md>) | Qwen系列模型深度调研报告 | — | — | — |

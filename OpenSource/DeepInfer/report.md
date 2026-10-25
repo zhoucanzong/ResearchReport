@@ -11,9 +11,9 @@ status: completed
 
 # DeepInfer：离线推理内核、异步调度与状态契约
 
-> **版本**：`deepseek-ai/DeepInfer` @ `9bd9cf243fc53ef9afbf8f04d391d989117d6ab9`，2026-10-22从远端HEAD解析并按完整SHA取源码；包版本0.1.0。使用`code-researcher deep`，运行官方扫描器并追踪源码。**完成的是本文列出的静态切面精读，未构建、未下载模型、未运行GPU/NPU或性能测试；status不代表全上游逐行审计。**
+> **源码范围与证据**：固定 revision `9bd9cf243fc53ef9afbf8f04d391d989117d6ab9`，包版本 0.1.0。本文基于源码和仓库文档静态分析，并以文件路径和行号支持行为结论。未构建、未加载模型或运行 GPU/NPU，因此性能和硬件执行结果不作为本文实测结论。
 >
-> 运行与内存生命周期见 [runtime-and-lifetimes.md](runtime-and-lifetimes.md)；DSpark、SWA和格式约束见 [speculation-cache-and-so.md](speculation-cache-and-so.md)；版本、阅读覆盖及强结论复核见 [sources/MANIFEST.md](sources/MANIFEST.md)、[claim-audit.md](claim-audit.md)。
+> 运行与内存生命周期见 [runtime-and-lifetimes.md](runtime-and-lifetimes.md)；DSpark、SWA 和格式约束见 [speculation-cache-and-so.md](speculation-cache-and-so.md)；源码范围和证据等级见 [sources/MANIFEST.md](sources/MANIFEST.md)。
 
 ## 阅读结论
 
@@ -30,7 +30,7 @@ DeepInfer公开的是**针对DeepSeek-V4.1-Flash的离线推理引擎及相邻�
 
 ## 项目地图与阅读路线
 
-官方扫描器在固定tarball得到336文件、63,630文本行：Python54,929行、C++5,909行、Markdown855行、Shell410行。扫描器没有给出entry candidates，需从公开示例反查入口。其测试分类统计20文件，**不等于20个测试函数**；算子文件内另有pytest测试。[pyproject.toml:27](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/pyproject.toml#L27) [deepinfer/model_executor/layers/tilelang_ops/schedule_mtp_varlen.py:103](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/deepinfer/model_executor/layers/tilelang_ops/schedule_mtp_varlen.py#L103)
+固定 revision 包含 Python、C++、Markdown 与 Shell 代码。项目入口以 `examples/offline_inference.py` 和 `entrypoints/llm.py` 为起点；测试目录包含模型、调度、算子与状态缓存等不同层级的用例，目录文件数不等同于独立测试函数数。[pyproject.toml:27](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/pyproject.toml#L27) [deepinfer/model_executor/layers/tilelang_ops/schedule_mtp_varlen.py:103](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/deepinfer/model_executor/layers/tilelang_ops/schedule_mtp_varlen.py#L103)
 
 | 责任 | 应先读的文件 | 本文深度 |
 |---|---|---|
@@ -47,7 +47,7 @@ DeepInfer公开的是**针对DeepSeek-V4.1-Flash的离线推理引擎及相邻�
 
 `pyproject.toml`声明Python≥3.12、setuptools、Beta阶段；`setup.py`构建`deepinfer._C`，公共源码包括调度、sequence、输入准备、采样准备和ZOS。NVIDIA走CUDAExtension、Ascend走NpuExtension，要求CXX11 ABI；NVIDIA构建还要求激活venv/conda。README支持硬件为SM100与Ascend950，不外推到任意CUDA卡。[pyproject.toml:1](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/pyproject.toml#L1) [setup.py:17](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/setup.py#L17) [README.md:35](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/README.md#L35)
 
-公共requirements锁定transformers、xgrammar、tilelang等，平台文件另锁torch及硬件依赖。本文没有执行构建或验证本机能安装这些组合。[requirements.txt:1](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/requirements.txt#L1) [requirements-nvidia.txt:1](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/requirements-nvidia.txt#L1) [requirements-ascend.txt:1](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/requirements-ascend.txt#L1)
+公共requirements锁定transformers、xgrammar、tilelang等，平台文件另锁torch及硬件依赖。依赖和构建配置限定了可支持的平台组合；源码阅读不证明这些组合在当前环境可成功构建。[requirements.txt:1](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/requirements.txt#L1) [requirements-nvidia.txt:1](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/requirements-nvidia.txt#L1) [requirements-ascend.txt:1](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/requirements-ascend.txt#L1)
 
 ## 一条请求怎样走到输出
 
@@ -96,7 +96,7 @@ decode按output_len排序，从短输出端取请求，缺块时优先抢占另�
 
 `MTPVarlen.schedule`比较“期望产出/预计耗时”，用N−2轮confidence决定总query，用可得的较新confidence分配每请求长度；ZOS较新长度在GPU重分配。无曲线则退回全草稿长度。**confidence不会代替proposal q进入拒绝验证。**[csrc/engine/mtp_varlen.hpp:150](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/csrc/engine/mtp_varlen.hpp#L150) [deepinfer/worker/worker.py:209](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/deepinfer/worker/worker.py#L209) [deepinfer/model_executor/layers/sampler.py:446](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/deepinfer/model_executor/layers/sampler.py#L446)
 
-**设计解读**：模型head与硬件性能模型构成闭环，也引入曲线、在线耗时、confidence行序、schedule/process轮数的耦合；不能据head存在断言每个batch都会加速。部署问答给出低并发可下降的作者估算，本报告不当成性能复现。[csrc/engine/mtp_varlen.hpp:191](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/csrc/engine/mtp_varlen.hpp#L191) [doc/inference_deployment_qa.md:245](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/doc/inference_deployment_qa.md#L245)
+**设计解读**：模型head与硬件性能模型构成闭环，也引入曲线、在线耗时、confidence行序、schedule/process轮数的耦合；不能据head存在断言每个batch都会加速。部署问答中的低并发退化是作者估算，不是本文的独立性能测量。[csrc/engine/mtp_varlen.hpp:191](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/csrc/engine/mtp_varlen.hpp#L191) [doc/inference_deployment_qa.md:245](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/doc/inference_deployment_qa.md#L245)
 
 ### 缓存：分页、state与consumer视图共同作用
 
@@ -110,7 +110,7 @@ YoCo mask只收窄SWA可见域；compact移除consumer多余query，两者要求
 
 **设计解读**：局部失败降低一个SO请求牵连整批collective的机会，不是整个系统容错证明。SO抢占即结束意味着调用方要分清格式失败、编译失败与资源抢占，不能都当成正常stop。[deepinfer/model_executor/layers/sampler.py:377](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/deepinfer/model_executor/layers/sampler.py#L377) [csrc/engine/scheduler.hpp:766](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/csrc/engine/scheduler.hpp#L766)
 
-采样还存在明确的数值取舍：[`tilelang_ops/common.py:53`](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/deepinfer/model_executor/layers/tilelang_ops/common.py#L53)定义`DRAFT_PROB_PENALTY=5e-5`，CUDA残差使用带此缩放的draft概率，不能仅凭比值接受测试宣称严格无损。具体公式、源码推导和未测边界见[机制专题](speculation-cache-and-so.md)。
+采样还存在明确的数值取舍：[`tilelang_ops/common.py:53`](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/deepinfer/model_executor/layers/tilelang_ops/common.py#L53)定义`DRAFT_PROB_PENALTY=5e-5`，CUDA残差使用带此缩放的draft概率，不能仅凭比值接受测试宣称严格无损。具体公式、源码推导和适用边界见[机制专题](speculation-cache-and-so.md)。
 
 ## 参数沿真正入口解读
 
@@ -127,12 +127,12 @@ EnvVar首次读后缓存进类属性；直接改os.environ不保证已读开关�
 
 ## 测试、错误与观测
 
-| 已读测试 | 验证目标及条件 | 证据的边界 |
+| 测试用例覆盖 | 验证目标及条件 | 证据的边界 |
 |---|---|---|
-| sampler统计 | 随机PIT+KS；128轨迹、最长2048token、多种温度/top-p，EP8单模型case | 不是全配置无偏证明；本轮未跑 [tests/models/test_sampler.py:1](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/tests/models/test_sampler.py#L1) [tests/models/test_sampler.py:35](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/tests/models/test_sampler.py#L35) [tests/models/test_sampler.py:240](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/tests/models/test_sampler.py#L240) |
+| sampler统计 | 随机PIT+KS；128轨迹、最长2048token、多种温度/top-p，EP8单模型case | 不构成全配置无偏证明；源码列出的测试覆盖 [tests/models/test_sampler.py:1](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/tests/models/test_sampler.py#L1) [tests/models/test_sampler.py:35](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/tests/models/test_sampler.py#L35) [tests/models/test_sampler.py:240](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/tests/models/test_sampler.py#L240) |
 | batch invariant | 同prompt批量与单条的token/logprob对比；单条使用批量产物golden trajectory | 不等于自由随机生成必逐字一致 [tests/models/test_batch_invariant.py:91](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/tests/models/test_batch_invariant.py#L91) |
 | sync guard | mock全局debug mode，检查嵌套/跨线程恢复；另有GPU e2e | mock不是设备同步/性能结果 [tests/test_cuda_sync_guards.py:14](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/tests/test_cuda_sync_guards.py#L14) [tests/test_cuda_sync_guards.py:172](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/tests/test_cuda_sync_guards.py#L172) |
-| YoCo等价脚本 | L1比metadata，L2比teacher-forcing logp/top-k与MTP confidence | 不比较完整未截断；本轮未执行 [examples/yoco/README.md:3](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/examples/yoco/README.md#L3) |
+| YoCo等价脚本 | L1比metadata，L2比teacher-forcing logp/top-k与MTP confidence | 不比较完整未截断；脚本定义的比较范围为 [examples/yoco/README.md:3](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/examples/yoco/README.md#L3) |
 | state cache ops | SWA/store/CE布局往返、C1/C2、移除配置拒绝 | 不证明远端存储可靠 [tests/worker/test_state_cache_ops.py:656](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/tests/worker/test_state_cache_ops.py#L656) |
 
 Engine有空输入/token范围校验、sequence创建日志；调度有position_end、MTP slot和状态断言。统计打印异常被记录，处理与模型执行失败分开。[deepinfer/engine/llm_engine.py:553](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/deepinfer/engine/llm_engine.py#L553) [csrc/engine/scheduler.hpp:682](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/csrc/engine/scheduler.hpp#L682) [deepinfer/engine/llm_engine.py:1004](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/deepinfer/engine/llm_engine.py#L1004)
@@ -146,5 +146,3 @@ CPU计时、forward/sample events、graph计时、StatsLogger和可选profile HT
 - **新模型需要满足实现契约**：ModelMetadata拒绝非MoE、C4/C128、compression overlap/APE；DFlash要求特定head类型及滑窗一致。[deepinfer/model_executor/model_metadata_utils.py:52](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/deepinfer/model_executor/model_metadata_utils.py#L52) [deepinfer/model_executor/model_metadata_utils.py:94](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/deepinfer/model_executor/model_metadata_utils.py#L94) [deepinfer/model_executor/models/mtp/dflash.py:94](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/deepinfer/model_executor/models/mtp/dflash.py#L94)
 - **SWA与NextN一起改**：最大回退受NextN+1约束，keep、ring/state大小也依赖它；草稿长度不是独立于显存/布局的旋钮。[deepinfer/environ.py:128](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/deepinfer/environ.py#L128) [deepinfer/worker/cache_engine.py:88](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/deepinfer/worker/cache_engine.py#L88)
 - **集成钩子不是完整服务**：do_save_kvcache、process_output、init_pd_split等基类方法留给上层，空实现不能证明3FS/在线路由/完整PD已可用。[deepinfer/engine/llm_engine.py:801](https://github.com/deepseek-ai/DeepInfer/blob/9bd9cf243fc53ef9afbf8f04d391d989117d6ab9/deepinfer/engine/llm_engine.py#L801)
-
-进一步补证应在受支持硬件固定checkpoint和依赖，执行sampler统计检验、ZOS开关对比、YoCo L2与SO资源抢占用例。本报告无此运行结果，不写吞吐排行榜，也不把部署问答里的生产数字当成本轮测量。

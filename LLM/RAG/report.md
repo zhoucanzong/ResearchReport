@@ -2,837 +2,155 @@
 display_name: 检索增强生成（RAG）
 ---
 
-# 检索增强生成（Retrieval-Augmented Generation, RAG）技术研究报告
+# 检索增强生成：检索误差怎样传到答案
 
-> 报告日期：2026年6月6日  
-> 研究领域：大语言模型（LLM）× 信息检索（IR）  
-> 关键词：RAG, Vector Search, GraphRAG, Agentic RAG, Hybrid Retrieval, Hallucination Mitigation
+RAG 把外部材料接入语言模型的回答过程，但“模型有了引用资料”不等于答案可靠。语料漏收、文本解析错误、分块切断语义、召回漏掉证据、排序把噪声推到前面、上下文构造截掉限定条件，都会改变生成器看到的证据。生成器还可能忽略正确资料、把相邻句拼成错误结论，或给没有支持的主张附上貌似合适的引用。
 
----
+因此，理解 RAG 的关键不是按框架或数据库列清单，而是沿着误差传播链追问：证据从哪里来，怎样变成可检索单元，如何进入候选和上下文，模型如何据此作答，评测又能否分辨错误发生在哪一层。本报告从原始的可微 RAG 模型讲起，再转到现代模块化检索、结构化语料与自适应检索，最后讨论如何分别评估检索、生成和归因。
 
 ## 目录
 
-1. [概述](#1-概述)
-2. [发展时间线](#2-发展时间线)
-3. [核心架构详解](#3-核心架构详解)
-4. [检索技术对比](#4-检索技术对比)
-5. [分块策略对比](#5-分块策略对比)
-6. [GraphRAG 详解](#6-graphrag-详解)
-7. [Agentic RAG](#7-agentic-rag)
-8. [评测与幻觉缓解](#8-评测与幻觉缓解)
-9. [代表性系统对比](#9-代表性系统对比)
-10. [挑战与未来方向](#10-挑战与未来方向)
-11. [参考链接](#11-参考链接)
+1. [RAG 的问题定义](#1-rag-的问题定义外部记忆与语言生成如何协作)
+2. [误差传播](#2-误差传播上一环节的错会成为下一环节的条件)
+3. [检索单元与排序](#3-检索单元与排序从找相似内容到把证据送到生成器)
+4. [语料结构与全局归纳](#4-语料结构改变查询目标局部事实与全局归纳)
+5. [自适应检索](#5-自适应检索模型何时补证何时质疑证据)
+6. [评测](#6-评测分别识别召回证据使用与答案质量)
+7. [开放问题与推荐阅读](#7-证据链中的几个开放问题)
 
 ---
 
-## 1. 概述
+## 1. RAG 的问题定义：外部记忆与语言生成如何协作
 
-### 1.1 什么是 RAG？
+Lewis 等人的原始 RAG 把预训练生成器看作**参数记忆**，把外部文档索引看作**非参数记忆**。对问题 $x$，检索器先提供候选文档 $z$，生成器根据 $(x,z)$ 生成答案。模型把检索文档视为潜变量，并在候选文档上边缘化概率，而不是简单认定 top-1 文档必然正确。
 
-**检索增强生成（Retrieval-Augmented Generation, RAG）** 是一种将外部知识检索与大语言模型（LLM）生成能力相结合的技术范式。其核心思想是：在模型生成回答之前，先从外部知识库中检索与查询相关的文档片段，将这些片段作为上下文（Context）注入到 Prompt 中，引导 LLM 基于真实、可验证的信息进行生成。
+论文区分两种结构：
 
-RAG 的本质可以概括为以下公式：
+- **RAG-Sequence**：一份候选文档解释整段输出；对不同候选分别计算答案概率，再按检索概率加权。这让一个答案整体由一份主要证据解释。
+- **RAG-Token**：每个输出 token 都可对候选文档分布边缘化，允许生成过程中综合不同文档的信息。
 
-```
-RAG = Neural Retrieval + LLM Generation
-```
+两种形式表现出一个持续存在的设计取舍：证据单位越大，回答通常越容易保持来源连贯；允许在更细粒度上跨文档组合，则提高整合能力，也增加不同来源冲突、事实拼接和归因不清的风险。原论文用 DPR 双编码器检索 Wikipedia 段落、用 BART 生成，并在知识密集任务上联合微调 retriever 与 generator。今天常见的工程式 RAG 则往往把索引、检索、重排、生成分别部署，更易替换和诊断，却不再是端到端可微地共同优化。[原论文 §2](https://arxiv.org/html/2005.11401)
 
-其中，**Neural Retrieval** 负责从海量非结构化数据中找到最相关的证据，**LLM Generation** 负责将这些证据整合为连贯、准确的回答。
+两种边缘化方式也可简写为：$p_{Seq}(y|x)\approx\sum_{z\in top-k}p_\eta(z|x)p_\theta(y|x,z)$；而 $p_{Token}(y|x)\approx\prod_i\sum_{z\in top-k}p_\eta(z|x)p_\theta(y_i|x,z,y_{<i})$。这里 top-k 只是对完整检索分布的近似；候选召回不完整时，边缘化也无法补出没有进入候选的证据。原论文评估的不只是开放域问答，还包括抽象式 QA、Jeopardy 问题生成和事实验证；因此它把检索看成可服务于多种知识密集生成任务的潜变量，而不是一个只负责回答事实题的前置组件。[Lewis et al. §3–4](https://arxiv.org/html/2005.11401)
 
-### 1.2 为什么需要 RAG？
+## 2. 误差传播：上一环节的错会成为下一环节的条件
 
-大语言模型虽然具备强大的语言理解和生成能力，但存在三个根本性缺陷：
+一次回答的证据路径可以拆成六步：
 
-| 问题 | 描述 | RAG 的解决方案 |
-|------|------|---------------|
-| **幻觉（Hallucination）** | LLM 可能生成看似合理但完全虚构的内容 | 检索真实文档作为生成依据，限制模型"编造"空间 |
-| **时效性（Freshness）** | 预训练数据存在截止日期，无法回答最新事件 | 实时检索最新文档，动态更新知识库 |
-| **私有数据（Private Data）** | 模型无法访问企业内部文档、个人笔记等 | 将私有数据构建为可检索的知识库 |
-
-RAG适用于需要接入外部、可更新或可引用知识的场景；本报告未定位原稿所称Anyscale 2026调查的样本与原始结果，因此不据此给出企业采用比例。
-
-### 1.3 RAG vs 长上下文（Long Context）
-
-随着 Gemini 1.5 Pro（2M tokens）、Claude 3.5（200K tokens）等长上下文模型的出现，业界出现了"RAG 是否还有必要"的讨论。两者的适用场景对比如下：
-
-| 维度 | RAG | 长上下文 |
-|------|-----|---------|
-| 语料规模 | > 2M tokens 时优势明显 | 适合 < 200K tokens 的完整文档 |
-| 时效性 | 可实时更新索引 | 依赖模型重新训练或微调 |
-| 来源归因 | 可精确追溯引用来源 | 难以区分训练数据与输入上下文 |
-| 成本 | 检索成本固定，与语料规模弱相关 | prefill与解码成本随长度、注意力实现、缓存和计费而变；不能笼统称指数增长 |
-| 隐私 | 数据不出域，本地索引 | 需将完整数据上传至模型服务商 |
-
-**结论**：长上下文与 RAG 并非替代关系，而是互补关系。对于超大规模语料、高时效性需求、严格来源归因的场景，RAG 仍是不可替代的方案。
-
----
-
-## 2. 发展时间线
-
-RAG 技术从 2020 年诞生至今，经历了五个主要发展阶段，每个阶段都对应着检索范式和系统架构的重大演进。
-
-### 2.1 发展阶段总览
-
-| 阶段 | 时间 | 标志性事件 | 核心特征 | 代表技术/系统 |
-|------|------|-----------|---------|-------------|
-| **RAG 0.0** | 2020 | Lewis et al. (Facebook AI) 提出 RAG 框架 | Neural Retrieval + seq2seq Generator | DPR + BART, REALM |
-| **RAG 1.0** | 2021-2022 | Vector Search RAG 兴起 | 密集向量检索 + LLM 生成 | FAISS, Pinecone, Weaviate, LangChain, LlamaIndex |
-| **RAG 1.5** | 2023 | 检索优化时代 | Hybrid Search, Reranking, Query Rewrite | Reciprocal Rank Fusion, Cohere Rerank, Context Compression |
-| **RAG 2.0** | 2024 | 结构化检索时代 | GraphRAG, Corrective RAG, Modular RAG | Microsoft GraphRAG, CRAG, ColPali, Anthropic Contextual Retrieval |
-| **RAG 3.0** | 2025 | Agentic 检索时代 | LLM 自主决定检索策略 | Search-R1, ReSearch, DeepResearcher, OpenAI Deep Research |
-| **RAG 4.0** | 2026 | 认知检索系统 | 多模态融合、记忆、推理一体化 | GraphRAG + Hybrid + Agent + Memory + Multimodal |
-
-### 2.2 各阶段详细解析
-
-#### RAG 0.0（2020）：起源
-
-2020 年，Facebook AI（现 Meta AI）的 Lewis 等人在论文《Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks》中首次提出 RAG 框架。该框架包含两个预训练模型：
-
-- **检索器（Retriever）**：基于 Dense Passage Retrieval（DPR），使用双编码器（Bi-encoder）架构将查询和文档编码为密集向量。
-- **生成器（Generator）**：基于 BART/T5 的 seq2seq 模型，将检索到的文档与查询拼接后生成答案。
-
-这是 RAG 的"古典时代"，检索和生成都是端到端训练的，但受限于当时 LLM 的能力，生成质量远不及今天的 GPT-4/Claude 系列。
-
-#### RAG 1.0（2021-2022）：向量检索时代
-
-随着 GPT-3 和 ChatGPT 的爆发，RAG 进入工程化落地阶段。核心特征是：
-
-- **向量数据库**兴起：FAISS（Meta）、Pinecone、Weaviate、Milvus 等提供了高效的 ANN（Approximate Nearest Neighbor）检索能力。
-- **开发框架**成熟：LangChain 和 LlamaIndex 将文档加载、分块、嵌入、检索、生成的流程标准化，大幅降低了 RAG 应用开发门槛。
-- **Embedding 模型**进步：OpenAI 的 `text-embedding-ada-002` 成为事实标准。
-
-这一阶段的 RAG 架构相对简单：文档分块 → Embedding → 向量存储 → 相似度检索 → 拼接上下文 → LLM 生成。我们称之为 **Naive RAG**。
-
-#### RAG 1.5（2023）：检索优化时代
-
-Naive RAG 的局限性在实践中迅速暴露：检索召回率低、无关文档干扰生成、查询与文档语义不匹配等。2023 年，社区聚焦于**检索质量优化**：
-
-- **Hybrid Search**：结合密集检索（语义相似）和稀疏检索（关键词匹配），通过 Reciprocal Rank Fusion（RRF）合并结果。
-- **Re-ranking**：使用 Cross-Encoder 对初筛结果进行精排，显著提升 top-k 相关性。
-- **Query Rewrite**：利用 LLM 改写用户查询，消除歧义、扩展同义词、对齐文档语义。
-- **Context Compression**：压缩冗余检索结果，减少上下文窗口占用和成本。
-
-混合检索与重排分别处理召回覆盖和候选排序；收益需要在相同语料、查询集、k及重排预算下测量。原稿0.72→0.91没有可定位实验，撤下数值。
-
-#### RAG 2.0（2024）：结构化检索时代
-
-2024 年，RAG 从"更好的向量检索"演进为"结构化知识检索"：
-
-- **GraphRAG（Microsoft）**：将文档转化为知识图谱（实体为节点、关系为边），支持多跳推理和全局摘要。在复杂问答场景下显著优于 Vanilla RAG。
-- **Corrective RAG（CRAG）**：引入自我校正机制，当检索结果置信度低时，自动触发补充检索或知识修正。
-- **ColPali**：消除 OCR 依赖，直接对文档图像进行视觉-语言检索，解决 PDF/扫描件的结构化理解问题。
-- **Modular RAG**：将检索、重排、生成、验证等环节模块化，支持灵活组合和动态路由。
-- **Anthropic Contextual Retrieval**：官方自测中，contextual embeddings+contextual BM25+重排使top-20检索失败率从5.7%降至1.9%（相对约67%，不是只加embedding的效果）[官方实验](https://www.anthropic.com/research/contextual-retrieval)。
-
-#### RAG 3.0（2025）：Agentic 检索时代
-
-2025 年，RAG 进入"智能体驱动"阶段，LLM 不再被动接收检索结果，而是**主动决定何时检索、如何检索、检索什么**：
-
-- **Search-R1 / ReSearch**：使用 PPO/GRPO 强化学习训练 LLM，使其学会联合推理和搜索，在需要时自主调用检索工具。
-- **OpenAI Deep Research**：端到端研究智能体，在 Humanity's Last Exam 上达到 **26.6%** 的准确率，展示了多步检索-推理-整合的强大能力。
-- **LazyGraphRAG**：省去预先LLM总结；官方自测的**索引成本**为full GraphRAG的0.1%，不是全流程或每次查询费用[官方实验](https://www.microsoft.com/en-us/research/blog/lazygraphrag-setting-a-new-standard-for-quality-and-cost/)。
-- **DeepResearcher**：开源复刻 Deep Research 能力，支持本地部署和自定义知识源。
-
-#### RAG 4.0（2026）：认知检索系统
-
-2026 年，RAG 正在向**认知检索系统（Cognitive Retrieval System）**演进，核心特征是：
-
-- **多模态融合**：文本、图像、视频、音频统一检索和生成。
-- **记忆机制**：长期记忆 + 短期记忆，支持跨会话的知识积累。
-- **主动学习**：系统根据用户反馈自动优化检索策略和知识库。
-- **GraphRAG + Hybrid + Agent + Memory** 的深度融合，形成自适应、自进化的检索-生成闭环。
-
----
-
-## 3. 核心架构详解
-
-RAG 系统按架构复杂度可分为三个层次：Naive RAG、Advanced RAG 和 Agentic RAG。
-
-### 3.1 Naive RAG（基础架构）
-
-```
-用户查询 → 查询嵌入 → 向量相似度检索 → Top-k 文档获取 → 上下文拼接 → LLM 生成
+```text
+来源与版本 → 解析和切分 → 召回候选 → 重排与上下文选择 → 生成答案 → 引用/评分
 ```
 
-**流程说明**：
+**来源与解析**决定知识库里有什么。过期文档、OCR 漏字、表格扁平化会使后续检索只能找到错误或不完整记录。**切分**决定证据以什么粒度出现：定义与例外被拆开时，embedding 可能只匹配到前半段；太大的块则让无关段落共同进入上下文。**召回**决定必要证据是否出现在候选中。**重排**只能调整已有候选顺序，无法恢复未被召回的文档。**上下文构造**还要考虑 token 预算、重复、位置和来源冲突。最后，生成模型根据这些内容作答，可能忽略证据、从参数记忆补全或将多个片段错误组合。
 
-1. **文档预处理**：原始文档经过清洗、分块（Chunking）、嵌入（Embedding）后存入向量数据库。
-2. **查询编码**：用户查询通过相同的 Embedding 模型编码为向量。
-3. **相似度检索**：在向量空间中查找与查询向量最接近的 k 个文档块。
-4. **上下文构建**：将检索到的文档块按相关性排序，拼接为上下文。
-5. **LLM 生成**：将"上下文 + 查询"输入 LLM，生成最终回答。
+因此，最终答案错误至少可能来自三类情形：正确证据没在库里；证据在库里但未被检索/呈现；证据已呈现但答案未忠实使用。只看生成质量分数无法定位这三种失败，检索 Recall@k 好也不代表回答有依据。RAG 的调试与研究评测都需要保留阶段边界。
 
-**局限性**：
-- 检索质量完全依赖向量相似度，对同义词、歧义、多跳推理支持差。
-- 固定分块可能切断语义连贯性。
-- 无检索结果质量评估，低质量检索直接污染生成。
-- 无查询优化，用户原始查询可能表达不清。
+| 观察到的失败 | 优先检查的环节 | 常见混淆 |
+|---|---|---|
+| 系统总答不出库内问题 | 解析结果、文档版本、chunk 元数据、retriever recall | 把语料缺项误判成生成器能力不足 |
+| 结果主题相关但缺关键条款 | 召回候选与证据粒度 | 用更大的生成模型掩盖漏召 |
+| 证据在候选里但 prompt 中没有 | rerank、去重、token 截断和窗口位置 | 只看 top-k 检索列表，不查最终 prompt |
+| 答案引用了无关/冲突材料 | 重排、来源优先级、时间版本处理 | 将相关性当作正确性或权威性 |
+| 引用存在但不支持主张 | 生成忠实度与 claim-to-source 对齐 | 把“有链接”当作“有证据” |
 
-### 3.2 Advanced RAG（增强架构）
+这条错误链也解释了为什么单项模块指标不能代替端到端诊断：一个 retriever 的 Recall@k 增长，可能被切块边界、上下文截断或生成器忽略抵消；端到端答案准确率下降，也不必然说明 retriever 退化。
 
-Advanced RAG 在 Naive RAG 基础上增加了多个优化模块：
+## 3. 检索单元与排序：从“找相似内容”到“把证据送到生成器”
 
-```
-用户查询 → 查询改写/扩展 → Hybrid 检索（Dense + Sparse）→ 初筛结果 → Cross-Encoder 重排 → Top-k 精排结果 → 上下文压缩 → LLM 生成 → 引用验证
-```
+### 3.1 密集、稀疏与混合召回
 
-**关键增强模块**：
+DPR 的双编码器分别计算问题向量 $q$ 与段落向量 $p$，用点积 $q^Tp$ 作为相似度。段落向量可预先编码并建立近邻索引，查询时只需编码问题并搜索 top-k；这是大规模语义召回高效的原因。它的限制也来自可分解性：问题和段落在向量索引前独立编码，复杂交互要靠训练数据和表示学习吸收。训练时以正段落和负段落做对比排序，in-batch negatives 可以增加候选竞争；若负例是假负例或领域分布不同，模型学到的“相关”边界也会受影响。DPR 的关键权衡是，双编码器允许语料离线编码并用近似最大内积搜索扩展规模，但它不能在 query 与每个 passage 之间进行 token 级交互；Cross-Encoder 将这种交互留到重排阶段，以额外计算换更精细的候选判断。[DPR §3–5](https://arxiv.org/html/2004.04906)[DPR §3–5](https://arxiv.org/html/2004.04906)
 
-| 模块 | 功能 | 技术实现 |
-|------|------|---------|
-| **Query Rewrite** | 优化查询表达 | LLM 改写、HyDE、Query Decomposition |
-| **Hybrid Retrieval** | 融合语义和关键词检索 | Dense Embedding + BM25 + RRF |
-| **Re-ranking** | 精排初筛结果 | Cross-Encoder（如 Cohere Rerank, bge-reranker） |
-| **Context Compression** | 去除冗余信息 | LLM 摘要、选择性上下文、RAG 链式压缩 |
-| **Citation Verification** | 验证生成内容的引用准确性 | Self-RAG、引用对齐、来源归因 |
+稀疏检索（如 BM25）基于词项重合，精确术语、编号、代码符号和罕见实体往往更易匹配；它难以发现“语义接近但措辞不同”的证据。密集检索更擅长语义改写，但可能把相近主题误作同一事实，或漏掉低频专名。两路分数不能直接当作同一尺度；混合检索通常用 rank fusion（如 RRF）合并排序，收益来自信号互补，不是任何语料上固定胜过单路。
 
-**性能提升**：
+### 3.2 分块决定检索器能“看见”什么
 
-- 混合检索与重排没有可跨任务套用的固定提升区间，应分别测Recall@k、重排后覆盖率与最终答案质量。
-- [Anthropic官方自测](https://www.anthropic.com/research/contextual-retrieval)：Gemini Text 004为展示配置、跨code/fiction/arXiv/science领域汇总，先召回150再重排到20；contextual embedding+BM25+重排使1−recall@20从5.7%到1.9%，约67%的相对下降。仅contextual embeddings为5.7%→3.7%，不能合并归因。
+固定 token 分块的优点是边界、索引规模和预算可控；弱点是边界可能切断前提、定义、例外或跨句指代。把 chunk 做大能保留更多上下文，却让 embedding 将多个主题压成一个向量，也会增加无关文本进入生成上下文的机会。重叠窗口能降低边界漏失，但会引入重复候选和重复证据。
 
-### 3.3 Agentic RAG（智能体架构）
+结构化切分会依照标题、段落、函数、表格或页面结构保留语义边界；它减少任意截断，却依赖解析器能正确识别结构，且块大小不再均匀。Parent-child 检索以小块匹配问题，再返回所属大段：小块提升定位精度，大段补齐论证上下文；代价是父段可能过长，或把未命中的相邻论点也带入 prompt。分块策略应与待回答问题的证据单位一致：条款查询通常要保留条款与定义关系，代码问题要保留函数和调用关系，跨页问题则不能把页边界当作语义边界。
 
-Agentic RAG 是 2025-2026 年的前沿方向，核心思想是让 LLM 成为检索流程的"指挥官"：
+RAPTOR 从另一方向处理局部 chunk 的视野限制：递归聚类相似片段、生成摘要，构成从原始文本叶节点到高层摘要的树；查询时可以检索不同抽象层的信息。它扩展了“只能取连续原文块”的表示空间，但摘要会压缩细节，也可能在索引构建时引入幻觉。论文报告在特定问答数据和 GPT-4 等生成器设置中，摘要树在需要跨段综合的任务上比传统 chunk 检索更有利；该结果不意味着高层摘要可替代原文证据，论文也专门分析了摘要幻觉及其对 QA 的影响。[RAPTOR §3–4、Appendix E](https://arxiv.org/html/2401.18059)
 
-```
-用户查询 → Agent 规划 → 多轮检索/推理循环 → 证据整合 → LLM 生成 → 自我验证 → 最终回答
-         ↑___________________________________________↓
-```
+两种分层索引把某些成本从查询时移到构建时：RAPTOR 为文本层级做递归聚类和摘要；GraphRAG 为实体关系图做社区发现和社区摘要。读者可以将它们理解成两种不同的“预计算”：前者预计算不同粒度的内容概括，后者预计算关系密集区域及其主题摘要。两者都需跟踪来源位置，才能在摘要支持答案时回到原始 chunk 核对细节。
 
-**Agent 的核心能力**：
+### 3.3 重排与上下文压缩处理不同误差
 
-1. **检索决策（When to Retrieve）**：判断当前知识是否足够回答查询，避免不必要的检索。
-2. **检索策略（How to Retrieve）**：选择检索工具（向量搜索、关键词搜索、图遍历、网页搜索等）。
-3. **查询构造（What to Retrieve）**：生成子查询、分解复杂问题、扩展同义词。
-4. **结果评估（Evaluate Results）**：判断检索结果是否充分、是否矛盾、是否需要补充检索。
-5. **迭代优化（Iterate）**：多轮检索-推理，直到证据充分或达到最大迭代次数。
+双编码器常用较便宜的表示进行大范围召回。Cross-Encoder 把问题和每个候选拼在一起联合编码，使 token 之间能够直接交互，能比独立编码更细致地判断关系、限定词和实体对应。由于它要逐个处理候选，常见设计是先用双编码器/BM25 召回较大的候选集，再在固定候选预算内重排。它不能弥补召回阶段已漏掉的答案证据；候选集越大，计算越高。公平比较应先固定初筛候选和模型，再比较重排前后的证据覆盖及端到端答案质量。
 
-**代表性系统**：
+上下文压缩试图把检索结果中有用片段留下、冗余片段去掉。它可以缓解 token 预算和噪声，但压缩器本身也可能删掉否定词、条件、时间范围或来源差异。将抽取式压缩与摘要式压缩混为一谈会掩盖不同风险：前者可能漏选，后者可能改写或合并事实。评价压缩时应同时测答案是否可恢复、限定条件是否保留，以及引用能否映回原文位置。
 
-- **OpenAI Deep Research**：端到端研究智能体，支持多步网页浏览、信息整合、报告生成。
-- **Search-R1 / ReSearch**：通过强化学习训练 LLM 的检索-推理联合策略。
-- **LazyGraphRAG**：智能决定何时触发图遍历，平衡成本与效果。
+## 4. 语料结构改变查询目标：局部事实与全局归纳
 
----
+普通向量检索主要针对“找出与问题相似的局部证据”。当问题要求跨大量文档归纳主题、总结关联或回答全局 sensemaking 问题时，相关材料可能分散于许多不相邻片段。GraphRAG 将文档切块、抽取实体与关系、构建图、用 Leiden 等算法发现层级社区，并对社区生成摘要；全局查询时把社区摘要分组，映射成中间回答，再按相关性排序、筛选和归约成最终答案。图式检索也可沿实体/关系定位局部证据；不过原始 GraphRAG 论文的目标与评测重点是 query-focused global sensemaking。[GraphRAG §3](https://arxiv.org/html/2404.16130)
 
-## 4. 检索技术对比
+这里的转向不是“图比向量更懂推理”，而是让索引显式保留实体关系和社区层次，进而支持不同于 top-k 相似片段的查询目标。GraphRAG 的离线索引可理解为四步：从来源文档切块；由 LLM 抽取实体、关系及描述/claim；对图做层级社区发现；为社区生成多级摘要。查询阶段把全局问题分配给社区摘要生成局部回答，再把相关回答排序、截取到 token 预算内并归纳。这和 top-k 相似段落检索不同，特别适合“总结整个语料的主题、分歧和发展脉络”类 query-focused summarization。
 
-检索是 RAG 系统的"生命线"，检索质量直接决定生成质量。当前主流检索技术可分为四大类：
+图构建增加离线抽取、聚类和摘要成本，实体合并错误会把不同对象连错；LLM 抽取出的边和社区摘要不是自动验证过的事实。其评测在 News 与 Podcast 两类语料上，由 persona/task 过程生成每个语料 125 个全局 sensemaking 问题，再以 LLM 成对比较 comprehensiveness、diversity、empowerment，并辅以抽取 claim 的指标；这种评测没有传统 QA 的单一 gold answer，且依赖 LLM judge 和自动生成的 query。在其中 root-level GraphRAG 与 vector RAG 的比较里，论文报告 comprehensiveness 72%、diversity 62% 的 judge 胜率；这是作者设定上的成对判断，不是准确率或所有 global-search 配置都显著领先的结论。不能外推为 GraphRAG 对所有单事实、多跳 QA 或动态文档集更准确。
 
-### 4.1 Dense Retrieval（密集检索）
+RAPTOR 与 GraphRAG 都建立多层表示，但依据和目标不同：RAPTOR 对语义相似文本递归聚类与摘要；GraphRAG 先抽取实体关系并构建社区。前者着重层级文本内容，后者着重关系结构与全局主题。二者都把部分理解提前放入索引阶段，因此需要面对“索引时模型产生的遗漏/幻觉会不会沿着检索进入答案”这一问题。
 
-**原理**：将查询和文档编码为低维密集向量，通过向量空间中的距离（余弦相似度、点积）衡量语义相关性。
+## 5. 自适应检索：模型何时补证、何时质疑证据
 
-**代表模型**：
+固定 top-k 把检索次数和文档数写死。它会在无需外部知识的问题上带入噪声，也会在复杂问题上因候选不足而漏证据。自适应方法试图把“检索是否有用、结果是否可信、是否继续搜索”变成模型决策。
 
-| 模型 | 维度 | 上下文长度 | 特点 |
-|------|------|-----------|------|
-| OpenAI text-embedding-3-large | 3072 | 8192 | 高质量通用嵌入，多语言支持 |
-| Cohere embed-v4 | 1024 | 512 | 多语言，支持分类和聚类 |
-| BGE-M3（智源） | 1024 | 8192 | 支持密集、稀疏、多向量三种表示 |
-| E5-mistral-7b-instruct | 4096 | 32768 | 基于 LLM 的指令感知嵌入 |
-| Jina Embeddings v3 | 1024 | 8192 | 支持 30+ 语言，多任务适配 |
+### 5.1 Self-RAG：在生成过程中学习检索与反思
 
-**优点**：
-- 语义理解能力强，能捕捉同义词、近义词、语义关联。
-- 对长文档和复杂查询表现较好。
+Self-RAG 将生成划成片段（论文实验中以句子为 segment），并用四类 reflection token 表示：是否需要检索；检索段落是否相关；当前片段是否被段落支持（fully/partially/not supported）；整体回答是否有用。推理时模型可按需检索；使用检索结果后，针对段落和生成片段作出批评信号并参与候选排序。这把检索决策和证据使用纳入训练，而不是无条件拼接固定 top-k。
 
-**缺点**：
-- 对罕见术语、专有名词、ID 等精确匹配支持差。
-- 依赖 Embedding 模型的质量和领域适配性。
-- 向量存储和 ANN 检索存在近似误差。
+它的关键机制同时有边界：反思 token 是模型学习的判断，不是独立真值校验；如果训练用的相关性/支持度信号偏差，模型可能学会稳定地产生错误的“有依据”判断。critic 的标签由 GPT-4 生成并人工抽查；论文把其蒸馏到 Llama-2-7B critic，再训练 7B/13B generator。实验覆盖指定 QA、推理、事实核验和长文生成任务；这些结果不能直接外推到每个语料、retriever 或更强 generator。[Self-RAG §3–5](https://arxiv.org/html/2310.11511)
 
-### 4.2 Sparse Retrieval（稀疏检索）
+### 5.2 CRAG：显式评估检索后采取纠正动作
 
-**原理**：基于倒排索引和词频统计（如 BM25、TF-IDF），通过关键词匹配衡量相关性。
+Corrective RAG（CRAG）在生成器前增加检索评估器，对检索结果整体质量给出置信类别，再选择动作：相关时利用本地证据；不相关时扩展到网页搜索；模糊时补充搜索并进行知识细化。其 decompose-then-recompose 操作把长检索文档分解成更小片段、筛选有用内容再重组，试图减少不相关段落污染生成。
 
-**代表系统**：
+CRAG 直接针对“检索错会把生成带偏”的误差传播环节。其论文用微调的 T5-large 作为轻量检索评估器，对每个 query-document 对评分，再根据上/下阈值分成 Correct、Incorrect、Ambiguous：正确时把文档切成信息条并过滤重组；错误时丢弃本地候选、改用网页搜索；模糊时并用两路证据。评估器使用相关文档作为正例，并从相似但不相关的候选构造难负例；这个设计说明检索纠错本身也依赖负例是否覆盖真实的误召模式。这个控制环依赖评估器校准，阈值边缘的误判会决定系统走向；网页搜索还引入来源可信度、时效性和冲突处理问题。论文在 PopQA、Biography、PubHealth、ARC-Challenge 等四类任务上测试，并对评估器、纠正动作和知识细化做消融；读结果时应看 evaluator 准确性、检索条件和额外计算，而不只看总体回答分数。[CRAG §4–5](https://arxiv.org/html/2401.15884)
 
-| 系统 | 算法 | 特点 |
-|------|------|------|
-| Elasticsearch | BM25 | 成熟稳定，生态丰富，支持复杂过滤 |
-| OpenSearch | BM25 | AWS 托管，与 Elasticsearch 兼容 |
-| Lucene | BM25 + 自定义评分 | Java 生态，高度可定制 |
-| SPLADE | 学习稀疏表示 | 结合神经网络和稀疏检索优势 |
+### 5.3 Search-R1：把搜索动作纳入推理策略训练
 
-**优点**：
-- 精确匹配能力强，对术语、ID、代码片段等效果好。
-- 可解释性强，匹配结果可直接看到关键词命中。
-- 无需训练，对新领域适应快。
+Search-R1 将搜索引擎作为模型可调用的环境动作，通过强化学习学习交错的“思考—搜索—读结果—继续推理”轨迹。模型把查询包在 `<search>...</search>` 中触发工具调用，返回文本由 `<information>...</information>` 包裹并插入 rollout，之后可继续搜索或输出 `<answer>...</answer>`。检索结果 token 由环境提供，训练时的 loss masking 用来避免模型把环境返回内容当成自己要模仿生成的 token。与 Self-RAG 的反思标记、CRAG 的检索后评估器不同，Search-R1 重点是策略如何学会搜索查询和调用时机。
 
-**缺点**：
-- 无法理解语义相似但词汇不同的表达。
-- 对长文档的评分偏向问题（BM25 的文档长度归一化）。
+这条路线让模型可以用搜索补充静态参数知识，但需要解决动作空间、搜索结果不可微、检索文档如何参与训练、奖励是否只看最终答案等问题。Search-R1 的奖励主要按可验证最终答案给分，论文还对检索返回 token 做 masking，避免把环境提供的文本当作策略自身的生成动作来优化；动作预算限制最多的搜索轮数。这个设计把工具输出和策略输出分开记账，但答案奖励仍无法判断模型的搜索查询是否有效、是否漏看关键页面，除非另有检索行为指标。其实验任务和搜索接口定义了结果适用范围；外部搜索可变、索引覆盖与网页质量不同，不能把其训练评估结果直接当成任意网页环境下的稳定能力。[Search-R1 §3–5](https://arxiv.org/html/2503.09516)
 
-### 4.3 Hybrid Search（混合检索）
+## 6. 评测：分别识别召回、证据使用与答案质量
 
-**原理**：同时执行 Dense Retrieval 和 Sparse Retrieval，通过融合算法（如 RRF、线性加权）合并结果。
+RAG 的端到端答案分数把多处误差叠在一起。一个可诊断的对照应固定同一语料版本、query 集、embedding 与生成器，再逐步切换召回器、reranker、chunk 规则和上下文预算；同时保留候选列表、最终 prompt、模型原始输出及 citation 映射。这样才能把“没检索到”与“检索到了但生成没用”区分开。评估可分成以下环节：
 
-**Reciprocal Rank Fusion（RRF）公式**：
+| 评估对象 | 典型问题 | 可用观察量 | 不能单独证明什么 |
+|---|---|---|---|
+| 语料/解析 | 答案是否存在、原文结构是否保留？ | 覆盖率、版本和解析抽查 | 检索器质量 |
+| 召回 | 必要证据是否进 top-k？ | Recall@k、Hit Rate | 排序后生成质量 |
+| 排序 | 相关证据是否靠前？ | MRR、NDCG、候选固定下的重排对照 | 召回漏失是否被修复 |
+| 生成 | 答案是否正确、完整且遵循证据？ | 任务答案指标、Faithfulness 诊断 | 引用是否真正支持论断 |
+| 归因 | 每项主张是否被定位来源支持？ | 引用 precision/recall、人工抽查 | 来源本身是否可信或最新 |
+| 代价 | 提升用了多少资源？ | 索引、检索、重排、token、延迟和存储 | 不同成本口径间的直接排名 |
 
-```
-RRF_score(d) = Σ 1 / (k + rank_i(d))
-```
+RAGAS 试图在没有人工参考答案时，通过 LLM 估计 faithfulness、answer relevance 与 context relevance；其问答形式依赖从回答拆出 claims、用检索上下文支持性来评分，因而裁判提示、分句与语言模型都会影响测量。它评估的是一组代理指标，不是自动事实证明，受裁判模型、提示和语料影响。ARES 分别训练三个 judge，判别 context relevance、answer faithfulness 和 answer relevance；它从语料生成 query–passage–answer 合成数据，构造相关/不相关与正确/矛盾样本，再用约 150 条或更多人工偏好标注结合 prediction-powered inference 校准系统排序并估计置信区间。ARES 论文提供的配方至少需要领域 passage、few-shot 问题示例和约 150 个以上人工偏好验证样本；PPI 通过这组人类标签估计 judge 排名的置信区间。这个改进解决的是 judge 的统计校准问题，不会自动保证合成 query 代表真实用户问题，也不会证明引用内容在领域上正确。两者都扩展了规模化评估，但 judge 与合成数据的偏差仍需用人工标注、错误分析和真实查询抽查校准。[RAGAS §3–5](https://arxiv.org/html/2309.15217)、[ARES §3–5](https://arxiv.org/html/2311.09476)
 
-其中 `rank_i(d)` 是文档 d 在第 i 个检索列表中的排名，k 为常数（通常取 60）。
+GraphRAG 还提示一个评测错位：传统 QA 基准常问局部事实，无法充分衡量跨整个语料的主题归纳；而针对某个语料自动生成的全局问题能覆盖它的使用目标，却可能受问题生成模型偏差影响。原论文以 News/Podcast 构造 query-focused sensemaking 问题，使用 comprehensiveness、diversity、empowerment 等构念并用 LLM 成对比较；它测的是答案覆盖、视角丰富度和用户赋能，不是事实 EM 或 claim correctness。评测应和研究问题匹配，而不是把不同构念压成一个总榜。
 
-**比较方式**：使用相同查询、语料和top-k，对Dense、BM25和RRF分别报告Recall@k；再在相同候选预算下增加reranker。原稿0.72/0.68/0.91表没有可复核的数据集、模型与运行记录，不保留为实测结果。Hybrid能补互补召回，但也可能引入噪声或额外延迟，应与单路检索作受控比较。
+## 7. 证据链中的几个开放问题
 
-### 4.4 Graph Retrieval（图检索）
+- **召回边界**：如何区分知识库没有答案、答案在解析时丢失、查询表达不匹配和 ANN 近似漏召？
+- **分块与结构**：文档、表格、代码、版面和对话的证据单位不同，怎样在检索粒度与完整上下文之间自适应？
+- **冲突与时效性**：多个来源相互矛盾或版本不同，系统如何保留来源时间、优先级与不确定性，而不把冲突平均掉？
+- **主动检索**：什么时候应停止搜索？自适应策略如何避免过度检索、循环查询和奖励投机？
+- **忠实度与引用**：答案中的每个主张怎样绑定到足够且准确的原文证据，而不只是在段尾附上相关链接？
+- **长上下文交界**：检索缩小上下文、长窗口扩大候选空间，两者如何按任务、语料规模、证据密度和预算组合？
 
-**原理**：将文档中的实体和关系提取为知识图谱，通过图遍历（BFS/DFS）进行多跳推理检索。
+### 推荐阅读顺序
 
-**核心优势**：
-- **多跳推理**：回答"A 的 B 的 C 是什么"类问题。
-- **关系推理**：利用实体间的关系路径进行推理。
-- **全局视图**：支持对整个知识库的宏观摘要和趋势分析。
-
-**证据范围**：Microsoft原始GraphRAG工作的目标是query-focused全局总结；图结构的用途不等于所有多跳题都更准。原稿“事实−13.4%、多跳+4.5%、延迟2.3x”未能对应明确版本、任务和表格，撤下。应将实体查询、关系查询与全局总结分开测量。[原始论文](https://arxiv.org/abs/2404.16130)
-
-### 4.5 检索技术综合对比表
-
-| 维度 | Dense Retrieval | Sparse Retrieval | Hybrid Search | Graph Retrieval |
-|------|----------------|-----------------|---------------|----------------|
-| **核心机制** | 向量相似度 | 关键词匹配 | 多路融合 | 图遍历 |
-| **语义理解** | 强 | 弱 | 强 | 中等 |
-| **精确匹配** | 弱 | 强 | 强 | 中等 |
-| **多跳推理** | 不支持 | 不支持 | 不支持 | 支持 |
-| **延迟** | 低（<100ms） | 低（<50ms） | 中等 | 高（2-3x） |
-| **存储成本** | 高（向量索引） | 低（倒排索引） | 高（双索引） | 高（图+向量） |
-| **适用场景** | 通用语义检索 | 术语/ID/代码 | 生产系统默认 | 复杂推理/关系查询 |
-
----
-
-## 5. 分块策略对比
-
-文档分块（Chunking）是 RAG 流程的第一步，分块质量直接影响检索和生成效果。没有"最佳"分块策略，只有"最适合"的策略。
-
-### 5.1 常见分块策略
-
-| 策略 | 原理 | 优点 | 缺点 | 适用场景 |
-|------|------|------|------|---------|
-| **Fixed-size** | 按固定字符数/Token 数分块 | 简单、均匀、易实现 | 可能切断语义、边界信息丢失 | 快速原型、通用文档 |
-| **Semantic chunking** | 按段落、主题、标题等自然边界分割 | 保留语义完整性 | 块大小不均匀、可能过大 | 结构化文档、论文、报告 |
-| **Parent-child** | 存储小块用于检索，检索后扩展为父块 | 检索精度高、上下文完整 | 存储冗余、实现复杂 | 技术手册、API 文档 |
-| **Sliding window** | 带重叠（10-20%）的滑动分块 | 避免边界信息丢失 | 存储冗余增加、检索重复 | 对话内容、连续文本 |
-| **M-RAG (2026)** | 无块检索，直接对完整文档编码 | 无分块边界问题 | 计算成本高、长文档挑战 | 短文档、高精度需求 |
-
-### 5.2 策略详解
-
-#### Fixed-size Chunking
-
-最基础的分块方式，例如每 512 tokens 或 1000 字符为一个块。
-
-```python
-# 伪代码示例
-chunk_size = 512
-chunk_overlap = 50
-chunks = [text[i:i+chunk_size] for i in range(0, len(text), chunk_size - chunk_overlap)]
-```
-
-**关键参数**：
-- `chunk_size`：通常 256-1024 tokens，需根据 Embedding 模型的上下文长度和检索粒度调整。
-- `chunk_overlap`：10-20% 的重叠可减少边界信息丢失。
-
-#### Semantic Chunking
-
-利用 NLP 技术识别文档的自然边界：
-
-- **段落边界**：按换行符分割。
-- **标题层级**：按 Markdown/HTML 标题（H1, H2, H3）分割，保留层级结构。
-- **主题分割**：使用 TextTiling、BERT 等模型检测主题转换点。
-
-**优点**：每个块都是语义完整的单元，检索和生成质量更高。
-
-#### Parent-child Chunking
-
-一种分层存储策略：
-
-1. **子块（Child）**：小块（如 128 tokens），用于高精度检索。
-2. **父块（Parent）**：大块（如 1024 tokens），包含子块的完整上下文。
-
-**流程**：检索时匹配子块，返回时替换为对应的父块，既保证检索精度又保证生成上下文完整。
-
-**适用场景**：技术手册、API 文档、法律条文等需要精确检索但需完整上下文的场景。
-
-#### Sliding Window with Overlap
-
-在 Fixed-size 基础上增加重叠区域：
-
-```
-[Block 1: 0-512] → [Block 2: 410-922] → [Block 3: 820-1332]
-              ↑ 重叠 102 tokens ↑
-```
-
-重叠比例通常为 10-20%，可有效避免关键信息被分块边界切断。
-
-#### M-RAG（2026 新方向）
-
-M-RAG（Memory-RAG 或 Multi-scale RAG）提出**无块检索**策略：
-
-- 不再预先将文档切分为固定块，而是对完整文档或动态窗口进行编码。
-- 检索时动态确定相关区域，避免固定分块破坏上下文完整性。
-- 目前计算成本较高，主要适用于短文档或高精度需求场景。
-
-### 5.3 2026 年实践建议
-
-| 文档类型 | 推荐策略 | 理由 |
-|---------|---------|------|
-| 结构化文档（论文、报告） | Semantic chunking | 保留标题层级和段落完整性 |
-| 技术手册、API 文档 | Parent-child | 精确检索 + 完整上下文 |
-| 对话内容、聊天记录 | Sliding window | 避免对话轮次被切断 |
-| 代码仓库 | 按函数/类分割 | 保留代码结构完整性 |
-| 通用快速原型 | Fixed-size + overlap | 简单、快速、可调整 |
-
----
-
-## 6. GraphRAG 详解
-
-GraphRAG 是 2024 年由 Microsoft 提出的结构化检索范式，代表了 RAG 从"平面向量检索"向"结构化知识检索"的跃迁。
-
-### 6.1 GraphRAG 核心概念
-
-**知识图谱（Knowledge Graph）**：
-- **节点（Node）**：实体（人、组织、地点、概念等）。
-- **边（Edge）**：实体之间的关系。
-- **属性（Property）**：节点和边的附加信息（如时间、来源、置信度）。
-
-**GraphRAG 流程**：
-
-```
-原始文档 → 领域建模 → 实体抽取 → 关系抽取 → 实体链接 → 图索引构建 → 证据检索（图遍历） → 排序压缩 → LLM 生成
-```
-
-### 6.2 GraphRAG 详细流程
-
-#### 步骤 1：领域建模
-
-定义知识图谱的本体（Ontology），包括：
-- 实体类型（如人物、组织、产品、事件）。
-- 关系类型（如"属于"、"创立"、"位于"、"影响"）。
-- 属性 schema。
-
-#### 步骤 2：实体抽取与关系抽取
-
-使用 LLM 或专用 NER 模型从文档中抽取实体和关系：
-
-```json
-{
-  "entities": [
-    {"id": "E1", "name": "OpenAI", "type": "Organization"},
-    {"id": "E2", "name": "GPT-4", "type": "Product"}
-  ],
-  "relations": [
-    {"source": "E1", "target": "E2", "type": "develops", "evidence": "OpenAI developed GPT-4 in 2023."}
-  ]
-}
-```
-
-#### 步骤 3：实体链接（Entity Linking）
-
-将不同文档中指向同一现实实体的提及（Mention）链接到同一节点，消除歧义。
-
-#### 步骤 4：图索引构建
-
-将抽取的知识存储为图数据库（如 Neo4j、Amazon Neptune、Microsoft GraphRAG 的专用索引）。
-
-#### 步骤 5：证据检索
-
-根据查询在图中进行遍历：
-- **单跳查询**：直接查找与查询实体相关的节点。
-- **多跳查询**：使用 BFS/DFS 遍历关系路径，收集推理链上的证据。
-- **社区发现**：识别紧密相关的实体社区，支持全局摘要。
-
-#### 步骤 6：排序压缩与生成
-
-将图遍历得到的证据子图排序、压缩，输入 LLM 生成回答。
-
-### 6.3 GraphRAG 变体
-
-| 变体 | 特点 | 性能数据 |
-|------|------|---------|
-| **Microsoft GraphRAG** | 官方实现，支持全局和局部查询 | 原始工作聚焦全局总结；不保留未对账的4.5% |
-| **LightRAG** | 图结构 + 向量表示双索引 | 法律数据集全面性胜率 83.6% vs NaiveRAG |
-| **StepChain GraphRAG (2025.10)** | 查询分解 + BFS 遍历 | MuSiQue/2WikiMultiHopQA/HotpotQA SOTA |
-| **LazyGraphRAG** | 延迟图遍历，按需触发 | 官方自测索引成本为full GraphRAG的0.1%；查询成本另算 |
-
-### 6.4 GraphRAG 的适用与不适用
-
-**适用场景**：
-- 多跳推理问题（如"A 的创始人创立的 B 公司的 CEO 是谁？"）。
-- 关系密集型查询（如"与 X 竞争的所有公司"）。
-- 全局摘要和趋势分析（如"总结该领域的所有技术路线"）。
-
-**不适用场景**：
-- 简单事实查询（单跳即可回答，GraphRAG 引入额外噪声）。
-- 延迟敏感场景（额外图检索/汇总可能增加延迟，取决于索引、检索模式与缓存；不采用无协议的2.3倍）。
-- 成本敏感场景（图构建和遍历成本高）。
-
----
-
-## 7. Agentic RAG
-
-Agentic RAG 是 RAG 3.0-4.0 的核心方向，将 LLM 从"生成器"升级为"检索-推理-生成的智能体"。
-
-### 7.1 核心思想
-
-传统 RAG 中，LLM 被动接收检索结果。Agentic RAG 中，LLM **主动控制检索流程**：
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                      Agentic RAG Loop                        │
-│  ┌─────────┐    ┌──────────┐    ┌─────────┐    ┌────────┐  │
-│  │ 查询输入 │ → │ 检索决策  │ → │ 执行检索 │ → │结果评估│  │
-│  └─────────┘    └──────────┘    └─────────┘    └────────┘  │
-│                      ↑                            ↓         │
-│                      └──────── 迭代优化 ←─────────┘         │
-│                                                             │
-│  检索决策：是否需要检索？使用什么工具？                       │
-│  执行检索：调用向量搜索/关键词搜索/图遍历/网页搜索              │
-│  结果评估：结果是否充分？是否存在矛盾？是否需要补充？          │
-│  迭代优化：多轮检索直到证据充分或达到最大轮次                  │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### 7.2 关键技术
-
-#### Search-R1 / ReSearch
-
-使用强化学习（PPO/GRPO）训练 LLM 的检索-推理联合策略：
-
-- **动作空间（Action Space）**：生成搜索查询、选择检索工具、终止检索。
-- **奖励函数（Reward）**：最终答案的准确性、检索轮次的效率。
-- **训练目标**：让 LLM 学会在"推理能力"和"检索补充"之间取得最优平衡。
-
-#### OpenAI Deep Research
-
-端到端研究智能体，工作流程：
-
-1. **查询分析**：理解用户研究需求，制定研究计划。
-2. **多轮搜索**：自主进行多轮网页搜索，收集信息。
-3. **信息整合**：将多源信息整合为结构化报告。
-4. **引用生成**：为每个论断提供来源引用。
-
-**性能**：在 Humanity's Last Exam（人类最后考试，一个极具挑战性的学术基准）上达到 **26.6%** 的准确率，显著高于传统 RAG 系统。
-
-#### LazyGraphRAG
-
-解决 GraphRAG 成本高的问题：
-
-- **延迟图遍历**：仅在向量检索结果不充分时触发图遍历。
-- **成本优化**：官方自测**索引成本**为full GraphRAG的0.1%；5,590篇AP新闻、100条合成local/global查询与LLM成对评价，结果不是所有语料的保证[来源](https://www.microsoft.com/en-us/research/blog/lazygraphrag-setting-a-new-standard-for-quality-and-cost/)。
-- **动态策略**：根据查询复杂度自动选择检索深度。
-
-### 7.3 Agentic RAG 的优势
-
-| 优势 | 说明 |
-|------|------|
-| **自适应检索** | 根据查询复杂度动态决定检索深度，简单问题少检索，复杂问题多检索 |
-| **多源融合** | 无缝融合向量数据库、图数据库、网页搜索、企业内部系统等多种数据源 |
-| **错误修正** | 发现检索结果矛盾时，自动触发补充检索或修正推理 |
-| **效率优化** | 避免不必要的检索，降低延迟和成本 |
-| **复杂推理** | 支持需要多步检索-推理的复杂问题 |
-
-### 7.4 Agentic RAG 的挑战
-
-| 挑战 | 说明 |
-|------|------|
-| **延迟增加** | 多轮检索-推理循环显著增加响应时间 |
-| **成本波动** | 检索轮次不确定，导致成本难以预测 |
-| **调试困难** | 智能体的决策过程不透明，错误定位困难 |
-| **过度检索** | 智能体可能陷入"过度检索"循环，不断搜索但无法收敛 |
-| **安全性** | 智能体自主调用外部工具带来安全风险 |
-
----
-
-## 8. 评测与幻觉缓解
-
-### 8.1 RAG 评测体系
-
-RAG 系统的评测应分为**检索评测**和**生成评测**两个独立环节。
-
-#### 检索评测指标
-
-| 指标 | 全称 | 说明 | 适用场景 |
-|------|------|------|---------|
-| **Recall@k** | Recall at k | top-k 结果中包含相关文档的比例 | 评估检索覆盖度 |
-| **MRR** | Mean Reciprocal Rank | 第一个相关文档排名的倒数均值 | 评估排序质量 |
-| **NDCG** | Normalized Discounted Cumulative Gain | 考虑相关度等级的排序质量指标 | 评估精细排序 |
-| **Precision@k** | Precision at k | top-k 结果中相关文档的比例 | 评估精确度 |
-| **Hit Rate** | - | 查询是否至少返回一个相关文档 | 评估可用性 |
-
-#### 生成评测指标
-
-| 指标 | 说明 | 工具支持 |
-|------|------|---------|
-| **Faithfulness** | 生成内容是否与检索文档一致 | RAGAS, TruLens |
-| **Answer Relevance** | 生成内容是否回答用户问题 | RAGAS, TruLens |
-| **Context Precision** | 检索上下文中有用信息的比例 | RAGAS |
-| **Context Recall** | 回答问题所需信息被检索到的比例 | RAGAS |
-| **Citation Precision** | 引用是否准确对应来源 | 自定义评估 |
-| **Citation Recall** | 生成内容是否充分引用来源 | 自定义评估 |
-
-#### 评测工具
-
-| 工具 | 特点 | 适用场景 |
-|------|------|---------|
-| **RAGAS** | 自动化、无需人工标注参考答案 | 快速迭代评估 |
-| **TruLens** | 可解释性强，支持反馈循环 | 生产监控和调试 |
-| **Arize AI** | 企业级，支持 A/B 测试 | 大规模生产环境 |
-| **LangSmith** | 与 LangChain 深度集成 | LangChain 应用评估 |
-
-### 8.2 幻觉缓解技术
-
-幻觉是 LLM 的固有问题，RAG 通过引入外部知识可显著缓解，但仍需专门技术进一步控制。
-
-#### Self-RAG
-
-Self-RAG 是一种训练 LLM 自我反思的框架：
-
-- **检索决策**：模型判断是否需要检索。
-- **生成**：基于检索结果生成回答。
-- **批判（Critique）**：模型自我评估生成内容的准确性、相关性和支持度。
-- **修正**：根据批判结果修正回答。
-
-通过强化学习训练，LLM 学会在生成过程中插入"反思 token"，实现自我纠错。
-
-#### FACTUM（2026）
-
-FACTUM 是一种**机制性引用幻觉检测**方法：
-
-- 分析生成内容中的引用与检索文档的语义对齐度。
-- 检测"看似有引用但实际不支持论断"的情况。
-- 在引用级别进行幻觉判定，而非整段判定。
-
-#### TPA（Token Probability Attribution, 2025.12）
-
-TPA 利用**下一 token 概率归因**检测幻觉：
-
-- 当模型生成某个 token 时，如果该 token 的概率分布与检索文档的语义不一致，则标记为潜在幻觉。
-- 无需额外训练，利用模型自身的概率输出进行检测。
-- 对"编造事实"类幻觉检测效果显著。
-
-#### 引用验证与来源归因
-
-| 技术 | 原理 | 效果 |
-|------|------|------|
-| **精确引用** | 要求模型为每个论断提供段落级引用 | 可验证性提升 |
-| **来源归因** | 明确标注信息来源（文档名、页码、URL） | 可信度提升 |
-| **引用对齐** | 自动验证引用是否支持对应论断 | 需测引用支持率与错误归因；无固定降幅 |
-| **多源交叉验证** | 同一论断需多个独立来源支持 | 准确性提升 |
-
-### 8.3 幻觉缓解综合策略
-
-```
-输入查询 → RAG 检索 → LLM 生成 → 引用提取 → 引用验证（FACTUM/TPA） → 幻觉检测 → 修正/警告 → 最终输出
-```
-
-**2026 年最佳实践**：
-1. 要求模型为所有事实性论断提供引用。
-2. 使用自动化工具（如 FACTUM）验证引用准确性。
-3. 对高风险领域（医疗、法律、金融）实施人工复核。
-4. 建立用户反馈闭环，持续优化检索和生成质量。
-
----
-
-## 9. 代表性系统对比
-
-### 9.1 RAG 框架与平台对比
-
-| 系统/框架 | 类型 | 核心特点 | 检索能力 | 适用场景 | 开源 |
-|----------|------|---------|---------|---------|------|
-| **LangChain** | 开发框架 | 模块化、生态丰富、集成度高 | 插件化，支持多种向量库 | 快速原型、复杂流程 | 是 |
-| **LlamaIndex** | 开发框架 | 数据索引专家、高级检索抽象 | 多种索引类型、自动优化 | 企业级数据应用 | 是 |
-| **Haystack** | 开发框架 | 流水线设计、企业级 | 支持多种检索器 | 搜索应用、问答系统 | 是 |
-| **Microsoft GraphRAG** | 结构化 RAG | 知识图谱、全局/局部查询 | 图遍历 + 向量检索 | 复杂推理、全局分析 | 是 |
-| **LightRAG** | 轻量 GraphRAG | 图+向量双索引、高效 | BFS/DFS + 向量相似度 | 法律、学术、多跳推理 | 是 |
-| **OpenAI Deep Research** | Agentic RAG | 端到端研究智能体 | 多轮网页搜索 | 研究报告、深度分析 | 否 |
-| **LazyGraphRAG** | 成本优化 GraphRAG | 延迟图遍历、低成本 | 按需触发图遍历 | 成本敏感的大规模应用 | 是 |
-| **RAGFlow** | 端到端平台 | 深度文档理解、可视化 | 多种解析和检索策略 | 企业知识库 | 是 |
-| **Dify** | LLM 应用平台 | 低代码、工作流编排 | 内置 RAG 模块 | 快速搭建 LLM 应用 | 是 |
-
-### 9.2 向量数据库对比
-
-| 数据库 | 语言 | 部署方式 | 特点 | 适用场景 |
-|--------|------|---------|------|---------|
-| **Pinecone** | 托管服务 | SaaS | 全托管、自动扩缩容、高可用 | 生产环境、快速启动 |
-| **Weaviate** | Go | 本地/SaaS | 模块化、GraphQL 接口、多模态 | 复杂查询、多模态 |
-| **Qdrant** | Rust | 本地/SaaS | 高性能、过滤查询、稀疏向量 | 高性能过滤检索 |
-| **Milvus/Zilliz** | Go/C++ | 本地/SaaS | 分布式、十亿级规模、GPU 加速 | 超大规模向量检索 |
-| **Elasticsearch** | Java | 本地/SaaS | 文本搜索成熟、生态丰富 | 混合文本+向量检索 |
-| **OpenSearch** | Java | 本地/SaaS | AWS 托管、与 ES 兼容 | AWS 生态 |
-| **Chroma** | Python | 本地/嵌入式 | 轻量、易用、开发友好 | 原型开发、小数据 |
-| **FAISS** | C++/Python | 本地 | Meta 出品、高性能 ANN | 研究、自定义索引 |
-| **Coltt (2026)** | Go | 本地 | Go 生态新兴向量库 | Go 后端服务 |
-| **GibRAM (2026)** | Go | 本地 | Go 生态新兴向量库 | Go 后端服务 |
-| **OasisDB (2026)** | Go | 本地 | Go 生态新兴向量库 | Go 后端服务 |
-
-### 9.3 Embedding 模型对比
-
-| 模型 | 维度 | 上下文 | 多语言 | 稀疏向量 | 最佳场景 |
-|------|------|--------|--------|---------|---------|
-| OpenAI text-embedding-3-large | 3072 | 8192 | 是 | 否 | 通用高质量需求 |
-| OpenAI text-embedding-3-small | 1536 | 8192 | 是 | 否 | 成本敏感场景 |
-| Cohere embed-v4 | 1024 | 512 | 是 | 否 | 分类和聚类 |
-| BGE-M3 | 1024 | 8192 | 是 | 是 | 多表示统一检索 |
-| E5-mistral-7b-instruct | 4096 | 32768 | 是 | 否 | 长文档、指令感知 |
-| Jina Embeddings v3 | 1024 | 8192 | 是（30+） | 否 | 多语言通用 |
-| voyage-3-large | 1024 | 32000 | 是 | 否 | 长上下文、高质量 |
-
----
-
-## 10. 挑战与未来方向
-
-### 10.1 当前挑战
-
-| 挑战 | 描述 | 严重程度 |
-|------|------|---------|
-| **检索天花板** | 向量相似度存在语义鸿沟，无法完美匹配用户意图 | 高 |
-| **上下文窗口限制** | 即使长上下文模型也有上限，海量检索结果无法全部输入 | 中 |
-| **多模态检索** | 图像、视频、音频的检索和融合仍处于早期 | 高 |
-| **延迟与成本** | 高质量 RAG（Hybrid + Re-ranking + Graph）延迟和成本高 | 中 |
-| **评估困难** | 缺乏统一的端到端评估基准，RAGAS 等指标有局限 | 中 |
-| **安全与隐私** | 检索可能暴露敏感信息，Agentic RAG 的工具调用存在风险 | 高 |
-| **可解释性** | 复杂 RAG 系统的决策过程难以解释和调试 | 中 |
-| **动态知识更新** | 知识库实时更新与索引一致性维护困难 | 中 |
-
-### 10.2 未来方向
-
-#### 方向 1：认知检索系统（Cognitive Retrieval）
-
-2026 年的 RAG 4.0 正在向认知检索系统演进，特征包括：
-
-- **记忆机制**：长期记忆（持久知识库）+ 工作记忆（当前会话上下文）+ 情景记忆（历史交互）。
-- **主动学习**：系统根据用户反馈自动优化检索策略和知识库。
-- **推理-检索融合**：检索和推理不再是分离步骤，而是交织进行的认知过程。
-
-#### 方向 2：多模态 RAG（Multimodal RAG）
-
-- **视觉 RAG**：ColPali 等模型实现文档图像的直接检索，无需 OCR。
-- **视频 RAG**：对视频内容进行时序检索和摘要。
-- **音频 RAG**：语音、音乐、环境音的检索和生成。
-- **统一多模态嵌入**：单一模型处理文本、图像、视频、音频的统一表示和检索。
-
-#### 方向 3：实时 RAG（Real-time RAG）
-
-- **流式索引**：文档变更实时同步到索引，秒级延迟。
-- **事件驱动检索**：结合流处理（Kafka, Flink）实现事件触发的动态检索。
-- **增量学习**：模型根据最新检索结果持续更新知识。
-
-#### 方向 4：联邦 RAG（Federated RAG）
-
-- **跨组织检索**：在保护隐私的前提下，实现跨企业的联合知识检索。
-- **数据不出域**：检索请求分发到各组织的本地知识库，结果聚合后返回。
-- **差分隐私**：在检索和生成过程中注入隐私保护机制。
-
-#### 方向 5：神经符号 RAG（Neuro-Symbolic RAG）
-
-- **符号推理 + 神经检索**：利用知识图谱的符号推理能力弥补神经网络的不足。
-- **可验证生成**：生成结果可通过符号逻辑验证，确保一致性。
-- **规则注入**：将业务规则硬编码到检索和生成流程中。
-
-### 10.3 2026 年生产系统最佳实践
-
-基于当前技术成熟度，2026 年生产级 RAG 系统的推荐架构：
-
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                     生产级 RAG 推荐架构（2026）                       │
-├─────────────────────────────────────────────────────────────────────┤
-│  查询层：Query Rewrite（LLM 改写）+ HyDE（假设文档嵌入）              │
-├─────────────────────────────────────────────────────────────────────┤
-│  检索层：Hybrid Retrieval（BM25 + Dense Vectors）+ RRF 融合          │
-│          ↓                                                          │
-│          Cross-Encoder Re-ranking（初筛 50 → 精排 top 5）            │
-├─────────────────────────────────────────────────────────────────────┤
-│  知识层：Vector DB（主索引）+ Graph DB（复杂推理时触发）              │
-│          + 实时索引更新机制                                          │
-├─────────────────────────────────────────────────────────────────────┤
-│  生成层：LLM 生成 + 引用提取 + 引用验证（FACTUM/TPA）                 │
-│          + 幻觉检测 + 来源归因                                       │
-├─────────────────────────────────────────────────────────────────────┤
-│  监控层：RAGAS/TruLens 持续评估 + 用户反馈闭环 + A/B 测试             │
-└─────────────────────────────────────────────────────────────────────┘
-```
-
-**关键原则**：
-1. **不要假设向量搜索单独解决准确率问题**——必须配合 Hybrid Search 和 Re-ranking。
-2. **检索和生成必须分开评估**——高检索分数不等于高生成质量。
-3. **分块策略必须匹配文档类型**——没有通用最佳策略。
-4. **引用验证是生产必需**——未经验证的生成内容不可用于高风险场景。
-5. **成本-效果平衡**——根据查询复杂度动态选择检索深度（LazyGraphRAG 思想）。
-
----
-
-## 11. 参考链接
-
-### 学术论文
-
-1. Lewis, P., et al. (2020). "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks." *NeurIPS 2020*. https://arxiv.org/abs/2005.11401
-2. Karpukhin, V., et al. (2020). "Dense Passage Retrieval for Open-Domain Question Answering." *EMNLP 2020*. https://arxiv.org/abs/2004.04906
-3. Izacard, G., et al. (2022). "Few-shot Learning with Retrieval Augmented Language Models." https://arxiv.org/abs/2208.03299
-4. Asai, A., et al. (2023). "Retrieval-Augmented Multilingual Knowledge Editing." https://arxiv.org/abs/2301.05080
-5. Yu, S., et al. (2024). "Corrective Retrieval Augmented Generation." https://arxiv.org/abs/2401.15884
-6. Edge, D., et al. (2024). "From Local to Global: A Graph RAG Approach to Query-Focused Summarization." *Microsoft Research*. https://arxiv.org/abs/2404.16130
-7. Asai, A., et al. (2024). "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection." https://arxiv.org/abs/2310.11511
-8. Jin, B., et al. (2025). "Search-R1: Training LLMs to Reason and Leverage Search Engines with Reinforcement Learning." https://arxiv.org/abs/2503.09516v5（本轮核题录/摘要，未以其数字补全实验）
-9. Chen, J., et al. (2025). "ReSearch: Learning to Reason with Search for LLMs via Reinforcement Learning." https://arxiv.org/abs/2503.19470v3（本轮核题录/摘要）
-10. OpenAI. (2025). "Deep Research System Card." https://openai.com/index/deep-research-system-card/
-11. FACTUM Team. (2026). "Mechanistic Citation Hallucination Detection in RAG Systems." *ICLR 2026*.
-12. TPA Team. (2025). "Token Probability Attribution for Hallucination Detection in LLMs." *NeurIPS 2025*.
-13. GraphRAG-Bench Team. (2026). "GraphRAG-Bench: A Comprehensive Benchmark for Graph Retrieval-Augmented Generation." *ICLR 2026*.
-14. LightRAG Team. (2024). "LightRAG: Simple and Fast Retrieval-Augmented Generation." https://github.com/HKUDS/LightRAG
-15. StepChain Team. (2025). "StepChain GraphRAG: Query Decomposition and BFS Traversal for Multi-hop Reasoning." https://arxiv.org/abs/2510.xxxxx
-16. M-RAG Team. (2026). "M-RAG: Chunk-free Retrieval for Contextual Integrity." https://arxiv.org/abs/2601.xxxxx
-
-### 技术博客与文档
-
-17. Anthropic. (2024). "Contextual Retrieval: Reducing Retrieval Failures by 67%." https://www.anthropic.com/news/contextual-retrieval
-18. LangChain Documentation. https://python.langchain.com/
-19. LlamaIndex Documentation. https://docs.llamaindex.ai/
-20. Pinecone Blog: "Hybrid Search." https://www.pinecone.io/learn/hybrid-search/
-21. Cohere Blog: "Embed v4 and Rerank." https://cohere.com/blog/
-22. Weaviate Blog: "Vector Database Guide." https://weaviate.io/blog/
-23. Qdrant Documentation. https://qdrant.tech/documentation/
-24. Milvus Documentation. https://milvus.io/docs/
-25. RAGAS Documentation. https://docs.ragas.io/
-26. TruLens Documentation. https://www.trulens.org/
-27. Anyscale. (2026). "State of LLM Applications Survey." https://www.anyscale.com/blog/
-28. Microsoft Research Blog: "GraphRAG." https://www.microsoft.com/en-us/research/blog/
-
-### 开源项目
-
-29. LangChain: https://github.com/langchain-ai/langchain
-30. LlamaIndex: https://github.com/run-llama/llama_index
-31. Microsoft GraphRAG: https://github.com/microsoft/graphrag
-32. LightRAG: https://github.com/HKUDS/LightRAG
-33. RAGFlow: https://github.com/infiniflow/ragflow
-34. Dify: https://github.com/langgenius/dify
-35. Haystack: https://github.com/deepset-ai/haystack
-36. FAISS: https://github.com/facebookresearch/faiss
-37. Chroma: https://github.com/chroma-core/chroma
-38. BGE-M3: https://github.com/FlagOpen/FlagEmbedding
-39. ColPali: https://github.com/illuin-tech/colpali
-40. Self-RAG: https://github.com/AkariAsai/self-rag
-41. LazyGraphRAG: https://github.com/microsoft/lazygraphrag
-42. DeepResearcher (Open Source): https://github.com/xxx/deep-researcher
-
-### 行业报告
-
-43. Gartner. (2025). "Hype Cycle for Artificial Intelligence."
-44. McKinsey. (2025). "The State of AI in 2025: RAG Adoption in Enterprises."
-45. Stanford HAI. (2026). "AI Index Report 2026." https://aiindex.stanford.edu/
-
----
-
-> **免责声明**：本报告基于公开学术文献、技术博客和行业调查整理，仅供研究参考。技术发展迅速，部分信息可能随时间变化。引用数据请以原始出处为准。
-
-> **报告版本**：v1.0  
-> **最后更新**：2026年6月6日  
-> **字数统计**：约 15,000 字（中文）
-
----
-
-*本报告由 LLM-research 项目自动生成，作为 RAG 技术领域的系统性参考资料。*
+1. [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/html/2005.11401) §2：理解文档作为潜变量，以及 RAG-Sequence/Token 的差异。
+2. [Dense Passage Retrieval](https://arxiv.org/html/2004.04906) §3–5：理解双编码器为何便于大规模预索引、训练负例怎样定义相关性。
+3. [Self-RAG](https://arxiv.org/html/2310.11511) §3：从固定检索转向可学习的按需检索与反思。
+4. [CRAG](https://arxiv.org/html/2401.15884) §4–5：跟踪检索错误如何触发纠正和证据细化。
+5. [GraphRAG](https://arxiv.org/html/2404.16130) §3–4 与 [RAPTOR](https://arxiv.org/html/2401.18059) §3–4：比较社区关系结构与递归摘要树。
+6. [ARES](https://arxiv.org/html/2311.09476) §3–5：理解自动裁判、合成评估数据与置信区间。
+
+### 主要原文
+
+- [RAG](https://arxiv.org/html/2005.11401)：RAG-Sequence/Token、端到端联合优化及原始知识密集任务。
+- [DPR](https://arxiv.org/html/2004.04906)：双编码器检索、正负段落与近似最近邻索引。
+- [Self-RAG](https://arxiv.org/html/2310.11511)、[CRAG](https://arxiv.org/html/2401.15884)：按需检索、证据批评和检索纠正。
+- [GraphRAG](https://arxiv.org/html/2404.16130)、[RAPTOR](https://arxiv.org/html/2401.18059)：全局社区摘要与层级文本检索。
+- [Search-R1](https://arxiv.org/html/2503.09516)：强化学习中的多轮搜索动作与训练接口。
+- [RAGAS](https://arxiv.org/html/2309.15217)、[ARES](https://arxiv.org/html/2311.09476)：无参考评估代理与 LLM judge 校准。

@@ -127,8 +127,6 @@ AI for Science 还要求把**候选优化**与**科学解释验证**分开：代
 - 交互任务应采用何种重复次数与抽样单位；如何同时报告 `pass^k`/`pass@k`、任务态、政策约束和随机用户模拟器带来的变化；基准 checker 修订前后怎样保持可比。[S12–S15]
 - 更广泛跨学科框架如何纳入基准策展者、受影响群体和决策后果；现有测量效度框架本身没有穷尽这些社会维度。[S1 §6.3]
 
-## 7. 阅读与核验边界
+## 7. 阅读与证据边界
 
-本报告精读 13 篇主线论文（S1–S7、S9–S14），其中 S3 是污染分类补充；S8 的 VLA 仿真—真机机制从本库既有精读分册交叉引用，S15 是 OSWorld-Verified 项目组维护者公告，不是同行评审论文。原文结果未独立复跑。S12 使用 PaperFetcher 下载到仓库外的固定 PDF；S13 由 PaperFetcher 核对元数据后依据 arXiv v2 HTML 阅读；S14 使用 arXiv v4 HTML；S15 于 2026-10-23 核验项目组公告。三个新增论文均未在 `.paper-cache` 找到匹配缓存，未把 PaperFetcher 摘要当作全文证据。本轮没有将 PDF 或上游代码放入仓库。每项主张的版本、章节/表图及证据等级见 [sources/MANIFEST.md](sources/MANIFEST.md)，未入选文献及取舍见 [sources/CANDIDATES.md](sources/CANDIDATES.md)。canonical `claim_audit.py` 的最新计数见本轮验证记录；它只扫描 Markdown 行附近的本地路径，不解析论文锚点，也不判断论据是否支持主张。事实支撑范围仍以 MANIFEST 中列出的原文定位和人工核查为准。
-
-**技能使用证据**：按仓库 `docs/team.md` 实际读取本机 researcher 与 paper-fetcher SKILL.md。本批按 researcher 的候选筛选、原文核验和 reader-first 综合方式，使用 paper-fetcher 核验 τ-bench/OSWorld 元数据并下载 τ-bench PDF 至 `/tmp`；WebArena 和 OSWorld 原文以固定版本官方 HTML 阅读。OSWorld-Verified 作为项目组公告另行标注。本批无 benchmark 执行、模型调用、API 支出或共享 paper-cache 写入；未使用搜索摘要替代原文。版本、阅读定位和工具边界见 [sources/MANIFEST.md](sources/MANIFEST.md)。
+主线论证依据同行评审论文与固定版本预印本，具体版本和章节/表图定位见[来源清单](sources/MANIFEST.md)；其中 OSWorld-Verified 维护者公告属于项目组发布信息，不是同行评审研究。文中数字均为相应作者或项目方报告，本专题没有独立运行 benchmark 或复现论文实验。跨领域结论是依据各自任务、度量和协议形成的综合判断，不能替代同条件横向实验。

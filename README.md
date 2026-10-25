@@ -47,7 +47,7 @@
 <td width="33%" valign="top">
 <h3>02 · <a href="LLM/README.md">LLM</a></h3>
 <p><strong>语言模型方法</strong><br><sub>12 篇主报告 · 语言模型能力、训练数据与技术专题</sub></p>
-<p><a href="LLM/ReasoningModels/report.md">推理模型与推理时计算</a> · <a href="LLM/LongContext/report.md">长上下文</a> · <a href="LLM/MoE/report.md">混合专家模型（MoE）</a> · <a href="LLM/TrainingData/report.md">训练数据策展</a></p>
+<p><a href="LLM/ReasoningModels/report.md">推理模型与测试时计算</a> · <a href="LLM/LongContext/report.md">长上下文</a> · <a href="LLM/MoE/report.md">混合专家模型（MoE）</a> · <a href="LLM/TrainingData/report.md">训练数据策展</a></p>
 <p><a href="LLM/README.md"><strong>浏览板块 →</strong></a></p>
 </td>
 <td width="33%" valign="top">
@@ -107,10 +107,10 @@
 <!-- SCRIPT:highlights START -->
 | 阅读入口 | 报告内容 |
 | :-- | :-- |
-| **[GPT](<Models/GPT/report.md>)**<br><sub>Models</sub> | OpenAI GPT 系列模型深度调研报告 |
-| **[推理模型与推理时计算](<LLM/ReasoningModels/report.md>)**<br><sub>LLM</sub> | 推理模型（Reasoning Models）与 Test-Time Compute 研究报告 |
+| **[GPT](<Models/GPT/report.md>)**<br><sub>Models</sub> | GPT：从生成式预训练到推理与多模态系统 |
+| **[推理模型与测试时计算](<LLM/ReasoningModels/report.md>)**<br><sub>LLM</sub> | 推理模型：测试时计算怎样变成更可靠的解题 |
 | **[智能体系统](<Agents/AgentSystems/report.md>)**<br><sub>Agents</sub> | Agent 系统：让模型在环境中持续完成任务 |
-| **[视频生成](<AIGC/VideoGen/report.md>)**<br><sub>AIGC</sub> | 视频生成技术研究报告 |
+| **[视频生成](<AIGC/VideoGen/report.md>)**<br><sub>AIGC</sub> | 视频生成：从图像先验到时空建模 |
 | **[世界模型](<WorldModel/WorldModels/report.md>)**<br><sub>WorldModel</sub> | WorldModels 技术专题调研 |
 | **[蛋白质与肽结合体设计](<AI4Science/ProteinDesign/report.md>)**<br><sub>AI4Science</sub> | 蛋白质 binder 发现：从复合物生成到候选筛选 |
 | **[评测科学](<Evaluation/EvaluationScience/report.md>)**<br><sub>Evaluation</sub> | 评测科学：分数何时支持“模型更好”或“能力泛化” |
@@ -137,7 +137,7 @@
 <!-- SCRIPT:topics START · 从条目目录生成 -->
 | 方向 | 专题入口 |
 | :-- | :-- |
-| **LLM** | [模型对齐与后训练](<LLM/Alignment/report.md>) · [决策模型（Decision Models）](<LLM/DecisionModels/report.md>) · [扩散语言模型](<LLM/DiffusionLM/report.md>) · [OCR 与文档解析](<LLM/DocumentParsing/report.md>) · [长上下文](<LLM/LongContext/report.md>) · [混合专家模型（MoE）](<LLM/MoE/report.md>) · [大模型辅助运筹建模与求解](<LLM/OperationsResearch/report.md>) · [检索增强生成（RAG）](<LLM/RAG/report.md>) · [推理模型与推理时计算](<LLM/ReasoningModels/report.md>) · [LLM 后训练中的强化学习](<LLM/ReinforcementLearning/report.md>) · [训练数据策展](<LLM/TrainingData/report.md>) · [视觉语言模型（VLM）](<LLM/VLM/report.md>) |
+| **LLM** | [模型对齐与后训练](<LLM/Alignment/report.md>) · [决策模型（Decision Models）](<LLM/DecisionModels/report.md>) · [扩散语言模型](<LLM/DiffusionLM/report.md>) · [OCR 与文档解析](<LLM/DocumentParsing/report.md>) · [长上下文](<LLM/LongContext/report.md>) · [混合专家模型（MoE）](<LLM/MoE/report.md>) · [大模型辅助运筹建模与求解](<LLM/OperationsResearch/report.md>) · [检索增强生成（RAG）](<LLM/RAG/report.md>) · [推理模型与测试时计算](<LLM/ReasoningModels/report.md>) · [LLM 后训练中的强化学习](<LLM/ReinforcementLearning/report.md>) · [训练数据策展](<LLM/TrainingData/report.md>) · [视觉语言模型（VLM）](<LLM/VLM/report.md>) |
 | **Agents** | [智能体系统](<Agents/AgentSystems/report.md>) · [电脑使用 Agent](<Agents/ComputerUse/report.md>) · [工具 Agent 安全](<Agents/AgentSecurity/report.md>) |
 | **AIGC** | [3D 生成](<AIGC/3DGen/report.md>) · [音频与音乐生成](<AIGC/AudioGen/report.md>) · [数字人与 Avatar](<AIGC/AvatarGen/report.md>) · [可控生成](<AIGC/ControllableGen/report.md>) · [扩散 Transformer（DiT）](<AIGC/DiT/report.md>) · [扩散模型](<AIGC/DiffusionModels/report.md>) · [图像编辑与修复](<AIGC/ImageEditing/report.md>) · [图像生成](<AIGC/ImageGeneration/report.md>) · [视频生成](<AIGC/VideoGen/report.md>) |
 | **WorldModel** | [具身预测规划](<WorldModel/EmbodiedPlanning/report.md>) · [机器人视觉语言动作模型（VLA）](<WorldModel/EmbodiedVLA/report.md>) · [世界模型](<WorldModel/WorldModels/report.md>) |
@@ -172,7 +172,7 @@
 ResearchReport/    74 条目 · 45 研究专题 · 9 板块
 │
 ├─ 🧠 Models/        23 条 · 厂商模型 / 系列逐个精读（GPT · Qwen · Gemini …）
-├─ 💬 LLM/           12 条 · 语言模型能力、训练数据与技术专题（推理模型与推理时计算 · 长上下文 · 混合专家模型（MoE） …）
+├─ 💬 LLM/           12 条 · 语言模型能力、训练数据与技术专题（推理模型与测试时计算 · 长上下文 · 混合专家模型（MoE） …）
 ├─ 🤖 Agents/         3 条 · Agent 系统围绕决策闭环展开，覆盖记忆、工具、长程执行、电脑使用与安全（智能体系统 · 电脑使用 Agent · 工具 Agent 安全 …）
 ├─ 🎨 AIGC/           9 条 · 图像、视频、音频、3D、数字人生成及相关架构与编辑方法（视频生成 · 扩散 Transformer（DiT） · 扩散模型 …）
 ├─ 🌍 WorldModel/     3 条 · 世界模型与具身 VLA（世界模型 · 机器人视觉语言动作模型（VLA） · 具身预测规划 …）

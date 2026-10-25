@@ -25,12 +25,12 @@
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
-| **DeepInfer** | [DeepInfer：离线推理内核、异步调度与状态契约](<DeepInfer/report.md>) | 140 行 |
-| **DeepSeek Harness** | [DeepSeek Harness（DSH）仓库深读](<DeepSeekHarness/report.md>) | 352 行 |
+| **DeepInfer** | [DeepInfer：离线推理内核、异步调度与状态契约](<DeepInfer/report.md>) | 138 行 |
+| **DeepSeek Harness** | [DeepSeek Harness（DSH）仓库深读](<DeepSeekHarness/report.md>) | 349 行 |
 | **Nemotron-Labs-Diffusion** | [Nemotron-Labs-Diffusion 阅读报告](<nemotron/report.md>) | 221 行 |
-| **SGLang** | [SGLang 仓库代码分析报告](<sglang/report.md>) | 317 行 |
-| **this-that-model** | [this-that-model 仓库深读](<this-that-model/report.md>) | 248 行 |
-| **vLLM** | [vLLM 仓库代码分析报告](<vllm/report.md>) | 300 行 |
+| **SGLang** | [SGLang 仓库代码分析报告](<sglang/report.md>) | 311 行 |
+| **this-that-model** | [this-that-model 仓库深读](<this-that-model/report.md>) | 190 行 |
+| **vLLM** | [vLLM 仓库代码分析报告](<vllm/report.md>) | 294 行 |
 
 ## 📎 子文档
 

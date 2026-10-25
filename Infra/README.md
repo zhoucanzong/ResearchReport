@@ -29,10 +29,10 @@
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
 | **KV Cache 与预填充／解码分离** | [KV Cache 服务与 Prefill/Decode 分离：什么时候复用，什么时候传输](<KVCachePD/report.md>) | 84 行 |
-| **MoE 执行与专家通信** | [MoE 执行：token 如何抵达专家，又如何回到原序](<MoEExecution/report.md>) | 25 行 |
+| **MoE 执行与专家通信** | [MoE 执行：从专家路由到跨设备回收](<MoEExecution/report.md>) | 69 行 |
 | **模型量化与边缘部署** | [模型量化与边缘部署研究报告](<QuantizationEdge/report.md>) | 188 行 |
 | **在线推理服务与评测** | [在线 LLM Serving：SLO、Goodput 与请求完整性](<ServingEvaluation/report.md>) | 81 行 |
-| **投机解码** | [投机解码（Speculative Decoding）技术专题 · 深度调研](<SpeculativeDecoding/report.md>) | 560 行 |
+| **投机解码** | [投机解码（Speculative Decoding）技术专题 · 深度调研](<SpeculativeDecoding/report.md>) | 536 行 |
 | **分布式训练基础设施** | [大模型训练基础设施与分布式训练研究报告](<TrainingInfra/report.md>) | 181 行 |
 
 ## 📎 子文档

@@ -16,24 +16,24 @@
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
 | **阿里通义生成模型** | [阿里巴巴通义万相（Wan）视频生成模型研究报告](<Alibaba-Gen/report.md>) | 118 行 |
-| **字节跳动生成模型** | [字节跳动生成模型系列研究报告](<ByteDance-Gen/report.md>) | 348 行 |
-| **Claude** | [Anthropic Claude 系列模型深度调研报告](<Claude/report.md>) | 605 行 |
+| **字节跳动生成模型** | [ByteDance Seed 生成模型：从双语图像生成到多模态视听创作](<ByteDance-Gen/report.md>) | 192 行 |
+| **Claude** | [Anthropic Claude 系列模型深度调研报告](<Claude/report.md>) | 570 行 |
 | **DeepSeek** | [DeepSeek 系列模型深度调研报告](<DeepSeek/report.md>) | 777 行 |
-| **Doubao-Seed** | [Doubao/Seed系列模型深度调研报告](<Doubao-Seed/report.md>) | 652 行 |
-| **GLM** | [GLM 系列模型深度调研报告](<GLM/report.md>) | 738 行 |
-| **GPT** | [OpenAI GPT 系列模型深度调研报告](<GPT/report.md>) | 786 行 |
+| **Doubao-Seed** | [Doubao/Seed系列模型深度调研报告](<Doubao-Seed/report.md>) | 497 行 |
+| **GLM** | [GLM：预训练目标、推理后训练与多模态分支](<GLM/report.md>) | 171 行 |
+| **GPT** | [GPT：从生成式预训练到推理与多模态系统](<GPT/report.md>) | 204 行 |
 | **Gemini** | [Google Gemini系列模型深度调研报告](<Gemini/report.md>) | 843 行 |
 | **Google 生成模型** | [Google / DeepMind 生成模型系列研究报告](<Google-Gen/report.md>) | 896 行 |
-| **Grok** | [xAI Grok 系列模型深度调研报告](<Grok/report.md>) | 266 行 |
-| **Hunyuan** | [Hunyuan系列模型深度调研报告](<Hunyuan/report.md>) | 505 行 |
+| **Grok** | [xAI Grok 系列模型深度调研报告](<Grok/report.md>) | 164 行 |
+| **Hunyuan** | [Hunyuan系列模型深度调研报告](<Hunyuan/report.md>) | 466 行 |
 | **Kimi** | [Kimi 系列模型深度调研报告](<Kimi/report.md>) | 586 行 |
 | **Kling** | [快手 Kling 视频生成研究报告](<Kling/report.md>) | 76 行 |
 | **LLaMA** | [Meta LLaMA 系列大模型完整研究报告](<LLaMA/report.md>) | 484 行 |
 | **MiMo** | [小米 MiMo 系列模型深度调研报告](<MiMo/report.md>) | 758 行 |
 | **Midjourney** | [Midjourney 模型与产品演进研究报告](<Midjourney/report.md>) | 86 行 |
 | **MiniMax** | [MiniMax 系列模型研究报告：以 Lightning Attention 重写 Transformer 的扩展曲线](<MiniMax/report.md>) | 525 行 |
-| **Mistral** | [Mistral AI 系列模型深度调研报告](<Mistral/report.md>) | 503 行 |
-| **Nemotron** | [NVIDIA Nemotron 系列研究脉络](<Nemotron/report.md>) | 239 行 |
+| **Mistral** | [Mistral：高效稠密模型、稀疏专家与任务专门化](<Mistral/report.md>) | 162 行 |
+| **Nemotron** | [NVIDIA Nemotron 系列研究脉络](<Nemotron/report.md>) | 236 行 |
 | **OpenAI 生成模型** | [OpenAI 生成模型系列研究报告](<OpenAI-Gen/report.md>) | 394 行 |
 | **Qwen** | [Qwen系列模型深度调研报告](<Qwen/report.md>) | 1,121 行 |
 | **Runway** | [Runway 视频生成与编辑模型研究报告](<Runway/report.md>) | 104 行 |

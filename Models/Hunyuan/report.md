@@ -17,9 +17,9 @@ display_name: Hunyuan
 - [5. 3D生成模型：Hunyuan3D 与 HunyuanWorld](#5-3d生成模型hunyuan3d-与-hunyuanworld)
 - [6. 多模态理解：Hunyuan-VL / Hunyuan-Vision-1.5 / HunyuanOCR](#6-多模态理解hunyuan-vl--hunyuan-vision-15--hunyuanocr)
 - [7. 音频、语音与机器翻译](#7-音频语音与机器翻译)
-- [8. 跨方向技术演进分析](#8-跨方向技术演进分析)
+- [8. 跨方向综合：容量、序列状态与生成表示是不同设计轴](#8-跨方向综合容量序列状态与生成表示是不同设计轴)
 - [9. 技术阅读要点](#9-技术阅读要点)
-- [10. 研究范围与有限比较](#10-研究范围与有限比较)
+- [10. 比较边界](#10-比较边界)
 - [11. 参考文献](#11-参考文献)
 
 ---
@@ -123,12 +123,12 @@ Hunyuan 总平台
 
 腾讯于 2025-06-26 开放 Hunyuan-A13B-Pretrain、Instruct、Instruct-FP8 和 Instruct-GPTQ-Int4 权重，并发布技术报告与训练、推理说明。这里的版本范围是官方仓库在该发布中介绍的 Hunyuan-A13B；基准结果仅代表报告所列模型版本和实验设置。
 
-- **参数口径**：技术报告将模型定义为 **80B 总参数、每个输入激活 13B 参数**。报告 §2.2（PDF 第 2 页）说明每层含 1 个始终激活的共享专家和 64 个细粒度非共享专家，其中每次同时激活 8 个非共享专家；表 1 列出 32 层、32 个 attention heads、8 个 KV heads。报告没有给出“含共享专家时为 26.5B 激活”的第二套口径，故删除此前依据社区分析的推算。
+- **参数口径**：技术报告给出 **80B 总参数、每个输入激活 13B 参数**。报告 §2.2（PDF 第 2 页）说明每层含 1 个始终激活的共享专家和 64 个细粒度非共享专家，其中每次同时激活 8 个非共享专家；表 1 列出 32 层、32 个 attention heads、8 个 KV heads。公开报告没有提供“含共享专家时为 26.5B 激活”的另一口径，因此不能据社区推算替代作者给出的数字。
 - **训练与上下文**：论文描述训练长度逐步扩至 256K。模型卡也宣称支持 256K，但默认配置是 32K；启用完整窗口要改配置，厂商给出的 BF16 部署建议为 4 张 H20 96GB。训练目标、默认设置和部署条件不能混为一谈，这些资料也不证明所有任务在 256K 下都保持稳定效果。
-- **部署边界**：13B 是每个输入的激活参数口径，不等同于 80B 权重占用或整机显存需求。不同官方部署说明给出的硬件条件不同，长上下文部署尤其依赖配置和显存；具体来源版本与条件见来源清单。
+- **部署边界**：13B 是每个输入的激活参数口径，不等同于 80B 权重占用或整机显存需求。不同官方部署说明给出的硬件条件不同，长上下文部署尤其依赖配置和显存；对应版本与部署材料见来源清单。
 - **当前可确认的架构**：fine-grained MoE、GQA、RoPE，以及快/慢思考两种模式见技术报告。该报告和模型卡未证明 A13B 是 Hunyuan-Large 的同一架构来源，也未证明它被 TurboS/T1 作为 backbone；这两项关系不在本节作事实陈述。
 
-**版本与日期**：权重及官方仓库技术报告于 2025-06-26 发布；arXiv v1 到 2026-09-23 才提交，PDF 首页标注 2025-06-27。发布日期和论文收录日分别记录；精确权重、仓库 revision 与核查范围见来源清单。
+**版本与日期**：权重及官方仓库技术报告于 2025-06-26 发布；arXiv v1 到 2026-09-23 才提交，PDF 首页标注 2025-06-27。发布日期和论文收录日分别列出；权重与仓库 revision 见来源清单。
 
 ### 2.4 Hunyuan-TurboS：Mamba-Transformer Synergy + 自适应 CoT
 
@@ -138,56 +138,20 @@ Hunyuan 总平台
   - 长序列亚二次复杂度下的低成本高吞吐（Mamba 优势）；
   - 强语义建模与精细推理（Transformer 优势）。
 - **自适应 CoT（Adaptive Chain-of-Thought）**：根据 prompt 难度动态决定是否进入"慢思考"模式，简单问题快速直答，复杂问题自动展开多步推理；通过 Hunyuan-T1 监督信号生成自适应思考的训练数据。
-- **效果（作者报告）**：论文列出 MATH=81.4 等结果。由于本报告未固定相关评测实现、提示集及对照检查点，暂不据此声称与 Qwen3 同档，也不推导平均推理成本优势。
+- **效果（作者报告）**：论文列出 MATH=81.4 等结果，但缺少与 Qwen3 对照所需的完整评测实现、提示集和检查点信息；这些数字不能单独支持同档结论，也不能推出平均推理成本优势。
 
 ### 2.5 Hunyuan-T1：Mamba-Transformer 混合推理模型
 
 > 官方页：tencent.github.io/llm.hunyuan.T1。
 > 发布时间：2025-03-21
 
-- **架构**：**Hybrid-Transformer-Mamba MoE**；官方材料将其定位为深度推理模型。
-- **能力**：结合长文本理解与强化学习驱动的链式推理。与其他推理模型的能力排序不在本节下结论。
-- **关系**：T1 在 TurboS 之上提供"思考型"推理；TurboS 反向用 T1 的推理输出做自适应 CoT 蒸馏。
+- **公开定位**：Hybrid-Transformer-Mamba MoE 的推理模型，强调长上下文和强化学习驱动的思考模式。
+- **关系边界**：TurboS 技术报告包含 Adaptive CoT 和其训练数据/推理配置；T1 的官方页面披露较少。现有来源不能确认二者共享 checkpoint、前后级蒸馏关系或相同的 RL 配方，因此本报告将它们视作相关但独立公开的路线。
 
-### 2.6 混元 2.0（2025-12-08）
+- **混元 2.0 / HY 2.0 Think、Instruct**：官方材料说明推理/指令模型系列及部分接口；目前公开技术披露未达到 Hunyuan-Large、A13B 或 TurboS 报告的细节程度，不从发布时间或产品描述补推架构、训练链路或基准胜负。
+- **Hunyuan-T1-Vision / Hunyuan-Voice**：可确认的材料主要描述视觉推理与语音交互能力；在没有独立技术报告时，不据“继承 T1”推断其和 T1 共享同一视觉/语音 backbone。
 
-- **定位**：面向推理任务的基座模型系列。
-- **能力边界**：不同模型、基准和推理配置未在本报告中完成同条件横评，因此不对国内排名作判断。
-- **后续**：为2026年HY 2.0系列奠定基础
-
-### 2.7 HY 2.0 Think / Instruct（2026-04-27）
-
-**HY 2.0 Think**：
-- **定位**：深度推理旗舰
-- **上下文窗口**：128K
-- **能力**：继承并超越T1的深度推理能力，在数学、代码、逻辑推理等基准上达到新高度
-
-**HY 2.0 Instruct**：
-- **定位**：指令遵循旗舰
-- **能力**：在复杂指令遵循、长文本理解、多轮对话等场景优化
-
-### 2.8 Hunyuan-T1-Vision / Voice（2025-05）
-
-**Hunyuan-T1-Vision**：
-- **定位**：视觉深度推理模型
-- **能力**：继承T1的推理能力，扩展至视觉理解领域，支持图像分析、图表推理、文档理解等
-
-**Hunyuan-Voice**：
-- **定位**：语音通话模型
-- **能力**：端到端语音交互，支持实时语音对话、语音指令遵循等场景
-
-### 2.9 语言模型对比表
-
-| 模型 | 总参/激活 | 架构 | 上下文 | 训练 token | 主要场景 | 开源 |
-|---|---|---|---|---|---|---|
-| Hunyuan-LLM (2024.02) | trillion / – | MoE Transformer | – | – | 元宝助手 | ❌ |
-| Hunyuan-Large | 389B / 52B | MoE Transformer + GQA + CLA | 256K | 7T | 通用旗舰 | ✅ |
-| Hunyuan-A13B | 80B / 13B per input | Fine-grained MoE；1 shared + 8/64 routed experts | 256K | >20T | 通用/推理 | ✅ |
-| Hunyuan-TurboS | – | Mamba2 + Transformer Hybrid MoE | 长上下文 | – | 通用 + 自适应 CoT | API |
-| Hunyuan-T1 | – | Hybrid Mamba-Transformer MoE | 长上下文 | – | 深度推理 | API |
-| 混元 2.0 (2025.12) | – | – | – | – | 推理与效率旗舰 | API |
-| HY 2.0 Think (2026.04) | – | – | 128K | – | 深度推理旗舰 | API |
-| HY 2.0 Instruct (2026.04) | – | – | 128K | – | 指令遵循旗舰 | API |
+就语言模型支线而言，能够逐篇比较方法的材料目前主要是 Hunyuan-Large、A13B 和 TurboS：前两者均以稀疏专家扩大模型容量，但专家粒度和路由负担不同；TurboS 把线性序列状态模型与 attention 结合，重点转向长序列效率。Hunyuan-T1 与更晚的混元 2.0/HY 2.0 系列可用于追踪能力方向，当前公开文档不足以纳入同等深度的机制对照。
 
 ---
 
@@ -209,7 +173,7 @@ Hunyuan 总平台
   - 全自研图文数据管线，迭代清洗与重新生成 caption。
   - 训练专用 **多模态大模型 (MLLM) Captioner**：用于 caption refine，把短描述扩成层次化、多视角描述，显著提升细粒度语义对齐。
 - **多轮多模态对话**：在 Hunyuan-DiT 基础上加入 multi-turn dialog 微调，使模型能够基于上下文反复修改图像（"对话式生图"）。
-- **评估协议与结果（作者报告）**：团队使用 50+ 名评审和 3,000+ 个提示词，按文本图像一致性、AI 瑕疵、主体清晰度、美学四维评分。按该文 Table 1 的所列开源对照（Playground 2.5、PixArt-α、SDXL），Hunyuan-DiT 四项分数均最高（74.2 / 74.3 / 95.4 / 86.6）；overall pass rate 为 59.0%，在表中全部七个模型里排第三，低于 DALL·E 3 的 71.0% 和 MidJourney v6 的 63.3%。用于“Comparison with SOTA”的权重仅覆盖表 2 中列出的类别（合计 90%）；多轮生成的 10% 权重只用于作者内部评测，不包含在该跨模型比较中。表 1 将 SD 3 归为闭源模型，Stable Cascade 未列入比较，因此不再写成“超越 SD3、Stable Cascade 等开源模型”。该结果受作者自建提示集、评审与聚合规则约束，且未将每个对照权重/API revision 固定到可复现身份。来源：[§3.1–3.3、§4.1 Table 1、Appendix A Table 2](https://arxiv.org/html/2405.08748v1)。
+- **评估协议与结果（作者报告）**：团队使用 50+ 名评审和 3,000+ 个提示词，按文本图像一致性、AI 瑕疵、主体清晰度、美学四维评分。按该文 Table 1 的所列开源对照（Playground 2.5、PixArt-α、SDXL），Hunyuan-DiT 四项分数均最高（74.2 / 74.3 / 95.4 / 86.6）；overall pass rate 为 59.0%，在表中全部七个模型里排第三，低于 DALL·E 3 的 71.0% 和 MidJourney v6 的 63.3%。用于“Comparison with SOTA”的权重仅覆盖表 2 中列出的类别（合计 90%）；多轮生成的 10% 权重只用于作者内部评测，不包含在该跨模型比较中。表 1 将 SD 3 归为闭源模型，Stable Cascade 未列入比较；因此这些表格不支持“超越 SD3、Stable Cascade 等开源模型”的说法。结果受作者自建提示集、评审与聚合规则约束，且未将每个对照权重/API revision 固定到可复现身份。来源：[§3.1–3.3、§4.1 Table 1、Appendix A Table 2](https://arxiv.org/html/2405.08748v1)。
 - **开源生态**：GitHub 仓库 `Tencent-Hunyuan/HunyuanDiT`，集成至 Diffusers/ComfyUI/Replicate；后续社区在其基础上做 LoRA/ControlNet 等延伸。
 
 ### 3.2 HunyuanImage-2.1：高效 2K 文生图
@@ -228,12 +192,12 @@ Hunyuan 总平台
 
 - **生成路径**：论文 v3 描述的是**混合离散—连续建模**：文本 token 采用自回归 next-token prediction，图像 latent 由扩散式预测生成，再与多模态序列交互。因此这是统一多模态架构中的混合生成，不是纯自回归图像生成。
 - **规模**：论文报告总参数**超过 80B**、推理时每 token 激活 **13B**；base 模型卡/代码仓库将总规模标作 80B。
-- **模型与版本**：base ID `tencent/HunyuanImage-3.0`，本次检查 HF revision `36f21fe74b65614451cc50ffd8a35a5f662dac70`（页面 `lastModified` 2026-01-28）；代码/README 固定到 `Tencent-Hunyuan/HunyuanImage-3.0@6e9113a692a27a0751d82aba3b2015a876646c03`（commit date 2026-06-23，2026-10-22 查询为 HEAD）。base 权重使用 Tencent Hunyuan Community License；Instruct 与 Instruct-Distil 是不同 checkpoint，官方公告日为 2026-01-26，HF revision 分别见来源清单。
+- **模型与版本**：base ID `tencent/HunyuanImage-3.0`，Hugging Face revision `36f21fe74b65614451cc50ffd8a35a5f662dac70`（页面 `lastModified` 2026-01-28）；代码/README 对应 `Tencent-Hunyuan/HunyuanImage-3.0@6e9113a692a27a0751d82aba3b2015a876646c03`（commit date 2026-06-23）。base 权重使用 Tencent Hunyuan Community License；Instruct 与 Instruct-Distil 是不同 checkpoint，官方公告日为 2026-01-26，HF revision 分别见来源清单。
 - **能力**：
   - 超长文本指令遵循（"长 prompt 不丢细节"）；
   - 与 HunyuanImage-3.0-Instruct（2026-01）扩展为推理增强提示与 Image-to-Image；
   - 自然支持图像理解 ↔ 生成的统一对话。
-- **研究解读**：它将理解与生成放入一个原生多模态模型序列，但图像生成模块仍使用扩散预测。arXiv v3 与官方仓库仍使用营销式体量/性能排名表述；本报告不把该排名当作独立结论，只保留可复核的结构、参数和版本信息。
+- **研究解读**：它将理解与生成放入一个原生多模态模型序列，但图像生成模块仍使用扩散预测。arXiv v3 与官方仓库提供的体量和性能排名属于厂商报告，不能视作独立比较；可用于机制分析的是公开的结构、参数和版本信息。
 
 ### 3.4 图像生成模型对比
 
@@ -354,13 +318,13 @@ Hunyuan 总平台
 
 > GitHub：[`Tencent-Hunyuan/HunyuanVision`](https://github.com/Tencent-Hunyuan/HunyuanVision/tree/61895cecc18a2ede2c8f8c921b9bec26130625f8)。该固定 README 仍把论文、权重和推理支持列在“Open-source Plan”中。
 
-- **架构**：采用 **Mamba-Transformer 混合 VLM**。吞吐、理解质量和其与 TurboS/T1 的技术继承关系需由固定实现和同条件实验验证，本报告不推断共享骨干。
+- **架构**：采用 **Mamba-Transformer 混合 VLM**。现有材料不足以判断其吞吐、理解质量，或是否与 TurboS/T1 共享骨干；这些关系需要固定实现和同条件实验才能比较。
 - **规格**：MoE 版本 **A56B**（约 56B 激活）+ **4B** 轻量版；含 Hunyuan-ViT-V1 视觉编码器；将提供 TRT 推理与 vLLM 支持。
 - **关键能力**：
   - **"Thinking on Image"（图上思考）**：在推理过程中主动调用 crop/zoom-in、画点/线/框等"图像操作工具"，并可调用网络检索补充知识，类似 OpenAI o3 的 visual chain-of-thought；
   - **3D 空间推理**、视频理解、多语种鲁棒。
 
-> 本报告不列 LMArena 排名：该固定 README 只记录官方对 2025-10-06 排名的说法，未附榜单快照、任务类型和对照模型版本，也不是独立评测。
+> 官方 README 提及 2025-10-06 的 LMArena 排名，但未提供榜单快照、任务类型和对照模型版本；该说法不足以支持可复核的横向比较。
 
 ### 6.3 HunyuanOCR：1B OCR-VLM
 
@@ -384,39 +348,49 @@ Hunyuan 总平台
 
 ---
 
-## 8. 跨方向技术演进分析
+## 8. 跨方向综合：容量、序列状态与生成表示是不同设计轴
 
-### 8.1 公开材料中的跨方向技术关系
+混元家族看上去覆盖许多模态，但这些支线不是同一个基础模型逐代加入工具。论文显示的是几类不同的技术问题：语言模型控制参数容量和推理计算；图像/视频生成压缩视觉序列并决定去噪过程；3D生成从几何表示到纹理渲染分阶段构造；视觉理解模型则要在图像输入和语言推理间分配容量。
 
-本报告按**公开材料中可见的设计元素**和**任务方向**整理模型家族；相似模块本身不能证明跨项目复用或共同训练沿革。
+### 8.1 语言线：MoE 扩展容量，Mamba-T 混合改变序列建模
 
-**(1) 横向：不同项目中出现的设计元素**
+[Hunyuan-Large](https://arxiv.org/abs/2411.02265v3) 与 [Hunyuan-A13B](https://arxiv.org/abs/2609.27284v1) 都用 MoE 将总参数规模与每 token 激活计算分开，但专家数量、共享/路由策略、上下文训练和模型规模并不相同。Large 重点研究共享专家、Recycle Routing、KV 压缩和专家专属学习率；A13B 使用更细粒度的路由专家，并以 13B 激活配置兼顾开放部署。两篇论文的共同问题是：扩大参数容量时，怎样避免推理显存、路由负载和长上下文 KV 状态成为瓶颈；不能据“都叫 MoE”推断两者共享 backbone 或能直接互换部署。
 
-- **MoE 设计**：Hunyuan-Large、A13B、TurboS 与 Vision-1.5 的公开材料涉及 MoE，但具体专家配置和共享结构应逐篇核对；本报告不把它们称作同一 backbone。
-- **Mamba-Transformer 混合**：TurboS/T1 与 Vision-1.5 的材料都描述混合架构；当前证据只支持记录相似设计，不支持“先在 LLM 验证、再迁移到 VLM”的沿革叙述。
-- **Dual-Stream → Single-Stream DiT**：HunyuanVideo 与 HunyuanImage-2.1 的材料都描述了相关流式结构；缺少直接设计沿革证据时，不将相似性写成跨项目借用或反哺。
-- **3D RoPE / Flow Matching**：HunyuanVideo 与 Hunyuan3D-DiT 的材料都讨论 flow-based 训练和位置编码；其具体实现及参数化是否相同，需要逐篇核对。
-- **Caption 与 Prompt 处理**：相关论文分别描述了 Captioner 或 Prompt Rewriter 等组件；具体模型依赖和质量贡献以各论文的设置及消融为准。
+[Hunyuan-TurboS](https://arxiv.org/abs/2505.15431) 把问题进一步转为序列处理成本：在混合专家体系里交替布置 Mamba2、attention 和 FFN，目标是在长序列上利用 Mamba 的状态传递效率，同时保留 attention 对上下文关系的直接访问。其 Adaptive CoT 则把模型计算预算按任务难度变化，面向简短回答与复杂推理两类输出。T1 和 TurboS 的公开材料均描述混合序列模块与推理增强，但没有证明其训练配方、检查点和部署成本完全相同；应分别阅读架构图、token/attention 细节与采样条件。
 
-**(2) 纵向：从生成到理解再到世界**
+这一语言路线的变化可概括为“稀疏容量”与“序列计算”两个不同轴：MoE 减少激活 FFN 计算但仍需管理全量专家权重；Mamba-T 试图降低长序列计算/状态成本，但不能由架构名称直接推出长上下文的检索质量。对报告中的效率数字，应回到它所比较的 baseline、硬件和 batch 设定。
 
-- **生成线（生成像素/几何）**：Hunyuan-DiT → HunyuanImage-2.1/3.0 → HunyuanVideo → Hunyuan3D → HunyuanWorld；
-- **理解线**：Hunyuan-VL → Hunyuan-Vision-1.5 → HunyuanOCR；
-- **理解 ↔ 生成 融合点**：HunyuanImage-3.0 在原生多模态 backbone 中结合自回归文本与扩散图像生成；Hunyuan-Vision-1.5 则把“生图编辑动作”作为推理工具。两者是不同的多模态整合路径。
+### 8.2 生成线：连续视觉 latent 扩散，到几何/纹理和交互世界
 
-### 8.2 时间维度上的三个阶段
+[Hunyuan-DiT](https://arxiv.org/abs/2405.08748v1) 解决中文/英文提示如何进入高分辨率图像扩散：CLIP 与 mT5 组合处理图文语义，2D RoPE 支持多分辨率，多轮对话编辑则增加上下文式条件。HunyuanImage-2.1 仍沿图像 DiT 方向，重点放在 2K 生成、VAE token 压缩和文字渲染；[HunyuanImage-3.0](https://arxiv.org/abs/2509.23951v3) 把文本 next-token prediction 与图像 latent diffusion 放入同一多模态序列框架。这几代有可比较的表示路线，但 3.0 的公开材料并未证明它是 2.1 主干简单放大，也没有统一实验把质量变化归因到单一机制。
 
-| 阶段 | 时间 | 标志 | 主线 |
-|---|---|---|---|
-| Phase 1：闭源旗舰 | 2023–2024.04 | Hunyuan-LLM trillion MoE | 业务 LLM |
-| Phase 2：多方向公开发布 | 2024.05–2025.06 | DiT/Large/3D/Video 论文、代码或权重陆续发布 | 语言与生成模型并行扩展 |
-| Phase 3：混合架构与多模态扩展 | 2025.05–2026.04 | TurboS/T1/Vision-1.5/Image-3.0/Video-1.5/HunyuanWorld | 混合序列建模、多模态生成与世界模型方向并行 |
-| Phase 4：推理与指令模型发布 | 2025.12–2026.04 | 混元 2.0 → HY 2.0 Think/Instruct | 推理与指令模型迭代 |
+[HunyuanVideo](https://arxiv.org/abs/2412.03603) 将图像生成扩展到时空 latent：3D causal VAE 降低帧序列长度并用时间因果卷积保持过去/未来方向，视频 DiT 的 dual-stream 阶段分开处理文本和视频特征，single-stream 阶段再做融合；3D RoPE 表示时空坐标，完整时空 attention 直接建模跨帧关系。核心取舍是时序一致性与注意力成本：full attention 能建立全局时间关系，却会扩大序列计算；VAE 压缩节省计算，也会成为可恢复细节的上限。[HunyuanVideo-1.5](https://arxiv.org/abs/2511.18870v2) 的 SSTA 则用选择性时空块和局部窗口减少注意力负担；论文只支持给定 8×H800、10 秒 720p 配置下的推理加速，不能推出与旧 13B 模型质量等价。
 
-### 8.3 与 LLM、生成线的相互增强
+[Hunyuan3D 2.0](https://arxiv.org/abs/2501.12202) 将生成对象变为可编辑的 3D 资产：shape diffusion 与 texture paint 分成两个基础模型，几何先满足输入图像约束，纹理阶段再处理材质与多视角外观。2.5 沿两阶段结构扩大 shape 模型，并加入 PBR 纹理路线。[HunyuanWorld](https://arxiv.org/abs/2507.21809) 则关注场景而非单件资产，使用可探索的场景表示、语义分层网格及视点/动作条件。三者分别对应单图像、资产表面和持续世界状态，不能把“从图到3D”与“可交互 world model”视作同一能力连续升级。
 
-- **LLM → 生成**：报告记录 Hunyuan-Large 用于 caption/prompt 重写；HunyuanImage-3.0 则将文本自回归建模与图像扩散预测整合进原生多模态序列；
-- **生成与视觉理解的潜在联系**：公开材料分别讨论了生成模型的多模态结构、图像推理和 Captioner 训练；在缺少直接设计沿革或消融证据时，不把它们写成单向因果或“反哺”关系。
+### 8.3 理解线：通用 VLM 与专用 OCR 的任务边界
+
+[Hunyuan-Vision-1.5](https://github.com/Tencent-Hunyuan/HunyuanVision) 将视觉编码器与语言/序列模型结合，并使用推理阶段的裁剪、放大、标注和检索等工具处理图像任务；这是一条以视觉推理/交互为目标的路线。[HunyuanOCR](https://arxiv.org/abs/2511.19575) 则用约 1B 参数的 ViT + LLM + MLP adapter 处理文字定位、文档解析、信息抽取和翻译等 OCR 任务，强调端到端架构以减少传统 OCR 流水线中间步骤的误差传播。
+
+两者不构成简单的“通用模型比专用模型强”关系：Vision 的测试应覆盖图像推理、视频、GUI、空间理解等开放任务；OCR 应覆盖文字检测/识别、版面、表格、文档问答、印刷/手写等任务。HunyuanOCR 论文报告其在部分文档与 OCR benchmark 上表现突出，但这些是作者报告的特定任务结果；不能直接据此推导其通用视觉推理能力，也不能用 VLM 总分替代 OCR 任务评测。
+
+### 8.4 跨线连接：可确认的依赖与不可确认的“统一”
+
+| 连接点 | 公开材料支持什么 | 还不能推出什么 |
+|---|---|---|
+| 语言模型作为条件/重写组件 | HunyuanVideo 论文用大语言/多模态模型处理文本描述和 prompt；HunyuanImage 的数据/文本编码线也强调文本条件质量 | 不能据此认为视频、图像系统共享同一文本编码器或联合预训练 |
+| 混合专家与混合序列模块 | Large/A13B 用 MoE；TurboS 和 Vision-1.5 提及 Mamba-Transformer 混合 | 同一团队使用相同术语不代表专家数、层布局、训练目标或参数可继承 |
+| 生成与理解并置 | HunyuanImage-3.0 报告了文本自回归与图像扩散的混合路线；Hunyuan-Vision/OCR 分别提供视觉理解模型 | 不能把“统一架构”推广为所有 Hunyuan 模态已共用一个模型或共享参数 |
+| 文本到视频、3D 与世界建模 | Video 生成时空像素序列，3D 资产生成 mesh，World 生成可探索场景 | 视频逼真度、单资产几何质量和交互世界一致性是不同评测对象，不能合并成“世界模型能力” |
+| 音频与语言服务 | Video-Foley 研究视频条件音效；Hunyuan-MT/Chimera 研究翻译与多候选融合，属于各自任务的专门处理 | 公开材料没有证明它们使用同一语音—视频模型，竞赛系统也不能等同于基础 MT 检查点 |
+
+最有价值的跨线观察并不是“混元覆盖得很全”，而是表示和反馈随任务而变：语言序列可走稀疏 FFN 专家或 Mamba/attention 混合；图像生成用连续 latent 扩散；视频需要时间因果压缩；3D 需要把形状与材质分离；OCR 则把任务限制在文字/文档理解。后续如果出现模型间共享 encoder、joint training 或 distillation 的直接报告，才可以把这种并行路线改写成因果关系。
+
+### 8.5 阅读路线与未闭合问题
+
+建议围绕三个比较问题阅读：先对照 Hunyuan-Large/A13B/TurboS 的稀疏容量、KV cache 与长序列设计；再读 Hunyuan-DiT、HunyuanVideo、Hunyuan3D 2.0，比较图像/视频/几何表示及生成目标；最后读 Hunyuan-Vision-1.5 与 HunyuanOCR，区分工具化视觉推理和专用文档感知。
+
+仍未闭合的问题包括：Mamba-T 混合结构是否在推理质量/延迟上优于同预算 attention-only 或 Mamba-only baseline；HunyuanVideo full attention 与 Video-1.5 SSTA 在固定版本、同质量设置下如何取舍；Image-3.0 的理解与生成任务是否互相促进；世界模型的长时几何一致性如何在多轮交互而非单帧视觉质量上度量。现有不同论文和模型卡未形成这些问题的同协议对照。
 
 ---
 
@@ -437,13 +411,13 @@ Hunyuan 总平台
    - 这些组件构成该报告描述的视频生成架构；不同组件的独立贡献和社区采用范围需要分别验证。
 
 5. **HunyuanImage-3.0 的原生多模态混合生成**
-   - 文本 token 自回归、图像 latent 扩散；论文 v3 报告总参超过80B、每token激活13B。不同任务路径和 checkpoint revision 应分开核查，不据单个厂商自述给出跨模型规模排名。
+   - 文本 token 自回归、图像 latent 扩散；论文 v3 报告总参超过80B、每token激活13B。不同任务路径与 checkpoint revision 的参数口径应分别理解；单个厂商报告不足以建立跨模型规模排名。
 
 6. **HunyuanVideo-1.5 的 SSTA**
    - SSTA 把按块相似度/冗余度筛选出的注意力区域与局部滑动窗口结合；论文在 8×H800 的 10 秒 720p T2V 设置中报告相对 FlashAttention-3 约 1.87× 的端到端加速。它支持“特定配置下降低推理耗时”，不支持与旧版 13B 模型质量等同的结论。
 
 7. **Hunyuan3D 2.0 的 "Shape-DiT + Texture-Paint" 解耦**
-   - 把"几何"与"纹理"作为两个独立可扩展的扩散问题分别训练，配合 ShapeVAE；后续 Studio 报告扩展到从概念图到游戏资产的多个生产阶段，但本报告未核验端到端耗时。
+   - 把"几何"与"纹理"作为两个独立可扩展的扩散问题分别训练，配合 ShapeVAE；后续 Studio 报告扩展到从概念图到游戏资产的多个生产阶段；该报告没有提供端到端耗时测量。
 
 8. **HunyuanWorld：3D 世界 + 可交互**
    - 将场景生成与交互式世界探索结合；具体输入条件、生成流程和可控性应以对应版本的技术材料为准。
@@ -453,24 +427,11 @@ Hunyuan 总平台
 
 ---
 
-## 10. 研究范围与有限比较
+## 10. 比较边界
 
-| 维度 | Hunyuan | Qwen（阿里） | DeepSeek | GLM/智谱 | Kimi（月之暗面） |
-|---|---|---|---|---|---|
-| LLM 旗舰路线 | Trillion MoE 起家 → Large/A13B 双开源 | Qwen2.5/3 + Qwen3-MoE | V2/V3/R1 强稀疏 MoE | GLM-4 / GLM-4.5 | K1.5 长上下文 |
-| 推理模型 | T1 + TurboS（**Mamba-Transformer 混合**） | QwQ / Qwen3-Thinking | R1 / R1-Distill | GLM-Z1 | k1.5/k2-thinking |
-| 文生图 | Hunyuan-DiT、HunyuanImage-2.1/3.0（3.0为文本自回归 + 图像latent扩散的多模态混合架构） | Wan-Image、Qwen-Image | Janus-Pro | CogView-3 | – |
-| 视频 | **HunyuanVideo（开源 13B）+ 1.5（8B 高效）+ Avatar/I2V/GameCraft** | Wan2.1/2.2 | – | CogVideoX | – |
-| 3D | **Hunyuan3D 1/2/2.5 + Studio + World** | – | – | – | – |
-| VLM | Hunyuan-Vision-1.5（Mamba-T 混合）、HunyuanOCR | Qwen2.5-VL/Qwen3-VL | DeepSeek-VL2 | GLM-4V/4.5V | k1.5-vl |
+本报告覆盖混元公开论文与模型材料中的语言模型、图像/视频生成、3D/世界建模、VLM、OCR 和翻译。这个范围图描述的是研究主题，不是模型能力排行榜或市场覆盖排名。不同论文采用不同提示集、基线、评审方式和推理预算；未固定同一任务与版本时，不将各方向的分数放在一张横向总表里。
 
-**范围观察（研究归纳，非横评）**：
-- **当前报告覆盖语言、图像、视频、3D/世界、OCR 与 V2A**，体现了腾讯已公开研究方向的跨度；本报告没有对全市场覆盖率或各方向的同协议模型质量做完整盘点，故不据此声称“国内覆盖最宽”或“视频与 3D/世界最强 SOTA”。
-- **本报告涉及的公开模型呈现多种架构尝试**：部分混元模型采用 Mamba-Transformer 混合或 MoE；与其他团队的路线差异应基于固定版本的技术材料比较，本报告不把厂商家族概括为单一架构哲学。
-- **公开材料中的跨模型协作**：部分生成线使用大模型进行 caption 或 prompt 处理；这体现了数据与条件构造的重要性，但单凭流程描述不能推断其带来了相对其他模型的质量优势。
-- **3D 与世界模型方向**：Hunyuan3D、Hunyuan3D Studio、HunyuanWorld 和 GameCraft 提供了不同粒度的资产、场景与交互生成研究材料；不据此推断其他团队未覆盖或商业产业链优势。
-
----
+跨厂商比较只在具体论文的实验条件范围内成立。比如 Hunyuan-DiT 的自建人评、Hunyuan-Large 的语言 benchmark、HunyuanVideo 的视频人评、Hunyuan3D 的几何/纹理评价分别测量不同目标，不能合并成一个“混元整体领先”结论。产品名相似、同一发布平台或相同公司归属，也不能证明共享参数、训练数据或推理系统。
 
 ## 11. 参考文献
 

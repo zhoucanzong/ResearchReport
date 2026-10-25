@@ -27,6 +27,16 @@ status: completed
 | [片段扩展与从头生成（Cell 2025）](https://doi.org/10.1016/j.cell.2025.07.033) | GNN 对 *N. gonorrhoeae* 与 *S. aureus* 预测抗菌性；片段路线在 >4,500 万片段中筛选并用 F-CReM/F-VAE 扩展；另用 CReM、JT-VAE 从头生成分子 | 总计 24 个成功合成/测试的候选中，7 个显示选择性抗菌活性。NG1 对 *N. gonorrhoeae* MIC 0.5 μg/mL、MBC 1 μg/mL；DN1 对 MSSA/MRSA 的 MIC 为 4 μg/mL。NG1 与 DN1 分别在淋病和 MRSA 皮肤感染小鼠模型中降低细菌负荷 | **筛选、生成与实际合成不可混为一个命中率**：片段路线中曾选 80 个、对 27 个启动合成流程，成功合成两种；从头 JT-VAE 路线从 4,831 个 shortlist 到供应商可得的 22 个并测活性。NG1 的 LptA 由 PISA、转录和膜实验共同指向，尚不是结构级配体结合证明。小鼠试验是局部给药短期模型，不证明人体疗效。 |
 | [SyntheMol-RL（2026）](https://doi.org/10.1038/s44320-026-00206-9) | 将原 MCTS 换成 RL value function，在 Enamine REAL 与 WuXi GalaXi 的组合空间生成；预测目标同时包含 *S. aureus* 活性和水溶性 | 两种 RL 版本共合成测试 79 个分子：RL-Chemprop 38 个中 11 个、RL-MLP 41 个中 2 个达到论文设定的 MIC ≤8 μg/mL。一个来自 RL-MLP 的化合物 MLP-01（synthecin）在 2% w/v 外用制剂的小鼠 MRSA 伤口模型中显著降低细菌负荷 | 作者对七个 hit 做了新颖性人工筛查后，选 synthecin 做动物实验；这不是广谱候选。该实验是小鼠、局部高浓度制剂和短时伤口模型，且论文未建立 synthecin 的分子作用机制。 |
 
+## 模型路线与证据漏斗
+
+这些论文并不是同一种生成器逐代升级。Abaucin 的监督学习器从已有化合物的表型数据学习，再为 Drug Repurposing Hub 候选排序；它回答“已有分子库里哪些值得测试”，并非从头设计 abaucin。SyntheMol 把可购买 building blocks 与反应模板作为搜索图，用 MCTS 遍历约 29.6 billion 个组合，并以多个活性预测器引导搜索；合成约束进入候选构造过程，但预测可合成不保证实际供货、纯度或反应成功。[Abaucin Nature Chemical Biology Fig. 1–2](https://www.nature.com/articles/s41589-023-01349-8) [SyntheMol Methods、Fig. 3–5](https://doi.org/10.1038/s42256-024-00809-7)
+
+Cell 2025 把小分子生成拆成片段扩展与从头两条路径。前者用 GNN 在大量片段中做表型筛选，再由 CReM/VAE 扩展；后者直接从训练分布生成候选。两条路都经过化学审查、可得性筛选和实际合成，因此“生成数千万候选”与“24 个成功合成、7 个有活性”是不同分母。NG1 的 LptA/外膜机制线索与 DN1 的膜活性也不是同一作用机制。[Cell 2025 Fig. 1–3、5–7](https://doi.org/10.1016/j.cell.2025.07.033)
+
+SyntheMol-RL 改变的是合成空间中的搜索策略，而不是变成无约束分子生成。value model 学习 building-block 组合节点的预期属性分数，以抗菌活性和水溶性联合指导扩展；主要训练菌株仍是 *S. aureus* RN4220。`11/38` 和 `2/41` 是两个 RL value-model variant 在成功合成并按论文 MIC 阈值检测后的命中数，不是全部生成候选的比例。RL 与 MCTS 的算法比较应以同一论文、同一预测器/空间/筛选流程下的对照为准。[SyntheMol-RL Methods、Figs. 2–4、Table 1](https://pmc.ncbi.nlm.nih.gov/articles/PMC13230741/)
+
+跨论文的共同证据漏斗是：**模型筛选或生成 → 化学可得/合成 → 目标菌体外活性 → 机制 → 动物模型**。Abaucin 与 Cell 2025 给出机制和小鼠实验；原始 SyntheMol 主要提供体外活性，SyntheMol-RL 的 synthecin 有小鼠局部伤口模型但机制未明。候选命中数必须连同靶菌、MIC 阈值、通透化剂、筛选分母、合成成功数和给药方式一起解释，不能横向拼成生成器排行榜。
+
 ### Abaucin：AI 命中之后，机制证据如何变强
 
 2023 年论文的 DMPNN/神经网络从已测试活性数据学习，再将预测用于已有化合物集合。原文 Extended Data Fig. 1 区分了训练集与预测候选的验证，Fig. 2 评估窄谱活性，Fig. 3 通过耐药突变、转录数据和 CRISPRi 等证据把 `lolE` 作为 lipoprotein trafficking 机制线索，Fig. 4 报告小鼠伤口感染结果。2026 年结构工作进一步以 *A. baumannii* LolDF 解析 abaucin 结合构象与转运抑制。因而准确表述是“AI 引导从已存在分子中筛出抗菌活性，并在模型中观察到体内效果”，不是“AI 从零创造了一种抗生素”。[2023 原文及图注](https://www.nature.com/articles/s41589-023-01349-8) · [2026 结构机制研究](https://www.nature.com/articles/s41467-026-75428-4)

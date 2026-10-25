@@ -9,16 +9,10 @@ evidence: 精读原文
 status: completed
 
 ---
-> **2026-10-22 语义复核**：固定源码、已核调用链和未覆盖项见 [sources/MANIFEST.md](sources/MANIFEST.md)；本轮核验限定在列明的行为切面。
-
 
 # this-that-model 仓库深读
 
-> **声明**：本报告由 AI Agent 自动调研生成，未经官方确认；代码结论均以钉住 commit 逐行核验，引用前请回溯上游。
-> **上游**：`FLock-io/this-that-model`，默认分支 `main`，**钉住 commit `6af11c63c8bb260aa4bed2b7717f33f25decd16e`**（2026-10-16 clone 于 `/tmp`，`--filter=blob:none`，阅后删除；**本仓库不含该克隆的任何源码文件**）。
-> **配套上游**：权重/配置 `flock-io/this-that-model-1.0`（HF 模型卡 + `config.json`）；预印本 [arXiv:2609.23886](https://arxiv.org/abs/2609.23886)。
-> **口径（一条知识只主写一处）**：**代码事实写在本条目**；模型卡/预印本口径只在章 4 对账，不复制；决策模型横向对比归 [`DecisionModels`](../../LLM/DecisionModels/report.md)。
-> **证据等级（每条只取一个主等级）**：`[精读原文]` 读取钉住 SHA 的源码 / 仓库文档 / 上游 `config.json` 并逐行核对（下文区分「代码事实」与「文档自述」）；`[摘要级]` 仅外部页面自述、未在代码中确证；`[二手]` 第三方转述；`[受限核验]` 需下载权重或私有资源才能确证。
+> **源码与证据范围**：代码结论对应 `FLock-io/this-that-model` 固定 commit `6af11c63c8bb260aa4bed2b7717f33f25decd16e`；模型配置来自 `flock-io/this-that-model-1.0` 的 `config.json`，外部研究背景见 [arXiv:2609.23886](https://arxiv.org/abs/2609.23886)。代码事实、文档自述、二手信息与受限核验分别标注 `[精读原文]`、`[摘要级]`、`[二手]`、`[受限核验]`。未下载权重或运行模型，因此权重数值属性不超出配置文件声明。源码索引见 [sources/MANIFEST.md](sources/MANIFEST.md)。
 
 ---
 
@@ -29,28 +23,22 @@ status: completed
 3. **每个实际 batch 单次前向读出其全部答案 slot**：`model.py:118-132` 先按 `batch_size` 分 chunk，每个 chunk 的 `slot_logits(...)` 取回其全部 slot 的 logits，再 softmax 并按题切片——没有解码循环。`[精读原文]`（代码事实：`thisthat/model.py:132`、`thisthat/model.py:134`、`thisthat/model.py:137`）
 4. **训练目标 / 损失：本仓库不含训练代码**，因此「损失中是否含校准项」**未确证**；仓库只提供推理包与复现脚本（已读推理/复现入口未见训练过程；字面搜索只作为线索）。`[精读原文]`（代码事实：`scripts/` 与 `thisthat/` 全目录无训练路径）
 5. **`confidence` 不是独立输出头**，而是「所选选项的概率」；校准是**事后测量**（benchmark 的 calibration 划分 + 回归测试）；本仓库无训练实现，**不能据此排除仓外训练使用校准损失**。`[精读原文]`（代码事实：`thisthat/types.py:52`、`thisthat/types.py:53`、`tests/test_published_results.py:49`）
-6. **对 `DecisionModels` 条目的对账结论**：其「**不是 LM head 路径**」「**专用打分头**」的说法与代码不符，应修正为「**复用 tied LM head 的标签行做受限打分**」；「≤255 选项」「支撑集 = 选项表」「同 state 多问题同一次前向」三条与代码一致；「30.9 ms」在本仓库复现文件内**未确证**（仓库记录的是 MLX `mean 25.24 / p90 30.50 ms`）。`[精读原文]`（详见章 4）
+6. **与生成式分类头的区别**：该实现复用 tied LM head 的标签行做选项受限打分，而非新增独立分类层；分类范围来自声明选项集。`[精读原文]`
 
 > 一句话定位：这是一套**限定在声明选项集上的单次前向打分器**——把「生成后解析」换成「在选项行上做一次受限内积 + softmax」。
 
 ---
 
-## 1. 上游与复现口径
+## 1. 源码版本与模型接口
 
-| 项 | 值 | 依据 |
-| :-- | :-- | :-- |
-| 仓库 | `https://github.com/FLock-io/this-that-model` | HTTP 200（2026-10-16） |
-| 默认分支 / 钉住 commit | `main` = `6af11c63c8bb260aa4bed2b7717f33f25decd16e` | `git ls-remote` + 钉 SHA 链接 HTTP 200 |
-| HEAD 提交信息 | `Serve the typed /v1/systemone format beside the OpenAI one` | `git log -1` |
-| 许可证 | **MIT**（Copyright (c) 2026 Zehua Cheng, Wei Dai, Jiahao Sun; University of Oxford and FLock.io） | `LICENSE:1-3`，`[精读原文]`（仓库文档） |
-| 权重 / 配置 | `flock-io/this-that-model-1.0`；`model_type=qwen3_5_text`，`num_hidden_layers=24`，`hidden_size=2048`，`vocab_size=248320`，`tie_word_embeddings=True`，`layer_types` = 18 × `linear_attention` + 6 × `full_attention` | `config.json`（HTTP 200）`[精读原文]` |
-| 包结构 | `thisthat/`（`model.py` 头部/归一化、`prompt.py` slot、`types.py` 类型、`server.py`、`systemone_protocol.py`、`backends/{torch,mlx}_backend.py`） | 目录树，`[精读原文]` |
-| 复现入口 | `scripts/reproduce_*.py`、`results_latency_{mps,mlx}.json` | 目录树 + 结果文件，`[精读原文]` |
-| 训练代码 | **已读发布包以推理/评测为主，未定位训练入口** | 推理包和复现脚本的静态阅读，`[精读原文]` |
+| 项 | 来源信息 |
+|---|---|
+| 代码仓库 | `FLock-io/this-that-model`，固定 commit `6af11c63c8bb260aa4bed2b7717f33f25decd16e` |
+| 模型配置 | `flock-io/this-that-model-1.0`，`config.json`；24 层、hidden size 2048、词表 248,320、`tie_word_embeddings=True`，含 18 个 linear attention 层和 6 个 full attention 层 |
+| 研究材料 | [arXiv:2609.23886](https://arxiv.org/abs/2609.23886)；模型卡与论文口径在相关章节单独区分 |
+| 代码结构 | `thisthat/` 提供模型、prompt/slot 构造、类型、服务协议及 PyTorch/MLX 后端；`scripts/reproduce_*.py` 与结果 JSON 提供复现入口 |
 
-> 复现口径提醒：`README.md:215` 说明论文 headline latency「30.9 ± 16.6 ms」测于其**内部套件**（prompt 长度方差远大于本仓库 68 题队列），并提示「本地应更紧、中位数相近」；仓库结果文件与 README 口径**不可并表**。
-
----
+上述参数是 `config.json` 的声明值；权重张量未加载，故不能据此断言实际嵌入行与输出行逐元素相同。代码路径、配置属性和论文/模型卡自述在下文分别标注。
 
 ## 2. 类型化决策头的实现路径
 
@@ -64,7 +52,7 @@ status: completed
 | 生成式解码 + 解析选项字母 | ❌ **无** | `thisthat/model.py` 无 decode loop；选项之外「不可表示」 | **排除** |
 | 逐选项 `[MASK]` 占位打分（Laya 式） | ❌ **无** | `thisthat/prompt.py` 无 mask 占位符 | **排除** |
 
-**结论**：本仓库是「**隐藏状态直读 + tied LM head 标签行内积 + 受限 softmax**」（`thisthat/backends/torch_backend.py:85`、`thisthat/backends/mlx_backend.py:112`）。它既不是微调分类头，也**不是**「独立于 LM head 的专用打分头」——这一点是对 `DecisionModels` 说法的主要修正（章 4）。
+**实现路径**：隐藏状态直读 → tied LM head 标签行内积 → 选项掩码与受限 softmax（`thisthat/backends/torch_backend.py:85`、`thisthat/backends/mlx_backend.py:112`）。仓库实现没有独立微调分类头，也没有生成后再解析选项字母的解码循环。
 
 ### 2.2 读数矩阵来自哪里
 
@@ -124,7 +112,7 @@ thisthat/server.py:103                    "confidence": d.confidence, "latency_m
 
 ---
 
-## 4. 与 `DecisionModels` 条目的对账
+## 4. 与 `DecisionModels` 的方法对照
 
 > 对账对象（均为 `[二手]`/`[摘要级]` 的模型卡口径）：[taxonomy.md](../../LLM/DecisionModels/taxonomy.md)、[open-implementations.md](../../LLM/DecisionModels/open-implementations.md)、[report.md](../../LLM/DecisionModels/report.md)。
 
@@ -202,58 +190,12 @@ thisthat/server.py:103                    "confidence": d.confidence, "latency_m
 
 ---
 
-## 7. 锚点等式机械检查（做法与结果）
+## 7. 未确证事项
 
-**做法（可复跑）**
-
-1. 正则抽取**正文**中所有 `thisthat/[a-z_]+\.py:\d+` 形式的锚点 → 集合 `P`（章 0、2、3、5 使用；章 6 表格自身的「锚点」列为 `T`）。
-2. 抽取**章 6 锚点表**各行的「锚点」单元格 → 集合 `T`。
-3. 计算对称差 `P △ T` 与旧值残留（本条目首次建立，旧值集合为空 `∅`）。
-4. 对 `T` 中每条执行 `git show 6af11c6:<path> | sed -n '<行>p'`，判定是否落在代码行。
-
-**2026-10-16历史机械结果（不是当前改后锚点数）**
-
-| 检查 | 历史结果 |
-| :-- | :-- |
-| `P △ T`（正文锚点集 vs 表内锚点集 对称差） | **0**（等式成立：正文出现的锚点 = 表内锚点 = 25 条） |
-| 旧值残留（历史锚点仍在正文） | **0**（首次建立，无旧值） |
-| 锚点落点校验（注释 / 文档串 / 空行） | **未命中 0** |
-| 未命中数 | **0** |
-
-> 说明：本条目所有 `文件:行` 均指向**钉住 commit `6af11c6`**。若上游推进，行号会漂移——届时应以 `git show <新SHA>:<path>` 重新定位，而非沿用本表。
-
----
-
-## 8. 链接核验清单
-
-> 核验口径：剥 `<>` 角括号 → 判 scheme → percent-decode → 查存在（本条目外链全部为 `https`，按 HTTP 状态码核验；相对链接按仓库文件存在性核验）。核验时间 2026-10-16。
-
-| 链接 | 类型 | 核验方式 | 结果 |
-| :-- | :-- | :-- | :-- |
-| [FLock-io/this-that-model](https://github.com/FLock-io/this-that-model) | 外链 | HTTP 状态码 | **200** |
-| [钉住 commit 目录树](https://github.com/FLock-io/this-that-model/tree/6af11c63c8bb260aa4bed2b7717f33f25decd16e) | 外链 | HTTP 状态码 | **200** |
-| [flock-io/this-that-model-1.0](https://huggingface.co/flock-io/this-that-model-1.0) | 外链 | HTTP 状态码 | **200** |
-| [config.json](https://huggingface.co/flock-io/this-that-model-1.0/raw/3d927195c4f9845efe66c5715883a7a0f42b1239/config.json) | 外链 | HTTP 状态码 + 字段解析 | **200**（`tie_word_embeddings=True`、24 层、18 linear + 6 full 已解析） |
-| [arXiv:2609.23886](https://arxiv.org/abs/2609.23886) | 外链 | arXiv Atom API 编号↔题名核对 | **通过** |
-| [DecisionModels report.md](../../LLM/DecisionModels/report.md) | 相对链接 | 仓库文件存在性 | **通过** |
-| [taxonomy.md](../../LLM/DecisionModels/taxonomy.md) | 相对链接 | 仓库文件存在性 | **通过** |
-| [open-implementations.md](../../LLM/DecisionModels/open-implementations.md) | 相对链接 | 仓库文件存在性 | **通过** |
-| [this-that-model-research/report.md](report.md)（章 4 交付语自指） | 相对链接 | 仓库文件存在性 | **通过** |
-
-**不可达 / 反爬条目及处置**：本轮无。权重本体（safetensors）**未下载**：涉及权重内部数值的断言本条目一律不下结论（标 `[受限核验]` 并列入章 9）。
-
-> **过程留痕**：初稿把相对链接误写成三层 `../`（正确为两层），按上表口径回测出 **9 处失效**，已全部修正为 **0 失效**；外链 6 条全部 200。
-
----
-
-## 9. 未确证 / 待跟踪
-
-1. **训练目标与损失**：本仓库无训练代码；「标签 token 上是否用交叉熵」「是否含校准项 / 温度学习」**未确证**。→ 待跟踪：项目是否另发训练仓库，或预印本附录是否给出目标函数（本轮未核预印本正文）。
+1. **训练目标与损失**：本仓库没有训练代码，训练目标与校准损失无法由推理实现确定；公开论文材料需另行确认。
 2. **时延口径**：仓库记录 MLX `mean 25.24 / p90 30.50 ms`（68 题、n=100）；模型卡「约 31 ms」、论文标题「30 ms」、论文正文「30.9 ± 16.6 ms（内部套件）」**条件互不相同** → 本条目按「同一量级、口径不可并表」处理。
-3. **参数量 1.88B**：来自 README/权重规模自述，未由 `config.json` 的完整参数清单复算（`hidden_size=2048`、24 层、`intermediate_size=6144`、`vocab_size=248320` 已核；细化复算列为待办）。`[摘要级]`
-4. **权重内部数值**：`tie_word_embeddings=True` 已由配置确证，但「标签行与嵌入行在权重层面完全一致」属配置声明；如需字节级确证须下载 safetensors。`[受限核验]`
-5. **对 `DecisionModels` 的修正落地**：R2 / R5 / R6 / R7 需要在横向比较中按相同口径核验；代码证据见章4，不把其他条目的旧行号视为稳定标识。
+3. **参数量 1.88B**：来自 README/权重规模自述，不是从 `config.json` 逐项推导的参数总数（`hidden_size=2048`、24 层、`intermediate_size=6144`、`vocab_size=248320` 已核；完整参数量不在当前证据范围内）。`[摘要级]`
+4. **权重内部数值**：`tie_word_embeddings=True` 已由配置确证，但「标签行与嵌入行在权重层面完全一致」目前只有配置声明，权重级相等未确认。`[受限核验]`
+
 
 ---
-
-*本条目为 `OpenSource/` 深读：源码仅在 `/tmp` 克隆并已删除，仓库内不含任何上游源码文件；所有引用均为 ≤15 行的短引用并标注 `文件:行`。*

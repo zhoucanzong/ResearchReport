@@ -4,7 +4,7 @@ display_name: StabilityAI
 
 # Stability AI / Black Forest Labs 图像生成模型系列研究报告
 
-> 原报告日期：2026年6月6日；证据复核：2026年10月23日
+> **覆盖范围**：Stable Diffusion 系列、FLUX 的公开论文、权重与源码，以及仍未公开的模型实现边界。
 > 研究范围：Stable Diffusion 1.x → SDXL → SD3 → FLUX → SD3.5 全系列架构演进
 > 核心主线：U-Net → DiT → MMDiT → Flow Matching Transformer，并补充 BFL 的跨模态 Self-Flow 训练机制
 
@@ -192,7 +192,7 @@ SD 2.x 的 U-Net 结构、VAE、扩散框架与 SD 1.x **基本一致**，无本
 
 SDXL 的扩容并非增加到“6 个下采样阶段”。[论文表 1 与 §2.1](https://arxiv.org/abs/2307.01952) 给出 **U-Net 2.6B** 参数（文本编码器另计 817M），channel multiplier 为 `[1,2,4]`，Transformer blocks 分布为 `[0,2,10]`；去掉旧 U-Net 最低的一个分辨率层，把更多 Transformer 计算放到较低分辨率特征上。
 
-[官方 Base 配置](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/blob/main/unet/config.json) 的 `block_out_channels=[320,640,1280]`、三个 down blocks 与该解释相符。原报告的“3.5B U-Net、6 阶段、最大通道 2560、QK-Norm”没有该配置支持，已撤回。3.5B 级的整体打包口径不能被改称为 U-Net 参数量。
+[官方 Base 配置](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/blob/main/unet/config.json) 的 `block_out_channels=[320,640,1280]`、三个 down blocks 与该解释相符。该配置不支持“3.5B U-Net、6 阶段、最大通道 2560、QK-Norm”的说法；3.5B级整体打包规模不能改称为 U-Net 参数量。3.5B 级的整体打包口径不能被改称为 U-Net 参数量。
 
 两个文本编码器是 CLIP ViT-L 与 OpenCLIP ViT-bigG，将倒数第二层特征沿**通道维**拼接，得到 `(77,2048)` 而非 `(77+77,2048)`。此外还输入 pooled text embedding；原图尺寸、裁剪位置、目标尺寸作为 micro-conditioning。尺寸条件是在训练/生成接口中缓解分布不匹配的设计，不是人体重复等所有瑕疵的充分解法。[论文 §2.1–2.3、表 1]
 
@@ -200,7 +200,7 @@ Refiner 是可选的低噪声细化阶段。论文 §2.5 描述在 Base 潜空�
 
 **实验与边界**：论文 §2.5、图 1 的四选一用户研究中，SDXL+refiner、SDXL base、SD1.5、SD2.1 分别获得 48.44%、36.93%、7.91%、6.71% 的偏好选择份额。这不是两两对战胜率。作者同时指出 FID / CLIP score 没有反映同样的改善（附录 F），因此不能用单一指标替代人评结论。§3 列出两模型显存/速度成本、文字生成与增大的推理开销等未解决问题。
 
-SDXL Turbo 的 ADD 蒸馏见 [原论文](https://arxiv.org/abs/2311.17042)；其具体速度需附硬件、尺寸与步数。本轮尚未复核该论文的性能表，因此不保留原稿的裸延迟数字。
+SDXL Turbo 的 ADD 蒸馏见 [原论文](https://arxiv.org/abs/2311.17042)；其具体速度需附硬件、尺寸与步数。具体速度必须带硬件、尺寸与步数条件；没有这些条件的延迟数字不能作为该论文的性能结果。
 
 ### 3.4 Stable Diffusion 3 (2024)
 
@@ -336,7 +336,7 @@ SD3 从 DDPM/LDM 框架迁移到 **Flow Matching**，这是生成模型领域的
 
 #### 3.4.5 论文规模与发布规格
 
-[Stable Diffusion 3 Medium 官方发布页](https://stability.ai/news-updates/stable-diffusion-3-medium) 明确对应 **2B** 模型。原稿把 Small/Medium/Large 排成 2B/4B/8B 并附带层数、头数，混淆了论文研究规模与正式发布名称，已撤回。不同权重和服务的参数应分别查模型卡，不能据论文的 scaling 实验补出产品矩阵。
+[Stable Diffusion 3 Medium 官方发布页](https://stability.ai/news-updates/stable-diffusion-3-medium) 明确对应 **2B** 模型。将 Small/Medium/Large 排为 2B/4B/8B 并附带层数、头数，混淆了论文研究规模与正式发布名称；不同权重和服务的参数应分别查模型卡，不能据论文 scaling 实验补出产品矩阵。不同权重和服务的参数应分别查模型卡，不能据论文的 scaling 实验补出产品矩阵。
 
 #### 3.4.6 VAE 改进
 
@@ -420,9 +420,9 @@ BFL 发布基于 FLUX 的图像编辑工具套件：
 
 #### 3.6.1 SD3.5 的发布
 
-[官方公告](https://stability.ai/news-updates/introducing-stable-diffusion-3-5) 在 **2024-10-22** 发布 Large / Large Turbo，Medium 于 **2024-10-29** 发布。规格分别为 Large 8.1B、同规模蒸馏 Turbo，以及 Medium 2.5B（MMDiT-X）；Turbo 给出的少步配置为 4 步。原稿的“2025 年初、2B/4B/8B”不成立。
+[官方公告](https://stability.ai/news-updates/introducing-stable-diffusion-3-5) 在 **2024-10-22** 发布 Large / Large Turbo，Medium 于 **2024-10-29** 发布。规格分别为 Large 8.1B、同规模蒸馏 Turbo，以及 Medium 2.5B（MMDiT-X）；Turbo 给出的少步配置为 4 步。因此，发布日期和规格不支持“2025 年初、2B/4B/8B”的说法。
 
-公告给出的具体训练设计包括 Query-Key Normalization；更多自定义空间伴随种子间风格/质量差异，模糊提示可能产生较不稳定的结果。作者性能图属于官方自评，本次没有独立复现，不把“更好的人体/手部”当成所有任务已成立的结论。
+公告给出的具体训练设计包括 Query-Key Normalization；更多自定义空间伴随种子间风格/质量差异，模糊提示可能产生较不稳定的结果。作者性能图属于官方自评，尚无独立复现；“更好的人体/手部”不能推广为所有任务的结论。
 
 #### 3.6.2 社区生态适配
 
@@ -657,7 +657,7 @@ Chefer et al., [Self-Supervised Flow Matching for Scalable Multi-Modal Synthesis
 
 ## 8. 参考链接
 
-本轮（2026-10-23）实质复核包括前次的 SDXL 主干/Refiner、FLUX.1 许可与双流/单流结构、SD3 Medium 和 SD3.5 规格，并新增 Self-Flow 原文核读。SDXL 原文用 `paper-fetcher` 下载于仓库外 `.paper-cache/research-audit-2026-10-22/models/sdxl/`，实读 §2.1、§2.5、§3、表 1。FLUX 源码固定为 `802fb4713906133fcbd0d8dc5351620ca4773036`，实读 `Flux.forward` 与 `util.py` 模型配置；Self-Flow 论文通过 `paper-fetcher fetch` 核对元数据，并经 arXiv HTML 实读 §3–5、表 1–4、图 6–8 和附录 A.3–A.5 / H。本轮没有运行权重推理或独立复现实验。
+证据主要来自 SDXL 原文、固定版本 FLUX.1 源码、SD3/SD3.5 官方材料与 Self-Flow 论文；报告中架构结论以对应版本的原文和源码为界。性能图均按作者报告结果引用，未独立运行权重推理或复现实验。
 
 新增一手来源：[BFL 成立公告](https://bfl.ai/blog/24-08-01-bfl)、[FLUX.1-dev 许可证](https://huggingface.co/black-forest-labs/FLUX.1-dev/blob/main/LICENSE.md)、[SD3 Medium 发布](https://stability.ai/news-updates/stable-diffusion-3-medium)、[SD3.5 发布](https://stability.ai/news-updates/introducing-stable-diffusion-3-5)、[SD3.5 代码发布记录](https://github.com/Stability-AI/sd3.5)、[FLUX Tools 公告](https://bfl.ai/blog/24-11-21-tools)、[BFL Self-Flow 研究页](https://bfl.ai/research/self-flow)。
 

@@ -4,8 +4,7 @@ display_name: Nemotron
 
 # NVIDIA Nemotron 系列研究脉络
 
-> 调研时间：2026-06-06；证据修订：2026-10-22
-> 覆盖范围：NVIDIA Nemotron 系列大语言模型从 2024 年至 2026 年 6 月的完整技术演进
+> 覆盖范围：NVIDIA Nemotron 系列大语言模型从 2024 年至 2026 年 10 月公开的技术路线与代表性研究。
 
 ---
 
@@ -13,9 +12,9 @@ display_name: Nemotron
 
 Nemotron 的研究线包括早期合成数据与对齐、基于 Llama 的压缩/推理后训练，以及 Mamba–Attention–MoE 混合架构。但同一品牌不代表同一训练配方。Nemotron 3 初始 Nano 与 Super / Ultra 的关键区别是：**LatentMoE、MTP 与原生 NVFP4 训练在家族白皮书中归给两个大模型**，不能把它们全部附到 Nano 上。[新增一手来源 N1–N4]
 
-Ultra 的 550B 总参 / 55B 激活不是只能依赖第三方新闻的数字，官方模型卡和技术报告可以直接确认。官方 BF16 型号页也列出最长 1M context，原稿“BF16 只有262K，NVFP4才1M”没有该型号材料支持。真正的部署瓶颈需要同时考虑精度、批大小、序列和硬件，而非仅凭参数量分类。
+Ultra 的 550B 总参 / 55B 激活不是只能依赖第三方新闻的数字，官方模型卡和技术报告可以直接确认。官方 BF16 型号页也列出最长 1M context，官方BF16型号页也列出最长1M context；BF16与NVFP4的上下文差异没有该型号材料支持。真正的部署瓶颈需要同时考虑精度、批大小、序列和硬件，而非仅凭参数量分类。
 
-性能证据也必须带运行点：Ultra 论文在 GB200、NVFP4、8K输入/64K输出的最大吞吐比较中有优势，但相同论文在 prefill-heavy 任务给出反例。原稿的“300+ tok/s、统一快3–6倍、成本低30%、美国开源第一”缺乏对应固定协议，本轮由可核对实验与限制替代；不是将第三方数字简单改为“官方确认”。
+性能证据也必须带运行点：Ultra 论文在 GB200、NVFP4、8K输入/64K输出的最大吞吐比较中有优势，但相同论文在 prefill-heavy 任务给出反例。“300+ tok/s、统一快3–6倍、成本低30%、美国开源第一”等说法缺少对应的固定协议，不能由论文中的特定运行点推出。
 
 ## 二、模型演进时间线
 
@@ -135,27 +134,27 @@ Ultra 的 550B 总参 / 55B 激活不是只能依赖第三方新闻的数字，�
 
 NVIDIA 2025-12-15 家族页发布 Nano，并把 Super / Ultra 列为后续计划；`2512.20856` 是**家族白皮书**，Nano 专门技术报告是 **`2512.20848`**。前者的未来配置不能当作 Nano 已采用的组件清单。[N1,N2]
 
-Nano 专门报告写 25T tokens 预训练，后训练包括 SFT、RLVR、RLHF；公开初始 checkpoint 为 BF16 及由 BF16 经 PTQ 得到的 FP8。家族白皮书把 LatentMoE、MTP、NVFP4 训练分配给 Super / Ultra；因此撤回原稿 Nano 的“原生NVFP4训练 + LatentMoE + MTP”组合。后续另有 NVFP4 推理权重，不等于初代用了同样精度预训练。[N1 Abstract/§2.2–2.4；N2 §1、§4]
+Nano 专门报告写 25T tokens 预训练，后训练包括 SFT、RLVR、RLHF；公开初始 checkpoint 为 BF16 及由 BF16 经 PTQ 得到的 FP8。家族白皮书把 LatentMoE、MTP、NVFP4 训练分配给 Super / Ultra；因此，不能把“原生NVFP4训练 + LatentMoE + MTP”组合归给 Nano。后续另有 NVFP4 推理权重，不等于初代用了同样精度预训练。[N1 Abstract/§2.2–2.4；N2 §1、§4]
 
 参数也有口径差异：模型卡的产品规格是30B总 / 3.5B激活，家族页细分为31.6B总 / 3.2B激活（含embeddings为3.6B）。引用应标明出处与是否含嵌入，不能把不同四舍五入值当作不同checkpoint。[N1官方家族页；N3 Nano Model Description]
 
 #### 3.4.2 Super
 
-2026-03-11 官方公告确认 Super 为 **120B 总参 / 12B 激活、1M context**，定位在多 agent 工作负载；LatentMoE、MTP 与 NVFP4 配方需以对应技术报告为界。[N4] 本轮未完整读 Super 技术报告，不保留原稿缺少 harness 的 SWE-bench 60.47% 或无日期的 Intelligence Index 36 作为已核分数，也不把 Nano 后训练细节逐项继承给 Super。
+2026-03-11 官方公告确认 Super 为 **120B 总参 / 12B 激活、1M context**，定位在多 agent 工作负载；LatentMoE、MTP 与 NVFP4 配方需以对应技术报告为界。[N4] 公开公告确认 Super 的参数与定位，但缺少完整技术报告和评测 harness 的 SWE-bench 60.47% 与无日期的 Intelligence Index 36 不作为可比较成绩；Nano 的后训练细节也不能逐项继承给 Super。
 
 #### 3.4.3 Ultra
 
-官方 BF16 模型卡列出 **550B总 / 55B激活、最长1M context、Hugging Face发布日2026-06-04**。arXiv 专门报告 `2606.15007v1` 的提交日是 **2026-06-12**；两个日期是模型发布与论文存档，不相互替代。本轮 2026-10-22 可以用这份报告回查技术，但不将其 arXiv 链接伪装成原稿6月6日已访问的来源。[N5,N6]
+官方 BF16 模型卡列出 **550B总 / 55B激活、最长1M context、Hugging Face发布日2026-06-04**。arXiv 专门报告 `2606.15007v1` 的提交日是 **2026-06-12**；两个日期是模型发布与论文存档，不相互替代。技术报告的 arXiv 提交日为 2026-06-12，晚于模型卡公布日 2026-06-04；引用时应分别注明模型发布与论文存档日期。[N5,N6][N5,N6]
 
 Ultra 使用 Mamba-2、MoE 与少量 Attention 交错，并带 LatentMoE 和共享权重的 MTP。原文表1给出108层、64个Q heads、2个KV heads、每层512 experts选22、latent维2048、2个共享权重MTP层；这些是 **Ultra 的配置**，不统称整个 Nemotron 家族固定规格。[N6 §2.1–2.2、表1]
 
 ## 四、训练和量化：区分阶段与模型
 
-| 对象 | 本次核到的训练/量化事实 | 原稿需要撤回的混写 |
+| 对象 | 公开训练与量化信息 | 不应混淆的模型边界 |
 |---|---|---|
-| 初始 Nano | 25T预训练；后训练后BF16→FP8 PTQ；选择性保留敏感层较高精度 | 不能写为全程NVFP4预训练，不能把20T统一套给它 [N2] |
-| Super | 家族白皮书和发布公告支持原生NVFP4、LatentMoE与MTP方向 | 具体优化器和训练token数本轮未逐表核验 [N1,N4] |
-| Ultra | 20T预训练，**15T + 5T**两阶段；NVFP4采用混合精度，部分网络保留高精度 | 原稿“前20T+后5T”、全系列同一优化器/学习率表不成立 [N6 §1、§2.2] |
+| 初始 Nano | 25T预训练；后训练后BF16→FP8 PTQ；选择性保留敏感层较高精度 | 不等同于全程NVFP4预训练，也不能将Ultra的20T训练数字套给Nano [N2] |
+| Super | 家族白皮书和发布公告支持原生NVFP4、LatentMoE与MTP方向 | 具体优化器和训练token数未在这些来源中披露 [N1,N4] |
+| Ultra | 20T预训练，**15T + 5T**两阶段；NVFP4采用混合精度，部分网络保留高精度 | 不能与“前20T+后5T”或全系列共用同一优化器/学习率表混为一谈 [N6 §1、§2.2] |
 
 Ultra 的NVFP4不是所有张量都四位。原文保留末段网络和若干敏感投影等高精度。§2.2 / 图3从5T、10T、16T检查点分支切BF16再训练74B tokens，比较训练loss gap；作者给出平均低于0.4%的差距。这是分支训练损失代理，**不是所有任务准确率损失<1%**。原文还明确切BF16没有解决所讨论的训练发散，不能据小loss gap声称低精度不会发散。
 
@@ -177,41 +176,39 @@ MTP同样不是固定30–50%延迟收益：小batch时权重读取占主导，�
 
 ### 5.3 推理预算的质量代价
 
-Ultra §3.5的medium-effort模式平均生成token约少2.5倍，作者同时报告约7%的准确性下降。这是其AA Intelligence Index V4任务组合上的相对取舍，不是无成本压缩。原稿“Index48即美国开源第一”缺少固定榜单集合与日期，本轮不保留排名；后续应把图11的模式、指标版本与token归一化方式一起记录。
+Ultra §3.5的medium-effort模式平均生成token约少2.5倍，作者同时报告约7%的准确性下降。这是其AA Intelligence Index V4任务组合上的相对取舍，不是无成本压缩。这些结果对应 AA Intelligence Index V4 的特定任务组合，不足以支持“Index 48 即美国开源第一”的无条件排名；比较还需固定榜单版本、模式与 token 归一化方式。
 
 ## 六、上下文、开放资源与许可
 
-Ultra BF16模型卡直接列最长1M，不支持原稿按“BF16 262K / NVFP4 1M”分成模型能力。量化能降低特定部署内存压力，但context上限、某硬件装不装得下和长任务正确率是不同问题。部署仍要固定checkpoint、运行引擎、GPU、并行方式、batch与输入/输出长度。[N5 Model Summary]
+Ultra BF16模型卡直接列最长1M，因此“BF16 262K / NVFP4 1M”不是该型号的上下文口径。量化能降低特定部署内存压力，但context上限、某硬件装不装得下和长任务正确率是不同问题。部署仍要固定checkpoint、运行引擎、GPU、并行方式、batch与输入/输出长度。[N5 Model Summary]
 
 开放范围也需区分。官方家族页承诺发布**有权再分发的数据**；Ultra模型卡说披露全部数据来源、发布其中重要部分。不能写成所有预训练/后训练数据和完整旗舰复现条件无缺开放。模型权重可得、训练recipe可读与能复现全部训练是不同级别。
 
-当前Nano模型卡标 `nvidia-nemotron-open-model-license`，Ultra BF16卡标 `openmdw-1.1`；本轮只记录这些checkpoint的许可标识，不将“全部Nemotron共用NVIDIA Open Model License”推广到整个家族。模型、数据、软件各自的许可证也不能合并；原稿将NeMo、TensorRT-LLM、NIM统称专有软件的结论不保留。
+Nano模型卡标注 `nvidia-nemotron-open-model-license`，Ultra BF16卡标注 `openmdw-1.1`；这些 checkpoint 的许可标识不能推广到整个 Nemotron 家族。模型、数据、软件各自的许可证也不能合并；NeMo、TensorRT-LLM、NIM 的许可也应按各项目分别判断，不能统称为专有软件。
 
 ## 七、服务价格与跨厂商比较
 
-原稿按第三方托管价、未指定并发的tok/s和不同硬件的竞品速度推出成本低30%与快3–6倍；这些变量不能构成受控比较。没有重新获取每个提供商的具体端点、模型revision、价格日期和计量方式前，不保留其价格表或相对成本排名。
+第三方托管价格、未指定并发的 tok/s 与不同硬件上的竞品速度不能构成受控比较；缺少端点、模型 revision、计价日期和计量方式时，不宜给出成本或速度排名。
 
 同样不把Llama3与Llama4统一写成“纯Dense”，也不采用“Meta维护模式所以Nemotron接替整个开源中心”的因果叙事。跨厂商研究应按同一任务、精度、token预算和部署目标对照。上文的prefill反例说明，agent长输出吞吐与RAG短输出性能可能作出不同选择。
 
 ## 八、生态事件与仍需补证的范围
 
-NVIDIA 2026-03-16官方新闻稿确认Nemotron Coalition，列出8个创始成员，并称首个NVIDIA/Mistral协作基座将支撑Nemotron4。[N7] 这是一项合作计划，不能作为未发布模型架构或能力的实测证据。下载量5000万、首日热榜、各企业已实现的具体业务效果缺少本轮核读的原始数据，撤出确定结论。
+NVIDIA 2026-03-16官方新闻稿确认Nemotron Coalition，列出8个创始成员，并称首个NVIDIA/Mistral协作基座将支撑Nemotron4。[N7] 这是一项合作计划，不能作为未发布模型架构或能力的实测证据。下载量、榜单热度和企业业务效果不属于该合作公告可支持的技术结论。
 
-本轮已全文读过旧报告，并实读家族白皮书、Nano报告的计时/量化段、Ultra的架构/低精度对照/推理效率段，以及官方模型卡与Super/Coalition公告。没有下载权重、跑推理、重训或第三方服务跑分。
+本报告引用的推理效率、量化和训练数字均为论文或官方材料报告值，没有独立下载权重、运行推理或重训验证；跨模型结果须保留原文给出的硬件、精度、输入输出长度和服务栈条件。
 
-仍需后续补证：§3.1–3.3的早期模型原论文、98%合成数据的具体分母与RewardBench比较、Llama-Nemotron的压缩/蒸馏条件、Nemotron-H/Nano2速度协议、Super全部评测表、Ultra主评测逐项harness与采样预算。上述旧段保留研究线索，不视为本轮逐事实通过。
+仍有若干证据缺口：早期模型原论文、98%合成数据的分母与 RewardBench 比较、Llama-Nemotron 的压缩/蒸馏条件、Nemotron-H/Nano2 速度协议、Super 的完整评测表，以及 Ultra 主评测逐项 harness 与采样预算。相关结论应按来源披露程度谨慎引用。
 
-## 九、新增一手来源与读取锚点
+## 九、主要来源与原文定位
 
-本轮按 `researcher` 的数字条件与消融边界规范修订；用 `paper-fetcher download` 取回三份原文，缓存于仓库外 `.paper-cache/research-audit-2026-10-22/models/nemotron-*`。
-
-- **N1** [Nemotron 3 家族页](https://research.nvidia.com/labs/nemotron/Nemotron-3/)，初发2025-12-15；及 [家族白皮书2512.20856v1](https://arxiv.org/abs/2512.20856v1)，2025-12-24。核对Abstract、§1、§2.2–2.4中两个大模型的组件归属。
-- **N2** [Nano技术报告2512.20848](https://arxiv.org/abs/2512.20848)：实读§1/图1计时协议、§4.3/表4/图11量化对照。下载版本身份以PDF首页和审计缓存记录为准，不与家族白皮书混同。
-- **N3** [Nano BF16模型卡](https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16)：读取Model Description/Design、许可与训练阶段；2026-10-22。
-- **N4** [NVIDIA Super发布公告](https://blogs.nvidia.com/blog/nemotron-3-super-agentic-ai/)，2026-03-11：核对参数、1M与发布时间。
-- **N5** [Ultra BF16模型卡](https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16)：读取参数、context、Release Date、Model Design与许可标识；2026-10-22。
-- **N6** [Ultra技术报告2606.15007v1](https://arxiv.org/abs/2606.15007v1)，2026-06-12提交：实读§1/图1、§2.1–2.2/表1/图3、§3.5/图11、§5推理效率/图15–16。PDF页眉印2026-06-16，不能据此更改arXiv提交日。
-- **N7** [NVIDIA Coalition新闻稿](https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Launches-Nemotron-Coalition-of-Leading-Global-AI-Labs-to-Advance-Open-Frontier-Models/default.aspx)，2026-03-16：读取成员、协作方式和未来模型计划。
+- **N1** [Nemotron 3 家族页](https://research.nvidia.com/labs/nemotron/Nemotron-3/)，初发2025-12-15；及 [家族白皮书2512.20856v1](https://arxiv.org/abs/2512.20856v1)，2025-12-24；相关定位为 Abstract、§1、§2.2–2.4。
+- **N2** [Nano技术报告2512.20848](https://arxiv.org/abs/2512.20848)：图1说明计时协议，§4.3/表4/图11说明量化对照；该报告与家族白皮书是不同文档。
+- **N3** [Nano BF16模型卡](https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16)：Model Description/Design、许可与训练阶段。
+- **N4** [NVIDIA Super发布公告](https://blogs.nvidia.com/blog/nemotron-3-super-agentic-ai/)，2026-03-11：参数、1M上下文与发布时间。
+- **N5** [Ultra BF16模型卡](https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16)：参数、context、Release Date、Model Design与许可标识。
+- **N6** [Ultra技术报告2606.15007v1](https://arxiv.org/abs/2606.15007v1)，2026-06-12提交；相关定位包括§1/图1、§2.1–2.2/表1/图3、§3.5/图11、§5推理效率/图15–16。PDF页眉日期为2026-06-16，与arXiv提交日不同。
+- **N7** [NVIDIA Coalition新闻稿](https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Launches-Nemotron-Coalition-of-Leading-Global-AI-Labs-to-Advance-Open-Frontier-Models/default.aspx)，2026-03-16：成员、协作方式和未来模型计划。
 
 ## 十、参考来源
 
@@ -239,4 +236,4 @@ NVIDIA 2026-03-16官方新闻稿确认Nemotron Coalition，列出8个创始成�
 
 NVIDIA 于 **2026-10-14/15** 公布 **Nemotron 3.5 Super / Lightning** 模型及材料：Nemotron 项目页标注 10 月 14 日，项目目录标注 10 月 15 日；固定阅读的技术报告首页日期为 **2026-10-21**。这是 6 月版报告之后的实质性训练和推理更新。Super 为 120B 总 / 12B 激活的多模态模型，Lightning 为 30B / 3B 激活的文本模型。新机制主要包括：Super 先延伸至 1M 长上下文，再以 256K 的 agentic 软件工程 mid-training，并用 9B token recovery stage 恢复长上下文；SFT、RLVR、RLHF、专用教师与 MOPD 合并能力；递归 MTP speculative decoding，并对 Super 使用 hidden-state mixing 缓解训练—推理条件分布不匹配。论文报告 Super 在 SWE-bench Pro 为 51.78%；agentic mid-training 受控设置下 DeepSWE pass@1 从 6.4% 到 10.4%，Codex harness 上 SWE-bench Verified 从 48.4% 到 61.8%；并行 agent 执行加自验证则是 test-time scaling 组合设置，在 Terminal-Bench 2.1 从 62.7% 到 71.9%、DeepSWE 从 24.6% 到 34.5%。后两类增益来自不同实验，不能彼此混同或当作单组件消融。量化与服务数字也依赖具体 GPU、工作负载、采样和 harness，详见原文方法。
 
-来源与锚点：NVIDIA Nemotron Research，[Nemotron 3.5 Super and Lightning](https://research.nvidia.com/labs/nemotron/Nemotron-3.5-Super-and-Lightning/)，页面标注发布日 2026-10-14；[NVIDIA Nemotron 项目目录](https://research.nvidia.com/labs/nemotron/projects/)标注 2026-10-15；[技术报告 PDF](https://research.nvidia.com/labs/nemotron/files/NVIDIA-Nemotron-3.5-Super-and-Lightning-Technical-Report.pdf)，封面日期 2026-10-21，§2 预训练 / MTP / 长上下文，§3 后训练与评测（尤其表 10 及 parallel agent + self-verification 对照），§4 量化，§5 推理。PaperFetcher 本轮未能将该报告映射为 arXiv 论文；技术事实据 NVIDIA 官方 PDF 原文核对。
+来源与锚点：NVIDIA Nemotron Research，[Nemotron 3.5 Super and Lightning](https://research.nvidia.com/labs/nemotron/Nemotron-3.5-Super-and-Lightning/)，页面标注发布日 2026-10-14；[NVIDIA Nemotron 项目目录](https://research.nvidia.com/labs/nemotron/projects/)标注 2026-10-15；[技术报告 PDF](https://research.nvidia.com/labs/nemotron/files/NVIDIA-Nemotron-3.5-Super-and-Lightning-Technical-Report.pdf)，封面日期 2026-10-21，§2 预训练 / MTP / 长上下文，§3 后训练与评测（尤其表 10 及 parallel agent + self-verification 对照），§4 量化，§5 推理。该报告以 NVIDIA 官方 PDF 发布，封面日期为 2026-10-21；§2–§5 分别讨论训练、后训练、评测、量化与推理。

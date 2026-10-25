@@ -11,7 +11,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [AIGC/3DGen/report.md](<../AIGC/3DGen/report.md>) | 3D 生成技术研究报告：从 DreamFusion SDS 蒸馏到 Tripo3D DiT 原生 3D 生成 | — | — | — |
+| [AIGC/3DGen/report.md](<../AIGC/3DGen/report.md>) | 3D 生成研究：表示、监督与几何一致性 | — | — | — |
 
 ## AgentSecurity (1)
 
@@ -53,7 +53,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [AIGC/AudioGen/report.md](<../AIGC/AudioGen/report.md>) | 音频/音乐生成技术研究报告 | — | — | — |
+| [AIGC/AudioGen/report.md](<../AIGC/AudioGen/report.md>) | 音频与音乐生成：从压缩表示到可控长序列 | — | — | — |
 
 ## AutonomousLabs (1)
 
@@ -65,13 +65,13 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [AIGC/AvatarGen/report.md](<../AIGC/AvatarGen/report.md>) | 数字人与 Avatar 生成技术研究报告 | — | — | — |
+| [AIGC/AvatarGen/report.md](<../AIGC/AvatarGen/report.md>) | 数字人与 Avatar：身份、动作和声音如何合成到同一段视频 | — | — | — |
 
 ## ByteDance-Gen (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) | 字节跳动生成模型系列研究报告 | — | — | — |
+| [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) | ByteDance Seed 生成模型：从双语图像生成到多模态视听创作 | — | — | — |
 
 ## Chemistry (1)
 
@@ -173,13 +173,13 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Models/GLM/report.md](<../Models/GLM/report.md>) | GLM 系列模型深度调研报告 | — | — | — |
+| [Models/GLM/report.md](<../Models/GLM/report.md>) | GLM：预训练目标、推理后训练与多模态分支 | — | — | — |
 
 ## GPT (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Models/GPT/report.md](<../Models/GPT/report.md>) | OpenAI GPT 系列模型深度调研报告 | — | — | — |
+| [Models/GPT/report.md](<../Models/GPT/report.md>) | GPT：从生成式预训练到推理与多模态系统 | — | — | — |
 
 ## Gemini (1)
 
@@ -209,7 +209,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) | 图像编辑与修复技术研究报告 | — | — | — |
+| [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) | 图像编辑与修复：让目标变化与原图保留同时成立 | — | — | — |
 
 ## ImageGeneration (1)
 
@@ -245,7 +245,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 长上下文（Long Context）技术研究报告 | — | — | — |
+| [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 长上下文：从可接收长度到有效利用 | — | — | — |
 
 ## MaterialsDiscovery (1)
 
@@ -281,19 +281,19 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Models/Mistral/report.md](<../Models/Mistral/report.md>) | Mistral AI 系列模型深度调研报告 | — | — | — |
+| [Models/Mistral/report.md](<../Models/Mistral/report.md>) | Mistral：高效稠密模型、稀疏专家与任务专门化 | — | — | — |
 
 ## MoE (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [LLM/MoE/report.md](<../LLM/MoE/report.md>) | 混合专家模型（Mixture of Experts, MoE）架构演进研究报告 | — | — | — |
+| [LLM/MoE/report.md](<../LLM/MoE/report.md>) | 混合专家模型：路由、负载均衡与系统通信 | — | — | — |
 
 ## MoEExecution (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | MoE 执行：token 如何抵达专家，又如何回到原序 | repo-research | 2026-10-24 | completed |
+| [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | MoE 执行：从专家路由到跨设备回收 | repo-research | 2026-10-24 | current |
 
 ## Nemotron (1)
 
@@ -341,13 +341,13 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [LLM/RAG/report.md](<../LLM/RAG/report.md>) | 检索增强生成（Retrieval-Augmented Generation, RAG）技术研究报告 | — | — | — |
+| [LLM/RAG/report.md](<../LLM/RAG/report.md>) | 检索增强生成：检索误差怎样传到答案 | — | — | — |
 
 ## ReasoningModels (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) | 推理模型（Reasoning Models）与 Test-Time Compute 研究报告 | — | — | — |
+| [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) | 推理模型：测试时计算怎样变成更可靠的解题 | — | — | — |
 
 ## ReinforcementLearning (1)
 
@@ -365,7 +365,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Evaluation/ScientificDiscovery/report.md](<../Evaluation/ScientificDiscovery/report.md>) | AI for Science：怎样判断闭环实验带来了发现 | research | 2026-10-24 | current |
+| [Evaluation/ScientificDiscovery/report.md](<../Evaluation/ScientificDiscovery/report.md>) | AI for Science：从回顾性基准到闭环实验，怎样判断“发现” | research | 2026-10-24 | current |
 
 ## ServingEvaluation (1)
 
@@ -407,13 +407,13 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [LLM/VLM/report.md](<../LLM/VLM/report.md>) | 多模态大模型（Vision-Language Models, VLM）研究报告 | — | — | — |
+| [LLM/VLM/report.md](<../LLM/VLM/report.md>) | 视觉语言模型：视觉表示如何进入语言模型 | — | — | — |
 
 ## VideoGen (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) | 视频生成技术研究报告 | — | — | — |
+| [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) | 视频生成：从图像先验到时空建模 | — | — | — |
 
 ## WeatherClimate (1)
 

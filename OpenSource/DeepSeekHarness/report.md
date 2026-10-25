@@ -10,14 +10,9 @@ status: completed
 ---
 # DeepSeek Harness（DSH）仓库深读
 
-> **2026-10-22 源码复核**：当前无 Git 身份的快照、文件指纹及已核范围见 [sources/MANIFEST.md](sources/MANIFEST.md)；版本字符串不等于 commit。
+> **源码范围**：主报告依据 2026-10-20 快照；其 `package.json` 自述 `0.2.1-rc.2`，快照没有 Git commit 身份，因此版本字符串不等于固定 commit。文件路径和行号均指该快照。源码清单见 [sources/MANIFEST.md](sources/MANIFEST.md)。
 >
-> **后续运行时专题**：工具副作用与会话持久化路径已单独固定到上游 commit [`22ddee3`](https://github.com/deepseek-ai/deepseek-harness/tree/22ddee3792402c3e70ec5f86a63c3e3e895a2f60)，追踪调用记录刷盘、工具体执行、结果持久化与崩溃恢复；见[工具副作用与会话持久化](topics/tool-effect-durability.md)。这项较新版本的精读不追溯替换下文原架构报告所用的 2026-10-20 快照。
-
-> **方法**：`code-researcher` skill 的 `deep` 模式（四层法：Codebase Map → Runtime Story → Design Inquiry → Maintainer Notes），结论一律带 `文件:行`。
-> **对象**：`github.com/deepseek-ai/deepseek-harness`，快照的 package.json 自述 **`0.2.1-rc.2`**；缺少 commit，不能称 master 等于该版本。
-> **快照**：2026-10-20，仓库 tarball 解包于 `/tmp/dsh-src`（`git clone` 在本机网络下会断流，改用 codeload）。
-> **范围**：仓库全貌 → 三条运行路径（启动链、工具调用与审批、会话事件）→ 工具调度与压缩语义 → 两份专项（ptc、compaction 与组合包）→ 设计追问 → 维护者笔记 → 证据索引。全文结论均带 `文件:行`。
+> **证据边界**：本文以仓库源码和随附文档为依据，代码事实标注 `文件:行`，推断另行注明。Gateway 事件投影使用独立固定 revision [`22ddee3792402c3e70ec5f86a63c3e3e895a2f60`](https://github.com/deepseek-ai/deepseek-harness/tree/22ddee3792402c3e70ec5f86a63c3e3e895a2f60)，工具副作用与会话持久化见[专项分析](topics/tool-effect-durability.md)；不同快照的结论各自限定在对应源码范围。
 
 ---
 
@@ -25,7 +20,7 @@ status: completed
 
 一句话：**一个"一切皆插件"的 agent harness**，由 [Cordis](https://github.com/cordiverse/cordis) 驱动，设计论文指向 *A Programming Paradigm for Spatiotemporal Composability*（`README.zh.md:5`）。
 
-### 1.1 规模（扫描实测）
+### 1.1 仓库规模
 
 | 指标 | 数值 |
 |---|---|
@@ -64,7 +59,7 @@ status: completed
 
 ### 1.4 低信号区（别先读）
 
-- `apps/web/tests/fixtures/**`（测试夹具，扫描把它误列为"入口"）
+- `apps/web/tests/fixtures/**`（测试夹具，不是运行时入口）
 - `.agents/notes/archived/**`（历史 ADR；**但作为设计意图的一手证据很有价值**，按需精读）
 - 生成物：`*.generated.ts`、`snapshots/**`、`website/**`（文档站）
 
@@ -173,7 +168,7 @@ sequenceDiagram
 
 同文件还有 `assistant/attempt`、`assistant/message`、`compaction/{start,prune,summary,end}`、`goal/change`、`hook/{invoked,result}` 等。
 
-> **这解释了为什么"审批"同时表现为"会话内 UI"与"日志事件"**：它同时是 **session 级待处理交互**（`ui-session` 的 `SessionPendingInteractionMap`）和 **session 日志里的一条事件**（`approval/asked`）。两者都不是"跨会话广播"——本轮检查的声明中未发现跨会话审批聚合事件；不排除额外客户端自行汇总。
+内部事件日志与客户端可见状态是两层：`SessionPendingInteractionMap` 保存 session 级待处理交互，`approval/asked` 则记录在 session 日志中。远程事件白名单、Gateway waterfall 与会话列表投影见 [Gateway 事件投影](gateway-projection.md) §2–4；该专题固定于 `22ddee3792402c3e70ec5f86a63c3e3e895a2f60`。所查白名单未包含跨会话待审批聚合事件；这一结论不覆盖未检查的 Host 或其他客户端实现。
 
 ### 4.2 组合包：`base` 是"共享核心 + 分层 patch"，`sdk-minimal` 是"独立整树"（证据：`packages/bundle/base/cordis.patch.yml`、`packages/bundle/sdk-minimal/cordis.patch.yml`）
 
@@ -217,7 +212,7 @@ sequenceDiagram
 
 `packages/core/tools/src/` 的组成即边界：`index.ts`（注册与执行模式）、`schema.ts` / `json-schema.ts` / `ts-types.ts` / `py-types.ts`（跨语言 schema 生成）、`presentation.ts`（呈现）、`ptc.ts` / `ptc-calls.ts`（Programmatic Tool Calling 形态）、`testing.ts`（夹具）。
 
-**推断**：`ptc` 的存在意味着工具可由代码编排而非仅模型逐步调用——值得单独深读（本次不含）。
+**推断**：`ptc` 允许模型生成的程序编排多次工具调用，而不是每一步都由模型单独发起。其调用与审批路径见 [PTC 专题](ptc.md)。
 
 ### 5.4 测试契约（目录名就是契约名）
 
@@ -245,20 +240,26 @@ sequenceDiagram
 
 **结论（部分推断）**：数据模型把"待处理交互"挂在**会话粒度**上，所以"会话列表给标记"结构上可行；但**批准卡仍渲染在会话视图内**（§4.5），**开源代码里没有跨会话/OS 级通知通道**。后台会话的问题因此不是"数据没有"，而是"**没有面向人的入口**"。
 
-## 6 专项深读：ptc 与 compaction/组合包
+## 6 专项深读：Gateway 投影、ptc 与 compaction/组合包
 
-> 两份专项报告独立完成，正文分别是 [`ptc.md`](ptc.md) 与 [`compaction-and-bundles.md`](compaction-and-bundles.md)。本节只做**要点吸收与交叉引用**，不复述全文。
+> 三份专项报告分别追踪 [Gateway 事件投影](gateway-projection.md)、[ptc](ptc.md) 与 [compaction 和组合包](compaction-and-bundles.md)。本节只做**要点吸收与交叉引用**，不复述全文。
 
-### 6.1 `ptc`（Programmatic Tool Calling）：程序在沙箱、工具在宿主
+### 6.1 `api/gateway`：事件如何到客户端，以及审批如何保留作用域
+
+[gateway-projection.md](gateway-projection.md) 从远程事件白名单、Host / Client Gateway、waterfall 应答协议与资源访问控制追踪“会话事件如何成为客户端可见状态”。它补充 §4.1 的内部事件日志视角：审批请求使用需要应答者的 waterfall 交互，而会话列表状态来自独立的 session 事件；当前白名单没有跨会话待审批聚合事件。结论严格限于该专题所查的转发白名单与源码范围，不据此推断闭源服务或未检查的客户端一定没有其他推送路径。
+
+该报告还区分“会话有待处理交互”与“用户一定看得见审批卡”：前者可由客户端会话状态观察，后者仍取决于订阅、所有权与渲染路径。要追“某个不可用提示由哪一层产生”，应沿报告所列事件源继续核查，不把 UI 文案直接归因给 Gateway。
+
+### 6.2 `ptc`（Programmatic Tool Calling）：程序在沙箱、工具在宿主
 
 | 结论 | 证据（详见子报告）|
 |---|---|
-| 模型输出一段**程序**，程序在**受沙箱约束的子进程**里用 `await tools.<name>(args)` 嵌套调**宿主工具** | `ptc.md` §机制；本仓 `packages/core/tools/src/ptc.ts` |
-| 入口工具 `run_code`；开关 `mode:'ptc'` 或 per-agent `presentAs('ptc')` | 子报告 §3 |
-| **审批严格早于执行**：程序级升级复用 `approveEscalation`，测试证明审批未答时 resolver 未被调用 | 子报告 §4 |
-| 失败是**结果字段**（8 类 kind）而非异常；deadline 含嵌套审批等待、不含外层程序级审批（默认 120s / 上限 600s）| 子报告 §5 |
+| 模型输出一段**程序**，程序在**受沙箱约束的子进程**里用 `await tools.<name>(args)` 嵌套调**宿主工具** | [ptc.md](ptc.md) §机制；本仓 `packages/core/tools/src/ptc.ts` |
+| 入口工具 `run_code`；开关 `mode:'ptc'` 或 per-agent `presentAs('ptc')` | [ptc.md](ptc.md) §3 |
+| **审批严格早于执行**：程序级升级复用 `approveEscalation`，测试证明审批未答时 resolver 未被调用 | [ptc.md](ptc.md) §4 |
+| 失败是**结果字段**（8 类 kind）而非异常；deadline 含嵌套审批等待、不含外层程序级审批（默认 120s / 上限 600s）| [ptc.md](ptc.md) §5 |
 
-### 6.2 `compaction`：日志保留是**会话层强制**，不是后端自觉
+### 6.3 `compaction`：日志保留是**会话层强制**，不是后端自觉（详见 [compaction-and-bundles.md](compaction-and-bundles.md)）
 
 | 结论 | 证据 |
 |---|---|
@@ -266,9 +267,9 @@ sequenceDiagram
 | 会话 append 时校验"必须覆盖每个被遮蔽节点"，否则抛错 | `packages/core/session/src/surface.ts:330-364`（判定 `:361-364`）|
 | 表面折叠只 splice 模型可见节点列表，**日志本身只有 push** | `packages/core/session/src/surface.ts:563-585`、`packages/core/session/src/index.ts:886` |
 | 元数据侧再留清单（`shadowedRange`/`shadowedSeqs`/`shadowedTokenCount`）| `packages/compaction/compaction/src/types.ts:34-53` |
-| 失败/回滚：替换前失败有 `compaction/end(error)`；替换后失败**无回滚**，分类为 `ManualCompactionError('commit'/'persistence', …)`；孤儿锁靠 `session/end-seed` 判定陈旧 | 子报告 §失败与回滚 |
+| 失败/回滚：替换前失败有 `compaction/end(error)`；替换后失败**无回滚**，分类为 `ManualCompactionError('commit'/'persistence', …)`；孤儿锁靠 `session/end-seed` 判定陈旧 | [compaction-and-bundles.md](compaction-and-bundles.md) §失败与回滚 |
 
-### 6.3 `bundle/base` 的插件计数（三种数法交叉）
+### 6.4 `bundle/base` 的插件计数（三种数法交叉；详见 [compaction-and-bundles.md](compaction-and-bundles.md)）
 
 | 口径 | 计数 |
 |---|---|
@@ -278,18 +279,14 @@ sequenceDiagram
 | 条件挂载（`!!js` 表达式）| **8** |
 | 校验 | 87 + 1 + 8 = 96 ✅；`!!js` 全文 16 次，其中 **8 次是挂载条件**、另 8 次在 `config` 中 |
 
-### 6.4 否定性结论怎么证明
+### 6.5 源码范围内的否定性结论
 
-"没找到 X"是**否定性结论**，不能只说"没找到"（下表的搜索面与方法均来自 `packages/core/tools/src/ptc.ts`、`packages/ptc-runtime/**`、`packages/core/session/src/*.ts` 的实际 grep）。本次两条核心否定结论的**证明方式**如下：
+| 结论 | 检查范围与源码证据 | 适用边界 |
+|---|---|---|
+| 所查 PTC 实现中，程序执行前定位到一处程序级升级审批调用 | `packages/core/tools/src/ptc.ts:395` 调用 `approveEscalation`; `ptc-calls.ts` 与 `packages/ptc-runtime/**` 包含类型/schema 与执行路径 | 只能说明这些文件里的调用关系；不构成对所有外围调用或绕过路径的证明 |
+| 所查 session 源码通过 `this.log.push` 追加事件，未发现删除历史的实现 | `packages/core/session/src/*.ts`；可见日志写入位于 `index.ts`，surface 折叠只调整模型可见节点 | 结论限于列明的 session 文件，不推断闭源持久化或客户端行为 |
 
-| 否定结论 | 搜索面 | 方法 | 结果 |
-|---|---|---|---|
-| **所查 PTC 文件仅定位到一处程序级升级审批调用；未完成绕过路径证明** | `packages/core/tools/src/ptc.ts`、`ptc-calls.ts`、`packages/ptc-runtime/**` | `grep -rn "approveEscalation\|approval"` 全量列出；确认**唯一的审批入口**是 `ptc.ts:395 await approveEscalation({...})`，其余命中是类型导入（`:21,23`）与 schema 描述（`:103,104,113,124`）| 只有一处审批调用，且在程序执行前 |
-| **所查 session 源码未匹配到列举的日志删除表达式** | `packages/core/session/src/*.ts` | `grep -rnE "\.log\.(splice\|pop\|shift\|length *=)\|delete .*log\|truncate"` | **0 命中**；唯一写入是 `this.log.push`（`index.ts` 内 2 处）|
-
-> **口径**：以上是"**穷举这些文件里的相关符号**"，不是"证明整个系统不存在该路径"。要写进结论时，必须把**搜索面与方法**一起写出来——这是否定性结论的验收标准。
-
-### 6.5 补强证据
+### 6.6 补强证据
 
 | 结论 | 证据 |
 |---|---|
@@ -308,7 +305,7 @@ sequenceDiagram
 2. **代价是"间接层变厚"**：读代码时，"这个功能在哪"要靠组合清单反查，而组合清单本身是配置（YAML），不是 import 图。
 3. **Cordis 的"时空可组合"**（论文标题）在本仓库最直接的体现就是：**同一套插件在有/无某能力的会话里表现不同**（session/scope 语义），这也是"scope"包存在的理由。
 
-> **边界**：`core/scope` 的语义细节，以及"插件之间不允许直接 import"是否有 lint 强制，本文未展开——不在本报告的可证范围内。
+> **证据边界**：`core/scope` 的语义与“插件之间不允许直接 import”是否由 lint 强制，需分别查阅对应实现与 lint 配置；当前列出的源码锚点不足以支持这两项结论。
 
 ---
 

@@ -4,7 +4,7 @@ display_name: Gemini
 
 # Google Gemini系列模型深度调研报告
 
-> 调研日期：2026年6月5日；证据修订：2026-10-23（复核 §9 并补入 2026 年 7–10 月模型卡更新）
+> 覆盖范围：从 Gemini 1.0 研究报告到 2026 年 10 月公开模型卡所覆盖的 Gemini / Gemma 研究线。
 > 覆盖范围：从PaLM（2022年）到**Gemini 4 Argon（2026 年 9–10 月）**的完整技术演进  
 > 写作原则：以**架构演进路径**为骨架，突出原生多模态、超长上下文、MoE与推理能力四大技术主线
 
@@ -143,7 +143,7 @@ PaLM 2的核心理念转变为**compute-optimal training**（遵循Chinchilla sc
 
 ### 2.3 Gemini 1.0（2023年12月）
 
-**固定来源**：*Gemini: A Family of Highly Capable Multimodal Models*，[arXiv:2312.11805v1](https://arxiv.org/abs/2312.11805v1)，提交于 **2023-12-19**（UTC；2026-10-22 复核）。[官方发布文章](https://blog.google/innovation-and-ai/technology/ai/google-gemini-ai/)日期为 **2023-12-06**；发布日与 arXiv 提交日分别记录。这里采用历史 v1，不以未注明版本的链接混入后续修订或后代模型规格。
+**固定来源**：*Gemini: A Family of Highly Capable Multimodal Models*，[arXiv:2312.11805v1](https://arxiv.org/abs/2312.11805v1)，提交于 **2023-12-19**（UTC）。[官方发布文章](https://blog.google/innovation-and-ai/technology/ai/google-gemini-ai/)日期为 **2023-12-06**；发布日与 arXiv 提交日分别记录。这里采用历史 v1，不以未注明版本的链接混入后续修订或后代模型规格。
 
 **模型分档**（v1 §2、表1）：
 
@@ -151,20 +151,20 @@ PaLM 2的核心理念转变为**compute-optimal training**（遵循Chinchilla sc
 |------|------|----------|------------|
 | Ultra | 高复杂度任务 | 本篇未公布；不保留“>1T”估计 | 家族训练长度32,768，逐产品API限额未由本表给出 |
 | Pro | 成本、延迟与能力平衡 | 本篇未公布 | 同上，不视为服务的输入/输出配额 |
-| Nano-1 | 低内存端侧 | 1.8B | 本篇未单列其部署上下文，撤下无依据的“较短” |
+| Nano-1 | 低内存端侧 | 1.8B | 论文未单列其部署上下文，因此不应将其概括为“较短” |
 | Nano-2 | 较高内存端侧 | 3.25B | 同上 |
 
 **架构能确认到哪一层**（[v1 §2](https://arxiv.org/html/2312.11805v1#S2)、[§4](https://arxiv.org/html/2312.11805v1#S4)）：
 
 - **骨干**：基于 Transformer decoder，采用高效注意力，原文举例 MQA；没有按变体列出完整层结构，不能据此把 Ultra/Pro/Nano 的注意力配置写死。
-- **分词**：确认 SentencePiece，并以大样本训练语料训练分词器；**本篇未给词表大小**。原稿“256K、文本/代码/图像共用一个词表”超出了披露范围。
+- **分词**：确认 SentencePiece，并以大样本训练语料训练分词器；**论文未给词表大小**，也没有说明文本、代码和图像共用 256K 词表。
 - **视觉与音频输入**：支持图文、音频、视频帧交错；视觉编码参考 Flamingo、CoCa、PaLI，输入分辨率可变，音频使用16kHz的USM特征。**离散图像token是原文对图像输出的说明**，不能反推所有视觉输入也经离散量化或SentencePiece编码。
 - **上下文**：[§5.1.5](https://arxiv.org/html/2312.11805v1#S5.SS1.SSS5)给出训练序列长度 **32,768 tokens**。这是训练/论文评测口径，不是当前API规格，也不单独证明所有长文档推理可靠。
-- **未披露项**：RoPE、RMSNorm、GeGLU、各变体Dense/MoE细分、type embedding与模态输出head布局，**本批均不能由这篇原文确认**。不从PaLM或后代模型补推。
+- **未披露项**：RoPE、RMSNorm、GeGLU、各变体Dense/MoE细分、type embedding与模态输出head布局，**Gemini 1.0 原文未披露**，不能从PaLM或后代模型补推。
 
 **联合训练的边界**：原文确认多模态联合训练与交错输入，未提供“原生训练消除了模态对齐gap”的受控证据。它也描述分阶段调整训练数据混合，不能把“从一开始是多模态模型”扩写为全部组件都从随机初始化、每一步各模态比例固定。[v1 §2、§4]
 
-**训练基础设施（原稿配置待单独核对）**：多个4096-chip TPU v4 Pod、跨数据中心、Pathways驱动这组具体说法不在本批的架构与评测核验范围内，不因以下结果核对而视为已确认。
+**训练基础设施**：Gemini 1.0 论文没有披露多个4096-chip TPU v4 Pod、跨数据中心或由Pathways驱动等具体配置；下述实验结果不能确认这些说法。
 
 **MMLU：90.0%与86.4%不属于同一推理设置**。v1表2与[附录§9.1](https://arxiv.org/html/2312.11805v1#S9.SS1)分别列出：
 
@@ -364,7 +364,7 @@ Gemini 1.5 Pro的MoE是这些研究的集大成者，实现了：
 | 训练硬件 | TPU v4 | TPU v4 | TPU v4 | TPU v4 | **TPU v6e** | TPU v6e+ | TPU v6e+ | TPU v7 | TPU v7 |
 | 激活参数 | 540B (全量) | 未公布 | 未公布 | 部分激活 | 部分激活 | ~40B | 未公布 | 未公布 | 未公布 |
 
-> **本批范围**：只按2312.11805v1同步Gemini 1.0列中的骨干、注意力、分词和训练上下文；本表其他代际列、硬件及激活参数仍属原稿待核内容，不据1.0论文升格为已确认。
+> Gemini 1.0 列依据 2312.11805v1；该论文不能确认本表其他代际的硬件、激活参数或架构细节。
 
 ---
 
@@ -386,7 +386,7 @@ Gemini 1.0的原生多模态指多模态联合训练与交错输入/输出能力
 
 因此可以说“decoder骨干支持多模态交错序列”，不能把这句话补画成已公开的逐模块实现图。[v1 §2、图2](https://arxiv.org/html/2312.11805v1#S2)的研究性图像输出也不等于2023年所有产品端点已开放生图或音频生成。
 
-**后代型号待核**：原稿的Gemini 2.0+原生音频/图像输出、TTS细粒度控制及各模型视频时长，需要各自固定日期的官方模型卡或API资料；本篇1.0论文不验证这些型号，不能据此确认其输出head或推理实现。
+**后代型号边界**：Gemini 2.0+ 的原生音频/图像输出、TTS控制及视频时长，应依据各自版本的模型卡或 API 文档；Gemini 1.0 论文不披露这些型号的输出 head 或推理实现。
 
 ### 3.3 Gemini在不同模态上的表现
 
@@ -737,7 +737,7 @@ Gemini 3.5 Flash: 编码和代理工作流优化，比3.1 Pro在编码/代理基
 
 ## 9. Gemini 4 Argon（2026-09/10）：稀疏 MoE、长解码与评测边界
 
-> 核查日期：2026-10-22。模型以 stable ID `gemini-4-argon` 提供；本节依据 Google 官方模型卡、Gemini API 模型说明和官方发布公告。官方来源没有公开权重 revision 或完整参数规模，本节不推断这些数值。
+> 模型以 stable ID `gemini-4-argon` 提供；本节依据 Google 官方模型卡、Gemini API 模型说明和官方发布公告。官方来源没有公开权重 revision 或完整参数规模，本节不推断这些数值。
 
 ### 9.1 发布和研究对象
 
@@ -780,11 +780,11 @@ Google 的评测方法说明：除特别注明外，Argon 结果为 pass@1，并
 
 截至 2026-10-23，Google DeepMind 的模型卡目录新增 Gemini 3.6、3.7、3.8 Flash 与 Gemini 3.8 Audio。Gemini 3.8 Flash 模型卡将其明确描述为基于 Gemini 3.7 Flash，支持文本、图像、音频和视频输入、最高 1M token 上下文与 64K 输出；卡片说明可调 effort 用于控制质量、成本与延迟。该卡提供若干 agentic coding、knowledge work、computer-use、长上下文等基准结果，但指出部分安全自动评估已更新、不可直接与旧卡分数比较。此证据支持产品级能力与评测口径，不能推出 3.8 的全新底层架构或训练配方。
 
-Gemini 4 Argon 的官方模型卡（2026-10-13）公布 2026 年 10 月多项软件工程、知识工作、科学、长上下文、计算机使用和多模态评测，并链接到单独的方法说明。其结果在同一张表中列出对手，但比较仍受各基准的工具、预算、版本和评分条件约束；不能简化为单一“总排名”。截至本轮核查，官方卡没有公开 Argon 参数规模、权重、专家数或完整训练流程。本节 §9.1–§9.4 的发布信息与架构限制仍适用。
+Gemini 4 Argon 的官方模型卡（2026-10-13）公布 2026 年 10 月多项软件工程、知识工作、科学、长上下文、计算机使用和多模态评测，并链接到单独的方法说明。其结果在同一张表中列出对手，但比较仍受各基准的工具、预算、版本和评分条件约束；不能简化为单一“总排名”。官方卡没有公开 Argon 参数规模、权重、专家数或完整训练流程。本节 §9.1–§9.4 的发布信息与架构限制仍适用。
 
-本条目所称“Gemini 系列”也包括本报告 §6 的 Gemma 开放模型支线。官方模型卡目录现列有 Gemma 4（2026-04）及 DiffusionGemma（2026-06）等较晚条目；它们与 Gemini 4 Argon 属不同发布线。本次仅记录其存在，不把 Gemma 模型卡外推为闭源 Gemini 的架构证据。
+本条目所称“Gemini 系列”也包括 §6 的 Gemma 开放模型支线。官方模型卡目录列有 Gemma 4（2026-04）及 DiffusionGemma（2026-06）；它们与 Gemini 4 Argon 属不同发布线，不能用 Gemma 模型卡推断闭源 Gemini 的架构。
 
-一手材料：[Gemini 3.8 Flash 模型卡](https://deepmind.google/models/model-cards/gemini-3-8-flash/)、[Gemini 4 Argon 模型卡](https://deepmind.google/models/model-cards/gemini-4-argon/)、[Google DeepMind 模型卡目录](https://deepmind.google/models/model-cards/)。核查日期：2026-10-23。
+一手材料：[Gemini 3.8 Flash 模型卡](https://deepmind.google/models/model-cards/gemini-3-8-flash/)、[Gemini 4 Argon 模型卡](https://deepmind.google/models/model-cards/gemini-4-argon/)、[Google DeepMind 模型卡目录](https://deepmind.google/models/model-cards/)。
 
 ## 10. 参考文献
 
@@ -792,7 +792,7 @@ Gemini 4 Argon 的官方模型卡（2026-10-13）公布 2026 年 10 月多项软
 
 2. Anil, R., et al. (2023). **PaLM 2 Technical Report.** arXiv:2305.10403.
 
-3. Gemini Team (2023). **Gemini: A Family of Highly Capable Multimodal Models.** [arXiv:2312.11805v1](https://arxiv.org/abs/2312.11805v1)，2023-12-19；本批核对§2、§4、§5.1.1、§5.1.5与附录§9.1。
+3. Gemini Team (2023). **Gemini: A Family of Highly Capable Multimodal Models.** [arXiv:2312.11805v1](https://arxiv.org/abs/2312.11805v1)，2023-12-19；相关方法与评测定位见 §2、§4、§5.1.1、§5.1.5 和附录 §9.1。
 
 4. Gemini Team (2024). **Gemini 1.5: Unlocking multimodal understanding across millions of tokens of context.** arXiv:2403.05530.
 

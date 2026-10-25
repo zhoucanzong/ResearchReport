@@ -9,18 +9,14 @@ evidence: 精读原文
 status: completed
 
 ---
-> **2026-10-22 语义复核**：固定源码、已核调用链和未覆盖项见 [sources/MANIFEST.md](sources/MANIFEST.md)；本轮核验限定在列明的行为切面。
-
 
 # SGLang 仓库代码分析报告
 
-> ⚠️ **信息来源声明**：本报告由 AI Agent 基于公开开源仓库源码整理生成，方法为**只读精读**（clone 到仓库外临时目录，不构建、不修改、读完即删）。所有行为结论均标注 `文件:行`，并区分「代码事实」与「研究推断」。加速比/接受率等性能数字**不在本报告结论范围内**——本报告只做代码事实核验，不做性能复现。
+> **源码范围与证据**：以下结论对应固定 revision `2a08e261ecd4cdfb04ec354f9005f18b88108b7d`，以源码路径/行号区分代码事实与研究推断。本文未运行构建、测试或性能基准；吞吐和接受率仅在引用作者报告时注明条件，不作为独立实测。
 >
-> **调研日期**：2026-10-16
 > **分析对象**：`sgl-project/sglang` @ `2a08e261ecd4cdfb04ec354f9005f18b88108b7d`（2026-10-16 13:24:48 +0800，提交标题 `[Feat] MiniCPM-V-4.7: add model support (#41993)`；`git describe` = `gateway-v0.3.1-11434-g2a08e261ec`）
-> **模式**：`deep`（code-researcher skill）
 > **子文档**：调度与 KV 复用见 [scheduler-and-prefix-cache.md](scheduler-and-prefix-cache.md)；投机解码路径与 EAGLE 对照见 [speculative-decoding-path.md](speculative-decoding-path.md)；结论审计见 [claim-audit.md](claim-audit.md)
-> **证据标签**：单一主等级（精读原文 / 摘要级 / 二手 / 受限核验）。本报告大量使用 **`[精读原文（SGLang 源码 @ 本报告 SHA）]`**——指逐行阅读了该 commit 的源码，未引用任何二手解读。
+> **证据标签**：单一主等级（精读原文 / 摘要级 / 二手 / 受限核验）；`[精读原文（SGLang 源码 @ 2a08e261）]`表示结论可由固定 revision 源码定位。
 
 ---
 
@@ -28,13 +24,13 @@ status: completed
 
 ### 1.1 这个项目是什么
 
-SGLang 是一个面向 LLM / 多模态模型的高吞吐推理服务框架（[README.md](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/README.md>)，本报告不贴仓库长引用）。本报告只覆盖它**推理引擎核心**的一条纵切面：`python/sglang/srt/` 下的**调度器 → KV 内存 → 注意力 → 投机解码**链路。[精读原文（SGLang 源码 @ 本报告 SHA）]
+SGLang 是一个面向 LLM / 多模态模型的高吞吐推理服务框架（[README.md](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/README.md>)）。本文覆盖**推理引擎核心**的一条纵切面：`python/sglang/srt/` 下的**调度器 → KV 内存 → 注意力 → 投机解码**链路。[精读原文（SGLang 源码 @ 2a08e261）]
 
-代码规模（`scan_repo.py` 扫描本 commit 工作树）：10,629 个文件、3,452,457 行；其中 Python 2,495,272 行、Rust 291,191 行、JavaScript 104,371 行、Markdown 33,493 行、C++ 28,988 行。`git ls-files` 层面这是一个**多语言单体仓库**：Python 引擎（`python/sglang/srt/`）+ Rust 侧扩展（`rust/`，含独立 workspace 的 `sglang-radix-tree`）+ 独立网关（`sgl-model-gateway/`）。[精读原文（SGLang 源码 @ 本报告 SHA）]
+这是一个**多语言单体仓库**：Python 引擎（`python/sglang/srt/`）+ Rust 侧扩展（`rust/`，含独立 workspace 的 `sglang-radix-tree`）+ 独立网关（`sgl-model-gateway/`）。[精读原文（SGLang 源码 @ 2a08e261）]
 
 ### 1.2 中心架构思路
 
-用一句话概括本报告读到的三段设计：
+三个关键设计是：
 
 1. **前缀复用被抽象成"逻辑 radix 树 + 物理组件"两层**。树只管 token 键的拓扑（`RadixKey` / `TreeNode.key`），KV 槽位的分配、释放、淘汰、拷贝全交给 `TreeComponent` 驱动——`[unified_tree_core.py:416](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/unified_cache/unified_tree_core.py>)` 的类注释原文即 "Zero special-casing in the main tree"。这使 Full / SWA / Mamba 三种缓存类型能共用同一棵树。 **[精读原文]** 证据：`python/sglang/srt/mem_cache/unified_cache/components/README.md:1`
 2. **调度器把"跑当前 batch"与"处理上一 batch 结果"拆到两条流上重叠执行**，并把投机解码的 draft/verify 也塞进同一个重叠窗口。`[scheduler.py:1993](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/managers/scheduler.py>)` 的 `event_loop_overlap` 用 `result_queue` 持有上一 batch 的结果，`[eagle_worker_v2.py:1424](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/speculative/eagle_worker_v2.py>)` 在 verify 结束、draft_extend 开始之间**主动回调 `on_publish`**，让调度准备与 draft_extend 并行。 **[精读原文]**
@@ -45,7 +41,7 @@ SGLang 是一个面向 LLM / 多模态模型的高吞吐推理服务框架（[RE
 | # | 判断 | 类型 |
 |---|---|---|
 | 1 | **本 commit 上，「topk=1 时把 draft 预测概率传给验证阶段」已存在落地路径**，即 `--speculative-use-rejection-sampling`；但**默认关闭**，且**对 EAGLE3 降维词表场景被显式排除**。因此"默认配置下 topk=1 仍把草稿当 one-hot"在代码层面依然成立。 | 代码事实 |
-| 2 | **默认 target-only 分支不能只凭“零 draft_probs”判断有偏**。topk=1、两个阈值为 1 时，接受 $p(x)$，拒绝残差排除 $x$（`sampling.cuh:81,93,104-123`），混合后才恢复 $p$。EAGLE 本体的拒绝路径本轮未复核，不主张完整同构。 | 代码事实 + 有条件单步推导 |
+| 2 | **默认 target-only 分支不能只凭“零 draft_probs”判断有偏**。topk=1、两个阈值为 1 时，接受 $p(x)$，拒绝残差排除 $x$（`sampling.cuh:81,93,104-123`），混合后才恢复 $p$。EAGLE 本体的拒绝路径不在此处引用的源码切面内，因而不推断完整同构。 | 代码事实 + 有条件单步推导 |
 | 3 | **overlap scheduler 与 topk>1 互斥**，而 SGLang 对 Llama/Grok 的自动参数选择恰好给出 `topk=4`；同时 `rejection sampling` 要求 `topk=1`。也就是说：**"重叠调度 + 严格随机验证 + 树状投机"三者当前无法同时开启**，这是当前主干上一个显式的设计取舍边界。 | 代码事实 + 研究推断 |
 
 ### 1.4 最值得关注的风险
@@ -68,28 +64,28 @@ SGLang 的目标场景在 README 里被概括为 "agentic workloads, large-scale
 ### 2.2 与更简单做法的取舍
 
 - **不做"每请求一棵树"**：所有请求共享一棵全局 radix 树，靠 `lock_ref` 引用计数区分"可淘汰 / 被占用"（`[radix_cache.py:582](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/radix_cache.py>)` `inc_lock_ref`）。代价是任何一次 `match_prefix` 都可能**就地分裂节点**（`[radix_cache.py:662](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/radix_cache.py>)`），树结构在只读操作中被改写。
-- **不做"验证一律严格拒绝采样"**：默认走目标-only kernel（仍需完整 `target_probs` 及同形缓冲，见 `eagle_utils.py:999-1003`；本报告未测速度差），代价是 T>0 下草稿被当作 point mass。严格模式作为 opt-in 保留。
+- **不做"验证一律严格拒绝采样"**：默认走目标-only kernel（仍需完整 `target_probs` 及同形缓冲，见 `eagle_utils.py:999-1003`），代价是 T>0 下草稿被当作 point mass。严格模式作为 opt-in 保留。
 - **不做"多语言统一"**：树热点用 Rust 重写（`rust/sglang-radix-tree/`），Python 侧只保留接口与回退。代价是**平台/工具链兼容矩阵**成为新的失败面（`[tree_core_registry.py:44](<https://github.com/sgl-project/sglang/blob/2a08e261ecd4cdfb04ec354f9005f18b88108b7d/python/sglang/srt/mem_cache/unified_cache/tree_core_registry.py>)` 的 `_rust_fallback_reason` 列了 6 类回退条件）。
 
 ---
 
 ## 3. Codebase Map
 
-### 3.1 主入口
+### 3.1 主入口与执行路径
 
 | 面 | 入口 | 说明 |
 |---|---|---|
 | HTTP / OpenAI 兼容 | `python/sglang/srt/entrypoints/` | 服务器进程入口 |
-| 请求编排 | `python/sglang/srt/managers/tokenizer_manager.py` | tokenize / 分派 / 结果回传（本报告仅快速阅读职责和交接处） |
-| 调度 | `python/sglang/srt/managers/scheduler.py` | 单进程调度主循环（274k 字符级大文件，本报告 traced） |
+| 请求编排 | `python/sglang/srt/managers/tokenizer_manager.py` | tokenize / 分派 / 结果回传（请求编排职责与下游交接） |
+| 调度 | `python/sglang/srt/managers/scheduler.py` | 单进程调度主循环（274k 字符级大文件，主路径） |
 | 模型执行 | `python/sglang/srt/model_executor/model_runner.py` | CUDA graph、attn backend 选择 |
 | 投机解码 | `python/sglang/srt/speculative/` | 按算法分 worker |
 
-普通文本 HTTP/SSE 请求从入口经 tokenizer、scheduler、detokenizer 到断连清理的独立追踪见 [在线请求生命周期专题](online-request-lifecycle.md)。它固定了单独的 2026-10-23 源码 SHA，不会升级本报告现有固定快照上的其他结论。
+普通文本 HTTP/SSE 请求从入口经 tokenizer、scheduler、detokenizer 到断连清理见 [在线请求生命周期专题](online-request-lifecycle.md)；该专题使用独立 revision，因此其结论应与本文固定 SHA 分开引用。
 
-`scan_repo.py` 的 `entry_candidates` 把 `.agents/skills/*/SKILL.md` 排在前面，这是**误判**：那些是仓库自带的 Agent 协作说明书，不是运行时入口。本报告按运行时重要性人工改判为 `entrypoints/` → `managers/` → `model_executor/`。[精读原文（SGLang 源码 @ 本报告 SHA）]
+运行时阅读路线为 `entrypoints/` → `managers/` → `model_executor/`；仓库自带的 `.agents/skills/*/SKILL.md` 是 Agent 协作说明，不是服务运行入口。
 
-### 3.2 高信号目录（按本报告实际阅读权重）
+### 3.2 主路径目录
 
 | 目录 | 权重 | 理由 |
 |---|---|---|
@@ -99,15 +95,15 @@ SGLang 的目标场景在 README 里被概括为 "agentic workloads, large-scale
 | `python/sglang/kernels/` | 中高 | verify 两个 kernel 的实现（CUDA `.cuh` + Triton） |
 | `python/sglang/srt/layers/attention/` | 中 | `RadixAttention` 层与各 backend 的 verify mask |
 | `rust/sglang-radix-tree/` | 中 | 默认 TreeCore 的 Rust 实现 |
-| `test/` | 中（抽样） | 3711 个测试文件；本报告只抽读 spec/mem_cache 相关 |
+| `test/` | 中（抽样） | 3711 个测试文件；代表性测试覆盖 spec/mem_cache |
 
-### 3.3 低信号 / 元数据区
+### 3.3 本专题未覆盖的目录
 
-`docs/`（10 万+ 行，含 1.2k 行 spec 文档，本报告用于交叉验证而非结论依据）、`benchmark/`、`assets/`、`.agents/`、`3rdparty/`。**本报告不基于这些区域下行为结论。**
+`docs/`（10 万+ 行，含 1.2k 行 spec 文档，供背景参考；行为结论以对应源码为据）、`benchmark/`、`assets/`、`.agents/`、`3rdparty/`。这些区域不在本文的推理路径证据范围内。
 
 ### 3.4 构建与开发面
 
-`python/pyproject.toml` 显示构建需要 `torch==2.14.1`、`setuptools-rust>=1.11`、`apache-tvm-ffi`；Rust 树核心是独立 Cargo workspace（`rust/sglang-radix-tree/Cargo.toml` 注释：`Keep this crate in its own workspace: tch needs libtorch at build time`）。本报告**未构建、未运行任何测试**——所有结论来自静态阅读。[精读原文（SGLang 源码 @ 本报告 SHA）]
+`python/pyproject.toml` 显示构建需要 `torch==2.14.1`、`setuptools-rust>=1.11`、`apache-tvm-ffi`；Rust 树核心是独立 Cargo workspace（`rust/sglang-radix-tree/Cargo.toml` 注释：`Keep this crate in its own workspace: tch needs libtorch at build time`）。构建依赖限定了平台组合。[精读原文（SGLang 源码 @ 2a08e261）]
 
 ---
 
@@ -156,7 +152,7 @@ flowchart TB
     GNB -->|"match_prefix / insert"| RC
 ```
 
-图中每条边都能对应到源码：[精读原文（SGLang 源码 @ 本报告 SHA）]
+图中每条边都能对应到源码：[精读原文（SGLang 源码 @ 2a08e261）]
 `scheduler.py:1993`、`scheduler.py:3806`、`scheduler.py:4531`、`scheduler.py:1173`、`eagle_worker_v2.py:1350`、`eagle_utils.py:741`、`sampling.cuh:80`、`reject_sampling.py:147`、`eagle_info.py:17`、`registry.py:146`、`tree_core_registry.py:44`、`radix_cache.py:281`、`schedule_batch.py:1660`。
 
 ### 4.2 关键边界
@@ -264,7 +260,7 @@ sequenceDiagram
 | 可观测性 | 启动日志会显式打印被自动改写的默认值（如 "enabling speculative_use_rejection_sampling by default"） | `speculative_hook.py:1125` |
 | 数值防御 | verify 路径对 logits/probs 做 NaN/Inf 探测（`maybe_detect_nan` / `maybe_detect_inf`） | `eagle_worker_common.py:1265`；`eagle_utils.py:1000–1003` |
 | 文档 | 投机解码单文档 1202 行，且明确写出"point mass / 默认关"这类**限制性事实** | `docs/docs/advanced_features/speculative_decoding.mdx:643` |
-| 我的不确定性 | **未构建、未跑测试、未做性能测量**；所有"更快/更慢"都不在本报告范围 | — |
+| 证据边界 | 静态源码和文档不能支持性能比较；Rust/Python 对拍与运行时默认路径需另行验证 | — |
 
 ---
 
@@ -291,8 +287,8 @@ sequenceDiagram
 
 **下一步值得追的调查**
 
-- `SGLANG_ENABLE_LILICORR_SAMPLING` 与 `--speculative-use-block-verification` 组合时的分布语义（本报告未展开）。
-- Rust TreeCore 与 Python TreeCore 的行为差异是否被对拍测试覆盖（本报告只见到 `rust/sglang-radix-tree/src/tests/` 与 `test/registered/unit/mem_cache/` 两处，未逐条比对）。
+- `SGLANG_ENABLE_LILICORR_SAMPLING` 与 `--speculative-use-block-verification` 组合时的分布语义（尚未在引用的源码切面中分析）。
+- Rust TreeCore 与 Python TreeCore 的行为差异是否被对拍测试覆盖（现有测试分别位于 `rust/sglang-radix-tree/src/tests/` 与 `test/registered/unit/mem_cache/`；两侧逐项等价性仍未建立）。
 - DDTree / DFLASH 系列 worker 与 EAGLE worker 的 verify 语义分叉。
 
 ---
@@ -323,6 +319,4 @@ sequenceDiagram
 
 ---
 
-> **方法学说明**：本报告按 code-researcher deep 模式执行：`scan_repo.py` 生成项目地图 → 四层方法（Codebase Map / Runtime Story / Design Inquiry / Maintainer Notes）→ 重点专题代码级追踪 → `claim_audit.py` 审计（结果见 [claim-audit.md](claim-audit.md)）。阅读覆盖按 Scanned / Skimmed / Traced / Audited 四级记录，详见 [claim-audit.md](claim-audit.md)。
 >
-> *数据截至 2026-10-16。*

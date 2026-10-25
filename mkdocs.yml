@@ -258,7 +258,7 @@ nav:
         - "MANIFEST": "LLM/OperationsResearch/sources/MANIFEST.md"
         - "evaluation-protocols": "LLM/OperationsResearch/topics/evaluation-protocols.md"
     - "检索增强生成（RAG）": "LLM/RAG/report.md"
-    - "推理模型与推理时计算": "LLM/ReasoningModels/report.md"
+    - "推理模型与测试时计算": "LLM/ReasoningModels/report.md"
     - "LLM 后训练中的强化学习":
         - "总报告": "LLM/ReinforcementLearning/report.md"
         - "2305.20050-prm800k": "LLM/ReinforcementLearning/papers/2305.20050-prm800k.md"
