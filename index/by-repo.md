@@ -51,7 +51,7 @@
 * [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) — 560 行
 * [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) — 181 行
 
-## LLM (10)
+## LLM (11)
 
 * [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) — 115 行
 * [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) — 875 行
@@ -59,6 +59,7 @@
 * [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) — 102 行
 * [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) — 610 行
 * [LLM/MoE/report.md](<../LLM/MoE/report.md>) — 406 行
+* [LLM/OperationsResearch/report.md](<../LLM/OperationsResearch/report.md>) — 90 行
 * [LLM/RAG/report.md](<../LLM/RAG/report.md>) — 835 行
 * [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) — 676 行
 * [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) — 60 行

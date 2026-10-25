@@ -13,17 +13,17 @@
 
 | 指标 | 数量 |
 | --- | --- |
-| **条目数**（`report.md`） | **73** |
-| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 11 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6 |
-| 条目子文档数 | 263 |
-| 条目正文行数（剔除 front-matter） | 28,725 |
-| 条目字节 | 2,235,815 B |
-| 带 front-matter 的条目 | 73 |
-| 带合法 `date` 的条目 | 30 |
-| 文档（除生成物外的全部 `.md`） | 358 |
+| **条目数**（`report.md`） | **74** |
+| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 12 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6 |
+| 条目子文档数 | 272 |
+| 条目正文行数（剔除 front-matter） | 28,815 |
+| 条目字节 | 2,247,549 B |
+| 带 front-matter 的条目 | 74 |
+| 带合法 `date` 的条目 | 31 |
+| 文档（除生成物外的全部 `.md`） | 368 |
 | 其中文件名 `README.md` | 11 |
-| 纳入版本控制的文件 | 382 |
-| 纳入版本控制的 `.md` | 366 |
+| 纳入版本控制的文件 | 392 |
+| 纳入版本控制的 `.md` | 376 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -33,7 +33,7 @@
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
 | Models | 23 | 41 | 12,150 | 906,873 B | [板块页 →](<Models/README.md>) |
-| LLM | 11 | 75 | 4,383 | 356,570 B | [板块页 →](<LLM/README.md>) |
+| LLM | 12 | 85 | 4,473 | 368,304 B | [板块页 →](<LLM/README.md>) |
 | Agents | 3 | 22 | 207 | 29,975 B | [板块页 →](<Agents/README.md>) |
 | AIGC | 9 | 10 | 6,993 | 348,293 B | [板块页 →](<AIGC/README.md>) |
 | WorldModel | 3 | 44 | 1,301 | 147,571 B | [板块页 →](<WorldModel/README.md>) |
@@ -41,7 +41,7 @@
 | Evaluation | 2 | 10 | 158 | 32,341 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 6 | 56 | 1,119 | 106,307 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 36 | 1,578 | 168,561 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **73** | **358** | **28,725** | **2,235,815 B** | — |
+| **合计** | **74** | **368** | **28,815** | **2,247,549 B** | — |
 
 ## 分面索引
 
@@ -351,10 +351,10 @@
 
 </details>
 
-### LLM（11 条目 / 75 文档）
+### LLM（12 条目 / 85 文档）
 
 <details>
-<summary><b>语言模型 LLM（11 条目 / 63 子文档）</b></summary>
+<summary><b>语言模型 LLM（12 条目 / 72 子文档）</b></summary>
 
   <details>
   <summary><b>模型对齐与后训练</b> · <code>LLM/Alignment/report.md</code> · 115 行 · —</summary>
@@ -466,6 +466,26 @@
     * **元数据**：type=`—` · domain=`LLM` · subject=`MoE` · date=`—` · status=`—`
     * **子文档（0）**
         * _该条目暂无子文档_
+
+  </details>
+
+  <details>
+  <summary><b>大模型辅助运筹建模与求解</b> · <code>LLM/OperationsResearch/report.md</code> · 90 行 · 2026-10-25</summary>
+
+
+    * **条目**：[LLM/OperationsResearch/report.md](<LLM/OperationsResearch/report.md>)（90 行 / 11,734 B）
+    * **专题目录**：`LLM/OperationsResearch`
+    * **元数据**：type=`research` · domain=`LLM` · subject=`OperationsResearch` · date=`2026-10-25` · status=`current`
+    * **子文档（9）**
+        * [papers/2022-nl4opt.md](<LLM/OperationsResearch/papers/2022-nl4opt.md>) — 11 行 / 1,280 B
+        * [papers/2401.02051-eoh.md](<LLM/OperationsResearch/papers/2401.02051-eoh.md>) — 17 行 / 1,794 B
+        * [papers/2402.10172-optimus.md](<LLM/OperationsResearch/papers/2402.10172-optimus.md>) — 21 行 / 2,199 B
+        * [papers/2602.10450-miplib-nl.md](<LLM/OperationsResearch/papers/2602.10450-miplib-nl.md>) — 17 行 / 2,001 B
+        * [papers/2605.10401-llm4branch.md](<LLM/OperationsResearch/papers/2605.10401-llm4branch.md>) — 17 行 / 1,934 B
+        * [papers/funsearch.md](<LLM/OperationsResearch/papers/funsearch.md>) — 21 行 / 2,483 B
+        * [papers/llm-lns.md](<LLM/OperationsResearch/papers/llm-lns.md>) — 17 行 / 1,953 B
+        * [sources/MANIFEST.md](<LLM/OperationsResearch/sources/MANIFEST.md>) — 18 行 / 2,132 B
+        * [topics/evaluation-protocols.md](<LLM/OperationsResearch/topics/evaluation-protocols.md>) — 55 行 / 6,885 B
 
   </details>
 
@@ -1252,6 +1272,6 @@
 ## 说明
 
 * 本索引是**派生数据**，仓库里的条目文件才是唯一事实来源；重建索引只需重跑脚本。
-* 当前 73 份条目带 front-matter；缺失的 `type` / `date` / `status` 显示为 `—`，domain / subject / topic 缺失时由路径推断。
+* 当前 74 份条目带 front-matter；缺失的 `type` / `date` / `status` 显示为 `—`，domain / subject / topic 缺失时由路径推断。
 * 可选元数据：`title` / `display_name` / `type` / `domain` / `subject` / `topic` / `upstream` / `date` / `evidence` / `status`。
 * 脚本只读扫描、只写生成物；**不会删除或改写任何条目文件**。

@@ -313,6 +313,12 @@
 | --- | --- | --- | --- | --- |
 | [Models/OpenAI-Gen/report.md](<../Models/OpenAI-Gen/report.md>) | OpenAI 生成模型系列研究报告 | — | — | — |
 
+## OperationsResearch (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM/OperationsResearch/report.md](<../LLM/OperationsResearch/report.md>) | 大模型辅助运筹建模与求解：从自然语言到可验证的决策 | research | 2026-10-25 | current |
+
 ## ProteinDesign (1)
 
 | 条目 | 标题 | type | date | status |

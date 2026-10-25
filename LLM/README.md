@@ -2,7 +2,7 @@
 
 # 💬 LLM
 
-**11 条** · 语言模型能力与技术专题，覆盖推理、对齐、Agent、RAG 等方向。
+**12 条** · 语言模型能力与技术专题，覆盖推理、对齐、Agent、RAG 等方向。
 
 [← 返回首页](<../README.md>) · [完整索引](<../INDEX.md>)
 
@@ -10,13 +10,14 @@
 
 <!-- SCRIPT:panel-readme START · 由 scripts/library_index.py 生成，勿手改 -->
 
-![Entries](https://img.shields.io/badge/Entries-11-3f51b5?style=flat-square)
+![Entries](https://img.shields.io/badge/Entries-12-3f51b5?style=flat-square)
 ![Panel](https://img.shields.io/badge/Panel-LLM-9e9e9e?style=flat-square)
 
 ## 专题内分析
 
 | 所属报告 | 分册入口 |
 | --- | --- |
+| 大模型辅助运筹建模与求解 | [运筹建模与求解评测：正确性、反馈与基准边界](<OperationsResearch/topics/evaluation-protocols.md>) |
 | 训练数据策展 | [预训练数据配比：从稳健重加权到代理回归](<TrainingData/topics/data-mixture.md>) |
 | 视觉语言模型（VLM） | [VLM 评测的输入预算与 grounding：模型究竟看到了什么？](<VLM/topics/evaluation-input-budget.md>) |
 | 视觉语言模型（VLM） | [VLMEvalKit 如何把 Video-MME 的回答变成分数](<VLM/topics/vlmevalkit-video-mme-path.md>) |
@@ -33,6 +34,7 @@
 | **OCR 与文档解析** | [OCR 与文档解析：从字符识别到结构还原](<DocumentParsing/report.md>) | 102 行 |
 | **长上下文** | [长上下文（Long Context）技术研究报告](<LongContext/report.md>) | 610 行 |
 | **混合专家模型（MoE）** | [混合专家模型（Mixture of Experts, MoE）架构演进研究报告](<MoE/report.md>) | 406 行 |
+| **大模型辅助运筹建模与求解** | [大模型辅助运筹建模与求解：从自然语言到可验证的决策](<OperationsResearch/report.md>) | 90 行 |
 | **检索增强生成（RAG）** | [检索增强生成（Retrieval-Augmented Generation, RAG）技术研究报告](<RAG/report.md>) | 835 行 |
 | **推理模型与推理时计算** | [推理模型（Reasoning Models）与 Test-Time Compute 研究报告](<ReasoningModels/report.md>) | 676 行 |
 | **LLM 后训练中的强化学习** | [LLM 后训练中的强化学习：轨迹从哪里来，策略何时更新](<ReinforcementLearning/report.md>) | 107 行 |
@@ -100,6 +102,21 @@
 * [papers/2605.27978-amap-abot-ocr.md](<DocumentParsing/papers/2605.27978-amap-abot-ocr.md>) — 42 行 / 5,791 B
 * [papers/2607.04884-hunyuan-ocr-15.md](<DocumentParsing/papers/2607.04884-hunyuan-ocr-15.md>) — 53 行 / 11,829 B
 * [papers/2607.21617-amazon-faithc4.md](<DocumentParsing/papers/2607.21617-amazon-faithc4.md>) — 39 行 / 6,093 B
+
+</details>
+
+<details>
+<summary><b>大模型辅助运筹建模与求解</b>（9 份）</summary>
+
+* [papers/2022-nl4opt.md](<OperationsResearch/papers/2022-nl4opt.md>) — 11 行 / 1,280 B
+* [papers/2401.02051-eoh.md](<OperationsResearch/papers/2401.02051-eoh.md>) — 17 行 / 1,794 B
+* [papers/2402.10172-optimus.md](<OperationsResearch/papers/2402.10172-optimus.md>) — 21 行 / 2,199 B
+* [papers/2602.10450-miplib-nl.md](<OperationsResearch/papers/2602.10450-miplib-nl.md>) — 17 行 / 2,001 B
+* [papers/2605.10401-llm4branch.md](<OperationsResearch/papers/2605.10401-llm4branch.md>) — 17 行 / 1,934 B
+* [papers/funsearch.md](<OperationsResearch/papers/funsearch.md>) — 21 行 / 2,483 B
+* [papers/llm-lns.md](<OperationsResearch/papers/llm-lns.md>) — 17 行 / 1,953 B
+* [sources/MANIFEST.md](<OperationsResearch/sources/MANIFEST.md>) — 18 行 / 2,132 B
+* [topics/evaluation-protocols.md](<OperationsResearch/topics/evaluation-protocols.md>) — 55 行 / 6,885 B
 
 </details>
 
