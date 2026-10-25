@@ -261,6 +261,12 @@
 | --- | --- | --- | --- | --- |
 | [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) | 在线 LLM Serving：SLO、Goodput 与请求完整性 | research | 2026-10-24 | current |
 
+## 大模型辅助运筹建模与求解 (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM/OperationsResearch/report.md](<../LLM/OperationsResearch/report.md>) | 大模型辅助运筹建模与求解：从自然语言到可验证的决策 | research | 2026-10-25 | current |
+
 ## 天文图像异常发现 (1)
 
 | 条目 | 标题 | type | date | status |
@@ -447,7 +453,7 @@
 | --- | --- | --- | --- | --- |
 | [AIGC/AudioGen/report.md](<../AIGC/AudioGen/report.md>) | 音频/音乐生成技术研究报告 | — | — | — |
 
-## 专题内分析分册（17）
+## 专题内分析分册（18）
 
 | 所属报告 | 分册入口 |
 | --- | --- |
@@ -456,6 +462,7 @@
 | [投机解码](<../Infra/SpeculativeDecoding/report.md>) | [扩散语言模型与投机解码：草稿、验证和生成目标](<../Infra/SpeculativeDecoding/topics/diffusion-drafters.md>) |
 | [投机解码](<../Infra/SpeculativeDecoding/report.md>) | [横切专题③：系统实现与吞吐—延迟权衡](<../Infra/SpeculativeDecoding/topics/systems-throughput-latency.md>) |
 | [投机解码](<../Infra/SpeculativeDecoding/report.md>) | [横切专题②：验证、接受率与无损性的适用条件](<../Infra/SpeculativeDecoding/topics/verification-acceptance.md>) |
+| [大模型辅助运筹建模与求解](<../LLM/OperationsResearch/report.md>) | [运筹建模与求解评测：正确性、反馈与基准边界](<../LLM/OperationsResearch/topics/evaluation-protocols.md>) |
 | [训练数据策展](<../LLM/TrainingData/report.md>) | [预训练数据配比：从稳健重加权到代理回归](<../LLM/TrainingData/topics/data-mixture.md>) |
 | [视觉语言模型（VLM）](<../LLM/VLM/report.md>) | [VLM 评测的输入预算与 grounding：模型究竟看到了什么？](<../LLM/VLM/topics/evaluation-input-budget.md>) |
 | [视觉语言模型（VLM）](<../LLM/VLM/report.md>) | [VLMEvalKit 如何把 Video-MME 的回答变成分数](<../LLM/VLM/topics/vlmevalkit-video-mme-path.md>) |

@@ -11,6 +11,7 @@
 
 | 条目 | date | 板块 | 专题 |
 | --- | --- | --- | --- |
+| [LLM/OperationsResearch/report.md](<../LLM/OperationsResearch/report.md>) | 2026-10-25 | LLM | OperationsResearch |
 | [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) | 2026-10-25 | LLM | DocumentParsing |
 | [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 2026-10-24 | LLM | TrainingData |
 | [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) | 2026-10-24 | Infra | ServingEvaluation |
@@ -30,7 +31,6 @@
 | [AI4Science/MaterialsDiscovery/report.md](<../AI4Science/MaterialsDiscovery/report.md>) | 2026-10-23 | AI4Science | MaterialsDiscovery |
 | [AI4Science/Chemistry/report.md](<../AI4Science/Chemistry/report.md>) | 2026-10-23 | AI4Science | Chemistry |
 | [AI4Science/AutonomousLabs/report.md](<../AI4Science/AutonomousLabs/report.md>) | 2026-10-23 | AI4Science | AutonomousLabs |
-| [AI4Science/Astronomy/report.md](<../AI4Science/Astronomy/report.md>) | 2026-10-23 | AI4Science | Astronomy |
 
 ## 无 date 元数据（43）
 

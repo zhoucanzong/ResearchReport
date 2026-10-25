@@ -7,7 +7,7 @@
 
 ---
 
-共 **73** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter；「板块」列由 [`scripts/panels.json`](<../scripts/panels.json>) 驱动。
+共 **74** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter；「板块」列由 [`scripts/panels.json`](<../scripts/panels.json>) 驱动。
 
 | 条目 | 板块 | 路径 | 子报告数 | 行数 | 日期 |
 | --- | --- | --- | --: | --: | --- |
@@ -47,6 +47,7 @@
 | OCR 与文档解析 | LLM | [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) | 16 | 102 | 2026-10-25 |
 | 长上下文 | LLM | [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 0 | 610 | — |
 | 混合专家模型（MoE） | LLM | [LLM/MoE/report.md](<../LLM/MoE/report.md>) | 0 | 406 | — |
+| 大模型辅助运筹建模与求解 | LLM | [LLM/OperationsResearch/report.md](<../LLM/OperationsResearch/report.md>) | 9 | 90 | 2026-10-25 |
 | 检索增强生成（RAG） | LLM | [LLM/RAG/report.md](<../LLM/RAG/report.md>) | 0 | 835 | — |
 | 推理模型与推理时计算 | LLM | [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) | 0 | 676 | — |
 | LLM 后训练中的强化学习 | LLM | [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | 10 | 107 | 2026-10-23 |
@@ -84,4 +85,4 @@
 | 具身预测规划 | WorldModel | [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) | 2 | 54 | — |
 | 机器人视觉语言动作模型（VLA） | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 23 | 643 | — |
 | 世界模型 | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 604 | 2026-10-22 |
-| **合计** | — | — | **263** | **28,725** | — |
+| **合计** | — | — | **272** | **28,815** | — |

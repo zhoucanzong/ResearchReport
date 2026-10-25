@@ -191,7 +191,7 @@ nav:
         - "MANIFEST": "Models/Qwen/sources/MANIFEST.md"
     - "Runway": "Models/Runway/report.md"
     - "StabilityAI": "Models/StabilityAI/report.md"
-  - "💬 LLM · 11":
+  - "💬 LLM · 12":
     - "LLM/README.md"
     - "模型对齐与后训练": "LLM/Alignment/report.md"
     - "决策模型（Decision Models）":
@@ -246,6 +246,17 @@ nav:
         - "2607.21617-amazon-faithc4": "LLM/DocumentParsing/papers/2607.21617-amazon-faithc4.md"
     - "长上下文": "LLM/LongContext/report.md"
     - "混合专家模型（MoE）": "LLM/MoE/report.md"
+    - "大模型辅助运筹建模与求解":
+        - "总报告": "LLM/OperationsResearch/report.md"
+        - "2022-nl4opt": "LLM/OperationsResearch/papers/2022-nl4opt.md"
+        - "2401.02051-eoh": "LLM/OperationsResearch/papers/2401.02051-eoh.md"
+        - "2402.10172-optimus": "LLM/OperationsResearch/papers/2402.10172-optimus.md"
+        - "2602.10450-miplib-nl": "LLM/OperationsResearch/papers/2602.10450-miplib-nl.md"
+        - "2605.10401-llm4branch": "LLM/OperationsResearch/papers/2605.10401-llm4branch.md"
+        - "funsearch": "LLM/OperationsResearch/papers/funsearch.md"
+        - "llm-lns": "LLM/OperationsResearch/papers/llm-lns.md"
+        - "MANIFEST": "LLM/OperationsResearch/sources/MANIFEST.md"
+        - "evaluation-protocols": "LLM/OperationsResearch/topics/evaluation-protocols.md"
     - "检索增强生成（RAG）": "LLM/RAG/report.md"
     - "推理模型与推理时计算": "LLM/ReasoningModels/report.md"
     - "LLM 后训练中的强化学习":
