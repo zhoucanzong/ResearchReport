@@ -27,7 +27,7 @@
 | **Grok** | [xAI Grok 系列模型深度调研报告](<Grok/report.md>) | 164 行 |
 | **Hunyuan** | [Hunyuan系列模型深度调研报告](<Hunyuan/report.md>) | 466 行 |
 | **Kimi** | [Kimi 系列模型深度调研报告](<Kimi/report.md>) | 586 行 |
-| **Kling** | [快手 Kling 视频生成研究报告](<Kling/report.md>) | 76 行 |
+| **Kling** | [快手 Kling 视频生成研究报告](<Kling/report.md>) | 106 行 |
 | **LLaMA** | [Meta LLaMA 系列大模型完整研究报告](<LLaMA/report.md>) | 484 行 |
 | **MiMo** | [小米 MiMo 系列模型深度调研报告](<MiMo/report.md>) | 758 行 |
 | **Midjourney** | [Midjourney 模型与产品演进研究报告](<Midjourney/report.md>) | 86 行 |

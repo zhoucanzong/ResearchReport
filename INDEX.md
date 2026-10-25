@@ -16,8 +16,8 @@
 | **条目数**（`report.md`） | **74** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 12 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6 |
 | 条目子文档数 | 272 |
-| 条目正文行数（剔除 front-matter） | 21,420 |
-| 条目字节 | 2,101,514 B |
+| 条目正文行数（剔除 front-matter） | 21,489 |
+| 条目字节 | 2,119,069 B |
 | 带 front-matter 的条目 | 74 |
 | 带合法 `date` 的条目 | 32 |
 | 文档（除生成物外的全部 `.md`） | 368 |
@@ -32,16 +32,16 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| Models | 23 | 41 | 10,170 | 830,762 B | [板块页 →](<Models/README.md>) |
-| LLM | 12 | 85 | 2,198 | 307,476 B | [板块页 →](<LLM/README.md>) |
-| Agents | 3 | 22 | 456 | 61,955 B | [板块页 →](<Agents/README.md>) |
-| AIGC | 9 | 10 | 3,747 | 315,425 B | [板块页 →](<AIGC/README.md>) |
+| Models | 23 | 41 | 10,200 | 835,908 B | [板块页 →](<Models/README.md>) |
+| LLM | 12 | 85 | 2,214 | 310,382 B | [板块页 →](<LLM/README.md>) |
+| Agents | 3 | 22 | 489 | 69,335 B | [板块页 →](<Agents/README.md>) |
+| AIGC | 9 | 10 | 3,737 | 317,548 B | [板块页 →](<AIGC/README.md>) |
 | WorldModel | 3 | 44 | 1,145 | 133,537 B | [板块页 →](<WorldModel/README.md>) |
 | AI4Science | 10 | 53 | 870 | 146,743 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 2 | 10 | 192 | 36,294 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 6 | 56 | 1,139 | 108,856 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 36 | 1,503 | 160,466 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **74** | **368** | **21,420** | **2,101,514 B** | — |
+| **合计** | **74** | **368** | **21,489** | **2,119,069 B** | — |
 
 ## 分面索引
 
@@ -213,10 +213,10 @@
   </details>
 
   <details>
-  <summary><b>Kling</b> · <code>Models/Kling/report.md</code> · 76 行 · —</summary>
+  <summary><b>Kling</b> · <code>Models/Kling/report.md</code> · 106 行 · —</summary>
 
 
-    * **条目**：[Models/Kling/report.md](<Models/Kling/report.md>)（76 行 / 9,027 B）
+    * **条目**：[Models/Kling/report.md](<Models/Kling/report.md>)（106 行 / 14,173 B）
     * **专题目录**：`Models/Kling`
     * **元数据**：type=`—` · domain=`Models` · subject=`Kling` · date=`—` · status=`—`
     * **子文档（0）**
@@ -357,10 +357,10 @@
 <summary><b>语言模型 LLM（12 条目 / 72 子文档）</b></summary>
 
   <details>
-  <summary><b>模型对齐与后训练</b> · <code>LLM/Alignment/report.md</code> · 110 行 · —</summary>
+  <summary><b>模型对齐与后训练</b> · <code>LLM/Alignment/report.md</code> · 126 行 · —</summary>
 
 
-    * **条目**：[LLM/Alignment/report.md](<LLM/Alignment/report.md>)（110 行 / 9,727 B）
+    * **条目**：[LLM/Alignment/report.md](<LLM/Alignment/report.md>)（126 行 / 12,633 B）
     * **专题目录**：`LLM/Alignment`
     * **元数据**：type=`—` · domain=`LLM` · subject=`Alignment` · date=`—` · status=`—`
     * **子文档（0）**
@@ -611,12 +611,12 @@
   </details>
 
   <details>
-  <summary><b>电脑使用 Agent</b> · <code>Agents/ComputerUse/report.md</code> · 67 行 · 2026-10-24</summary>
+  <summary><b>电脑使用 Agent</b> · <code>Agents/ComputerUse/report.md</code> · 100 行 · 2026-10-26</summary>
 
 
-    * **条目**：[Agents/ComputerUse/report.md](<Agents/ComputerUse/report.md>)（67 行 / 9,577 B）
+    * **条目**：[Agents/ComputerUse/report.md](<Agents/ComputerUse/report.md>)（100 行 / 16,957 B）
     * **专题目录**：`Agents/ComputerUse`
-    * **元数据**：type=`research` · domain=`Agents` · subject=`ComputerUse` · date=`2026-10-24` · status=`current`
+    * **元数据**：type=`research` · domain=`Agents` · subject=`ComputerUse` · date=`2026-10-26` · status=`current`
     * **子文档（2）**
         * [papers/2606.09426-weavebench.md](<Agents/ComputerUse/papers/2606.09426-weavebench.md>) — 60 行 / 11,573 B
         * [papers/2606.29537-osworld2.md](<Agents/ComputerUse/papers/2606.29537-osworld2.md>) — 61 行 / 12,141 B
@@ -691,10 +691,10 @@
   </details>
 
   <details>
-  <summary><b>扩散模型</b> · <code>AIGC/DiffusionModels/report.md</code> · 859 行 · —</summary>
+  <summary><b>扩散模型</b> · <code>AIGC/DiffusionModels/report.md</code> · 849 行 · —</summary>
 
 
-    * **条目**：[AIGC/DiffusionModels/report.md](<AIGC/DiffusionModels/report.md>)（859 行 / 36,749 B）
+    * **条目**：[AIGC/DiffusionModels/report.md](<AIGC/DiffusionModels/report.md>)（849 行 / 38,878 B）
     * **专题目录**：`AIGC/DiffusionModels`
     * **元数据**：type=`—` · domain=`AIGC` · subject=`DiffusionModels` · date=`—` · status=`—`
     * **子文档（0）**
@@ -718,7 +718,7 @@
   <summary><b>图像生成</b> · <code>AIGC/ImageGeneration/report.md</code> · 227 行 · —</summary>
 
 
-    * **条目**：[AIGC/ImageGeneration/report.md](<AIGC/ImageGeneration/report.md>)（227 行 / 27,441 B）
+    * **条目**：[AIGC/ImageGeneration/report.md](<AIGC/ImageGeneration/report.md>)（227 行 / 27,435 B）
     * **专题目录**：`AIGC/ImageGeneration`
     * **元数据**：type=`—` · domain=`AIGC` · subject=`ImageGeneration` · date=`—` · status=`—`
     * **子文档（0）**
@@ -1248,15 +1248,15 @@
 | [AGENTS.md](<AGENTS.md>) |  | 9 | 938 B |
 | [AI4Science/README.md](<AI4Science/README.md>) | AI4Science | 137 | 6,896 B |
 | [AIGC/README.md](<AIGC/README.md>) | AIGC | 32 | 1,837 B |
-| [Agents/README.md](<Agents/README.md>) | Agents | 74 | 3,620 B |
+| [Agents/README.md](<Agents/README.md>) | Agents | 74 | 3,621 B |
 | [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 46 | 1,972 B |
 | [Infra/README.md](<Infra/README.md>) | Infra | 117 | 8,060 B |
 | [LLM/README.md](<LLM/README.md>) | LLM | 164 | 11,479 B |
-| [Models/README.md](<Models/README.md>) | Models | 101 | 5,028 B |
+| [Models/README.md](<Models/README.md>) | Models | 101 | 5,029 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 104 | 4,517 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 196 | 14,529 B |
+| [README.md](<README.md>) |  | 196 | 14,536 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 103 | 6,735 B |
 | [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 102 | 7,365 B |

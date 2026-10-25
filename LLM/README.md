@@ -28,7 +28,7 @@
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
-| **模型对齐与后训练** | [模型对齐与后训练：方法、目标与证据边界](<Alignment/report.md>) | 110 行 |
+| **模型对齐与后训练** | [模型对齐与后训练：方法、目标与证据边界](<Alignment/report.md>) | 126 行 |
 | **决策模型（Decision Models）** | [Decision Models（System One / Typed Decision Model）技术专题调研](<DecisionModels/report.md>) | 875 行 |
 | **扩散语言模型** | [扩散语言模型：从随机遮盖到大规模并行生成](<DiffusionLM/report.md>) | 76 行 |
 | **OCR 与文档解析** | [OCR 与文档解析：从字符识别到结构还原](<DocumentParsing/report.md>) | 116 行 |

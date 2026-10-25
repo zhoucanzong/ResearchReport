@@ -89,7 +89,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) | 电脑使用 Agent：从看见界面到交付完整工作流 | research | 2026-10-24 | current |
+| [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) | 电脑使用 Agent：从看见界面到交付完整工作流 | research | 2026-10-26 | current |
 
 ## ControllableGen (1)
 

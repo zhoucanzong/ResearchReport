@@ -27,7 +27,7 @@
 * [AIGC/AvatarGen/report.md](<../AIGC/AvatarGen/report.md>) — 170 行
 * [AIGC/ControllableGen/report.md](<../AIGC/ControllableGen/report.md>) — 612 行
 * [AIGC/DiT/report.md](<../AIGC/DiT/report.md>) — 601 行
-* [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) — 859 行
+* [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) — 849 行
 * [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) — 477 行
 * [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) — 227 行
 * [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) — 171 行
@@ -36,7 +36,7 @@
 
 * [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) — 67 行
 * [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) — 322 行
-* [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) — 67 行
+* [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) — 100 行
 
 ## Evaluation (2)
 
@@ -53,7 +53,7 @@
 
 ## LLM (11)
 
-* [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) — 110 行
+* [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) — 126 行
 * [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) — 875 行
 * [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) — 76 行
 * [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) — 116 行
@@ -79,7 +79,7 @@
 * [Models/Grok/report.md](<../Models/Grok/report.md>) — 164 行
 * [Models/Hunyuan/report.md](<../Models/Hunyuan/report.md>) — 466 行
 * [Models/Kimi/report.md](<../Models/Kimi/report.md>) — 586 行
-* [Models/Kling/report.md](<../Models/Kling/report.md>) — 76 行
+* [Models/Kling/report.md](<../Models/Kling/report.md>) — 106 行
 * [Models/LLaMA/report.md](<../Models/LLaMA/report.md>) — 484 行
 * [Models/MiMo/report.md](<../Models/MiMo/report.md>) — 758 行
 * [Models/Midjourney/report.md](<../Models/Midjourney/report.md>) — 86 行

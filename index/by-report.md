@@ -26,13 +26,13 @@
 | 数字人与 Avatar | AIGC | [AIGC/AvatarGen/report.md](<../AIGC/AvatarGen/report.md>) | 0 | 170 | — |
 | 可控生成 | AIGC | [AIGC/ControllableGen/report.md](<../AIGC/ControllableGen/report.md>) | 0 | 612 | — |
 | 扩散 Transformer（DiT） | AIGC | [AIGC/DiT/report.md](<../AIGC/DiT/report.md>) | 0 | 601 | — |
-| 扩散模型 | AIGC | [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) | 0 | 859 | — |
+| 扩散模型 | AIGC | [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) | 0 | 849 | — |
 | 图像编辑与修复 | AIGC | [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) | 0 | 477 | — |
 | 图像生成 | AIGC | [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) | 0 | 227 | — |
 | 视频生成 | AIGC | [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) | 0 | 171 | — |
 | 工具 Agent 安全 | Agents | [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) | 4 | 67 | 2026-10-24 |
 | 智能体系统 | Agents | [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) | 12 | 322 | 2026-10-26 |
-| 电脑使用 Agent | Agents | [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) | 2 | 67 | 2026-10-24 |
+| 电脑使用 Agent | Agents | [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) | 2 | 100 | 2026-10-26 |
 | 评测科学 | Evaluation | [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) | 5 | 123 | 2026-10-23 |
 | 科学发现的评测方法 | Evaluation | [Evaluation/ScientificDiscovery/report.md](<../Evaluation/ScientificDiscovery/report.md>) | 2 | 69 | 2026-10-24 |
 | KV Cache 与预填充／解码分离 | Infra | [Infra/KVCachePD/report.md](<../Infra/KVCachePD/report.md>) | 5 | 84 | 2026-10-23 |
@@ -41,7 +41,7 @@
 | 在线推理服务与评测 | Infra | [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) | 3 | 81 | 2026-10-24 |
 | 投机解码 | Infra | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 40 | 536 | 2026-10-22 |
 | 分布式训练基础设施 | Infra | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 0 | 181 | 2026-10-22 |
-| 模型对齐与后训练 | LLM | [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) | 0 | 110 | — |
+| 模型对齐与后训练 | LLM | [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) | 0 | 126 | — |
 | 决策模型（Decision Models） | LLM | [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | 18 | 875 | — |
 | 扩散语言模型 | LLM | [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 10 | 76 | 2026-10-23 |
 | OCR 与文档解析 | LLM | [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) | 16 | 116 | 2026-10-25 |
@@ -65,7 +65,7 @@
 | Grok | Models | [Models/Grok/report.md](<../Models/Grok/report.md>) | 0 | 164 | — |
 | Hunyuan | Models | [Models/Hunyuan/report.md](<../Models/Hunyuan/report.md>) | 1 | 466 | — |
 | Kimi | Models | [Models/Kimi/report.md](<../Models/Kimi/report.md>) | 2 | 586 | — |
-| Kling | Models | [Models/Kling/report.md](<../Models/Kling/report.md>) | 0 | 76 | — |
+| Kling | Models | [Models/Kling/report.md](<../Models/Kling/report.md>) | 0 | 106 | — |
 | LLaMA | Models | [Models/LLaMA/report.md](<../Models/LLaMA/report.md>) | 0 | 484 | — |
 | MiMo | Models | [Models/MiMo/report.md](<../Models/MiMo/report.md>) | 1 | 758 | — |
 | Midjourney | Models | [Models/Midjourney/report.md](<../Models/Midjourney/report.md>) | 0 | 86 | — |
@@ -85,4 +85,4 @@
 | 具身预测规划 | WorldModel | [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) | 2 | 54 | — |
 | 机器人视觉语言动作模型（VLA） | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 23 | 573 | — |
 | 世界模型 | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 518 | 2026-10-22 |
-| **合计** | — | — | **272** | **21,420** | — |
+| **合计** | — | — | **272** | **21,489** | — |

@@ -4,9 +4,8 @@ display_name: 扩散模型
 
 # 扩散模型（Diffusion Models）基础框架与架构演进研究报告
 
-> **报告日期**：2026年6月6日  
 > **研究范围**：从 DDPM（2020）到 Flow Matching（2023）及后续采样加速技术的核心架构演进  
-> **目标读者**：具备深度学习基础、希望系统理解 Diffusion Models 架构脉络的研究者与工程师
+> **阅读目标**：理解扩散模型的噪声路径、网络参数化和采样器各自解决什么问题，以及它们如何与潜空间表示和 Transformer 骨干组合。
 
 ---
 
@@ -51,7 +50,7 @@ display_name: 扩散模型
 | 2023.10 | **Flow Matching / Rectified Flow** | Lipman et al.; Liu et al. | 直接回归速度场，用直线插值替代曲线扩散 | 速度场 v_t + 直线路径 |
 | 2024 | **SD3 / FLUX** | Stability AI / Black Forest Labs | 采用 Flow Matching 框架的大规模文生图系统 | Flow Matching + Transformer |
 
-> **注**：本报告重点覆盖 2020–2023 年的核心架构演进，即表格中 **加粗** 的里程碑工作。
+> **注**：时间线用于定位代表性机制，不代表某条路线取代其他路线；重点是不同路径、目标与采样器的关系。
 
 ---
 
@@ -448,17 +447,17 @@ return x_{t_0}
 
 ---
 
-### 3.6 Flow Matching（2023, Lipman et al. / Rectified Flow）
+### 3.6 Flow Matching 与 Rectified Flow（2022–2023）
 
 #### 3.6.1 核心思想
 
-Flow Matching（以及并行的 Rectified Flow）提出了一种**不依赖随机微分方程（SDE）**的生成框架。其核心是直接在样本和噪声之间定义一条**直线路径**，并训练网络回归路径上的**速度场（Velocity Field）**。
+Flow Matching（FM）首先是一种**按指定概率路径训练速度场**的方式：路径可以取自扩散过程，也可以是非扩散路径；Conditional Flow Matching（CFM）通过条件路径构造可直接计算的训练目标。Rectified Flow 则以噪声和数据之间的直线耦合为出发点，学习相应 ODE 速度场，并可通过 reflow 使轨迹逐步变直。二者相关但不是同义词：**FM/CFM 是路径匹配训练框架，直线路径是可选设计之一；Rectified Flow 专门研究直线路径、rectification 与数值求解误差之间的关系。**[Flow Matching §§3–4](https://arxiv.org/html/2210.02747v1) · [Rectified Flow §§2–3](https://arxiv.org/html/2209.03003v1)
 
 #### 3.6.2 数学框架
 
 **扩散模型的视角**：
 
-扩散模型定义了一条曲线路径（由 SDE 或概率流 ODE 描述）：
+扩散模型通过噪声调度定义扰动路径；连续时间表述可写成 SDE 及对应的 probability-flow ODE：
 
 ```
 dx = [f(x,t) - ½·g²(t)·∇_x log p_t(x)] dt + g(t) dw   (SDE)
@@ -467,71 +466,66 @@ dx = [f(x,t) - ½·g²(t)·∇_x log p_t(x)] dt             (Probability Flow OD
 
 **Flow Matching 的视角**：
 
-直接定义一条从噪声 `x_1 ~ N(0,I)` 到数据 `x_0 ~ p_data` 的直线路径：
+以 CFM 原论文的噪声到数据时间方向为例，令 `x_noise ~ N(0,I)`、`x_data ~ p_data`，忽略终点处很小的方差下限后，条件直线路径可写为：
 
 ```
-x_t = (1-t)·x_0 + t·x_1,   t ∈ [0, 1]
+x_t = (1-t)·x_noise + t·x_data,   t ∈ [0, 1]
 ```
 
 路径上的速度场为：
 
 ```
-v_t = dx_t/dt = x_1 - x_0
+v_t = dx_t/dt = x_data - x_noise
 ```
 
 训练目标是让神经网络 `v_θ(x_t, t)` 回归这个真实速度场：
 
 ```
-L = E_{x_0, x_1, t} [ ||v_t - v_θ(x_t, t)||² ]
-    = E [ ||(x_1 - x_0) - v_θ((1-t)·x_0 + t·x_1, t)||² ]
+L = E_{x_noise, x_data, t} [ ||v_t - v_θ(x_t, t)||² ]
+    = E [ ||(x_data - x_noise) - v_θ((1-t)·x_noise + t·x_data, t)||² ]
 ```
 
-#### 3.6.3 与扩散模型的等价性
+#### 3.6.3 与扩散模型的关系
 
-Flow Matching 与扩散模型并非互斥。事实上，对于特定的噪声调度，两者可以等价：
+Flow Matching（FM）描述的是如何为一条选定的概率路径回归速度场；扩散模型通常从噪声扰动路径、score 或反向 SDE/ODE 来表述生成过程。Lipman 等人的 conditional flow matching（CFM）可使用高斯条件路径，其中包含特定的扩散路径，也允许选用非扩散路径，例如最优传输位移插值。[原文 §§3–4](https://arxiv.org/html/2210.02747v1)
 
-| 框架 | 路径定义 | 网络输出 | 采样方程 |
-|------|---------|---------|---------|
-| DDPM | 曲线（由 α_t 定义） | 预测噪声 ε_θ | x_{t-1} = ... |
-| Flow Matching | 直线 x_t = (1-t)x_0 + t·x_1 | 预测速度 v_θ | x_{t+Δt} = x_t + Δt·v_θ |
-| 等价转换 | 设 x_t = √ᾱ_t·x_0 + √(1-ᾱ_t)·ε | v_t = -√(1-ᾱ_t)·ε_θ / ... | 可通过变量替换统一 |
+| 视角 | 路径 / 训练对象 | 需要区分的部分 |
+|------|----------------|----------------|
+| 扩散模型 | 由噪声调度定义概率路径，常用 score 或噪声预测目标；对应的 probability-flow ODE 可作确定性采样 | 随机过程、训练参数化和确定性 ODE 采样器彼此相关，但并非同一对象 |
+| Flow Matching | 先选概率路径，再回归生成该路径的向量场；CFM 用每个数据样本的条件路径构造可训练目标 | 可沿扩散路径训练，也可选非扩散路径；路径选择与网络骨干是独立设计 |
 
-关键洞察：**Flow Matching 是更一般的框架**，扩散模型可以看作 Flow Matching 在特定路径选择下的特例。
+因此准确说法是：**FM/CFM 提供了比特定扩散路径更灵活的向量场训练表述；部分扩散路径可以嵌入这一表述，非扩散路径则打开额外选择。**这不是说所有扩散模型在每个训练和采样细节上都只是同一类 FM 模型的别名。原论文证明 FM 与 CFM 目标在其条件路径构造下具有相同梯度，并给出可恢复扩散路径及 OT 路径的例子。[原文 §3.2、§4.1](https://arxiv.org/html/2210.02747v1)
 
-#### 3.6.4 架构特点
+#### 3.6.4 路径、预测量与采样器
 
-Flow Matching 的架构与扩散模型类似，但有一些重要差异：
+Flow Matching 是训练目标/路径构造，不是单独规定一种网络架构。它可以使用 U-Net、Transformer 等骨干；与扩散系统对照时，应分开看路径、模型预测量和数值积分器。
 
-**（1）时间步范围**
-- 扩散模型：`t ∈ {1, 2, ..., 1000}` 或连续 `[0, T]`
-- Flow Matching：`t ∈ [0, 1]`（归一化时间）
+**（1）时间参数**
+- 离散 DDPM 常把时间步写成 `1...T`；score/SDE 与 probability-flow ODE 可采用连续时间。
+- CFM 原论文将时间归一化到 `[0,1]`，这是一种记号与路径设定，不是 FM 独有的计算优势。
 
-**（2）网络输出**
-- 扩散模型：预测噪声 `ε_θ(x_t, t)` 或预测 `x_0`
-- Flow Matching：预测速度场 `v_θ(x_t, t)`（与输入同维度）
+**（2）网络预测量**
+- 扩散模型可预测噪声、score、数据或等价的速度参数化，具体取决于训练目标和调度。
+- CFM 训练网络预测指定概率路径的向量场 `v_θ(x_t,t)`。
 
-**（3）采样方程**
-- 扩散模型：需要复杂的去噪公式（涉及 α_t、σ_t 等参数）
-- Flow Matching：简单的 ODE 积分
+**（3）采样器**
+- 概率流 ODE 和 FM 向量场都可交给数值 ODE 求解器；Euler 只是一个低阶选项。
+- 步数—质量—计算开销由路径曲率、网络误差、条件引导、求解器阶数和容差共同决定，不能仅凭目标名称推断。
 
+以 CFM 原论文的 noise-to-data 时间方向为例，忽略路径末端的微小方差下限，令 `x_noise` 位于 `t=0`、`x_data` 位于 `t=1`，直线路径可写为 `x_t=(1-t)x_noise+t x_data`，其条件速度为 `x_data−x_noise`。若用 Euler 求解，生成时从噪声向数据方向更新：
+
+```text
+x ← x_noise
+for t = 0, Δt, 2Δt, ..., 1−Δt:
+    x ← x + Δt · v_θ(x, t)
+return x
 ```
-# Flow Matching 采样（Euler 方法）
-x_1 ~ N(0, I)
-for t = 1, 1-Δt, ..., Δt:
-    x_t = x_{t+Δt} - Δt · v_θ(x_{t+Δt}, t+Δt)
-return x_0
-```
+
+这里的直线路径是解释 CFM 的一个选择，不代表所有 Flow Matching 模型都使用同一路径或固定步数。[CFM 原文 §4.1](https://arxiv.org/html/2210.02747v1)
 
 #### 3.6.5 SD3 / FLUX 中的应用
 
-Stable Diffusion 3（SD3）和 FLUX 是首批大规模采用 Flow Matching 的文生图系统：
-
-- **SD3**：使用 Rectified Flow + Transformer 架构（替代 U-Net）
-- **FLUX**：基于 Flow Matching 的改进版本，结合 Guidance Distillation
-- **优势**：
-  - 更稳定的训练（无需复杂的噪声调度设计）
-  - 更少的采样步数（4-8 步即可达到 DDIM 50 步质量）
-  - 更自然的理论框架（与 Optimal Transport 联系紧密）
+SD3 与 FLUX 说明，FM/Rectified Flow 可以和 Transformer/MMDiT 类骨干组合；这仍是“生成目标/路径”与“网络骨干”两项选择。不能据“采用 Flow Matching”推出模型必然更稳定、可用固定少步数达到同等质量，或其 Transformer 结构与其他系统相同。具体的 SD3、FLUX 架构与论文报告结果见[DiT 报告](../DiT/report.md)及[模型系列报告](../../Models/README.md)。本节只保留机制关系，不把产品级推理配置当作 FM 的普遍性质。
 
 ---
 
@@ -539,10 +533,10 @@ Stable Diffusion 3（SD3）和 FLUX 是首批大规模采用 Flow Matching 的�
 
 ### 4.1 统一视角
 
-所有扩散/流模型可以统一在以下框架下理解：
+很多扩散与流模型都可用“路径—预测量—训练目标—采样器”这组问题对照。下式是常见的高斯噪声到数据路径示意，不表示所有模型使用同一噪声调度或插值式路径：
 
 ```
-前向过程（加噪/插值）:    x_t = a_t·x_0 + b_t·ε    (或 x_t = (1-t)·x_0 + t·ε)
+路径构造（噪声到数据）:  x_t = a_t·x_noise + b_t·x_data
                             │
                             ▼
 网络预测:                  y_θ = model(x_t, t)     (y 可以是 ε, x_0, v, 或 score)
@@ -595,11 +589,11 @@ Stable Diffusion 3（SD3）和 FLUX 是首批大规模采用 Flow Matching 的�
 #### Flow Matching（速度场回归）
 
 ```
-前向:  x_t = (1-t)·x_0 + t·x_1,    x_1 ~ N(0,I),  t ∈ [0,1]
-速度场: v_t = dx_t/dt = x_1 - x_0
+路径:  x_t = (1-t)·x_noise + t·x_data,  x_noise ~ N(0,I),  t ∈ [0,1]
+速度场: v_t = dx_t/dt = x_data - x_noise
 网络:  v_θ(x_t, t)
 目标:  L = E[ ||v_t - v_θ(x_t, t)||² ]
-采样:  x_t = x_{t+Δt} - Δt · v_θ(x_{t+Δt}, t+Δt)    (反向积分)
+采样:  x_{t+Δt} = x_t + Δt · v_θ(x_t, t)    (noise→data 的 Euler 积分)
 ```
 
 ### 4.3 参数化方式对比
@@ -856,7 +850,3 @@ x_{t_{n-1}} = x_{t_n} + Δt·v_θ(x_{t_n}, t_n) + ½·Δt²·(dv/dt) + ...
     https://lilianweng.github.io/posts/2021-07-11-diffusion-models/
 
 ---
-
-> **报告完成日期**：2026年6月6日  
-> **版本**：v1.0  
-> **说明**：本报告聚焦扩散模型的架构演进脉络，从 DDPM 的像素空间 U-Net 到 LDM 的潜空间范式，再到 Consistency Models 的单步蒸馏和 Flow Matching 的速度场框架，系统梳理了 2020–2024 年的核心进展。后续可根据需要补充视频扩散（Sora/VideoLDM）、3D 生成（Point-E/DreamFusion）、以及最新的一致性蒸馏变体（LCM、InstaFlow）等方向。

@@ -26,7 +26,7 @@
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
 | **智能体系统** | [Agent 系统综述：从工具调用到可验证的长程闭环](<AgentSystems/report.md>) | 322 行 |
-| **电脑使用 Agent** | [电脑使用 Agent：从看见界面到交付完整工作流](<ComputerUse/report.md>) | 67 行 |
+| **电脑使用 Agent** | [电脑使用 Agent：从看见界面到交付完整工作流](<ComputerUse/report.md>) | 100 行 |
 | **工具 Agent 安全** | [工具 Agent 安全：提示注入、权限与动作证据](<AgentSecurity/report.md>) | 67 行 |
 
 ## 📎 子文档

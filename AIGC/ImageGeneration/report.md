@@ -60,7 +60,7 @@ DiT 原论文问的是：扩散模型的去噪器能否由 Transformer 实现，
 
 这一区别很关键：论文在 ImageNet 类别条件下观察到的生成质量变化，支撑的是特定任务与训练设定下的架构和计算扩展结论；它本身没有验证复杂自然语言提示、精确计数、文字渲染或图像编辑。要讨论这些能力，需要看采用文本条件的其他论文及其评测。
 
-Flow Matching 改的是连续生成轨迹的学习方式：模型学习数据空间中的速度场，再通过数值积分从起点走到样本。它可以搭配 Transformer，因此常见组合是 **Flow Matching 目标 + Transformer 骨干**。这与“DiT 就是 Flow Matching”或“Transformer 表示自回归”都不是一回事。[Flow Matching / Rectified Flow 机制见扩散模型报告 §3.6](../DiffusionModels/report.md#36-flow-matching2023-lipman-et-al--rectified-flow)；[DiT 的架构路线见 DiT 报告](../DiT/report.md)。
+Flow Matching 改的是连续生成轨迹的学习方式：模型学习数据空间中的速度场，再通过数值积分从起点走到样本。它可以搭配 Transformer，因此常见组合是 **Flow Matching 目标 + Transformer 骨干**。这与“DiT 就是 Flow Matching”或“Transformer 表示自回归”都不是一回事。[Flow Matching / Rectified Flow 机制见扩散模型报告 §3.6](../DiffusionModels/report.md#36-flow-matching-与-rectified-flow20222023)；[DiT 的架构路线见 DiT 报告](../DiT/report.md)。
 
 可以用下面的流程图区分生成过程：
 

@@ -11,6 +11,7 @@
 
 | 条目 | date | 板块 | 专题 |
 | --- | --- | --- | --- |
+| [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) | 2026-10-26 | Agents | ComputerUse |
 | [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) | 2026-10-26 | Agents | AgentSystems |
 | [LLM/OperationsResearch/report.md](<../LLM/OperationsResearch/report.md>) | 2026-10-25 | LLM | OperationsResearch |
 | [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) | 2026-10-25 | LLM | DocumentParsing |
@@ -18,7 +19,6 @@
 | [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) | 2026-10-24 | Infra | ServingEvaluation |
 | [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | 2026-10-24 | Infra | MoEExecution |
 | [Evaluation/ScientificDiscovery/report.md](<../Evaluation/ScientificDiscovery/report.md>) | 2026-10-24 | Evaluation | ScientificDiscovery |
-| [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) | 2026-10-24 | Agents | ComputerUse |
 | [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) | 2026-10-24 | Agents | AgentSecurity |
 | [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | 2026-10-23 | LLM | ReinforcementLearning |
 | [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 2026-10-23 | LLM | DiffusionLM |
