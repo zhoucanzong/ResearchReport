@@ -8,7 +8,7 @@
 # 预览：mkdocs serve
 # ==========================================================================
 
-site_name: ResearchReport 研究图书馆
+site_name: AI 论文与技术报告精读
 site_description: 一个仓库收敛 AIGC / LLM / 论文深读全部研究产出
 site_url: https://zhoucanzong.github.io/ResearchReport/
 repo_url: https://github.com/zhoucanzong/ResearchReport

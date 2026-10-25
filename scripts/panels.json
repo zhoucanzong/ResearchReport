@@ -38,7 +38,7 @@
       "id": "agents",
       "title": "Agents",
       "emoji": "🤖",
-      "tagline": "智能体架构、记忆、工具使用与长期执行",
+      "tagline": "Agent 系统围绕决策闭环展开，覆盖记忆、工具、长程执行、电脑使用与安全",
       "topic_index": true,
       "match": [
         "Agents/*"

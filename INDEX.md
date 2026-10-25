@@ -16,8 +16,8 @@
 | **条目数**（`report.md`） | **74** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 12 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6 |
 | 条目子文档数 | 272 |
-| 条目正文行数（剔除 front-matter） | 28,815 |
-| 条目字节 | 2,247,549 B |
+| 条目正文行数（剔除 front-matter） | 28,896 |
+| 条目字节 | 2,256,836 B |
 | 带 front-matter 的条目 | 74 |
 | 带合法 `date` 的条目 | 31 |
 | 文档（除生成物外的全部 `.md`） | 368 |
@@ -34,14 +34,14 @@
 | --- | --: | --: | --: | --: | --- |
 | Models | 23 | 41 | 12,150 | 906,873 B | [板块页 →](<Models/README.md>) |
 | LLM | 12 | 85 | 4,473 | 368,304 B | [板块页 →](<LLM/README.md>) |
-| Agents | 3 | 22 | 207 | 29,975 B | [板块页 →](<Agents/README.md>) |
+| Agents | 3 | 22 | 288 | 39,262 B | [板块页 →](<Agents/README.md>) |
 | AIGC | 9 | 10 | 6,993 | 348,293 B | [板块页 →](<AIGC/README.md>) |
 | WorldModel | 3 | 44 | 1,301 | 147,571 B | [板块页 →](<WorldModel/README.md>) |
 | AI4Science | 10 | 53 | 836 | 139,324 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 2 | 10 | 158 | 32,341 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 6 | 56 | 1,119 | 106,307 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 36 | 1,578 | 168,561 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **74** | **368** | **28,815** | **2,247,549 B** | — |
+| **合计** | **74** | **368** | **28,896** | **2,256,836 B** | — |
 
 ## 分面索引
 
@@ -588,10 +588,10 @@
   </details>
 
   <details>
-  <summary><b>智能体系统</b> · <code>Agents/AgentSystems/report.md</code> · 95 行 · —</summary>
+  <summary><b>智能体系统</b> · <code>Agents/AgentSystems/report.md</code> · 176 行 · —</summary>
 
 
-    * **条目**：[Agents/AgentSystems/report.md](<Agents/AgentSystems/report.md>)（95 行 / 13,810 B）
+    * **条目**：[Agents/AgentSystems/report.md](<Agents/AgentSystems/report.md>)（176 行 / 23,097 B）
     * **专题目录**：`Agents/AgentSystems`
     * **元数据**：type=`—` · domain=`Agents` · subject=`AgentSystems` · date=`—` · status=`—`
     * **子文档（12）**
@@ -1248,15 +1248,15 @@
 | [AGENTS.md](<AGENTS.md>) |  | 9 | 908 B |
 | [AI4Science/README.md](<AI4Science/README.md>) | AI4Science | 137 | 6,896 B |
 | [AIGC/README.md](<AIGC/README.md>) | AIGC | 32 | 1,780 B |
-| [Agents/README.md](<Agents/README.md>) | Agents | 74 | 3,495 B |
+| [Agents/README.md](<Agents/README.md>) | Agents | 74 | 3,601 B |
 | [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 46 | 1,951 B |
 | [Infra/README.md](<Infra/README.md>) | Infra | 117 | 8,075 B |
-| [LLM/README.md](<LLM/README.md>) | LLM | 147 | 10,228 B |
+| [LLM/README.md](<LLM/README.md>) | LLM | 164 | 11,533 B |
 | [Models/README.md](<Models/README.md>) | Models | 101 | 4,939 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 104 | 4,517 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 196 | 14,289 B |
+| [README.md](<README.md>) |  | 196 | 14,460 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 103 | 6,735 B |
 | [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 102 | 7,365 B |
