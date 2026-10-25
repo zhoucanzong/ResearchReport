@@ -47,6 +47,11 @@
         "Agents/AgentSystems",
         "Agents/ComputerUse",
         "Agents/AgentSecurity"
+      ],
+      "entry_order": [
+        "Agents/AgentSystems",
+        "Agents/ComputerUse",
+        "Agents/AgentSecurity"
       ]
     },
     {

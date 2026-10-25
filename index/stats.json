@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "a932e13c30735efe8a18b0d36862aea87e5321b7db03ecf829f3dedc5affa0ee",
+  "content_fingerprint": "5a84a3842203064d158f398675fe81fe128e6e79c2c004260ce7713fc898a6a7",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -29,7 +29,7 @@
     "named_report_md": 74,
     "named_readme_md": 11,
     "lines": 61250,
-    "bytes": 5478588
+    "bytes": 5478638
   },
   "libraries": {
     "Models": {
@@ -128,7 +128,7 @@
       "lines_raw": 309,
       "dir_files": 22,
       "dir_md": 22,
-      "dir_bytes": 144985,
+      "dir_bytes": 144995,
       "du_sk": 172
     },
     "AIGC": {
@@ -335,7 +335,7 @@
     "library_entries": 74,
     "library_documents_md": 357,
     "library_dir_files": 360,
-    "library_dir_bytes": 5414958,
+    "library_dir_bytes": 5414968,
     "library_du_sk": 5956,
     "library_entry_lines": 28896,
     "library_entry_bytes": 2256836
@@ -570,13 +570,13 @@
           "files": 19,
           "lines": 674,
           "lines_raw": 674,
-          "bytes": 105723
+          "bytes": 105733
         },
         "dir_md": {
           "files": 22,
           "lines": 962,
           "lines_raw": 983,
-          "bytes": 144985
+          "bytes": 144995
         }
       },
       "AIGC": {
@@ -1040,19 +1040,19 @@
       "files": 368,
       "lines": 61250,
       "lines_raw": 61810,
-      "bytes": 5478588
+      "bytes": 5478638
     },
     "library_md": {
       "files": 357,
       "lines": 59960,
       "lines_raw": 60520,
-      "bytes": 5386708
+      "bytes": 5386718
     },
     "root_readme": {
       "files": 1,
       "lines": 196,
       "lines_raw": 196,
-      "bytes": 14460
+      "bytes": 14500
     },
     "docs_md": {
       "files": 8,
@@ -1072,7 +1072,7 @@
     ]
   },
   "storage": {
-    "tracked_bytes": 10723119,
+    "tracked_bytes": 10724776,
     "definition": "纳入版本控制的文件字节合计（`git ls-files` 跟踪路径逐个 getsize 求和）；刻意**不**用 du 量工作树——工作树含 site/site-docs/构建产物、别人的未提交草稿、虚拟环境等「车间地面」，会让数字每个 clone 一个样、生成物不可复现。本字段与提交树同源，任意 clone 重跑一致。"
   }
 }

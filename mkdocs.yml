@@ -286,12 +286,6 @@ nav:
         - "vlmevalkit-video-mme-path": "LLM/VLM/topics/vlmevalkit-video-mme-path.md"
   - "🤖 Agents · 3":
     - "Agents/README.md"
-    - "工具 Agent 安全":
-        - "总报告": "Agents/AgentSecurity/report.md"
-        - "2406.13352-agentdojo": "Agents/AgentSecurity/papers/2406.13352-agentdojo.md"
-        - "2503.18813-camel": "Agents/AgentSecurity/papers/2503.18813-camel.md"
-        - "2605.03378-argus": "Agents/AgentSecurity/papers/2605.03378-argus.md"
-        - "MANIFEST": "Agents/AgentSecurity/sources/MANIFEST.md"
     - "智能体系统":
         - "总报告": "Agents/AgentSystems/report.md"
         - "2026-acl-long-1573-toolscope": "Agents/AgentSystems/papers/2026-acl-long-1573-toolscope.md"
@@ -310,6 +304,12 @@ nav:
         - "总报告": "Agents/ComputerUse/report.md"
         - "2606.09426-weavebench": "Agents/ComputerUse/papers/2606.09426-weavebench.md"
         - "2606.29537-osworld2": "Agents/ComputerUse/papers/2606.29537-osworld2.md"
+    - "工具 Agent 安全":
+        - "总报告": "Agents/AgentSecurity/report.md"
+        - "2406.13352-agentdojo": "Agents/AgentSecurity/papers/2406.13352-agentdojo.md"
+        - "2503.18813-camel": "Agents/AgentSecurity/papers/2503.18813-camel.md"
+        - "2605.03378-argus": "Agents/AgentSecurity/papers/2605.03378-argus.md"
+        - "MANIFEST": "Agents/AgentSecurity/sources/MANIFEST.md"
   - "🎨 AIGC · 9":
     - "AIGC/README.md"
     - "3D 生成": "AIGC/3DGen/report.md"

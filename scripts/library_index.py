@@ -1157,6 +1157,13 @@ def load_panels(repo_root: str) -> dict:
         for key in ("match", "representatives"):
             if not isinstance(panel[key], list) or not panel[key]:
                 raise ConfigError(f"面板 {panel['id']} 的 `{key}` 必须是非空列表")
+        entry_order = panel.get("entry_order")
+        if entry_order is not None:
+            if (not isinstance(entry_order, list)
+                    or any(not isinstance(item, str) or not item.strip() for item in entry_order)):
+                raise ConfigError(f"面板 {panel['id']} 的 `entry_order` 必须是非空路径字符串列表")
+            if len(entry_order) != len(set(entry_order)):
+                raise ConfigError(f"面板 {panel['id']} 的 `entry_order` 不能有重复路径")
         if "topic_index" in panel and not isinstance(panel["topic_index"], bool):
             raise ConfigError(f"面板 {panel['id']} 的 `topic_index` 必须是布尔值")
 
@@ -1198,6 +1205,18 @@ def panel_dir(panel: dict) -> str:
     return panel.get("directory", panel["title"])
 
 
+def sort_panel_entries(members: list, panel: dict) -> list:
+    """按可选的 entry_order 排列板块入口；未配置时维持路径排序。"""
+    order = panel.get("entry_order", [])
+    if not order:
+        return sorted(members, key=lambda d: d["path"])
+    rank = {directory: index for index, directory in enumerate(order)}
+    return sorted(
+        members,
+        key=lambda d: (rank.get(entry_dir(d["path"]), len(rank)), d["path"]),
+    )
+
+
 def match_panels(entries: list, cfg: dict) -> tuple:
     """把每个条目目录映射到**唯一**面板。
 
@@ -1226,6 +1245,9 @@ def panel_representatives(repo_root: str, cfg: dict) -> list:
         for rep in panel["representatives"]:
             if not os.path.isfile(os.path.join(repo_root, rep, ENTRY_BASENAME)):
                 missing.append((panel["id"], rep))
+        for directory in panel.get("entry_order", []):
+            if not os.path.isfile(os.path.join(repo_root, directory, ENTRY_BASENAME)):
+                missing.append((panel["id"], directory))
     return missing
 
 
@@ -1456,9 +1478,9 @@ def render_topics_block(entries: list, mapping: dict, panels: list) -> str:
     for panel in panels:
         if not panel.get("topic_index", False):
             continue
-        members = sorted(
+        members = sort_panel_entries(
             (d for d in entries if mapping.get(d["path"], {}).get("id") == panel["id"]),
-            key=lambda d: d["path"],
+            panel,
         )
         links = " · ".join(f"[{entry_short_name(d)}](<{d['path']}>)" for d in members)
         lines.append(f"| **{panel['title']}** | {links} |")
@@ -1580,7 +1602,7 @@ def render_panel_readme(panel: dict, members: list, repo_root: str) -> str:
     """
     directory = panel_dir(panel)
     top = panel["title"]
-    names = sorted(members, key=lambda d: d["path"])
+    names = sort_panel_entries(members, panel)
     one_liner = PANEL_ONE_LINERS.get(directory, panel["tagline"])
     lines = [
         '<div align="center" markdown="1">',
@@ -1800,11 +1822,13 @@ def _yaml_dq(text: str) -> str:
 
 
 def _site_nav_entry_lines(entries: list, mapping: dict, panel: dict) -> list:
-    """单个板块的 nav 行：板块 README 作 section index，条目按路径排序，
+    """单个板块的 nav 行：板块 README 作 section index，条目按配置或路径排序，
     带子文档的条目折叠为二级分组（总报告在前，子文档按路径排序）。"""
-    members = [d for d in entries
-               if mapping.get(d["path"], {}).get("id") == panel["id"]]
-    members.sort(key=lambda d: d["path"])
+    members = sort_panel_entries(
+        [d for d in entries
+         if mapping.get(d["path"], {}).get("id") == panel["id"]],
+        panel,
+    )
     top = panel_dir(panel)
     if panel["title"] == top:
         lines = [f"    - {_yaml_dq(top + '/README.md')}"]
@@ -2056,7 +2080,14 @@ def render_site_home(cfg: dict, mapping: dict, entries: list,
                   '## 研究专题', "",
                   f'<span>{len(topics_entries)} 个研究专题，选择感兴趣的方向开始阅读。</span>', "",
                   '</div>', "", '<div class="rr-topic-links" markdown="1">', ""]
-        for doc in sorted(topics_entries, key=lambda d: d["path"]):
+        def _topic_sort_key(doc):
+            panel = mapping.get(doc["path"], {})
+            directory = entry_dir(doc["path"])
+            order = panel.get("entry_order", [])
+            rank = order.index(directory) if directory in order else len(order)
+            return (directory.split("/", 1)[0], rank, doc["path"])
+
+        for doc in sorted(topics_entries, key=_topic_sort_key):
             lines += [f'[{label(entry_short_name(doc))}](<{doc["path"]}>){{ .rr-topic }}', ""]
         lines += ['</div>', "", '</section>', ""]
     lines += ['<div class="rr-library-footer" markdown="1">', "",

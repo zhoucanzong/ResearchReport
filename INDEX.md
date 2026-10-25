@@ -1248,7 +1248,7 @@
 | [AGENTS.md](<AGENTS.md>) |  | 9 | 908 B |
 | [AI4Science/README.md](<AI4Science/README.md>) | AI4Science | 137 | 6,896 B |
 | [AIGC/README.md](<AIGC/README.md>) | AIGC | 32 | 1,780 B |
-| [Agents/README.md](<Agents/README.md>) | Agents | 74 | 3,601 B |
+| [Agents/README.md](<Agents/README.md>) | Agents | 74 | 3,611 B |
 | [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 46 | 1,951 B |
 | [Infra/README.md](<Infra/README.md>) | Infra | 117 | 8,075 B |
 | [LLM/README.md](<LLM/README.md>) | LLM | 164 | 11,533 B |
@@ -1256,7 +1256,7 @@
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 104 | 4,517 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 196 | 14,460 B |
+| [README.md](<README.md>) |  | 196 | 14,500 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 103 | 6,735 B |
 | [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 102 | 7,365 B |
