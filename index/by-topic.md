@@ -343,7 +343,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) | Agent 系统：让模型在环境中持续完成任务 | — | — | — |
+| [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) | Agent 系统综述：从工具调用到可验证的长程闭环 | — | 2026-10-26 | — |
 
 ## 机器人视觉语言动作模型（VLA） (1)
 

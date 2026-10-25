@@ -11,6 +11,7 @@
 
 | 条目 | date | 板块 | 专题 |
 | --- | --- | --- | --- |
+| [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) | 2026-10-26 | Agents | AgentSystems |
 | [LLM/OperationsResearch/report.md](<../LLM/OperationsResearch/report.md>) | 2026-10-25 | LLM | OperationsResearch |
 | [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) | 2026-10-25 | LLM | DocumentParsing |
 | [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 2026-10-24 | LLM | TrainingData |
@@ -30,9 +31,8 @@
 | [AI4Science/MathematicalDiscovery/report.md](<../AI4Science/MathematicalDiscovery/report.md>) | 2026-10-23 | AI4Science | MathematicalDiscovery |
 | [AI4Science/MaterialsDiscovery/report.md](<../AI4Science/MaterialsDiscovery/report.md>) | 2026-10-23 | AI4Science | MaterialsDiscovery |
 | [AI4Science/Chemistry/report.md](<../AI4Science/Chemistry/report.md>) | 2026-10-23 | AI4Science | Chemistry |
-| [AI4Science/AutonomousLabs/report.md](<../AI4Science/AutonomousLabs/report.md>) | 2026-10-23 | AI4Science | AutonomousLabs |
 
-## 无 date 元数据（43）
+## 无 date 元数据（42）
 
 以下条目缺少可解析的 `date`，无法参与「最近更新」排序：
 
@@ -45,7 +45,6 @@
 * [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>)
 * [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>)
 * [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>)
-* [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>)
 * [LLM/Alignment/report.md](<../LLM/Alignment/report.md>)
 * [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>)
 * [LLM/LongContext/report.md](<../LLM/LongContext/report.md>)

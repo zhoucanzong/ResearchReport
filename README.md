@@ -109,7 +109,7 @@
 | :-- | :-- |
 | **[GPT](<Models/GPT/report.md>)**<br><sub>Models</sub> | GPT：从生成式预训练到推理与多模态系统 |
 | **[推理模型与测试时计算](<LLM/ReasoningModels/report.md>)**<br><sub>LLM</sub> | 推理模型：测试时计算怎样变成更可靠的解题 |
-| **[智能体系统](<Agents/AgentSystems/report.md>)**<br><sub>Agents</sub> | Agent 系统：让模型在环境中持续完成任务 |
+| **[智能体系统](<Agents/AgentSystems/report.md>)**<br><sub>Agents</sub> | Agent 系统综述：从工具调用到可验证的长程闭环 |
 | **[视频生成](<AIGC/VideoGen/report.md>)**<br><sub>AIGC</sub> | 视频生成：从图像先验到时空建模 |
 | **[世界模型](<WorldModel/WorldModels/report.md>)**<br><sub>WorldModel</sub> | WorldModels 技术专题调研 |
 | **[蛋白质与肽结合体设计](<AI4Science/ProteinDesign/report.md>)**<br><sub>AI4Science</sub> | 蛋白质 binder 发现：从复合物生成到候选筛选 |
@@ -123,11 +123,11 @@
 <!-- SCRIPT:recent START · 报告日期优先，缺失时回退最近提交日 -->
 | 日期 | 阅读条目 | 板块 |
 | :-- | :-- | :-- |
+| 2026-10-26 | [智能体系统](<Agents/AgentSystems/report.md>) | Agents |
 | 2026-10-25 | [OCR 与文档解析](<LLM/DocumentParsing/report.md>) | LLM |
 | 2026-10-25 | [大模型辅助运筹建模与求解](<LLM/OperationsResearch/report.md>) | LLM |
 | 2026-10-25 | [3D 生成](<AIGC/3DGen/report.md>) | AIGC |
 | 2026-10-25 | [音频与音乐生成](<AIGC/AudioGen/report.md>) | AIGC |
-| 2026-10-25 | [数字人与 Avatar](<AIGC/AvatarGen/report.md>) | AIGC |
 <!-- SCRIPT:recent END -->
 
 [查看全部更新 →](index/recent.md)
