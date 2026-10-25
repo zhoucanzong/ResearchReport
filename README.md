@@ -1,6 +1,6 @@
-<h1 align="center">ResearchReport</h1>
+<h1 align="center">AI 论文与技术报告精读</h1>
 
-<p align="center">AI 研究图书馆 · 连接论文、方法与开源实现</p>
+<p align="center">读懂研究问题与方法机制，按需追踪开源实现</p>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/readme-cover-dark.svg">
@@ -52,7 +52,7 @@
 </td>
 <td width="33%" valign="top">
 <h3>03 · <a href="Agents/README.md">Agents</a></h3>
-<p><strong>智能体系统</strong><br><sub>3 篇主报告 · 智能体架构、记忆、工具使用与长期执行</sub></p>
+<p><strong>智能体系统</strong><br><sub>3 篇主报告 · Agent 系统围绕决策闭环展开，覆盖记忆、工具、长程执行、电脑使用与安全</sub></p>
 <p><a href="Agents/AgentSystems/report.md">智能体系统</a> · <a href="Agents/ComputerUse/report.md">电脑使用 Agent</a> · <a href="Agents/AgentSecurity/report.md">工具 Agent 安全</a></p>
 <p><a href="Agents/README.md"><strong>浏览板块 →</strong></a></p>
 </td>
@@ -173,7 +173,7 @@ ResearchReport/    74 条目 · 45 研究专题 · 9 板块
 │
 ├─ 🧠 Models/        23 条 · 厂商模型 / 系列逐个精读（GPT · Qwen · Gemini …）
 ├─ 💬 LLM/           12 条 · 语言模型能力、训练数据与技术专题（推理模型与推理时计算 · 长上下文 · 混合专家模型（MoE） …）
-├─ 🤖 Agents/         3 条 · 智能体架构、记忆、工具使用与长期执行（智能体系统 · 电脑使用 Agent · 工具 Agent 安全 …）
+├─ 🤖 Agents/         3 条 · Agent 系统围绕决策闭环展开，覆盖记忆、工具、长程执行、电脑使用与安全（智能体系统 · 电脑使用 Agent · 工具 Agent 安全 …）
 ├─ 🎨 AIGC/           9 条 · 图像、视频、音频、3D、数字人生成及相关架构与编辑方法（视频生成 · 扩散 Transformer（DiT） · 扩散模型 …）
 ├─ 🌍 WorldModel/     3 条 · 世界模型与具身 VLA（世界模型 · 机器人视觉语言动作模型（VLA） · 具身预测规划 …）
 ├─ 🧪 AI4Science/    10 条 · 科学问题中的 AI 方法与实验闭环（蛋白质与肽结合体设计 · 生成式材料设计 · 天气与气候预测 …）
