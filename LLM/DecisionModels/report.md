@@ -427,6 +427,65 @@ TypeSafe 把 Jev 定位为 **System One 模型**（"first System One model"）�
 
 ---
 
+## 六甲、生态落地：五个开源版本 + 训练框架（2026-10-26 增补）
+
+> **证据类型**：本节全部为**厂商/框架官方文档**（ms-swift 文档、Cloudflare changelog、ModelScope 公众号），**非论文、未独立复现**；数字一律标"官方报告"。
+> **为什么单列**：前文把"决策模型是什么、官方放了什么、第三方怎么评"讲完了，但**"不同版本各是什么结构、怎么训"**只散落在开源复刻地图里。本节按「结构 → 损失 → 数据形态 → 工程」四轴把它们对齐。
+
+### 6甲.1 五个版本的结构对照
+
+| 版本 | 底座 | 评分头形态 | 默认损失 | 数据形态 | 模态 | 一手来源 |
+| :-- | :-- | :-- | :-- | :-- | :-- | :-- |
+| **JEV-27B-VL** | Qwen3-VL + PEFT adapter | 24 槽 verbalizer bias（`decision_head.json` + `calibration.json`）| `distill_rps` | 一问一行（fan-out）| 文本 + 图像/视频 | ModelScope `autotrust/JEV-27B-VL` |
+| **Clef / Clef-flash** | Qwen3-VL（LoRA 已合并）| `joint_head.safetensors`（联合头）| `smooth_brier` | **多问联合**（一次前向答完一条记录）| 文本 + 最多 4 图 | HF `Cloudflare/clef`、`clef-flash`（Apache 2.0）|
+| **OmniJev** | Qwen3.5-4B（hybrid gated-deltanet + VL）+ PEFT | FiLM 头 + 序数回归头 + 2 个新 token | `ce_rps` | 一问一行（多模态 state）| 图像 / 视频（先拼 4×4 mosaic）| ModelScope `AI-ModelScope/OmniJev` |
+| **Kev（0.8B/4B/9B）** | Qwen3.5-Base（hybrid）| pointer head（fp32）| `scoring`（仅基础项）| 一问一行（**纯文本**变体）| 文本 | ModelScope `jaredpalmer/kev-*` |
+| **THX-02** | Qwen3.5 hybrid（非因果全注意力，已合并）| 线性 readout（255 个答案码）+ 标定温度 | `distill_rps` | **多问联合**（非因果一次读全部问题）| 文本 + 可选图像 | ModelScope `HAL-X/THX-02` |
+| **generic_decision** | 任意因果 LM | `JevVerbalizerHead`（**不加网络层**，直接复用 `lm_logits` 在选项 token 上取对数概率）| `distill_rps` 或 `scoring` | 一问一行 | 文本 | ms-swift 文档 |
+
+**两个可以直接下的判断**
+1. **"决策模型"不是一个架构，而是一组接口约定**：底座可以是 Qwen3-VL、Qwen3.5 hybrid，也可以是任意因果 LM；真正决定"是不是决策模型"的是**一次前向给出每题候选集的校准概率**这个契约（与 §2.2–2.5 的四条判据一致）。
+2. **一问一行 vs 多问联合是真实的分叉**：只有 **Clef** 与 **THX-02** 走"一条记录一次前向"的联合解码（`joint_head` / 非因果 readout），其余都是 fan-out 成逐题前向。这直接对应 §2.5 的"共享状态多问题并行"，也是 `record_acc`（整条记录全对才算对）这个指标存在的理由。
+
+### 6甲.2 损失函数谱系：一个基础项 + 三个校准项
+
+官方把五种损失描述为**适当评分规则（proper scoring rules）**的组合：
+
+| 项 | 数学形式 | 作用范围 |
+| :-- | :-- | :-- |
+| **基础项：掩码软交叉熵** | `−Σ_k t_k log p_k`（软标签时 ≡ KL(t‖p)）| 全部题型；FP32 计算、不截断概率，保留"高置信度答错"的纠正梯度 |
+| RPS（有序概率得分） | `Σ_k (p̂^(k) − t̂^(k))² /(K−1)`（累积分布差）| 仅 `score` 题型 |
+| Brier 得分 | `Σ_k (p_k − t_k)² / K` | 全部题型 |
+| 序数交叉熵 | 保留档位顺序的 CE | `score` 题型（NanoJev 路线）|
+
+**组合方式**：`distill_rps = CE(软标签) + 0.5·RPS`；`smooth_brier = CE(标签平滑 ε=0.1) + Brier`；`ce_rps = CE + 0.5·RPS`（注意这版 RPS **不做逐行归一化**，与 `distill_rps` 不同）；`scoring = CE`。
+
+### 6甲.3 温度标定：两级、样本外、可关闭（工程细节最值得抄）
+
+- **两级分解**：先在全题型合并数据上拟合**全局温度** `T_h`，再在缩放后的 logits 上按题型拟合**相对温度** `T_r^k`；服务用温度 `T^k = T_h · T_r^k`，**裁剪到 0.05–20**。
+- **样本外报告**：日志里的 accuracy/ECE/Brier/NLL 是**两折交叉验证的 out-of-fold** 值（按记录奇偶分半，用另一半拟合的温度给本半打分，整条记录不跨折）；**但写进 checkpoint 的温度仍是用全部 eval 数据拟合的**——报告严谨、生产不浪费数据。
+- **跳过条件**（静默、不报错）：头没有温度 buffer（如联合头）、无 eval set、eval 题数 < 10（`SWIFT_CALIBRATION_MIN_ITEMS`）、收集 logits 抛错。
+- **拟合目标**：默认 `brier`（网格 0.05–10 + 黄金分割，无 scipy 依赖、对噪声稳健）；`nll`（LBFGS + strong-wolfe，更激进地压过度自信）。
+- **为什么准确率不变**：温度是 logits 的单调变换，**argmax 不动**——所以日志里 accuracy 是"对照项"，**ECE 才是标定是否成功的直接指标**。这条正好解释了官方"JEV ECE 0.00268→0.00143（−46.7%）而准确率不变"的说法为什么自洽。
+
+### 6甲.4 Clef 的官方数字（厂商自述，需与 §5 的"厂商主张"同等审慎）
+
+| 项 | Clef（27B）| Clef-flash（9B）| Jev（对照）|
+| :-- | --: | --: | --: |
+| 中位延迟 | 209.3 ms | **38.8 ms** | 524.1 ms |
+| p95 延迟 | 238.6 ms | **122.4 ms** | 536.0 ms |
+| BFCL（case exact）| 98.47 | **98.76** | 95.75 |
+| BANKING77（macro-F1）| **94.20** | 90.93 | 79.74 |
+| CLINC150+OOS（macro-F1）| **97.43** | 66.77 | 89.27 |
+| 家电分类（case exact）| 82.95 | **97.73** | 52.27 |
+
+官方口径：43 次延迟量测取中位、10 个决策基准里 Clef 系在 7 个上最高、上下文 64K、每次请求最多 64 问、权重 **Apache 2.0**、训练用自家 RL 微调平台。**注意**：这是 Cloudflare 自测自报，未第三方复现；且 §5.3 已记录过"第三方对 Jev 速度的独立量测口径各异"，跨厂延迟数字**不可直接并表**。
+
+### 6甲.5 与既有章节的关系
+
+- 本节补的是**"版本"维度**；结构判据仍看 §2，训练目标 RLCD 仍看 §3，第三方评仍看 §6；
+- **"五类结构"**（评分头信号来源 / 候选项序列化 / 候选间交互 / 多问联合建模）是 ModelScope 文章给出的分类轴，与 `taxonomy.md` 的轴**不冲突但也不等同**——本文按"数据形态（一问一行 / 多问联合）"与"头形态（verbalizer / FiLM+序数 / readout / pointer）"两条更能落地的轴来对齐，避免两套分类互相打架。
+
 ## 七、三类主张分开写
 
 > 本专题的硬规则：**能力 / 效率 / 失效必须分栏陈述**，且**不做跨论文排行榜**。下表的每一行都可独立成立或独立被推翻。

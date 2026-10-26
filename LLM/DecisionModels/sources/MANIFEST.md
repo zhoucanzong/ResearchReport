@@ -60,3 +60,18 @@
 ---
 
 *编制时间：2026-10-18 ｜ 元数据：`export.arxiv.org/api/query`（12 条全命中）｜ license：`arxiv.org/abs/<id>` 页内 CC 标识 ｜ 版本日期：`published`（v1）/ `updated`（多版本） ｜ 全文不入库*
+
+## 6. 非论文来源：框架与厂商文档（2026-10-26 增补）
+
+> 与上面 12 篇论文分开记：**这些是工程文档/厂商博客，不是预印本**，引用时标注证据类型为"官方工程文档"。
+
+| # | 来源 | 类型 | 用于 | 实测 |
+| --: | :-- | :-- | :-- | :-- |
+| 1 | [ms-swift 决策模型训练文档](https://swift.readthedocs.io/en/latest/BestPractices/Decision.html) | 框架文档 | 五个版本的结构/损失/数据形态、两级温度标定、generic_decision | 200（正文已读）|
+| 2 | [ms-swift PR #10306](https://github.com/modelscope/ms-swift/pull/10306) | 代码变更 | decision task_type 的引入 | 200 |
+| 3 | [Cloudflare changelog：Clef on Workers AI（2026-10-01）](https://developers.cloudflare.com/changelog/post/2026-10-01-clef-workers-ai/) | 厂商公告 | Clef/Clef-flash 尺寸、延迟、基准、Apache 2.0 | 200（正文已读）|
+| 4 | [Cloudflare 博客：Introducing Clef](https://blog.cloudflare.com/clef-decision-models/) | 厂商博客 | 训练与 RL 微调平台背景 | 200（页面导航较重，取 changelog 事实为主）|
+| 5 | [HF `Cloudflare/clef`](https://huggingface.co/Cloudflare/clef) · [`clef-flash`](https://huggingface.co/Cloudflare/clef-flash) | 权重卡 | 权重与许可（Apache 2.0）| 未逐页读，按 changelog 声明记录 |
+| 6 | [ModelScope 公众号《ms-swift 倾情奉献：决策模型的从原理到上手定制》](https://mp.weixin.qq.com/s/tXsB41r725D8iIX6K5nuCQ) | 厂商公众号 | 生态时间线（Jev→OpenAI Decisions→Clef）、五类结构轴、损失谱系叙事 | 需移动端 UA 才可取正文（默认 UA 命中验证页）|
+
+**记录口径**：本文对上述来源只做"官方报告"级引用，**未独立复现**任何训练或延迟数字；跨厂延迟不可并表（见 report §5.3 与 §6甲.4）。
