@@ -497,6 +497,7 @@ nav:
         - "2610.07350-tlar": "Infra/SpeculativeDecoding/papers/2610.07350-tlar.md"
         - "2610.08678-secure-sd": "Infra/SpeculativeDecoding/papers/2610.08678-secure-sd.md"
         - "2610.23787-dlite": "Infra/SpeculativeDecoding/papers/2610.23787-dlite.md"
+        - "eagle4-one-flexible-drafter": "Infra/SpeculativeDecoding/papers/eagle4-one-flexible-drafter.md"
         - "sglang-implementation": "Infra/SpeculativeDecoding/papers/sglang-implementation.md"
         - "vllm-implementation": "Infra/SpeculativeDecoding/papers/vllm-implementation.md"
         - "CANDIDATES": "Infra/SpeculativeDecoding/sources/CANDIDATES.md"

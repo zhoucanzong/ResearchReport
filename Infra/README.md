@@ -32,7 +32,7 @@
 | **MoE 执行与专家通信** | [MoE 执行：从专家路由到跨设备回收](<MoEExecution/report.md>) | 69 行 |
 | **模型量化与边缘部署** | [模型量化与边缘部署研究报告](<QuantizationEdge/report.md>) | 188 行 |
 | **在线推理服务与评测** | [在线 LLM Serving：SLO、Goodput 与请求完整性](<ServingEvaluation/report.md>) | 81 行 |
-| **投机解码** | [投机解码（Speculative Decoding）技术专题 · 深度调研](<SpeculativeDecoding/report.md>) | 536 行 |
+| **投机解码** | [投机解码（Speculative Decoding）技术专题 · 深度调研](<SpeculativeDecoding/report.md>) | 538 行 |
 | **分布式训练基础设施** | [大模型训练基础设施与分布式训练研究报告](<TrainingInfra/report.md>) | 181 行 |
 
 ## 📎 子文档
@@ -65,7 +65,7 @@
 </details>
 
 <details>
-<summary><b>投机解码</b>（40 份）</summary>
+<summary><b>投机解码</b>（41 份）</summary>
 
 * [legacy/speculative-block-diffusion.md](<SpeculativeDecoding/legacy/speculative-block-diffusion.md>) — 230 行 / 18,588 B
 * [legacy/speculative-cascade-heterogeneous.md](<SpeculativeDecoding/legacy/speculative-cascade-heterogeneous.md>) — 141 行 / 11,829 B
@@ -98,6 +98,7 @@
 * [papers/2610.07350-tlar.md](<SpeculativeDecoding/papers/2610.07350-tlar.md>) — 54 行 / 9,515 B
 * [papers/2610.08678-secure-sd.md](<SpeculativeDecoding/papers/2610.08678-secure-sd.md>) — 55 行 / 6,108 B
 * [papers/2610.23787-dlite.md](<SpeculativeDecoding/papers/2610.23787-dlite.md>) — 48 行 / 6,161 B
+* [papers/eagle4-one-flexible-drafter.md](<SpeculativeDecoding/papers/eagle4-one-flexible-drafter.md>) — 68 行 / 7,898 B
 * [papers/sglang-implementation.md](<SpeculativeDecoding/papers/sglang-implementation.md>) — 220 行 / 15,358 B
 * [papers/vllm-implementation.md](<SpeculativeDecoding/papers/vllm-implementation.md>) — 227 行 / 18,077 B
 * [sources/CANDIDATES.md](<SpeculativeDecoding/sources/CANDIDATES.md>) — 96 行 / 10,366 B

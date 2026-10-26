@@ -37,6 +37,7 @@ status: needs-review
 | # | 分册 | 系统 | 在谱系中的位置 | 行数 |
 | --: | :-- | :-- | :-- | --: |
 | 1 | [2401.15077-eagle-series.md](papers/2401.15077-eagle-series.md) | EAGLE / EAGLE-2 / EAGLE-3 | 自投机·特征级自回归（工程实现代表） | 244 |
+| 21 | [eagle4-one-flexible-drafter.md](papers/eagle4-one-flexible-drafter.md) | EAGLE-4 | 自投机·按实测成本自调树（系统层） | 68 |
 | 2 | [2401.10774-medusa.md](papers/2401.10774-medusa.md) | Medusa | 自投机·并行头（轻量插件） | 204 |
 | 3 | [2402.02057-lookahead.md](papers/2402.02057-lookahead.md) | Lookahead Decoding | 免训练·Jacobi 轨迹 | 202 |
 | 4 | [2305.09781-specinfer.md](papers/2305.09781-specinfer.md) | SpecInfer | 独立 draft·树验证系统 | 201 |
@@ -72,7 +73,7 @@ status: needs-review
 
 ## 0. 一页结论
 
-1. **投机解码的收益不是“算法属性”，而是“算法 × 负载 × 硬件”的联合属性**。EAGLE 在 SGLang batch=24 就跌破 1.0×（0.93×），EAGLE-3 在 batch=64 仍有 1.38×；同一族、不同版本，拐点不同。`[精读原文]`
+1. **投机解码的收益不是“算法属性”，而是“算法 × 负载 × 硬件”的联合属性**。EAGLE 在 SGLang batch=24 就跌破 1.0×（0.93×），EAGLE-3 在 batch=64 仍有 1.38×；同一族、不同版本，拐点不同。**EAGLE-4 把这条从“族属性”收窄为“配置属性”**：它用按实测成本自调的树，在四卡 B300 上并发 64 仍有 1.39×，但**同一实现默认配置在单卡并发 64 是 0.73×、四卡默认配置并发 256 是 0.37×**——只有换上官方 high-load recipe 才在大并发不被普通解码反超（见 [EAGLE-4 分册](papers/eagle4-one-flexible-drafter.md) §4）。`[精读原文]`
 2. **“无损”须按保证与算法形式区分**：严格分布保持与贪心等价需要各自证明；逐 token / 序列级是验证形式，不能另当正确性等级；typical acceptance 的经验质量也不能直接升级为分布偏移有界。新近 SecureSD 还测到：对有损 verifier，jailbreak/prompt-injection 指标可能比通用 utility 更早退化；这不推翻严格无损方法的等价证明。详见 [验证专题 §6](topics/verification-acceptance.md#6-无损需要区分保证与经验)与[SecureSD 精读](papers/2610.08678-secure-sd.md)。`[精读原文]`
 3. **T>0 的动态树必须分析候选选择条件**：不能从贪心 benchmark 推出所有采样配置的收益。对按 `q` 排序/剪枝的随机候选，需核对存活条件和实际提议分布；RheoSampling 给出一种特定构造。未核版本的默认配置不在此断言。`[精读原文]`
 4. **top-K 改变的是接受率，不是无偏性**：单链拒绝采样的 α* = Σ min(p,q) = 1 − TV；top-K 截断只要验证端用同一分布、残差用完整 p，输出仍严格等于 p。把“top-K 有偏”当结论是错的。`[精读原文]`
@@ -178,6 +179,7 @@ flowchart LR
 | 2026 H1 | 块扩散 draft、树验证、dLLM 自投机与质量桥接 | DFlash / DFlare / DDTree / PRESTO / Spiffy / PoE-Bridge | [精读与机制综合](topics/diffusion-drafters.md) |
 | 2026 H2 | T>0 正确性、安全边界与新系统瓶颈 | RheoSampling；SecureSD；SpecStream | [RheoSampling](papers/2609.21827-rheosampling.md)、[SecureSD](papers/2610.08678-secure-sd.md)、[SpecStream](papers/2609.33184-specstream.md) |
 | 2026 H2 | 扩散草稿的分支校正；Agent 场景复用 target 上下文 | DARTree；DLite | [DARTree](papers/2608.13524-dartree.md)、[DLite](papers/2610.23787-dlite.md) |
+| 2026 H2 | 草稿预算自适应（按硬件与 batch 实测成本调树） | EAGLE-4 | [EAGLE-4 分册](papers/eagle4-one-flexible-drafter.md) |
 | 2026 | 生产框架落地 | vLLM / SGLang | [vLLM](papers/vllm-implementation.md)、[SGLang](papers/sglang-implementation.md) |
 
 ### 2.3 五根可判定的轴
