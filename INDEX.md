@@ -17,7 +17,7 @@
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 12 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6 |
 | 条目子文档数 | 273 |
 | 条目正文行数（剔除 front-matter） | 21,491 |
-| 条目字节 | 2,119,769 B |
+| 条目字节 | 2,119,770 B |
 | 带 front-matter 的条目 | 74 |
 | 带合法 `date` 的条目 | 32 |
 | 文档（除生成物外的全部 `.md`） | 369 |
@@ -39,9 +39,9 @@
 | WorldModel | 3 | 44 | 1,145 | 133,537 B | [板块页 →](<WorldModel/README.md>) |
 | AI4Science | 10 | 53 | 870 | 146,743 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 2 | 10 | 192 | 36,294 B | [板块页 →](<Evaluation/README.md>) |
-| Infra | 6 | 57 | 1,141 | 109,556 B | [板块页 →](<Infra/README.md>) |
+| Infra | 6 | 57 | 1,141 | 109,557 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 36 | 1,503 | 160,466 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **74** | **369** | **21,491** | **2,119,769 B** | — |
+| **合计** | **74** | **369** | **21,491** | **2,119,770 B** | — |
 
 ## 分面索引
 
@@ -1078,7 +1078,7 @@
   <summary><b>投机解码</b> · <code>Infra/SpeculativeDecoding/report.md</code> · 538 行 · 2026-10-22</summary>
 
 
-    * **条目**：[Infra/SpeculativeDecoding/report.md](<Infra/SpeculativeDecoding/report.md>)（538 行 / 45,558 B）
+    * **条目**：[Infra/SpeculativeDecoding/report.md](<Infra/SpeculativeDecoding/report.md>)（538 行 / 45,559 B）
     * **专题目录**：`Infra/SpeculativeDecoding`
     * **元数据**：type=`topic-research` · domain=`Infra` · subject=`SpeculativeDecoding` · date=`2026-10-22` · status=`needs-review`
     * **子文档（41）**
@@ -1113,7 +1113,7 @@
         * [papers/2610.07350-tlar.md](<Infra/SpeculativeDecoding/papers/2610.07350-tlar.md>) — 54 行 / 9,515 B
         * [papers/2610.08678-secure-sd.md](<Infra/SpeculativeDecoding/papers/2610.08678-secure-sd.md>) — 55 行 / 6,108 B
         * [papers/2610.23787-dlite.md](<Infra/SpeculativeDecoding/papers/2610.23787-dlite.md>) — 48 行 / 6,161 B
-        * [papers/eagle4-one-flexible-drafter.md](<Infra/SpeculativeDecoding/papers/eagle4-one-flexible-drafter.md>) — 68 行 / 7,898 B
+        * [papers/eagle4-one-flexible-drafter.md](<Infra/SpeculativeDecoding/papers/eagle4-one-flexible-drafter.md>) — 139 行 / 13,623 B
         * [papers/sglang-implementation.md](<Infra/SpeculativeDecoding/papers/sglang-implementation.md>) — 220 行 / 15,358 B
         * [papers/vllm-implementation.md](<Infra/SpeculativeDecoding/papers/vllm-implementation.md>) — 227 行 / 18,077 B
         * [sources/CANDIDATES.md](<Infra/SpeculativeDecoding/sources/CANDIDATES.md>) — 96 行 / 10,366 B
@@ -1251,7 +1251,7 @@
 | [AIGC/README.md](<AIGC/README.md>) | AIGC | 32 | 1,837 B |
 | [Agents/README.md](<Agents/README.md>) | Agents | 74 | 3,621 B |
 | [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 46 | 1,972 B |
-| [Infra/README.md](<Infra/README.md>) | Infra | 118 | 8,184 B |
+| [Infra/README.md](<Infra/README.md>) | Infra | 118 | 8,186 B |
 | [LLM/README.md](<LLM/README.md>) | LLM | 164 | 11,479 B |
 | [Models/README.md](<Models/README.md>) | Models | 101 | 5,029 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 104 | 4,517 B |
