@@ -37,7 +37,7 @@ status: needs-review
 | # | 分册 | 系统 | 在谱系中的位置 | 行数 |
 | --: | :-- | :-- | :-- | --: |
 | 1 | [2401.15077-eagle-series.md](papers/2401.15077-eagle-series.md) | EAGLE / EAGLE-2 / EAGLE-3 | 自投机·特征级自回归（工程实现代表） | 244 |
-| 21 | [eagle4-one-flexible-drafter.md](papers/eagle4-one-flexible-drafter.md) | EAGLE-4 | 自投机·按实测成本自调树（系统层） | 139 |
+| 21 | [eagle4-one-flexible-drafter.md](papers/eagle4-one-flexible-drafter.md) | EAGLE-4 | 自投机·按实测成本自调树（系统层） | 211 |
 | 2 | [2401.10774-medusa.md](papers/2401.10774-medusa.md) | Medusa | 自投机·并行头（轻量插件） | 204 |
 | 3 | [2402.02057-lookahead.md](papers/2402.02057-lookahead.md) | Lookahead Decoding | 免训练·Jacobi 轨迹 | 202 |
 | 4 | [2305.09781-specinfer.md](papers/2305.09781-specinfer.md) | SpecInfer | 独立 draft·树验证系统 | 201 |

@@ -1113,7 +1113,7 @@
         * [papers/2610.07350-tlar.md](<Infra/SpeculativeDecoding/papers/2610.07350-tlar.md>) — 54 行 / 9,515 B
         * [papers/2610.08678-secure-sd.md](<Infra/SpeculativeDecoding/papers/2610.08678-secure-sd.md>) — 55 行 / 6,108 B
         * [papers/2610.23787-dlite.md](<Infra/SpeculativeDecoding/papers/2610.23787-dlite.md>) — 48 行 / 6,161 B
-        * [papers/eagle4-one-flexible-drafter.md](<Infra/SpeculativeDecoding/papers/eagle4-one-flexible-drafter.md>) — 139 行 / 13,623 B
+        * [papers/eagle4-one-flexible-drafter.md](<Infra/SpeculativeDecoding/papers/eagle4-one-flexible-drafter.md>) — 211 行 / 19,192 B
         * [papers/sglang-implementation.md](<Infra/SpeculativeDecoding/papers/sglang-implementation.md>) — 220 行 / 15,358 B
         * [papers/vllm-implementation.md](<Infra/SpeculativeDecoding/papers/vllm-implementation.md>) — 227 行 / 18,077 B
         * [sources/CANDIDATES.md](<Infra/SpeculativeDecoding/sources/CANDIDATES.md>) — 96 行 / 10,366 B
