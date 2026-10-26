@@ -125,9 +125,9 @@
 | :-- | :-- | :-- |
 | 2026-10-26 | [智能体系统](<Agents/AgentSystems/report.md>) | Agents |
 | 2026-10-26 | [电脑使用 Agent](<Agents/ComputerUse/report.md>) | Agents |
-| 2026-10-25 | [OCR 与文档解析](<LLM/DocumentParsing/report.md>) | LLM |
-| 2026-10-25 | [大模型辅助运筹建模与求解](<LLM/OperationsResearch/report.md>) | LLM |
-| 2026-10-25 | [3D 生成](<AIGC/3DGen/report.md>) | AIGC |
+| 2026-10-26 | [扩散模型](<AIGC/DiffusionModels/report.md>) | AIGC |
+| 2026-10-26 | [图像生成](<AIGC/ImageGeneration/report.md>) | AIGC |
+| 2026-10-26 | [模型对齐与后训练](<LLM/Alignment/report.md>) | LLM |
 <!-- SCRIPT:recent END -->
 
 [查看全部更新 →](index/recent.md)
