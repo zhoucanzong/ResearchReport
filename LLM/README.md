@@ -29,7 +29,7 @@
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
 | **模型对齐与后训练** | [模型对齐与后训练：方法、目标与证据边界](<Alignment/report.md>) | 126 行 |
-| **决策模型（Decision Models）** | [Decision Models（System One / Typed Decision Model）技术专题调研](<DecisionModels/report.md>) | 934 行 |
+| **决策模型（Decision Models）** | [决策模型综述：把概率判断变成可行动的选择](<DecisionModels/report.md>) | 242 行 |
 | **扩散语言模型** | [扩散语言模型：从随机遮盖到大规模并行生成](<DiffusionLM/report.md>) | 76 行 |
 | **OCR 与文档解析** | [OCR 与文档解析：从字符识别到结构还原](<DocumentParsing/report.md>) | 116 行 |
 | **长上下文** | [长上下文：从可接收长度到有效利用](<LongContext/report.md>) | 176 行 |
@@ -46,9 +46,9 @@
 <details>
 <summary><b>决策模型（Decision Models）</b>（18 份）</summary>
 
-* [calibration.md](<DecisionModels/calibration.md>) — 261 行 / 28,610 B
-* [experiments.md](<DecisionModels/experiments.md>) — 349 行 / 25,166 B
-* [open-implementations.md](<DecisionModels/open-implementations.md>) — 412 行 / 32,731 B
+* [calibration.md](<DecisionModels/calibration.md>) — 261 行 / 28,683 B
+* [experiments.md](<DecisionModels/experiments.md>) — 348 行 / 25,133 B
+* [open-implementations.md](<DecisionModels/open-implementations.md>) — 412 行 / 32,700 B
 * [papers/2609.23886-this-that-model.md](<DecisionModels/papers/2609.23886-this-that-model.md>) — 289 行 / 22,356 B
 * [papers/2609.23986-jev-mem.md](<DecisionModels/papers/2609.23986-jev-mem.md>) — 334 行 / 27,127 B
 * [papers/2609.24052-crash-narrative-calibration.md](<DecisionModels/papers/2609.24052-crash-narrative-calibration.md>) — 98 行 / 12,094 B
@@ -59,11 +59,11 @@
 * [papers/2609.26758-option-name-vs-definition.md](<DecisionModels/papers/2609.26758-option-name-vs-definition.md>) — 334 行 / 50,064 B
 * [papers/2609.28613-decision-hijacking.md](<DecisionModels/papers/2609.28613-decision-hijacking.md>) — 317 行 / 26,528 B
 * [papers/2609.30243-jevout-natural-context-flip.md](<DecisionModels/papers/2609.30243-jevout-natural-context-flip.md>) — 312 行 / 33,740 B
-* [papers/2609.33209-probability-axioms-coherence.md](<DecisionModels/papers/2609.33209-probability-axioms-coherence.md>) — 92 行 / 10,252 B
+* [papers/2609.33209-probability-axioms-coherence.md](<DecisionModels/papers/2609.33209-probability-axioms-coherence.md>) — 92 行 / 10,250 B
 * [papers/2610.09683-system-switch.md](<DecisionModels/papers/2610.09683-system-switch.md>) — 90 行 / 10,672 B
 * [sources/CANDIDATES.md](<DecisionModels/sources/CANDIDATES.md>) — 70 行 / 8,181 B
 * [sources/MANIFEST.md](<DecisionModels/sources/MANIFEST.md>) — 77 行 / 9,956 B
-* [taxonomy.md](<DecisionModels/taxonomy.md>) — 254 行 / 25,036 B
+* [taxonomy.md](<DecisionModels/taxonomy.md>) — 254 行 / 25,127 B
 
 </details>
 

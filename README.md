@@ -125,9 +125,9 @@
 | :-- | :-- | :-- |
 | 2026-10-26 | [智能体系统](<Agents/AgentSystems/report.md>) | Agents |
 | 2026-10-26 | [电脑使用 Agent](<Agents/ComputerUse/report.md>) | Agents |
+| 2026-10-26 | [决策模型（Decision Models）](<LLM/DecisionModels/report.md>) | LLM |
 | 2026-10-26 | [扩散模型](<AIGC/DiffusionModels/report.md>) | AIGC |
 | 2026-10-26 | [图像生成](<AIGC/ImageGeneration/report.md>) | AIGC |
-| 2026-10-26 | [模型对齐与后训练](<LLM/Alignment/report.md>) | LLM |
 <!-- SCRIPT:recent END -->
 
 [查看全部更新 →](index/recent.md)

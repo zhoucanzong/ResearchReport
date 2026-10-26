@@ -18,7 +18,7 @@
 | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | status=needs-review |
 | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | status=needs-review |
 
-## 无 date 且无 status（无法判定，42）
+## 无 date 且无 status（无法判定，41）
 
 以下条目既没有 `date` 也没有 `status`，陈旧度无法评估（不算作已标记）：
 
@@ -32,7 +32,6 @@
 * [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>)
 * [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>)
 * [LLM/Alignment/report.md](<../LLM/Alignment/report.md>)
-* [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>)
 * [LLM/LongContext/report.md](<../LLM/LongContext/report.md>)
 * [LLM/MoE/report.md](<../LLM/MoE/report.md>)
 * [LLM/RAG/report.md](<../LLM/RAG/report.md>)

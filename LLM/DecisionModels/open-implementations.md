@@ -37,7 +37,7 @@ date: 2026-10-16
 
 ### 1.1 定位
 
-FLock-io 发布的**开源权重 typed decision model**，配套预印本 [2609.23886](https://arxiv.org/abs/2609.23886)《this-that-model-1.0: A typed decision model that decides in 30 ms, for a millionth of a cent》（[report.md §6.3](report.md)）。模型卡自述定位为"一次前向、无解码循环、无解析器、无重试"（`One forward pass, no decoding loop, no parser, no retry.`）。
+FLock-io 发布的**开源权重 typed decision model**，配套预印本 [2609.23886](https://arxiv.org/abs/2609.23886)《this-that-model-1.0: A typed decision model that decides in 30 ms, for a millionth of a cent》（[report.md §3](report.md)）。模型卡自述定位为"一次前向、无解码循环、无解析器、无重试"（`One forward pass, no decoding loop, no parser, no retry.`）。
 
 ### 1.2 实现路径（**隐藏状态直读**）
 
@@ -166,9 +166,9 @@ probs = torch.softmax(logits[letters[:len(row["options"])]], -1).tolist()
 
 ### 3.2 实现路径（**逐选项 `[MASK]` 打分**）
 
-模型卡与 [report.md §2.3](report.md) 一致的口径：**每个选项在自己的 `[MASK]` token 处打分**，再在**该题选项集合上**做 softmax，因此**答案空间在请求时定义，新 schema 无需重训**。三档形态差异**只在 backbone 与上下文长度**，不在 readout 形态。
+模型卡与 [report.md §3](report.md) 一致的口径：**每个选项在自己的 `[MASK]` token 处打分**，再在**该题选项集合上**做 softmax，因此**答案空间在请求时定义，新 schema 无需重训**。三档形态差异**只在 backbone 与上下文长度**，不在 readout 形态。
 
-（⚠️ 该 readout 描述在本批中以 [report.md §2.3](report.md) 与 [taxonomy.md §2.2](taxonomy.md) 的记录为准；本次抓取的模型卡正文已核实到**三档 backbone/上下文表**与 **Router 机制**，`[MASK]` 打分原句未在本轮抓取中逐字复核 → 标为 `二手/转述` 而非 `精读原文`。）
+（⚠️ 该 readout 描述在本批中以 [report.md §3](report.md) 与 [taxonomy.md §2.2](taxonomy.md) 的记录为准；本次抓取的模型卡正文已核实到**三档 backbone/上下文表**与 **Router 机制**，`[MASK]` 打分原句未在本轮抓取中逐字复核 → 标为 `二手/转述` 而非 `精读原文`。）
 
 ### 3.3 三个 checkpoint（模型卡原表）
 
@@ -190,7 +190,7 @@ probs = torch.softmax(logits[letters[:len(row["options"])]], -1).tolist()
 | 路由开销 | 脚本与语言检测 `<0.5 ms`（纯 Python），在**前向之前** | 模型卡正文 |
 | 长文档 | `max_len=8192`；20 题中 **16–18 题**答对（前置文本至约 4,000 token），**超出后 8–17/20** | 模型卡正文（自陈"结果多变，请自行核验"） |
 | 冷启代价 | 单语部署永不加载第二个；`max_loaded=1` 每次切换重建，**CPU 中位 7.4 s / T4 10.3 s** | 模型卡正文 |
-| **跨语言塌陷（重要失效）** | 英语 checkpoint 对非拉丁脚本塌陷：**高棉语 0.000 accuracy at 0.952 confidence**；模型卡自评 `the model stays confident while being wrong, confidence gating cannot save you` | 模型卡正文——**与 [report.md §7.3](report.md) 引用一致** |
+| **跨语言塌陷（重要失效）** | 英语 checkpoint 对非拉丁脚本塌陷：**高棉语 0.000 accuracy at 0.952 confidence**；模型卡自评 `the model stays confident while being wrong, confidence gating cannot save you` | 模型卡正文——**与 [report.md §6](report.md) 引用一致** |
 
 ### 3.5 可复现性
 
@@ -267,7 +267,7 @@ probs = torch.softmax(logits[letters[:len(row["options"])]], -1).tolist()
 
 ### 4.5 项目自述性能与**口径警告**
 
-- 博客：`Kev-27B leads overall in my evaluations`；`All results are from the author's evaluation harness, not an independent leaderboard.` → **作者自陈非独立排行榜**，与 [report.md §6.5](report.md) 一致。
+- 博客：`Kev-27B leads overall in my evaluations`；`All results are from the author's evaluation harness, not an independent leaderboard.` → **作者自陈非独立排行榜**。本报告不把该自评作为跨系统性能结论。
 - 成本口径原文：`GPU costs per million requests are estimates from Modal's October 2026 list prices and measured throughput, assuming a busy GPU. They exclude separately billed CPU, memory, and network; lightly used endpoints cost more per request.` → **成本数字必须连此假设一起引用**。
 - 已知退化（**重要**）：博客自陈新版 27B `short-input accuracy is roughly unchanged. The new model is less accurate and more overconfident on long legal contracts.`，建议该负载改用 `jaredpalmer/kev-27b@v1-lora`。
 - 本地运行时：Kev-0.8B/4B 可经 MLX 在 Apple Silicon 运行；`On a 32 GB M5, Kev-4B answers five questions about a short text in 721 ms, or 136 ms when the text is cached; Kev-0.8B takes 149 ms for new text.`
@@ -312,7 +312,7 @@ probs = torch.softmax(logits[letters[:len(row["options"])]], -1).tolist()
 
 | 项 | 记录值 |
 |---|---|
-| 公开权重 | **未找到**（预印本与 [report.md §10](report.md) 均未给出 HF repo id 或权重页） |
+| 公开权重 | **未找到**（预印本未给出 HF repo id 或权重页） |
 | 许可证 | **未声明**（无权重页可查） |
 | 推理代码 | **未找到**公开仓库 URL |
 | 结论 | 按本文件规则记入 **§7 未确证/待跟踪**，**不得**转引为"可直接复现的实现" |

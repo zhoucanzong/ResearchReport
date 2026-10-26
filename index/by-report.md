@@ -42,7 +42,7 @@
 | 投机解码 | Infra | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 41 | 538 | 2026-10-22 |
 | 分布式训练基础设施 | Infra | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 0 | 181 | 2026-10-22 |
 | 模型对齐与后训练 | LLM | [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) | 0 | 126 | — |
-| 决策模型（Decision Models） | LLM | [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | 18 | 934 | — |
+| 决策模型（Decision Models） | LLM | [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | 18 | 242 | 2026-10-26 |
 | 扩散语言模型 | LLM | [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 10 | 76 | 2026-10-23 |
 | OCR 与文档解析 | LLM | [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) | 16 | 116 | 2026-10-25 |
 | 长上下文 | LLM | [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 0 | 176 | — |
@@ -85,4 +85,4 @@
 | 具身预测规划 | WorldModel | [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) | 2 | 54 | — |
 | 机器人视觉语言动作模型（VLA） | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 23 | 573 | — |
 | 世界模型 | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 518 | 2026-10-22 |
-| **合计** | — | — | **273** | **21,550** | — |
+| **合计** | — | — | **273** | **20,858** | — |

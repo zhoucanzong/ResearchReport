@@ -16,10 +16,10 @@
 | **条目数**（`report.md`） | **74** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 12 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6 |
 | 条目子文档数 | 273 |
-| 条目正文行数（剔除 front-matter） | 21,550 |
-| 条目字节 | 2,126,188 B |
+| 条目正文行数（剔除 front-matter） | 20,858 |
+| 条目字节 | 2,039,580 B |
 | 带 front-matter 的条目 | 74 |
-| 带合法 `date` 的条目 | 32 |
+| 带合法 `date` 的条目 | 33 |
 | 文档（除生成物外的全部 `.md`） | 369 |
 | 其中文件名 `README.md` | 11 |
 | 纳入版本控制的文件 | 396 |
@@ -33,7 +33,7 @@
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
 | Models | 23 | 41 | 10,200 | 835,908 B | [板块页 →](<Models/README.md>) |
-| LLM | 12 | 85 | 2,273 | 316,800 B | [板块页 →](<LLM/README.md>) |
+| LLM | 12 | 85 | 1,581 | 230,192 B | [板块页 →](<LLM/README.md>) |
 | Agents | 3 | 22 | 489 | 69,335 B | [板块页 →](<Agents/README.md>) |
 | AIGC | 9 | 10 | 3,737 | 317,548 B | [板块页 →](<AIGC/README.md>) |
 | WorldModel | 3 | 44 | 1,145 | 133,537 B | [板块页 →](<WorldModel/README.md>) |
@@ -41,7 +41,7 @@
 | Evaluation | 2 | 10 | 192 | 36,294 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 6 | 57 | 1,141 | 109,557 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 6 | 36 | 1,503 | 160,466 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **74** | **369** | **21,550** | **2,126,188 B** | — |
+| **合计** | **74** | **369** | **20,858** | **2,039,580 B** | — |
 
 ## 分面索引
 
@@ -369,16 +369,16 @@
   </details>
 
   <details>
-  <summary><b>决策模型（Decision Models）</b> · <code>LLM/DecisionModels/report.md</code> · 934 行 · —</summary>
+  <summary><b>决策模型（Decision Models）</b> · <code>LLM/DecisionModels/report.md</code> · 242 行 · 2026-10-26</summary>
 
 
-    * **条目**：[LLM/DecisionModels/report.md](<LLM/DecisionModels/report.md>)（934 行 / 115,616 B）
+    * **条目**：[LLM/DecisionModels/report.md](<LLM/DecisionModels/report.md>)（242 行 / 29,008 B）
     * **专题目录**：`LLM/DecisionModels`
-    * **元数据**：type=`—` · domain=`LLM` · subject=`DecisionModels` · date=`—` · status=`—`
+    * **元数据**：type=`—` · domain=`LLM` · subject=`DecisionModels` · date=`2026-10-26` · status=`—`
     * **子文档（18）**
-        * [calibration.md](<LLM/DecisionModels/calibration.md>) — 261 行 / 28,610 B
-        * [experiments.md](<LLM/DecisionModels/experiments.md>) — 349 行 / 25,166 B
-        * [open-implementations.md](<LLM/DecisionModels/open-implementations.md>) — 412 行 / 32,731 B
+        * [calibration.md](<LLM/DecisionModels/calibration.md>) — 261 行 / 28,683 B
+        * [experiments.md](<LLM/DecisionModels/experiments.md>) — 348 行 / 25,133 B
+        * [open-implementations.md](<LLM/DecisionModels/open-implementations.md>) — 412 行 / 32,700 B
         * [papers/2609.23886-this-that-model.md](<LLM/DecisionModels/papers/2609.23886-this-that-model.md>) — 289 行 / 22,356 B
         * [papers/2609.23986-jev-mem.md](<LLM/DecisionModels/papers/2609.23986-jev-mem.md>) — 334 行 / 27,127 B
         * [papers/2609.24052-crash-narrative-calibration.md](<LLM/DecisionModels/papers/2609.24052-crash-narrative-calibration.md>) — 98 行 / 12,094 B
@@ -389,11 +389,11 @@
         * [papers/2609.26758-option-name-vs-definition.md](<LLM/DecisionModels/papers/2609.26758-option-name-vs-definition.md>) — 334 行 / 50,064 B
         * [papers/2609.28613-decision-hijacking.md](<LLM/DecisionModels/papers/2609.28613-decision-hijacking.md>) — 317 行 / 26,528 B
         * [papers/2609.30243-jevout-natural-context-flip.md](<LLM/DecisionModels/papers/2609.30243-jevout-natural-context-flip.md>) — 312 行 / 33,740 B
-        * [papers/2609.33209-probability-axioms-coherence.md](<LLM/DecisionModels/papers/2609.33209-probability-axioms-coherence.md>) — 92 行 / 10,252 B
+        * [papers/2609.33209-probability-axioms-coherence.md](<LLM/DecisionModels/papers/2609.33209-probability-axioms-coherence.md>) — 92 行 / 10,250 B
         * [papers/2610.09683-system-switch.md](<LLM/DecisionModels/papers/2610.09683-system-switch.md>) — 90 行 / 10,672 B
         * [sources/CANDIDATES.md](<LLM/DecisionModels/sources/CANDIDATES.md>) — 70 行 / 8,181 B
         * [sources/MANIFEST.md](<LLM/DecisionModels/sources/MANIFEST.md>) — 77 行 / 9,956 B
-        * [taxonomy.md](<LLM/DecisionModels/taxonomy.md>) — 254 行 / 25,036 B
+        * [taxonomy.md](<LLM/DecisionModels/taxonomy.md>) — 254 行 / 25,127 B
 
   </details>
 
@@ -1252,12 +1252,12 @@
 | [Agents/README.md](<Agents/README.md>) | Agents | 74 | 3,621 B |
 | [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 46 | 1,972 B |
 | [Infra/README.md](<Infra/README.md>) | Infra | 118 | 8,186 B |
-| [LLM/README.md](<LLM/README.md>) | LLM | 164 | 11,479 B |
+| [LLM/README.md](<LLM/README.md>) | LLM | 164 | 11,467 B |
 | [Models/README.md](<Models/README.md>) | Models | 101 | 5,029 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 104 | 4,517 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 196 | 14,523 B |
+| [README.md](<README.md>) |  | 196 | 14,537 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 103 | 6,735 B |
 | [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 102 | 7,365 B |

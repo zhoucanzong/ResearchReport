@@ -101,7 +101,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | Decision Models（System One / Typed Decision Model）技术专题调研 | — | — | — |
+| [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | 决策模型综述：把概率判断变成可行动的选择 | — | 2026-10-26 | — |
 
 ## DeepInfer (1)
 

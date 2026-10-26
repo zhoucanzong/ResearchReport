@@ -67,7 +67,7 @@
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) | 模型对齐与后训练：方法、目标与证据边界 | — | — | — |
-| [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | Decision Models（System One / Typed Decision Model）技术专题调研 | — | — | — |
+| [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | 决策模型综述：把概率判断变成可行动的选择 | — | 2026-10-26 | — |
 | [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 扩散语言模型：从随机遮盖到大规模并行生成 | topic-research | 2026-10-23 | current |
 | [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) | OCR 与文档解析：从字符识别到结构还原 | research | 2026-10-25 | current |
 | [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 长上下文：从可接收长度到有效利用 | — | — | — |
