@@ -242,6 +242,7 @@ nav:
         - "2603.28130-mdpbench": "LLM/DocumentParsing/papers/2603.28130-mdpbench.md"
         - "2605.17447-jd-fastocr": "LLM/DocumentParsing/papers/2605.17447-jd-fastocr.md"
         - "2605.27978-amap-abot-ocr": "LLM/DocumentParsing/papers/2605.27978-amap-abot-ocr.md"
+        - "2606.23050-unlimited-ocr": "LLM/DocumentParsing/papers/2606.23050-unlimited-ocr.md"
         - "2607.04884-hunyuan-ocr-15": "LLM/DocumentParsing/papers/2607.04884-hunyuan-ocr-15.md"
         - "2607.21617-amazon-faithc4": "LLM/DocumentParsing/papers/2607.21617-amazon-faithc4.md"
     - "长上下文": "LLM/LongContext/report.md"

@@ -22,7 +22,7 @@ status: current
 | 想理解的问题 | 推荐精读 |
 |---|---|
 | 一页文档如何拆成区域、恢复顺序并识别内容 | [PaddleOCR-VL](papers/2510.14528-paddleocr-vl.md) → [Dolphin](papers/2505.14059-bytedance-dolphin.md) |
-| 高分辨率、视觉压缩和解码预算如何取舍 | [DeepSeek-OCR](papers/2510.18234-deepseek-ocr.md) → [DeepSeek-OCR 2](papers/2601.20552-deepseek-ocr2.md)，再对照 [Coarse-to-Fine](papers/2603.24326-coarse-to-fine.md)、[FastOCR](papers/2605.17447-jd-fastocr.md) |
+| 高分辨率、视觉压缩和解码预算如何取舍 | [DeepSeek-OCR](papers/2510.18234-deepseek-ocr.md) → [DeepSeek-OCR 2](papers/2601.20552-deepseek-ocr2.md)，再对照 [Coarse-to-Fine](papers/2603.24326-coarse-to-fine.md)、[FastOCR](papers/2605.17447-jd-fastocr.md)；长时程解码见 [Unlimited OCR](papers/2606.23050-unlimited-ocr.md) |
 | 数据和奖励怎样教会模型输出文档结构 | [FireRed-OCR](papers/2603.01840-firered-ocr.md)、[Logics-Parsing](papers/2509.19760-alibaba-logics-parsing.md)、[ABot-OCR](papers/2605.27978-amap-abot-ocr.md)；[HunyuanOCR](papers/2511.19575-hunyuan-ocr.md)与 [1.5](papers/2607.04884-hunyuan-ocr-15.md)展示后续演进 |
 | 指标、语言、拍摄条件与逐字忠实度怎样影响结论 | [OmniDocBench](papers/2412.07626-omnidocbench.md) → [MDPBench](papers/2603.28130-mdpbench.md) → [FaithC4](papers/2607.21617-amazon-faithc4.md) |
 | 图表结构和多文档证据怎样成为下游可用信息 | [Multimodal OCR / dots.mocr](papers/2603.13032-multimodal-ocr.md)、[Doc-Researcher](papers/2510.21603-huawei-doc-researcher.md) |

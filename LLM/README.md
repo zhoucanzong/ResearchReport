@@ -84,7 +84,7 @@
 </details>
 
 <details>
-<summary><b>OCR 与文档解析</b>（16 份）</summary>
+<summary><b>OCR 与文档解析</b>（17 份）</summary>
 
 * [papers/2412.07626-omnidocbench.md](<DocumentParsing/papers/2412.07626-omnidocbench.md>) — 42 行 / 9,196 B
 * [papers/2505.14059-bytedance-dolphin.md](<DocumentParsing/papers/2505.14059-bytedance-dolphin.md>) — 40 行 / 5,505 B
@@ -100,6 +100,7 @@
 * [papers/2603.28130-mdpbench.md](<DocumentParsing/papers/2603.28130-mdpbench.md>) — 51 行 / 10,106 B
 * [papers/2605.17447-jd-fastocr.md](<DocumentParsing/papers/2605.17447-jd-fastocr.md>) — 40 行 / 5,443 B
 * [papers/2605.27978-amap-abot-ocr.md](<DocumentParsing/papers/2605.27978-amap-abot-ocr.md>) — 42 行 / 5,791 B
+* [papers/2606.23050-unlimited-ocr.md](<DocumentParsing/papers/2606.23050-unlimited-ocr.md>) — 97 行 / 16,733 B
 * [papers/2607.04884-hunyuan-ocr-15.md](<DocumentParsing/papers/2607.04884-hunyuan-ocr-15.md>) — 53 行 / 11,829 B
 * [papers/2607.21617-amazon-faithc4.md](<DocumentParsing/papers/2607.21617-amazon-faithc4.md>) — 39 行 / 6,093 B
 

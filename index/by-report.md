@@ -44,7 +44,7 @@
 | 模型对齐与后训练 | LLM | [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) | 0 | 126 | — |
 | 决策模型（Decision Models） | LLM | [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | 18 | 242 | 2026-10-26 |
 | 扩散语言模型 | LLM | [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 10 | 76 | 2026-10-23 |
-| OCR 与文档解析 | LLM | [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) | 16 | 116 | 2026-10-25 |
+| OCR 与文档解析 | LLM | [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) | 17 | 116 | 2026-10-25 |
 | 长上下文 | LLM | [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 0 | 176 | — |
 | 混合专家模型（MoE） | LLM | [LLM/MoE/report.md](<../LLM/MoE/report.md>) | 0 | 139 | — |
 | 大模型辅助运筹建模与求解 | LLM | [LLM/OperationsResearch/report.md](<../LLM/OperationsResearch/report.md>) | 9 | 90 | 2026-10-25 |
@@ -85,4 +85,4 @@
 | 具身预测规划 | WorldModel | [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) | 2 | 54 | — |
 | 机器人视觉语言动作模型（VLA） | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 23 | 573 | — |
 | 世界模型 | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 15 | 518 | 2026-10-22 |
-| **合计** | — | — | **273** | **20,858** | — |
+| **合计** | — | — | **274** | **20,858** | — |

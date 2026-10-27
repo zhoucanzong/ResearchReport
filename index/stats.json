@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "433c28aff05af0bd9ae6606e5b223352432731fc4363355b94dc14d46cae41ec",
+  "content_fingerprint": "a11efdbde1a8b1b3c55ccee3c27011ec20d8488ea96bf0c4105ce0a8a3a4b993",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -19,17 +19,17 @@
     "without_front_matter": 0,
     "with_date": 33,
     "lines": 20858,
-    "bytes": 2039580,
-    "children": 273
+    "bytes": 2039653,
+    "children": 274
   },
   "documents": {
-    "md_total": 369,
-    "md_libraries": 358,
+    "md_total": 370,
+    "md_libraries": 359,
     "with_front_matter": 87,
     "named_report_md": 74,
     "named_readme_md": 11,
-    "lines": 53440,
-    "bytes": 5283863
+    "lines": 53538,
+    "bytes": 5300784
   },
   "libraries": {
     "Models": {
@@ -67,10 +67,10 @@
     },
     "LLM": {
       "entries": 12,
-      "documents_md": 85,
+      "documents_md": 86,
       "md_by_category": {
         "Models": 0,
-        "LLM": 85,
+        "LLM": 86,
         "Agents": 0,
         "AIGC": 0,
         "WorldModel": 0,
@@ -91,12 +91,12 @@
         "OpenSource": 0
       },
       "lines": 1581,
-      "bytes": 230192,
+      "bytes": 230265,
       "lines_raw": 1651,
-      "dir_files": 85,
-      "dir_md": 85,
-      "dir_bytes": 979446,
-      "du_sk": 1140
+      "dir_files": 86,
+      "dir_md": 86,
+      "dir_bytes": 996367,
+      "du_sk": 1160
     },
     "Agents": {
       "entries": 3,
@@ -333,18 +333,18 @@
   "totals": {
     "libraries": 9,
     "library_entries": 74,
-    "library_documents_md": 358,
-    "library_dir_files": 364,
-    "library_dir_bytes": 5380157,
-    "library_du_sk": 5940,
+    "library_documents_md": 359,
+    "library_dir_files": 365,
+    "library_dir_bytes": 5397078,
+    "library_du_sk": 5960,
     "library_entry_lines": 20858,
-    "library_entry_bytes": 2039580
+    "library_entry_bytes": 2039653
   },
   "version_control": {
-    "tracked_total": 396,
-    "tracked_md": 377,
+    "tracked_total": 397,
+    "tracked_md": 378,
     "tracked_report_md": 74,
-    "tracked_libraries": 364,
+    "tracked_libraries": 365,
     "tracked_repo_root": 5,
     "tracked_docs": 8,
     "tracked_scripts": 4
@@ -432,7 +432,7 @@
           "files": 12,
           "lines": 1581,
           "lines_raw": 1651,
-          "bytes": 230192
+          "bytes": 230265
         },
         "report_md_by_category": {
           "Models": {
@@ -445,7 +445,7 @@
             "files": 12,
             "lines": 1581,
             "lines_raw": 1651,
-            "bytes": 230192
+            "bytes": 230265
           },
           "Agents": {
             "files": 0,
@@ -491,16 +491,16 @@
           }
         },
         "other_md": {
-          "files": 73,
-          "lines": 6173,
-          "lines_raw": 6313,
-          "bytes": 749254
+          "files": 74,
+          "lines": 6271,
+          "lines_raw": 6411,
+          "bytes": 766102
         },
         "dir_md": {
-          "files": 85,
-          "lines": 7754,
-          "lines_raw": 7964,
-          "bytes": 979446
+          "files": 86,
+          "lines": 7852,
+          "lines_raw": 8062,
+          "bytes": 996367
         }
       },
       "Agents": {
@@ -1037,16 +1037,16 @@
       }
     },
     "repo_md": {
-      "files": 369,
-      "lines": 53440,
-      "lines_raw": 54002,
-      "bytes": 5283863
+      "files": 370,
+      "lines": 53538,
+      "lines_raw": 54100,
+      "bytes": 5300784
     },
     "library_md": {
-      "files": 358,
-      "lines": 52148,
-      "lines_raw": 52710,
-      "bytes": 5190815
+      "files": 359,
+      "lines": 52246,
+      "lines_raw": 52808,
+      "bytes": 5207736
     },
     "root_readme": {
       "files": 1,
@@ -1072,7 +1072,7 @@
     ]
   },
   "storage": {
-    "tracked_bytes": 10691412,
+    "tracked_bytes": 10708555,
     "definition": "纳入版本控制的文件字节合计（`git ls-files` 跟踪路径逐个 getsize 求和）；刻意**不**用 du 量工作树——工作树含 site/site-docs/构建产物、别人的未提交草稿、虚拟环境等「车间地面」，会让数字每个 clone 一个样、生成物不可复现。本字段与提交树同源，任意 clone 重跑一致。"
   }
 }
