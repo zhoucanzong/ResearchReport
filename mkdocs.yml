@@ -509,7 +509,7 @@ nav:
         - "systems-throughput-latency": "Infra/SpeculativeDecoding/topics/systems-throughput-latency.md"
         - "verification-acceptance": "Infra/SpeculativeDecoding/topics/verification-acceptance.md"
     - "分布式训练基础设施": "Infra/TrainingInfra/report.md"
-  - "🔧 OpenSource · 6":
+  - "🔧 OpenSource · 7":
     - "OpenSource/README.md"
     - "DeepInfer":
         - "总报告": "OpenSource/DeepInfer/report.md"
@@ -524,6 +524,7 @@ nav:
         - "ptc": "OpenSource/DeepSeekHarness/ptc.md"
         - "MANIFEST": "OpenSource/DeepSeekHarness/sources/MANIFEST.md"
         - "tool-effect-durability": "OpenSource/DeepSeekHarness/topics/tool-effect-durability.md"
+    - "Harness²": "OpenSource/Harness2/report.md"
     - "Nemotron-Labs-Diffusion":
         - "总报告": "OpenSource/nemotron/report.md"
         - "knowledge-graph": "OpenSource/nemotron/knowledge-graph.md"

@@ -13,14 +13,14 @@
 
 | 指标 | 数量 |
 | --- | --- |
-| **条目数**（`report.md`） | **74** |
-| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 12 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6 |
+| **条目数**（`report.md`） | **75** |
+| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 12 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 7 |
 | 条目子文档数 | 274 |
-| 条目正文行数（剔除 front-matter） | 20,858 |
-| 条目字节 | 2,039,653 B |
-| 带 front-matter 的条目 | 74 |
-| 带合法 `date` 的条目 | 33 |
-| 文档（除生成物外的全部 `.md`） | 370 |
+| 条目正文行数（剔除 front-matter） | 20,935 |
+| 条目字节 | 2,049,560 B |
+| 带 front-matter 的条目 | 75 |
+| 带合法 `date` 的条目 | 34 |
+| 文档（除生成物外的全部 `.md`） | 371 |
 | 其中文件名 `README.md` | 11 |
 | 纳入版本控制的文件 | 397 |
 | 纳入版本控制的 `.md` | 378 |
@@ -40,8 +40,8 @@
 | AI4Science | 10 | 53 | 870 | 146,743 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 2 | 10 | 192 | 36,294 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 6 | 57 | 1,141 | 109,557 B | [板块页 →](<Infra/README.md>) |
-| OpenSource | 6 | 36 | 1,503 | 160,466 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **74** | **370** | **20,858** | **2,039,653 B** | — |
+| OpenSource | 7 | 37 | 1,580 | 170,373 B | [板块页 →](<OpenSource/README.md>) |
+| **合计** | **75** | **371** | **20,935** | **2,049,560 B** | — |
 
 ## 分面索引
 
@@ -1141,10 +1141,10 @@
 
 </details>
 
-### OpenSource（6 条目 / 36 文档）
+### OpenSource（7 条目 / 37 文档）
 
 <details>
-<summary><b>开源仓库 OpenSource（6 条目 / 27 子文档）</b></summary>
+<summary><b>开源仓库 OpenSource（7 条目 / 27 子文档）</b></summary>
 
   <details>
   <summary><b>DeepInfer</b> · <code>OpenSource/DeepInfer/report.md</code> · 138 行 · 2026-10-22</summary>
@@ -1174,6 +1174,18 @@
         * [ptc.md](<OpenSource/DeepSeekHarness/ptc.md>) — 251 行 / 35,465 B
         * [sources/MANIFEST.md](<OpenSource/DeepSeekHarness/sources/MANIFEST.md>) — 18 行 / 2,823 B
         * [topics/tool-effect-durability.md](<OpenSource/DeepSeekHarness/topics/tool-effect-durability.md>) — 69 行 / 13,042 B
+
+  </details>
+
+  <details>
+  <summary><b>Harness²</b> · <code>OpenSource/Harness2/report.md</code> · 77 行 · 2026-10-28</summary>
+
+
+    * **条目**：[OpenSource/Harness2/report.md](<OpenSource/Harness2/report.md>)（77 行 / 9,907 B）
+    * **专题目录**：`OpenSource/Harness2`
+    * **元数据**：type=`repo-research` · domain=`Repo-Research` · subject=`Harness2` · date=`2026-10-28` · status=`completed`
+    * **子文档（0）**
+        * _该条目暂无子文档_
 
   </details>
 
@@ -1255,10 +1267,10 @@
 | [Infra/README.md](<Infra/README.md>) | Infra | 118 | 8,186 B |
 | [LLM/README.md](<LLM/README.md>) | LLM | 165 | 11,582 B |
 | [Models/README.md](<Models/README.md>) | Models | 101 | 5,029 B |
-| [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 104 | 4,517 B |
+| [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 105 | 4,619 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 196 | 14,537 B |
+| [README.md](<README.md>) |  | 196 | 14,539 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 103 | 6,735 B |
 | [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 102 | 7,365 B |
@@ -1274,6 +1286,6 @@
 ## 说明
 
 * 本索引是**派生数据**，仓库里的条目文件才是唯一事实来源；重建索引只需重跑脚本。
-* 当前 74 份条目带 front-matter；缺失的 `type` / `date` / `status` 显示为 `—`，domain / subject / topic 缺失时由路径推断。
+* 当前 75 份条目带 front-matter；缺失的 `type` / `date` / `status` 显示为 `—`，domain / subject / topic 缺失时由路径推断。
 * 可选元数据：`title` / `display_name` / `type` / `domain` / `subject` / `topic` / `upstream` / `date` / `evidence` / `status`。
 * 脚本只读扫描、只写生成物；**不会删除或改写任何条目文件**。

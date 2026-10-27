@@ -114,6 +114,10 @@
 
 * [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) — 349 行
 
+## https://github.com/google-research/harness2@1cfe254e8d25b15f37048c3730134686abe60335 (1)
+
+* [OpenSource/Harness2/report.md](<../OpenSource/Harness2/report.md>) — 77 行
+
 ## https://github.com/sgl-project/sglang@2a08e261ecd4cdfb04ec354f9005f18b88108b7d (1)
 
 * [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) — 311 行

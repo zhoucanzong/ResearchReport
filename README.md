@@ -18,7 +18,7 @@
 <div align="center">
 
 <!-- SCRIPT:badges START -->
-[**74** 主报告](index/by-report.md) &nbsp; · &nbsp; [**274** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**45** 研究专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
+[**75** 主报告](index/by-report.md) &nbsp; · &nbsp; [**274** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**45** 研究专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
 <!-- SCRIPT:badges END -->
 
 </div>
@@ -92,7 +92,7 @@
 </td>
 <td width="33%" valign="top">
 <h3>09 · <a href="OpenSource/README.md">OpenSource</a></h3>
-<p><strong>开源代码深读</strong><br><sub>6 篇主报告 · 开源仓库代码深读</sub></p>
+<p><strong>开源代码深读</strong><br><sub>7 篇主报告 · 开源仓库代码深读</sub></p>
 <p><a href="OpenSource/DeepInfer/report.md">DeepInfer</a> · <a href="OpenSource/vllm/report.md">vLLM</a> · <a href="OpenSource/sglang/report.md">SGLang</a></p>
 <p><a href="OpenSource/README.md"><strong>浏览板块 →</strong></a></p>
 </td>
@@ -123,11 +123,11 @@
 <!-- SCRIPT:recent START · 报告日期优先，缺失时回退最近提交日 -->
 | 日期 | 阅读条目 | 板块 |
 | :-- | :-- | :-- |
+| 2026-10-28 | [Harness²](<OpenSource/Harness2/report.md>) | OpenSource |
 | 2026-10-26 | [智能体系统](<Agents/AgentSystems/report.md>) | Agents |
 | 2026-10-26 | [电脑使用 Agent](<Agents/ComputerUse/report.md>) | Agents |
 | 2026-10-26 | [决策模型（Decision Models）](<LLM/DecisionModels/report.md>) | LLM |
 | 2026-10-26 | [扩散模型](<AIGC/DiffusionModels/report.md>) | AIGC |
-| 2026-10-26 | [图像生成](<AIGC/ImageGeneration/report.md>) | AIGC |
 <!-- SCRIPT:recent END -->
 
 [查看全部更新 →](index/recent.md)
@@ -161,15 +161,15 @@
 ### 完整索引
 
 <!-- SCRIPT:index START · 条目单一真值在 index/by-report.md -->
-共 **74** 条，分属 **9** 个板块：Models 23 · LLM 12 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 6。
-完整 74 行（条目 | 板块 | 路径）见 **[index/by-report.md](<index/by-report.md>)**；按域 / 主题 / 来源分面见 [index/](<index/>)，总目录见 [INDEX.md](<INDEX.md>)。
+共 **75** 条，分属 **9** 个板块：Models 23 · LLM 12 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 7。
+完整 75 行（条目 | 板块 | 路径）见 **[index/by-report.md](<index/by-report.md>)**；按域 / 主题 / 来源分面见 [index/](<index/>)，总目录见 [INDEX.md](<INDEX.md>)。
 <!-- SCRIPT:index END -->
 
 ### 目录结构
 
 <!-- SCRIPT:structure START · 来源 scripts/panels.json，配置驱动 -->
 ```text
-ResearchReport/    74 条目 · 45 研究专题 · 9 板块
+ResearchReport/    75 条目 · 45 研究专题 · 9 板块
 │
 ├─ 🧠 Models/        23 条 · 厂商模型 / 系列逐个精读（GPT · Qwen · Gemini …）
 ├─ 💬 LLM/           12 条 · 语言模型能力、训练数据与技术专题（推理模型与测试时计算 · 长上下文 · 混合专家模型（MoE） …）
@@ -179,7 +179,7 @@ ResearchReport/    74 条目 · 45 研究专题 · 9 板块
 ├─ 🧪 AI4Science/    10 条 · 科学问题中的 AI 方法与实验闭环（蛋白质与肽结合体设计 · 生成式材料设计 · 天气与气候预测 …）
 ├─ 📏 Evaluation/     2 条 · 跨领域 AI 评测与测量方法（评测科学 · 科学发现的评测方法 …）
 ├─ ⚙️ Infra/          6 条 · 推理 / 训练基础设施（投机解码 · 模型量化与边缘部署 · 分布式训练基础设施 …）
-├─ 🔧 OpenSource/     6 条 · 开源仓库代码深读（DeepInfer · vLLM · SGLang …）
+├─ 🔧 OpenSource/     7 条 · 开源仓库代码深读（DeepInfer · vLLM · SGLang …）
 │
 └─ ⚙ 生成管线：scripts/panels.json（单一真值）→ library_index.py
               → README / INDEX.md / index/* / 站点 nav

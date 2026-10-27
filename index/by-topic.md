@@ -75,6 +75,12 @@
 | --- | --- | --- | --- | --- |
 | [Models/Grok/report.md](<../Models/Grok/report.md>) | xAI Grok 系列模型深度调研报告 | — | — | — |
 
+## Harness² (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [OpenSource/Harness2/report.md](<../OpenSource/Harness2/report.md>) | Harness²：把 harness 本身作为优化对象 | repo-research | 2026-10-28 | completed |
+
 ## Hunyuan (1)
 
 | 条目 | 标题 | type | date | status |
