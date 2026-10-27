@@ -440,7 +440,7 @@
         * [papers/2603.28130-mdpbench.md](<LLM/DocumentParsing/papers/2603.28130-mdpbench.md>) — 51 行 / 10,106 B
         * [papers/2605.17447-jd-fastocr.md](<LLM/DocumentParsing/papers/2605.17447-jd-fastocr.md>) — 40 行 / 5,443 B
         * [papers/2605.27978-amap-abot-ocr.md](<LLM/DocumentParsing/papers/2605.27978-amap-abot-ocr.md>) — 42 行 / 5,791 B
-        * [papers/2606.23050-unlimited-ocr.md](<LLM/DocumentParsing/papers/2606.23050-unlimited-ocr.md>) — 97 行 / 16,733 B
+        * [papers/2606.23050-unlimited-ocr.md](<LLM/DocumentParsing/papers/2606.23050-unlimited-ocr.md>) — 97 行 / 16,758 B
         * [papers/2607.04884-hunyuan-ocr-15.md](<LLM/DocumentParsing/papers/2607.04884-hunyuan-ocr-15.md>) — 53 行 / 11,829 B
         * [papers/2607.21617-amazon-faithc4.md](<LLM/DocumentParsing/papers/2607.21617-amazon-faithc4.md>) — 39 行 / 6,093 B
 

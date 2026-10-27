@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "a11efdbde1a8b1b3c55ccee3c27011ec20d8488ea96bf0c4105ce0a8a3a4b993",
+  "content_fingerprint": "53f8ee2db5eb5c8dc83ed1d2c07c8bb58a420dc775b155d6be3ab56e43bc7004",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -29,7 +29,7 @@
     "named_report_md": 74,
     "named_readme_md": 11,
     "lines": 53538,
-    "bytes": 5300784
+    "bytes": 5300809
   },
   "libraries": {
     "Models": {
@@ -95,7 +95,7 @@
       "lines_raw": 1651,
       "dir_files": 86,
       "dir_md": 86,
-      "dir_bytes": 996367,
+      "dir_bytes": 996392,
       "du_sk": 1160
     },
     "Agents": {
@@ -335,7 +335,7 @@
     "library_entries": 74,
     "library_documents_md": 359,
     "library_dir_files": 365,
-    "library_dir_bytes": 5397078,
+    "library_dir_bytes": 5397103,
     "library_du_sk": 5960,
     "library_entry_lines": 20858,
     "library_entry_bytes": 2039653
@@ -494,13 +494,13 @@
           "files": 74,
           "lines": 6271,
           "lines_raw": 6411,
-          "bytes": 766102
+          "bytes": 766127
         },
         "dir_md": {
           "files": 86,
           "lines": 7852,
           "lines_raw": 8062,
-          "bytes": 996367
+          "bytes": 996392
         }
       },
       "Agents": {
@@ -1040,13 +1040,13 @@
       "files": 370,
       "lines": 53538,
       "lines_raw": 54100,
-      "bytes": 5300784
+      "bytes": 5300809
     },
     "library_md": {
       "files": 359,
       "lines": 52246,
       "lines_raw": 52808,
-      "bytes": 5207736
+      "bytes": 5207761
     },
     "root_readme": {
       "files": 1,
@@ -1072,7 +1072,7 @@
     ]
   },
   "storage": {
-    "tracked_bytes": 10708555,
+    "tracked_bytes": 10708580,
     "definition": "纳入版本控制的文件字节合计（`git ls-files` 跟踪路径逐个 getsize 求和）；刻意**不**用 du 量工作树——工作树含 site/site-docs/构建产物、别人的未提交草稿、虚拟环境等「车间地面」，会让数字每个 clone 一个样、生成物不可复现。本字段与提交树同源，任意 clone 重跑一致。"
   }
 }
