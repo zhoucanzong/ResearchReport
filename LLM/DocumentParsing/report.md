@@ -22,11 +22,11 @@ status: current
 | 想理解的问题 | 推荐精读 |
 |---|---|
 | 一页文档如何拆成区域、恢复顺序并识别内容 | [PaddleOCR-VL](papers/2510.14528-paddleocr-vl.md) → [Dolphin](papers/2505.14059-bytedance-dolphin.md)；同骨架换解码策略（外置版面 + 多 token 预测）见 [GLM-OCR](papers/2603.10910-glm-ocr.md)；把版面分析做成可选"思维"阶段的端到端做法见 [Qianfan-OCR](papers/2603.13398-qianfan-ocr.md) |
-| 高分辨率、视觉压缩和解码预算如何取舍 | [DeepSeek-OCR](papers/2510.18234-deepseek-ocr.md) → [DeepSeek-OCR 2](papers/2601.20552-deepseek-ocr2.md)，再对照 [Coarse-to-Fine](papers/2603.24326-coarse-to-fine.md)、[FastOCR](papers/2605.17447-jd-fastocr.md)；长时程解码见 [Unlimited OCR](papers/2606.23050-unlimited-ocr.md) |
+| 高分辨率、视觉压缩和解码预算如何取舍 | [DeepSeek-OCR](papers/2510.18234-deepseek-ocr.md) → [DeepSeek-OCR 2](papers/2601.20552-deepseek-ocr2.md)，再对照 [Coarse-to-Fine](papers/2603.24326-coarse-to-fine.md)、[FastOCR](papers/2605.17447-jd-fastocr.md)；长时程解码见 [Unlimited OCR](papers/2606.23050-unlimited-ocr.md)；按区域类型提示做短程转写、并用专用 draft head 加速见 [MiniCPM-OCR](papers/20261027-minicpm-ocr.md) |
 | 数据和奖励怎样教会模型输出文档结构 | [FireRed-OCR](papers/2603.01840-firered-ocr.md)、[Logics-Parsing](papers/2509.19760-alibaba-logics-parsing.md)、[ABot-OCR](papers/2605.27978-amap-abot-ocr.md)；[HunyuanOCR](papers/2511.19575-hunyuan-ocr.md)与 [1.5](papers/2607.04884-hunyuan-ocr-15.md)展示后续演进；把增益全押在数据与分阶段训练上见 [MinerU2.5-Pro](papers/2604.04771-mineru2-5-pro.md)，文本锚定预训练 + 混合任务 RL 见 [Xiaomi-OCR-0](papers/2609.36136-xiaomi-ocr-0.md) |
 | 指标、语言、拍摄条件与逐字忠实度怎样影响结论 | [OmniDocBench](papers/2412.07626-omnidocbench.md) → [MDPBench](papers/2603.28130-mdpbench.md) → [FaithC4](papers/2607.21617-amazon-faithc4.md)；v1.6 的 MGAM 匹配与 Base/Hard/Full 三层协议由 [MinerU2.5-Pro](papers/2604.04771-mineru2-5-pro.md) 定义，引用 v1.6 分数前先读其 §5 |
 | 图表结构和多文档证据怎样成为下游可用信息 | [Multimodal OCR / dots.mocr](papers/2603.13032-multimodal-ocr.md)、[Doc-Researcher](papers/2510.21603-huawei-doc-researcher.md) |
-| 不换解析器时，怎样自动判断这份 OCR 结果准不准 | [JEV 判别线](papers/jev-decision-line.md)（判别模型与解析器的分工、概率如何进阈值策略） |
+| 不换解析器时，怎样自动判断这份 OCR 结果准不准 | [JEV 判别线](papers/jev-decision-line.md)（判别模型与解析器的分工、概率如何进阈值策略）→ 同思路的小模型实例见 [MiniCPM-OCR Jev](papers/20261027-minicpm-ocr.md) |
 
 ## 先看端到端任务怎样分解
 
@@ -109,6 +109,7 @@ MDPBench 把另一条缺口凸显出来：标准数字文档表现不能代表�
 | 小红书 | [FireRed-OCR](papers/2603.01840-firered-ocr.md)、[Multimodal OCR / dots.mocr](papers/2603.13032-multimodal-ocr.md) | 一条路线把通用 VLM 专门化为文档解析器；另一条把图表、示意图等图形也变成可解析的结构内容 | 两篇已精读 |
 | 腾讯混元 | [HunyuanOCR](papers/2511.19575-hunyuan-ocr.md)、[HunyuanOCR-1.5](papers/2607.04884-hunyuan-ocr-15.md) | 以小型端到端 OCR VLM 统一识别、结构解析和语义抽取；后续报告进一步讨论训练与推理加速 | 两篇已精读 |
 | 腾讯微信 WXG | [微信 OCR 图片文字提取技术介绍](https://developer.cloud.tencent.com/article/1798403) | WXG 工程师明确称微信客户端长按提取文字使用微信自研 OCR；文章描述文字存在性/语种检测、文本图像分类、通用或垂类识别，再做版面重排 | 2021 年工程文章，非近期论文；直接证明微信团队有 OCR 研发与产品实践，不能代表当前模型结构 |
+| 面壁智能 OpenBMB | [MiniCPM-OCR 精读](papers/20261027-minicpm-ocr.md)（[仓库](https://github.com/OpenBMB/MiniCPM-OCR)、[1.0 模型卡](https://huggingface.co/openbmb/MiniCPM-OCR-1.0)、[Jev 模型卡](https://huggingface.co/openbmb/MiniCPM-OCR-Jev)） | 1.3B 只做**区域识别**（版面与读序由外置 PP-DocLayoutV3 提供，故 93.68 是系统分）；2B Jev 把"这段识别对不对"做成**二分类头**，用于解析结果质检 | 官方发布稿级（无 arXiv），1.0 与 Jev 已精读 |
 | 智谱 | [GLM-OCR 精读](papers/2603.10910-glm-ocr.md)（[原文 v2](https://arxiv.org/abs/2603.10910)） | 0.4B CogViT + 0.5B GLM 解码器，外置 PP-DocLayout-V3 两阶段；MTP 用共享参数多头，训 10 token/步、推理约 5.2 | v2 已精读 |
 | 小米 | [Xiaomi-OCR-0 精读](papers/2609.36136-xiaomi-ocr-0.md)（[原文](https://arxiv.org/abs/2609.36136)） | 0.8B 从 Qwen3.5-0.8B 起，Q-Mask 文本锚定 + CPT + Mix-RL；同一套权重同训解析与 OCR 理解，版面仍外置 | v1 已精读 |
 | AutoTrust（JEV 系列） | [JEV 判别线](papers/jev-decision-line.md)（[官方模型卡 JEV-35B](https://huggingface.co/autotrust/JEV-35B)） | 不做解析，做判别：把“问题 + 至多 256 个候选”压成一次前向的概率分布，用按类型标定的温度出概率，用于解析结果质检与多解析器仲裁 | 判别线已整理；无 arXiv 论文可确证，证据等级为官方发布稿 |

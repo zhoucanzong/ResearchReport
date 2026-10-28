@@ -31,7 +31,7 @@
 | **模型对齐与后训练** | [模型对齐与后训练：方法、目标与证据边界](<Alignment/report.md>) | 126 行 |
 | **决策模型（Decision Models）** | [决策模型综述：把概率判断变成可行动的选择](<DecisionModels/report.md>) | 242 行 |
 | **扩散语言模型** | [扩散语言模型：从随机遮盖到大规模并行生成](<DiffusionLM/report.md>) | 76 行 |
-| **OCR 与文档解析** | [OCR 与文档解析：从字符识别到结构还原](<DocumentParsing/report.md>) | 123 行 |
+| **OCR 与文档解析** | [OCR 与文档解析：从字符识别到结构还原](<DocumentParsing/report.md>) | 124 行 |
 | **长上下文** | [长上下文：从可接收长度到有效利用](<LongContext/report.md>) | 176 行 |
 | **混合专家模型（MoE）** | [混合专家模型：路由、负载均衡与系统通信](<MoE/report.md>) | 139 行 |
 | **大模型辅助运筹建模与求解** | [大模型辅助运筹建模与求解：从自然语言到可验证的决策](<OperationsResearch/report.md>) | 90 行 |
