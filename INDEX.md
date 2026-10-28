@@ -16,14 +16,14 @@
 | **条目数**（`report.md`） | **76** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 12 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 8 |
 | 条目子文档数 | 274 |
-| 条目正文行数（剔除 front-matter） | 21,035 |
-| 条目字节 | 2,059,690 B |
+| 条目正文行数（剔除 front-matter） | 21,064 |
+| 条目字节 | 2,062,313 B |
 | 带 front-matter 的条目 | 76 |
 | 带合法 `date` 的条目 | 35 |
 | 文档（除生成物外的全部 `.md`） | 372 |
 | 其中文件名 `README.md` | 11 |
-| 纳入版本控制的文件 | 399 |
-| 纳入版本控制的 `.md` | 380 |
+| 纳入版本控制的文件 | 407 |
+| 纳入版本控制的 `.md` | 386 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -40,8 +40,8 @@
 | AI4Science | 10 | 53 | 870 | 146,743 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 2 | 10 | 192 | 36,294 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 6 | 57 | 1,141 | 109,557 B | [板块页 →](<Infra/README.md>) |
-| OpenSource | 8 | 38 | 1,680 | 180,503 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **76** | **372** | **21,035** | **2,059,690 B** | — |
+| OpenSource | 8 | 38 | 1,709 | 183,126 B | [板块页 →](<OpenSource/README.md>) |
+| **合计** | **76** | **372** | **21,064** | **2,062,313 B** | — |
 
 ## 分面索引
 
@@ -1190,10 +1190,10 @@
   </details>
 
   <details>
-  <summary><b>REA</b> · <code>OpenSource/REA/report.md</code> · 58 行 · 2026-10-28</summary>
+  <summary><b>REA</b> · <code>OpenSource/REA/report.md</code> · 87 行 · 2026-10-28</summary>
 
 
-    * **条目**：[OpenSource/REA/report.md](<OpenSource/REA/report.md>)（58 行 / 7,577 B）
+    * **条目**：[OpenSource/REA/report.md](<OpenSource/REA/report.md>)（87 行 / 10,200 B）
     * **专题目录**：`OpenSource/REA`
     * **元数据**：type=`repo-research` · domain=`Repo-Research` · subject=`REA` · date=`2026-10-28` · status=`completed`
     * **子文档（0）**

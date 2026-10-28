@@ -28,7 +28,7 @@
 | **DeepInfer** | [DeepInfer：离线推理内核、异步调度与状态契约](<DeepInfer/report.md>) | 138 行 |
 | **DeepSeek Harness** | [DeepSeek Harness（DSH）仓库深读](<DeepSeekHarness/report.md>) | 349 行 |
 | **Harness²** | [Harness²：把 harness 本身作为优化对象](<Harness2/report.md>) | 119 行 |
-| **REA** | [REA：把逆向工程变成 agent 可核验的证据流](<REA/report.md>) | 58 行 |
+| **REA** | [REA：把逆向工程变成 agent 可核验的证据流](<REA/report.md>) | 87 行 |
 | **Nemotron-Labs-Diffusion** | [Nemotron-Labs-Diffusion 阅读报告](<nemotron/report.md>) | 221 行 |
 | **SGLang** | [SGLang 仓库代码分析报告](<sglang/report.md>) | 311 行 |
 | **this-that-model** | [this-that-model 仓库深读](<this-that-model/report.md>) | 190 行 |
