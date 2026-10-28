@@ -13,17 +13,17 @@
 
 | 指标 | 数量 |
 | --- | --- |
-| **条目数**（`report.md`） | **76** |
-| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 12 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 8 |
+| **条目数**（`report.md`） | **77** |
+| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 12 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 9 |
 | 条目子文档数 | 281 |
-| 条目正文行数（剔除 front-matter） | 21,071 |
-| 条目字节 | 2,064,568 B |
-| 带 front-matter 的条目 | 76 |
-| 带合法 `date` 的条目 | 35 |
-| 文档（除生成物外的全部 `.md`） | 380 |
+| 条目正文行数（剔除 front-matter） | 21,214 |
+| 条目字节 | 2,081,428 B |
+| 带 front-matter 的条目 | 77 |
+| 带合法 `date` 的条目 | 36 |
+| 文档（除生成物外的全部 `.md`） | 381 |
 | 其中文件名 `README.md` | 11 |
-| 纳入版本控制的文件 | 407 |
-| 纳入版本控制的 `.md` | 388 |
+| 纳入版本控制的文件 | 416 |
+| 纳入版本控制的 `.md` | 395 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -40,8 +40,8 @@
 | AI4Science | 10 | 53 | 870 | 146,743 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 2 | 10 | 192 | 36,294 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 6 | 57 | 1,141 | 109,557 B | [板块页 →](<Infra/README.md>) |
-| OpenSource | 8 | 38 | 1,709 | 183,126 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **76** | **380** | **21,071** | **2,064,568 B** | — |
+| OpenSource | 9 | 39 | 1,852 | 199,986 B | [板块页 →](<OpenSource/README.md>) |
+| **合计** | **77** | **381** | **21,214** | **2,081,428 B** | — |
 
 ## 分面索引
 
@@ -1148,10 +1148,10 @@
 
 </details>
 
-### OpenSource（8 条目 / 38 文档）
+### OpenSource（9 条目 / 39 文档）
 
 <details>
-<summary><b>开源仓库 OpenSource（8 条目 / 27 子文档）</b></summary>
+<summary><b>开源仓库 OpenSource（9 条目 / 27 子文档）</b></summary>
 
   <details>
   <summary><b>DeepInfer</b> · <code>OpenSource/DeepInfer/report.md</code> · 138 行 · 2026-10-22</summary>
@@ -1203,6 +1203,18 @@
     * **条目**：[OpenSource/REA/report.md](<OpenSource/REA/report.md>)（87 行 / 10,200 B）
     * **专题目录**：`OpenSource/REA`
     * **元数据**：type=`repo-research` · domain=`Repo-Research` · subject=`REA` · date=`2026-10-28` · status=`completed`
+    * **子文档（0）**
+        * _该条目暂无子文档_
+
+  </details>
+
+  <details>
+  <summary><b>RSIHub</b> · <code>OpenSource/RSIHub/report.md</code> · 143 行 · 2026-10-28</summary>
+
+
+    * **条目**：[OpenSource/RSIHub/report.md](<OpenSource/RSIHub/report.md>)（143 行 / 16,860 B）
+    * **专题目录**：`OpenSource/RSIHub`
+    * **元数据**：type=`repo-research` · domain=`Repo-Research` · subject=`RSIHub` · date=`2026-10-28` · status=`completed`
     * **子文档（0）**
         * _该条目暂无子文档_
 
@@ -1286,10 +1298,10 @@
 | [Infra/README.md](<Infra/README.md>) | Infra | 118 | 8,186 B |
 | [LLM/README.md](<LLM/README.md>) | LLM | 171 | 12,227 B |
 | [Models/README.md](<Models/README.md>) | Models | 101 | 5,029 B |
-| [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 106 | 4,718 B |
+| [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 107 | 4,830 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 196 | 14,530 B |
+| [README.md](<README.md>) |  | 196 | 14,509 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 104 | 6,827 B |
 | [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 102 | 7,365 B |
@@ -1306,6 +1318,6 @@
 ## 说明
 
 * 本索引是**派生数据**，仓库里的条目文件才是唯一事实来源；重建索引只需重跑脚本。
-* 当前 76 份条目带 front-matter；缺失的 `type` / `date` / `status` 显示为 `—`，domain / subject / topic 缺失时由路径推断。
+* 当前 77 份条目带 front-matter；缺失的 `type` / `date` / `status` 显示为 `—`，domain / subject / topic 缺失时由路径推断。
 * 可选元数据：`title` / `display_name` / `type` / `domain` / `subject` / `topic` / `upstream` / `date` / `evidence` / `status`。
 * 脚本只读扫描、只写生成物；**不会删除或改写任何条目文件**。

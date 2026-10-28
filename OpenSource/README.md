@@ -2,7 +2,7 @@
 
 # 🔧 OpenSource
 
-**8 条** · 开源仓库代码深读，源码不入口、只留报告与证据引用。
+**9 条** · 开源仓库代码深读，源码不入口、只留报告与证据引用。
 
 [← 返回首页](<../README.md>) · [完整索引](<../INDEX.md>)
 
@@ -10,7 +10,7 @@
 
 <!-- SCRIPT:panel-readme START · 由 scripts/library_index.py 生成，勿手改 -->
 
-![Entries](https://img.shields.io/badge/Entries-8-3f51b5?style=flat-square)
+![Entries](https://img.shields.io/badge/Entries-9-3f51b5?style=flat-square)
 ![Panel](https://img.shields.io/badge/Panel-OpenSource-9e9e9e?style=flat-square)
 
 ## 专题内分析
@@ -29,6 +29,7 @@
 | **DeepSeek Harness** | [DeepSeek Harness（DSH）仓库深读](<DeepSeekHarness/report.md>) | 349 行 |
 | **Harness²** | [Harness²：把 harness 本身作为优化对象](<Harness2/report.md>) | 119 行 |
 | **REA** | [REA：把逆向工程变成 agent 可核验的证据流](<REA/report.md>) | 87 行 |
+| **RSIHub** | [RSIHub：把"自进化"拆成可组合阶段与不可变评测](<RSIHub/report.md>) | 143 行 |
 | **Nemotron-Labs-Diffusion** | [Nemotron-Labs-Diffusion 阅读报告](<nemotron/report.md>) | 221 行 |
 | **SGLang** | [SGLang 仓库代码分析报告](<sglang/report.md>) | 311 行 |
 | **this-that-model** | [this-that-model 仓库深读](<this-that-model/report.md>) | 190 行 |

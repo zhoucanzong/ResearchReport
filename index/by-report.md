@@ -7,7 +7,7 @@
 
 ---
 
-共 **76** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter；「板块」列由 [`scripts/panels.json`](<../scripts/panels.json>) 驱动。
+共 **77** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter；「板块」列由 [`scripts/panels.json`](<../scripts/panels.json>) 驱动。
 
 | 条目 | 板块 | 路径 | 子报告数 | 行数 | 日期 |
 | --- | --- | --- | --: | --: | --- |
@@ -80,6 +80,7 @@
 | DeepSeek Harness | OpenSource | [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | 5 | 349 | 2026-10-20 |
 | Harness² | OpenSource | [OpenSource/Harness2/report.md](<../OpenSource/Harness2/report.md>) | 0 | 119 | 2026-10-28 |
 | REA | OpenSource | [OpenSource/REA/report.md](<../OpenSource/REA/report.md>) | 0 | 87 | 2026-10-28 |
+| RSIHub | OpenSource | [OpenSource/RSIHub/report.md](<../OpenSource/RSIHub/report.md>) | 0 | 143 | 2026-10-28 |
 | Nemotron-Labs-Diffusion | OpenSource | [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | 7 | 221 | — |
 | SGLang | OpenSource | [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | 5 | 311 | 2026-10-16 |
 | this-that-model | OpenSource | [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | 1 | 190 | 2026-10-16 |
@@ -87,4 +88,4 @@
 | 具身预测规划 | WorldModel | [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) | 2 | 54 | — |
 | 机器人视觉语言动作模型（VLA） | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 23 | 573 | — |
 | 世界模型 | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 16 | 518 | 2026-10-22 |
-| **合计** | — | — | **281** | **21,071** | — |
+| **合计** | — | — | **281** | **21,214** | — |

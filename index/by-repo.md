@@ -126,6 +126,10 @@
 
 * [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) — 311 行
 
+## https://github.com/simple-agent-lab/RSIHub@d6554299c58bf0fe2db04ddda0277f9db67ea680 (1)
+
+* [OpenSource/RSIHub/report.md](<../OpenSource/RSIHub/report.md>) — 143 行
+
 ## https://github.com/vllm-project/vllm@fa75d3456d60a5ffe923818c4b495295675b38e1 (1)
 
 * [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) — 294 行

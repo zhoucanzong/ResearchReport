@@ -183,6 +183,12 @@
 | --- | --- | --- | --- | --- |
 | [OpenSource/REA/report.md](<../OpenSource/REA/report.md>) | REA：把逆向工程变成 agent 可核验的证据流 | repo-research | 2026-10-28 | completed |
 
+## RSIHub (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [OpenSource/RSIHub/report.md](<../OpenSource/RSIHub/report.md>) | RSIHub：把"自进化"拆成可组合阶段与不可变评测 | repo-research | 2026-10-28 | completed |
+
 ## Runway (1)
 
 | 条目 | 标题 | type | date | status |
