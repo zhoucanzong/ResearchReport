@@ -22,8 +22,8 @@
 | 带合法 `date` 的条目 | 36 |
 | 文档（除生成物外的全部 `.md`） | 381 |
 | 其中文件名 `README.md` | 11 |
-| 纳入版本控制的文件 | 416 |
-| 纳入版本控制的 `.md` | 395 |
+| 纳入版本控制的文件 | 408 |
+| 纳入版本控制的 `.md` | 389 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
