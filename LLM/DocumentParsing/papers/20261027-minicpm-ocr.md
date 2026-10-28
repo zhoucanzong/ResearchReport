@@ -1,6 +1,6 @@
 # MiniCPM-OCR：1.3B 只做区域转写，2B 专门判"这段要不要复核"
 
-> 面壁智能（OpenBMB）2026-10-27 开源，Apache-2.0（代码、文档、权重；见仓库 `LICENSE` 与 README 末段）。**没有 arXiv 论文**：2026-10-28 以 `"MiniCPM-OCR" arxiv` 等词检索未见条目，一手材料只有仓库文档与模型卡。依据：仓库 [README](https://github.com/OpenBMB/MiniCPM-OCR) 与 `docs/` 下四份文档（`minicpm_ocr_1dot0_en.md`、`minicpm_ocr_jev_en.md`、`benchmark_reproduction_en.md`、`faq_en.md`，下文以文件名:行号引用）、[MiniCPM-OCR-1.0 模型卡](https://huggingface.co/openbmb/MiniCPM-OCR-1.0)、[Jev 模型卡](https://huggingface.co/openbmb/MiniCPM-OCR-Jev)、[JevOCRBench 数据集卡](https://huggingface.co/datasets/openbmb/JevOCRBench)。证据等级为**官方发布稿/文档**，低于论文级：机制段落有多处是官方自己承认"无材料可证"，本文逐处标出；未独立运行模型、未重算任何指标。
+> 面壁智能（OpenBMB）2026-10-27 开源，Apache-2.0（代码、文档、权重；见仓库 `LICENSE` 与 README 末段）。**没有 arXiv 论文**：2026-10-28 以 `"MiniCPM-OCR" arxiv` 等词检索未见条目，一手材料只有仓库文档与模型卡。依据：仓库 [README](https://github.com/OpenBMB/MiniCPM-OCR) 与 `docs/` 下四份文档（`minicpm_ocr_1dot0_en.md`、`minicpm_ocr_jev_en.md`、`benchmark_reproduction_en.md`、`faq_en.md`，下文以文件名:行号引用）、[MiniCPM-OCR-1.0 模型卡](https://huggingface.co/openbmb/MiniCPM-OCR-1.0)、[DSpark 草稿头模型卡](https://huggingface.co/openbmb/MiniCPM-OCR-1.0-DSpark)、[Jev 模型卡](https://huggingface.co/openbmb/MiniCPM-OCR-Jev)、[JevOCRBench 数据集卡](https://huggingface.co/datasets/openbmb/JevOCRBench)。证据等级为**官方发布稿/文档**，低于论文级：机制段落有多处是官方自己承认"无材料可证"，本文逐处标出；未独立运行模型、未重算任何指标。**这一族实际发布四类产物**：1.0 识别模型（1.3B）、Jev 判别模型（2B）、DSpark 草稿头（≈0.3B，只能配 1.0 用）、以及各自的量化/GGUF 形态。
 
 ## 先把"系统"和"模型"分开，否则 93.68 会被误读
 
@@ -56,15 +56,55 @@ MiniCPM-OCR Jev 2B，从 **Qwen3.5-2B** 训起，保留视觉编码器与语言�
 
 跨模型列的数字**来源未说明**：文档没有写对手分数是自己重跑还是转引论文（HunyuanOCR-1.5 的 94.74 与论文自报完全一致，倾向于转引）。这一列按"作者汇编"读，不能当独立复现。
 
-## DSpark 与那个 55%
+## DSpark 草稿头：第三个可下载产物，不是独立模型
 
-DSpark 是**主模型 + 配套草稿模型（sampling head）**的推测解码组合；权重表里主模型与 DSpark head 分开发布，官方强调"两者必须同发布批次配套，不能混用"（`minicpm_ocr_1dot0_en.md:99`；模型卡"Related checkpoints"段）。普通解码不需要草稿模型。
+HF 卡片第一句就把定位写死：这是 MiniCPM-OCR 1.0 的**推测解码草稿头**，"It is a draft model, not a standalone OCR model — it must be paired with the matching main checkpoint"（`openbmb/MiniCPM-OCR-1.0-DSpark` 卡片开头；元数据 `base_model_relation: finetune`）。所以这一族发布其实是**三件东西**：主模型（BF16/GGUF/AWQ/GPTQ）、DSpark 草稿头（BF16/GGUF）、Jev 判别模型（BF16/GGUF/AWQ/GPTQ）。
 
-**55% 的条件是官方自己承认不完整的**：文档只规定"比 DSpark 与不启用 DSpark，必须同主权重、同数据集、同硬件、同 SDK 配置，只切 DSpark 开关"，随后写"完整的对比命令与日志仍待补充"（`benchmark_reproduction_en.md:112`），且强调这 55% 只描述 DSpark 的收益、不能替代与其他系统的吞吐比较（`:116`）。所以 55% 只能作为官方声明引用，复现路径目前不存在。
+**硬参数**（卡片 "Specification" 表，均为官方卡片事实）：
+
+| 项 | 值 |
+|---|---|
+| 目标模型 | MiniCPM-OCR 1.0（1.3B） |
+| 草稿参数量 | **296,837,889**（≈0.3B，约为主模型的 23%） |
+| 草稿层数 | **5** |
+| 每次前向草稿 token 数 | **15** |
+| 取目标模型隐藏层 | **`[3, 7, 11, 15, 19]`** |
+| 精度 | BF16 |
+| 输入词表 | 248,100 |
+| 草稿输出词表 | **114,688**（输出 LM head 与 Markov 输出行被裁到该大小） |
+
+权重文件也可印证结构：`model.safetensors` 共 64 个 tensor，含 5 层草稿、`fc` 投影、`lm_head`、Markov heads、confidence head 与 `d2t`；`config.json` 的 architecture 是 `Qwen3DSparkModel`，另有 `dflash_config` 记目标层号与 Markov rank；`export-audit.json` 是导出时的权重/映射哈希与词表覆盖审计（卡片 "Files" 表）。
+
+**`d2t` 是这条路径最容易踩的坑**：卡片明确该 tensor 在本 checkpoint 里是**delta 编码**（`target_id - draft_id`），用前必须转成绝对 ID（`d2t[i] + i`）；GGUF 构建已做这步，`local-to-target.json`（114,688 个绝对目标 token ID）是核对用的 ground truth。直接当绝对映射用，等于整表错位。
+
+**vLLM 侧怎么挂**（卡片 "Usage with vLLM" 段原文参数）：`--speculative-config '{"method":"dspark","model":"openbmb/MiniCPM-OCR-1.0-DSpark","num_speculative_tokens":15,"enable_adaptive_verification":false}'`，并需配 `--max-model-len 40960`、`--trust-request-mm-kwargs`、`--mm-processor-kwargs '{"downsample_mode":"4x","max_slice_nums":9}'`、`--default-chat-template-kwargs '{"enable_thinking":false}'`。该示例本身是 `--max-num-seqs 1` 的单并发配置，不是生产吞吐配置。
+
+**分工与 55% 到底归谁**：主模型出 logits 并做验证，草稿头每步提 15 个 token、被接受就一次前进多步。卡片把 55% 写成 "With this head, MiniCPM-OCR 1.0 improves end-to-end processing efficiency by 55%"，即**这 55% 是这条草稿路径的收益，不是主模型自己变快**；同一份主权重关掉 DSpark 就退回普通自回归（与 `minicpm_ocr_1dot0_en.md:99` 的"普通解码不需要草稿模型"一致）。
+
+**55% 的条件仍不完整**：官方只规定"开/关 DSpark 必须同主权重、同数据集、同硬件、同 SDK 配置，只切 DSpark 开关"，随后写"完整的对比命令与日志仍待补充"（`benchmark_reproduction_en.md:112`），并强调它不能替代与其他系统的吞吐比较（`:116`）；卡片里的 1.49× / 3.62× 与主模型指南共用同一测量口径（RTX 5090、1,651 张图、图级并发 1）。
 
 **吞吐数字是可自查的**：1.217 pages/s（RTX 5090、全部 1,651 张图、**图级**并发 1、各系统开加速配置，`minicpm_ocr_1dot0_en.md:151,157-173`）。表内 1.49× PaddleOCR-VL-1.6 = 1.217/0.818，3.62× MinerU2.5-Pro = 1.217/0.336，两处都对得上。注意"图级并发 1"不等于页内串行——页内区域仍并发，这是它吞吐高的一半原因（`benchmark_reproduction_en.md:105`）。
 
-顺带一句与库内条目的关系：DSpark 与 [HunyuanOCR-1.5 精读](2607.04884-hunyuan-ocr-15.md) 的 DFlash 是同一路线（草稿模型加速 OCR 长输出），但**口径不同不可相减**——DFlash 报的是 vLLM 下单请求延迟 2.14×（3.032→1.408 秒/页），DSpark 报的是端到端效率 +55%。
+**草稿词表裁剪对中文 OCR 的潜在影响（我们的推断，官方未说明）**：草稿输出词表从 248,100 裁到 114,688（约 46%），只有这 114,688 个目标 token 能被草稿提出。中文 OCR 输出高度依赖大 CJK 词表与生僻字，若裁剪依据是训练语料频次，**低频汉字与生僻符号可能无法被草稿提出**，只能由主模型逐 token 生成；对生僻字密集或中英混排符号多的页面，接受长度会下降，加速比可能低于平均值。卡片只写"裁到 114,688"，**没给裁剪依据、也没有分语言影响**，所以这只是一条待验证的推断——要下结论需要同一页集上开/关 DSpark 的逐页加速分布。
+
+**与通用投机解码的关系（一句话点到）**：DSpark 属于"有独立草稿模型的推测解码"这一族，对照库内 [`Infra/SpeculativeDecoding`](../../../Infra/SpeculativeDecoding/report.md) 的 EAGLE 系；差别在于它是**为 OCR 长结构化输出专门训的草稿头**、且必须与同批次主模型绑定（卡片 "Related checkpoints" 末句）。另有一个观察：`config.json` 把配置字段命名为 `dflash_config`，与 [HunyuanOCR-1.5 精读](2607.04884-hunyuan-ocr-15.md) 的 DFlash 同名；两者是否同源实现，官方未说明（**未能确证**）。
+
+**与 DFlash 的数字不可相减**：DFlash 报的是 vLLM 下单请求延迟 2.14×（3.032→1.408 秒/页，见 [HunyuanOCR-1.5 精读](2607.04884-hunyuan-ocr-15.md)），DSpark 报的是**端到端处理效率 +55%**——一个是延迟比、一个是效率比，分母都不同。
+
+## 量化与分发形态：六种权重怎么选
+
+官方为同一模型发了六种形态（主模型卡片与 DSpark 卡片 "Related checkpoints" 表），用途不同，不能互相替代：
+
+| 形态 | 面向 | 用途与限制 |
+|---|---|---|
+| BF16（主模型） | vLLM / SGLang / Transformers | 精度基准与默认部署；评测口径都基于它（`minicpm_ocr_1dot0_en.md:38`、HF 卡片 Architecture 表） |
+| GGUF（主模型） | llama.cpp / Ollama | 端侧与 CPU 推理路线；官方未给该形态的精度分项 |
+| AWQ W4A16 | 显存受限 GPU | 4bit 权重、激活 16bit；官方未给量化后精度损失数字 |
+| GPTQ W4A16 | 显存受限 GPU（另一量化实现） | 同上；两套量化官方未说明优劣 |
+| DSpark-BF16（草稿） | vLLM + 草稿 | **必须与 1.0 BF16 主模型同批配对**，不能混搭其他主 checkpoint（卡片末句） |
+| DSpark-GGUF（草稿） | llama.cpp 侧草稿 | 卡片注明 GGUF 构建已把 `d2t` 转成绝对 ID，省掉手工转换 |
+
+要点：**量化形态改变的是显存与硬件门槛，不改变分工**——Jev 仍是独立判别模型，草稿头仍必须配对；官方对任一量化形态都没有公布精度损失，所以"W4A16 掉多少分"目前**未能确证**。
 
 ## 与库内两篇怎么摆
 
@@ -86,7 +126,7 @@ MiniCPM 的定位可以概括为"**把长序列生成的责任拆走**"：版面
 - **超长输入**：`max_model_len` 40960，区域生成上限见上表；输出被截断时 `finish_reason` 会是 `length`（`minicpm_ocr_1dot0_en.md:72`）。OOM 时官方建议降到 16384（`faq_en.md:124`）。
 - **Jev 的三条使用边界**：AUROC 高**不等于**可以直接选阈值，官方明确"现有 AUROC 结果不支持任何通用默认阈值"，必须用本域样本标定（`jev_en.md:83`）；它只能在**已有候选**里挑，最终质量受候选覆盖限制（`:47`）；返回里只有 `verdict == scored` 才是模型分，`precheck`/渲染/前向失败返回的是**固定值**，不能当"低分"处理（`:107`）——这条在流水线里最容易出错。
 - **许可要分开看**：仓库、两份权重与文档均 Apache-2.0；但 **JevOCRBench 是 `license: other`**——因为数据取自 OmniDocBench（上游研究用途、非商用）、Real5 与 olmOCR-Bench，数据集卡明确写了派生材料的条款各自延续。用 Jev 做商用评估前先读 `DATA_LICENSE.md`。
-- **未能确证**：训练数据构成与训练阶段；竖排、低质扫描、手写各自的量化表现（官方只有"示例里包含手写"这类展示，没有分项分数）；对手列数字的来源（转引或重跑）；DSpark 55% 的复现条件。
+- **未能确证**：训练数据构成与训练阶段；竖排、低质扫描、手写各自的量化表现（官方只有"示例里包含手写"这类展示，没有分项分数）；对手列数字的来源（转引或重跑）；DSpark 55% 的复现条件；**DSpark 内部组件作用**（卡片只给 `Markov heads`、`confidence head`、`enable_adaptive_verification` 这些名字，未解释机制）；**草稿词表 114,688 的裁剪依据**（按语料频次还是按词表结构，直接决定中文生僻字的加速表现）；各量化形态的精度损失。
 
 ## 读法
 

@@ -426,7 +426,7 @@
     * **专题目录**：`LLM/DocumentParsing`
     * **元数据**：type=`research` · domain=`LLM` · subject=`DocumentParsing` · date=`2026-10-25` · status=`current`
     * **子文档（23）**
-        * [papers/20261027-minicpm-ocr.md](<LLM/DocumentParsing/papers/20261027-minicpm-ocr.md>) — 93 行 / 13,670 B
+        * [papers/20261027-minicpm-ocr.md](<LLM/DocumentParsing/papers/20261027-minicpm-ocr.md>) — 133 行 / 19,154 B
         * [papers/2412.07626-omnidocbench.md](<LLM/DocumentParsing/papers/2412.07626-omnidocbench.md>) — 42 行 / 9,196 B
         * [papers/2505.14059-bytedance-dolphin.md](<LLM/DocumentParsing/papers/2505.14059-bytedance-dolphin.md>) — 40 行 / 5,505 B
         * [papers/2509.19760-alibaba-logics-parsing.md](<LLM/DocumentParsing/papers/2509.19760-alibaba-logics-parsing.md>) — 38 行 / 5,449 B
@@ -1296,7 +1296,7 @@
 | [Agents/README.md](<Agents/README.md>) | Agents | 74 | 3,621 B |
 | [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 46 | 1,972 B |
 | [Infra/README.md](<Infra/README.md>) | Infra | 118 | 8,186 B |
-| [LLM/README.md](<LLM/README.md>) | LLM | 171 | 12,227 B |
+| [LLM/README.md](<LLM/README.md>) | LLM | 171 | 12,228 B |
 | [Models/README.md](<Models/README.md>) | Models | 101 | 5,029 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 107 | 4,830 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |

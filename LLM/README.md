@@ -86,7 +86,7 @@
 <details>
 <summary><b>OCR 与文档解析</b>（23 份）</summary>
 
-* [papers/20261027-minicpm-ocr.md](<DocumentParsing/papers/20261027-minicpm-ocr.md>) — 93 行 / 13,670 B
+* [papers/20261027-minicpm-ocr.md](<DocumentParsing/papers/20261027-minicpm-ocr.md>) — 133 行 / 19,154 B
 * [papers/2412.07626-omnidocbench.md](<DocumentParsing/papers/2412.07626-omnidocbench.md>) — 42 行 / 9,196 B
 * [papers/2505.14059-bytedance-dolphin.md](<DocumentParsing/papers/2505.14059-bytedance-dolphin.md>) — 40 行 / 5,505 B
 * [papers/2509.19760-alibaba-logics-parsing.md](<DocumentParsing/papers/2509.19760-alibaba-logics-parsing.md>) — 38 行 / 5,449 B
