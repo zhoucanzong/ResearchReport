@@ -76,7 +76,7 @@
 </details>
 
 <details>
-<summary><b>世界模型</b>（15 份）</summary>
+<summary><b>世界模型</b>（16 份）</summary>
 
 * [papers/1803.10122-world-models.md](<WorldModels/papers/1803.10122-world-models.md>) — 206 行 / 15,578 B
 * [papers/1811.04551-planet.md](<WorldModels/papers/1811.04551-planet.md>) — 204 行 / 13,762 B
@@ -88,6 +88,7 @@
 * [papers/2408.14837-gamengen.md](<WorldModels/papers/2408.14837-gamengen.md>) — 204 行 / 11,946 B
 * [papers/2501.09038-physics-iq.md](<WorldModels/papers/2501.09038-physics-iq.md>) — 206 行 / 12,991 B
 * [papers/2503.21755-vbench-2.md](<WorldModels/papers/2503.21755-vbench-2.md>) — 206 行 / 11,671 B
+* [papers/genie4-official.md](<WorldModels/papers/genie4-official.md>) — 69 行 / 9,110 B
 * [sources/CANDIDATES.md](<WorldModels/sources/CANDIDATES.md>) — 63 行 / 6,676 B
 * [sources/MANIFEST.md](<WorldModels/sources/MANIFEST.md>) — 24 行 / 3,898 B
 * [topics/dynamics-and-action-conditioning.md](<WorldModels/topics/dynamics-and-action-conditioning.md>) — 175 行 / 14,079 B

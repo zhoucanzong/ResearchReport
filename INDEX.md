@@ -15,15 +15,15 @@
 | --- | --- |
 | **条目数**（`report.md`） | **76** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 12 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 8 |
-| 条目子文档数 | 280 |
+| 条目子文档数 | 281 |
 | 条目正文行数（剔除 front-matter） | 21,071 |
 | 条目字节 | 2,064,568 B |
 | 带 front-matter 的条目 | 76 |
 | 带合法 `date` 的条目 | 35 |
-| 文档（除生成物外的全部 `.md`） | 379 |
+| 文档（除生成物外的全部 `.md`） | 380 |
 | 其中文件名 `README.md` | 11 |
-| 纳入版本控制的文件 | 406 |
-| 纳入版本控制的 `.md` | 387 |
+| 纳入版本控制的文件 | 407 |
+| 纳入版本控制的 `.md` | 388 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -36,12 +36,12 @@
 | LLM | 12 | 92 | 1,588 | 232,520 B | [板块页 →](<LLM/README.md>) |
 | Agents | 3 | 22 | 489 | 69,335 B | [板块页 →](<Agents/README.md>) |
 | AIGC | 9 | 10 | 3,737 | 317,548 B | [板块页 →](<AIGC/README.md>) |
-| WorldModel | 3 | 44 | 1,145 | 133,537 B | [板块页 →](<WorldModel/README.md>) |
+| WorldModel | 3 | 45 | 1,145 | 133,537 B | [板块页 →](<WorldModel/README.md>) |
 | AI4Science | 10 | 53 | 870 | 146,743 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 2 | 10 | 192 | 36,294 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 6 | 57 | 1,141 | 109,557 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 8 | 38 | 1,709 | 183,126 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **76** | **379** | **21,071** | **2,064,568 B** | — |
+| **合计** | **76** | **380** | **21,071** | **2,064,568 B** | — |
 
 ## 分面索引
 
@@ -747,10 +747,10 @@
 
 </details>
 
-### WorldModel（3 条目 / 44 文档）
+### WorldModel（3 条目 / 45 文档）
 
 <details>
-<summary><b>世界模型 WorldModel（3 条目 / 40 子文档）</b></summary>
+<summary><b>世界模型 WorldModel（3 条目 / 41 子文档）</b></summary>
 
   <details>
   <summary><b>具身预测规划</b> · <code>WorldModel/EmbodiedPlanning/report.md</code> · 54 行 · —</summary>
@@ -806,7 +806,7 @@
     * **条目**：[WorldModel/WorldModels/report.md](<WorldModel/WorldModels/report.md>)（518 行 / 57,183 B）
     * **专题目录**：`WorldModel/WorldModels`
     * **元数据**：type=`topic-research` · domain=`WorldModel` · subject=`WorldModels` · date=`2026-10-22` · status=`needs-review`
-    * **子文档（15）**
+    * **子文档（16）**
         * [papers/1803.10122-world-models.md](<WorldModel/WorldModels/papers/1803.10122-world-models.md>) — 206 行 / 15,578 B
         * [papers/1811.04551-planet.md](<WorldModel/WorldModels/papers/1811.04551-planet.md>) — 204 行 / 13,762 B
         * [papers/1911.08265-muzero.md](<WorldModel/WorldModels/papers/1911.08265-muzero.md>) — 100 行 / 7,780 B
@@ -817,6 +817,7 @@
         * [papers/2408.14837-gamengen.md](<WorldModel/WorldModels/papers/2408.14837-gamengen.md>) — 204 行 / 11,946 B
         * [papers/2501.09038-physics-iq.md](<WorldModel/WorldModels/papers/2501.09038-physics-iq.md>) — 206 行 / 12,991 B
         * [papers/2503.21755-vbench-2.md](<WorldModel/WorldModels/papers/2503.21755-vbench-2.md>) — 206 行 / 11,671 B
+        * [papers/genie4-official.md](<WorldModel/WorldModels/papers/genie4-official.md>) — 69 行 / 9,110 B
         * [sources/CANDIDATES.md](<WorldModel/WorldModels/sources/CANDIDATES.md>) — 63 行 / 6,676 B
         * [sources/MANIFEST.md](<WorldModel/WorldModels/sources/MANIFEST.md>) — 24 行 / 3,898 B
         * [topics/dynamics-and-action-conditioning.md](<WorldModel/WorldModels/topics/dynamics-and-action-conditioning.md>) — 175 行 / 14,079 B
@@ -1289,7 +1290,7 @@
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
 | [README.md](<README.md>) |  | 196 | 14,530 B |
-| [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 103 | 6,735 B |
+| [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 104 | 6,827 B |
 | [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 102 | 7,365 B |
 | [docs/issue-index-single-pass.md](<docs/issue-index-single-pass.md>) | docs | 15 | 1,280 B |
