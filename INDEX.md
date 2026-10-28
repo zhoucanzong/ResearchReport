@@ -20,10 +20,10 @@
 | 条目字节 | 2,062,313 B |
 | 带 front-matter 的条目 | 76 |
 | 带合法 `date` 的条目 | 35 |
-| 文档（除生成物外的全部 `.md`） | 372 |
+| 文档（除生成物外的全部 `.md`） | 373 |
 | 其中文件名 `README.md` | 11 |
-| 纳入版本控制的文件 | 399 |
-| 纳入版本控制的 `.md` | 380 |
+| 纳入版本控制的文件 | 400 |
+| 纳入版本控制的 `.md` | 381 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -41,7 +41,7 @@
 | Evaluation | 2 | 10 | 192 | 36,294 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 6 | 57 | 1,141 | 109,557 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 8 | 38 | 1,709 | 183,126 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **76** | **372** | **21,064** | **2,062,313 B** | — |
+| **合计** | **76** | **373** | **21,064** | **2,062,313 B** | — |
 
 ## 分面索引
 
@@ -1286,6 +1286,7 @@
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 103 | 6,735 B |
 | [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 102 | 7,365 B |
+| [docs/issue-index-single-pass.md](<docs/issue-index-single-pass.md>) | docs | 15 | 1,280 B |
 | [docs/maintenance.md](<docs/maintenance.md>) | docs | 187 | 11,064 B |
 | [docs/research-method.md](<docs/research-method.md>) | docs | 31 | 2,546 B |
 | [docs/research-source-sites.md](<docs/research-source-sites.md>) | docs | 44 | 3,816 B |

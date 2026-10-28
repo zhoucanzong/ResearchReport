@@ -567,6 +567,7 @@ nav:
   - "📖 文档":
       - "历史校验记录（截至 2026-10）": "docs/archive/verification-history-2026-10.md"
       - "DSH Harness 反馈清单（2026-10-18，来自一次真实事故）": "docs/harness-feedback.md"
+      - "library_index.py 单趟未收敛（自指统计）": "docs/issue-index-single-pass.md"
       - "🛠 维护指南 · Maintenance": "docs/maintenance.md"
       - "阅读与研究方法": "docs/research-method.md"
       - "AI 研究机构与团队入口": "docs/research-source-sites.md"

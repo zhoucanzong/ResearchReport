@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "8a92adde0a19104eda3801d090b3510f54cc5c74b1b46d04f0cfe2ec35ae3497",
+  "content_fingerprint": "ff6f446a250f9349c441724fef3ee6ab4e7f3ac5f057aed19657f80d4262031b",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -23,13 +23,13 @@
     "children": 274
   },
   "documents": {
-    "md_total": 372,
+    "md_total": 373,
     "md_libraries": 361,
     "with_front_matter": 89,
     "named_report_md": 76,
     "named_readme_md": 11,
-    "lines": 53746,
-    "bytes": 5323663
+    "lines": 53761,
+    "bytes": 5324943
   },
   "libraries": {
     "Models": {
@@ -341,12 +341,12 @@
     "library_entry_bytes": 2062313
   },
   "version_control": {
-    "tracked_total": 399,
-    "tracked_md": 380,
+    "tracked_total": 400,
+    "tracked_md": 381,
     "tracked_report_md": 76,
     "tracked_libraries": 367,
     "tracked_repo_root": 5,
-    "tracked_docs": 8,
+    "tracked_docs": 9,
     "tracked_scripts": 4
   },
   "doc_stats": {
@@ -1037,10 +1037,10 @@
       }
     },
     "repo_md": {
-      "files": 372,
-      "lines": 53746,
-      "lines_raw": 54330,
-      "bytes": 5323663
+      "files": 373,
+      "lines": 53761,
+      "lines_raw": 54345,
+      "bytes": 5324943
     },
     "library_md": {
       "files": 361,
@@ -1055,10 +1055,10 @@
       "bytes": 14530
     },
     "docs_md": {
-      "files": 8,
-      "lines": 986,
-      "lines_raw": 986,
-      "bytes": 72617
+      "files": 9,
+      "lines": 1001,
+      "lines_raw": 1001,
+      "bytes": 73897
     },
     "scripts_md": {
       "files": 1,
@@ -1072,7 +1072,7 @@
     ]
   },
   "storage": {
-    "tracked_bytes": 10734279,
+    "tracked_bytes": 10735752,
     "definition": "纳入版本控制的文件字节合计（`git ls-files` 跟踪路径逐个 getsize 求和）；刻意**不**用 du 量工作树——工作树含 site/site-docs/构建产物、别人的未提交草稿、虚拟环境等「车间地面」，会让数字每个 clone 一个样、生成物不可复现。本字段与提交树同源，任意 clone 重跑一致。"
   }
 }
