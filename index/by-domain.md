@@ -114,13 +114,14 @@
 | [OpenSource/DeepInfer/report.md](<../OpenSource/DeepInfer/report.md>) | DeepInfer：离线推理内核、异步调度与状态契约 | repo-research | 2026-10-22 | completed |
 | [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | Nemotron-Labs-Diffusion 阅读报告 | — | — | — |
 
-## Repo-Research (6)
+## Repo-Research (7)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | DeepSeek Harness（DSH）仓库深读 | repo-research | 2026-10-20 | completed |
 | [OpenSource/Harness2/report.md](<../OpenSource/Harness2/report.md>) | Harness²：把 harness 本身作为优化对象 | repo-research | 2026-10-28 | completed |
 | [OpenSource/REA/report.md](<../OpenSource/REA/report.md>) | REA：把逆向工程变成 agent 可核验的证据流 | repo-research | 2026-10-28 | completed |
+| [OpenSource/RSIHub/report.md](<../OpenSource/RSIHub/report.md>) | RSIHub：把"自进化"拆成可组合阶段与不可变评测 | repo-research | 2026-10-28 | completed |
 | [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | SGLang 仓库代码分析报告 | repo-research | 2026-10-16 | completed |
 | [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | this-that-model 仓库深读 | repo-research | 2026-10-16 | completed |
 | [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | vLLM 仓库代码分析报告 | repo-research | 2026-10-16 | completed |
