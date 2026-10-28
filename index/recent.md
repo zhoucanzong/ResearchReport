@@ -11,6 +11,7 @@
 
 | 条目 | date | 板块 | 专题 |
 | --- | --- | --- | --- |
+| [OpenSource/REA/report.md](<../OpenSource/REA/report.md>) | 2026-10-28 | OpenSource | REA |
 | [OpenSource/Harness2/report.md](<../OpenSource/Harness2/report.md>) | 2026-10-28 | OpenSource | Harness2 |
 | [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | 2026-10-26 | LLM | DecisionModels |
 | [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) | 2026-10-26 | Agents | ComputerUse |
@@ -30,7 +31,6 @@
 | [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) | 2026-10-23 | AI4Science | SingleCellPerturbation |
 | [AI4Science/ProteinDesign/report.md](<../AI4Science/ProteinDesign/report.md>) | 2026-10-23 | AI4Science | ProteinDesign |
 | [AI4Science/Neuroscience/report.md](<../AI4Science/Neuroscience/report.md>) | 2026-10-23 | AI4Science | Neuroscience |
-| [AI4Science/MathematicalDiscovery/report.md](<../AI4Science/MathematicalDiscovery/report.md>) | 2026-10-23 | AI4Science | MathematicalDiscovery |
 
 ## 无 date 元数据（41）
 

@@ -177,6 +177,12 @@
 | --- | --- | --- | --- | --- |
 | [Models/Qwen/report.md](<../Models/Qwen/report.md>) | Qwen系列模型深度调研报告 | — | — | — |
 
+## REA (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [OpenSource/REA/report.md](<../OpenSource/REA/report.md>) | REA：把逆向工程变成 agent 可核验的证据流 | repo-research | 2026-10-28 | completed |
+
 ## Runway (1)
 
 | 条目 | 标题 | type | date | status |

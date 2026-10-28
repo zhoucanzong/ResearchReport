@@ -349,6 +349,12 @@
 | --- | --- | --- | --- | --- |
 | [LLM/RAG/report.md](<../LLM/RAG/report.md>) | 检索增强生成：检索误差怎样传到答案 | — | — | — |
 
+## REA (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [OpenSource/REA/report.md](<../OpenSource/REA/report.md>) | REA：把逆向工程变成 agent 可核验的证据流 | repo-research | 2026-10-28 | completed |
+
 ## ReasoningModels (1)
 
 | 条目 | 标题 | type | date | status |

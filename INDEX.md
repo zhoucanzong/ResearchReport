@@ -13,17 +13,17 @@
 
 | 指标 | 数量 |
 | --- | --- |
-| **条目数**（`report.md`） | **75** |
-| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 12 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 7 |
+| **条目数**（`report.md`） | **76** |
+| 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 12 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 8 |
 | 条目子文档数 | 274 |
-| 条目正文行数（剔除 front-matter） | 20,935 |
-| 条目字节 | 2,049,560 B |
-| 带 front-matter 的条目 | 75 |
-| 带合法 `date` 的条目 | 34 |
-| 文档（除生成物外的全部 `.md`） | 371 |
+| 条目正文行数（剔除 front-matter） | 20,993 |
+| 条目字节 | 2,057,137 B |
+| 带 front-matter 的条目 | 76 |
+| 带合法 `date` 的条目 | 35 |
+| 文档（除生成物外的全部 `.md`） | 372 |
 | 其中文件名 `README.md` | 11 |
-| 纳入版本控制的文件 | 398 |
-| 纳入版本控制的 `.md` | 379 |
+| 纳入版本控制的文件 | 399 |
+| 纳入版本控制的 `.md` | 380 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -40,8 +40,8 @@
 | AI4Science | 10 | 53 | 870 | 146,743 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 2 | 10 | 192 | 36,294 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 6 | 57 | 1,141 | 109,557 B | [板块页 →](<Infra/README.md>) |
-| OpenSource | 7 | 37 | 1,580 | 170,373 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **75** | **371** | **20,935** | **2,049,560 B** | — |
+| OpenSource | 8 | 38 | 1,638 | 177,950 B | [板块页 →](<OpenSource/README.md>) |
+| **合计** | **76** | **372** | **20,993** | **2,057,137 B** | — |
 
 ## 分面索引
 
@@ -1141,10 +1141,10 @@
 
 </details>
 
-### OpenSource（7 条目 / 37 文档）
+### OpenSource（8 条目 / 38 文档）
 
 <details>
-<summary><b>开源仓库 OpenSource（7 条目 / 27 子文档）</b></summary>
+<summary><b>开源仓库 OpenSource（8 条目 / 27 子文档）</b></summary>
 
   <details>
   <summary><b>DeepInfer</b> · <code>OpenSource/DeepInfer/report.md</code> · 138 行 · 2026-10-22</summary>
@@ -1184,6 +1184,18 @@
     * **条目**：[OpenSource/Harness2/report.md](<OpenSource/Harness2/report.md>)（77 行 / 9,907 B）
     * **专题目录**：`OpenSource/Harness2`
     * **元数据**：type=`repo-research` · domain=`Repo-Research` · subject=`Harness2` · date=`2026-10-28` · status=`completed`
+    * **子文档（0）**
+        * _该条目暂无子文档_
+
+  </details>
+
+  <details>
+  <summary><b>REA</b> · <code>OpenSource/REA/report.md</code> · 58 行 · 2026-10-28</summary>
+
+
+    * **条目**：[OpenSource/REA/report.md](<OpenSource/REA/report.md>)（58 行 / 7,577 B）
+    * **专题目录**：`OpenSource/REA`
+    * **元数据**：type=`repo-research` · domain=`Repo-Research` · subject=`REA` · date=`2026-10-28` · status=`completed`
     * **子文档（0）**
         * _该条目暂无子文档_
 
@@ -1286,6 +1298,6 @@
 ## 说明
 
 * 本索引是**派生数据**，仓库里的条目文件才是唯一事实来源；重建索引只需重跑脚本。
-* 当前 75 份条目带 front-matter；缺失的 `type` / `date` / `status` 显示为 `—`，domain / subject / topic 缺失时由路径推断。
+* 当前 76 份条目带 front-matter；缺失的 `type` / `date` / `status` 显示为 `—`，domain / subject / topic 缺失时由路径推断。
 * 可选元数据：`title` / `display_name` / `type` / `domain` / `subject` / `topic` / `upstream` / `date` / `evidence` / `status`。
 * 脚本只读扫描、只写生成物；**不会删除或改写任何条目文件**。
