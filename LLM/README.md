@@ -31,7 +31,7 @@
 | **模型对齐与后训练** | [模型对齐与后训练：方法、目标与证据边界](<Alignment/report.md>) | 126 行 |
 | **决策模型（Decision Models）** | [决策模型综述：把概率判断变成可行动的选择](<DecisionModels/report.md>) | 242 行 |
 | **扩散语言模型** | [扩散语言模型：从随机遮盖到大规模并行生成](<DiffusionLM/report.md>) | 76 行 |
-| **OCR 与文档解析** | [OCR 与文档解析：从字符识别到结构还原](<DocumentParsing/report.md>) | 116 行 |
+| **OCR 与文档解析** | [OCR 与文档解析：从字符识别到结构还原](<DocumentParsing/report.md>) | 119 行 |
 | **长上下文** | [长上下文：从可接收长度到有效利用](<LongContext/report.md>) | 176 行 |
 | **混合专家模型（MoE）** | [混合专家模型：路由、负载均衡与系统通信](<MoE/report.md>) | 139 行 |
 | **大模型辅助运筹建模与求解** | [大模型辅助运筹建模与求解：从自然语言到可验证的决策](<OperationsResearch/report.md>) | 90 行 |
@@ -84,7 +84,7 @@
 </details>
 
 <details>
-<summary><b>OCR 与文档解析</b>（18 份）</summary>
+<summary><b>OCR 与文档解析</b>（21 份）</summary>
 
 * [papers/20261027-minicpm-ocr.md](<DocumentParsing/papers/20261027-minicpm-ocr.md>) — 93 行 / 13,670 B
 * [papers/2412.07626-omnidocbench.md](<DocumentParsing/papers/2412.07626-omnidocbench.md>) — 42 行 / 9,196 B
@@ -96,14 +96,17 @@
 * [papers/2511.19575-hunyuan-ocr.md](<DocumentParsing/papers/2511.19575-hunyuan-ocr.md>) — 39 行 / 8,134 B
 * [papers/2601.20552-deepseek-ocr2.md](<DocumentParsing/papers/2601.20552-deepseek-ocr2.md>) — 45 行 / 8,359 B
 * [papers/2603.01840-firered-ocr.md](<DocumentParsing/papers/2603.01840-firered-ocr.md>) — 39 行 / 6,932 B
+* [papers/2603.10910-glm-ocr.md](<DocumentParsing/papers/2603.10910-glm-ocr.md>) — 62 行 / 8,041 B
 * [papers/2603.13032-multimodal-ocr.md](<DocumentParsing/papers/2603.13032-multimodal-ocr.md>) — 41 行 / 7,530 B
 * [papers/2603.24326-coarse-to-fine.md](<DocumentParsing/papers/2603.24326-coarse-to-fine.md>) — 67 行 / 9,350 B
 * [papers/2603.28130-mdpbench.md](<DocumentParsing/papers/2603.28130-mdpbench.md>) — 51 行 / 10,106 B
+* [papers/2604.04771-mineru2-5-pro.md](<DocumentParsing/papers/2604.04771-mineru2-5-pro.md>) — 80 行 / 9,931 B
 * [papers/2605.17447-jd-fastocr.md](<DocumentParsing/papers/2605.17447-jd-fastocr.md>) — 40 行 / 5,443 B
 * [papers/2605.27978-amap-abot-ocr.md](<DocumentParsing/papers/2605.27978-amap-abot-ocr.md>) — 42 行 / 5,791 B
 * [papers/2606.23050-unlimited-ocr.md](<DocumentParsing/papers/2606.23050-unlimited-ocr.md>) — 97 行 / 16,758 B
 * [papers/2607.04884-hunyuan-ocr-15.md](<DocumentParsing/papers/2607.04884-hunyuan-ocr-15.md>) — 53 行 / 11,829 B
 * [papers/2607.21617-amazon-faithc4.md](<DocumentParsing/papers/2607.21617-amazon-faithc4.md>) — 39 行 / 6,093 B
+* [papers/2609.36136-xiaomi-ocr-0.md](<DocumentParsing/papers/2609.36136-xiaomi-ocr-0.md>) — 72 行 / 8,647 B
 
 </details>
 

@@ -21,10 +21,10 @@ status: current
 
 | 想理解的问题 | 推荐精读 |
 |---|---|
-| 一页文档如何拆成区域、恢复顺序并识别内容 | [PaddleOCR-VL](papers/2510.14528-paddleocr-vl.md) → [Dolphin](papers/2505.14059-bytedance-dolphin.md) |
+| 一页文档如何拆成区域、恢复顺序并识别内容 | [PaddleOCR-VL](papers/2510.14528-paddleocr-vl.md) → [Dolphin](papers/2505.14059-bytedance-dolphin.md)；同骨架换解码策略（外置版面 + 多 token 预测）见 [GLM-OCR](papers/2603.10910-glm-ocr.md) |
 | 高分辨率、视觉压缩和解码预算如何取舍 | [DeepSeek-OCR](papers/2510.18234-deepseek-ocr.md) → [DeepSeek-OCR 2](papers/2601.20552-deepseek-ocr2.md)，再对照 [Coarse-to-Fine](papers/2603.24326-coarse-to-fine.md)、[FastOCR](papers/2605.17447-jd-fastocr.md)；长时程解码见 [Unlimited OCR](papers/2606.23050-unlimited-ocr.md) |
-| 数据和奖励怎样教会模型输出文档结构 | [FireRed-OCR](papers/2603.01840-firered-ocr.md)、[Logics-Parsing](papers/2509.19760-alibaba-logics-parsing.md)、[ABot-OCR](papers/2605.27978-amap-abot-ocr.md)；[HunyuanOCR](papers/2511.19575-hunyuan-ocr.md)与 [1.5](papers/2607.04884-hunyuan-ocr-15.md)展示后续演进 |
-| 指标、语言、拍摄条件与逐字忠实度怎样影响结论 | [OmniDocBench](papers/2412.07626-omnidocbench.md) → [MDPBench](papers/2603.28130-mdpbench.md) → [FaithC4](papers/2607.21617-amazon-faithc4.md) |
+| 数据和奖励怎样教会模型输出文档结构 | [FireRed-OCR](papers/2603.01840-firered-ocr.md)、[Logics-Parsing](papers/2509.19760-alibaba-logics-parsing.md)、[ABot-OCR](papers/2605.27978-amap-abot-ocr.md)；[HunyuanOCR](papers/2511.19575-hunyuan-ocr.md)与 [1.5](papers/2607.04884-hunyuan-ocr-15.md)展示后续演进；把增益全押在数据与分阶段训练上见 [MinerU2.5-Pro](papers/2604.04771-mineru2-5-pro.md)，文本锚定预训练 + 混合任务 RL 见 [Xiaomi-OCR-0](papers/2609.36136-xiaomi-ocr-0.md) |
+| 指标、语言、拍摄条件与逐字忠实度怎样影响结论 | [OmniDocBench](papers/2412.07626-omnidocbench.md) → [MDPBench](papers/2603.28130-mdpbench.md) → [FaithC4](papers/2607.21617-amazon-faithc4.md)；v1.6 的 MGAM 匹配与 Base/Hard/Full 三层协议由 [MinerU2.5-Pro](papers/2604.04771-mineru2-5-pro.md) 定义，引用 v1.6 分数前先读其 §5 |
 | 图表结构和多文档证据怎样成为下游可用信息 | [Multimodal OCR / dots.mocr](papers/2603.13032-multimodal-ocr.md)、[Doc-Researcher](papers/2510.21603-huawei-doc-researcher.md) |
 
 ## 先看端到端任务怎样分解
@@ -86,15 +86,18 @@ MDPBench 把另一条缺口凸显出来：标准数字文档表现不能代表�
 
 比较文档解析结果时，至少记录：页面来源与语言、数字生成或实拍、页数/图像分辨率、裁切和动态分辨率策略、OCR/布局组件、视觉 token 或计算预算、输出格式，以及各任务的指标和失败计数。需要解释端到端差异时，再拆出布局检测、文字识别、阅读顺序、表格/公式结构和人工审查样本。跨系统比较须说明预算是否一致；论文原文没有报告的量应标为未知，不以模型规模或营销描述代替。
 
+一个具体例子说明“同名基准”也可能换了尺子：OmniDocBench v1.6 不是官方仓库的补丁版，而是 [MinerU2.5-Pro](papers/2604.04771-mineru2-5-pro.md) 提出的协议——用多粒度自适应匹配（MGAM）消除“语义正确但切分粒度不同”的扣分，并新增 296 页 Hard 子集，形成 Base 1,355 / Hard 296 / Full 1,651 三层（§5）。两件事方向相反：匹配放宽会抬分，加入难样本会压分，所以 v1.5 与 v1.6 的分数不能相减成“提升”。引用 v1.6 分数时必须写层，并注意第三方汇总表里的对手列可能混用自报数与重跑数（如 Xiaomi-OCR-0 的 Real5 自报 95.24、第三方重跑 92.73）。
+
 这些论文展示了文档解析从识别单个字符走向结构恢复、从整页密集编码走向元素选择，以及从规整数字页面走向多语言实拍测试的几条研究线。还缺少跨系统、同页集、统一分辨率/token预算和可审计失败分母的控制比较；本专题没有运行模型或基准，也不据此判定哪种架构总体最佳。
 
 ## 哪些团队也在做 OCR 与文档解析
 
-这里列的是截至 2026-10-24 能找到的一手公开证据代表，不是厂商普查或性能榜。研究论文和产品文档回答的问题不同：前者能读方法、数据和实验条件；后者主要说明可用能力与接口，不能据此推断内部模型机制。
+这里列的是截至 2026-10-28 能找到的一手公开证据代表，不是厂商普查或性能榜。研究论文和产品文档回答的问题不同：前者能读方法、数据和实验条件；后者主要说明可用能力与接口，不能据此推断内部模型机制。
 
 | 团队 | 可追溯的一手材料 | 研究问题/路线 | 阅读状态 |
 |---|---|---|---|
 | 百度 PaddleOCR | [PaddleOCR-VL](papers/2510.14528-paddleocr-vl.md)、[PaddleOCR 3.0 技术报告](https://arxiv.org/abs/2507.05595) | 传统 OCR、版面分析与小型 VLM 逐步整合；布局检测先行，再识别文本、表格、公式等元素 | PaddleOCR-VL 已精读；报告摘要与题录已核 |
+| 上海人工智能实验室 / OpenDataLab | [MinerU2.5-Pro 精读](papers/2604.04771-mineru2-5-pro.md)（[原文 v2](https://arxiv.org/abs/2604.04771v2)） | 1.2B 解耦架构不动，只做数据引擎与三阶段训练；同时提出 OmniDocBench v1.6 的 MGAM 匹配与 Base/Hard/Full 三层协议 | v2 已精读 |
 | 百度千帆 | [Qianfan-OCR](https://arxiv.org/abs/2603.13398) | 单个端到端模型联合文档解析和理解；可选的 Layout-as-Thought 阶段显式输出框、类别和阅读顺序 | 已核官方论文，尚未精读 |
 | 字节跳动 | [Dolphin 精读](papers/2505.14059-bytedance-dolphin.md)（[原文](https://arxiv.org/abs/2505.14059)） | “先分析、后解析”：先生成带阅读顺序的异构版面锚点，再并行识别各区域，尝试在整页生成和多专家流水线间折中 | v1 已精读 |
 | 阿里巴巴通义实验室「读光」OCR Team | [Advanced Literate Machinery 官方仓库](https://github.com/AlibabaResearch/AdvancedLiterateMachinery) | 仓库明确由通义实验室语言技术实验室 OCR Team 维护，汇集文档理解、Platypus 通用文字识别和 CC-OCR 评测等公开项目 | 已核对团队归属和项目入口，具体论文尚未精读 |
@@ -104,8 +107,8 @@ MDPBench 把另一条缺口凸显出来：标准数字文档表现不能代表�
 | 小红书 | [FireRed-OCR](papers/2603.01840-firered-ocr.md)、[Multimodal OCR / dots.mocr](papers/2603.13032-multimodal-ocr.md) | 一条路线把通用 VLM 专门化为文档解析器；另一条把图表、示意图等图形也变成可解析的结构内容 | 两篇已精读 |
 | 腾讯混元 | [HunyuanOCR](papers/2511.19575-hunyuan-ocr.md)、[HunyuanOCR-1.5](papers/2607.04884-hunyuan-ocr-15.md) | 以小型端到端 OCR VLM 统一识别、结构解析和语义抽取；后续报告进一步讨论训练与推理加速 | 两篇已精读 |
 | 腾讯微信 WXG | [微信 OCR 图片文字提取技术介绍](https://developer.cloud.tencent.com/article/1798403) | WXG 工程师明确称微信客户端长按提取文字使用微信自研 OCR；文章描述文字存在性/语种检测、文本图像分类、通用或垂类识别，再做版面重排 | 2021 年工程文章，非近期论文；直接证明微信团队有 OCR 研发与产品实践，不能代表当前模型结构 |
-| 智谱 | [GLM-OCR](https://arxiv.org/abs/2603.10910) | 视觉编码器与小型语言解码器组合，配合版面分析及区域级识别，并用多 token 预测处理 OCR 的确定性输出 | 已核官方报告 v2 的架构和限制章节，尚未精读 |
-| 小米 | [Xiaomi-OCR-0](https://arxiv.org/abs/2609.36136) | 将文档解析与 OCR 问答/信息抽取放进统一小模型训练；报告强调文本锚定、分阶段训练和混合任务强化学习 | 已检索到技术报告，尚未精读 |
+| 智谱 | [GLM-OCR 精读](papers/2603.10910-glm-ocr.md)（[原文 v2](https://arxiv.org/abs/2603.10910)） | 0.4B CogViT + 0.5B GLM 解码器，外置 PP-DocLayout-V3 两阶段；MTP 用共享参数多头，训 10 token/步、推理约 5.2 | v2 已精读 |
+| 小米 | [Xiaomi-OCR-0 精读](papers/2609.36136-xiaomi-ocr-0.md)（[原文](https://arxiv.org/abs/2609.36136)） | 0.8B 从 Qwen3.5-0.8B 起，Q-Mask 文本锚定 + CPT + Mix-RL；同一套权重同训解析与 OCR 理解，版面仍外置 | v1 已精读 |
 | 华为 | [Doc-Researcher 精读](papers/2510.21603-huawei-doc-researcher.md)（[原文](https://arxiv.org/abs/2510.21603)） | 把版面和视觉语义保留、多粒度切分、跨模态检索接到多文档研究流程，关注解析质量如何影响证据检索 | v1 已精读；系统范围超出 OCR 模型 |
 | Amazon / AWS AI Labs | [FaithC4 精读](papers/2607.21617-amazon-faithc4.md)（[原文 v2](https://arxiv.org/abs/2607.21617v2)）、[DocVLM](https://arxiv.org/abs/2412.08746)、[TAP-VL](https://www.amazon.science/publications/tap-vl-text-layout-aware-pre-training-for-enriched-vision-language-models) | FaithC4 研究模型会否按语言先验改写可见错字；DocVLM/TAP-VL 则研究将 OCR 文字与版面压缩后接入 VLM | FaithC4 v2 已精读；其余两篇尚未精读 |
 | Meta AI | [Nougat](https://arxiv.org/abs/2308.13418)、[Rosetta](https://ai.meta.com/research/publications/rosetta-large-scale-system-for-text-detection-and-recognition-in-images/) | Nougat 把学术 PDF 页转换为结构化标记语言；Rosetta 是面向海量社交图片的文字检测/识别系统 | 研究与系统论文，分别代表文档转写和场景 OCR；尚未精读 |

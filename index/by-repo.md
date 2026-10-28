@@ -56,7 +56,7 @@
 * [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) — 126 行
 * [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) — 242 行
 * [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) — 76 行
-* [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) — 116 行
+* [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) — 119 行
 * [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) — 176 行
 * [LLM/MoE/report.md](<../LLM/MoE/report.md>) — 139 行
 * [LLM/OperationsResearch/report.md](<../LLM/OperationsResearch/report.md>) — 90 行

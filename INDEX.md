@@ -15,15 +15,15 @@
 | --- | --- |
 | **条目数**（`report.md`） | **76** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 12 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 8 |
-| 条目子文档数 | 275 |
-| 条目正文行数（剔除 front-matter） | 21,064 |
-| 条目字节 | 2,062,313 B |
+| 条目子文档数 | 278 |
+| 条目正文行数（剔除 front-matter） | 21,067 |
+| 条目字节 | 2,063,804 B |
 | 带 front-matter 的条目 | 76 |
 | 带合法 `date` 的条目 | 35 |
-| 文档（除生成物外的全部 `.md`） | 374 |
+| 文档（除生成物外的全部 `.md`） | 377 |
 | 其中文件名 `README.md` | 11 |
-| 纳入版本控制的文件 | 401 |
-| 纳入版本控制的 `.md` | 382 |
+| 纳入版本控制的文件 | 404 |
+| 纳入版本控制的 `.md` | 385 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -33,7 +33,7 @@
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
 | Models | 23 | 41 | 10,200 | 835,908 B | [板块页 →](<Models/README.md>) |
-| LLM | 12 | 87 | 1,581 | 230,265 B | [板块页 →](<LLM/README.md>) |
+| LLM | 12 | 90 | 1,584 | 231,756 B | [板块页 →](<LLM/README.md>) |
 | Agents | 3 | 22 | 489 | 69,335 B | [板块页 →](<Agents/README.md>) |
 | AIGC | 9 | 10 | 3,737 | 317,548 B | [板块页 →](<AIGC/README.md>) |
 | WorldModel | 3 | 44 | 1,145 | 133,537 B | [板块页 →](<WorldModel/README.md>) |
@@ -41,7 +41,7 @@
 | Evaluation | 2 | 10 | 192 | 36,294 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 6 | 57 | 1,141 | 109,557 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 8 | 38 | 1,709 | 183,126 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **76** | **374** | **21,064** | **2,062,313 B** | — |
+| **合计** | **76** | **377** | **21,067** | **2,063,804 B** | — |
 
 ## 分面索引
 
@@ -351,10 +351,10 @@
 
 </details>
 
-### LLM（12 条目 / 87 文档）
+### LLM（12 条目 / 90 文档）
 
 <details>
-<summary><b>语言模型 LLM（12 条目 / 74 子文档）</b></summary>
+<summary><b>语言模型 LLM（12 条目 / 77 子文档）</b></summary>
 
   <details>
   <summary><b>模型对齐与后训练</b> · <code>LLM/Alignment/report.md</code> · 126 行 · —</summary>
@@ -419,13 +419,13 @@
   </details>
 
   <details>
-  <summary><b>OCR 与文档解析</b> · <code>LLM/DocumentParsing/report.md</code> · 116 行 · 2026-10-25</summary>
+  <summary><b>OCR 与文档解析</b> · <code>LLM/DocumentParsing/report.md</code> · 119 行 · 2026-10-25</summary>
 
 
-    * **条目**：[LLM/DocumentParsing/report.md](<LLM/DocumentParsing/report.md>)（116 行 / 22,584 B）
+    * **条目**：[LLM/DocumentParsing/report.md](<LLM/DocumentParsing/report.md>)（119 行 / 24,075 B）
     * **专题目录**：`LLM/DocumentParsing`
     * **元数据**：type=`research` · domain=`LLM` · subject=`DocumentParsing` · date=`2026-10-25` · status=`current`
-    * **子文档（18）**
+    * **子文档（21）**
         * [papers/20261027-minicpm-ocr.md](<LLM/DocumentParsing/papers/20261027-minicpm-ocr.md>) — 93 行 / 13,670 B
         * [papers/2412.07626-omnidocbench.md](<LLM/DocumentParsing/papers/2412.07626-omnidocbench.md>) — 42 行 / 9,196 B
         * [papers/2505.14059-bytedance-dolphin.md](<LLM/DocumentParsing/papers/2505.14059-bytedance-dolphin.md>) — 40 行 / 5,505 B
@@ -436,14 +436,17 @@
         * [papers/2511.19575-hunyuan-ocr.md](<LLM/DocumentParsing/papers/2511.19575-hunyuan-ocr.md>) — 39 行 / 8,134 B
         * [papers/2601.20552-deepseek-ocr2.md](<LLM/DocumentParsing/papers/2601.20552-deepseek-ocr2.md>) — 45 行 / 8,359 B
         * [papers/2603.01840-firered-ocr.md](<LLM/DocumentParsing/papers/2603.01840-firered-ocr.md>) — 39 行 / 6,932 B
+        * [papers/2603.10910-glm-ocr.md](<LLM/DocumentParsing/papers/2603.10910-glm-ocr.md>) — 62 行 / 8,041 B
         * [papers/2603.13032-multimodal-ocr.md](<LLM/DocumentParsing/papers/2603.13032-multimodal-ocr.md>) — 41 行 / 7,530 B
         * [papers/2603.24326-coarse-to-fine.md](<LLM/DocumentParsing/papers/2603.24326-coarse-to-fine.md>) — 67 行 / 9,350 B
         * [papers/2603.28130-mdpbench.md](<LLM/DocumentParsing/papers/2603.28130-mdpbench.md>) — 51 行 / 10,106 B
+        * [papers/2604.04771-mineru2-5-pro.md](<LLM/DocumentParsing/papers/2604.04771-mineru2-5-pro.md>) — 80 行 / 9,931 B
         * [papers/2605.17447-jd-fastocr.md](<LLM/DocumentParsing/papers/2605.17447-jd-fastocr.md>) — 40 行 / 5,443 B
         * [papers/2605.27978-amap-abot-ocr.md](<LLM/DocumentParsing/papers/2605.27978-amap-abot-ocr.md>) — 42 行 / 5,791 B
         * [papers/2606.23050-unlimited-ocr.md](<LLM/DocumentParsing/papers/2606.23050-unlimited-ocr.md>) — 97 行 / 16,758 B
         * [papers/2607.04884-hunyuan-ocr-15.md](<LLM/DocumentParsing/papers/2607.04884-hunyuan-ocr-15.md>) — 53 行 / 11,829 B
         * [papers/2607.21617-amazon-faithc4.md](<LLM/DocumentParsing/papers/2607.21617-amazon-faithc4.md>) — 39 行 / 6,093 B
+        * [papers/2609.36136-xiaomi-ocr-0.md](<LLM/DocumentParsing/papers/2609.36136-xiaomi-ocr-0.md>) — 72 行 / 8,647 B
 
   </details>
 
@@ -1278,7 +1281,7 @@
 | [Agents/README.md](<Agents/README.md>) | Agents | 74 | 3,621 B |
 | [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 46 | 1,972 B |
 | [Infra/README.md](<Infra/README.md>) | Infra | 118 | 8,186 B |
-| [LLM/README.md](<LLM/README.md>) | LLM | 166 | 11,689 B |
+| [LLM/README.md](<LLM/README.md>) | LLM | 169 | 12,017 B |
 | [Models/README.md](<Models/README.md>) | Models | 101 | 5,029 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 106 | 4,718 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
