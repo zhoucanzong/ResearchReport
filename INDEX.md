@@ -17,7 +17,7 @@
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 12 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 9 |
 | 条目子文档数 | 281 |
 | 条目正文行数（剔除 front-matter） | 21,215 |
-| 条目字节 | 2,082,151 B |
+| 条目字节 | 2,082,402 B |
 | 带 front-matter 的条目 | 77 |
 | 带合法 `date` 的条目 | 36 |
 | 文档（除生成物外的全部 `.md`） | 381 |
@@ -33,7 +33,7 @@
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
 | Models | 23 | 41 | 10,200 | 835,908 B | [板块页 →](<Models/README.md>) |
-| LLM | 12 | 92 | 1,589 | 233,243 B | [板块页 →](<LLM/README.md>) |
+| LLM | 12 | 92 | 1,589 | 233,494 B | [板块页 →](<LLM/README.md>) |
 | Agents | 3 | 22 | 489 | 69,335 B | [板块页 →](<Agents/README.md>) |
 | AIGC | 9 | 10 | 3,737 | 317,548 B | [板块页 →](<AIGC/README.md>) |
 | WorldModel | 3 | 45 | 1,145 | 133,537 B | [板块页 →](<WorldModel/README.md>) |
@@ -41,7 +41,7 @@
 | Evaluation | 2 | 10 | 192 | 36,294 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 6 | 57 | 1,141 | 109,557 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 9 | 39 | 1,852 | 199,986 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **77** | **381** | **21,215** | **2,082,151 B** | — |
+| **合计** | **77** | **381** | **21,215** | **2,082,402 B** | — |
 
 ## 分面索引
 
@@ -422,7 +422,7 @@
   <summary><b>OCR 与文档解析</b> · <code>LLM/DocumentParsing/report.md</code> · 124 行 · 2026-10-25</summary>
 
 
-    * **条目**：[LLM/DocumentParsing/report.md](<LLM/DocumentParsing/report.md>)（124 行 / 25,562 B）
+    * **条目**：[LLM/DocumentParsing/report.md](<LLM/DocumentParsing/report.md>)（124 行 / 25,813 B）
     * **专题目录**：`LLM/DocumentParsing`
     * **元数据**：type=`research` · domain=`LLM` · subject=`DocumentParsing` · date=`2026-10-25` · status=`current`
     * **子文档（23）**
