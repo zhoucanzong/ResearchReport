@@ -21,6 +21,48 @@ status: completed
 - **任务级递归**（改执行 harness）：一步 = `Propose → Probe → Compose`。先跑一次**参照执行**（得到基线轨迹与交付物，不判断对错），再提**两个候选**——`INV`（跨域复发的 agent 缺陷：规划、工具使用、上下文管理、委派）与 `DOM`（当前领域的知识、流程、约束）；两候选在**同模型同环境**下跑同一任务，与参照做**行为对照**；最后**选择性合成**（合并受支持改动、修正冲突、采纳其一或保留原状），**每个决策绑定一个具体观察**。`k=1` 即单步；`k>1` 时并行（k 候选 × k 合成会话）或顺序（k 步链式），并在末轮由 selector 只"挑现有交付物"、不重写。
 - **harness 级递归**（改"改进 harness"）：任务结束后回看完整改进记录，**只有被执行对照支撑的经验**才写入 `EXPERIENCE.md` 并入索引库；下一任务仍从**公共初始 harness** 起步，旧组件**经 Propose 选择性复用**而非自动继承（`core/library.py`）。
 
+```mermaid
+flowchart TB
+    subgraph TASK["任务级递归：改执行 harness（论文 §2.2）"]
+        direction TB
+        REF["① 参照执行 e0"]
+        PROP["② Propose 两个候选"]
+        INV["INV：跨域复发的 agent 缺陷"]
+        DOM["DOM：当前领域的知识/流程/约束"]
+        PROBE["③ Probe：同模型同环境，与参照做行为对照"]
+        COMP["④ Compose：选择性合成，每个决策绑一个观察"]
+        FIN["⑤ k 个 final"]
+        SEL["⑥ Selector：只挑现有交付物，不重写"]
+        REF --> PROP
+        PROP --> INV
+        PROP --> DOM
+        INV --> PROBE
+        DOM --> PROBE
+        PROBE --> COMP
+        COMP --> FIN
+        FIN --> SEL
+    end
+    subgraph HARN["harness 级递归：改「改进 harness」本身（论文 §2.3）"]
+        direction TB
+        RF["⑦ 反思：只保留被执行对照支撑的经验"]
+        EXP["⑧ EXPERIENCE.md + 索引库"]
+        NEXT["⑨ 下一任务的 Propose"]
+        RF --> EXP
+        EXP --> NEXT
+    end
+    SEL -->|"任务交付后回看完整改进记录"| RF
+    NEXT -.->|"选择性复用，非自动继承；仍从公共初始 harness 起步"| PROP
+    K["约束·k 是宽度不是深度：k 候选 + k 合成，实现只做一次 population update"] -.-> PROBE
+    BUD["约束·R = 4k / P = 3k：k base + 2k 候选 + k final = 4k 次执行；k INV + k DOM + k 合成 = 3k 个会话"] -.-> COMP
+    SCP["约束·库按 run + mode + domain 分层；每个 sweep 默认从空开始，跨 sweep 需显式 tag"] -.-> EXP
+```
+
+**读图**（节点 → 论文/代码）：
+
+- **①–⑥**：论文 §2.2.1–§2.2.2、Figure 3/4；`core/recursion.py:343`（`run_parallel`）/ `:452`（`run_sequential`），会话标签 `base`、`inv{t}`/`dom{t}`、`agg{i}`/`c{t}`（`:408`、`:479-483`、`:534`），末轮 `finals = c1…ck`（`:564`）；合成提示 `core/prompts.py:894`（并行）/ `:964`（顺序）；选择器 `core/selection.py:268`（`run_selection`）。
+- **⑦–⑨**：反思 `core/selection.py:402`（`reflect_adoption`）→ 提炼 `:454`（`_distil`）；库结构与写入 `core/library.py:19`、`:106-152`（`EXPERIENCE.md` 落盘在 `:150`）；"证据不足则不加新条目"见 §2.3 正文。
+- **三条约束**：`core/ledger.py:26-33`（`expected_rollouts` = 4k、`expected_sessions` = 3k）与 `:89-113`（`assert_identity`，重复 label 也算失败）；库作用域 `core/library.py:215-222`（`root_for`：`<benchmark>/k<k>[-variant]`，只有显式 `tag` 才跨 run 共享）。
+
 **八个组件各是一个文件**，编辑即 diff（论文 Table 5 / §D.3；代码 `substrate/opencode.py:42-88`）：
 
 | 编号 | 组件 | 文件 | 何时进入上下文 |

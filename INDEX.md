@@ -16,8 +16,8 @@
 | **条目数**（`report.md`） | **76** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 12 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 8 |
 | 条目子文档数 | 274 |
-| 条目正文行数（剔除 front-matter） | 20,993 |
-| 条目字节 | 2,057,137 B |
+| 条目正文行数（剔除 front-matter） | 21,035 |
+| 条目字节 | 2,059,690 B |
 | 带 front-matter 的条目 | 76 |
 | 带合法 `date` 的条目 | 35 |
 | 文档（除生成物外的全部 `.md`） | 372 |
@@ -40,8 +40,8 @@
 | AI4Science | 10 | 53 | 870 | 146,743 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 2 | 10 | 192 | 36,294 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 6 | 57 | 1,141 | 109,557 B | [板块页 →](<Infra/README.md>) |
-| OpenSource | 8 | 38 | 1,638 | 177,950 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **76** | **372** | **20,993** | **2,057,137 B** | — |
+| OpenSource | 8 | 38 | 1,680 | 180,503 B | [板块页 →](<OpenSource/README.md>) |
+| **合计** | **76** | **372** | **21,035** | **2,059,690 B** | — |
 
 ## 分面索引
 
@@ -1178,10 +1178,10 @@
   </details>
 
   <details>
-  <summary><b>Harness²</b> · <code>OpenSource/Harness2/report.md</code> · 77 行 · 2026-10-28</summary>
+  <summary><b>Harness²</b> · <code>OpenSource/Harness2/report.md</code> · 119 行 · 2026-10-28</summary>
 
 
-    * **条目**：[OpenSource/Harness2/report.md](<OpenSource/Harness2/report.md>)（77 行 / 9,907 B）
+    * **条目**：[OpenSource/Harness2/report.md](<OpenSource/Harness2/report.md>)（119 行 / 12,460 B）
     * **专题目录**：`OpenSource/Harness2`
     * **元数据**：type=`repo-research` · domain=`Repo-Research` · subject=`Harness2` · date=`2026-10-28` · status=`completed`
     * **子文档（0）**
@@ -1279,7 +1279,7 @@
 | [Infra/README.md](<Infra/README.md>) | Infra | 118 | 8,186 B |
 | [LLM/README.md](<LLM/README.md>) | LLM | 165 | 11,582 B |
 | [Models/README.md](<Models/README.md>) | Models | 101 | 5,029 B |
-| [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 106 | 4,717 B |
+| [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 106 | 4,718 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
 | [README.md](<README.md>) |  | 196 | 14,530 B |
