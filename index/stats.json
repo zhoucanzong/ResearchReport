@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "ff6f446a250f9349c441724fef3ee6ab4e7f3ac5f057aed19657f80d4262031b",
+  "content_fingerprint": "a2c8e8e7423f492679e28feecd618848deaf4a3673fadcb24f1684522905027e",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -20,16 +20,16 @@
     "with_date": 35,
     "lines": 21064,
     "bytes": 2062313,
-    "children": 274
+    "children": 275
   },
   "documents": {
-    "md_total": 373,
-    "md_libraries": 361,
+    "md_total": 374,
+    "md_libraries": 362,
     "with_front_matter": 89,
     "named_report_md": 76,
     "named_readme_md": 11,
-    "lines": 53761,
-    "bytes": 5324943
+    "lines": 53855,
+    "bytes": 5338720
   },
   "libraries": {
     "Models": {
@@ -67,10 +67,10 @@
     },
     "LLM": {
       "entries": 12,
-      "documents_md": 86,
+      "documents_md": 87,
       "md_by_category": {
         "Models": 0,
-        "LLM": 86,
+        "LLM": 87,
         "Agents": 0,
         "AIGC": 0,
         "WorldModel": 0,
@@ -93,10 +93,10 @@
       "lines": 1581,
       "bytes": 230265,
       "lines_raw": 1651,
-      "dir_files": 86,
-      "dir_md": 86,
-      "dir_bytes": 996392,
-      "du_sk": 1160
+      "dir_files": 87,
+      "dir_md": 87,
+      "dir_bytes": 1010169,
+      "du_sk": 1176
     },
     "Agents": {
       "entries": 3,
@@ -333,18 +333,18 @@
   "totals": {
     "libraries": 9,
     "library_entries": 76,
-    "library_documents_md": 361,
-    "library_dir_files": 367,
-    "library_dir_bytes": 5419964,
-    "library_du_sk": 5988,
+    "library_documents_md": 362,
+    "library_dir_files": 368,
+    "library_dir_bytes": 5433741,
+    "library_du_sk": 6004,
     "library_entry_lines": 21064,
     "library_entry_bytes": 2062313
   },
   "version_control": {
-    "tracked_total": 400,
-    "tracked_md": 381,
+    "tracked_total": 401,
+    "tracked_md": 382,
     "tracked_report_md": 76,
-    "tracked_libraries": 367,
+    "tracked_libraries": 368,
     "tracked_repo_root": 5,
     "tracked_docs": 9,
     "tracked_scripts": 4
@@ -491,16 +491,16 @@
           }
         },
         "other_md": {
-          "files": 74,
-          "lines": 6271,
-          "lines_raw": 6411,
-          "bytes": 766127
+          "files": 75,
+          "lines": 6365,
+          "lines_raw": 6505,
+          "bytes": 779904
         },
         "dir_md": {
-          "files": 86,
-          "lines": 7852,
-          "lines_raw": 8062,
-          "bytes": 996392
+          "files": 87,
+          "lines": 7946,
+          "lines_raw": 8156,
+          "bytes": 1010169
         }
       },
       "Agents": {
@@ -1037,16 +1037,16 @@
       }
     },
     "repo_md": {
-      "files": 373,
-      "lines": 53761,
-      "lines_raw": 54345,
-      "bytes": 5324943
+      "files": 374,
+      "lines": 53855,
+      "lines_raw": 54439,
+      "bytes": 5338720
     },
     "library_md": {
-      "files": 361,
-      "lines": 52454,
-      "lines_raw": 53038,
-      "bytes": 5230622
+      "files": 362,
+      "lines": 52548,
+      "lines_raw": 53132,
+      "bytes": 5244399
     },
     "root_readme": {
       "files": 1,
@@ -1072,7 +1072,7 @@
     ]
   },
   "storage": {
-    "tracked_bytes": 10735752,
+    "tracked_bytes": 10749737,
     "definition": "纳入版本控制的文件字节合计（`git ls-files` 跟踪路径逐个 getsize 求和）；刻意**不**用 du 量工作树——工作树含 site/site-docs/构建产物、别人的未提交草稿、虚拟环境等「车间地面」，会让数字每个 clone 一个样、生成物不可复现。本字段与提交树同源，任意 clone 重跑一致。"
   }
 }

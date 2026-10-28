@@ -15,15 +15,15 @@
 | --- | --- |
 | **条目数**（`report.md`） | **76** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 12 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 8 |
-| 条目子文档数 | 274 |
+| 条目子文档数 | 275 |
 | 条目正文行数（剔除 front-matter） | 21,064 |
 | 条目字节 | 2,062,313 B |
 | 带 front-matter 的条目 | 76 |
 | 带合法 `date` 的条目 | 35 |
-| 文档（除生成物外的全部 `.md`） | 373 |
+| 文档（除生成物外的全部 `.md`） | 374 |
 | 其中文件名 `README.md` | 11 |
-| 纳入版本控制的文件 | 400 |
-| 纳入版本控制的 `.md` | 381 |
+| 纳入版本控制的文件 | 401 |
+| 纳入版本控制的 `.md` | 382 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -33,7 +33,7 @@
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
 | Models | 23 | 41 | 10,200 | 835,908 B | [板块页 →](<Models/README.md>) |
-| LLM | 12 | 86 | 1,581 | 230,265 B | [板块页 →](<LLM/README.md>) |
+| LLM | 12 | 87 | 1,581 | 230,265 B | [板块页 →](<LLM/README.md>) |
 | Agents | 3 | 22 | 489 | 69,335 B | [板块页 →](<Agents/README.md>) |
 | AIGC | 9 | 10 | 3,737 | 317,548 B | [板块页 →](<AIGC/README.md>) |
 | WorldModel | 3 | 44 | 1,145 | 133,537 B | [板块页 →](<WorldModel/README.md>) |
@@ -41,7 +41,7 @@
 | Evaluation | 2 | 10 | 192 | 36,294 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 6 | 57 | 1,141 | 109,557 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 8 | 38 | 1,709 | 183,126 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **76** | **373** | **21,064** | **2,062,313 B** | — |
+| **合计** | **76** | **374** | **21,064** | **2,062,313 B** | — |
 
 ## 分面索引
 
@@ -351,10 +351,10 @@
 
 </details>
 
-### LLM（12 条目 / 86 文档）
+### LLM（12 条目 / 87 文档）
 
 <details>
-<summary><b>语言模型 LLM（12 条目 / 73 子文档）</b></summary>
+<summary><b>语言模型 LLM（12 条目 / 74 子文档）</b></summary>
 
   <details>
   <summary><b>模型对齐与后训练</b> · <code>LLM/Alignment/report.md</code> · 126 行 · —</summary>
@@ -425,7 +425,8 @@
     * **条目**：[LLM/DocumentParsing/report.md](<LLM/DocumentParsing/report.md>)（116 行 / 22,584 B）
     * **专题目录**：`LLM/DocumentParsing`
     * **元数据**：type=`research` · domain=`LLM` · subject=`DocumentParsing` · date=`2026-10-25` · status=`current`
-    * **子文档（17）**
+    * **子文档（18）**
+        * [papers/20261027-minicpm-ocr.md](<LLM/DocumentParsing/papers/20261027-minicpm-ocr.md>) — 93 行 / 13,670 B
         * [papers/2412.07626-omnidocbench.md](<LLM/DocumentParsing/papers/2412.07626-omnidocbench.md>) — 42 行 / 9,196 B
         * [papers/2505.14059-bytedance-dolphin.md](<LLM/DocumentParsing/papers/2505.14059-bytedance-dolphin.md>) — 40 行 / 5,505 B
         * [papers/2509.19760-alibaba-logics-parsing.md](<LLM/DocumentParsing/papers/2509.19760-alibaba-logics-parsing.md>) — 38 行 / 5,449 B
@@ -1277,7 +1278,7 @@
 | [Agents/README.md](<Agents/README.md>) | Agents | 74 | 3,621 B |
 | [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 46 | 1,972 B |
 | [Infra/README.md](<Infra/README.md>) | Infra | 118 | 8,186 B |
-| [LLM/README.md](<LLM/README.md>) | LLM | 165 | 11,582 B |
+| [LLM/README.md](<LLM/README.md>) | LLM | 166 | 11,689 B |
 | [Models/README.md](<Models/README.md>) | Models | 101 | 5,029 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 106 | 4,718 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
