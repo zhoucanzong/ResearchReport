@@ -239,6 +239,7 @@ nav:
         - "2601.20552-deepseek-ocr2": "LLM/DocumentParsing/papers/2601.20552-deepseek-ocr2.md"
         - "2603.01840-firered-ocr": "LLM/DocumentParsing/papers/2603.01840-firered-ocr.md"
         - "2603.13032-multimodal-ocr": "LLM/DocumentParsing/papers/2603.13032-multimodal-ocr.md"
+        - "2603.13398-qianfan-ocr": "LLM/DocumentParsing/papers/2603.13398-qianfan-ocr.md"
         - "2603.24326-coarse-to-fine": "LLM/DocumentParsing/papers/2603.24326-coarse-to-fine.md"
         - "2603.28130-mdpbench": "LLM/DocumentParsing/papers/2603.28130-mdpbench.md"
         - "2605.17447-jd-fastocr": "LLM/DocumentParsing/papers/2605.17447-jd-fastocr.md"
@@ -246,6 +247,7 @@ nav:
         - "2606.23050-unlimited-ocr": "LLM/DocumentParsing/papers/2606.23050-unlimited-ocr.md"
         - "2607.04884-hunyuan-ocr-15": "LLM/DocumentParsing/papers/2607.04884-hunyuan-ocr-15.md"
         - "2607.21617-amazon-faithc4": "LLM/DocumentParsing/papers/2607.21617-amazon-faithc4.md"
+        - "jev-decision-line": "LLM/DocumentParsing/papers/jev-decision-line.md"
     - "长上下文": "LLM/LongContext/report.md"
     - "混合专家模型（MoE）": "LLM/MoE/report.md"
     - "大模型辅助运筹建模与求解":
