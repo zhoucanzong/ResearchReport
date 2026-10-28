@@ -34,6 +34,35 @@ REA 的目标表把每一类目标写成"要什么才能分析"：原生二进�
 
 错误分两档，语义不同：认证失败是 `evidence_integrity_mismatch`，认证通过但工作流角色或选择器不支持是 `invalid_request`（`docs/mcp-contracts.md:47-58`）；错误对象带 `recovery` / `remediation` 字段（`docs/error-contract.schema.json`）。
 
+### Evidence 的生命周期：为什么它能被核验
+
+```mermaid
+flowchart TD
+  T["工具调用 MCP tools/call"] --> H["契约处理器<br/>contractToolHandler.ts:133"]
+  H --> AD["准入 + 取消信号下发<br/>contractToolHandler.ts:155"]
+  AD --> EX["provider 执行<br/>AnalysisProvider.ts:135"]
+  EX --> SP["spawn 外部工具（副作用）<br/>ProviderProcess.ts:312"]
+  SP --> RAW["原始结果 raw_result"]
+  RAW --> NRM["归一化 normalized_result<br/>evidence.ts:369"]
+  NRM --> SEM["摘要面 evidenceSemanticContent<br/>evidence.ts:229"]
+  SEM --> ID["evidence_id = ev_ + digest<br/>evidence.ts:250"]
+  ID --> AUTH{"回读重算比对<br/>evidence.ts:136"}
+  AUTH -- 不相等 --> FAIL["evidence_integrity_mismatch ✗"]
+  AUTH -- 相等 --> LED["EvidenceLedger.record<br/>:62 幂等 / 冲突拒"]
+  LED --> DEL["交付 deliverEvidenceResult<br/>:42"]
+  DEL --> SUM{"detail = summary ?"}
+  SUM -- 否 --> OUT["返回完整 Evidence"]
+  SUM -- 是 --> RET["会话保留 + 分页取回<br/>:113 无保留即拒"]
+  SP -. 起不来或清理未确认 .-> BAD["本试次作废，不重放"]
+  RET -. 分页读不到完整 peer 集 .-> PEER["跨页关系断言失效"]
+```
+
+三条读图要点：
+
+1. **身份由语义算出，认证只需重算一次。** `evidenceSemanticContent`（`src/domain/evidence.ts:229-247`）是白名单，只含 subject 的 digest/format/architecture、provider、`analysis_profile`、`predicate_type`、`operation`、`parameters`、`raw_result`、`normalized_result`、`confidence`、`authority`、`environment`、`limitations`、`relationship_coverage`、`locations`、`evidence_links`；`caller_input_path`、请求 id 等本地展示元数据**不在**摘要里，所以同一观察在另一台机器上得到同一 `evidence_id`（`:250-251`），回读时重算比对即可判真伪（`:136-148`）。
+2. **失败分三处，位置不同、后果不同。** 外部进程起不来或清理未确认（`src/process/ProviderProcess.ts:312`，`shell:false`；非 Windows 用独立进程组，内存上限只有 Windows Job Object 能真实施加，`:296-299` 直接报错）会让本试次作废而不重放；认证不相等才是 `evidence_integrity_mismatch`；`detail=summary` 在无会话保留时直接被拒（`src/server/contractToolHandler.ts:113-116`）。
+3. **分页是刻意的取舍。** summary 只回指针（`normalized_result.parent_evidence_id`），完整记录留在会话；一旦按页取片段，"callers/callees 是完整集合"这个断言就不再成立，所以比较类工具要保留原始记录而不是摘要（`docs/mcp-contracts.md:33-44`）。
+
 ## 3. 能力边界：17 - 12 - 7 - 0
 
 按 `README.md:189-228` 目标表的 **36 行**数据逐行归类（口径：第三列"需要什么"）：
