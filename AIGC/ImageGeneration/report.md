@@ -8,6 +8,8 @@ display_name: 图像生成
 
 > **阅读职责与顺序**：这是跨路线综述，负责串联表示、生成目标、骨干、控制、编辑与评测，不替代各机制报告中的逐篇细读。初学者可从本报告建立问题地图，再按兴趣读[扩散模型基础](../DiffusionModels/report.md)（生成目标与采样）、[DiT 架构](../DiT/report.md)（骨干与条件架构）；若先读机制报告，则回到本报告比较它们能回答什么问题、证据边界在哪里。
 
+跨图像、视频、音频、3D 与数字人的概念依赖关系，见 [AIGC 学习地图](../../docs/aigc-learning-path.md)；本篇聚焦图像生成，避免把其它媒介的时间结构和评价目标混入图像任务。
+
 ## 1. 为什么“生成一张图”不是一个单一能力
 
 读者给模型一句话，模型需要同时完成几件不同的事：识别对象和属性，把属性绑定到正确对象，决定对象之间的位置与关系，再生成形状、纹理、光照、风格等视觉细节。若图中还有标牌或海报文字，它还要生成可读字符；若输入包含参考图或编辑指令，则要保留某些特征、改变另一些特征。
@@ -131,6 +133,8 @@ T2I-CompBench 从属性绑定、物体关系、数量和复杂组合评测提示
 
 GenEval 用检测器和属性分类组件评分，可检查物体数量、位置、颜色等；但作者也指出，检测器的类别集合与粒度会限制可验证的内容，不能检查任意细粒度属性。T2I-CompBench++ 用不同方法评测不同能力：属性绑定依赖 VQA 询问，空间关系 / 数量用检测器，复杂组合尝试 MLLM 评估。论文分析了 MLLM 在空间和数量判断上的局限，因此 MLLM-as-judge 不是天然可靠的总裁判。
 
+两条路线不要合并成一个排行榜：[GenEval 精读](papers/2310.11513-geneval.md)追踪对象检测、框位置和颜色分类如何变成单图诊断；[T2I-CompBench++ 精读](papers/2307.06350-t2i-compbench-plus.md)说明属性/关系/数量/复杂组合如何使用不同评测器。它们的提示集与指标不相同，结论应作为互补的故障切面来读。
+
 ### 4.2 文字渲染需要专门表示与监督
 
 在图像里画文字，不只是“图像里有一块像文字的纹理”。字符序列必须正确，字形位置和行布局必须匹配视觉空间，文字与背景还要融合。TextDiffuser 将任务拆成两步：先由 Transformer 生成关键词布局，再用扩散模型根据提示和布局生成图像；其数据集 MARIO-10M 使用 OCR 与字符级标注，MARIO-Eval 面向文字渲染评测。[TextDiffuser 原文 §3–5](https://arxiv.org/html/2305.10855)
@@ -214,7 +218,7 @@ DALL‑E 3 展示训练 caption 质量会影响文本条件；ControlNet 表明�
 | 2 | [DDPM / 潜空间扩散 / Flow Matching](../DiffusionModels/report.md) | 从噪声恢复和在 latent 生成分别改变了什么？采样步骤承担什么工作？ |
 | 3 | [DiT 原论文](https://arxiv.org/html/2212.09748)，§3–5；[本库 DiT 报告](../DiT/report.md) | Transformer 改的是去噪骨干还是生成目标？原论文任务能支持哪些结论？ |
 | 4 | [DALL‑E 3 原论文](https://cdn.openai.com/papers/dall-e-3.pdf)，§3–5 | 训练 caption 与推理时提示扩写如何区分？受控实验和产品差异在哪里？ |
-| 5 | [GenEval](https://arxiv.org/html/2310.11513)、[T2I-CompBench++](https://arxiv.org/html/2307.06350)、[TextDiffuser](https://arxiv.org/html/2305.10855) | 对象、关系、数量和文字渲染分别需要怎样的基准？自动评测依赖什么模型？ |
+| 5 | [GenEval 精读](papers/2310.11513-geneval.md)、[T2I-CompBench++ 精读](papers/2307.06350-t2i-compbench-plus.md)、[TextDiffuser](https://arxiv.org/html/2305.10855) | 对象、关系、数量和文字渲染分别需要怎样的基准？自动评测依赖什么模型？ |
 | 6 | [ControlNet](https://arxiv.org/html/2302.05543)、[IP-Adapter](https://arxiv.org/html/2308.06721) | 结构条件和参考图条件分别通过哪个模块进入生成过程？ |
 | 7 | [Prompt-to-Prompt](https://arxiv.org/html/2208.01626)、[InstructPix2Pix](https://arxiv.org/html/2211.09800)、[MagicBrush](https://arxiv.org/html/2306.10012) | 编辑方法如何修改图像，同时衡量目标变化与未修改区域？ |
 

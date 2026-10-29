@@ -22,15 +22,15 @@
 
 ## AIGC (9)
 
-* [AIGC/3DGen/report.md](<../AIGC/3DGen/report.md>) — 387 行
+* [AIGC/3DGen/report.md](<../AIGC/3DGen/report.md>) — 389 行
 * [AIGC/AudioGen/report.md](<../AIGC/AudioGen/report.md>) — 243 行
-* [AIGC/AvatarGen/report.md](<../AIGC/AvatarGen/report.md>) — 170 行
-* [AIGC/ControllableGen/report.md](<../AIGC/ControllableGen/report.md>) — 618 行
-* [AIGC/DiT/report.md](<../AIGC/DiT/report.md>) — 603 行
-* [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) — 851 行
-* [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) — 477 行
-* [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) — 229 行
-* [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) — 171 行
+* [AIGC/AvatarGen/report.md](<../AIGC/AvatarGen/report.md>) — 172 行
+* [AIGC/ControllableGen/report.md](<../AIGC/ControllableGen/report.md>) — 620 行
+* [AIGC/DiT/report.md](<../AIGC/DiT/report.md>) — 605 行
+* [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) — 853 行
+* [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) — 479 行
+* [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) — 233 行
+* [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) — 209 行
 
 ## Agents (3)
 

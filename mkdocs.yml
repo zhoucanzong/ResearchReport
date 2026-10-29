@@ -328,8 +328,14 @@ nav:
     - "扩散 Transformer（DiT）": "AIGC/DiT/report.md"
     - "扩散模型": "AIGC/DiffusionModels/report.md"
     - "图像编辑与修复": "AIGC/ImageEditing/report.md"
-    - "图像生成": "AIGC/ImageGeneration/report.md"
-    - "视频生成": "AIGC/VideoGen/report.md"
+    - "图像生成":
+        - "总报告": "AIGC/ImageGeneration/report.md"
+        - "2307.06350-t2i-compbench-plus": "AIGC/ImageGeneration/papers/2307.06350-t2i-compbench-plus.md"
+        - "2310.11513-geneval": "AIGC/ImageGeneration/papers/2310.11513-geneval.md"
+    - "视频生成":
+        - "总报告": "AIGC/VideoGen/report.md"
+        - "2602.06028-context-forcing": "AIGC/VideoGen/papers/2602.06028-context-forcing.md"
+        - "2608.19556-stream4d": "AIGC/VideoGen/papers/2608.19556-stream4d.md"
   - "🌍 WorldModel · 3":
     - "WorldModel/README.md"
     - "具身预测规划":
@@ -603,6 +609,7 @@ nav:
       - "最近更新": "index/recent.md"
       - "待复核": "index/stale.md"
   - "📖 文档":
+      - "AIGC 学习地图：从表示到可控生成": "docs/aigc-learning-path.md"
       - "历史校验记录（截至 2026-10）": "docs/archive/verification-history-2026-10.md"
       - "DSH Harness 反馈清单（2026-10-18，来自一次真实事故）": "docs/harness-feedback.md"
       - "library_index.py 单趟未收敛（自指统计）": "docs/issue-index-single-pass.md"

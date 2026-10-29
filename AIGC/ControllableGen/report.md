@@ -7,6 +7,8 @@ display_name: 可控生成
 > 研究领域：Diffusion Model / Controllable Image & Video Generation
 > 核心问题：控制信号如何表示、注入，以及多条件怎样共同作用
 
+跨媒介条件控制的阅读入口见 [AIGC 学习地图](../../docs/aigc-learning-path.md)；本专题聚焦空间图、参考内容和多路条件如何进入图像/视频生成器。
+
 ---
 
 ## 目录

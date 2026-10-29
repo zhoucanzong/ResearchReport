@@ -18,7 +18,7 @@
 <div align="center">
 
 <!-- SCRIPT:badges START -->
-[**77** 主报告](index/by-report.md) &nbsp; · &nbsp; [**308** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**45** 研究专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
+[**77** 主报告](index/by-report.md) &nbsp; · &nbsp; [**312** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**45** 研究专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
 <!-- SCRIPT:badges END -->
 
 </div>
@@ -127,8 +127,8 @@
 | 2026-10-30 | [MoE 执行与专家通信](<Infra/MoEExecution/report.md>) | Infra |
 | 2026-10-30 | [模型量化与边缘部署](<Infra/QuantizationEdge/report.md>) | Infra |
 | 2026-10-30 | [分布式训练基础设施](<Infra/TrainingInfra/report.md>) | Infra |
-| 2026-10-29 | [投机解码](<Infra/SpeculativeDecoding/report.md>) | Infra |
-| 2026-10-29 | [扩散语言模型](<LLM/DiffusionLM/report.md>) | LLM |
+| 2026-10-30 | [可控生成](<AIGC/ControllableGen/report.md>) | AIGC |
+| 2026-10-30 | [扩散 Transformer（DiT）](<AIGC/DiT/report.md>) | AIGC |
 <!-- SCRIPT:recent END -->
 
 [查看全部更新 →](index/recent.md)

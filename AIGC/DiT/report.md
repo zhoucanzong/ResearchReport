@@ -10,6 +10,8 @@ display_name: 扩散 Transformer（DiT）
 
 > **本报告的职责**：聚焦扩散模型中的 Transformer 去噪骨干、条件交互及其视频扩展；生成目标、噪声路径与采样器的基础机制见[扩散模型报告](../DiffusionModels/report.md)，不同图像生成路线之间的关系、任务能力与评测边界见[图像生成综述](../ImageGeneration/report.md)。适合在了解扩散基本过程后阅读，也可作为综述中 DiT 路线的机制分册。
 
+跨媒介的表示与评测路线见 [AIGC 学习地图](../../docs/aigc-learning-path.md)；本篇只说明 Transformer 如何实现扩散去噪，不将 DiT 当成独立生成目标。
+
 ---
 
 ## 目录

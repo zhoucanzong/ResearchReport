@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_by": "scripts/library_index.py",
-  "content_fingerprint": "17b2708f14821108ad3d79c67182b4458f5043cb99e2171f590fe67ba6b54f24",
+  "content_fingerprint": "7df7719deed9520616ea73ca326e2fcdfbd04d855653b9c37390503e9908f937",
   "repo_root": ".",
   "definitions": {
     "entry": "条目 = 文件名字面为 report.md 的 Markdown（每个 <topic>-research/ 一份）",
@@ -18,18 +18,18 @@
     "with_front_matter": 77,
     "without_front_matter": 0,
     "with_date": 38,
-    "lines": 20152,
-    "bytes": 2088889,
-    "children": 308
+    "lines": 20206,
+    "bytes": 2097596,
+    "children": 312
   },
   "documents": {
-    "md_total": 409,
-    "md_libraries": 396,
+    "md_total": 414,
+    "md_libraries": 400,
     "with_front_matter": 102,
     "named_report_md": 77,
     "named_readme_md": 11,
-    "lines": 54861,
-    "bytes": 5612656
+    "lines": 55098,
+    "bytes": 5644843
   },
   "libraries": {
     "Models": {
@@ -133,12 +133,12 @@
     },
     "AIGC": {
       "entries": 9,
-      "documents_md": 10,
+      "documents_md": 14,
       "md_by_category": {
         "Models": 0,
         "LLM": 0,
         "Agents": 0,
-        "AIGC": 10,
+        "AIGC": 14,
         "WorldModel": 0,
         "AI4Science": 0,
         "Evaluation": 0,
@@ -156,13 +156,13 @@
         "Infra": 0,
         "OpenSource": 0
       },
-      "lines": 3749,
-      "bytes": 320523,
-      "lines_raw": 3776,
-      "dir_files": 10,
-      "dir_md": 10,
-      "dir_bytes": 322360,
-      "du_sk": 336
+      "lines": 3803,
+      "bytes": 329230,
+      "lines_raw": 3830,
+      "dir_files": 14,
+      "dir_md": 14,
+      "dir_bytes": 348474,
+      "du_sk": 372
     },
     "WorldModel": {
       "entries": 3,
@@ -293,7 +293,7 @@
       "lines_raw": 1387,
       "dir_files": 86,
       "dir_md": 83,
-      "dir_bytes": 1028896,
+      "dir_bytes": 1029128,
       "du_sk": 1140
     },
     "OpenSource": {
@@ -333,20 +333,20 @@
   "totals": {
     "libraries": 9,
     "library_entries": 77,
-    "library_documents_md": 396,
-    "library_dir_files": 402,
-    "library_dir_bytes": 5700212,
-    "library_du_sk": 6320,
-    "library_entry_lines": 20152,
-    "library_entry_bytes": 2088889
+    "library_documents_md": 400,
+    "library_dir_files": 406,
+    "library_dir_bytes": 5726558,
+    "library_du_sk": 6356,
+    "library_entry_lines": 20206,
+    "library_entry_bytes": 2097596
   },
   "version_control": {
-    "tracked_total": 421,
-    "tracked_md": 402,
+    "tracked_total": 436,
+    "tracked_md": 417,
     "tracked_report_md": 77,
-    "tracked_libraries": 388,
+    "tracked_libraries": 402,
     "tracked_repo_root": 5,
-    "tracked_docs": 9,
+    "tracked_docs": 10,
     "tracked_scripts": 4
   },
   "doc_stats": {
@@ -582,9 +582,9 @@
       "AIGC": {
         "report_md": {
           "files": 9,
-          "lines": 3749,
-          "lines_raw": 3776,
-          "bytes": 320523
+          "lines": 3803,
+          "lines_raw": 3830,
+          "bytes": 329230
         },
         "report_md_by_category": {
           "Models": {
@@ -607,9 +607,9 @@
           },
           "AIGC": {
             "files": 9,
-            "lines": 3749,
-            "lines_raw": 3776,
-            "bytes": 320523
+            "lines": 3803,
+            "lines_raw": 3830,
+            "bytes": 329230
           },
           "WorldModel": {
             "files": 0,
@@ -643,16 +643,16 @@
           }
         },
         "other_md": {
-          "files": 1,
-          "lines": 32,
-          "lines_raw": 32,
-          "bytes": 1837
+          "files": 5,
+          "lines": 156,
+          "lines_raw": 156,
+          "bytes": 19244
         },
         "dir_md": {
-          "files": 10,
-          "lines": 3781,
-          "lines_raw": 3808,
-          "bytes": 322360
+          "files": 14,
+          "lines": 3959,
+          "lines_raw": 3986,
+          "bytes": 348474
         }
       },
       "WorldModel": {
@@ -948,15 +948,15 @@
         },
         "other_md": {
           "files": 77,
-          "lines": 7081,
-          "lines_raw": 7191,
-          "bytes": 720453
+          "lines": 7083,
+          "lines_raw": 7193,
+          "bytes": 720685
         },
         "dir_md": {
           "files": 83,
-          "lines": 8413,
-          "lines_raw": 8578,
-          "bytes": 867804
+          "lines": 8415,
+          "lines_raw": 8580,
+          "bytes": 868036
         }
       },
       "OpenSource": {
@@ -1037,16 +1037,16 @@
       }
     },
     "repo_md": {
-      "files": 409,
-      "lines": 54861,
-      "lines_raw": 55583,
-      "bytes": 5612656
+      "files": 414,
+      "lines": 55098,
+      "lines_raw": 55820,
+      "bytes": 5644843
     },
     "library_md": {
-      "files": 396,
-      "lines": 53496,
-      "lines_raw": 54218,
-      "bytes": 5510870
+      "files": 400,
+      "lines": 53676,
+      "lines_raw": 54398,
+      "bytes": 5537216
     },
     "root_readme": {
       "files": 1,
@@ -1055,10 +1055,10 @@
       "bytes": 14721
     },
     "docs_md": {
-      "files": 10,
-      "lines": 1058,
-      "lines_raw": 1058,
-      "bytes": 81171
+      "files": 11,
+      "lines": 1115,
+      "lines_raw": 1115,
+      "bytes": 87012
     },
     "scripts_md": {
       "files": 1,
@@ -1072,7 +1072,7 @@
     ]
   },
   "storage": {
-    "tracked_bytes": 10963396,
+    "tracked_bytes": 11041726,
     "definition": "纳入版本控制的文件字节合计（`git ls-files` 跟踪路径逐个 getsize 求和）；刻意**不**用 du 量工作树——工作树含 site/site-docs/构建产物、别人的未提交草稿、虚拟环境等「车间地面」，会让数字每个 clone 一个样、生成物不可复现。本字段与提交树同源，任意 clone 重跑一致。"
   }
 }

@@ -40,7 +40,7 @@
 
 ## 6. 图像生成机制、控制与厂商系统
 
-推荐顺序：[图像生成](../AIGC/ImageGeneration/report.md)建立问题地图 → [扩散模型](../AIGC/DiffusionModels/report.md)理解生成目标与采样 → [DiT](../AIGC/DiT/report.md)理解 Transformer 去噪骨干 → 按任务转向[可控生成](../AIGC/ControllableGen/report.md)或[图像编辑](../AIGC/ImageEditing/report.md)。之后可选读 [OpenAI](../Models/OpenAI-Gen/report.md)、[Google](../Models/Google-Gen/report.md)、[DeepSeek](../Models/DeepSeek/report.md) 等模型系列报告，观察公开系统如何落在这些问题上。
+完整跨媒介读序见 [AIGC 学习地图](aigc-learning-path.md)。本路线推荐：[图像生成](../AIGC/ImageGeneration/report.md)建立问题地图 → [扩散模型](../AIGC/DiffusionModels/report.md)理解生成目标与采样 → [DiT](../AIGC/DiT/report.md)理解 Transformer 去噪骨干 → 按任务转向[可控生成](../AIGC/ControllableGen/report.md)或[图像编辑](../AIGC/ImageEditing/report.md)。之后可选读 [OpenAI](../Models/OpenAI-Gen/report.md)、[Google](../Models/Google-Gen/report.md)、[DeepSeek](../Models/DeepSeek/report.md) 等模型系列报告，观察公开系统如何落在这些问题上。
 
 机制专题回答“方法怎样工作”，厂商报告回答“某系列公开了什么研究或产品证据”；后者不能代替未公开实现的机制说明。遇到提示遵循、空间关系、文字渲染、主体一致性或编辑保留等具体问题，应回到相应任务的实验与评测条件，而不是由模型名称推断能力。
 

@@ -21,15 +21,15 @@
 | 蛋白质与肽结合体设计 | AI4Science | [AI4Science/ProteinDesign/report.md](<../AI4Science/ProteinDesign/report.md>) | 6 | 94 | 2026-10-23 |
 | 单细胞扰动预测 | AI4Science | [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) | 4 | 87 | 2026-10-23 |
 | 天气与气候预测 | AI4Science | [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) | 7 | 89 | 2026-10-23 |
-| 3D 生成 | AIGC | [AIGC/3DGen/report.md](<../AIGC/3DGen/report.md>) | 0 | 387 | — |
+| 3D 生成 | AIGC | [AIGC/3DGen/report.md](<../AIGC/3DGen/report.md>) | 0 | 389 | — |
 | 音频与音乐生成 | AIGC | [AIGC/AudioGen/report.md](<../AIGC/AudioGen/report.md>) | 0 | 243 | — |
-| 数字人与 Avatar | AIGC | [AIGC/AvatarGen/report.md](<../AIGC/AvatarGen/report.md>) | 0 | 170 | — |
-| 可控生成 | AIGC | [AIGC/ControllableGen/report.md](<../AIGC/ControllableGen/report.md>) | 0 | 618 | — |
-| 扩散 Transformer（DiT） | AIGC | [AIGC/DiT/report.md](<../AIGC/DiT/report.md>) | 0 | 603 | — |
-| 扩散模型 | AIGC | [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) | 0 | 851 | — |
-| 图像编辑与修复 | AIGC | [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) | 0 | 477 | — |
-| 图像生成 | AIGC | [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) | 0 | 229 | — |
-| 视频生成 | AIGC | [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) | 0 | 171 | — |
+| 数字人与 Avatar | AIGC | [AIGC/AvatarGen/report.md](<../AIGC/AvatarGen/report.md>) | 0 | 172 | — |
+| 可控生成 | AIGC | [AIGC/ControllableGen/report.md](<../AIGC/ControllableGen/report.md>) | 0 | 620 | — |
+| 扩散 Transformer（DiT） | AIGC | [AIGC/DiT/report.md](<../AIGC/DiT/report.md>) | 0 | 605 | — |
+| 扩散模型 | AIGC | [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) | 0 | 853 | — |
+| 图像编辑与修复 | AIGC | [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) | 0 | 479 | — |
+| 图像生成 | AIGC | [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) | 2 | 233 | — |
+| 视频生成 | AIGC | [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) | 2 | 209 | — |
 | 工具 Agent 安全 | Agents | [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) | 4 | 67 | 2026-10-24 |
 | 智能体系统 | Agents | [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) | 12 | 322 | 2026-10-26 |
 | 电脑使用 Agent | Agents | [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) | 2 | 100 | 2026-10-26 |
@@ -88,4 +88,4 @@
 | 具身预测规划 | WorldModel | [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) | 2 | 54 | — |
 | 机器人视觉语言动作模型（VLA） | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 23 | 571 | — |
 | 世界模型 | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 16 | 524 | 2026-10-29 |
-| **合计** | — | — | **308** | **20,152** | — |
+| **合计** | — | — | **312** | **20,206** | — |

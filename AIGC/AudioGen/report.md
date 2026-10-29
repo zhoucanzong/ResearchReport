@@ -8,7 +8,7 @@ display_name: 音频与音乐生成
 
 ## 阅读路线
 
-建议先读表示与任务地图，再按问题选择路线：
+跨媒介的表示、条件和评测读序见 [AIGC 学习地图](../../docs/aigc-learning-path.md)。建议先读表示与任务地图，再按问题选择路线；关注视频生成本身时，另读[视频生成专题](../VideoGen/report.md)：AudioX 的视频输入只说明视频可作为音频生成条件，不等同于同一个视频生成模型。
 
 1. 想理解原始波形为什么难建模：读 WaveNet → Jukebox。
 2. 想理解文本音效与音乐控制：读 AudioGen → MusicLM → MusicGen。
