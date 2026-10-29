@@ -11,6 +11,7 @@
 | 音频 | **首次原生生成音频**：环境声、音乐，以及会随输入变化的**角色对话**（"interactive dialogue that adapts on the fly"） | 官方博客 "Modeling how the world sounds" |
 | 可控性 | 自然语言**实时**改场景（天气、镜头、增删人或物）；键盘控制导航与镜头 | 官方 "Shaping world simulation in real-time" |
 | 物理与人物 | 空气动力学、碰撞等物理交互；人物动作可被**实时操控**（原文称这是"most dramatic leap"） | 官方 "Pushing the frontier in realism for physics and human action" |
+| — | 官方原文说本轮推进 **four key capabilities**：音频 / 可控性 / 物理与人物 / 交互；"时长与分辨率"不在四项之列，故另列两行专门说明**未披露**。**四个能力与博客的五个小节并非一一对应，读时按小节名对齐更稳** | 博客 "four key capabilities" |
 | 时长/稳定性 | 官方只说**短会话内**可保持连贯；"最多两分钟、是前代两倍"是媒体口径 | 媒体（TechCrunch）；官方仅 "short sessions" |
 | 分辨率/帧率 | **官方未披露**——博客全文检索无 fps / resolution / latency 数字；对照 Genie 3 官方博客当时给过 **720p / 24 FPS / 数分钟**这类可测值 | 官方博客（检索结论）；Genie 3 数字见[其官方博客](https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/) |
 | 交互输入 | 键盘导航 + 文本提示；更上层是 LLM 把目标拆成步骤再喂回文本 | 官方 "四个关键能力" 与 "Simulating complex events" |
@@ -60,7 +61,7 @@
 
 ## 边界与未确证汇总
 
-- **营销表述（不可当结论）**：`enhanced photorealism` / `fluid movement` / `most dramatic leap` / "更自然的人物动作"。**早前版本误引 "most photorealistic and interactive worlds yet" 作为博客原话，经逐字检索该句在 Genie 4 博客 0 次命中，已删。**
+- **营销表述（不可当结论）**：`enhanced photorealism` / `fluid movement` / `most dramatic leap` / "更自然的人物动作"。**早前版本误引 "most photorealistic and interactive worlds yet" 作为博客原话；逐字检索该句在 Genie 4 博客 0 次命中（该说法见于 TechCrunch 报道），已删。**
 - **媒体报道（交叉参考）**：两分钟一致性（"double its predecessor's limit"）、Gemini 当"导演"拆步核帧、Runway 也发布带音频的世界模型、World Labs 被 AMD 收购等行业动态（TechCrunch 2026-10-27）。
 - **未能确证**：分辨率、帧率、控制延迟、动作接口形式、会话最长时间（官方"短会话" vs 媒体"两分钟"）、模型规模与架构、训练数据、是否支持任意视频续写、是否存在第三方评测。
 - **一个值得留下的判断**：Genie 4 的"新"不在单点指标，而在**把 LLM 放进世界模型的闭环**——Gemini 当导演、Genie 当渲染器，官方自己把这条路线叫 **hybrid world models** 并列为 future work。这也解释了它为什么先发博客而不是发论文：可讲的机制细节，2026-10-27 时点还不存在。

@@ -88,7 +88,7 @@
 * [papers/2408.14837-gamengen.md](<WorldModels/papers/2408.14837-gamengen.md>) — 204 行 / 11,946 B
 * [papers/2501.09038-physics-iq.md](<WorldModels/papers/2501.09038-physics-iq.md>) — 206 行 / 12,991 B
 * [papers/2503.21755-vbench-2.md](<WorldModels/papers/2503.21755-vbench-2.md>) — 206 行 / 11,671 B
-* [papers/genie4-official.md](<WorldModels/papers/genie4-official.md>) — 70 行 / 9,498 B
+* [papers/genie4-official.md](<WorldModels/papers/genie4-official.md>) — 71 行 / 9,857 B
 * [sources/CANDIDATES.md](<WorldModels/sources/CANDIDATES.md>) — 63 行 / 6,676 B
 * [sources/MANIFEST.md](<WorldModels/sources/MANIFEST.md>) — 24 行 / 3,898 B
 * [topics/dynamics-and-action-conditioning.md](<WorldModels/topics/dynamics-and-action-conditioning.md>) — 175 行 / 14,079 B
