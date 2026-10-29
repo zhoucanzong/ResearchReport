@@ -12,7 +12,7 @@ status: completed
 
 # Harness²：把 harness 本身作为优化对象
 
-论文：*Harness²: Recursive Agent Harnessing for an Open World*（arXiv:2610.14224v1，2026-10-09）。代码：`google-research/harness2` @ `1cfe254`（2026-10-13，Python，`harness2/` 39 文件 / 12,747 行）。
+论文：[*Harness²: Recursive Agent Harnessing for an Open World*](https://arxiv.org/abs/2610.14224v1)（arXiv v1，2026-10-09）。代码：[google-research/harness2](https://github.com/google-research/harness2/tree/1cfe254e8d25b15f37048c3730134686abe60335) 固定到 `1cfe254`（2026-10-13）。
 
 ## 1. 它做什么
 
@@ -63,9 +63,9 @@ flowchart TB
 - **⑦–⑨**：反思 `core/selection.py:402`（`reflect_adoption`）→ 提炼 `:454`（`_distil`）；库结构与写入 `core/library.py:19`、`:106-152`（`EXPERIENCE.md` 落盘在 `:150`）；"证据不足则不加新条目"见 §2.3 正文。
 - **三条约束**：`core/ledger.py:26-33`（`expected_rollouts` = 4k、`expected_sessions` = 3k）与 `:89-113`（`assert_identity`，重复 label 也算失败）；库作用域 `core/library.py:215-222`（`root_for`：`<benchmark>/k<k>[-variant]`，只有显式 `tag` 才跨 run 共享）。
 
-**八个组件各是一个文件**，编辑即 diff（论文 Table 5 / §D.3；代码 `substrate/opencode.py:42-88`）：
+**八类组件都能作为可编辑面被记录和比较**；实际载体可能是单个文件、目录或一组配置，并不都是“一个文件”（论文 Table 5 / §D.3；代码 `substrate/opencode.py:42-88`）：
 
-| 编号 | 组件 | 文件 | 何时进入上下文 |
+| 编号 | 组件 | 示例路径 | 何时进入上下文 |
 |---|---|---|---|
 | C1 | System prompt | `systemprompt.md` | 每次调用 |
 | C2 | Guardrails | `guardrails.md` | 每次调用 |

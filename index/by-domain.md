@@ -68,7 +68,7 @@
 | --- | --- | --- | --- | --- |
 | [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) | 模型对齐与后训练：方法、目标与证据边界 | — | — | — |
 | [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | 决策模型综述：把概率判断变成可行动的选择 | — | 2026-10-26 | — |
-| [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 扩散语言模型：从随机遮盖到大规模并行生成 | topic-research | 2026-10-23 | current |
+| [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 扩散语言模型：从随机遮盖到大规模并行生成 | topic-research | 2026-10-29 | current |
 | [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) | OCR 与文档解析：从字符识别到结构还原 | research | 2026-10-25 | current |
 | [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 长上下文：从可接收长度到有效利用 | — | — | — |
 | [LLM/MoE/report.md](<../LLM/MoE/report.md>) | 混合专家模型：路由、负载均衡与系统通信 | — | — | — |
@@ -90,7 +90,7 @@
 | [Models/Doubao-Seed/report.md](<../Models/Doubao-Seed/report.md>) | Doubao/Seed系列模型深度调研报告 | — | — | — |
 | [Models/GLM/report.md](<../Models/GLM/report.md>) | GLM：预训练目标、推理后训练与多模态分支 | — | — | — |
 | [Models/GPT/report.md](<../Models/GPT/report.md>) | GPT：从生成式预训练到推理与多模态系统 | — | — | — |
-| [Models/Gemini/report.md](<../Models/Gemini/report.md>) | Google Gemini系列模型深度调研报告 | — | — | — |
+| [Models/Gemini/report.md](<../Models/Gemini/report.md>) | Google Gemini系列模型深度调研报告 | — | 2026-10-29 | — |
 | [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>) | Google / DeepMind 生成模型系列研究报告 | — | — | — |
 | [Models/Grok/report.md](<../Models/Grok/report.md>) | xAI Grok 系列模型深度调研报告 | — | — | — |
 | [Models/Hunyuan/report.md](<../Models/Hunyuan/report.md>) | Hunyuan系列模型深度调研报告 | — | — | — |
@@ -132,4 +132,4 @@
 | --- | --- | --- | --- | --- |
 | [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) | 具身预测规划：执行前怎样筛选想象中的动作？ | — | — | — |
 | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | EmbodiedVLA 技术专题调研 | — | — | — |
-| [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | WorldModels 技术专题调研 | topic-research | 2026-10-22 | needs-review |
+| [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | WorldModels 技术专题调研 | topic-research | 2026-10-29 | needs-review |

@@ -1,12 +1,12 @@
 ---
 display_name: Gemini
+date: 2026-10-29
 ---
 
 # Google Gemini系列模型深度调研报告
 
-> 覆盖范围：从 Gemini 1.0 研究报告到 2026 年 10 月公开模型卡所覆盖的 Gemini / Gemma 研究线。
-> 覆盖范围：从PaLM（2022年）到**Gemini 4 Argon（2026 年 9–10 月）**的完整技术演进  
-> 写作原则：以**架构演进路径**为骨架，突出原生多模态、超长上下文、MoE与推理能力四大技术主线
+> 覆盖范围：以 PaLM、Gemini 1.0/1.5 技术报告为研究证据主线，延伸到 Gemini 4 Argon 的公开模型卡；Gemma 开放权重系列单列为相关生态，不能据此推断 Gemini 闭源模型的内部架构。产品与模型卡信息更新至 2026-10-29。
+> 阅读重点：理解多模态训练、长上下文、稀疏计算和推理/Agent 能力分别解决什么问题，以及现有公开证据能支持到哪里；不把不同代产品拼成单一排行榜。
 
 ---
 
@@ -14,13 +14,13 @@ display_name: Gemini
 
 ### 1.1 系列定位
 
-Google的大语言模型系列经历了从PaLM到Gemini的重大战略转型。PaLM（Pathways Language Model）代表了Google在Dense Transformer上的极致scaling探索，而Gemini则标志着Google进入**原生多模态+MoE**的新时代。整个系列的核心设计哲学可归纳为：
+Google 的公开模型研究可以沿几条互相交叉、但不适用于每个型号的路线来理解：PaLM 研究大规模稠密语言建模与分布式训练；Gemini 1.0 报告多模态联合训练；Gemini 1.5 披露稀疏 MoE 与长上下文实验；后续模型卡更多描述推理、工具使用和多模态输入输出。它们是公开材料呈现的研究线索，不足以证明所有 Gemini 型号共享同一架构或训练配方。
 
 1. **原生多模态**：Gemini 1.0 论文确认文本、图像、音频和视频联合训练，同时保留视觉编码与 USM 音频特征处理；“原生”不等于没有模态编码器，也不证明不存在对齐问题（[固定 v1，§2、§4](https://arxiv.org/html/2312.11805v1#S2)）。
-2. **MoE高效scaling**：从1.5代起全面转向Sparse MoE架构，实现计算效率与模型容量的最优平衡
-3. **超长上下文**：从32K→1M→10M token，实现近乎完美的长程检索与推理
-4. **硬件协同设计**：与TPU（v4→v5e→v6e Trillium）深度协同，从Pathways分布式训练系统到模型架构均针对TPU拓扑优化
-5. **从对话到Agent**：Gemini 2.0起明确定位"Agentic Era"，2.5/3代实现原生工具调用与长程自主规划
+2. **稀疏计算**：Gemini 1.5 技术报告描述了稀疏 MoE；不能据此把后续所有 Gemini 型号都归为 MoE，也不能推断未披露的专家数和路由设计。
+3. **长上下文**：Gemini 1.5 报告了百万级上下文及更长序列实验。针对此类合成检索任务的结果，不能等同任意长文档上的可靠推理。
+4. **训练与硬件**：Google 的论文和模型卡提到 Pathways、TPU、JAX 等基础设施；具体型号的硬件协同细节并未全部公开。
+5. **推理与工具使用**：后续报告和模型卡呈现更强的推理预算、工具接口与多步任务评测；产品能力说明不自动揭示内部推理机制。
 
 ### 1.2 完整发展时间线（2022–2026）
 
@@ -68,11 +68,11 @@ Google的大语言模型系列经历了从PaLM到Gemini的重大战略转型。P
 
 | 阶段 | 时间跨度 | 代表模型 | 核心技术标志 | 战略定位 |
 |------|----------|----------|--------------|----------|
-| **Dense Scaling期** | 2022.04–2023.05 | PaLM / PaLM 2 | 540B Dense + Pathways训练系统 + compute-optimal | 追赶GPT-3.5水平 |
-| **原生多模态期** | 2023.12–2024.01 | Gemini 1.0 Ultra/Pro/Nano | 多模态联合训练；论文训练长度32,768 tokens | 按任务与推理配置评价，非所有设置下超越GPT-4 |
-| **长上下文+MoE期** | 2024.02–2024.11 | Gemini 1.5 Pro/Flash | Sparse MoE + 1M→10M上下文 + 高效蒸馏 | 长上下文+效率双突破 |
-| **Agentic+推理期** | 2024.12–2025.11 | Gemini 2.0/2.5/3 | Thinking模式 + 原生工具调用 + 多模态输出 | Agent时代到来 |
-| **深度推理期** | 2025.11– | Gemini 3/3.1/3.5 Deep Think | Deep Think增强推理 + 长程规划 + 1501 Elo + 全模态输出 | AGI前沿探索 |
+| **稠密模型与训练系统** | 2022–2023 | PaLM / PaLM 2 | 大规模稠密 Transformer、Pathways 与规模化训练 | 读 PaLM 论文中的并行策略、数据与 scaling 实验 |
+| **多模态联合训练** | 2023–2024 | Gemini 1.0 | 论文描述文本、图像、音频、视频等混合训练；同时使用模态处理组件 | “原生多模态”指训练路线，不等于没有编码器或模态边界 |
+| **长上下文与稀疏计算** | 2024 | Gemini 1.5 | 稀疏 MoE、百万级上下文与长序列检索实验 | 区分可用上下文长度、合成检索表现和真实任务推理 |
+| **推理与多步任务** | 2024–2026 | Gemini 2.x–4 | 思考预算、工具接口和多步任务评测逐步出现在公开材料中 | 公开产品能力与未披露的内部实现分开阅读 |
+| **开放权重支线** | 2024–2026 | Gemma 系列 | 面向不同资源、模态和任务的开放权重模型 | 作为独立模型家族比较，不将其架构外推到 Gemini |
 
 ---
 
@@ -183,7 +183,7 @@ PaLM 2的核心理念转变为**compute-optimal training**（遵循Chinchilla sc
 
 **论文**：*Gemini 1.5: Unlocking multimodal understanding across millions of tokens of context*（arXiv:2403.05530）
 
-Gemini 1.5是整个系列的**架构转折点**——从Dense转向Sparse MoE，同时将上下文长度从32K一跃提升至1M（实验性10M）。
+Gemini 1.5 是公开研究材料中一个清楚的转折点：技术报告介绍了 **Sparse MoE**，并报告百万级上下文与更长序列实验。这里的“转折”只描述可见证据，不意味着 Gemini 2 之后的每个型号都沿用同一实现；报告也未披露可据以确认总参数量、激活参数量和专家路由细节的数据。
 
 **核心架构**：
 - **模型类型**：Sparse Mixture-of-Experts (MoE) Transformer
@@ -192,24 +192,9 @@ Gemini 1.5是整个系列的**架构转折点**——从Dense转向Sparse MoE，
 - **上下文窗口**：原生支持1M tokens，实验性支持10M tokens
 - **多模态**：继承Gemini 1.0的原生多模态能力
 
-**MoE设计（基于Google长期MoE研究）**：
-Google在MoE领域有深厚积累：
-- Shazeer et al. (2017): 最早的MoE for NLP
-- GShard (Lepikhin et al., 2020): 分布式MoE
-- Switch Transformer (Fedus et al., 2021): 简化MoE路由
-- GLaM (Du et al., 2022): 1.2T参数MoE
-- ST-MoE (Zoph et al., 2022): 稳定MoE训练
+**它回答了什么问题**：在维持大容量模型的同时，让每个 token 只经由部分专家计算，以缓解稠密模型的计算成本。Google 报告称 Gemini 1.5 Pro 相比 Gemini 1.0 Ultra 使用更少训练计算量并在其所选基准上取得相近或更好结果；这是作者对该代训练和评测设置的报告，不足以单独证明同等能力下普遍更高效，也不能把效果归因给 MoE 一个因素。相关背景可读 GShard、Switch Transformer、GLaM 与 ST-MoE；这些是技术谱系，不是 Gemini 1.5 未公开实现细节的证据。
 
-Gemini 1.5 Pro的MoE是这些研究的集大成者，实现了：
-- 模型总参数量远大于激活参数量（估计总参数数千亿，激活参数数百亿级别）
-- 训练和推理效率远优于同等能力的Dense模型
-- 相比Gemini 1.0 Ultra用更少计算达到相近甚至更优性能
-
-**长上下文能力（详见第5章）**：
-- Text Haystack: 1M tokens达到99.7%召回率，10M tokens达到99.2%
-- Video Haystack: 10.5小时视频中完美检索
-- Audio Haystack: 超过107小时音频
-- NLL在1M tokens内持续下降（遵循power-law）
+**长上下文能力（详见第5章）**：技术报告用合成检索任务测试文本、视频和音频中的定位能力，并报告在长序列训练上的损失趋势。这些实验说明模型可在特定设置中利用远距离上下文；不等同于对自然长文档、长视频或多步推理达到“近乎完美”。数值与实验协议见第 4、5 章及固定版本技术报告。
 
 **性能对比**：
 - vs Gemini 1.0 Pro: 29/33个benchmark胜出（87.9% win rate）
@@ -336,35 +321,21 @@ Gemini 1.5 Pro的MoE是这些研究的集大成者，实现了：
 - 6月发布预告，新一代旗舰
 - 预计继承3.5 Flash的编码/代理优化并扩展至全能力维度
 
-### 2.10 思考级别与上下文统一
+### 2.10 思考设置和上下文上限：按具体型号阅读
 
-**4个思考级别**：
-所有Gemini 3/3.1/3.5系列模型均支持4级思考控制：
-- **minimal**：最小思考，最低延迟
-- **low**：低思考深度，平衡速度
-- **medium**：中等思考深度（默认）
-- **high**：最大思考深度，最佳推理质量
+模型卡/API 文档中的 thinking level、effort 或上下文上限是**具体型号和接口的设置**，并非整个 Gemini 家族共享的架构属性。某个型号支持更高 effort，只能说明接口允许分配不同推理预算；公开接口不揭示模型内部如何产生或筛选思考过程。上下文窗口也是输入、思考和输出预算的组合，具体限制要回到对应版本的模型卡/API 文档，不能概括为“Gemini 3 起全系列统一 1M”。
 
-**统一1M token上下文**：
-从Gemini 3系列开始，所有模型（Pro/Flash/Deep Think/Omni）均标配1M token上下文窗口，实现长文档、长视频、长代码库的统一处理。
+### 2.11 跨代材料实际披露了什么
 
-### 2.11 跨代架构对比表
+| 研究对象 | 公开材料能支持的机制判断 | 关键未知项 / 阅读边界 |
+|---|---|---|
+| PaLM | 技术论文描述稠密 Transformer、并行注意力与 FFN 的实现选择，以及大规模 TPU 训练 | 单一训练配置的效率结果不能直接外推到后续 Gemini 系列 |
+| Gemini 1.0 | v1 技术报告描述多模态联合训练、Transformer decoder 骨干和模态输入处理 | 不能从模型家族总称推出每个产品型号的完全相同实现 |
+| Gemini 1.5 | 技术报告明确描述 Sparse MoE、长上下文训练和多模态检索实验 | 参数总量、激活规模和完整长上下文推理实现未披露 |
+| Gemini 2.x–4 | 以产品文档、模型卡和部分技术报告为主，可查各型号输入/输出、上下文与公开评测 | 多数型号缺少足够的结构细节；不应填入推测的 RoPE、FFN、路由或硬件参数 |
+| Gemma | 独立技术报告和模型卡给出具体开放权重型号的架构与任务信息 | Gemma 规格不代表闭源 Gemini 实现 |
 
-| 组件 | PaLM (2022) | PaLM 2 (2023) | Gemini 1.0 (2023.12) | Gemini 1.5 (2024.02) | Gemini 2.0 (2024.12) | Gemini 2.5 (2025.03) | Gemini 3 (2025.11) | Gemini 3.1 (2026.02) | Gemini 3.5 (2026.05) |
-|------|-------------|---------------|----------------------|----------------------|----------------------|----------------------|--------------------|----------------------|----------------------|
-| 架构 | Dense Decoder | Dense Decoder | Transformer decoder；Dense/MoE细分本篇未定 | **Sparse MoE** | MoE/Dense | MoE | MoE | MoE | MoE |
-| 注意力 | MQA | MQA | 高效注意力（举例MQA）；分变体未列 | MoE+MHA | MoE+MHA | MoE+MHA | MoE+MHA | MoE+MHA | MoE+MHA |
-| 位置编码 | RoPE | RoPE | 本篇未披露，待核 | RoPE | RoPE | RoPE | RoPE | RoPE | RoPE |
-| FFN | SwiGLU | SwiGLU | 本篇未披露，待核 | MoE-GeGLU | MoE-GeGLU | MoE-GeGLU | MoE-GeGLU | MoE-GeGLU | MoE-GeGLU |
-| 归一化 | Pre-RMSNorm | Pre-RMSNorm | 本篇未披露，待核 | Pre-RMSNorm | Pre-RMSNorm | Pre-RMSNorm | Pre-RMSNorm | Pre-RMSNorm | Pre-RMSNorm |
-| 词表 | 256K SP | 256K SP | SentencePiece；大小未披露 | 256K SP | 256K SP | 256K SP | 256K SP | 256K SP | 256K SP |
-| 上下文 | 2K→8K | 8K→32K | 训练32,768；非逐API配额 | **1M (10M实验)** | 1M | 1M (2M开放) | **1M统一** | **1M统一** | **1M统一** |
-| 多模态 | 纯文本 | 纯文本 | **原生多模态** | 原生多模态 | **原生输出** | 原生输出 | 原生输出 | 原生输出 | **原生视频输出** |
-| 推理模式 | — | — | — | — | Flash Thinking | **Thinking** | **Deep Think** | **Deep Think** | **4级思考** |
-| 训练硬件 | TPU v4 | TPU v4 | TPU v4 | TPU v4 | **TPU v6e** | TPU v6e+ | TPU v6e+ | TPU v7 | TPU v7 |
-| 激活参数 | 540B (全量) | 未公布 | 未公布 | 部分激活 | 部分激活 | ~40B | 未公布 | 未公布 | 未公布 |
-
-> Gemini 1.0 列依据 2312.11805v1；该论文不能确认本表其他代际的硬件、激活参数或架构细节。
+本表刻意不把分散的产品规格拼成“跨代内部架构表”。每项技术结论应以对应技术报告、模型卡版本及具体型号为准。
 
 ---
 
@@ -419,28 +390,13 @@ Gemini 1.5: 1M tokens (10M实验性)
 Gemini 2.0+: 1M tokens (标准)
 ```
 
-### 4.2 Gemini 1.5的长上下文技术实现
+### 4.2 Gemini 1.5 的长上下文机制与公开边界
 
-Gemini 1.5 Pro在长上下文方面取得了突破性进展，核心技术包括：
+Gemini 1.5 报告把长上下文能力与稀疏 MoE、多模态长序列训练和大规模 TPU 训练联系起来，但并未给出足够细节来重建完整注意力结构或推理缓存实现。尤其不能把其他论文中的层级注意力、Gist token 或摘要压缩机制移植为 Gemini 1.5 的已确认设计。
 
-**4.2.1 MoE对长上下文的支持**
+阅读时应把三个成本分开：MoE 控制每个 token 使用多少前馈参数；长上下文本身仍增加注意力、存储与通信负担；跨模态长输入还受分辨率、帧率和音频切片策略影响。论文在受控的 needle retrieval / perplexity 设置下展示模型利用长输入的能力，并讨论训练与推理配置；这类证据支持“模型能在特定条件下检索远处线索”，不支持“MoE 自动解决长序列成本”或“真实资料里普遍完美召回”。
 
-Sparse MoE架构天然有利于长上下文：
-- 每个token仅激活部分参数，降低了序列长度增加带来的计算量增长
-- 专家路由可以学习到不同上下文距离的模式
-- 总模型容量（记忆能力）远大于激活参数量
-
-**4.2.2 注意力机制优化**
-
-- **层级注意力（Hierarchical Attention）**：结合窗口注意力、全局token和学习压缩
-- **Gist Tokens（摘要token）**：学习对旧上下文进行压缩表示，超过一定长度后用learned summary representations替代
-- **上下文压缩**：在context compression ratio和retrieval fidelity间做trade-off
-
-**4.2.3 训练与推理的工程优化**
-
-- 使用多个4096-chip TPU v4 Pod跨数据中心训练
-- 支持将长序列分布到多个设备上处理
-- 推理时支持增量式KV-cache管理
+原文阅读入口：Gemini 1.5 技术报告 [§2（架构）](https://arxiv.org/html/2403.05530v1#S2)、[§3（训练）](https://arxiv.org/html/2403.05530v1#S3)、[§5（评测）](https://arxiv.org/html/2403.05530v1#S5)。
 
 ### 4.3 长上下文评估结果
 
@@ -630,108 +586,71 @@ Gemma是Google基于Gemini研究和技术开发的开源小模型系列，目标
 - 视觉理解能力在同规模开源模型中领先
 - 多语言能力覆盖140+语言
 
+### 6.5 2025–2026：Gemma 开放权重分出生成、扩散与表示学习路线
+
+Google 近期新增的开放模型不是一串同构的“Gemma 新版本”。其中既有通用生成基座，也有任务专门化微调、文本扩散模型和非生成式 embedding 模型。比较它们时先看**输出对象**和**系统中承担的环节**，不要把基准分数或参数规模拼成单一排行榜。
+
+截至 2026-10-29，Google DeepMind [官方模型卡目录](https://deepmind.google/models/model-cards/)在 Gemma 的开放模型栏目列出 EmbeddingGemma 2（10 月 6 日更新）、DiffusionGemma（6 月 10 日）和 Gemma 4（4 月 2 日）为最近的系列发布。下表按学习主线挑选代表性分支，并非 Google 所有开源项目的全量清单；例如模型卡目录按专门用途分组的机器人模型不自动等同于开放权重。
+
+| 型号 / 发布节点 | 模型类型与主要用途 | 公开机制或规格 | 证据性质 |
+|---|---|---|---|
+| **Gemma 4**（2026-04-02） | 开放权重通用模型家族 | E2B、E4B、26B A4B MoE、31B Dense；小型型号强调端侧多模态，较大型号面向推理和微调；官方称 Apache 2.0 | 发布博客和模型卡自述；不等于训练数据和所有模型组件均开源。[发布说明](https://blog.google/innovation-and-ai/technology/developers-tools/gemma-4/) |
+| **Gemma 4 12B**（2026-06-03） | Gemma 4 的中型多模态变体 | 官方发布稿称视觉和音频输入直接接入 LLM 主干，不使用传统独立多模态编码器；这是发布稿层级的结构描述 | Google 发布博客；Apache 2.0。[发布说明](https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemma-4-12b/) |
+| **Gemma 4 QAT checkpoints**（2026-06） | 既有型号的量化感知训练变体 | 训练时模拟量化，以降低端侧压缩后的质量损失 | 检查点与部署变体，不是新的模型架构代际。[QAT 发布说明](https://blog.google/innovation-and-ai/technology/developers-tools/quantization-aware-training-gemma-4/) |
+| **FunctionGemma**（2025-12-18） | 270M 级函数调用专门模型 | 基于 Gemma 3 270M 微调，把自然语言映射为结构化 API / OS 动作；官方示例强调还需针对应用微调 | Google 发布博客和模型卡；属于边缘 Agent 的专用分支，不代表通用 Gemma 指令模型天然具备相同工具可靠性。[官方说明](https://blog.google/innovation-and-ai/technology/developers-tools/functiongemma/) |
+| **TranslateGemma**（2026-01-15） | 翻译专门模型系列 | 4B / 12B / 27B，基于 Gemma 并经翻译任务定向训练 | Google 发布说明与官方权重；报告结果是厂商指定评测上的作者数据。[官方说明](https://blog.google/innovation-and-ai/technology/developers-tools/translategemma/) |
+| **MedGemma 1.5**（2026-01-15） | 医学文本 / 影像专门模型 | 4B；官方发布范围包括 CT/MRI 体数据、病理切片、纵向 X 光分析与报告抽取 | 属 HAI-DEF 开放模型生态，使用条款不同于通用 Gemma Apache 2.0；属于下游开发起点，不是临床诊断系统。[官方说明](https://blog.google/intl/en-in/company-news/from-seed-to-scale-partnering-with-indias-startups-to-build-the-ai-future/) |
+| **DiffusionGemma 26B A4B**（2026-06-10） | 实验性文本扩散生成模型 | 26B 总参数 / 3.8B 激活；自回归 encoder 处理 prompt 并缓存 KV，双向 denoiser 迭代修订 256-token canvas，定稿块再作为下一块上下文 | Google 官方博客、开发指南与模型卡；Apache 2.0。模型卡称整体输出质量低于标准 Gemma 4；“最高 4×”是低批量、指定 GPU 配置下的作者报告，不能泛化到高并发服务。[DiffusionGemma 模型卡](https://ai.google.dev/gemma/docs/diffusiongemma/model_card) · [扩散语言模型专题](../../LLM/DiffusionLM/report.md) |
+| **EmbeddingGemma 2**（2026-10-06 发布；arXiv v1 于 10-27 提交） | 多模态 embedding 模型，输出向量而非生成文本 | 文本、代码、图像、视频、音频映射到共享空间；论文报告约 744M 参数，官方模型卡四舍五入为 740M；支持模块化编码器和 Matryoshka 向量截断 | 官方模型卡称 Apache 2.0；技术报告已做[逐篇精读](papers/2610.37364-embeddinggemma2.md)。它属于检索 / 表征线，不能当成 Gemma 生成模型能力的证据。[官方发布说明](https://blog.google/innovation-and-ai/technology/developers-tools/embeddinggemma-2/) |
+
+这些分支至少分成三类：**生成模型**回答或生成内容；**DiffusionGemma**研究并行去噪、块提交与自修订；**EmbeddingGemma 2**学习跨模态检索表示。它们共享 Gemma 家族背景，但任务目标、训练损失、输出接口和评测集都不同。Function/Translate/Med 等专用模型则主要体现对数据和目标任务的定向适配。许可证也应按各模型卡逐一确认，不能用“Gemma”这个家族名推断所有模型条款一致。
+
 ---
 
-## 7. 跨代技术演进分析
+## 7. 跨代技术演进：公开证据呈现的几条路线
 
-### 7.1 从Dense到MoE的架构转型
+### 7.1 从规模化训练到多模态训练
 
-| 维度 | Dense时代 (PaLM) | MoE时代 (Gemini 1.5+) |
-|------|-------------------|------------------------|
-| 参数效率 | 所有参数每次都激活 | 仅激活部分参数 |
-| Scaling策略 | 增大模型尺寸 | 增加专家数量 |
-| 计算成本 | 与参数量成正比 | 与激活参数量成正比 |
-| 训练效率 | 较低 | 显著更高 |
-| 推理延迟 | 与参数量成正比 | 可控（与激活量相关） |
+PaLM 的研究问题是如何把稠密语言模型扩展到大规模 TPU 系统；Gemini 1.0 报告将重点转向多模态混合训练。两者并非简单的“旧架构被新架构替代”：训练数据、模型接口、并行系统与评测目标都发生变化。Gemini 1.0 论文可支持联合多模态训练的判断，但没有证明这种训练消除了模态间的对齐问题，也没有公开所有产品变体的具体结构。
 
-**转型动因**：
-- Chinchilla scaling law表明需要更多数据+适当模型尺寸
-- MoE允许在固定计算预算下拥有更大的"知识容量"
-- Google在MoE领域有7年以上研究积累（GShard→Switch→GLaM→ST-MoE→Gemini 1.5）
+### 7.2 Gemini 1.5：长上下文不只是扩大窗口
 
-### 7.2 多模态能力的深化
+Gemini 1.5 的研究将稀疏计算、多模态长序列训练和检索评测放在一起。读这一代时要拆开看：MoE 影响每 token 激活哪些前馈参数；长序列增加注意力与缓存成本；needle retrieval 只测特定位置线索能否被找回。窗口上限、每 token 计算量和任务质量属于不同问题，不能把一个实验的高召回率解释成“长上下文已经解决”。
 
-```
-PaLM/PaLM2:         纯文本
-Gemini 1.0:          原生多模态理解（文本+图像+音频+视频输入）
-Gemini 1.5:          原生多模态 + 超长多模态上下文
-Gemini 2.0:          原生多模态输入 + 原生多模态输出（图像/音频生成）
-Gemini 2.5/3:        全模态理解+生成 + 工具调用
-Gemini 3.5/Omni:     全模态理解+生成 + 原生视频输出 + YouTube集成
-```
+### 7.3 后续 Gemini：从推理接口看系统，而非猜内部算法
 
-### 7.3 推理能力的跃迁
+Gemini 2.5 及之后的报告与模型卡越来越强调 thinking / effort 设置、工具调用、多步任务和多模态生成。对学习者而言，值得比较的是模型得到多少推理预算、能否调用哪些工具、任务如何判定成功，以及结果来自模型卡自测还是独立评测。产品接口中可见的“思考级别”不是内部推理算法的完整描述；“Agent”也需拆成规划、状态观察、工具执行和错误恢复等可测环节。
 
-| 阶段 | 模型 | 推理方式 | 代表能力 |
-|------|------|----------|----------|
-| 基线推理 | Gemini 1.0/1.5 | 标准自回归 | 遵循指令、基本CoT |
-| 显式推理 | 2.0 Flash Thinking | Thinking trace | 可见思考过程 |
-| 深度推理 | 2.5 Pro | Dynamic Thinking | 自适应推理深度 |
-| 专家推理 | 3 Deep Think | Extended Deep Think | 奥赛金牌级 |
-| 前沿推理 | 3.1 Pro | ARC AGI-2 77.1% | 接近人类水平 |
-| 工作马优化 | 3.5 Flash | 4级思考 + 编码/代理优化 | 速度4×，成本1/3 GPT-5.5 |
+### 7.4 Gemma：开放权重带来的另一种研究可见性
 
-### 7.4 从对话到Agent
+Gemma 支线提供可下载权重及各型号自己的模型卡、技术报告，因而读者可直接学习小模型、专用模型、扩散解码与多模态 embedding 的设计。它与 Gemini 同属 Google 研究生态，但可见的开源权重不能补足 Gemini 闭源型号未披露的架构细节。近期分支见 §6.5。
 
-```
-Gemini 1.0/1.5:   被动响应式对话
-Gemini 2.0:       原生工具调用 → "Agentic Era"开端
-Gemini 2.5:       长程规划 + 持续推理
-Gemini 3:         自主多步骤任务执行（SWE-bench 76.2%）+ Vending-Bench长程规划SOTA
-Gemini 3.5 Flash: 编码和代理工作流优化，比3.1 Pro在编码/代理基准上更强
-```
+### 7.5 读技术与硬件协同的证据
 
-### 7.5 TPU硬件协同演进
-
-| TPU版本 | 时间 | 关键特性 | 对应模型 |
-|---------|------|----------|----------|
-| TPU v4 | 2022 | 4096-chip Pod，ICI互连 | PaLM, Gemini 1.0/1.5 |
-| TPU v5e | 2023 | 2.5×吞吐/美元(vs v4) | 推理优化 |
-| TPU v6e (Trillium) | 2024 | 4×训练/3×推理(vs v5) | Gemini 2.0+ |
-| TPU v7+ | 2025-2026 | 下一代 | Gemini 3/3.1 |
-
-**协同设计**：
-- Pathways系统针对TPU Pod拓扑优化通信模式
-- MoE路由与TPU chip间通信带宽匹配
-- 模型并行策略与TPU互连拓扑适配
-- 长序列训练的KV-cache分布策略与TPU HBM匹配
+PaLM/Gemini 论文和 Google 的基础设施材料说明 TPU、JAX、Pathways 在大规模训练中的作用；但“某型号在某代 TPU 上训练”不足以证明模型结构已经针对某硬件做了特定联合优化。除非论文披露并比较并行策略、通信瓶颈或硬件消融，报告应把训练平台和架构协同分开写。
 
 ---
 
 ## 8. 关键创新点总结
 
-### 8.1 十大核心创新
+### 8.1 这条研究线目前能支持的综合判断
 
-1. **原生多模态预训练**：Gemini系列从1.0起就在多模态混合数据上从头联合训练，避免了"先语言后多模态"的对齐gap，是其区别于GPT-4V等模型的根本性设计差异
+1. **多模态首先是训练与接口问题，不是一个标签。** Gemini 1.0 技术报告描述联合多模态训练，但也公开视觉与音频的输入处理组件；后代产品支持更多输入/输出，公开材料并未因此揭示同一套内部实现。
+2. **长上下文能力必须连同任务协议阅读。** Gemini 1.5 的合成检索结果展示远距离线索可被利用，但上下文窗口上限、needle recall 与真实长文档推理是不同问题；不能把定点检索分数概括成普遍“近乎完美”。
+3. **稀疏计算与长上下文是两条相交的成本轴。** MoE 主要改变每 token 激活的参数子集，序列长度仍影响注意力、缓存与通信；公开材料没有证明一个机制消除了另一类成本。
+4. **推理与 Agent 能力应按可观察的任务和预算分析。** 模型卡提供的 effort、工具配置和 benchmark 条件可用于理解系统行为；它们不等同于已披露的内部思维算法或通用自主规划机制。
+5. **Gemma 是相邻的开放权重研究线。** Gemma 技术报告和模型卡能讨论具体模型的训练、结构与适用边界；不能将其规格泛化到闭源 Gemini。
 
-2. **Sparse MoE大规模化**：Gemini 1.5将Google近十年MoE研究（GShard/Switch/GLaM/ST-MoE）工程化落地，实现了超大容量模型的高效训练与推理
+### 8.2 跨厂商比较的读法
 
-3. **1M→10M超长上下文**：通过MoE+层级注意力+Gist Tokens等技术组合，实现10M token级别的近乎完美检索，且遵循context-length power law
+| 比较问题 | 建议比较的证据 | 不宜直接得出的结论 |
+|---|---|---|
+| 多模态路线 | 具体技术报告对训练目标、输入编码和生成接口的描述 | 不能仅凭“原生”一词判定不存在编码器或对齐阶段 |
+| 上下文能力 | 同一任务协议、输入长度、检索位置和推理预算下的结果 | 不能把产品上下文窗口当成真实长文档推理质量 |
+| 推理与 Agent | 明确工具、预算、成功判据和独立评测条件的任务结果 | 不能把 thinking 档位或厂商演示直接解释成通用自主规划算法 |
+| 开放程度 | 权重、数据、代码和许可分别检查 | 不能用“开源 / 闭源”一个标签概括整个模型生态 |
 
-4. **Pathways分布式训练系统**：单Python客户端控制数千TPU芯片，跨数据中心的异步分布式数据流，为超大规模模型训练提供了工程基础
-
-5. **PaLM的Parallel Attention+FFN**：将注意力层和FFN并行化而非串行，在不损失质量的前提下提升15%训练吞吐
-
-6. **Dynamic Thinking Mode**：Gemini 2.5引入的自适应推理深度机制，模型根据问题难度自动决定"思考多久"
-
-7. **原生多模态输出**：Gemini 2.0首次实现文本→图像/音频的原生生成（非外接生成模型），使模型成为真正的"全模态"系统
-
-8. **Gemma知识蒸馏方法论**：将蒸馏作为核心预训练信号（而非后训练增强），使开源小模型显著超越同规模独立训练模型
-
-9. **Gemma 2的Local/Global交替注意力**：交替使用4096窗口滑动注意力和8192全局注意力，在效率和全局信息获取间取得平衡
-
-10. **TPU-Model协同设计**：模型架构（MoE专家数/路由/并行策略）与TPU硬件拓扑（Pod互连/HBM带宽）深度匹配
-
-### 8.2 Google路线 vs OpenAI/Meta路线对比
-
-| 维度 | Google (Gemini) | OpenAI (GPT) | Meta (LLaMA) |
-|------|----------------|--------------|--------------|
-| 多模态方式 | 原生联合训练 | 后接编码器 | 后接编码器(LLaMA 3.2) |
-| 规模策略 | MoE (1.5起) | Dense→MoE(??) | Dense为主 |
-| 长上下文 | 1M-10M原生 | 128K-200K | 128K |
-| 硬件 | 自研TPU | NVIDIA GPU | NVIDIA GPU |
-| 推理方法 | Dynamic Thinking | o1/o3 CoT | 无显式推理(开源) |
-| 开源策略 | Gemma系列(小模型) | 不开源 | 全面开源 |
+跨厂商比较的单位应是具体模型、版本、任务与协议，而不是公司路线概述。Gemini、GPT 与 Llama 的开放方式、模态接口和推理系统都随型号变化；表格只给出比较维度，不把异质结果强行排位。
 
 ---
 
@@ -782,7 +701,7 @@ Google 的评测方法说明：除特别注明外，Argon 结果为 pass@1，并
 
 Gemini 4 Argon 的官方模型卡（2026-10-13）公布 2026 年 10 月多项软件工程、知识工作、科学、长上下文、计算机使用和多模态评测，并链接到单独的方法说明。其结果在同一张表中列出对手，但比较仍受各基准的工具、预算、版本和评分条件约束；不能简化为单一“总排名”。官方卡没有公开 Argon 参数规模、权重、专家数或完整训练流程。本节 §9.1–§9.4 的发布信息与架构限制仍适用。
 
-本条目所称“Gemini 系列”也包括 §6 的 Gemma 开放模型支线。官方模型卡目录列有 Gemma 4（2026-04）及 DiffusionGemma（2026-06）；它们与 Gemini 4 Argon 属不同发布线，不能用 Gemma 模型卡推断闭源 Gemini 的架构。
+本条目所称“Gemini 系列”也包括 §6 的 Gemma 开放模型支线。官方模型卡目录将 Gemma 列为开放模型，并列出 Gemma 4（2026-04）、DiffusionGemma（2026-06）与 EmbeddingGemma 2（2026-10）；它们与 Gemini 4 Argon 属不同发布线，不能用 Gemma 模型卡推断闭源 Gemini 的架构。
 
 一手材料：[Gemini 3.8 Flash 模型卡](https://deepmind.google/models/model-cards/gemini-3-8-flash/)、[Gemini 4 Argon 模型卡](https://deepmind.google/models/model-cards/gemini-4-argon/)、[Google DeepMind 模型卡目录](https://deepmind.google/models/model-cards/)。
 

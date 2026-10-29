@@ -34,7 +34,7 @@
 | :-- | :-- | --: |
 | **具身预测规划** | [具身预测规划：执行前怎样筛选想象中的动作？](<EmbodiedPlanning/report.md>) | 54 行 |
 | **机器人视觉语言动作模型（VLA）** | [EmbodiedVLA 技术专题调研](<EmbodiedVLA/report.md>) | 573 行 |
-| **世界模型** | [WorldModels 技术专题调研](<WorldModels/report.md>) | 518 行 |
+| **世界模型** | [WorldModels 技术专题调研](<WorldModels/report.md>) | 526 行 |
 
 ## 📎 子文档
 
@@ -88,9 +88,9 @@
 * [papers/2408.14837-gamengen.md](<WorldModels/papers/2408.14837-gamengen.md>) — 204 行 / 11,946 B
 * [papers/2501.09038-physics-iq.md](<WorldModels/papers/2501.09038-physics-iq.md>) — 206 行 / 12,991 B
 * [papers/2503.21755-vbench-2.md](<WorldModels/papers/2503.21755-vbench-2.md>) — 206 行 / 11,671 B
-* [papers/genie4-official.md](<WorldModels/papers/genie4-official.md>) — 71 行 / 9,857 B
 * [sources/CANDIDATES.md](<WorldModels/sources/CANDIDATES.md>) — 63 行 / 6,676 B
-* [sources/MANIFEST.md](<WorldModels/sources/MANIFEST.md>) — 24 行 / 3,898 B
+* [sources/MANIFEST.md](<WorldModels/sources/MANIFEST.md>) — 30 行 / 4,329 B
+* [sources/genie4-official-release.md](<WorldModels/sources/genie4-official-release.md>) — 30 行 / 4,232 B
 * [topics/dynamics-and-action-conditioning.md](<WorldModels/topics/dynamics-and-action-conditioning.md>) — 175 行 / 14,079 B
 * [topics/incomparability-checklist.md](<WorldModels/topics/incomparability-checklist.md>) — 174 行 / 13,264 B
 * [topics/world-model-as-env.md](<WorldModels/topics/world-model-as-env.md>) — 153 行 / 13,254 B

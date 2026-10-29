@@ -22,7 +22,7 @@
 | **Doubao-Seed** | [Doubao/Seed系列模型深度调研报告](<Doubao-Seed/report.md>) | 497 行 |
 | **GLM** | [GLM：预训练目标、推理后训练与多模态分支](<GLM/report.md>) | 171 行 |
 | **GPT** | [GPT：从生成式预训练到推理与多模态系统](<GPT/report.md>) | 204 行 |
-| **Gemini** | [Google Gemini系列模型深度调研报告](<Gemini/report.md>) | 843 行 |
+| **Gemini** | [Google Gemini系列模型深度调研报告](<Gemini/report.md>) | 761 行 |
 | **Google 生成模型** | [Google / DeepMind 生成模型系列研究报告](<Google-Gen/report.md>) | 896 行 |
 | **Grok** | [xAI Grok 系列模型深度调研报告](<Grok/report.md>) | 164 行 |
 | **Hunyuan** | [Hunyuan系列模型深度调研报告](<Hunyuan/report.md>) | 466 行 |
@@ -50,6 +50,13 @@
 * [papers/2610.06851-base-model-cues.md](<DeepSeek/papers/2610.06851-base-model-cues.md>) — 55 行 / 5,135 B
 * [sources/CANDIDATES.md](<DeepSeek/sources/CANDIDATES.md>) — 7 行 / 745 B
 * [sources/MANIFEST.md](<DeepSeek/sources/MANIFEST.md>) — 128 行 / 18,020 B
+
+</details>
+
+<details>
+<summary><b>Gemini</b>（1 份）</summary>
+
+* [papers/2610.37364-embeddinggemma2.md](<Gemini/papers/2610.37364-embeddinggemma2.md>) — 71 行 / 9,750 B
 
 </details>
 

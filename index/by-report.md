@@ -43,8 +43,8 @@
 | 分布式训练基础设施 | Infra | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 0 | 181 | 2026-10-22 |
 | 模型对齐与后训练 | LLM | [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) | 0 | 126 | — |
 | 决策模型（Decision Models） | LLM | [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | 18 | 242 | 2026-10-26 |
-| 扩散语言模型 | LLM | [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 10 | 76 | 2026-10-23 |
-| OCR 与文档解析 | LLM | [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) | 23 | 124 | 2026-10-25 |
+| 扩散语言模型 | LLM | [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 10 | 96 | 2026-10-29 |
+| OCR 与文档解析 | LLM | [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) | 23 | 122 | 2026-10-25 |
 | 长上下文 | LLM | [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 0 | 176 | — |
 | 混合专家模型（MoE） | LLM | [LLM/MoE/report.md](<../LLM/MoE/report.md>) | 0 | 139 | — |
 | 大模型辅助运筹建模与求解 | LLM | [LLM/OperationsResearch/report.md](<../LLM/OperationsResearch/report.md>) | 9 | 90 | 2026-10-25 |
@@ -60,7 +60,7 @@
 | Doubao-Seed | Models | [Models/Doubao-Seed/report.md](<../Models/Doubao-Seed/report.md>) | 0 | 497 | — |
 | GLM | Models | [Models/GLM/report.md](<../Models/GLM/report.md>) | 0 | 171 | — |
 | GPT | Models | [Models/GPT/report.md](<../Models/GPT/report.md>) | 0 | 204 | — |
-| Gemini | Models | [Models/Gemini/report.md](<../Models/Gemini/report.md>) | 0 | 843 | — |
+| Gemini | Models | [Models/Gemini/report.md](<../Models/Gemini/report.md>) | 1 | 761 | 2026-10-29 |
 | Google 生成模型 | Models | [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>) | 1 | 896 | — |
 | Grok | Models | [Models/Grok/report.md](<../Models/Grok/report.md>) | 0 | 164 | — |
 | Hunyuan | Models | [Models/Hunyuan/report.md](<../Models/Hunyuan/report.md>) | 1 | 466 | — |
@@ -80,12 +80,12 @@
 | DeepSeek Harness | OpenSource | [OpenSource/DeepSeekHarness/report.md](<../OpenSource/DeepSeekHarness/report.md>) | 5 | 349 | 2026-10-20 |
 | Harness² | OpenSource | [OpenSource/Harness2/report.md](<../OpenSource/Harness2/report.md>) | 0 | 119 | 2026-10-28 |
 | REA | OpenSource | [OpenSource/REA/report.md](<../OpenSource/REA/report.md>) | 0 | 87 | 2026-10-28 |
-| RSIHub | OpenSource | [OpenSource/RSIHub/report.md](<../OpenSource/RSIHub/report.md>) | 0 | 143 | 2026-10-28 |
+| RSIHub | OpenSource | [OpenSource/RSIHub/report.md](<../OpenSource/RSIHub/report.md>) | 0 | 144 | 2026-10-28 |
 | Nemotron-Labs-Diffusion | OpenSource | [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | 7 | 221 | — |
 | SGLang | OpenSource | [OpenSource/sglang/report.md](<../OpenSource/sglang/report.md>) | 5 | 311 | 2026-10-16 |
 | this-that-model | OpenSource | [OpenSource/this-that-model/report.md](<../OpenSource/this-that-model/report.md>) | 1 | 190 | 2026-10-16 |
 | vLLM | OpenSource | [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | 5 | 294 | 2026-10-16 |
 | 具身预测规划 | WorldModel | [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) | 2 | 54 | — |
 | 机器人视觉语言动作模型（VLA） | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 23 | 573 | — |
-| 世界模型 | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 16 | 518 | 2026-10-22 |
-| **合计** | — | — | **281** | **21,215** | — |
+| 世界模型 | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 16 | 526 | 2026-10-29 |
+| **合计** | — | — | **282** | **21,160** | — |

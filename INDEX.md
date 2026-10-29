@@ -15,12 +15,12 @@
 | --- | --- |
 | **条目数**（`report.md`） | **77** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 12 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 9 |
-| 条目子文档数 | 281 |
-| 条目正文行数（剔除 front-matter） | 21,215 |
-| 条目字节 | 2,082,402 B |
+| 条目子文档数 | 282 |
+| 条目正文行数（剔除 front-matter） | 21,160 |
+| 条目字节 | 2,094,971 B |
 | 带 front-matter 的条目 | 77 |
-| 带合法 `date` 的条目 | 36 |
-| 文档（除生成物外的全部 `.md`） | 381 |
+| 带合法 `date` 的条目 | 37 |
+| 文档（除生成物外的全部 `.md`） | 382 |
 | 其中文件名 `README.md` | 11 |
 | 纳入版本控制的文件 | 408 |
 | 纳入版本控制的 `.md` | 389 |
@@ -32,16 +32,16 @@
 
 | 资料库 | 条目数 | 文档（`.md`） | 条目行数 | 条目字节 | 入口 |
 | --- | --: | --: | --: | --: | --- |
-| Models | 23 | 41 | 10,200 | 835,908 B | [板块页 →](<Models/README.md>) |
-| LLM | 12 | 92 | 1,589 | 233,494 B | [板块页 →](<LLM/README.md>) |
+| Models | 23 | 42 | 10,118 | 841,089 B | [板块页 →](<Models/README.md>) |
+| LLM | 12 | 92 | 1,607 | 237,759 B | [板块页 →](<LLM/README.md>) |
 | Agents | 3 | 22 | 489 | 69,335 B | [板块页 →](<Agents/README.md>) |
 | AIGC | 9 | 10 | 3,737 | 317,548 B | [板块页 →](<AIGC/README.md>) |
-| WorldModel | 3 | 45 | 1,145 | 133,537 B | [板块页 →](<WorldModel/README.md>) |
+| WorldModel | 3 | 45 | 1,153 | 135,372 B | [板块页 →](<WorldModel/README.md>) |
 | AI4Science | 10 | 53 | 870 | 146,743 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 2 | 10 | 192 | 36,294 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 6 | 57 | 1,141 | 109,557 B | [板块页 →](<Infra/README.md>) |
-| OpenSource | 9 | 39 | 1,852 | 199,986 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **77** | **381** | **21,215** | **2,082,402 B** | — |
+| OpenSource | 9 | 39 | 1,853 | 201,274 B | [板块页 →](<OpenSource/README.md>) |
+| **合计** | **77** | **382** | **21,160** | **2,094,971 B** | — |
 
 ## 分面索引
 
@@ -57,10 +57,10 @@
 
 ## 条目索引（按板块目录折叠，可直达条目与子报告）
 
-### Models（23 条目 / 41 文档）
+### Models（23 条目 / 42 文档）
 
 <details>
-<summary><b>模型系列 Models（23 条目 / 17 子文档）</b></summary>
+<summary><b>模型系列 Models（23 条目 / 18 子文档）</b></summary>
 
   <details>
   <summary><b>阿里通义生成模型</b> · <code>Models/Alibaba-Gen/report.md</code> · 118 行 · —</summary>
@@ -152,14 +152,14 @@
   </details>
 
   <details>
-  <summary><b>Gemini</b> · <code>Models/Gemini/report.md</code> · 843 行 · —</summary>
+  <summary><b>Gemini</b> · <code>Models/Gemini/report.md</code> · 761 行 · 2026-10-29</summary>
 
 
-    * **条目**：[Models/Gemini/report.md](<Models/Gemini/report.md>)（843 行 / 45,630 B）
+    * **条目**：[Models/Gemini/report.md](<Models/Gemini/report.md>)（761 行 / 50,811 B）
     * **专题目录**：`Models/Gemini`
-    * **元数据**：type=`—` · domain=`Models` · subject=`Gemini` · date=`—` · status=`—`
-    * **子文档（0）**
-        * _该条目暂无子文档_
+    * **元数据**：type=`—` · domain=`Models` · subject=`Gemini` · date=`2026-10-29` · status=`—`
+    * **子文档（1）**
+        * [papers/2610.37364-embeddinggemma2.md](<Models/Gemini/papers/2610.37364-embeddinggemma2.md>) — 71 行 / 9,750 B
 
   </details>
 
@@ -398,12 +398,12 @@
   </details>
 
   <details>
-  <summary><b>扩散语言模型</b> · <code>LLM/DiffusionLM/report.md</code> · 76 行 · 2026-10-23</summary>
+  <summary><b>扩散语言模型</b> · <code>LLM/DiffusionLM/report.md</code> · 96 行 · 2026-10-29</summary>
 
 
-    * **条目**：[LLM/DiffusionLM/report.md](<LLM/DiffusionLM/report.md>)（76 行 / 13,230 B）
+    * **条目**：[LLM/DiffusionLM/report.md](<LLM/DiffusionLM/report.md>)（96 行 / 17,374 B）
     * **专题目录**：`LLM/DiffusionLM`
-    * **元数据**：type=`topic-research` · domain=`LLM` · subject=`DiffusionLM` · date=`2026-10-23` · status=`current`
+    * **元数据**：type=`topic-research` · domain=`LLM` · subject=`DiffusionLM` · date=`2026-10-29` · status=`current`
     * **子文档（10）**
         * [papers/2502.09992-llada.md](<LLM/DiffusionLM/papers/2502.09992-llada.md>) — 86 行 / 12,781 B
         * [papers/2503.09573-block-diffusion.md](<LLM/DiffusionLM/papers/2503.09573-block-diffusion.md>) — 59 行 / 7,692 B
@@ -414,15 +414,15 @@
         * [papers/LLaDA2.1-Token-Editing.md](<LLM/DiffusionLM/papers/LLaDA2.1-Token-Editing.md>) — 65 行 / 9,366 B
         * [papers/LLaDA2.2-Levenshtein-Editing.md](<LLM/DiffusionLM/papers/LLaDA2.2-Levenshtein-Editing.md>) — 64 行 / 11,889 B
         * [sources/CANDIDATES.md](<LLM/DiffusionLM/sources/CANDIDATES.md>) — 32 行 / 4,175 B
-        * [sources/MANIFEST.md](<LLM/DiffusionLM/sources/MANIFEST.md>) — 21 行 / 5,028 B
+        * [sources/MANIFEST.md](<LLM/DiffusionLM/sources/MANIFEST.md>) — 26 行 / 5,892 B
 
   </details>
 
   <details>
-  <summary><b>OCR 与文档解析</b> · <code>LLM/DocumentParsing/report.md</code> · 124 行 · 2026-10-25</summary>
+  <summary><b>OCR 与文档解析</b> · <code>LLM/DocumentParsing/report.md</code> · 122 行 · 2026-10-25</summary>
 
 
-    * **条目**：[LLM/DocumentParsing/report.md](<LLM/DocumentParsing/report.md>)（124 行 / 25,813 B）
+    * **条目**：[LLM/DocumentParsing/report.md](<LLM/DocumentParsing/report.md>)（122 行 / 25,934 B）
     * **专题目录**：`LLM/DocumentParsing`
     * **元数据**：type=`research` · domain=`LLM` · subject=`DocumentParsing` · date=`2026-10-25` · status=`current`
     * **子文档（23）**
@@ -800,12 +800,12 @@
   </details>
 
   <details>
-  <summary><b>世界模型</b> · <code>WorldModel/WorldModels/report.md</code> · 518 行 · 2026-10-22</summary>
+  <summary><b>世界模型</b> · <code>WorldModel/WorldModels/report.md</code> · 526 行 · 2026-10-29</summary>
 
 
-    * **条目**：[WorldModel/WorldModels/report.md](<WorldModel/WorldModels/report.md>)（518 行 / 57,183 B）
+    * **条目**：[WorldModel/WorldModels/report.md](<WorldModel/WorldModels/report.md>)（526 行 / 59,018 B）
     * **专题目录**：`WorldModel/WorldModels`
-    * **元数据**：type=`topic-research` · domain=`WorldModel` · subject=`WorldModels` · date=`2026-10-22` · status=`needs-review`
+    * **元数据**：type=`topic-research` · domain=`WorldModel` · subject=`WorldModels` · date=`2026-10-29` · status=`needs-review`
     * **子文档（16）**
         * [papers/1803.10122-world-models.md](<WorldModel/WorldModels/papers/1803.10122-world-models.md>) — 206 行 / 15,578 B
         * [papers/1811.04551-planet.md](<WorldModel/WorldModels/papers/1811.04551-planet.md>) — 204 行 / 13,762 B
@@ -817,9 +817,9 @@
         * [papers/2408.14837-gamengen.md](<WorldModel/WorldModels/papers/2408.14837-gamengen.md>) — 204 行 / 11,946 B
         * [papers/2501.09038-physics-iq.md](<WorldModel/WorldModels/papers/2501.09038-physics-iq.md>) — 206 行 / 12,991 B
         * [papers/2503.21755-vbench-2.md](<WorldModel/WorldModels/papers/2503.21755-vbench-2.md>) — 206 行 / 11,671 B
-        * [papers/genie4-official.md](<WorldModel/WorldModels/papers/genie4-official.md>) — 71 行 / 9,857 B
         * [sources/CANDIDATES.md](<WorldModel/WorldModels/sources/CANDIDATES.md>) — 63 行 / 6,676 B
-        * [sources/MANIFEST.md](<WorldModel/WorldModels/sources/MANIFEST.md>) — 24 行 / 3,898 B
+        * [sources/MANIFEST.md](<WorldModel/WorldModels/sources/MANIFEST.md>) — 30 行 / 4,329 B
+        * [sources/genie4-official-release.md](<WorldModel/WorldModels/sources/genie4-official-release.md>) — 30 行 / 4,232 B
         * [topics/dynamics-and-action-conditioning.md](<WorldModel/WorldModels/topics/dynamics-and-action-conditioning.md>) — 175 行 / 14,079 B
         * [topics/incomparability-checklist.md](<WorldModel/WorldModels/topics/incomparability-checklist.md>) — 174 行 / 13,264 B
         * [topics/world-model-as-env.md](<WorldModel/WorldModels/topics/world-model-as-env.md>) — 153 行 / 13,254 B
@@ -1188,7 +1188,7 @@
   <summary><b>Harness²</b> · <code>OpenSource/Harness2/report.md</code> · 119 行 · 2026-10-28</summary>
 
 
-    * **条目**：[OpenSource/Harness2/report.md](<OpenSource/Harness2/report.md>)（119 行 / 12,460 B）
+    * **条目**：[OpenSource/Harness2/report.md](<OpenSource/Harness2/report.md>)（119 行 / 12,647 B）
     * **专题目录**：`OpenSource/Harness2`
     * **元数据**：type=`repo-research` · domain=`Repo-Research` · subject=`Harness2` · date=`2026-10-28` · status=`completed`
     * **子文档（0）**
@@ -1200,7 +1200,7 @@
   <summary><b>REA</b> · <code>OpenSource/REA/report.md</code> · 87 行 · 2026-10-28</summary>
 
 
-    * **条目**：[OpenSource/REA/report.md](<OpenSource/REA/report.md>)（87 行 / 10,200 B）
+    * **条目**：[OpenSource/REA/report.md](<OpenSource/REA/report.md>)（87 行 / 10,706 B）
     * **专题目录**：`OpenSource/REA`
     * **元数据**：type=`repo-research` · domain=`Repo-Research` · subject=`REA` · date=`2026-10-28` · status=`completed`
     * **子文档（0）**
@@ -1209,10 +1209,10 @@
   </details>
 
   <details>
-  <summary><b>RSIHub</b> · <code>OpenSource/RSIHub/report.md</code> · 143 行 · 2026-10-28</summary>
+  <summary><b>RSIHub</b> · <code>OpenSource/RSIHub/report.md</code> · 144 行 · 2026-10-28</summary>
 
 
-    * **条目**：[OpenSource/RSIHub/report.md](<OpenSource/RSIHub/report.md>)（143 行 / 16,860 B）
+    * **条目**：[OpenSource/RSIHub/report.md](<OpenSource/RSIHub/report.md>)（144 行 / 17,455 B）
     * **专题目录**：`OpenSource/RSIHub`
     * **元数据**：type=`repo-research` · domain=`Repo-Research` · subject=`RSIHub` · date=`2026-10-28` · status=`completed`
     * **子文档（0）**
@@ -1297,12 +1297,12 @@
 | [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 46 | 1,972 B |
 | [Infra/README.md](<Infra/README.md>) | Infra | 118 | 8,186 B |
 | [LLM/README.md](<LLM/README.md>) | LLM | 171 | 12,228 B |
-| [Models/README.md](<Models/README.md>) | Models | 101 | 5,029 B |
+| [Models/README.md](<Models/README.md>) | Models | 108 | 5,206 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 107 | 4,830 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 196 | 14,509 B |
-| [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 104 | 6,827 B |
+| [README.md](<README.md>) |  | 196 | 14,499 B |
+| [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 104 | 6,845 B |
 | [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 102 | 7,365 B |
 | [docs/issue-index-single-pass.md](<docs/issue-index-single-pass.md>) | docs | 15 | 1,280 B |

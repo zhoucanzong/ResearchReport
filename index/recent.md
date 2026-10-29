@@ -11,6 +11,9 @@
 
 | 条目 | date | 板块 | 专题 |
 | --- | --- | --- | --- |
+| [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 2026-10-29 | WorldModel | WorldModels |
+| [Models/Gemini/report.md](<../Models/Gemini/report.md>) | 2026-10-29 | Models | Gemini |
+| [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 2026-10-29 | LLM | DiffusionLM |
 | [OpenSource/RSIHub/report.md](<../OpenSource/RSIHub/report.md>) | 2026-10-28 | OpenSource | RSIHub |
 | [OpenSource/REA/report.md](<../OpenSource/REA/report.md>) | 2026-10-28 | OpenSource | REA |
 | [OpenSource/Harness2/report.md](<../OpenSource/Harness2/report.md>) | 2026-10-28 | OpenSource | Harness2 |
@@ -25,14 +28,11 @@
 | [Evaluation/ScientificDiscovery/report.md](<../Evaluation/ScientificDiscovery/report.md>) | 2026-10-24 | Evaluation | ScientificDiscovery |
 | [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) | 2026-10-24 | Agents | AgentSecurity |
 | [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | 2026-10-23 | LLM | ReinforcementLearning |
-| [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 2026-10-23 | LLM | DiffusionLM |
 | [Infra/KVCachePD/report.md](<../Infra/KVCachePD/report.md>) | 2026-10-23 | Infra | KVCachePD |
 | [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) | 2026-10-23 | Evaluation | EvaluationScience |
 | [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) | 2026-10-23 | AI4Science | WeatherClimate |
-| [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) | 2026-10-23 | AI4Science | SingleCellPerturbation |
-| [AI4Science/ProteinDesign/report.md](<../AI4Science/ProteinDesign/report.md>) | 2026-10-23 | AI4Science | ProteinDesign |
 
-## 无 date 元数据（41）
+## 无 date 元数据（40）
 
 以下条目缺少可解析的 `date`，无法参与「最近更新」排序：
 
@@ -58,7 +58,6 @@
 * [Models/Doubao-Seed/report.md](<../Models/Doubao-Seed/report.md>)
 * [Models/GLM/report.md](<../Models/GLM/report.md>)
 * [Models/GPT/report.md](<../Models/GPT/report.md>)
-* [Models/Gemini/report.md](<../Models/Gemini/report.md>)
 * [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>)
 * [Models/Grok/report.md](<../Models/Grok/report.md>)
 * [Models/Hunyuan/report.md](<../Models/Hunyuan/report.md>)

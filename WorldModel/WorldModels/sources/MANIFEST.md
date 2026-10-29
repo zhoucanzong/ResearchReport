@@ -22,3 +22,9 @@
 2. **标题与第一作者**已于本轮**逐条回查 arXiv 元数据**（`arxiv.org/abs/<id>` 的 `citation_author`）；括号内为社区通称，便于检索。**完整作者列表**未逐字核对，正式引用请回查原文。
 3. **license 一栏默认"未核实"**：arXiv 上多为「永久非独占许可」，**不授予再分发权**；因此本仓库不存全文。若将来要入库某篇正文，须先逐篇核清许可并单独标注。
 4. **本地缓存（可选、不入库）**：`.paper-cache/<arXiv-ID>@<版本>/`，内含 `meta.json`（标题/作者/版本/日期/license/SHA256/抓取命令）。**本清单不依赖缓存存在**。
+
+## 官方发布材料（非论文）
+
+| 来源 | 日期 / 类型 | 阅读笔记 | 证据边界 |
+|---|---|---|---|
+| [Genie 4: A new generation of world simulation](https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation/) | Google DeepMind 官方博客，2026-10-27 | [Genie 4 官方发布材料读法](genie4-official-release.md) | 官方能力主张与失效说明；无技术报告、权重或量化评测 |

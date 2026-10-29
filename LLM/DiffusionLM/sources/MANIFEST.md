@@ -13,6 +13,11 @@
 | D7 | Ruan et al., [CARD](https://arxiv.org/abs/2601.22031v1), `2601.22031v1`, 2026-01-29; CC BY 4.0 | [HTML v1](https://arxiv.org/html/2601.22031v1), §§2–6, Appendices A–D, Figs. 1–4, Tables 1–8. 核验 causal-tail diffusion、局部上下文加权及质量—TPF/TPS 关系 | `.paper-cache/LLM-DiffusionLM/2601.22031.pdf`; SHA-256 `cc032058974d5baea8490b1f78d174a3885c08597e76be739d28c51c969b3e41`; 未运行代码或模型 |
 | D8 | Bie et al., [LLaDA2.2: Enabling Agentic Diffusion Language Models via Levenshtein Editing](https://github.com/inclusionAI/LLaDA2.X/blob/f402f0b52817e1c3586a024ebf89e69ad8ca5523/LLaDA2_2_tech_report.pdf), 11-page official technical report；无 arXiv ID；官网标注 2026-07-01，commit-pinned PDF 上传/创建日期为 2026-07-22；PDF 未声明 license | 官方 PDF §§2–5, Figure 3–4, Tables 1–3；重点看 LCS 编辑监督、插入/删除动作、同基座 SWE editing ablation 及 agent benchmark / throughput 限制 | SHA-256 `06e1f341cd08688c9d85ec0a7e0a57bca86555b72e3dac7f71ef69fcf70d2812` (702,354 bytes); PDF 与全文抽取位于 `/tmp/paper-fetcher-diffusionlm/`; 没有独立运行或复现。未从 repository root 的 Apache license 推断 PDF 许可 |
 
+## 官方开放模型材料（非论文）
+
+- Google, [DiffusionGemma 发布说明](https://blog.google/innovation-and-ai/technology/developers-tools/diffusion-gemma-faster-text-generation/)，2026-06-10；[开发指南](https://developers.googleblog.com/en/diffusiongemma-the-developer-guide/)，2026-06-10；[官方模型卡](https://ai.google.dev/gemma/docs/diffusiongemma/model_card)。这些是一手发布材料和模型卡，不是同行评审论文；机制描述与 benchmark 数值均为作者报告，本专题未运行权重或复现结果。
+- 口径差异：模型卡正文称可接收 text/image/video 并生成文本，但同一卡片的 “Supported Modalities” 摘要行只列 Text、Image。本报告将视频输入作为官方正文所述功能，并保留该页面内部表述差异，不将其写成已独立验证的完整视频能力。
+
 ## 证据纪律与限制
 
 - 各论文的作者结果、复核范围和 claim-audit 说明见对应 `papers/*.md`；章节/表图编号必须与 fixed version 一起读取。

@@ -18,7 +18,7 @@
 | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | status=needs-review |
 | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | status=needs-review |
 
-## 无 date 且无 status（无法判定，41）
+## 无 date 且无 status（无法判定，40）
 
 以下条目既没有 `date` 也没有 `status`，陈旧度无法评估（不算作已标记）：
 
@@ -44,7 +44,6 @@
 * [Models/Doubao-Seed/report.md](<../Models/Doubao-Seed/report.md>)
 * [Models/GLM/report.md](<../Models/GLM/report.md>)
 * [Models/GPT/report.md](<../Models/GPT/report.md>)
-* [Models/Gemini/report.md](<../Models/Gemini/report.md>)
 * [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>)
 * [Models/Grok/report.md](<../Models/Grok/report.md>)
 * [Models/Hunyuan/report.md](<../Models/Hunyuan/report.md>)

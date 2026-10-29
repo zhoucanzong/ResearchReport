@@ -100,7 +100,6 @@ MDPBench 把另一条缺口凸显出来：标准数字文档表现不能代表�
 | 百度 PaddleOCR | [PaddleOCR-VL](papers/2510.14528-paddleocr-vl.md)、[PaddleOCR 3.0 技术报告](https://arxiv.org/abs/2507.05595) | 传统 OCR、版面分析与小型 VLM 逐步整合；布局检测先行，再识别文本、表格、公式等元素 | PaddleOCR-VL 已精读；报告摘要与题录已核 |
 | 上海人工智能实验室 / OpenDataLab | [MinerU2.5-Pro 精读](papers/2604.04771-mineru2-5-pro.md)（[原文 v2](https://arxiv.org/abs/2604.04771v2)） | 1.2B 解耦架构不动，只做数据引擎与三阶段训练；同时提出 OmniDocBench v1.6 的 MGAM 匹配与 Base/Hard/Full 三层协议 | v2 已精读 |
 | 百度千帆 | [Qianfan-OCR 精读](papers/2603.13398-qianfan-ocr.md)、[原文](https://arxiv.org/abs/2603.13398) | 单个端到端模型联合文档解析和理解；可选的 Layout-as-Thought 阶段先输出框、类别和阅读顺序，再出正文 | v1 已精读 |
-
 | 字节跳动 | [Dolphin 精读](papers/2505.14059-bytedance-dolphin.md)（[原文](https://arxiv.org/abs/2505.14059)） | “先分析、后解析”：先生成带阅读顺序的异构版面锚点，再并行识别各区域，尝试在整页生成和多专家流水线间折中 | v1 已精读 |
 | 阿里巴巴通义实验室「读光」OCR Team | [Advanced Literate Machinery 官方仓库](https://github.com/AlibabaResearch/AdvancedLiterateMachinery) | 仓库明确由通义实验室语言技术实验室 OCR Team 维护，汇集文档理解、Platypus 通用文字识别和 CC-OCR 评测等公开项目 | 已核对团队归属和项目入口，具体论文尚未精读 |
 | 阿里巴巴 Logics Team / Qwen 产品 | [Logics-Parsing 精读](papers/2509.19760-alibaba-logics-parsing.md)（[原文](https://arxiv.org/abs/2509.19760)）、[Qwen OCR 文档](https://docs.modelstudio.console.alibabacloud.com/zh/model-studio/qwen-vl-ocr) | Logics-Parsing 用布局感知奖励训练端到端解析；Qwen OCR 文档说明有专门产品接口，但不公开足够细节来替代论文 | Logics-Parsing v1 已精读；产品文档只作产品证据 |
@@ -113,7 +112,6 @@ MDPBench 把另一条缺口凸显出来：标准数字文档表现不能代表�
 | 智谱 | [GLM-OCR 精读](papers/2603.10910-glm-ocr.md)（[原文 v2](https://arxiv.org/abs/2603.10910)） | 0.4B CogViT + 0.5B GLM 解码器，外置 PP-DocLayout-V3 两阶段；MTP 用共享参数多头，训 10 token/步、推理约 5.2 | v2 已精读 |
 | 小米 | [Xiaomi-OCR-0 精读](papers/2609.36136-xiaomi-ocr-0.md)（[原文](https://arxiv.org/abs/2609.36136)） | 0.8B 从 Qwen3.5-0.8B 起，Q-Mask 文本锚定 + CPT + Mix-RL；同一套权重同训解析与 OCR 理解，版面仍外置 | v1 已精读 |
 | AutoTrust（JEV 系列） | [JEV 判别线](papers/jev-decision-line.md)（[官方模型卡 JEV-35B](https://huggingface.co/autotrust/JEV-35B)） | 不做解析，做判别：把“问题 + 至多 256 个候选”压成一次前向的概率分布，用按类型标定的温度出概率，用于解析结果质检与多解析器仲裁 | 判别线已整理；无 arXiv 论文可确证，证据等级为官方发布稿 |
-
 | 华为 | [Doc-Researcher 精读](papers/2510.21603-huawei-doc-researcher.md)（[原文](https://arxiv.org/abs/2510.21603)） | 把版面和视觉语义保留、多粒度切分、跨模态检索接到多文档研究流程，关注解析质量如何影响证据检索 | v1 已精读；系统范围超出 OCR 模型 |
 | Amazon / AWS AI Labs | [FaithC4 精读](papers/2607.21617-amazon-faithc4.md)（[原文 v2](https://arxiv.org/abs/2607.21617v2)）、[DocVLM](https://arxiv.org/abs/2412.08746)、[TAP-VL](https://www.amazon.science/publications/tap-vl-text-layout-aware-pre-training-for-enriched-vision-language-models) | FaithC4 研究模型会否按语言先验改写可见错字；DocVLM/TAP-VL 则研究将 OCR 文字与版面压缩后接入 VLM | FaithC4 v2 已精读；其余两篇尚未精读 |
 | Meta AI | [Nougat](https://arxiv.org/abs/2308.13418)、[Rosetta](https://ai.meta.com/research/publications/rosetta-large-scale-system-for-text-detection-and-recognition-in-images/) | Nougat 把学术 PDF 页转换为结构化标记语言；Rosetta 是面向海量社交图片的文字检测/识别系统 | 研究与系统论文，分别代表文档转写和场景 OCR；尚未精读 |
@@ -131,4 +129,4 @@ MDPBench 把另一条缺口凸显出来：标准数字文档表现不能代表�
 
 其他公司也覆盖了从经典 OCR 到文档 VLM 的不同层次：Amazon 研究 OCR 表征如何补充 VLM，并关注转写的逐字忠实度；Meta 有海量图片 OCR 系统与学术 PDF 转写模型；NAVER 的 Donut 是较早的 OCR-free 文档理解路线；IBM 同时维护解析工具链和紧凑文档 VLM；JD 与清华的 FastOCR 研究如何减少每个生成步骤实际关注的视觉区域。它们不全是近期 OCR 专用模型发布，但都能提供清晰的研究问题或系统路线。
 
-整体上，行业研究不只是在发布“识字模型”：还包括版面和阅读顺序恢复、OCR 文字与视觉信息融合、结构化文档重建、长上下文检索、逐字转写忠实度和解码期计算优化。新增精读覆盖了字节、阿里两支团队、华为、JD/清华和 Amazon 五个研究组织；这些路线的输入、输出和目标任务不同，不能只按“OCR”名称或单个总分横向排名。下一步更值得追问的是，在固定页面集、语言、分辨率、输出协议和计算预算下，布局分解、整页生成和动态注意各自在哪些页面类型上占优；其他产品资料仍只作应用背景，未读论文也保持待精读标记。
+整体上，这不是一个“哪个 OCR 模型总分最高”的单一竞赛，而是几条互相连接的研究轴：布局结构由外置检测器、模型内锚点还是训练奖励承担；视觉预算是整页投入还是按区域/解码步动态分配；数据与奖励怎样影响结构正确性；最后，解析置信度怎样进入人工复核或下游问答。近期精读已覆盖字节、阿里多个团队、华为、百度、面壁、智谱、小米、JD/清华等不同路线，但它们的输入、输出和评测条件并不统一。下一步更有价值的比较是在固定页面集、语言、分辨率、输出协议和计算预算下，观察布局分解、端到端生成与动态注意分别在哪些页面类型上奏效；产品文档和未精读论文仍只作为来源线索，不与论文证据混排。

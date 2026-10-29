@@ -55,8 +55,8 @@
 
 * [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) — 126 行
 * [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) — 242 行
-* [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) — 76 行
-* [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) — 124 行
+* [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) — 96 行
+* [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) — 122 行
 * [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) — 176 行
 * [LLM/MoE/report.md](<../LLM/MoE/report.md>) — 139 行
 * [LLM/OperationsResearch/report.md](<../LLM/OperationsResearch/report.md>) — 90 行
@@ -74,7 +74,7 @@
 * [Models/Doubao-Seed/report.md](<../Models/Doubao-Seed/report.md>) — 497 行
 * [Models/GLM/report.md](<../Models/GLM/report.md>) — 171 行
 * [Models/GPT/report.md](<../Models/GPT/report.md>) — 204 行
-* [Models/Gemini/report.md](<../Models/Gemini/report.md>) — 843 行
+* [Models/Gemini/report.md](<../Models/Gemini/report.md>) — 761 行
 * [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>) — 896 行
 * [Models/Grok/report.md](<../Models/Grok/report.md>) — 164 行
 * [Models/Hunyuan/report.md](<../Models/Hunyuan/report.md>) — 466 行
@@ -99,7 +99,7 @@
 
 * [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) — 54 行
 * [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) — 573 行
-* [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) — 518 行
+* [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) — 526 行
 
 ## https://github.com/FLock-io/this-that-model@6af11c63c8bb260aa4bed2b7717f33f25decd16e (1)
 
@@ -128,7 +128,7 @@
 
 ## https://github.com/simple-agent-lab/RSIHub@d6554299c58bf0fe2db04ddda0277f9db67ea680 (1)
 
-* [OpenSource/RSIHub/report.md](<../OpenSource/RSIHub/report.md>) — 143 行
+* [OpenSource/RSIHub/report.md](<../OpenSource/RSIHub/report.md>) — 144 行
 
 ## https://github.com/vllm-project/vllm@fa75d3456d60a5ffe923818c4b495295675b38e1 (1)
 

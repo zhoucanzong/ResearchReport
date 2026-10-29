@@ -3,7 +3,7 @@ display_name: 扩散语言模型
 type: topic-research
 domain: LLM
 subject: DiffusionLM
-date: 2026-10-23
+date: 2026-10-29
 evidence: 精读原文
 status: current
 ---
@@ -67,6 +67,26 @@ LLaDA 2.1 的 token editing 让模型不仅填 mask，也能撤回并替换已�
 LLaDA 2.2 在此基础上增加**局部长度变化**：以 draft/target 的最长公共子序列产生 keep、substitute、insert、delete 标签；插入将一个 token 扩成 `[MASK]` 与原 token，删除则移位后续 token，并在 block 内 padding 或截断恢复容量。官方技术报告在相同基座、相同 SWE trajectories 的微调比较中报告 SWE-bench Verified 从 35.8 到 44.4；这是直接支持“编辑动作对该训练设置有用”的证据，不是普遍 agent 能力提升的保证。该报告没有 arXiv 编号，官网标注 2026-07-01，而 commit-pinned PDF 元数据/上传时间为 2026-07-22；PDF 未声明许可。其 Ling 对比使用不同 SWE scaffold，吞吐缺少足够可移植的硬件与并发细节，不能将官网technical report等同经同行评审的 AR 基准排名。[PDF §§3–5、Fig. 4、Tables 1–3](papers/LLaDA2.2-Levenshtein-Editing.md)
 
 跨论文看，扩散生成的工程问题至少有三层：固定长度与 EOS 规则决定输出长度能否自然停止；全局迭代去噪与分块生成决定前向次数和 KV 管理；已有 token 能否修订决定并行草稿错误是否可以回滚。若论文仅报告 tokens-per-forward (TPF)，还不足以知道墙钟吞吐；如果只报 TPS，则还要核对硬件、并发、prompt/output 长度、量化、内核和计时边界。完整 evidence matrix 与实验配置见各论文分册和 [MANIFEST](sources/MANIFEST.md)。
+
+## Google DiffusionGemma：扩散生成进入开放模型生态
+
+DiffusionGemma 把本专题的扩散解码路线落到一个可下载的开放权重模型上。它是 Google 于 2026-06-10 发布的**实验性模型**，Apache 2.0 权重；现有主要材料是官方发布稿、开发指南和模型卡，尚不是独立同行评审论文，因此其方法说明和基准结果都应标作开发者自述。[发布稿](https://blog.google/innovation-and-ai/technology/developers-tools/diffusion-gemma-faster-text-generation/) · [开发指南](https://developers.googleblog.com/en/diffusiongemma-the-developer-guide/) · [模型卡](https://ai.google.dev/gemma/docs/diffusiongemma/model_card)
+
+官方材料描述的采样结构是**自回归上下文编码器 + 双向扩散解码器**：encoder 先处理 prompt 并建立 KV cache；decoder 对一个含 256 个位置的 token canvas 做双向注意力和多轮去噪，低熵 token 可先定稿，其余位置继续重噪声并修订；完成的块再由 encoder 读入、追加至 KV cache，随后初始化下一个 canvas。这形成“块内并行修订、块间因果推进”的 block-autoregressive 解码，从而同时保留开放式长度生成和块内双向信息流。[开发指南 “The Architecture”](https://developers.googleblog.com/en/diffusiongemma-the-developer-guide/) · [模型卡 “Model Overview”](https://ai.google.dev/gemma/docs/diffusiongemma/model_card)
+
+| 设计 | 公开材料所述 | 读者应如何理解 |
+|---|---|---|
+| 基座与激活计算 | Gemma 4 26B A4B MoE；模型卡写总量 25.2B、每 token 激活约 3.8B 参数 | “26B A4B”是型号口径，表格内部的总参数更精确；稀疏激活量不等于权重存储量 |
+| 去噪对象 | 离散文本 token canvas，默认块长 256 | 不是图像扩散，也不是将完整回答从左到右逐 token 生成 |
+| 上下文与块提交 | prompt 由 causal encoder 编码；定稿 canvas 进入 KV cache，再生成下一块 | 当前块可以双向互看，跨块仍按历史上下文推进；与整句全局并行去噪的 MDM 有结构区别 |
+| 输入输出 | 模型卡描述 text/image/video 输入、text 输出 | 任务能力以固定模型卡和软件配置为准；不能把支持视觉/视频输入读成生成视频 |
+| 推理目标 | 面向单卡、低 batch、交互式本地生成 | Google 报告的“最高 4×”针对其指定 GPU/采样配置；官方也说明高并发云端自回归模型可更充分利用硬件 |
+
+它与本专题已有路线的关系是：LLaDA 研究全序列 mask-to-token 去噪；Block Diffusion 把自回归结构和块内扩散结合；DiffusionGemma 则提供一个基于 Gemma4 MoE、prompt causal prefill、canvas 双向去噪并分块提交的开放模型实例。它是这种路线的产品化研究载体，但不能据一个型号推断所有块扩散模型都用同样的采样器、上下文架构或长度控制。
+
+它的主要取舍也应连同官方对照一起读。模型卡将 DiffusionGemma 与同基座 Gemma4 26B A4B 列在一起：在 MMLU-Pro 上报告 77.6 对 82.6，在 AIME 2026（no tools）上 69.1 对 88.3；官方发布稿明确说其整体输出质量低于标准 Gemma4。速度与质量不是同一维度：该模型瞄准低 batch 单加速器的交互延迟，不能从局部 TPS 主张推导高并发 serving 的吞吐优势，也不能说它普遍优于自回归 Gemma4。[模型卡 benchmark 表](https://ai.google.dev/gemma/docs/diffusiongemma/model_card) · [官方发布稿](https://blog.google/innovation-and-ai/technology/developers-tools/diffusion-gemma-faster-text-generation/)
+
+这里的公开证据仍有边界：没有独立复现、没有同行评审技术报告；Google 的开发指南能说明架构流程，但不能替代对不同 prompt 长度、batch、canvas/去噪步数、硬件和 serving 环境的同条件比较。因而目前最稳妥的学习结论是：**扩散语言模型已从论文中的生成目标和块机制，扩展到一款公开权重的具体系统；其价值主张是特定低并发推理路径的速度—质量折中，而不是已证明的通用替代。**
 
 ## 阅读路线与范围
 

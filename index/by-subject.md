@@ -131,7 +131,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 扩散语言模型：从随机遮盖到大规模并行生成 | topic-research | 2026-10-23 | current |
+| [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 扩散语言模型：从随机遮盖到大规模并行生成 | topic-research | 2026-10-29 | current |
 
 ## DiffusionModels (1)
 
@@ -185,7 +185,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Models/Gemini/report.md](<../Models/Gemini/report.md>) | Google Gemini系列模型深度调研报告 | — | — | — |
+| [Models/Gemini/report.md](<../Models/Gemini/report.md>) | Google Gemini系列模型深度调研报告 | — | 2026-10-29 | — |
 
 ## Google-Gen (1)
 
@@ -443,7 +443,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | WorldModels 技术专题调研 | topic-research | 2026-10-22 | needs-review |
+| [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | WorldModels 技术专题调研 | topic-research | 2026-10-29 | needs-review |
 
 ## nemotron (1)
 

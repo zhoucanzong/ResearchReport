@@ -18,7 +18,7 @@
 <div align="center">
 
 <!-- SCRIPT:badges START -->
-[**77** 主报告](index/by-report.md) &nbsp; · &nbsp; [**281** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**45** 研究专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
+[**77** 主报告](index/by-report.md) &nbsp; · &nbsp; [**282** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**45** 研究专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
 <!-- SCRIPT:badges END -->
 
 </div>
@@ -123,11 +123,11 @@
 <!-- SCRIPT:recent START · 报告日期优先，缺失时回退最近提交日 -->
 | 日期 | 阅读条目 | 板块 |
 | :-- | :-- | :-- |
+| 2026-10-29 | [扩散语言模型](<LLM/DiffusionLM/report.md>) | LLM |
+| 2026-10-29 | [Gemini](<Models/Gemini/report.md>) | Models |
+| 2026-10-29 | [世界模型](<WorldModel/WorldModels/report.md>) | WorldModel |
 | 2026-10-28 | [Harness²](<OpenSource/Harness2/report.md>) | OpenSource |
 | 2026-10-28 | [REA](<OpenSource/REA/report.md>) | OpenSource |
-| 2026-10-28 | [RSIHub](<OpenSource/RSIHub/report.md>) | OpenSource |
-| 2026-10-26 | [智能体系统](<Agents/AgentSystems/report.md>) | Agents |
-| 2026-10-26 | [电脑使用 Agent](<Agents/ComputerUse/report.md>) | Agents |
 <!-- SCRIPT:recent END -->
 
 [查看全部更新 →](index/recent.md)

@@ -3,7 +3,7 @@ display_name: 世界模型
 type: topic-research
 domain: WorldModel
 subject: WorldModels
-date: 2026-10-22
+date: 2026-10-29
 evidence: 精读原文
 status: needs-review
 ---
@@ -18,7 +18,7 @@ status: needs-review
 
 ## 阅读入口
 
-建议先用本页建立路线，再按问题阅读 `papers/` 中的逐篇机制与实验，最后用 `topics/` 比较跨论文设计轴。
+建议先用本页建立路线，再按问题阅读 `papers/` 中的逐篇机制与实验，最后用 `topics/` 比较跨论文设计轴。官方发布稿不是论文，Genie 4 的来源和证据边界单列在[官方发布材料读法](sources/genie4-official-release.md)。
 
 **逐篇论文阅读**
 
@@ -34,6 +34,10 @@ status: needs-review
 | [2408.14837-gamengen.md](papers/2408.14837-gamengen.md) | GameNGen（2024） | 像素级动作条件扩散，实时交互引擎 |
 | [2501.09038-physics-iq.md](papers/2501.09038-physics-iq.md) | Physics-IQ（2025） | 真实拍摄物理基准，视觉真实感≠物理理解 |
 | [2503.21755-vbench-2.md](papers/2503.21755-vbench-2.md) | VBench-2.0（2025） | 内在真实性评测（5 维 18 子维），不测交互 |
+
+**官方发布材料（非论文）**
+
+- [Genie 4 官方发布材料读法](sources/genie4-official-release.md)：仅依据 Google DeepMind 2026-10-27 博客，帮助区分官方能力主张与未披露实现；不把演示或产品描述当成技术报告结果。
 
 **跨论文专题**
 
@@ -100,11 +104,11 @@ World Models、PlaNet 与 Dreamer 从观测中编码潜状态并学习状态如�
 
 MuZero 把“规划模型是否必须重构像素”推到另一端：它的 recurrent model 迭代预测 reward、policy 和 value，供 MCTS 使用；训练不要求像素解码器，因此学的是规划充分信息而非可视模拟器。将 MuZero 的搜索表现和 GameNGen 的视频保真放在一个排行榜上会混淆交付物：前者关心行动选择，后者关心动作条件化生成。[MuZero §3–4](papers/1911.08265-muzero.md)
 
-JEPA/V-JEPA 路线又改变了预测目标：从 context 预测被遮挡的 target 表征，而非重构像素。这样可把学习压力放在语义/时序表示，避免追逐所有低层像素细节；但 action-free 表征不能单独回答“执行动作 a 后环境会怎样”，需要额外动作条件化模型或策略学习。从此处向像素/视频 rollout 的路线，GameNGen/Genie 将动作作为显式条件生成后续观测，提供可查看的交互接口，也承受长时程误差积累。UniSim/Cosmos 等多源平台扩大了数据与环境接口，但需区分真实观测、合成训练、规划和评测角色。更细的设计轴见[动作条件化与动力学专题](topics/dynamics-and-action-conditioning.md)。
+JEPA/V-JEPA 路线又改变了预测目标：从 context 预测被遮挡的 target 表征，而非重构像素。这样可把学习压力放在语义/时序表示，避免追逐所有低层像素细节；但 action-free 表征不能单独回答“执行动作 a 后环境会怎样”，需要额外动作条件化模型或策略学习。从此处向像素/视频 rollout 的路线，**2024 年 Genie 的 latent-action 模型**与 GameNGen 的逐帧动作条件化扩散都提供可观察的交互接口，但方法不同，也都承受长时程误差积累。**Genie 4 是后续官方发布的另一种系统线索：强调 Gemini agent 与 Genie 生成器闭环；不能据此把其内部机制归同于 2024 年 Genie 的 latent action model。**UniSim/Cosmos 等多源平台扩大了数据与环境接口，但需区分真实观测、合成训练、规划和评测角色。更细的设计轴见[动作条件化与动力学专题](topics/dynamics-and-action-conditioning.md)。
 
 ## 3. 交互性与误差：用途决定评测边界
 
-“可调用模型”不等于模型能稳定支撑行为。作为**在线规划器**（PlaNet/MuZero），一步预测误差会改变搜索树中候选动作的排序；作为**想象训练环境**（Dreamer 系），策略在模型自己生成的状态上反复训练，若模型高估异常状态回报，策略可能利用漏洞；作为**动作条件化视频 rollout**（GameNGen/Genie），生成帧又成为后续输入，局部错误会逐步变成场景漂移。相同的预测误差在三种闭环中传播路径不同，不能用一个“模型准确率”概括。
+“可调用模型”不等于模型能稳定支撑行为。作为**在线规划器**（PlaNet/MuZero），一步预测误差会改变搜索树中候选动作的排序；作为**想象训练环境**（Dreamer 系），策略在模型自己生成的状态上反复训练，若模型高估异常状态回报，策略可能利用漏洞；作为**动作条件化视频 rollout**（GameNGen、2024 Genie），生成帧又成为后续输入，局部错误会逐步变成场景漂移。Genie 4 官方博客描述 Gemini 在环内计划并 steering 场景，但没有披露生成器如何接收动作，因此不应直接归类为逐帧动作条件化模型。相同的预测误差在这些闭环中的传播路径不同，不能用一个“模型准确率”概括。
 
 误差控制也对应不同失效来源：PlaNet 的 latent overshooting 约束多步潜状态预测；Dreamer 用 reward/value 学习和 imagined actor-critic 控制策略目标；DreamerV3 用 balanced KL、free bits、symlog/twohot 等方法稳定跨任务训练；视频生成路线研究 noise augmentation、蒸馏或训练/推理分布对齐。比较这些办法时，应识别被控制的是潜状态漂移、奖励尺度、策略利用漏洞，还是视频 rollout 误差，再看各论文相应消融和目标函数（见[专题 §4](topics/dynamics-and-action-conditioning.md)）。
 
@@ -120,11 +124,14 @@ JEPA/V-JEPA 路线又改变了预测目标：从 context 预测被遮挡的 targ
 4. **平台化路线把世界模型做成可被下游 fine-tune 的基础设施**：Cosmos 开源因果视频 tokenizer 与 Predict1 多规格模型（7B / 12B / 13B / 14B）。`[摘要级]`
 5. **可复核的公开数字多为作者自述、评测条件互不统一**，跨系统横向比较必须先回到各自 benchmark 定义（见章 5）。`[精读原文]`
 
+Genie 4 的官方发布稿可补充“多模态交互与 Gemini 环内规划”的系统路线，但未给帧率、分辨率或一致性时长等量化结果，因此能更新研究问题地图，不能把它放进这条性能三角做比较。[Genie 4 官方发布材料读法](sources/genie4-official-release.md)
+
 ### 4.2 代表系统的机制和证据
 
-| 系统 | 关键实测数字 | 出处 | 主等级 |
+| 系统 | 公开结果 / 能力主张 | 出处 | 证据性质 |
 | :-- | :-- | :-- | :-- |
 | **Genie 3**（Google DeepMind） | 实时导航 **24 FPS**、分辨率 **720p**、一致性维持**数分钟** | [官方博客 2025-08-05](https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/) | `[摘要级]` |
+| **Genie 4**（Google DeepMind） | 官方发布稿声称原生音频、文本实时 steering、键盘导航及 Gemini 3.8 Flash 环内引导；**未披露帧率、分辨率、时长基准或内部架构** | [官方博客 2026-10-27](https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation/)；[发布材料读法](sources/genie4-official-release.md) | 官方博客（非技术报告） |
 | **GameNGen** | DOOM，320×240；**单 TPU 20 FPS**；**PSNR 29.43 / LPIPS 0.249**（5 关卡 2048 条轨迹）；连续游玩 **5–10 分钟**后人类判别仍接近随机 | [arXiv:2408.14837v2 摘要 / §5](https://arxiv.org/html/2408.14837v2)；精读定位见 [分册 §7.8](papers/2408.14837-gamengen.md) | `[精读原文]` |
 | **Dreamer 4** | **单 GPU 实时交互推理**（shortcut forcing + 高效 transformer）；纯离线数据在 Minecraft **首次取得钻石** | [arXiv:2509.24527](https://arxiv.org/abs/2509.24527) 正文 | `[摘要级]` |
 | **V-JEPA 2 / V-JEPA 2-AC** | 预训练 **>1M 小时**互联网视频；2-AC 用 **<62h** Droid 无标注视频 post-train；**零样本** Franka 抓放 | [arXiv:2506.09985](https://arxiv.org/abs/2506.09985) 正文 | `[摘要级]` |
@@ -180,6 +187,7 @@ JEPA/V-JEPA 路线又改变了预测目标：从 context 预测被遮挡的 targ
 | **[Genie Envisioner](https://arxiv.org/abs/2508.05635)** | ②+③平台 | GE-Base（指令条件视频扩散世界模型）+ GE-Sim（action-conditioned 神经模拟器，闭环 rollout）+ EWMBench（评测） | `[精读原文]` |
 | **[Cosmos WFM](https://arxiv.org/abs/2501.03575)** | ①工业化形态 | Physical AI 的「世界数字孪生」；覆盖 curation / 预训练 / post-train / tokenizer 全链路并开放权重 | `[摘要级]` |
 | **[V-JEPA 2-AC](https://arxiv.org/abs/2506.09985)** | ②规划环境 | 62h Droid 数据 post-train 后零样本规划抓放（少量真机数据范式） | `[摘要级]` |
+| **Genie 4**（官方发布稿） | 提议的模拟训练环境 | 博客称其可能用于机器人与 Agent 训练场景；未展示策略训练、迁移或闭环评测，因此是用途主张，不是训练收益证据 | `[官方发布稿]` |
 
 **数据/评测接口清单（可直接复用，避免二次造轮子）**
 
@@ -193,7 +201,7 @@ JEPA/V-JEPA 路线又改变了预测目标：从 context 预测被遮挡的 targ
 
 ### 6.3 相邻应用域的归属
 
-- **游戏引擎**：Genie 3（官方博客）、GameNGen、Matrix-Game、Hunyuan-GameCraft —— 已在章 4 给出实测数字。
+- **游戏引擎**：Genie 3 / Genie 4（官方博客）、GameNGen、Matrix-Game、Hunyuan-GameCraft —— 已在章 4 区分论文实测与官方发布主张。
 - **自动驾驶**：GAIA-1、GAIA-2、Vista（参考文献 30–32）—— 作为相邻方向补充阅读（`[摘要级]`）。
 - **开放世界探索**：由 38（交互式视频世界建模综述）的 domain 章节给出索引（`[摘要级]`）。
 

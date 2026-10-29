@@ -59,7 +59,7 @@ status: completed
 
 **7 absorb**：`_run_gate_and_record`（`:421`）用**已认证的分数**决定 keep/discard，`record` 加注；`reflect` 可选且 best-effort——失败不回滚本代（`:428-440`）；最后 `_maybe_quarantine`（`:441`）。任何一步失败统一走 `_run_terminal_record`，保证"失败也有记录"。
 
-**副作用面**：真正的执行副作用只在 Harbor 容器里（`src/evolve/runtime/sandbox.py` 要求用不可变镜像 ID，`operator_isolation.py:1` 明说 operator 在显式公共数据上跑、不碰宿主 worktree）。
+**副作用边界**：基准目标的 rollout/evaluation 由 Harbor sandbox 执行；报告明确该 runner 使用不可变镜像，并限制容器挂载与权限（`src/evolve/runtime/sandbox.py`）。但**整个 RSIHub 并非都在 Harbor 容器内运行**：阶段 operator 由框架作为子进程调用，并读写 candidate checkout 与 run 目录（`library/PROTOCOL.md`、`src/evolve/driver.py`）。因此 sandbox 的隔离范围是目标执行环境，不能概括成“所有框架副作用都被容器隔离”。
 
 ```mermaid
 flowchart TD
@@ -86,8 +86,11 @@ flowchart TD
 ## 3. Design Inquiry
 
 **Q1 为什么"评测必须在可变面之外"，以及它到底靠什么成立？**
-三处独立机制叠加，缺一不可：① **路径硬排除**——`surface.py:8` 的 `IMPLICIT_EXCLUDES = ("evaluator/**", "archive.jsonl", ".evolve/**", "evolve")`，recipe 的 `include` 写得再宽也覆盖不掉这四类，且命中 exclude 直接判违规（`:19-22`）；② **阶段归属**——`guardrail` 与 `evaluate` 由框架执行，`evaluate` 阶段**没有可插的 operator 槽**（`README.md:118-126` 的表 + `driver.py:418` 直调 `eval_child`）；③ **数值认证**——评测事件与回执分两个文件（`archive.jsonl` vs `.evolve-eval-receipts.jsonl`，`archive.py:243-244`），回执是事件 JSON 的 `sha256`（`:307-308`），读档案时只有"机制标记为真 + 回执存在 + tag 对得上 + verdict/reason/cost 齐全"的事件才被打上认证标记（`:297-306`），无回执的评测事件被降级、不能覆盖已有 top eval（`:274-277`）；`verify_integrity` 专门报这类（`:313+`）。
-判断：它的隔离不是"约定"，是**"谁能改"与"谁打分"在代码里分属两条路径**，再加一层可离线校验的哈希回执。
+三处机制叠加，提升评测路径的可审计性：① **路径硬排除**——`surface.py:8` 的 `IMPLICIT_EXCLUDES = ("evaluator/**", "archive.jsonl", ".evolve/**", "evolve")`，recipe 的 `include` 写得再宽也覆盖不掉这四类，且命中 exclude 直接判违规（`:19-22`）；② **阶段归属**——`guardrail` 与 `evaluate` 由框架执行，`evaluate` 阶段**没有可插的 operator 槽**（`README.md:118-126` 的表 + `driver.py:418` 直调 `eval_child`）；③ **评测回执校验**——评测事件与回执分两个文件（`archive.jsonl` vs `.evolve-eval-receipts.jsonl`，`archive.py:243-244`），回执由事件 JSON 计算 SHA-256（`:307-308`），读档案时检查回执存在、tag 匹配以及 verdict/reason/cost 字段（`:297-306`），无回执事件会降级，不能覆盖已有 top eval（`:274-277`）；`verify_integrity` 会报告缺失/不匹配（`:313+`）。
+
+这里的 SHA-256 回执是**事件与回执之间的一致性检查**，不是带密钥的签名：拥有整个 workspace 写权限的人可以同时改事件和重算回执。因此它支持审计流程、防止单边编辑或意外错配，但不能单独证明评测者身份、评测过程真实或结果正确。
+
+判断：它把“谁能改可变面”和“谁运行评测”拆在不同阶段，并用回执维持记录一致性；这提升可比性的前提，但不是对恶意 workspace 写入者的密码学防篡改保证。
 
 **Q2 为什么用 recipe + operator，而不是插件？**
 因为要的是**可比性**，不是可扩展性。九个 stage 是固定槽（`select/rollout/analyze/mutate/validate/novelty/gate/record/reflect`，`README.md:128-140`），operator 只是"某个槽的一种实现"（`library/<stage>/<name>.py`），recipe 只能选与配。于是 AHE、Hyperagents、GEPA 三种方法**共享同一个驱动与同一套评测**，差异全在 `evolve.yaml`（`recipes/*/evolve.yaml`）。插件模型允许自带生命周期，一旦允许，评测口径就没法统一——这正是它要避免的。
@@ -145,10 +148,8 @@ operator 之间不是进程内 API，而是**文件契约**：子进程 + 环境
 | 19 | 连续会话形态（`evolve agent`）仍走同一套准入校验 | 代码事实 | `README.md:150-154`；`orchestration.py:343` |
 | 20 | Harness² 可作 operator 装入、其"在线性"与静态评测冲突 | **我们的判断** | 依据 #3 #9 #13 #19 |
 
-## 6. 覆盖声明
+## 6. 证据范围与结论边界
 
-**读了**：`README.md` 全部关键节（`78-160`、`227+`、`336-360`、`400-416`）、`NOTICE`、`pyproject.toml`、`library/PROTOCOL.md` 前 30 行、`recipes/hyperagents/evolve.yaml` 全文、`src/evolve/{driver,surface,archive,orchestration,config}.py` 的相关函数（`_run_child`、`eval_child`、`_finalize_child`、`_stamp_evaluation`、`merge_events`、`_has_evaluation_provenance`、`check_paths`、`surface_lists`）、`src/evolve/composition/recipe.py` 与 `evaluation/` 的符号级浏览。
+本报告关于执行路径的判断以 front matter 固定 commit 的 `driver.py`、`surface.py`、`archive.py`、`orchestration.py`、配置/recipe 契约和 `library/PROTOCOL.md` 为证据；它们支持的是**静态代码路径和框架约束**，不构成实际 Harbor 运行结果或不同算法的性能复现。九个阶段的具体 operator、viewer、preflight 和大部分 provider/runner 代码未纳入本篇的逐模块分析，因此不从流程接口推断这些组件的内部行为。
 
-**没读**：`src/evolve/` 其余约 90 个模块的正文（`agent_driver.py`、`trace_analysis.py`、`workspace.py`、`viewer/`、`preflight/`、`integrations/harbor/` 只看了接口与报错文案）；`library/` 九个阶段下的具体 operator 实现（只读 `PROTOCOL.md` 与目录名）；`tests/` 150 个文件；`docs/` 26 篇；`scaffolds/workspace/` 的内部实现。
-
-**没做**：不安装、不运行、不跑 Harbor、不执行任何 recipe。论文 arXiv 2610.32253 的正文**本轮未读**（本报告的论文侧信息仅来自 `README.md` 与仓库 `CITATION`），因此凡涉论文论断一律按"仓库自述"处理。
+尤其要区分三种可信度：静态源码说明框架会怎样调用、校验和记录；Harbor sandbox 的容器配置说明**目标评测进程**有哪些隔离；事件 hash 只能说明工作区内事件与回执是否一致。operator 自身作为子进程运行并可读写候选工作区，故系统整体安全还取决于宿主权限、workspace 所有者和外部模型/工具调用；本篇没有把这些上层问题说成已由 Harbor sandbox 解决。相关论文机制是仓库 README/CITATION 所述，本文没有据此声称独立验证了论文结果。
