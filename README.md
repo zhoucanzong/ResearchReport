@@ -62,7 +62,7 @@
 <td width="33%" valign="top">
 <h3>04 · <a href="AIGC/README.md">AIGC</a></h3>
 <p><strong>AIGC</strong><br><sub>9 篇主报告 · 图像、视频、音频、3D、数字人生成及相关架构与编辑方法</sub></p>
-<p><a href="AIGC/VideoGen/report.md">视频生成</a> · <a href="AIGC/DiT/report.md">扩散 Transformer（DiT）</a> · <a href="AIGC/DiffusionModels/report.md">扩散模型</a></p>
+<p><a href="AIGC/VideoGen/report.md">视频生成</a> · <a href="AIGC/DiT/report.md">扩散 Transformer（DiT）</a> · <a href="AIGC/DiffusionModels/report.md">扩散模型</a> · <a href="docs/aigc-learning-path.md">AIGC 学习地图</a></p>
 <p><a href="AIGC/README.md"><strong>浏览板块 →</strong></a></p>
 </td>
 <td width="33%" valign="top">
@@ -127,8 +127,8 @@
 | 2026-10-30 | [MoE 执行与专家通信](<Infra/MoEExecution/report.md>) | Infra |
 | 2026-10-30 | [模型量化与边缘部署](<Infra/QuantizationEdge/report.md>) | Infra |
 | 2026-10-30 | [分布式训练基础设施](<Infra/TrainingInfra/report.md>) | Infra |
-| 2026-10-30 | [可控生成](<AIGC/ControllableGen/report.md>) | AIGC |
-| 2026-10-30 | [扩散 Transformer（DiT）](<AIGC/DiT/report.md>) | AIGC |
+| 2026-10-30 | [3D 生成](<AIGC/3DGen/report.md>) | AIGC |
+| 2026-10-30 | [音频与音乐生成](<AIGC/AudioGen/report.md>) | AIGC |
 <!-- SCRIPT:recent END -->
 
 [查看全部更新 →](index/recent.md)

@@ -60,6 +60,8 @@
       "directory": "AIGC",
       "emoji": "🎨",
       "tagline": "图像、视频、音频、3D、数字人生成及相关架构与编辑方法",
+      "learning_map": "docs/aigc-learning-path.md",
+      "learning_map_label": "AIGC 学习地图",
       "topic_index": true,
       "match": [
         "AIGC/*"

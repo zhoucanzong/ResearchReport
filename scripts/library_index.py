@@ -1258,6 +1258,10 @@ def validate_panels(entries: list, cfg: dict, repo_root: str) -> tuple:
     for rel in cfg.get("highlights", []):
         if not os.path.isfile(os.path.join(repo_root, rel, ENTRY_BASENAME)):
             missing.append(("highlights", rel))
+    for panel in cfg["panels"]:
+        learning_map = panel.get("learning_map")
+        if learning_map and not os.path.isfile(os.path.join(repo_root, learning_map)):
+            missing.append((panel["id"], learning_map))
 
     print(f"板块校验：条目 {len(entries)} · 已归类 {len(mapping)} · "
           f"未归类 {len(unassigned)} · 重复归类 {len(duplicated)} · "
@@ -1455,6 +1459,10 @@ def render_panels_block(cfg: dict, mapping: dict, entries: list, label_limit: in
             f'<a href="{rel}/report.md">{escape(entry_short_name(by_dir[rel]))}</a>'
             for rel in panel.get("representatives", [])
         ]
+        if panel.get("learning_map"):
+            map_path = escape(panel["learning_map"], quote=True)
+            map_label = escape(panel.get("learning_map_label", "学习地图"))
+            reps.append(f'<a href="{map_path}">{map_label}</a>')
         cards.append(
             f'<td width="33%" valign="top">\n'
             f'<h3>{number:02d} · <a href="{top}/README.md">{display_title}</a></h3>\n'
@@ -1604,6 +1612,11 @@ def render_panel_readme(panel: dict, members: list, repo_root: str) -> str:
     top = panel["title"]
     names = sort_panel_entries(members, panel)
     one_liner = PANEL_ONE_LINERS.get(directory, panel["tagline"])
+    header_links = '[← 返回首页](<../README.md>) · [完整索引](<../INDEX.md>)'
+    if panel.get("learning_map"):
+        map_rel = os.path.relpath(panel["learning_map"], directory).replace(os.sep, "/")
+        map_label = panel.get("learning_map_label", "学习地图")
+        header_links += f' · [{map_label}](<{map_rel}>)'
     lines = [
         '<div align="center" markdown="1">',
         '',
@@ -1611,7 +1624,7 @@ def render_panel_readme(panel: dict, members: list, repo_root: str) -> str:
         '',
         f'**{len(names)} 条** · {one_liner}',
         '',
-        f'[← 返回首页](<../README.md>) · [完整索引](<../INDEX.md>)',
+        header_links,
         '',
         '</div>',
         '',
@@ -1862,6 +1875,9 @@ def render_site_nav(cfg: dict, mapping: dict, docs: list, orphans: list) -> str:
                    if mapping.get(d["path"], {}).get("id") == panel["id"]]
         title = f"{panel['emoji']} {panel['title']} · {len(members)}"
         lines.append(f"  - {_yaml_dq(title)}:")
+        if panel.get("learning_map"):
+            map_label = panel.get("learning_map_label", "学习地图")
+            lines.append(f"    - {_yaml_dq(map_label)}: {_yaml_dq(panel['learning_map'])}")
         lines.extend(_site_nav_entry_lines(entries, mapping, panel))
         lines.extend(_site_nav_orphan_lines(orphans, panel_dir(panel)))
 
@@ -1872,9 +1888,12 @@ def render_site_nav(cfg: dict, mapping: dict, docs: list, orphans: list) -> str:
         lines.append(f"      - {_yaml_dq(title)}: {_yaml_dq(GENERATED_DIR + '/' + name + '.md')}")
 
     # 文档区（docs/*.md + scripts/*.md，按路径排序，标题取 front-matter/H1）
+    panel_maps = {panel["learning_map"] for panel in cfg["panels"]
+                  if panel.get("learning_map")}
     meta_docs = sorted((d for d in docs
                         if d["top"] in ("docs", "scripts")
-                        and not d["is_generated"] and not d["is_entry"]),
+                        and not d["is_generated"] and not d["is_entry"]
+                        and d["path"] not in panel_maps),
                        key=lambda d: d["path"])
     if meta_docs:
         lines.append(f"  - {_yaml_dq('📖 文档')}:")
@@ -2026,6 +2045,9 @@ def render_site_home(cfg: dict, mapping: dict, entries: list,
             if rel in by_dir:
                 doc = by_dir[rel]
                 reps.append(f'[{label(entry_short_name(doc))}](<{doc["path"]}>)')
+        if panel.get("learning_map"):
+            map_label = label(panel.get("learning_map_label", "学习地图"))
+            reps.append(f'[{map_label}](<{panel["learning_map"]}>)')
         lines += [
             f'<div class="rr-panel rr-panel-{escape(panel["id"], quote=True)}" markdown="1">', "",
             '<div class="rr-panel-meta">'

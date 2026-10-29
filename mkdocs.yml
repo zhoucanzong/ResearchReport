@@ -320,6 +320,7 @@ nav:
         - "2605.03378-argus": "Agents/AgentSecurity/papers/2605.03378-argus.md"
         - "MANIFEST": "Agents/AgentSecurity/sources/MANIFEST.md"
   - "🎨 AIGC · 9":
+    - "AIGC 学习地图": "docs/aigc-learning-path.md"
     - "AIGC/README.md"
     - "3D 生成": "AIGC/3DGen/report.md"
     - "音频与音乐生成": "AIGC/AudioGen/report.md"
@@ -609,7 +610,6 @@ nav:
       - "最近更新": "index/recent.md"
       - "待复核": "index/stale.md"
   - "📖 文档":
-      - "AIGC 学习地图：从表示到可控生成": "docs/aigc-learning-path.md"
       - "历史校验记录（截至 2026-10）": "docs/archive/verification-history-2026-10.md"
       - "DSH Harness 反馈清单（2026-10-18，来自一次真实事故）": "docs/harness-feedback.md"
       - "library_index.py 单趟未收敛（自指统计）": "docs/issue-index-single-pass.md"

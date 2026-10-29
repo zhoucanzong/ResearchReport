@@ -4,7 +4,7 @@
 
 **9 条** · 图像、视频、音频、3D、数字人生成及相关架构与编辑方法。
 
-[← 返回首页](<../README.md>) · [完整索引](<../INDEX.md>)
+[← 返回首页](<../README.md>) · [完整索引](<../INDEX.md>) · [AIGC 学习地图](<../docs/aigc-learning-path.md>)
 
 </div>
 
