@@ -4,7 +4,7 @@
 > 需要回看原文时：按下面的 arXiv 链接现取；本地缓存可选（`.paper-cache/<id>@<版本>/`），缓存同样不入库。
 > **代码仓库**只记录 `仓库 @ commit` 与用到的 `文件:行`，**源码不入库**。
 
-## 1. 论文（20 个精读分册覆盖 22 篇论文）
+## 1. 论文（32 个精读分册覆盖 34 项工作；EAGLE 系列一册含三篇）
 
 | # | 分册（我们的精读） | arXiv ID | 版本 | 版本日期 | 标题（arXiv 元数据，逐条核实） | 第一作者（核实） | license | 去哪找原文 |
 | --: | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
@@ -30,16 +30,29 @@
 | 20 | [`papers/2607.22634-presto.md`](<../papers/2607.22634-presto.md>) | 2607.22634 | v1 | 2026-06-20 | PRESTO: Prefix-Aligned Tree Drafting for Diffusion Speculative Decoding | Wang, Zheng | CC BY 4.0 | https://arxiv.org/abs/2607.22634v1 |
 | 21 | [`papers/2509.18085-spiffy.md`](<../papers/2509.18085-spiffy.md>) | 2509.18085 | v4 | 2026-06-11 | Structuring The Future: Diffusion LLM Speculative Decoding via Calibrated Draft Graphs | Agrawal, Sudhanshu | CC BY 4.0 | https://arxiv.org/abs/2509.18085v4 |
 | 22 | [`papers/2606.08048-poe-bridge.md`](<../papers/2606.08048-poe-bridge.md>) | 2606.08048 | v1 | 2026-06-06 | Diffusion Language Model Parallel Decoding via Product-of-Experts Bridge | Shi, Juntong | CC BY 4.0 | https://arxiv.org/abs/2606.08048v1 |
+| 23 | [`papers/2402.12374-sequoia.md`](<../papers/2402.12374-sequoia.md>) | 2402.12374 | v3 | 2025-07-05 | Sequoia: Scalable, Robust, and Hardware-aware Speculative Decoding | Chen, Zhuoming | 见固定原文页；未将全文入库 | https://arxiv.org/abs/2402.12374v3 |
+| 24 | [`papers/2505.12398-traversal-verification.md`](<../papers/2505.12398-traversal-verification.md>) | 2505.12398 | v2 | 2025-11-05 | Traversal Verification for Speculative Tree Decoding | Weng, Yepeng | 见固定原文页；未将全文入库 | https://arxiv.org/abs/2505.12398v2 |
+| 25 | [`papers/2608.03447-approximate-sd.md`](<../papers/2608.03447-approximate-sd.md>) | 2608.03447 | v3 | 2026-08-30 | Approximate Speculative Decoding | Feng | 见固定原文页；未将全文入库 | https://arxiv.org/abs/2608.03447v3 |
+| 26 | [`papers/2602.05774-vsd.md`](<../papers/2602.05774-vsd.md>) | 2602.05774 | v6 | 2026-08-12 | Variational Speculative Decoding: Rethinking Draft Training from Token Likelihood to Sequence Acceptance | Zou | 见固定原文页；未将全文入库 | https://arxiv.org/abs/2602.05774v6 |
+| 27 | [`papers/2605.01106-component-aware-self-spec.md`](<../papers/2605.01106-component-aware-self-spec.md>) | 2605.01106 | v1 | 2026-05-01 | Component-Aware Self-Speculative Decoding in Hybrid Language Models | Borobia | 见固定原文页；未将全文入库 | https://arxiv.org/abs/2605.01106v1 |
+| 28 | [`papers/2510.19779-adaspec.md`](<../papers/2510.19779-adaspec.md>) | 2510.19779 | v1 | 2025-10-22 | AdaSPEC: Selective Knowledge Distillation for Efficient Speculative Decoders | Hu, Yuezhou | 见固定原文页；未将全文入库 | https://arxiv.org/abs/2510.19779v1 |
+| 29 | [`papers/2605.09992-attention-drift.md`](<../papers/2605.09992-attention-drift.md>) | 2605.09992 | v1 | 2026-05-11 | Attention Drift: What Autoregressive Speculative Decoding Models Learn | Eldenk, Doğaç | 见固定原文页；未将全文入库 | https://arxiv.org/abs/2605.09992v1 |
+| 30 | [`papers/2511.16665-tlt-adaptive-drafter.md`](<../papers/2511.16665-tlt-adaptive-drafter.md>) | 2511.16665 | v3 | 2026-03-20 | Taming the Long-Tail: Efficient Reasoning RL Training with Adaptive Drafter | Hu, Qinghao | 见固定原文页；未将全文入库 | https://arxiv.org/abs/2511.16665v3 |
+| 31 | [`papers/2609.24150-acceptance-aware-training.md`](<../papers/2609.24150-acceptance-aware-training.md>) | 2609.24150 | v1 | 2026-09-21 | Acceptance-Aware Draft Model Training for Speculative Decoding | Xia | 见固定原文页；未将全文入库 | https://arxiv.org/abs/2609.24150v1 |
+| 32 | [`papers/2610.10411-expected-decoding-rounds.md`](<../papers/2610.10411-expected-decoding-rounds.md>) | 2610.10411 | v1 | 2026-10-07 | Training Parallel Speculative Draft Models by Directly Minimizing Expected Decoding Rounds | Zhao | 见固定原文页；未将全文入库 | https://arxiv.org/abs/2610.10411v1 |
+| 33 | [`papers/2607.16673-specla.md`](<../papers/2607.16673-specla.md>) | 2607.16673 | v1 | 2026-07-18 | SpecLA: Efficient Speculative Decoding for Linear-Attention Models | Wang, Zhibin | CC BY 4.0 | https://arxiv.org/abs/2607.16673v1 |
+
+**非 arXiv 一手技术材料**： [EAGLE-4 精读](../papers/eagle4-one-flexible-drafter.md)依据 EAGLE-4 Team 的 2026 预印本 PDF 与 [官方实现仓库](https://github.com/eagle-hq/EAGLE-4)；arXiv `all:"EAGLE-4"` 未发现对应论文条目，故该来源不计入上表 arXiv 编号。
 
 ## 2. 代码仓库（4 个实现/代码切面核验 + 1 个官方参考实现）
 
 | # | 分册/用途 | 仓库 | commit | 日期 | 用到的文件:行 | license |
 | --: | :-- | :-- | :-- | :-- | :-- | :-- |
-| 23 | [DARTree 精读](../papers/2608.13524-dartree.md) | `VILA-Lab/DARTree` | `5bb3240e806a9ccdc2c65e98d3bc40998a9845f1` | 2026-08-13 | `run_dartree.py:20–81`；`eval_dartree.py:586–760`（supertree）；`utils/draft_model.py:397–507`（draft/verify/commit） | 未核实（快照根目录未发现 LICENSE） |
-| 24 | [DLite 精读](../papers/2610.23787-dlite.md) | `SJTU-DAI-Sys/DLite` | `e0aa3d55d792fc9088231e13779678bcfdb3188f` | 2026-10-21 | `dlite/engine.py:67–106`；`dlite/modeling/dlite.py:345–461,503–735`；`dlite/modeling/sequential_head.py:72–87`；`dlite/utils/sampling.py:73–125` | MIT |
-| 25 | [vLLM 实现核验](../papers/vllm-implementation.md) | `vllm-project/vllm` | `2b85d9cb65c1f56c347cb7f56f1596a6b8b28373` | 2026-10-17 | `config/speculative.py:533,604`；`v1/spec_decode/llm_base_proposer.py:257–261,449–509`；`v1/sample/rejection_sampler.py:410–520,949,1128`；`v1/spec_decode/metrics.py:107–122`；`v1/worker/gpu_model_runner.py:4714–4741,4987–4990` | Apache-2.0 |
-| 26 | [SGLang 实现核验](../papers/sglang-implementation.md) | `sgl-project/sglang` | `2a08e261ecd4cdfb04ec354f9005f18b88108b7d` | 2026-10-16 | `speculative/eagle_worker_v2.py:178–180,181–182,648–657,671–684,727–733`；`speculative/eagle_utils.py:157,384,741,860–916,947,1000–1013,1032–1038`；`speculative/eagle_info.py:35,162` | Apache-2.0 |
-| 27 | [EAGLE 分册 §8.1 + report §8.1](../papers/2401.15077-eagle-series.md) | `SafeAILab/EAGLE` | `cb7e0841fe0c206c6ed74a197ad5e2a1f13f5a2b` | 2026-02-20 | `eagle/model/utils.py:398–399`（`qx=1.0`）；`eagle/model/ea_model.py:270,452`；`eagle/modeling_eagle.py:1427` | 未核实（仓库根有 LICENSE，未逐字读） |
+| 34 | [DARTree 精读](../papers/2608.13524-dartree.md) | `VILA-Lab/DARTree` | `5bb3240e806a9ccdc2c65e98d3bc40998a9845f1` | 2026-08-13 | `run_dartree.py:20–81`；`eval_dartree.py:586–760`（supertree）；`utils/draft_model.py:397–507`（draft/verify/commit） | 未核实（快照根目录未发现 LICENSE） |
+| 35 | [DLite 精读](../papers/2610.23787-dlite.md) | `SJTU-DAI-Sys/DLite` | `e0aa3d55d792fc9088231e13779678bcfdb3188f` | 2026-10-21 | `dlite/engine.py:67–106`；`dlite/modeling/dlite.py:345–461,503–735`；`dlite/modeling/sequential_head.py:72–87`；`dlite/utils/sampling.py:73–125` | MIT |
+| 36 | [vLLM 实现核验](../papers/vllm-implementation.md) | `vllm-project/vllm` | `2b85d9cb65c1f56c347cb7f56f1596a6b8b28373` | 2026-10-17 | `config/speculative.py:533,604`；`v1/spec_decode/llm_base_proposer.py:257–261,449–509`；`v1/sample/rejection_sampler.py:410–520,949,1128`；`v1/spec_decode/metrics.py:107–122`；`v1/worker/gpu_model_runner.py:4714–4741,4987–4990` | Apache-2.0 |
+| 37 | [SGLang 实现核验](../papers/sglang-implementation.md) | `sgl-project/sglang` | `2a08e261ecd4cdfb04ec354f9005f18b88108b7d` | 2026-10-16 | `speculative/eagle_worker_v2.py:178–180,181–182,648–657,671–684,727–733`；`speculative/eagle_utils.py:157,384,741,860–916,947,1000–1013,1032–1038`；`speculative/eagle_info.py:35,162` | Apache-2.0 |
+| 38 | [EAGLE 分册 §8.1 + report §8.1](../papers/2401.15077-eagle-series.md) | `SafeAILab/EAGLE` | `cb7e0841fe0c206c6ed74a197ad5e2a1f13f5a2b` | 2026-02-20 | `eagle/model/utils.py:398–399`（`qx=1.0`）；`eagle/model/ea_model.py:270,452`；`eagle/modeling_eagle.py:1427` | 未核实（仓库根有 LICENSE，未逐字读） |
 
 逐条锚点、支撑断言与行号更正历史见 [CODE-AUDIT.md](CODE-AUDIT.md)。
 
@@ -53,7 +66,7 @@
 
 ## 4. 未入库/未设分册的候选
 
-DSpark / BASTION / HASS / DistillSpec / Sequoia 等仍未设分册的候选，处置理由见 [CANDIDATES.md](CANDIDATES.md)；其中只有 4 条在本轮重新核实过 ID，其余按类别排除、不给编号。
+候选与排除理由见 [CANDIDATES.md](CANDIDATES.md)。本轮将 Sequoia、Traversal Verification 及多条 drafter/validator/kernel 研究线从“待补或排除”提升至正式精读；Bole 仅保留摘要级候选，因公开稿带有与公开发布许可状态不一致的保密水印，且当前固定 SGLang 分支未找到对应实现路径。
 
 ## SecureSD evidence scope (2026-10-22)
 

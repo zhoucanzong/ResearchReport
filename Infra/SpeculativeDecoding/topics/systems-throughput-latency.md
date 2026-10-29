@@ -95,6 +95,61 @@ EAGLE-3 论文 Table 3（SGLang、1×H100、LLaMA-3.1-8B、MT-Bench、链长 3�
 
 ---
 
+## 算子与状态：树验证怎样变成一次 target 工作
+
+树形 speculative decoding 不只是“把更多候选并行算”。target 必须能让每个候选只读取**已提交前缀和它自己的祖先**，同时避免兄弟分支互相泄漏；验收后还要只保存被接受路径的 cache/state。下面是通用执行抽象，不是某个框架的逐函数调用图。
+
+```mermaid
+flowchart LR
+  D[Draft 产生候选链/树] --> P[打包 token 与 parent / depth]
+  P --> M[构造拓扑约束：祖先可见、兄弟隔离]
+  M --> F[Target 并行前向：计算候选 logits / 状态因子]
+  F --> A[Greedy 或采样规则选择接受路径]
+  A --> C{Target 的历史状态形态}
+  C -->|Transformer KV| K[提交接受 token 的 KV；丢弃拒绝分支]
+  C -->|递归线性状态| R[恢复/重建接受分支 state；回收其余因子]
+  K --> B[调度下一轮 batch]
+  R --> B
+```
+
+| 层 | 算子/数据问题 | 关键设计取舍 | 现有证据应怎样读 |
+|---|---|---|---|
+| **候选打包** | 将多请求的候选树展成节点数组，并保留 parent、depth、request 等索引 | 规则张量便于批处理；ragged forest 更省空槽，却让地址、mask 和图捕获更复杂 | [SpecInfer](../papers/2305.09781-specinfer.md) 解释树生成与 flatten；框架代码分别见 vLLM/SGLang 分册 |
+| **Topology mask / target forward** | 为每个树节点构造可见前缀；节点只读共同已提交前缀和该节点祖先 | 树 mask 可在一次 target forward 中评分多条路径；节点越多通常意味着更多 target 行、mask 元数据和验证工作 | [SpecInfer](../papers/2305.09781-specinfer.md) 是 KV-cache target 的树验证基础；[Sequoia](../papers/2402.12374-sequoia.md) 将最优树形与硬件预算联系起来 |
+| **接受与修正** | 根据各节点 target logits，按目标是 greedy 还是 sampling 选择接受路径并在拒绝处修正 | 算法层的分布保持规则，与 kernel 是否支持相同拓扑是两件事；“树 mask 正确”不自动证明接受采样无损 | 数学条件见[验证专题](verification-acceptance.md)；SGLang 固定代码只对 topk=1 路径使用真实 draft `q` 的拒绝采样，树 topk>1 走另一条 target-only kernel（见[SGLang 分册](../papers/sglang-implementation.md)） |
+| **KV/state commit** | 验收后只保留接受路径，回收其它候选状态 | Transformer KV 可截断拒绝后缀；递归线性状态不是按 token 索引的后缀，不能用同一截断操作 | [SpecLA](../papers/2607.16673-specla.md) 比较全状态快照、token replay 与 factor buffer，并提出把接受因子更新延迟融合到下一次验证 |
+| **kernel/调度** | 将 mask、target 层、状态读取、采样、commit 映射到设备并发和 CUDA Graph | 常规 attention kernel 的连续访存优势可能被树形依赖、ragged shape、短序列固定开销抵消；树宽需要受实测 kernel 成本约束 | 系统曲线见本专题；Bole 的公开摘要提出 hybrid-attention tree kernel，但其细节在本库暂不作为精读结论，见下方来源边界 |
+
+### 不要把“树注意力”当成一个 kernel 名称
+
+树验证至少跨三个层次：
+
+1. **拓扑语义**：要算哪些候选，哪些祖先可见、哪些兄弟必须隔离；这是 mask / state-flow 的定义。
+2. **张量计算**：target 如何对这些节点做投影、attention 或线性状态递推；它可以是 dense tree mask、tree-aware kernel、serial replay 或分解后的并行链。
+3. **生命周期**：每轮的 logits 和 K/V/state 因子如何采样、提交或释放；正确性约束与临时内存峰值都在这里落地。
+
+因此论文报告“树候选一次前向验证”，并不代表验证成本与链式草稿相同：目标模型要处理更多候选行，树 mask 与状态因子也会改变 kernel 的访存和中间张量。反过来，某个实现采用 target-only 或 greedy verifier，也不能单凭名字判断它是否满足概率采样的分布等价；须回到接受规则。
+
+### Transformer KV 与 recurrent state：commit 的两种语义
+
+Transformer 路线可把树节点 KV 视作临时扩展：共同前缀复用，验收后保留选中路径，拒绝分支作为 cache 后缀回收。SGLang 的固定实现核验也显示，树节点构造、greedy tree verification、链式拒绝采样是不同函数路径；其中采样拒绝路径硬限制 topk=1，不能把框架的所有树路径统称为“使用 `p/q` 无损拒绝采样”。
+
+线性注意力/混合模型则以递归状态压缩过去。若每个树节点保存完整 state，瞬时内存随节点数增长；若验收后重放已接受 token，又会重复执行 target。SpecLA 的 GDN 研究通过 state-resident serial、tree-masked parallel 和 chain-decomposed hybrid 三种验证形状，配合 accepted-factor buffer 和 delayed state update，专门处理“分支预测—只提交一条路径”的状态生命周期。论文数字只针对其 GDN-1.3B/H100 设置，不能外推成所有 recurrent attention kernel 的性能结论。[SpecLA §§4–5、8](../papers/2607.16673-specla.md)
+
+另一个需要单独关注的方向是 **hybrid-attention tree verification**。[Bole 的公开 arXiv 摘要](https://arxiv.org/abs/2608.01651v1)将问题定位为：full-attention 与 recurrent linear-attention 混合的 target，如何降低树验证和状态管理的成本。v1 页面/稿件含有“HPCA 2027 submission / Confidential Draft / Do NOT Distribute”水印；虽然 arXiv 页面标注 CC BY-NC-SA，现阶段这里只保留摘要级问题定位，不据此复述内部 kernel 细节或图表。论文链接到 SGLang `release/v0.5.12`；在固定 commit `5a15cde858ea09b77116212a39356f2fc51b8584` 的 `python/sglang/srt/speculative/` 与测试目录中未找到可辨认的 Bole 专属实现路径，因此不把摘要中的能力描述写成已由源码确认的生产行为。
+
+### 生产框架快照告诉我们什么、又没有告诉我们什么
+
+| 固定源码证据 | 可支持的判断 | 证据边界 |
+|---|---|---|
+| [vLLM @ `2b85d9c`](../papers/vllm-implementation.md)：`llm_base_proposer.py`、`rejection_sampler.py`、`gpu_model_runner.py` 等 | 草稿概率如何装配、拒绝采样怎样分 greedy/probabilistic、指标如何统计 | 分册明确只审 5 个投机相关文件；attention backend、树形 mask kernel、完整 CUDA Graph 调度没有逐模块审读 |
+| [SGLang @ `2a08e26`](../papers/sglang-implementation.md)：`eagle_worker_v2.py`、`eagle_utils.py`、`eagle_info.py` | 候选树构造与 `eagle_sample` 分支；topk=1 chain rejection 与 topk>1 target-only 路径的区别 | 分册明确未展开 attention backend/CUDA Graph 细节；不能从 `verify_tree_*` 函数名推断硬件 kernel 的吞吐或访存行为 |
+| SpecInfer / Sequoia / SpecLA 论文 | 拓扑 mask、硬件树预算、recurrent state parallelization 的算法/论文级机制 | 论文或官方摘要里的 kernel 方案不等于当前 vLLM/SGLang 主线已有同样实现；每个源码结论需要另钉 commit |
+
+这一区分很重要：**论文层**解释目标算子应怎样利用树结构，**源码层**说明特定框架版本实际走了哪些 proposer/verifier/kernel 路径，**运行层**才回答特定 GPU、batch 和序列长度下是否更快。本专题目前有论文级 stateful kernel 精读和两个框架的静态路径核验，但没有进行 GPU benchmark，也没有对两套框架的完整 attention backend/CUDA Graph 层做共同版本的算子对照。
+
+---
+
 ## 6. 延迟 vs 吞吐：不要混着报
 
 | 指标 | 定义 | 投机解码的影响 |

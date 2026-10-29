@@ -48,7 +48,7 @@
 * [Infra/KVCachePD/report.md](<../Infra/KVCachePD/report.md>) — 84 行
 * [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) — 188 行
 * [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) — 81 行
-* [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) — 538 行
+* [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) — 533 行
 * [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) — 181 行
 
 ## LLM (11)

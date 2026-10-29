@@ -15,15 +15,15 @@
 | --- | --- |
 | **条目数**（`report.md`） | **77** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 12 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 9 |
-| 条目子文档数 | 282 |
-| 条目正文行数（剔除 front-matter） | 21,160 |
-| 条目字节 | 2,094,971 B |
+| 条目子文档数 | 294 |
+| 条目正文行数（剔除 front-matter） | 21,155 |
+| 条目字节 | 2,096,478 B |
 | 带 front-matter 的条目 | 77 |
 | 带合法 `date` 的条目 | 37 |
-| 文档（除生成物外的全部 `.md`） | 382 |
+| 文档（除生成物外的全部 `.md`） | 394 |
 | 其中文件名 `README.md` | 11 |
-| 纳入版本控制的文件 | 408 |
-| 纳入版本控制的 `.md` | 389 |
+| 纳入版本控制的文件 | 409 |
+| 纳入版本控制的 `.md` | 390 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -39,9 +39,9 @@
 | WorldModel | 3 | 45 | 1,153 | 135,372 B | [板块页 →](<WorldModel/README.md>) |
 | AI4Science | 10 | 53 | 870 | 146,743 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 2 | 10 | 192 | 36,294 B | [板块页 →](<Evaluation/README.md>) |
-| Infra | 6 | 57 | 1,141 | 109,557 B | [板块页 →](<Infra/README.md>) |
+| Infra | 6 | 69 | 1,136 | 111,064 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 9 | 39 | 1,853 | 201,274 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **77** | **382** | **21,160** | **2,094,971 B** | — |
+| **合计** | **77** | **394** | **21,155** | **2,096,478 B** | — |
 
 ## 分面索引
 
@@ -1023,10 +1023,10 @@
 
 </details>
 
-### Infra（6 条目 / 57 文档）
+### Infra（6 条目 / 69 文档）
 
 <details>
-<summary><b>基础设施 Infra（6 条目 / 50 子文档）</b></summary>
+<summary><b>基础设施 Infra（6 条目 / 62 子文档）</b></summary>
 
   <details>
   <summary><b>KV Cache 与预填充／解码分离</b> · <code>Infra/KVCachePD/report.md</code> · 84 行 · 2026-10-23</summary>
@@ -1083,13 +1083,13 @@
   </details>
 
   <details>
-  <summary><b>投机解码</b> · <code>Infra/SpeculativeDecoding/report.md</code> · 538 行 · 2026-10-22</summary>
+  <summary><b>投机解码</b> · <code>Infra/SpeculativeDecoding/report.md</code> · 533 行 · 2026-10-29</summary>
 
 
-    * **条目**：[Infra/SpeculativeDecoding/report.md](<Infra/SpeculativeDecoding/report.md>)（538 行 / 45,559 B）
+    * **条目**：[Infra/SpeculativeDecoding/report.md](<Infra/SpeculativeDecoding/report.md>)（533 行 / 47,066 B）
     * **专题目录**：`Infra/SpeculativeDecoding`
-    * **元数据**：type=`topic-research` · domain=`Infra` · subject=`SpeculativeDecoding` · date=`2026-10-22` · status=`needs-review`
-    * **子文档（41）**
+    * **元数据**：type=`topic-research` · domain=`Infra` · subject=`SpeculativeDecoding` · date=`2026-10-29` · status=`needs-review`
+    * **子文档（53）**
         * [legacy/speculative-block-diffusion.md](<Infra/SpeculativeDecoding/legacy/speculative-block-diffusion.md>) — 230 行 / 18,588 B
         * [legacy/speculative-cascade-heterogeneous.md](<Infra/SpeculativeDecoding/legacy/speculative-cascade-heterogeneous.md>) — 141 行 / 11,829 B
         * [legacy/speculative-classical-and-self.md](<Infra/SpeculativeDecoding/legacy/speculative-classical-and-self.md>) — 157 行 / 12,113 B
@@ -1105,32 +1105,44 @@
         * [papers/2401.10774-medusa.md](<Infra/SpeculativeDecoding/papers/2401.10774-medusa.md>) — 204 行 / 15,815 B
         * [papers/2401.15077-eagle-series.md](<Infra/SpeculativeDecoding/papers/2401.15077-eagle-series.md>) — 244 行 / 19,850 B
         * [papers/2402.02057-lookahead.md](<Infra/SpeculativeDecoding/papers/2402.02057-lookahead.md>) — 202 行 / 15,270 B
+        * [papers/2402.12374-sequoia.md](<Infra/SpeculativeDecoding/papers/2402.12374-sequoia.md>) — 76 行 / 9,166 B
         * [papers/2408.11049-magicdec.md](<Infra/SpeculativeDecoding/papers/2408.11049-magicdec.md>) — 200 行 / 14,379 B
+        * [papers/2505.12398-traversal-verification.md](<Infra/SpeculativeDecoding/papers/2505.12398-traversal-verification.md>) — 61 行 / 7,601 B
         * [papers/2509.18085-spiffy.md](<Infra/SpeculativeDecoding/papers/2509.18085-spiffy.md>) — 19 行 / 2,586 B
+        * [papers/2510.19779-adaspec.md](<Infra/SpeculativeDecoding/papers/2510.19779-adaspec.md>) — 49 行 / 5,391 B
+        * [papers/2511.16665-tlt-adaptive-drafter.md](<Infra/SpeculativeDecoding/papers/2511.16665-tlt-adaptive-drafter.md>) — 58 行 / 7,214 B
         * [papers/2601.05724-hsd.md](<Infra/SpeculativeDecoding/papers/2601.05724-hsd.md>) — 84 行 / 8,788 B
+        * [papers/2602.05774-vsd.md](<Infra/SpeculativeDecoding/papers/2602.05774-vsd.md>) — 66 行 / 7,379 B
         * [papers/2602.06036-dflash.md](<Infra/SpeculativeDecoding/papers/2602.06036-dflash.md>) — 21 行 / 2,771 B
         * [papers/2602.16994-delayed-tree.md](<Infra/SpeculativeDecoding/papers/2602.16994-delayed-tree.md>) — 83 行 / 9,007 B
         * [papers/2604.12989-ddtree.md](<Infra/SpeculativeDecoding/papers/2604.12989-ddtree.md>) — 21 行 / 2,490 B
+        * [papers/2605.01106-component-aware-self-spec.md](<Infra/SpeculativeDecoding/papers/2605.01106-component-aware-self-spec.md>) — 51 行 / 7,035 B
+        * [papers/2605.09992-attention-drift.md](<Infra/SpeculativeDecoding/papers/2605.09992-attention-drift.md>) — 52 行 / 6,283 B
         * [papers/2606.01813-caddtree.md](<Infra/SpeculativeDecoding/papers/2606.01813-caddtree.md>) — 53 行 / 8,309 B
         * [papers/2606.02091-dflare.md](<Infra/SpeculativeDecoding/papers/2606.02091-dflare.md>) — 23 行 / 2,424 B
         * [papers/2606.08048-poe-bridge.md](<Infra/SpeculativeDecoding/papers/2606.08048-poe-bridge.md>) — 17 行 / 2,114 B
+        * [papers/2607.16673-specla.md](<Infra/SpeculativeDecoding/papers/2607.16673-specla.md>) — 85 行 / 10,809 B
         * [papers/2607.22634-presto.md](<Infra/SpeculativeDecoding/papers/2607.22634-presto.md>) — 19 行 / 2,452 B
+        * [papers/2608.03447-approximate-sd.md](<Infra/SpeculativeDecoding/papers/2608.03447-approximate-sd.md>) — 70 行 / 8,066 B
         * [papers/2608.13524-dartree.md](<Infra/SpeculativeDecoding/papers/2608.13524-dartree.md>) — 31 行 / 3,850 B
         * [papers/2609.21827-rheosampling.md](<Infra/SpeculativeDecoding/papers/2609.21827-rheosampling.md>) — 216 行 / 15,804 B
+        * [papers/2609.24150-acceptance-aware-training.md](<Infra/SpeculativeDecoding/papers/2609.24150-acceptance-aware-training.md>) — 74 行 / 8,060 B
         * [papers/2609.33184-specstream.md](<Infra/SpeculativeDecoding/papers/2609.33184-specstream.md>) — 44 行 / 5,416 B
         * [papers/2610.07350-tlar.md](<Infra/SpeculativeDecoding/papers/2610.07350-tlar.md>) — 54 行 / 9,515 B
         * [papers/2610.08678-secure-sd.md](<Infra/SpeculativeDecoding/papers/2610.08678-secure-sd.md>) — 55 行 / 6,108 B
+        * [papers/2610.10411-expected-decoding-rounds.md](<Infra/SpeculativeDecoding/papers/2610.10411-expected-decoding-rounds.md>) — 56 行 / 7,869 B
         * [papers/2610.23787-dlite.md](<Infra/SpeculativeDecoding/papers/2610.23787-dlite.md>) — 48 行 / 6,161 B
         * [papers/eagle4-one-flexible-drafter.md](<Infra/SpeculativeDecoding/papers/eagle4-one-flexible-drafter.md>) — 211 行 / 19,192 B
         * [papers/sglang-implementation.md](<Infra/SpeculativeDecoding/papers/sglang-implementation.md>) — 220 行 / 15,358 B
         * [papers/vllm-implementation.md](<Infra/SpeculativeDecoding/papers/vllm-implementation.md>) — 227 行 / 18,077 B
-        * [sources/CANDIDATES.md](<Infra/SpeculativeDecoding/sources/CANDIDATES.md>) — 96 行 / 10,366 B
+        * [sources/CANDIDATES.md](<Infra/SpeculativeDecoding/sources/CANDIDATES.md>) — 95 行 / 11,888 B
         * [sources/CODE-AUDIT.md](<Infra/SpeculativeDecoding/sources/CODE-AUDIT.md>) — 99 行 / 12,828 B
-        * [sources/MANIFEST.md](<Infra/SpeculativeDecoding/sources/MANIFEST.md>) — 71 行 / 11,370 B
-        * [topics/algorithm-families.md](<Infra/SpeculativeDecoding/topics/algorithm-families.md>) — 164 行 / 12,014 B
+        * [sources/MANIFEST.md](<Infra/SpeculativeDecoding/sources/MANIFEST.md>) — 84 行 / 14,971 B
+        * [topics/algorithm-families.md](<Infra/SpeculativeDecoding/topics/algorithm-families.md>) — 166 行 / 12,471 B
         * [topics/diffusion-drafters.md](<Infra/SpeculativeDecoding/topics/diffusion-drafters.md>) — 114 行 / 15,248 B
-        * [topics/systems-throughput-latency.md](<Infra/SpeculativeDecoding/topics/systems-throughput-latency.md>) — 168 行 / 10,532 B
-        * [topics/verification-acceptance.md](<Infra/SpeculativeDecoding/topics/verification-acceptance.md>) — 173 行 / 11,577 B
+        * [topics/draft-side-and-training.md](<Infra/SpeculativeDecoding/topics/draft-side-and-training.md>) — 84 行 / 10,710 B
+        * [topics/systems-throughput-latency.md](<Infra/SpeculativeDecoding/topics/systems-throughput-latency.md>) — 223 行 / 18,083 B
+        * [topics/verification-acceptance.md](<Infra/SpeculativeDecoding/topics/verification-acceptance.md>) — 186 行 / 14,049 B
 
   </details>
 
@@ -1295,13 +1307,13 @@
 | [AIGC/README.md](<AIGC/README.md>) | AIGC | 32 | 1,837 B |
 | [Agents/README.md](<Agents/README.md>) | Agents | 74 | 3,621 B |
 | [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 46 | 1,972 B |
-| [Infra/README.md](<Infra/README.md>) | Infra | 118 | 8,186 B |
+| [Infra/README.md](<Infra/README.md>) | Infra | 131 | 9,794 B |
 | [LLM/README.md](<LLM/README.md>) | LLM | 171 | 12,228 B |
 | [Models/README.md](<Models/README.md>) | Models | 108 | 5,206 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 107 | 4,830 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 196 | 14,499 B |
+| [README.md](<README.md>) |  | 196 | 14,514 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 104 | 6,845 B |
 | [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |
 | [docs/harness-feedback.md](<docs/harness-feedback.md>) | docs | 102 | 7,365 B |

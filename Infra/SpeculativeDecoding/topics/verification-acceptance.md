@@ -123,6 +123,19 @@ T>0 的 point-mass 接受概率 \(p(d)\) 不等于“候选是否是 target argm
 
 [RheoSampling 分册](../papers/2609.21827-rheosampling.md) 讨论了其论文范围内的 proxy/真实概率分离；没有核对具体实现、条件和默认值时，不能宣称所有 EAGLE 配置都会采用或都需要同一个修复。
 
+### 树验证阅读地图：拓扑、遍历、接受规则是三件事
+
+读树状 speculative decoding 时，可先分开定位四个问题；不要把“树更大”“从叶子开始检查”和“允许接受不匹配”混成一种优化。
+
+| 问题层 | 要回答的问题 | 代表阅读 | 保证/边界 |
+|---|---|---|---|
+| **树形设计** | 草稿候选如何组织、节点预算给哪些分支、树 mask/KV 怎样表达？ | [SpecInfer](../papers/2305.09781-specinfer.md) 建多 SSM token tree；[Sequoia](../papers/2402.12374-sequoia.md) 用动态规划选节点预算内的树，并按实测硬件成本选规模；[EAGLE 系列](../papers/2401.15077-eagle-series.md) 按上下文动态扩展 | 建树提高候选覆盖；树拓扑本身不证明输出等价，也不保证 wall-clock 更快。 |
+| **遍历顺序** | 已经算出整棵树的 target logits 后，先看哪条候选、拒绝时保留什么？ | [Traversal Verification](../papers/2505.12398-traversal-verification.md) 叶到根考察路径，并更新剩余兄弟分支 | 论文在其自回归采样树定义下证明严格分布等价；T=0 时作者认为没有相对收益，遍历开销也会吃掉部分吞吐收益。 |
+| **接受判据与概率回补** | 一个节点或整条路径何时提交，拒绝后的 target 概率质量如何恢复？ | 单链推导仍见本页 §2–4；树/序列级扩展看 [HSD](../papers/2601.05724-hsd.md)、[RheoSampling](../papers/2609.21827-rheosampling.md) | HSD/RheoSampling 改的是可访问树上的质量平衡或概率职责；其证明需连同各自候选树和条件读取，不能用一条单链公式替代。 |
+| **近似风险预算** | 若允许接受 target 不会 greedy 选择的 token，怎样限制偏离？ | [Approximate Speculative Decoding](../papers/2608.03447-approximate-sd.md) 设局部 regret gate、块内上限和跨轮 request ledger | 这是有预算的近似 greedy decoding，不保持 target 输出轨迹或分布；local logit regret 不是语义错误概率或完整序列 KL 上界。 |
+
+一个简洁的阅读顺序是：先用 SpecInfer 理解树如何进入一次 target 前向，再对照 Sequoia 看预算和硬件如何改变树形；接着读 Traversal Verification 理解遍历顺序如何影响整段接受；最后回到 HSD/RheoSampling 对照严格概率回补，并把 ASD 单独放在有损 verifier 一栏。树的构造、遍历的顺序、接受规则以及算子成本必须分别判断。
+
 ## 6. “无损”需要区分保证与经验
 
 | 声明 | 需要的证据 |

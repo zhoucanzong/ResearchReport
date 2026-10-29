@@ -1,6 +1,6 @@
 # 选文说明与候选池 · SpeculativeDecoding
 
-> 目的：**先筛选、后精读**。把“为什么选这 22 项、为什么没选其它”写清楚，以后不必重复筛。
+> 目的：**先筛选、后精读**。记录哪些工作因新增机制进入当前主线、哪些因重叠或证据不足仍作候选；覆盖项和版本以当前 `report.md`、`papers/` 与 `MANIFEST.md` 为准。本清单不以条目数衡量研究深度。
 > 证据纪律：本页只做**选文判断**，不含未核实的论文结论。**带 ID 的排除项均已回查 arXiv 元数据**；未核实的按类别排除，**不编号、不编造 ID**。
 
 ## 1. 本条目要回答什么（决定选文标准）
@@ -14,7 +14,7 @@
 **入选门槛（满足其一）**：提出新机制或新范式 ｜ 首次在某能力上成立且有规模证据 ｜ 成为后续基线 ｜ 证伪/纠正已有共识。
 **淘汰标准（命中其一）**：增量调参无新机制 ｜ 只在玩具设置验证或无消融 ｜ 已被后续取代 ｜ 与本条目主题仅擦边 ｜ 拿不到正文。
 
-## 2. 入选（22 项，逐篇一句理由）
+## 2. 已纳入当前学习路线
 
 | 分册 | 入选理由（一句话） |
 | :-- | :-- |
@@ -38,59 +38,58 @@
 | [Delayed Tree Expansion](../papers/2602.16994-delayed-tree.md) | 配平 verifier 基线后再改变树分叉时机；保留跨模型比较中的负向子项，并披露 selector 的离线训练成本。 |
 | [CaDDTree](../papers/2606.01813-caddtree.md) | 把接受长度优化改为每轮吞吐目标，解释固定候选预算怎样忽略 target 验证成本；停止保证依赖成本曲线条件。 |
 | [TLAR](../papers/2610.07350-tlar.md) | 对生成历史检索做来源对照、SmallDraft 边际增量与验证反馈调度，同时报告长短输出的端到端收益差异。 |
+| [EAGLE-4](../papers/eagle4-one-flexible-drafter.md) | 将实测 draft/verify 成本与硬件、并发条件一起用于在线调整树的深度和宽度；收益因此是配置属性而非家族常数。 |
+| [Sequoia](../papers/2402.12374-sequoia.md) | 在树验证基础上加入节点预算动态规划、不放回验证与硬件成本树优化；补树形和运行成本的共同选择。 |
+| [Traversal Verification](../papers/2505.12398-traversal-verification.md) | 以叶到根遍历和序列级路径接受为 verifier 设计，补树遍历顺序与严格无损保证的分工。 |
+| [Approximate Speculative Decoding](../papers/2608.03447-approximate-sd.md) | 对 greedy verifier 的 mismatch 设置 regret 门、块内上限和请求级预算；明确作为近似路线而非无损方法。 |
+| [VSD](../papers/2602.05774-vsd.md) | 把草稿训练从 token likelihood 扩到 path-level acceptance utility，并用变分优化与 EM 近似训练。 |
+| [Component-Aware Self-Speculation](../papers/2605.01106-component-aware-self-spec.md) | 用 hybrid target 的 SSM/linear-attention 子图当内部 draft，展示模块并/串关系如何改变候选可用性。 |
+| [AdaSPEC](../papers/2510.19779-adaspec.md) | 按拟合难度选择蒸馏 token，解释容量受限时“全 token KL”与接受收益的错位。 |
+| [Attention Drift](../papers/2605.09992-attention-drift.md) | 从表示和注意力漂移分析草稿链深度为何影响上下文跟随，并测试归一化修补。 |
+| [TLT / Adaptive Drafter](../papers/2511.16665-tlt-adaptive-drafter.md) | 在 RL rollout 长尾空档在线更新 draft，把草稿训练时机与 rollout 调度结合。 |
+| [Acceptance-Aware Training](../papers/2609.24150-acceptance-aware-training.md) | 分别以 EAL/WTV 直接优化 greedy 与 sampling 的固定窗口接受长度。 |
+| [EDR](../papers/2610.10411-expected-decoding-rounds.md) | 用状态访问概率直接优化全序列期望验证轮数，区别于 window-local 接受目标。 |
+| [SpecLA](../papers/2607.16673-specla.md) | 面向 linear-attention target 设计树验证 kernel 和接受状态恢复，补递归状态的执行问题。 |
 | [vLLM 实现核验](../papers/vllm-implementation.md) | 生产框架一手代码；`greedy` vs `probabilistic` 的语义分叉，是“论文 q 如何落地”的最佳样本。 |
 | [SGLang 实现核验](../papers/sglang-implementation.md) | 生产框架一手代码；#10308 的处置对象，能同时回答“issue 状态”与“代码能力”。 |
 
-## 3. 排除清单（13 条：4 条带已核实 ID + 9 条类别性排除）
+## 3. 排除清单
 
-### 3.1 带已核实 ID 的排除（4 条）
+### 3.1 带已核实 ID 的排除（3 条）
 
 > 下列论文**本轮未精读**。理由仅为**选文判断**（主题分布、代际关系、与本条目判据的关系），**不构成对其质量的评价**。标题/作者/版本取自本轮 arXiv API 回查。
 
 | # | arXiv ID | 论文（arXiv 标题，版本/日期） | 排除理由（一句话） |
 | --: | :-- | :-- | :-- |
-| 1 | `2310.08461` | DistillSpec: Improving Speculative Decoding via Knowledge Distillation（v2，2024-03-31，Zhou, Yongchao） | 训练目标线的早期基线；其结论已被 AdaSPEC/HASS/EAGLE-3 的训练章节覆盖，单设分册会重复。 |
-| 2 | `2402.12374` | Sequoia: Scalable, Robust, and Hardware-aware Speculative Decoding（v3，2025-07-05，Chen, Zhuoming） | 硬件感知树优化；与 SpecInfer（树宽）、MagicDec（硬件条件）在系统轴上重叠，本轮优先保留后两者。 |
-| 3 | `2408.15766` | Learning Harmonized Representations for Speculative Sampling（HASS；v3，2025-02-26，Zhang, Lefan） | EAGLE-3 论文已直接对照 HASS 并说明差异（HASS 保留特征预测损失）；单设分册会与 EAGLE 分册重复。 |
-| 4 | `2403.00835` | CLLMs: Consistency Large Language Models（v4，2024-06-13，Kou, Siqi） | **不是投机解码**（一致性模型的并行解码）；同时用作“素材层 EAGLE ID 误写”的更正样本，故只登记不设册。 |
+| 1 | `2310.08461` | DistillSpec: Improving Speculative Decoding via Knowledge Distillation（v2，2024-03-31，Zhou, Yongchao） | 训练目标线的早期基线；当前路线已有 EAGLE 系列、AdaSPEC、VSD、AAT、EDR 等不同角度的训练目标，单设分册需有新的比较结论。 |
+| 2 | `2408.15766` | Learning Harmonized Representations for Speculative Sampling（HASS；v3，2025-02-26，Zhang, Lefan） | EAGLE-3 论文已直接对照 HASS 并说明差异（HASS 保留特征预测损失）；单设分册会与 EAGLE 分册重复。 |
+| 3 | `2403.00835` | CLLMs: Consistency Large Language Models（v4，2024-06-13，Kou, Siqi） | **不是投机解码**（一致性模型的并行解码）；同时用作“素材层 EAGLE ID 误写”的更正样本，故只登记不设册。 |
 
-### 3.2 类别性排除（9 条，**未逐一核实 ID，故不给 ID**）
+### 3.2 类别性排除（8 项，**未逐一核实 ID，故不给 ID**）
 
 | # | 类别 | 排除理由（一句话） |
 | --: | :-- | :-- |
-| 5 | **自投机子型**：Hydra、SWIFT、CLaSp、LayerSkip 等 | 机制已被 Medusa（并行头）与 EAGLE（特征级）覆盖；作为素材层保留，不重复设册。 |
-| 6 | **系统优化**：TriForce、Mirror-SD 等 | SpecStream 已补 KV offload / streaming / co-execution；TriForce 作为其论文内基线出现。其它系统仍需固定实现和同条件对照，避免与 MagicDec 重复讲历史 KV 结论。 |
-| 7 | **量化/分层交叉**：QSpec、HiSpec 等 | 更适合归 `Infra/QuantizationEdge`；本条目只在谱系里提一句。 |
-| 8 | **多模态投机**：ViSpec、SpecVLM、MSD、SpecPrune-VLA 等 | 素材层已有横切文档；本轮篇幅优先给“验证 + 系统”两条主线。 |
-| 9 | **领域/语种特化**：DictSpec、CDSL 等 | 属于“检索式/受限输出”的补充；已在素材层保留，本轮不设册。 |
-| 10 | **端侧/专用硅**：SMoLPU、SS-MoE、FlexSpec 等 | 指标口径不同（µJ/token、能效 vs tokens/s），无法与算法论文同表；素材层保留。 |
-| 11 | **草稿训练新法**：AdaSPEC、Attention Drift、TLT 等 | 与 EAGLE-3 的训练/上下文对齐线交叉；本轮以 EAGLE 分册 + 素材层覆盖。 |
-| 12 | **检索式**：REST、PLD、SAM 等 | Lookahead 与 TLAR 分别覆盖语料/prompt线索和当前生成轨迹复用；其它检索器仍需同预算对照。 |
-| 13 | **经典背景**：Leviathan / Chen（2023） | 范式源头，已在 topic 2 作为数学基础引用；不单设分册（无“新机制”可拆）。 |
+| 4 | **自投机子型**：Hydra、SWIFT、CLaSp、LayerSkip 等 | 现有 Medusa/EAGLE 与草稿侧专题已经建立并行头、特征级和层跳过阅读路线；单篇优先级低于这些路径之间的统一控制比较。 |
+| 5 | **系统优化**：TriForce、Mirror-SD 等 | SpecStream 已补 KV offload / streaming / co-execution；其它系统仍需固定实现和同条件对照，避免与现有长上下文/服务材料重复。 |
+| 6 | **量化/分层交叉**：QSpec、HiSpec 等 | 更适合归 `Infra/QuantizationEdge`；本条目只在谱系里提一句。 |
+| 7 | **多模态/VLA 投机**：ViSpec、SpecVLM、MSD、SpecPrune-VLA 等 | 素材层已有线索，但需先区分目标模型、输出结构和正确性定义，再选代表作精读。 |
+| 8 | **领域/语种、检索与端侧特化**：DictSpec、CDSL、REST、PLD、SAM、SMoLPU、SS-MoE、FlexSpec 等 | 属于扩展路线；若没有新的控制实验或明确使用场景，不再堆模型/应用名单。 |
 
-## 4. 统计口径（可逐条核对）
+## 4. 选文边界
 
-| 项 | 数 | 说明 |
-| :-- | --: | :-- |
-| 候选池 N | **35** | 4 条带 ID 的排除 + 9 条类别排除 + 22 个精读/代码入口 |
-| 入选 M | **22** | 20 篇论文精读分册（覆盖 22 篇论文）+ 2 篇框架代码核验 |
-| 排除 | **13** | 4 带 ID + 9 类别 |
-| 其中本轮重新核 ID | **4** | `2310.08461` / `2402.12374` / `2408.15766` / `2403.00835` |
-| 未设分册但进谱系 | 2+ | DSpark / BASTION（只定位，不入表） |
-
-**ID 纪律**：3.1 的 4 个 ID 与标题/版本/日期**已逐条回查 arXiv**；3.2 是类别性排除，**不编号、不编造 ID**。现已精读的扩散交叉论文以 [MANIFEST](MANIFEST.md) 中固定版本和原文链接为准。
+精读入口按研究机制而不是发布数量扩展；类别性排除表示目前不单独拆册，不等于该方向不重要。ID、标题、版本和原文定位以 [MANIFEST](MANIFEST.md) 与各分册为准。扩散交叉、代码来源和其他不适合单篇精读的线索继续按主题关联，不拿候选数量或篇幅衡量覆盖深度。
 
 ## 5. 下一轮候选（按价值排序）
 
 1. **DLite 的迁移边界**：扩展到其它 target 家族/尺寸，并检查 LiteSpec 完整训练栈、实际模型权重和输出等价性。
 2. **SpecStream 源码/互联扩展**：找到作者实现固定 SHA，审计 SGLang 内核与 PCIe/NVLink/更大并发下的 trade-off。
-3. **Traversal Verification**（NeurIPS 2025）：与 RheoSampling 正交的验证遍历改进，值得单独设册。
-4. **CAST**（ICLR 2026）：成本感知建树；目前只有二手解读页，需一手正文。
-5. **HCSpec / HeteroSpec**（ACL 2026）：级联/异构验证预算；需通读 PDF。
-6. **多模态/VLA 投机**：素材层线索多，但正文质量参差；先筛再读。
+3. **CAST 同名工作消歧**：先核对不同 arXiv ID、版本和机制，再决定是否值得单独精读，避免把硬件动态建树和 block-draft 树构造混为一篇。
+4. **HCSpec / HeteroSpec**（ACL 2026）：级联/异构验证预算；需通读 PDF。
+5. **多模态/VLA 投机**：素材层线索多，但正文质量参差；先筛 target、候选/接受定义与安全边界再读。
+6. **Bole**（arXiv 2608.01651）：公开摘要涉及 hybrid-attention tree kernels，但当前 v1 稿件带“Confidential Draft / Do NOT Distribute”水印且 SGLang 链接快照未发现对应实现；在有清晰公开版本前只保留候选级别，不以摘要升级深度结论。
 
 ## 6. 与 `papers/` 的对应
 
-- 入选的论文研究各有独立分册；每篇开头含「亮点与差异」四行，正文展开七问。
+- 代表性论文按各自研究问题设置独立精读；结构不要求固定模板，需让读者看清机制、作者证据、设计边界及与相邻工作的关系。
 - 本页与 [MANIFEST.md](MANIFEST.md) 配套：**清单入库、全文不入库**；代码只记 `仓库@commit:文件:行`。
-- 与 `report.md` §9 一致：report 的“选文说明”是摘要，本页是完整清单。
+- 与 `report.md` 的推荐路线配合使用：本页记录选文判断，MANIFEST 记录固定版本和原文位置，`papers/` 分册负责深入解释。

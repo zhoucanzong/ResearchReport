@@ -331,7 +331,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-22 | needs-review |
+| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-29 | needs-review |
 
 ## 抗生素发现 (1)
 
@@ -471,13 +471,14 @@
 | --- | --- | --- | --- | --- |
 | [AIGC/AudioGen/report.md](<../AIGC/AudioGen/report.md>) | 音频与音乐生成：从压缩表示到可控长序列 | — | — | — |
 
-## 专题内分析分册（18）
+## 专题内分析分册（19）
 
 | 所属报告 | 分册入口 |
 | --- | --- |
 | [智能体系统](<../Agents/AgentSystems/report.md>) | [长程 Agent 的执行恢复：诊断、回滚与学习修正](<../Agents/AgentSystems/topics/long-horizon-execution-recovery.md>) |
 | [投机解码](<../Infra/SpeculativeDecoding/report.md>) | [横切专题①：投机解码的算法家族谱系](<../Infra/SpeculativeDecoding/topics/algorithm-families.md>) |
 | [投机解码](<../Infra/SpeculativeDecoding/report.md>) | [扩散语言模型与投机解码：草稿、验证和生成目标](<../Infra/SpeculativeDecoding/topics/diffusion-drafters.md>) |
+| [投机解码](<../Infra/SpeculativeDecoding/report.md>) | [横切专题：草稿从哪里来，怎样训练到会被接受](<../Infra/SpeculativeDecoding/topics/draft-side-and-training.md>) |
 | [投机解码](<../Infra/SpeculativeDecoding/report.md>) | [横切专题③：系统实现与吞吐—延迟权衡](<../Infra/SpeculativeDecoding/topics/systems-throughput-latency.md>) |
 | [投机解码](<../Infra/SpeculativeDecoding/report.md>) | [横切专题②：验证、接受率与无损性的适用条件](<../Infra/SpeculativeDecoding/topics/verification-acceptance.md>) |
 | [大模型辅助运筹建模与求解](<../LLM/OperationsResearch/report.md>) | [运筹建模与求解评测：正确性、反馈与基准边界](<../LLM/OperationsResearch/topics/evaluation-protocols.md>) |

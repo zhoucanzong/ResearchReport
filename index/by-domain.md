@@ -59,7 +59,7 @@
 | [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | MoE 执行：从专家路由到跨设备回收 | repo-research | 2026-10-24 | current |
 | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 模型量化与边缘部署研究报告 | topic-research | 2026-10-22 | needs-review |
 | [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) | 在线 LLM Serving：SLO、Goodput 与请求完整性 | research | 2026-10-24 | current |
-| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-22 | needs-review |
+| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-29 | needs-review |
 | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 大模型训练基础设施与分布式训练研究报告 | topic-research | 2026-10-22 | needs-review |
 
 ## LLM (12)

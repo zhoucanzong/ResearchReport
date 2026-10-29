@@ -14,6 +14,7 @@
 | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 2026-10-29 | WorldModel | WorldModels |
 | [Models/Gemini/report.md](<../Models/Gemini/report.md>) | 2026-10-29 | Models | Gemini |
 | [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 2026-10-29 | LLM | DiffusionLM |
+| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 2026-10-29 | Infra | SpeculativeDecoding |
 | [OpenSource/RSIHub/report.md](<../OpenSource/RSIHub/report.md>) | 2026-10-28 | OpenSource | RSIHub |
 | [OpenSource/REA/report.md](<../OpenSource/REA/report.md>) | 2026-10-28 | OpenSource | REA |
 | [OpenSource/Harness2/report.md](<../OpenSource/Harness2/report.md>) | 2026-10-28 | OpenSource | Harness2 |
@@ -30,7 +31,6 @@
 | [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | 2026-10-23 | LLM | ReinforcementLearning |
 | [Infra/KVCachePD/report.md](<../Infra/KVCachePD/report.md>) | 2026-10-23 | Infra | KVCachePD |
 | [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) | 2026-10-23 | Evaluation | EvaluationScience |
-| [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) | 2026-10-23 | AI4Science | WeatherClimate |
 
 ## 无 date 元数据（40）
 

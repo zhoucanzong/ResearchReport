@@ -24,6 +24,8 @@
 | D. 接受率上限 | 由 draft 与 target 的对齐度决定 | 同条件下比 τ 或 acceptance rate |
 | E. 负载行为 | batch↑ 时收益升/降/反转 | 看 batch 扫描曲线 |
 
+这里的“家族”只回答候选从哪里来，**不等于完整的 draft-side 分类**：同是自投机，可能采用不同表示、蒸馏/接受目标、链深和训练时机；同一训练目标也能用于不同提案来源。要读 AdaSPEC、Attention Drift、VSD、AAT、EDR、在线 Adaptive Drafter 等如何改变“训练什么、什么样的 draft 会被接受”，请接着看[草稿机制与训练专题](draft-side-and-training.md)。
+
 ---
 
 ## 2. 四大家族
