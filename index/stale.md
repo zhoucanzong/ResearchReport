@@ -9,16 +9,15 @@
 
 判定口径：`status` 不是 active/current/ok/stable/published/completed，或 `date` 早于 180 天。
 
-## 已标记（4）
+## 已标记（3）
 
 | 条目 | 原因 |
 | --- | --- |
-| [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | status=needs-review |
 | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | status=needs-review |
 | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | status=needs-review |
 | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | status=needs-review |
 
-## 无 date 且无 status（无法判定，40）
+## 无 date 且无 status（无法判定，39）
 
 以下条目既没有 `date` 也没有 `status`，陈旧度无法评估（不算作已标记）：
 
@@ -59,6 +58,5 @@
 * [Models/Qwen/report.md](<../Models/Qwen/report.md>)
 * [Models/Runway/report.md](<../Models/Runway/report.md>)
 * [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>)
-* [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>)
 * [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>)
 * [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>)

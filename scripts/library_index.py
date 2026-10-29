@@ -2008,6 +2008,7 @@ def render_site_home(cfg: dict, mapping: dict, entries: list,
         '<label for="__search" class="rr-search-launch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><span>搜索模型、论文或技术问题</span><kbd>/</kbd></label>', "",
         '<div class="rr-quicklinks" markdown="1">', "",
         f'[研究专题索引](<{GENERATED_DIR}/by-topic.md>) · '
+        f'[跨领域学习路线](<docs/learning-paths.md>) · '
         f'[查看最近更新](<{GENERATED_DIR}/recent.md>) · '
         f'[阅读与证据说明](<docs/research-method.md>)', "",
         '</div>', "", '</div>', "",

@@ -1,16 +1,23 @@
 ---
 display_name: Nemotron-Labs-Diffusion
+type: research
+domain: OpenSource
+subject: NemotronLabsDiffusion
+date: 2026-10-29
+evidence: 精读原文
+status: current
 ---
 
 # Nemotron-Labs-Diffusion 阅读报告
 
-> **报告日期**: 2026-05-27
-> **论文来源**: Yonggan Fu 等 (NVIDIA + Georgia Tech + HKU + MIT), 2026-05-19
+> **报告更新：2026-10-29。主读固定版本**：Yonggan Fu 等，NVIDIA Technical Report v1，2026-05-19；后补 arXiv:2607.05722v1（2026-07-07 首投）单独列出，不用它替换本文的版本锚点或实验定位。
 > **结构化数据**: [`papers/nemotron-labs-diffusion.json`](papers/nemotron-labs-diffusion.json)
 > **详细笔记**: [`notes/structured-reading.md`](notes/structured-reading.md)
 > **概念地图**: [`knowledge-graph.md`](knowledge-graph.md)
 
-> **原文复核（2026-10-22）**：按 `researcher deep` 与 `paper-fetcher` 回取 NVIDIA 2026-05-19 v1 PDF，核对训练消融 Table 1–3、准确率/TPF Table 5–6、SOL §4.2 与 Fig.7、硬件 Fig.9；图表页已渲染复核。后补 arXiv 为 [2607.05722](https://arxiv.org/abs/2607.05722)，首次提交2026-07-07，与5月报告分开记；见 [sources/MANIFEST.md](sources/MANIFEST.md)。
+> **研究范围**：这是围绕一篇论文及其配套公开推理仓库的单篇研究条目；源码核对限于入口与模式说明，不等于完整代码审读、训练复现或真实服务基准。它与[扩散语言模型](../../LLM/DiffusionLM/report.md)共享“模型自身扩散生成”的机制背景，与[投机解码](../../Infra/SpeculativeDecoding/report.md)中的草稿—验证和自投机方法相连；本文聚焦 NLD 这一三模式模型及其论文实验，不代表扩散语言模型或投机解码领域综述。两专题分别讨论机制谱系与验证/系统条件。
+
+> **原文复核（2026-10-22）**：按 `researcher deep` 与 `paper-fetcher` 回取 NVIDIA 2026-05-19 v1 PDF，核对训练消融 Table 1–3、准确率/TPF Table 5–6、SOL §4.2 与 Fig.7、硬件 Fig.9；图表页已渲染复核。后补 arXiv 版本 [2607.05722v1](https://arxiv.org/abs/2607.05722v1) 与主读版本分开记；版本和证据定位见 [sources/MANIFEST.md](sources/MANIFEST.md)。
 
 ---
 
@@ -197,17 +204,9 @@ SOL 分析（Sec.4）：
 
 ## 结论与个人评价
 
-**评分**：相关度 10/10，质量 9/10。
+这篇报告在一个模型系列和其论文设置内展示了 AR、扩散生成与 self-speculation 的联合设计。其训练消融和有限的 α 扫描支持一个较窄的判断：在所用初始化、数据预算与评测任务下，联合目标和配套训练设计可以兼顾两种生成模式；这还不能证明该组合对其它模型或任务普遍互补。SOL 分析给出了论文所定义 oracle 参照下的差距，用于定位其方法的优化空间，不是跨系统的性能上限。
 
-NVIDIA 这篇技术报告是 "AR + Diffusion 融合" 这一研究方向迄今最完整的工程证明。它做对了三件事：
-
-1. **方法论上**：把"AR/Diffusion 互补"从猜想变成可量化的结论（α 扫描 + 消融 + SOL 三角验证）。
-2. **工程上**：交付 3B/8B/14B 文本模型及论文研究的8B视觉语言变体（不按规格笛卡尔积推算发布数量），开源 Megatron Bridge 训练 pipeline 与 HF 权重。
-3. **基础设施上**：SOL 分析框架给社区设定了"还有多远"的明确 north star。
-
-最值得借鉴的设计哲学是 **"对 inference 时实际数据分布建模"**——'accepted+1' loss mask、global loss averaging、asymmetric dual-stream 都是这一思想的不同侧面体现。
-
-如果这一 'tri-mode 一站式部署' 范式能工程化稳定，可能会成为下一代 LLM 推理基础设施的默认形态——单模型、按 concurrency 切换模式、不需要维护独立的 draft model。这对模型管理、显存占用、运维复杂度都是结构性简化。
+值得进一步理解的是论文如何把推理时分布带回训练设计：`accepted+1` loss mask、global loss averaging 与 asymmetric dual-stream 分别处理自投机目标位置、不同长度序列的损失聚合和两路注意力计算。它们是本文方案中的具体机制；现有材料不足以推出 tri-mode 部署会成为通用默认架构，也不足以量化其相对独立 draft model 的普遍运维收益。
 
 ---
 

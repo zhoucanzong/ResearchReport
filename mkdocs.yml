@@ -468,7 +468,19 @@ nav:
     - "MoE 执行与专家通信":
         - "总报告": "Infra/MoEExecution/report.md"
         - "deepep-v2-dispatch-compute-combine": "Infra/MoEExecution/implementation/deepep-v2-dispatch-compute-combine.md"
-    - "模型量化与边缘部署": "Infra/QuantizationEdge/report.md"
+        - "2601.17111-llep": "Infra/MoEExecution/papers/2601.17111-llep.md"
+        - "2606.04101-ultraep": "Infra/MoEExecution/papers/2606.04101-ultraep.md"
+    - "模型量化与边缘部署":
+        - "总报告": "Infra/QuantizationEdge/report.md"
+        - "2401.06118-aqlm": "Infra/QuantizationEdge/papers/2401.06118-aqlm.md"
+        - "2402.02750-kivi": "Infra/QuantizationEdge/papers/2402.02750-kivi.md"
+        - "2404.00456-quarot": "Infra/QuantizationEdge/papers/2404.00456-quarot.md"
+        - "2405.04532-qserve": "Infra/QuantizationEdge/papers/2405.04532-qserve.md"
+        - "2405.16406-spinquant": "Infra/QuantizationEdge/papers/2405.16406-spinquant.md"
+        - "2510.06175-vecinfer": "Infra/QuantizationEdge/papers/2510.06175-vecinfer.md"
+        - "2606.10531-lc-qat": "Infra/QuantizationEdge/papers/2606.10531-lc-qat.md"
+        - "2609.39223-qatfactory": "Infra/QuantizationEdge/papers/2609.39223-qatfactory.md"
+        - "low-precision-training": "Infra/QuantizationEdge/topics/low-precision-training.md"
     - "在线推理服务与评测":
         - "总报告": "Infra/ServingEvaluation/report.md"
         - "2401.09670-distserve": "Infra/ServingEvaluation/papers/2401.09670-distserve.md"
@@ -529,7 +541,11 @@ nav:
         - "draft-side-and-training": "Infra/SpeculativeDecoding/topics/draft-side-and-training.md"
         - "systems-throughput-latency": "Infra/SpeculativeDecoding/topics/systems-throughput-latency.md"
         - "verification-acceptance": "Infra/SpeculativeDecoding/topics/verification-acceptance.md"
-    - "分布式训练基础设施": "Infra/TrainingInfra/report.md"
+    - "分布式训练基础设施":
+        - "总报告": "Infra/TrainingInfra/report.md"
+        - "2304.11277-pytorch-fsdp": "Infra/TrainingInfra/papers/2304.11277-pytorch-fsdp.md"
+        - "2401.10241-zero-bubble": "Infra/TrainingInfra/papers/2401.10241-zero-bubble.md"
+        - "2405.15362-controllable-memory": "Infra/TrainingInfra/papers/2405.15362-controllable-memory.md"
   - "🔧 OpenSource · 9":
     - "OpenSource/README.md"
     - "DeepInfer":
@@ -590,6 +606,7 @@ nav:
       - "历史校验记录（截至 2026-10）": "docs/archive/verification-history-2026-10.md"
       - "DSH Harness 反馈清单（2026-10-18，来自一次真实事故）": "docs/harness-feedback.md"
       - "library_index.py 单趟未收敛（自指统计）": "docs/issue-index-single-pass.md"
+      - "跨领域学习路线": "docs/learning-paths.md"
       - "🛠 维护指南 · Maintenance": "docs/maintenance.md"
       - "阅读与研究方法": "docs/research-method.md"
       - "AI 研究机构与团队入口": "docs/research-source-sites.md"

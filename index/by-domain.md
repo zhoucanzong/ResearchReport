@@ -56,11 +56,11 @@
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [Infra/KVCachePD/report.md](<../Infra/KVCachePD/report.md>) | KV Cache 服务与 Prefill/Decode 分离：什么时候复用，什么时候传输 | research | 2026-10-23 | current |
-| [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | MoE 执行：从专家路由到跨设备回收 | repo-research | 2026-10-24 | current |
-| [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 模型量化与边缘部署研究报告 | topic-research | 2026-10-22 | needs-review |
+| [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | MoE 执行：从专家路由到跨设备回收 | repo-research | 2026-10-30 | current |
+| [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 模型量化与边缘部署研究报告 | topic-research | 2026-10-30 | current |
 | [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) | 在线 LLM Serving：SLO、Goodput 与请求完整性 | research | 2026-10-24 | current |
 | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-29 | needs-review |
-| [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 大模型训练基础设施与分布式训练研究报告 | topic-research | 2026-10-22 | needs-review |
+| [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 大模型训练基础设施与分布式训练研究报告 | topic-research | 2026-10-30 | needs-review |
 
 ## LLM (12)
 
@@ -99,7 +99,7 @@
 | [Models/LLaMA/report.md](<../Models/LLaMA/report.md>) | Meta LLaMA 系列大模型完整研究报告 | — | — | — |
 | [Models/MiMo/report.md](<../Models/MiMo/report.md>) | 小米 MiMo 系列模型深度调研报告 | — | — | — |
 | [Models/Midjourney/report.md](<../Models/Midjourney/report.md>) | Midjourney 模型与产品演进研究报告 | — | — | — |
-| [Models/MiniMax/report.md](<../Models/MiniMax/report.md>) | MiniMax 系列模型研究报告：以 Lightning Attention 重写 Transformer 的扩展曲线 | — | — | — |
+| [Models/MiniMax/report.md](<../Models/MiniMax/report.md>) | MiniMax 系列模型研究报告：混合注意力、后训练与多模态路线 | — | — | — |
 | [Models/Mistral/report.md](<../Models/Mistral/report.md>) | Mistral：高效稠密模型、稀疏专家与任务专门化 | — | — | — |
 | [Models/Nemotron/report.md](<../Models/Nemotron/report.md>) | NVIDIA Nemotron 系列研究脉络 | — | — | — |
 | [Models/OpenAI-Gen/report.md](<../Models/OpenAI-Gen/report.md>) | OpenAI 生成模型系列研究报告 | — | — | — |
@@ -112,7 +112,7 @@
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [OpenSource/DeepInfer/report.md](<../OpenSource/DeepInfer/report.md>) | DeepInfer：离线推理内核、异步调度与状态契约 | repo-research | 2026-10-22 | completed |
-| [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | Nemotron-Labs-Diffusion 阅读报告 | — | — | — |
+| [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | Nemotron-Labs-Diffusion 阅读报告 | research | 2026-10-29 | current |
 
 ## Repo-Research (7)
 

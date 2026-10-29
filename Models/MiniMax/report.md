@@ -2,7 +2,7 @@
 display_name: MiniMax
 ---
 
-# MiniMax 系列模型研究报告：以 Lightning Attention 重写 Transformer 的扩展曲线
+# MiniMax 系列模型研究报告：混合注意力、后训练与多模态路线
 
 > 撰写时间：2026-06-05 ｜ 研究范围：MiniMax-abab 系列、MiniMax-01（Text/VL）、MiniMax-Speech 与海螺音视频模型、MiniMax-M1/M2/M2.5/M2.7/M3 推理与 Agent 模型、海螺 AI 产品线
 
@@ -10,7 +10,7 @@ display_name: MiniMax
 
 ## 1. 概述与时间线
 
-MiniMax（稀宇科技）成立于 2021 年 12 月，由原商汤科技副总裁、研究院副院长闫俊杰创立，总部位于上海，是中国第一梯队的通用人工智能公司之一。其在大模型路线选择上有两个标志性的早期赌注：（1）**全面押注 MoE（Mixture-of-Experts）**，是国内最早将 MoE 用于万亿参数级文本基座的公司；（2）**全面押注线性注意力（Linear Attention）**，最终在 2025 年初发布 MiniMax-01，用 Lightning Attention 把开源模型的上下文窗口直接拉到 4M token 级别——比同期主流模型长 20–32 倍。MiniMax 的研究矩阵覆盖文本、视觉、语音、音乐、视频五大模态，对外形成 **海螺 AI（含 Hailuo Video、Hailuo Audio）+ Talkie/星野（社交陪伴）+ MiniMax 开放平台 + MiniMax Agent** 多条产品线。
+本报告沿 MiniMax 的公开论文和模型报告梳理稀疏专家、混合注意力、推理后训练、工具任务与多模态生成几条研究线。重点是这些机制解决什么约束、论文用什么设置评估，以及结论能否跨任务外推；不以公司排名、商业策略或产品覆盖面作为技术判断。
 
 **关键时间线**
 
@@ -51,11 +51,11 @@ MiniMax（稀宇科技）成立于 2021 年 12 月，由原商汤科技副总裁
 
 **abab6.5 / abab6.5s（2024-04-17）** 进一步将 MoE 推到**万亿（trillion）级总参数**，并把上下文窗口扩展到 **200k tokens**：
 
-- `abab6.5`：万亿总参 MoE，200k 上下文，对标 GPT-4 / Claude 2.1，强项是长文档理解、复杂指令、多语种与中文综合能力。
+- `abab6.5`：万亿总参 MoE，官方材料列出 200k 上下文；与 GPT-4、Claude 2.1 的比较和长文档能力描述应限于当时公布的版本与测试，不能由窗口长度推出综合能力。
 - `abab6.5s`：相同训练数据与方法，但更轻量，推理更快，**1 秒可处理近 3 万字**，主打高吞吐场景。
 - 两者通过 MiniMax 开放平台、海螺 AI 等产品对内对外滚动更新。
 
-abab 系列的最大遗留问题，是仍然以**标准 Softmax Attention** 为主，长上下文成本随序列长度二次方上升，到 200k 已逼近"算力可承受 + 工程可调度"的边界。MiniMax 的下一步思路非常清晰：要把上下文做到百万级、千万级，就必须把 Softmax 换掉。
+标准 Softmax Attention 的计算与 KV 缓存成本会随序列长度增长，使超长上下文训练和推理面临计算与内存压力。MiniMax-01 论文选择混合线性注意力与 Softmax 注意力的方案；这是一种设计取舍，并不意味着所有百万级上下文模型都必须移除 Softmax。
 
 ### 2.2 MiniMax-01：把 Lightning Attention 推到 456B 规模
 
@@ -79,47 +79,46 @@ abab 系列的最大遗留问题，是仍然以**标准 Softmax Attention** 为�
 | 训练上下文长度 | 1,000,000 tokens |
 | 推理外推上下文 | **4,000,000 tokens**（NIAH 4M 通过） |
 
-这是当时业界第一次把**Linear Attention 真正放到接近半万亿参数 + MoE + 百万级上下文**的工程规模上跑通，并开源完整权重。其核心组合拳是：
+MiniMax-01 论文展示了在 456B 总参数 MoE 与百万级训练上下文下使用混合注意力的一种实现，并公开对应模型权重。其核心组合是：
 
 1. **Lightning Attention（线性注意力高效实现）**——把训练/推理成本从 O(n²d) 降到 O(nd²)，并通过 IO-aware tiling 把常数项压平；
 2. **Softmax 兜底**——只在每 8 层中保留 1 层 Softmax，承担长程检索与精确召回任务，弥补线性注意力在"针在干草堆"等任务上的检索弱项；
 3. **MoE 稀疏激活**——保证容量与质量，单 token 仅激活 45.9B 参数；
 4. **针对 MoE + Lightning Attention 共同优化的并行策略与 communication-overlap 技术**，让百万级序列的训练 / 推理在数千卡集群上可承担。
 
-在标准基准上，MiniMax-Text-01 与 GPT-4o (11-20)、Claude-3.5-Sonnet、DeepSeek-V3、Llama-3.1-405B 等同期闭源/开源最强模型基本同档（MMLU 88.5、IFEval avg 89.1、Arena-Hard 89.1、C-SimpleQA 67.4 领先），同时在 RULER 1M、LongBench v2、MTOB（半本/整本书翻译）等长上下文任务上明显领先：
+MiniMax-01 论文在 MMLU、IFEval、Arena-Hard、C-SimpleQA 等基准报告与指定对照模型的结果，并在 RULER、LongBench v2、MTOB 等长上下文任务中作比较。以下数字均为论文报告结果；它们对应不同基准与评测协议，不能合并成统一的“总体同档”或跨模型排名：
 
-- **RULER（1M 长度）**：MiniMax-Text-01 = 0.910，唯一在 1M 仍维持 0.9+ 表现的模型；
+- **RULER（1M 长度）**：MiniMax-Text-01 = 0.910；在该论文列出的 1M 对照模型中，它是达到 0.9 以上的模型；
 - **LongBench v2 w/ CoT**：56.5（人类 53.7、GPT-4o 51.4、Claude-3.5-Sonnet 46.7）；
-- **MTOB 半本书翻译 ChrF Δ**：+45.7（领先）。
+- **MTOB 半本书翻译 ChrF Δ**：+45.7；按论文任务构造和指标定义理解，不概括为所有长文档翻译任务的领先。
 
-更重要的是，它在长上下文上的成本优势是**架构级**的：在长上下文极限下，Lightning Attention 的有效算力消耗只有标准 Softmax 的 1/几千（"百万级长文本只用 1/2700 算力"是 MiniMax 架构负责人钟怡然在公开访谈中给出的估算）。
+这些结果说明论文中的混合配置可在指定的长上下文基准上运行。线性注意力部分的渐近复杂度不能直接换算为整套模型在所有序列长度下的实际算力或成本收益；具体收益仍取决于实现、Softmax 注意力层比例、硬件和任务。
 
-### 2.3 MiniMax-M2 / M2.5：从基座向 Agent 模型的范式收敛
+### 2.3 MiniMax-M2 / M2.5：编码与 Agent 任务
 
 到了 2025 年 10 月，MiniMax 在 GitHub 开源 **MiniMax-M2**：
 
 - **230B 总参 / 10B 激活**的 MoE 模型；
-- 定位是"Mini model built for Max coding & agentic workflows"——刻意把激活参数做小，换取**端到端 agent 闭环（plan → act → verify）的低延迟与高并发**；
-- 在 SWE-bench Verified = 69.4、Terminal-Bench = 46.3、ArtifactsBench = 66.8、BrowseComp = 44、τ²-Bench = 77.2、AA Intelligence 综合分 = 61，是同期开源模型中综合能力最强的之一；
+- 官方定位是"Mini model built for Max coding & agentic workflows"；10B 激活参数说明其稀疏计算配置，但不单独证明端到端 Agent 延迟或并发收益，后者还取决于工具执行、批量、硬件和服务栈；
+- MiniMax 的报告列出 SWE-bench Verified = 69.4、Terminal-Bench = 46.3、ArtifactsBench = 66.8、BrowseComp = 44、τ²-Bench = 77.2 等结果；它们是各基准的独立分数，不能合并成跨基准综合排名；
 - M2 是**交错思考（interleaved thinking）模型**，输出中保留 `<think>...</think>` 段，多轮历史必须原样回传，否则性能显著下滑；
 - 后续推出的 **MiniMax-M2.1（2025-12-22）** 进一步强化多语言编程精通能力，在 LiveCodeBench、FullStackBench 等代码基准上持续提升。
 
-**MiniMax-M2.5（2026-02-12）** 是 M2 系列的重要生产级升级，开源发布：
+**MiniMax-M2.5（2026-02-12）** 的公开报告补充了 M2 系列在代码与 Agent 任务上的评测结果：
 
-- **SWE-Bench Verified 80.2%**，Multi-SWE-Bench 51.3%，BrowseComp 76.3%——软件工程与 Agent 工具使用能力跃居开源第一梯队；
-- **速度比 M2.1 快 37%**，端到端 agent 循环延迟与 Claude Opus 4.6 持平（22.8 分钟 vs 22.9 分钟）；
-- **成本仅 Claude Opus 4.6 的 10%**：\$0.15/M input tokens，\$1.15/M output tokens；
-- **M2.5-Lightning**：100 tokens/秒极速版本，定价 \$0.3/M input、\$2.4/M output，面向高并发交互场景；
+- MiniMax 报告 SWE-Bench Verified 80.2%、Multi-SWE-Bench 51.3%、BrowseComp 76.3%；引用时需保留基准版本、harness 与预算条件，不据此推出模型总体排名；
+- M2.5 与 M2.1 的速度对照，以及与 Claude Opus 4.6 的端到端耗时比较，均依赖报告所述任务和执行配置；它们不代表所有 Agent 工作流的固定延迟差异；
+- API 定价与托管速度不作为本报告的研究结论；
 - 开源权重，**197K 上下文**支持；
 - **10+ 语言编程**能力，在 20 万+ 真实软件工程环境中完成 RL 训练；
 - 定位"原生 Agent 生产级 LLM"，覆盖编程、工具调用、信息检索与办公场景。
 
-**MiniMax-M2.7（2026-03-18）** 启动**递归自我改进（Recursive Self-Improvement）**：模型通过自主生成训练数据、自我评估与迭代优化，在代码、数学推理与工具使用任务上实现无人类标注的持续能力提升。这是 MiniMax 首次将 RSI 机制公开集成到 M 系列训练管线中。
+**MiniMax-M2.7（2026-03-18）** 报告了递归自我改进（Recursive Self-Improvement）流程，使用模型生成数据、评价并迭代训练。要判断它是否带来可复现的持续提升，需要检查独立验证、固定评测集以及跨轮次增益；流程描述本身不等于已排除数据污染或自评偏差。
 
-**MiniMax-M3（2026-06-01）** 作为 M 系列最新旗舰，统一了代理推理、工具使用、编码、多模态聊天与长上下文能力：
+**MiniMax-M3（2026-06-01）** 的公开材料描述了代理推理、工具使用、编码、多模态聊天与长上下文：
 
 - 在 M2.5 的 agentic 基础上进一步扩展至多模态输入（文本 + 图像 + 音频）的端到端 agent 闭环；
-- 继承并扩展 Lightning Attention 混合架构，长上下文推理效率持续领先；
+- 公开材料描述其使用 Lightning Attention 混合架构；长上下文效率仍需结合论文中的固定负载与对照理解；
 - 支持更复杂的 multi-hop 工具调用与跨会话记忆保持；
 - 同时提供 API 与开源权重，延续 MiniMax"开源旗舰 + 产品闭环"的双轨策略。
 
@@ -203,7 +202,7 @@ MiniMax-01 / M1 采用的混合方式是：
 
 1. **质量兜底**：纯线性注意力在 NIAH（Needle-In-A-Haystack）、长程精确检索类任务上的表现不如 Softmax；保留少量 Softmax 层负责"重要 token 的精确召回"；
 2. **成本主导 = Lightning**：7/8 的层是 Lightning Attention，长上下文几乎所有计算瓶颈都在 O(nd²) 那一侧，因此推理 4M token 才"可承受"；
-3. **效果优于纯 Softmax + MoE**：MiniMax 在内部消融实验中发现 **Hybrid-Lightning + MoE > Softmax + MoE**，论文报告这一点是技术决策的关键证据；
+3. **混合配置的消融**：MiniMax-01 论文在其模型、训练数据和长上下文评测设置下比较 Hybrid-Lightning + MoE 与纯 Softmax + MoE。该对照支持作者在该设置下的选择，不能推出混合配置在所有模型、任务或上下文长度上都优于纯 Softmax；
 4. **长上下文 + 推理时计算（test-time compute）双友好**：M1 后续做 RL 推理时，长 chain-of-thought 不会让显存爆炸——这是 M1 能做 80K thinking budget 的硬件基础。
 
 ### 3.6 上下文窗口扩展：1M 训练 → 4M 推理
@@ -214,22 +213,22 @@ MiniMax-Text-01 训练阶段直接把上下文拉到 100 万 token，并通过�
 - 仅对一半头维度施加 RoPE，剩余维度保持 NoPE，配合线性注意力的隐式记忆；
 - 长上下文阶段的数据 curriculum 与高质量长文档数据；
 
-实现 **训练 1M、推理外推 4M token**。在 4M Needle-In-A-Haystack 测试中通过率良好，是当时唯一一个把"4M 上下文"**真正交付到开源权重**里的模型。
+论文报告训练上下文为 1M，并在该模型的 4M Needle-In-A-Haystack 设置中评估外推能力。该结果说明模型在特定检索任务中能处理 4M 输入；不等于对任意任务都有效利用 4M 上下文，也不需要据此作跨模型“唯一”判断。
 
 ### 3.7 训练效率收益
 
-线性注意力对 MiniMax 训练栈的收益是结构性的：
+线性注意力的渐近计算量与 Softmax 注意力不同；整套训练栈能获得多少收益还取决于序列长度、线性/Softmax 层比例、内核、通信与硬件。MiniMax-01 技术报告给出了该模型的训练系统案例：
 
-- **FLOPs**：长上下文段的注意力 FLOPs 从 n² 降到 n，理论上 1M 上下文相对 4K，节省可达数千倍；
-- **激活 / KV 显存**：因为没有 Softmax 中的全 attention map，激活检查点（activation checkpointing）方案大大简化；
-- **Pipeline 并行 + Sequence 并行**：MiniMax 为 MoE + Lightning Attention 的组合定制了并行切分与 communication-computation overlap，使得 1M 长度的批量训练在数千卡集群上是可行且经济的；
-- **RL 训练亲和度**：M1 的 CISPO RL 训练全程在 512 张 H800 上跑了 3 周，租金 53.47 万美元——这一规模对常规 Softmax 推理模型几乎不可能。
+- **FLOPs**：线性注意力在固定特征维度下对序列长度呈线性计算，Softmax 注意力包含二次项；这不是整套模型实际 FLOPs 比例的直接预测。
+- **激活 / KV 显存**：线性递推状态避免存储完整注意力矩阵，但混合模型仍保留 Softmax 层，因此内存收益取决于层配置和实现。
+- **并行策略**：技术报告描述了为 MoE 与 Lightning Attention 组合设计的并行切分和通信计算重叠；其长序列可行性证据限于论文采用的训练集群与批量配置。
+- **RL 训练**：M1 报告了特定规模的强化学习运行。训练费用不用于比较方法能力，且不能由此推断同规模 Softmax 模型无法训练。
 
 ---
 
 ## 4. 多模态能力：从 VL 到 Speech / Music / Video
 
-MiniMax 的多模态战略与 OpenAI / Google 类似——**统一基座 + 模态特化**，但更激进地做语音和音乐。
+本节比较论文报告的模态表示与训练机制；不从产品组合或发布节奏推断 MiniMax 与其它公司的整体多模态战略。
 
 ### 4.1 MiniMax-VL-01：把视觉接到 Lightning 基座上
 
@@ -241,16 +240,16 @@ MiniMax-VL-01 在 MiniMax-Text-01 之上**继续训练 5120 亿（512B）视觉-
 
 **Vision Benchmark 表现**（节选自官方仓库）：
 
-- MMMU = 68.5、MMMU-Pro = 52.7（同档优秀）
+- MMMU = 68.5、MMMU-Pro = 52.7；分数来自材料所列评测版本和协议
 - ChartQA = 91.7、DocVQA = 96.4、OCRBench = 865（OCR 与图表是强项）
-- M-LongDoc（长视觉文档）= 32.5（明显领先 GPT-4o 41.4 之外的多数同行）
+- M-LongDoc（长视觉文档）= 32.5；该值应与相同版本和协议的对照读取
 - MathVista = 68.6、In-house Benchmark = 56.6
 
-VL-01 的差异化在于**视觉 + 长上下文**：长 PDF / 多图电子书 / 视频帧序列这种"图文混杂 + 上下文巨大"场景，是 MiniMax-VL-01 相对其他 VL 模型的天然优势。
+VL-01 论文覆盖视觉问答、图表、文档与长视觉输入；其长上下文表现应以所列测试集和上下文构造为边界，不能外推为相对其它 VLM 的普遍优势。
 
 ### 4.2 MiniMax-Speech / Speech-02：可学习 Speaker Encoder + Flow-VAE
 
-语音是 MiniMax 区别于 DeepSeek、Kimi、GLM 等同行最显眼的能力。**MiniMax-Speech**（arXiv:2505.07916，2025-05）的核心系统由三部分构成：
+**MiniMax-Speech**（arXiv:2505.07916，2025-05）的核心系统由三部分构成：
 
 1. **Tokenizer**：文本 BPE + 音频 Encoder-VQ-Decoder（基于 mel-spectrogram，25 token/s，CTC 监督）；
 2. **自回归 Transformer**：把文本 token 映射到离散音频 token 序列；
@@ -261,15 +260,15 @@ VL-01 的差异化在于**视觉 + 长上下文**：长 PDF / 多图电子书 / 
 - **Learnable Speaker Encoder（可学习说话人编码器）**：业界主流（CosyVoice2 / Seed-TTS / VALL-E 等）依赖预训练的说话人验证（SV）模型作为冻结的 speaker encoder，而 MiniMax 让 speaker encoder **与 AR Transformer 联合训练**，提取的不是 SV 任务向量，而是真正服务于 TTS 任务的"音色 + 韵律"条件向量。结果是：
   - 严格意义上的 **"intrinsic zero-shot"** 声纹克隆——只需一段无转写参考音频就能克隆说话人；
   - 摆脱对 paired text-audio 的依赖；
-  - 因为编码器在所有 32 种语种上联合训练，**跨语种声纹保留能力大幅领先**。
+  - 论文报告编码器在 32 种语种上联合训练，并在其跨语种声纹测试中评估音色保持；不据此概括为跨语种普遍领先。
 
 - **Flow-VAE**：传统 VAE 假设潜变量符合标准正态，会形成信息瓶颈；MiniMax 在 VAE encoder 输出后再串一个 Normalizing Flow，把潜分布映射到标准正态后才计算 KL，使得 encoder 实际可以输出**任意正态分布**，潜空间表达力显著提升。Flow Matching 解码器在该潜空间上做生成，比"先生成 mel-spectrogram 再 vocoder"的两段式方案保真度更高。
 
 **评测结果**：
 
-- Seed-TTS-eval：zero-shot WER（test-zh / test-en）= 0.83 / 1.65，**优于 ground truth**；one-shot SIM 0.799 / 0.738，超越 Seed-TTS 与 CosyVoice 2；
-- **多语种**：在 Vietnamese、Thai、Cantonese 等"长尾语种"上 WER 远低于 ElevenLabs（ElevenLabs 在 Vietnamese WER 73.4，MiniMax 0.88）；
-- **Artificial Arena（2025-05-12）**：MiniMax-Speech（即 Speech-02-HD）以 ELO 第一名超越 OpenAI、ElevenLabs、Google、Microsoft、Amazon。
+- Seed-TTS-eval：论文报告 zero-shot WER（test-zh / test-en）= 0.83 / 1.65，one-shot SIM = 0.799 / 0.738；WER 与 SIM 衡量不同属性，按其样本和协议解释，不将 WER 低于某参考语音写成整体优于参考；
+- **多语种**：论文在 Vietnamese、Thai、Cantonese 等语种上报告 WER，并与其列出的系统比较；结果受语种、测试集、转写规范和服务版本影响，不合并成跨语言排名；
+- **Artificial Arena（2025-05-12）**：报告记录了 MiniMax-Speech 在当时的 Artificial Arena 人类偏好评测中的 ELO 排名。该读数应按当日参评系统、版本和听测协议理解，不能视为跨服务、跨时段的普遍语音质量排序。
 
 API 与产品落地：
 
@@ -316,22 +315,22 @@ API 与产品落地：
 
 ### 5.1 模型定位与规模
 
-M1 是**世界上第一个开源权重的大规模 hybrid-attention 推理模型**：
+M1 论文展示了一个开源权重的大规模 hybrid-attention 推理模型：
 
 - 基于 MiniMax-Text-01 继续训练，**456B 总参 / 45.9B 激活**；
 - 沿用 Lightning Attention + Softmax + MoE 的混合结构；
-- **原生支持 1M token 上下文**，是 DeepSeek-R1 的 8 倍；
+- **论文报告 1M token 上下文设置**；与其它模型的窗口长度对照不等同于相同任务下的有效上下文能力比较；
 - 提供两个版本：**M1-40K**（思考预算 40K token，相当于 80K 训练的中间版本）、**M1-80K**（80K 思考预算）。
 
 ### 5.2 为什么 Lightning Attention 让 M1 成为可能
 
-推理模型的核心特征是**长 chain-of-thought**：模型可能要消耗 4 万、8 万甚至更多 token 来"思考"。在 Softmax 注意力下，这部分思考 token 的 KV Cache 与 attention 计算线性累加，会让长思考 + 长输入彻底变得不经济。Lightning Attention 把这一段成本压平：
+M1 论文将长 chain-of-thought 作为推理负载之一：随着生成 token 增多，Softmax 注意力的计算和 KV cache 会继续增长。Lightning Attention 在其线性注意力层上提供另一种增长方式，但模型仍保留 Softmax 层，整套系统的收益取决于上下文、生成长度与运行配置：
 
-- 长 thinking 的注意力 FLOPs 从 n² 变 n；
-- 长 thinking 的 KV state 在 7/8 的层保持常数；
-- 长输入（1M）+ 长思考（80K）+ 长输出几乎可以同时存在。
+- 在线性注意力层中，论文给出的注意力计算随序列长度呈线性增长；混合模型的总计算还包括保留的 Softmax 层与其它模块；
+- 在该模型的 7/8 Lightning 层中，递推 KV state 的大小不随序列长度线性增长；
+- 论文配置了 1M 输入与 80K 思考预算；这描述模型支持的实验设置，不证明所有任务均可同时有效利用这些预算。
 
-这也是为什么 M1 能在 OpenAI-MRCR-1M（56.2）、LongBench-v2（61.5）等长文本推理任务上明显超越 DeepSeek-R1 / Qwen3-235B。
+M1 论文在 OpenAI-MRCR-1M 与 LongBench-v2 等任务中报告了与 DeepSeek-R1、Qwen3-235B 的对照结果。结果支持作者对所测试长上下文任务的观察，不能仅凭这些分数把优势归因于 Lightning Attention；模型版本、提示、预算和评测协议也会影响比较。
 
 ### 5.3 CISPO：为长 RL 训练定制的策略算法
 
@@ -339,10 +338,9 @@ M1 提出 **CISPO**（Clipped Importance Sampling Policy Optimization），核�
 
 > **裁剪重要性采样权重，而非裁剪 token 级 update**，绕开传统 PPO/GRPO 中由于策略漂移导致的不稳定。
 
-实测下，CISPO 在与多种主流 RL 变体（GRPO、Dr. GRPO、DAPO 等）的对比中表现更优；与 Hybrid-Attention 结合后：
+M1 论文在其 RL 任务和训练设置中将 CISPO 与 GRPO、Dr. GRPO、DAPO 等变体作比较，并报告相应结果；这支持作者对该训练配置的选择，不证明 CISPO 在不同任务或预算下普遍占优。
 
-- **训练总成本**：512 × H800，3 周完成全 RL，租金 ≈ **53.47 万美元**；
-- 相对量级模型，是同期最便宜的"达到前沿水平"的 RL 训练之一。
+- 论文描述了 512 张 H800 上的 RL 训练运行。硬件规模和训练时长用于理解实验条件，不在此换算成方法成本排名。
 
 ### 5.4 训练数据与任务
 
@@ -356,6 +354,8 @@ M1 的 RL 任务覆盖：
 
 ### 5.5 评测结果（节选）
 
+下表是 M1 报告列出的模型分数。各列版本、提示、采样和执行环境需按报告说明理解；不同基准分别测量不同任务，不构成统一的模型排名。
+
 | 任务 | M1-80K | DeepSeek-R1-0528 | Qwen3-235B-A22B | Claude 4 Opus | Gemini 2.5 Pro | OpenAI-o3 |
 |------|--------|------------------|------------------|----------------|------------------|-----------|
 | AIME 2024 | 86.0 | 91.4 | 85.7 | 76.0 | 92.0 | 91.6 |
@@ -368,22 +368,22 @@ M1 的 RL 任务覆盖：
 | LongBench-v2 | 61.5 | 52.1 | 50.1 | 55.6 | 65.0 | 58.8 |
 | **TAU-bench airline** | **62.0** | 53.5 | 34.7 | 59.6 | 50.0 | 52.0 |
 
-M1 的差异化标签是非常清晰的：
+在论文报告的对照范围内，M1 的结果集中在以下方向：
 
-- **长上下文推理**（MRCR 128k/1M、LongBench-v2 全面领先开源同类）；
-- **复杂软件工程 / Agent 工具使用**（SWE-bench Verified、TAU-bench airline 在开源端属第一梯队）；
-- **训练 / 推理性价比**（hybrid lightning + CISPO）。
+- **长上下文推理**（MRCR 128k/1M、LongBench-v2）；
+- **软件工程 / Agent 工具使用**（SWE-bench Verified、TAU-bench airline）；
+- **训练机制**（hybrid attention 与 CISPO）。
 
-短板是数学/AIME 极限分数仍略落后于 DeepSeek-R1-0528 和 Gemini 2.5 Pro，这是 hybrid 注意力对极限符号推理任务上的小折损。
+在论文所列数学/AIME 对照中，M1 的分数低于 DeepSeek-R1-0528 与 Gemini 2.5 Pro。该观察不能单独归因于 hybrid attention；模型训练数据、奖励、预算和推理设置均可能影响结果。
 
 ### 5.6 从 M1 到 M2 / M2.5：方向收敛到 Agent
 
-M1 之后，MiniMax 没有继续走"更大基座更长 thinking"的路，而是用 **M2（230B / 10B 激活）** 做了一个重要切换：
+从公开报告比较，M1 侧重长上下文推理训练，M2 则把重点放在代码与工具任务；这是论文/报告公开目标的变化，不推断为产品战略或内部研发路线切换：
 
-- 把激活参数压到 **10B 级别**，让 plan→act→verify 循环延迟和成本骤降；
-- 在 SWE-bench、Terminal-Bench、BrowseComp、τ²-Bench 等 Agent 基准全面发力；
+- 使用 **10B 激活参数**；该规模本身不能证明 Agent 闭环延迟或总成本必然降低；
+- 在 SWE-bench、Terminal-Bench、BrowseComp、τ²-Bench 等 Agent 基准报告结果，按各基准协议分别理解；
 - M2 是 **interleaved thinking 模型**，思考与工具调用交错；
-- **Artificial Analysis Intelligence 综合分 = 61，开源第一**。
+- MiniMax 报告 Artificial Analysis Intelligence 综合分为 61；该分数受榜单版本、任务组合和评测日期影响，不在这里作为模型总体排名。
 
 M2 对开发者最大的吸引力是 **"前沿 agent 能力 + 8% Sonnet 成本"** 这条性价比曲线——这与 M1 强调"长上下文推理"是不同的子目标。从 M1 到 M2，MiniMax 完成了一次"从研究展示到产品化 Agent"的姿态切换。**M2.5** 进一步把 M2 推进为生产级 Agent 模型，覆盖编程 / 工具调用 / 信息检索 / 办公场景。
 
@@ -391,27 +391,26 @@ M2 对开发者最大的吸引力是 **"前沿 agent 能力 + 8% Sonnet 成本"*
 
 ## 6. 跨代技术演进分析
 
-把 abab → MiniMax-01 → M1/M2/M3 三代放在同一张表里，可以看到 MiniMax 的演化是一条**"先稀疏化，再线性化，再 RL/Agent 化，再递归自我改进"** 的清晰路径：
+把 abab → MiniMax-01 → M1/M2/M3 放在同一张表里，可以按注意力、训练目标和任务交付物观察公开工作的变化。这个时间线是阅读组织方式，不代表每一代都由前一代机制直接导致，也不证明公司预先规划了单一路线：
 
 | 维度 | abab6.5（2024-04） | MiniMax-01（2025-01） | MiniMax-M1（2025-06） | MiniMax-M2（2025-10） | MiniMax-M2.5（2026-02） | MiniMax-M3（2026-06） |
 |------|---------------------|------------------------|------------------------|------------------------|------------------------|------------------------|
 | 总参 / 激活 | ~1T MoE | 456B / 45.9B | 456B / 45.9B（同 01） | **230B / 10B** | 230B / 10B（同 M2） | （未公布） |
 | 注意力 | Softmax | **Hybrid Lightning + Softmax (7:1)** | Hybrid（同 01） | （未公开混合细节） | （未公开混合细节） | Hybrid Lightning + Softmax |
 | 上下文 | 200k | **训练 1M / 推理 4M** | **原生 1M**（thinking 80K） | 长上下文 + agent | **197K** | 长上下文 + 多模态 agent |
-| 训练目标 | 通用基座 + 对话对齐 | 通用基座 + VL 继续训练 | **大规模 RL + CISPO** | **Agent 端到端 RL** | **Agent 生产级 RL**（20万+真实环境） | **多模态 Agent + RSI** |
+| 训练目标 | 通用基座 + 对话对齐 | 通用基座 + VL 继续训练 | **RL + CISPO** | Agent 任务后训练 | Agent 任务后训练 | 多模态 Agent / RSI 研究 |
 | 多模态 | 文本主导 | 文本 + ViT 视觉 | 文本推理 | Coding / Agent / 工具 | Coding / Agent / 工具 | 文本 + 图像 + 音频 + Agent |
-| 主力产品 | 海螺 AI / Talkie | 海螺 AI 长文 / VL | 长文档推理 / 论文级长链 | MiniMax Agent / IDE | MiniMax Agent / 开放平台 | MiniMax Agent / 海螺 AI |
-| 战略卡位 | 国内首个 MoE | 开源 4M 上下文 + linear attention 大规模验证 | 第一个开源 hybrid-attention 推理模型 | 开源 agent 综合榜第一 | **开源 SWE-Bench 80.2%** | 最新 M 系列旗舰 |
+| 研究焦点 | 稀疏专家模型 | 混合注意力与长上下文 | 推理后训练 | 工具使用与代码任务 | Agent 任务训练 | 多模态 Agent |
 
 **演进逻辑梳理：**
 
-1. **第 1 跳：稠密 → 稀疏（abab5.5 → abab6 → 6.5）。** 把"知识容量"通过 MoE 提一个数量级，单 token 推理成本几乎不变；
-2. **第 2 跳：Softmax → Hybrid Lightning（abab6.5 → MiniMax-01）。** 把"上下文长度"再提一个数量级，从 200k 到 4M；
-3. **第 3 跳：基座 → 推理模型（MiniMax-Text-01 → M1）。** 在 hybrid 基座上叠加大规模 RL（CISPO），把"思考长度"作为新的扩展维度（test-time compute scaling），而 Lightning Attention 让长思考变得经济；
-4. **第 4 跳：推理 → Agent（M1 → M2 → M2.5）。** 把激活参数刻意做小，把"端到端工具循环"的延迟与成本压到极致，从研究模型走向生产级 Agent。M2.5 以 SWE-Bench Verified 80.2% 和 Claude Opus 4.6 的 10% 成本确立开源 Agent 模型性价比标杆；
-5. **第 5 跳：Agent → 递归自我改进（M2.5 → M2.7 → M3）。** M2.7 启动递归自我改进（RSI），模型自主生成数据、自我评估迭代；M3 统一代理推理、工具使用、编码、多模态聊天与长上下文，将 Agent 能力扩展到多模态输入的端到端闭环。
+1. **密集模型到 MoE（abab 系列）**：研究重点由稠密容量扩展转到稀疏专家路由；总参数与激活参数的区别决定了参数规模不等于单 token 计算量。
+2. **全注意力到混合注意力（MiniMax-01）**：论文研究 Lightning Attention 与 Softmax Attention 的层级组合，并报告长序列设置下的训练与评测结果。其结论受层比例、模型、数据和上下文设置限制。
+3. **基座到推理后训练（M1）**：论文把大规模强化学习和 CISPO 用于推理模型训练，适合与其它 RL 后训练方案对比其重要性权重裁剪与优化稳定性。
+4. **推理到工具任务（M2/M2.5）**：训练对象扩展到代码与 Agent 任务。论文报告的 SWE-Bench Verified 结果应结合任务版本、执行环境、采样与修复预算阅读；托管服务价格不作为模型能力证据。
+5. **Agent 到多模态与自改进研究（M2.7/M3）**：后续公开材料提出递归自我改进和多模态 Agent 方向。应区分已公开论文/模型报告中的机制与产品路线表述，不能把研究设想直接写成已验证能力。
 
-每一步都不是单纯堆参数，而是**换一个新的扩展维度**。Linear / Lightning Attention 在第二跳起就是底盘技术，并且持续帮助第三、第四跳。
+这条组织方式提示读者分别追问：新增的计算结构解决什么约束，训练目标改变了什么行为，评测是否覆盖了真实的闭环任务。跨代共用组件本身不能证明它导致了后续能力变化。
 
 ---
 
@@ -419,46 +418,37 @@ M2 对开发者最大的吸引力是 **"前沿 agent 能力 + 8% Sonnet 成本"*
 
 ### 7.1 Lightning Attention 的工程突破
 
-在 MiniMax 的体系里，线性注意力第一次从"学术 toy"变成"工业基座"，关键原因有三点：
+MiniMax-01 的设计重点是把因果线性注意力组织成适合 GPU 并行的计算路径，并与 Softmax Attention 混合。应从论文中的算法、内核和模型实验分别理解其贡献：
 
 1. **算法层 cumsum 消除**：tiling + intra/inter 双路径让因果线性注意力既保留了 O(nd²) 的理论复杂度，又获得了 GPU 友好的并行度，**精确等价于完整线性注意力，而非近似**。
 2. **系统层 IO-aware kernel**：Triton 实现 + on-chip SRAM 滚动 KV，使前向/反向都接近 FlashAttention 级常数项，但在长序列下时间近似线性增长（"Various Lengths, Constant Speed"）。
-3. **混合架构（Hybrid Lightning + Softmax）**：把 7/8 的层换成 Lightning，1/8 的层保留 Softmax 兜底长程检索；并通过 MiniMax-01 在 456B 规模、1M 训练上下文上**实证 Hybrid + MoE 优于纯 Softmax + MoE**——这是当前最具说服力的"线性注意力大规模可行"的实验证据。
+3. **混合架构（Hybrid Lightning + Softmax）**：论文将大部分注意力层设为 Lightning、保留一部分 Softmax 层，并在 MiniMax-01 的模型和训练设置中与纯 Softmax 基线比较。该消融支持这一配置在论文条件下的可行性，不意味着该层比例是普遍最优，也不单独证明线性注意力在所有长上下文任务上优于全注意力。
 
-### 7.2 Scaling Foundation Models 的新维度
+### 7.2 长上下文能力与机制
 
-在 GPT-4 / Claude / Gemini 把"更大模型 + 更多数据"作为主旋律时，MiniMax-01 提出了第三个扩展维度：**上下文长度的扩展**——并把它做到了 1M 训练 / 4M 推理，且**开源**。这条路线后续被 M1（test-time compute）、M2（agentic 工具循环）继承和细化。
+MiniMax-01 报告了长上下文训练和推理设置，并研究混合注意力如何支撑长序列建模。上下文窗口是模型配置，不等同于长上下文任务中的有效检索能力；其对后续 M1/M2 的作用需要由各自论文的实验确认，不能仅凭系列时间线推断。
 
 ### 7.3 多模态多产品同基座
 
-MiniMax 是少数把**同一个基座 + 同一套训练栈**真正贯穿到 Text / VL / Speech / Music / Video 五个模态、并且每个模态都有头部产品落地的公司：
-
-- VL-01 直接复用 Text-01 的 hybrid lightning 主干；
-- M1 / M2 复用 Text-01 的训练管线 + RL 框架；
-- Speech / Music / Video 共用音频/视觉 token 化 + AR Transformer + Flow Matching 解码器范式。
+公开资料分别描述了文本、视觉、语音、音乐和视频模型的架构。各条路线可以比较其 token 表示、自回归建模与 Flow Matching 解码的组合，但“共用一套基座/训练栈”需要逐篇核对，不能从同一公司或模型系列名称推断。
 
 ### 7.4 语音（TTS / 声纹克隆）的差异化
 
-可学习 Speaker Encoder + Flow-VAE 的组合让 MiniMax-Speech 在 Artificial Arena 这种**人类盲听偏好**评测上超越 OpenAI / ElevenLabs / Google / Microsoft / Amazon——这在中国大模型公司里是少见的"多模态单点世界第一"。
+MiniMax-Speech 的论文可作为 Speaker Encoder 与 Flow-VAE 组合的案例。其主观听感结果应按论文的听测样本、评价协议和对照版本理解；这里不据此给跨服务商做普遍排名。
 
 ### 7.5 RL 算法（CISPO）
 
-CISPO 通过裁剪重要性采样权重而非 token 更新，在长链思考的 RL 训练中获得更高的样本效率与稳定性，让 M1 用 53 万美元跑出前沿水平。
-
-### 7.6 商业化 + 出海双轮
-
-abab 时代赌 MoE，MiniMax-01 时代赌 Linear Attention，配合 Talkie / 海螺 AI 在海外市场的强势增长，让 MiniMax 成为"中国 AI 出海"叙事中最有说服力的模板之一（Talkie 海外 MAU 1100 万，Hailuo 视频海外月访问千万级）。
+CISPO 的关键设计是裁剪重要性采样权重，而非直接裁剪 token 级策略更新；M1 论文据此讨论长链策略优化中的更新稳定性。具体收益需结合论文的训练预算、奖励与基准结果阅读，训练费用不作为方法结论。
 
 ---
 
-## 8. 关键洞察与展望
+## 8. 仍待回答的问题
 
-1. **Lightning Attention 是 MiniMax 体系的护城河**：从 MiniMax-01 到 M1/M3，所有"长上下文 / 长思考 / 高吞吐"优势都来自这一项技术。M3 明确继承并扩展了 Lightning Attention 混合架构，长上下文推理效率持续领先。
-2. **Hybrid 注意力可能是中长期主流**：纯 Softmax 在 1M+ 上下文不可承受，纯线性注意力在精确召回上有损；MiniMax-01 验证 7:1 比例可在 456B 规模收敛得很好，这一组合很可能成为长上下文推理模型的事实标准（参考后续 Tri Dao 等学者的认可）。
-3. **测试时计算（Test-time Compute Scaling）会进一步利好线性注意力**：思考链越长，n² 与 nd² 的差距越关键。M1 已经把 thinking budget 推到 80K，未来 200K、500K 的 thinking 几乎只有 hybrid lightning 这类架构能承担。
-4. **Agent 路线优先小激活**：M2（230B / 10B 激活）已经验证"小激活 + 强 agent loop"路线，M2.5 以 SWE-Bench Verified 80.2% 和 Claude Opus 4.6 的 10% 成本确立开源 Agent 模型性价比标杆。M3 在此基础上进一步扩展至多模态 agent 闭环，未来 MiniMax 大概率会在 M3.5 上继续推这条路；与之配合，海螺 / MiniMax Agent 会逐渐覆盖 IDE、Browser、Office、终端的全栈 agent 场景。
-5. **递归自我改进（RSI）是下一个扩展维度**：M2.7 启动的递归自我改进机制，让模型在无人类标注的情况下自主提升代码、数学与工具使用能力。如果 RSI 与 Lightning Attention 的长上下文优势结合，可能开启"自我训练 → 长链验证 → 能力跃迁"的新范式。
-6. **多模态的统一仍是开放问题，但 M3 已迈出关键一步**：Text、VL、Speech、Music、Video 当前共享的是"基础设施层"（tokenizer + AR + Flow Matching），而非"统一模型权重"。M3 将 agent 能力扩展到多模态输入（文本 + 图像 + 音频），是向全模态统一基座的重要过渡。如果 MiniMax 后续推出"全模态统一基座"（类似 Qwen-Omni 的路线），其在 Speech / Music / Video 上的领先会进一步放大。
+1. **混合注意力的适用条件**：在什么上下文长度、检索任务与硬件下，Lightning/线性层和 Softmax 层的比例能兼顾状态压缩与精确召回？MiniMax-01 的消融给出一个具体模型设置，尚需其它任务与系统条件的对照。
+2. **训练机制能否解释能力变化**：CISPO、RL 环境规模和工具轨迹同时变化时，哪些因素分别改善代码任务与 Agent 闭环？需看消融是否固定模型、数据、采样和执行环境。
+3. **基准成绩如何转成真实工作流能力**：SWE-Bench 类任务的通过判据、补丁测试和预算，与浏览器、终端或多模态工作流不同，不能合并成一个 Agent 能力分数。
+4. **多模态系统的共享边界**：不同模态模型共享 tokenization、主干或训练栈的程度各异；需要由对应论文或配置说明，不能由产品家族关系推断统一模型。
+5. **RSI 的证据要求**：模型生成数据并参与评估还不等于自我改进成立；需要独立验证器、固定评测集和可重复的跨轮次增益，排除数据污染与评价器自偏。
 
 ---
 

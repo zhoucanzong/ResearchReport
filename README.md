@@ -18,7 +18,7 @@
 <div align="center">
 
 <!-- SCRIPT:badges START -->
-[**77** 主报告](index/by-report.md) &nbsp; · &nbsp; [**294** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**45** 研究专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
+[**77** 主报告](index/by-report.md) &nbsp; · &nbsp; [**308** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**45** 研究专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
 <!-- SCRIPT:badges END -->
 
 </div>
@@ -32,6 +32,7 @@
 | 一个模型或系列的机制与演进 | [模型系列](Models/README.md) → 目标报告 → 论文与来源 |
 | 一类方法解决了什么问题 | [技术专题](index/by-topic.md) → 方法对照 → 实验条件与失效边界 |
 | 开源系统究竟怎样运行 | [代码深读](OpenSource/README.md) → 运行路径 → 固定版本的源码证据 |
+| 想把不同板块连起来读 | [跨领域学习路线](docs/learning-paths.md) → 能力形成、行动系统、推理基础设施、AIGC 与科学发现 |
 
 ## 研究板块
 
@@ -123,11 +124,11 @@
 <!-- SCRIPT:recent START · 报告日期优先，缺失时回退最近提交日 -->
 | 日期 | 阅读条目 | 板块 |
 | :-- | :-- | :-- |
+| 2026-10-30 | [MoE 执行与专家通信](<Infra/MoEExecution/report.md>) | Infra |
+| 2026-10-30 | [模型量化与边缘部署](<Infra/QuantizationEdge/report.md>) | Infra |
+| 2026-10-30 | [分布式训练基础设施](<Infra/TrainingInfra/report.md>) | Infra |
 | 2026-10-29 | [投机解码](<Infra/SpeculativeDecoding/report.md>) | Infra |
 | 2026-10-29 | [扩散语言模型](<LLM/DiffusionLM/report.md>) | LLM |
-| 2026-10-29 | [Gemini](<Models/Gemini/report.md>) | Models |
-| 2026-10-29 | [世界模型](<WorldModel/WorldModels/report.md>) | WorldModel |
-| 2026-10-28 | [Harness²](<OpenSource/Harness2/report.md>) | OpenSource |
 <!-- SCRIPT:recent END -->
 
 [查看全部更新 →](index/recent.md)
@@ -144,7 +145,7 @@
 | **AI4Science** | [抗生素发现](<AI4Science/AntibioticDiscovery/report.md>) · [天文图像异常发现](<AI4Science/Astronomy/report.md>) · [自主实验室](<AI4Science/AutonomousLabs/report.md>) · [化学反应条件优化](<AI4Science/Chemistry/report.md>) · [生成式材料设计](<AI4Science/MaterialsDiscovery/report.md>) · [数学与算法发现](<AI4Science/MathematicalDiscovery/report.md>) · [神经活动表征与解码](<AI4Science/Neuroscience/report.md>) · [蛋白质与肽结合体设计](<AI4Science/ProteinDesign/report.md>) · [单细胞扰动预测](<AI4Science/SingleCellPerturbation/report.md>) · [天气与气候预测](<AI4Science/WeatherClimate/report.md>) |
 | **Evaluation** | [评测科学](<Evaluation/EvaluationScience/report.md>) · [科学发现的评测方法](<Evaluation/ScientificDiscovery/report.md>) |
 | **Infra** | [KV Cache 与预填充／解码分离](<Infra/KVCachePD/report.md>) · [MoE 执行与专家通信](<Infra/MoEExecution/report.md>) · [模型量化与边缘部署](<Infra/QuantizationEdge/report.md>) · [在线推理服务与评测](<Infra/ServingEvaluation/report.md>) · [投机解码](<Infra/SpeculativeDecoding/report.md>) · [分布式训练基础设施](<Infra/TrainingInfra/report.md>) |
-| **分析分册** | [查看 19 篇专题内分析](<index/by-topic.md>) |
+| **分析分册** | [查看 20 篇专题内分析](<index/by-topic.md>) |
 <!-- SCRIPT:topics END -->
 
 ## 阅读与引用

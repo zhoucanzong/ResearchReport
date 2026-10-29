@@ -133,7 +133,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Models/MiniMax/report.md](<../Models/MiniMax/report.md>) | MiniMax 系列模型研究报告：以 Lightning Attention 重写 Transformer 的扩展曲线 | — | — | — |
+| [Models/MiniMax/report.md](<../Models/MiniMax/report.md>) | MiniMax 系列模型研究报告：混合注意力、后训练与多模态路线 | — | — | — |
 
 ## Mistral (1)
 
@@ -145,7 +145,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | MoE 执行：从专家路由到跨设备回收 | repo-research | 2026-10-24 | current |
+| [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | MoE 执行：从专家路由到跨设备回收 | repo-research | 2026-10-30 | current |
 
 ## Nemotron (1)
 
@@ -157,7 +157,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | Nemotron-Labs-Diffusion 阅读报告 | — | — | — |
+| [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | Nemotron-Labs-Diffusion 阅读报告 | research | 2026-10-29 | current |
 
 ## OCR 与文档解析 (1)
 
@@ -241,7 +241,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 大模型训练基础设施与分布式训练研究报告 | topic-research | 2026-10-22 | needs-review |
+| [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 大模型训练基础设施与分布式训练研究报告 | topic-research | 2026-10-30 | needs-review |
 
 ## 化学反应条件优化 (1)
 
@@ -385,7 +385,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 模型量化与边缘部署研究报告 | topic-research | 2026-10-22 | needs-review |
+| [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 模型量化与边缘部署研究报告 | topic-research | 2026-10-30 | current |
 
 ## 混合专家模型（MoE） (1)
 
@@ -471,11 +471,12 @@
 | --- | --- | --- | --- | --- |
 | [AIGC/AudioGen/report.md](<../AIGC/AudioGen/report.md>) | 音频与音乐生成：从压缩表示到可控长序列 | — | — | — |
 
-## 专题内分析分册（19）
+## 专题内分析分册（20）
 
 | 所属报告 | 分册入口 |
 | --- | --- |
 | [智能体系统](<../Agents/AgentSystems/report.md>) | [长程 Agent 的执行恢复：诊断、回滚与学习修正](<../Agents/AgentSystems/topics/long-horizon-execution-recovery.md>) |
+| [模型量化与边缘部署](<../Infra/QuantizationEdge/report.md>) | [量化感知适配与原生低精度训练：模型从哪里开始量化？](<../Infra/QuantizationEdge/topics/low-precision-training.md>) |
 | [投机解码](<../Infra/SpeculativeDecoding/report.md>) | [横切专题①：投机解码的算法家族谱系](<../Infra/SpeculativeDecoding/topics/algorithm-families.md>) |
 | [投机解码](<../Infra/SpeculativeDecoding/report.md>) | [扩散语言模型与投机解码：草稿、验证和生成目标](<../Infra/SpeculativeDecoding/topics/diffusion-drafters.md>) |
 | [投机解码](<../Infra/SpeculativeDecoding/report.md>) | [横切专题：草稿从哪里来，怎样训练到会被接受](<../Infra/SpeculativeDecoding/topics/draft-side-and-training.md>) |

@@ -12,9 +12,9 @@ display_name: Nemotron
 
 Nemotron 的研究线包括早期合成数据与对齐、基于 Llama 的压缩/推理后训练，以及 Mamba–Attention–MoE 混合架构。但同一品牌不代表同一训练配方。Nemotron 3 初始 Nano 与 Super / Ultra 的关键区别是：**LatentMoE、MTP 与原生 NVFP4 训练在家族白皮书中归给两个大模型**，不能把它们全部附到 Nano 上。[新增一手来源 N1–N4]
 
-Ultra 的 550B 总参 / 55B 激活不是只能依赖第三方新闻的数字，官方模型卡和技术报告可以直接确认。官方 BF16 型号页也列出最长 1M context，官方BF16型号页也列出最长1M context；BF16与NVFP4的上下文差异没有该型号材料支持。真正的部署瓶颈需要同时考虑精度、批大小、序列和硬件，而非仅凭参数量分类。
+Ultra 的 550B 总参 / 55B 激活可由官方模型卡和技术报告确认；BF16 型号页也列出最长 1M context。现有材料不支持把 BF16 与 NVFP4 的上下文上限说成不同。部署瓶颈还取决于精度、批大小、序列和硬件，不能只凭参数量判断。
 
-性能证据也必须带运行点：Ultra 论文在 GB200、NVFP4、8K输入/64K输出的最大吞吐比较中有优势，但相同论文在 prefill-heavy 任务给出反例。“300+ tok/s、统一快3–6倍、成本低30%、美国开源第一”等说法缺少对应的固定协议，不能由论文中的特定运行点推出。
+性能证据也必须带运行点：Ultra 论文在 GB200、NVFP4、8K 输入/64K 输出的最大吞吐比较中有优势，但同一论文在 prefill-heavy 任务给出反例。因此不应把特定运行点外推成统一速度或成本排名；横向比较需固定模型版本、硬件、精度、输入输出长度与服务栈。
 
 ## 二、模型演进时间线
 
@@ -113,7 +113,7 @@ Ultra 的 550B 总参 / 55B 激活不是只能依赖第三方新闻的数字，�
   - **MiniPuzzle 压缩技术**：结合剪枝与知识蒸馏，将 56B 模型压缩至 47B，精度几乎无损，推理更快
   - **FP8 训练方案**：证明 FP8 训练可达到与 BF16 相当的精度，降低训练成本
   - **视觉语言扩展**：Nemotron-H-8B/56B-VLM，采用 NVLM-D 架构，用于 Cosmos-Reason1 等物理 AI 推理
-- **性能**：与同规模 Transformer（Qwen-2.5、Llama-3.1）相比，精度相当或更优，**推理速度最高提升 3 倍**
+  - **性能**：论文在指定模型、精度、硬件与长度设置中比较同规模 Transformer（Qwen-2.5、Llama-3.1），并报告了最高 3 倍推理速度；这是该报告测试范围内的结果，不代表任意部署设置都能达到该倍数。
 
 #### Nemotron Nano 2（2025-08，arXiv:2508.14444）
 - **论文**：*NVIDIA Nemotron Nano 2: An Accurate and Efficient Hybrid Mamba-Transformer Reasoning Model*
@@ -186,13 +186,7 @@ Ultra BF16模型卡直接列最长1M，因此“BF16 262K / NVFP4 1M”不是该
 
 Nano模型卡标注 `nvidia-nemotron-open-model-license`，Ultra BF16卡标注 `openmdw-1.1`；这些 checkpoint 的许可标识不能推广到整个 Nemotron 家族。模型、数据、软件各自的许可证也不能合并；NeMo、TensorRT-LLM、NIM 的许可也应按各项目分别判断，不能统称为专有软件。
 
-## 七、服务价格与跨厂商比较
-
-第三方托管价格、未指定并发的 tok/s 与不同硬件上的竞品速度不能构成受控比较；缺少端点、模型 revision、计价日期和计量方式时，不宜给出成本或速度排名。
-
-同样不把Llama3与Llama4统一写成“纯Dense”，也不采用“Meta维护模式所以Nemotron接替整个开源中心”的因果叙事。跨厂商研究应按同一任务、精度、token预算和部署目标对照。上文的prefill反例说明，agent长输出吞吐与RAG短输出性能可能作出不同选择。
-
-## 八、生态事件与仍需补证的范围
+## 七、生态事件与仍需补证的范围
 
 NVIDIA 2026-03-16官方新闻稿确认Nemotron Coalition，列出8个创始成员，并称首个NVIDIA/Mistral协作基座将支撑Nemotron4。[N7] 这是一项合作计划，不能作为未发布模型架构或能力的实测证据。下载量、榜单热度和企业业务效果不属于该合作公告可支持的技术结论。
 

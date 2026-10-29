@@ -33,8 +33,8 @@
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
 | **具身预测规划** | [具身预测规划：执行前怎样筛选想象中的动作？](<EmbodiedPlanning/report.md>) | 54 行 |
-| **机器人视觉语言动作模型（VLA）** | [EmbodiedVLA 技术专题调研](<EmbodiedVLA/report.md>) | 573 行 |
-| **世界模型** | [WorldModels 技术专题调研](<WorldModels/report.md>) | 526 行 |
+| **机器人视觉语言动作模型（VLA）** | [EmbodiedVLA 技术专题调研](<EmbodiedVLA/report.md>) | 571 行 |
+| **世界模型** | [WorldModels 技术专题调研](<WorldModels/report.md>) | 524 行 |
 
 ## 📎 子文档
 

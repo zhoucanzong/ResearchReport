@@ -17,6 +17,7 @@
 
 | 所属报告 | 分册入口 |
 | --- | --- |
+| 模型量化与边缘部署 | [量化感知适配与原生低精度训练：模型从哪里开始量化？](<QuantizationEdge/topics/low-precision-training.md>) |
 | 投机解码 | [横切专题①：投机解码的算法家族谱系](<SpeculativeDecoding/topics/algorithm-families.md>) |
 | 投机解码 | [扩散语言模型与投机解码：草稿、验证和生成目标](<SpeculativeDecoding/topics/diffusion-drafters.md>) |
 | 投机解码 | [横切专题：草稿从哪里来，怎样训练到会被接受](<SpeculativeDecoding/topics/draft-side-and-training.md>) |
@@ -30,11 +31,11 @@
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
 | **KV Cache 与预填充／解码分离** | [KV Cache 服务与 Prefill/Decode 分离：什么时候复用，什么时候传输](<KVCachePD/report.md>) | 84 行 |
-| **MoE 执行与专家通信** | [MoE 执行：从专家路由到跨设备回收](<MoEExecution/report.md>) | 69 行 |
-| **模型量化与边缘部署** | [模型量化与边缘部署研究报告](<QuantizationEdge/report.md>) | 188 行 |
+| **MoE 执行与专家通信** | [MoE 执行：从专家路由到跨设备回收](<MoEExecution/report.md>) | 95 行 |
+| **模型量化与边缘部署** | [模型量化与边缘部署研究报告](<QuantizationEdge/report.md>) | 244 行 |
 | **在线推理服务与评测** | [在线 LLM Serving：SLO、Goodput 与请求完整性](<ServingEvaluation/report.md>) | 81 行 |
 | **投机解码** | [投机解码（Speculative Decoding）技术专题 · 深度调研](<SpeculativeDecoding/report.md>) | 533 行 |
-| **分布式训练基础设施** | [大模型训练基础设施与分布式训练研究报告](<TrainingInfra/report.md>) | 181 行 |
+| **分布式训练基础设施** | [大模型训练基础设施与分布式训练研究报告](<TrainingInfra/report.md>) | 295 行 |
 
 ## 📎 子文档
 
@@ -50,9 +51,26 @@
 </details>
 
 <details>
-<summary><b>MoE 执行与专家通信</b>（1 份）</summary>
+<summary><b>MoE 执行与专家通信</b>（3 份）</summary>
 
 * [implementation/deepep-v2-dispatch-compute-combine.md](<MoEExecution/implementation/deepep-v2-dispatch-compute-combine.md>) — 78 行 / 15,317 B
+* [papers/2601.17111-llep.md](<MoEExecution/papers/2601.17111-llep.md>) — 45 行 / 5,234 B
+* [papers/2606.04101-ultraep.md](<MoEExecution/papers/2606.04101-ultraep.md>) — 49 行 / 6,061 B
+
+</details>
+
+<details>
+<summary><b>模型量化与边缘部署</b>（9 份）</summary>
+
+* [papers/2401.06118-aqlm.md](<QuantizationEdge/papers/2401.06118-aqlm.md>) — 23 行 / 2,849 B
+* [papers/2402.02750-kivi.md](<QuantizationEdge/papers/2402.02750-kivi.md>) — 21 行 / 2,720 B
+* [papers/2404.00456-quarot.md](<QuantizationEdge/papers/2404.00456-quarot.md>) — 29 行 / 3,981 B
+* [papers/2405.04532-qserve.md](<QuantizationEdge/papers/2405.04532-qserve.md>) — 21 行 / 2,761 B
+* [papers/2405.16406-spinquant.md](<QuantizationEdge/papers/2405.16406-spinquant.md>) — 29 行 / 3,770 B
+* [papers/2510.06175-vecinfer.md](<QuantizationEdge/papers/2510.06175-vecinfer.md>) — 25 行 / 3,279 B
+* [papers/2606.10531-lc-qat.md](<QuantizationEdge/papers/2606.10531-lc-qat.md>) — 27 行 / 3,718 B
+* [papers/2609.39223-qatfactory.md](<QuantizationEdge/papers/2609.39223-qatfactory.md>) — 32 行 / 4,461 B
+* [topics/low-precision-training.md](<QuantizationEdge/topics/low-precision-training.md>) — 46 行 / 7,033 B
 
 </details>
 
@@ -121,6 +139,15 @@
 * [topics/draft-side-and-training.md](<SpeculativeDecoding/topics/draft-side-and-training.md>) — 84 行 / 10,710 B
 * [topics/systems-throughput-latency.md](<SpeculativeDecoding/topics/systems-throughput-latency.md>) — 223 行 / 18,083 B
 * [topics/verification-acceptance.md](<SpeculativeDecoding/topics/verification-acceptance.md>) — 186 行 / 14,049 B
+
+</details>
+
+<details>
+<summary><b>分布式训练基础设施</b>（3 份）</summary>
+
+* [papers/2304.11277-pytorch-fsdp.md](<TrainingInfra/papers/2304.11277-pytorch-fsdp.md>) — 52 行 / 8,091 B
+* [papers/2401.10241-zero-bubble.md](<TrainingInfra/papers/2401.10241-zero-bubble.md>) — 35 行 / 3,802 B
+* [papers/2405.15362-controllable-memory.md](<TrainingInfra/papers/2405.15362-controllable-memory.md>) — 29 行 / 3,941 B
 
 </details>
 

@@ -4,7 +4,7 @@ display_name: MiMo
 
 # 小米 MiMo 系列模型深度调研报告
 
-> 文档定位：本报告聚焦小米（Xiaomi）大语言模型核心团队（LLM-Core Team）自 2025 年 4 月以来公开发布的 MiMo 系列模型，覆盖基座、推理、视觉-语言、语音、具身、MoE 旗舰等多条产品线，并梳理其技术演进、关键创新与商业化战略。撰写时间：2026 年 6 月（初版）；**最近更新：2026-10-23** —— 增量增补 **§九 MiMo-V2.6 系列**（独立章节）与 **§十 MiMo-V3 / HySparse2「架构公开、模型未发布」**，并同步 §1.1 时间线、§十二 结论与参考文献；技术报告另见 [精读分册](<papers/2610.11959-mimo-v2-6.md>)。**覆盖到的最新已发布模型：2026-09-22 的 MiMo-V2.6 系列**（V3 只有架构公开，见 §十）。
+> 文档定位：本报告沿公开论文和技术报告，梳理 MiMo 系列在基座训练、推理后训练、多模态、具身模型与 MoE 上的研究路线。重点是模型机制、训练设计和证据边界，不把公司战略、团队履历或产品排名当作技术结论。MiMo-V2.6 技术报告的逐篇细读见 [精读分册](<papers/2610.11959-mimo-v2-6.md>)；覆盖到的最新已发布模型为 2026-09-22 的 MiMo-V2.6，V3 目前只有架构论文，见 §十。
 > 信息可信度：标注「确认」表示来自 arXiv 技术报告 / 官方 GitHub / Hugging Face 模型卡 / 小米官方发布；标注「推测」表示根据公开二手信息整合，可能存在误差。
 >
 > **证据标注**：正文区分一手论文、官方页面、媒体转述与尚未确证的说法；官方自报数字标明其来源。混合来源的结论按较弱的证据类型理解。
@@ -13,35 +13,15 @@ display_name: MiMo
 
 ## 一、概述与背景
 
-### 1.1 小米进入大模型赛道的时间线
+### 1.1 公开研究路线概览
 
-小米对大模型的布局可以划分为三个阶段：
+从公开材料看，MiMo 的研究对象从稠密基座扩展到推理、多模态和大规模 MoE。这里按研究问题归纳，而非将发布节奏等同于技术进步：
 
-1. **内部 MiLM 阶段（2023–2024）**：以 MiLM2 系列（包含 4B 端侧模型与 30B 云端模型）为代表，主要服务小爱同学、HyperOS、IoT 终端等内部产品，未对外开源（确认）。该阶段的代表性技术包括「TransAct 大模型结构化剪枝」与端侧量化，强调「端侧跑通」与「云-端协同」。
-2. **MiMo 1.0 时代（2025.04–2025.11）**：以 2025 年 4 月 30 日 [MiMo-7B](https://github.com/XiaomiMiMo/MiMo) 系列开源为标志，小米首次以 LLM-Core 团队的名义对外发布大模型，主线包括：
-   - MiMo-7B（基座 + RL 推理模型，2025.04）
-   - MiMo-VL-7B（视觉语言模型，2025.06）
-   - MiMo-Audio-7B（端到端语音大模型，2025.09）
-   - MiMo-Embodied-7B（具身 + 自动驾驶统一基座，2025.11）
-3. **MiMo V2 时代（2025.12 至今）**：从稠密 7B 跃迁到大规模 MoE，进入「Agent 时代」战略：
-   - MiMo-V2-Flash（309B 总参 / 15B 激活 MoE，2025.12 开源）
-   - MiMo-V2-Pro / Omni / TTS（万亿级 MoE 三件套，2026.03.19 发布）
-   - **MiMo-V2.5 系列（2026.04.23）**：全面升级，含 V2.5-Pro、V2.5、V2.5-TTS、V2.5-ASR
-   - **V2-Pro / V2-Omni 退役（2026.06.30）**：旧版停止服务，迁移至 V2.5 系列
-   - **MiMo-V2.6 系列（2026.09.22 发布并开源）**：Pro 1.02T 总参 / 42B 激活、Flash 310B / 15B，双模型原生全模态 + 1M 上下文；技术报告 2026-10-08（[arXiv:2610.11959](https://arxiv.org/abs/2610.11959)）；V2.5-Pro / V2.5 于 2026-10-21 退役（详见 §九）
-   - **MiMo-V3 / HySparse2（2026.09.22 架构公开；模型未发布）**：两级 KV 共享的混合稀疏注意力架构，论文在 80B-A3B 验证模型上报告 1M 上下文预填充 FLOPs 较 Hybrid SWA 低 5.02×；截至 2026-10-17，V3 无权重、无 API、无模型卡（详见 §十）
+1. **基座训练与推理能力**：MiMo-7B 研究预训练数据课程、MTP 与强化学习后训练，见第 2–3 节。
+2. **多模态与具身任务**：MiMo-VL、MiMo-Audio 和 MiMo-Embodied 分别研究视觉语言、语音及动作相关任务，见第 7 节。
+3. **稀疏模型与长上下文**：V2 系列转向 MoE；V2.6 把多模态与混合 RL 纳入同一模型线，V3 的 HySparse2 论文则研究稀疏注意力与 KV 共享，见第 8–10 节。
 
-### 1.2 战略坐标：「人车家全生态」与 Agent 化
-
-雷军在 2026 年 3 月 19 日的发布会上明确：小米将在未来三年于 AI 领域投入至少 600 亿元，其中 2026 年 AI 研发与资本预算超过 160 亿元，目标是「进入全球大模型第一阵营」（确认，来源：财新）。MiMo 系列被设计为支撑小米「人-车-家全生态」的统一智能底座：
-
-- **人**：MiMo-7B / MiMo-V2-Pro 用于通用对话、推理与编码，MiMo-Audio / MiMo-V2-TTS 用于语音交互（小爱同学、HyperOS）。
-- **车**：MiMo-Embodied 为小米汽车的智驾团队（陈龙、王乃岩、叶航军等核心架构）提供 VLA（Vision-Language-Action）基座。
-- **家 / IoT**：端侧 4B 模型 + MoE 稀疏激活，强调低成本部署。
-
-### 1.3 团队组织
-
-MiMo 系列由小米 **LLM-Core Team**（核心团队）主导，公开作者列表中可见 Bingquan Xia、Zihao Yue、Bowen Shen、Dawei Zhu 等 60+ 名研究员；[2025 年加入的罗福莉](https://huggingface.co/XiaomiMiMo)（曾任 DeepSeek 核心研究员）参与 MiMo-VL；自动驾驶 / 具身方向由首席科学家陈龙博士（前 Wayve Staff Scientist，Lingo 系统主导者）与第一作者郝孝帅领衔，构成与 LLM-Core 平行但相互复用的双线团队结构。
+不同模型之间是否共享训练数据、底座或基础设施，按各自论文和模型配置说明；公开发布序列本身不足以推出统一的公司级战略或组织结构。
 
 ---
 
@@ -344,21 +324,17 @@ MiMo-7B-RL 的根本不同在于**「自训练」而非「蒸馏」**：
 
 算法采用 **fully on-policy GRPO 变体**——单步策略更新无 clipped surrogate；继承 MiMo-7B 的去 KL、动态采样、Clip-Higher、easy data filter；引入 **Reward-as-a-Service (RaaS)** 统一接入多种奖励。
 
-**亮点指标**：
-- MMMU 66.7（开源 7B SOTA），在 40 个 benchmark 中 35 个超过 Qwen2.5-VL-7B；
-- OlympiadBench 59.4（**超越 78B 模型**）；
-- OSWorld-G 56.1（**GUI grounding SOTA，超越专用模型 UI-TARS**）；
-- 内部用户偏好评测中 Elo 分数为开源 VLM 第一，与 Claude 3.7 Sonnet 同档。
+论文在 MMMU、OlympiadBench、OSWorld-G 等任务上报告了 MiMo-VL-7B 与所列对照模型的结果。读这些分数时应回到论文对应表格的模型版本、提示和评测设置；它们不是统一评测协议下对“开源 VLM”或专用系统的普遍排名。[MiMo-VL 技术报告](https://arxiv.org/abs/2506.03569)
 
 ### 7.2 MiMo-Audio-7B（2025.09.19，[arXiv:2512.23808](https://arxiv.org/abs/2512.23808)）
 
 **架构**：1.2B RVQ Audio Tokenizer + 7B LLM。Tokenizer 采用 **8 层 RVQ 堆叠**，25Hz 帧率，每秒生成约 200 tokens；patch encoder 将连续 4 个时间步聚合为 1 个 patch，下采样至 6.25Hz 表示，从而压缩长音频序列长度。
 
-**关键定位**：业界首个开源端到端原生语音大模型 instruct 版本（MiMo-Audio-7B-Instruct）；在 MMSU、MMAU、MMAR、MMAU-Pro 等音频理解 benchmark 与 Big Bench Audio 等口语对话 benchmark 上声称达到开源 SOTA，部分指标超越 GPT-4o 与 Gemini 2.0（确认源：小米官方与 arXiv）。
+MiMo-Audio 把音频 tokenizer 与语言模型组合为统一的语音输入/输出系统。论文在 MMSU、MMAU、MMAR、MMAU-Pro 和 Big Bench Audio 等任务上报告了与其对照模型的结果；这些是各基准设定下的论文结果，不足以支持“首个”或跨任务 SOTA 的概括。[MiMo-Audio 技术报告](https://arxiv.org/abs/2512.23808)
 
 ### 7.3 MiMo-Embodied-7B（2025.11.21，[arXiv:2511.16518](https://arxiv.org/abs/2511.16518)）
 
-**定位**：业界首个**统一具身智能与自动驾驶**的开源跨域基座 VLM。基于 MiMo-VL 进行 continue-train。
+该论文研究一个同时面向具身任务和自动驾驶任务的开源视觉语言模型，并从 MiMo-VL 继续训练。这里的“统一”描述论文覆盖的任务与模型设置，不意味着它已经证明跨机器人和车辆场景的通用动作策略。
 
 **架构 = ViT + Projector + LLM**（沿用 MiMo-VL）。
 
@@ -368,9 +344,7 @@ MiMo-7B-RL 的根本不同在于**「自训练」而非「蒸馏」**：
 3. **链式思维 (CoT) 训练**：让模型显式输出「观察→分析→候选→理由→结论」的推理链
 4. **强化学习微调**：多选题奖励 + bbox IoU 奖励 + 格式模板约束
 
-**结果**：在 **17 个具身 benchmark + 12 个自动驾驶 benchmark** 全面 SOTA，在 RoboRefIt、Part-Afford、VABench-Point、CV-Bench、RoboSpatial、CODA-LM、DRAMA、LingoQA、DriveLM、MAPLM、BDD-X 等核心榜单领先。
-
-**团队信号**：第一作者郝孝帅（前 BAAI Robobrain 1.0/2.0 核心，2025.08 加入小米）；项目负责人陈龙（前 Wayve Staff Scientist，Lingo VLA 主导者，MIT 35 under 35）。这一项目标志着小米将 LLM-Core 与汽车 / 机器人团队从**「不同 base 模型」**向**「统一 base 模型」**的范式合并。
+论文在所列具身与自动驾驶基准上报告了与若干对照模型的结果。不同基准测量的能力并不相同；这些离线结果不能替代真机闭环或道路安全证据。[MiMo-Embodied 技术报告](https://arxiv.org/abs/2511.16518)
 
 ---
 
@@ -663,45 +637,28 @@ HySparse2 是 HySparse（Gao et al., 2026）的迭代，针对 Agent 推理「�
 
 ---
 
-## 十一、端侧部署与应用方向
+## 十一、相关研究专题
 
-### 11.1 推理加速能力（端云一体）
+若要理解 MiMo 论文中的机制，可沿以下路线继续阅读：
 
-- **MTP / speculative decoding**：MiMo-7B、MiMo-V2 系列均原生支持 1+ 层 MTP，配合 EAGLE 风格 speculative decoding，在 vLLM 与 SGLang 主线均提供官方实现，第 1 层接受率 90%。
-- **MoE 稀疏激活**：MiMo-V2-Flash 仅激活 15B / 309B，MiMo-V2-Pro 激活 42B / 1T，对推理服务的显存与吞吐成本极为友好。
-- **混合注意力（Hybrid SWA / Mixed-Attention）**：Flash 与 Pro 均采用滑窗+全局混合注意力，原生支持百万 token 上下文同时控制 KV cache。
-
-### 11.2 端侧落地（MiLM 历史与 MiMo 端侧化）
-
-- 小米 2024 年的 **MiLM2-4B** 已通过 **TransAct 结构化剪枝** + 端侧量化部署到手机/IoT 设备（确认）。
-- MiMo 系列的端侧版本目前公开信息有限（推测）：MiMo-V2-Flash 的极致稀疏 MoE 设计与多层 MTP 都指向「云端高吞吐 + 端侧轻激活」的形态；MiMo-Audio 的 6.25Hz patch 表示也利于端侧实时语音交互。
-- 应用场景：小爱同学（语音）、HyperOS Copilot、小米汽车智能座舱、IoT 设备语音助理。
-
-### 11.3 汽车与机器人
-
-- **小米汽车智驾**：陈龙团队推动 VLA（Vision-Language-Action）路线，MiMo-Embodied 是其首篇论文与开源基座。MiMo-Embodied 同时具备智驾与具身能力，使「带轮子的智能体」与「带四肢的智能体」能在同一参数空间复用。
-- **机器人（推测）**：基于 MiMo-Embodied 的「可供性推断 + 空间理解 + 任务规划 + 链式推理」组合，预计将服务于小米的家用 / 工业机器人形态产品；具体产品时间线未官方披露。
-
-### 11.4 Agent 平台与生态
-
-- **platform.xiaomimimo.com** + **mimo.xiaomi.com**：MiMo-V2 系列采用纯浏览器 API 形态，全球开发者可访问。
-- **Xiaomi MiMo Studio**：开发者门户。
-- 与 OpenClaw、OpenCode、KiloCode、Blackbox、Cline 等主流 Agent 框架原生集成（确认）。
-- 在国际榜单（Hermes Agent、OpenRouter 日/周榜）上 MiMo-V2-Pro 已多次登顶（确认）。
+- 预训练数据课程与推理后训练：[训练数据策展](../../LLM/TrainingData/report.md)、[强化学习后训练](../../LLM/ReinforcementLearning/report.md) 和[推理模型](../../LLM/ReasoningModels/report.md)。
+- MTP 与推理期验证：[投机解码](../../Infra/SpeculativeDecoding/report.md)，关注接受率、目标分布和端到端系统条件。
+- MoE 与长上下文：[混合专家模型](../../LLM/MoE/report.md)、[MoE 执行](../../Infra/MoEExecution/report.md) 和 [KV Cache](../../Infra/KVCachePD/report.md)，区分稀疏激活、专家通信与缓存成本。
+- 视觉语言与具身任务：[视觉语言模型](../../LLM/VLM/report.md) 和[具身 VLA](../../WorldModel/EmbodiedVLA/report.md)，比较离线理解结果与闭环动作证据。
 
 ---
 
 ## 十二、结论
 
-MiMo 系列只用了不到一年时间，就从「内部 MiLM」走到了「业界一流开源大模型矩阵」。其技术叙事可以总结为三条主线：
+MiMo 公开研究可以沿三条问题线理解：
 
-1. **「为推理而预训练」的范式确认**：MiMo-7B 用 25T 推理优先 tokens + 三阶段课程 + MTP，证明 7B 模型在 RL 后能直接对标 32B 推理模型乃至闭源 o1-mini，同时给社区贡献了 Base / SFT / RL-Zero / RL 全套 checkpoint。
-2. **GRPO 变体 + IOI 风格密集奖励 + Seamless Rollout Engine** 形成可复现、可工业化的 RL 训练栈，被 MiMo-VL、MiMo-Embodied、MiMo-V2 全线复用。
-3. **从 7B 稠密到 1T MoE 的跃迁**：以 MiMo-V2-Flash（309B/15B）打通 MoE 工程链路，再以 MiMo-V2-Pro（1T/42B + 1M context）切入 Agent 时代；**V2.5 系列（2026.04）全面升级**，Pro 对标 Claude Opus 4.6，标准版实现原生全模态感知，TTS/ASR 覆盖语音全链路；MiMo-VL → MiMo-Embodied 完成多模态与具身/智驾打通；MiMo-Audio / TTS / ASR 完成语音入口。三条线最终回到小米「人车家全生态」的战略坐标系。
+1. **预训练能否提高后续推理上限**：MiMo-7B 论文比较推理导向数据课程、MTP 与后训练结果。它是研究 base-model reasoning potential 的案例；关于蒸馏、pass@k 和 RL 的结论应限定在论文选择的模型、预算和基准中。
+2. **奖励与 rollout 如何影响策略学习**：MiMo 的论文分别研究规则奖励、组相对优化和 rollout 系统。它们组成可读的训练案例，但不同论文间机制复用或结果变化不等于对每个组件都完成了独立因果消融。
+3. **模型扩展带来哪些系统取舍**：从 7B 稠密模型到 V2 的 MoE，再到 V2.6 的多模态训练和 V3 的 HySparse2，问题从训练信号扩展到激活参数、注意力与缓存。V3 的效率结论来自论文中的 80B-A3B 验证模型，不能算作已发布 V3 权重或其他模型的实测收益。
 
-对于研究者，MiMo-7B 是目前研究「base model reasoning potential 与 RL 上限关系」的最佳开源样本；对于工程团队，MiMo-V2-Flash 与 Pro 提供了以国产开源 MoE + 1M 上下文构建低成本 Agent 系统的现实选择；**V2.5 系列则进一步将全模态感知与高强度 Agent 能力推向开源前沿**。
+推荐把 MiMo-7B 作为“预训练数据课程如何影响后续 RL”问题的一个案例，再对读 MiMo-VL、MiMo-Embodied 与 V2.6，观察同一系列研究如何转向多模态任务、MoE 和混合 RL。各论文报告的基准结果仍受模型版本、数据和评测协议约束，不宜汇总成统一的系列排名。
 
-**MiMo-V2.6 的路线变化**：MiMo-V2.6 保留了上一代的「MoE + 1M 上下文」骨架（Pro 与 V2.5-Pro、Flash 与 V2.5 的 `config.json` 骨架逐项相同），把 Pro 从纯文本升级为原生全模态，并用一次混合 RL 在 6 天内完成 30 步训练。官方给出的 out-of-sample 提升为 DeepSWE v1.1 **+14.2（Pro，58.4→72.6）**与 **+17.0（Flash，48.8→65.7）**；第三方 AA Intelligence Index **46** 使其成为该指数下开放权重类内最高分（AA 口径，§9.6）。**V3 的 HySparse2 则把「效率」再往前推**：两级 KV 共享 + token 级稀疏 + prefill 早退，论文在 80B-A3B 验证模型上报告 1M 预填充 FLOPs 较 Hybrid SWA 低 5.02×、KV cache 2.69 GB——但 **V3 尚未发布**（架构公开、无权重 / API / 模型卡），这些收益不能算到任何已发布模型头上。
+**MiMo-V2.6 与 V3 的路线差异**：V2.6 报告保留上一代 MoE 与长上下文结构，将多模态训练和混合 RL 纳入更新；其 DeepSWE v1.1 分数变化是技术报告在指定测试集上的结果，细节见 §9.6 与逐篇精读。V3 的 HySparse2 论文则在 80B-A3B 验证模型上报告了 1M 预填充 FLOPs 与 KV cache 结果；这些结果不能归到尚未发布权重的 V3 模型或 V2.6 上。
 
 ---
 

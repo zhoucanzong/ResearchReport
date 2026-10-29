@@ -112,6 +112,8 @@ DeepSeek-V3 技术报告把专家路由、节点拓扑和通信重叠一并设�
 
 从部署角度，MoE 还有一个常见误区：未激活专家不做这一步的 FFN 计算，但它的权重仍需存放在 GPU、CPU 或远端节点；量化、卸载和 expert caching 会改变内存带宽、专家加载和尾延迟。性能报告至少要区分 prefill/decode、吞吐/单请求延迟、batch、模型权重常驻策略、KV cache、量化和互联，不能用 active parameter count 替代这些指标。
 
+本节给出路由与 EP 的概念执行链；并行训练中 DP、TP、PP 与 FSDP 如何切分状态和安排通信，见[训练基础设施](../../Infra/TrainingInfra/report.md)。固定版本的 dispatch → grouped GEMM → combine、运行时负载迁移及 DeepEP 数据面见 [MoE 执行与专家通信](../../Infra/MoEExecution/report.md)。三者分别讨论模型路由、训练状态并行和固定执行实现，不能把各自论文的吞吐数字拼成横向排名。
+
 ## 6. 实验如何比较与开放问题
 
 | 对比问题 | 必须对齐/报告的条件 | 避免的误读 |

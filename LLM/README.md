@@ -28,16 +28,16 @@
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
-| **模型对齐与后训练** | [模型对齐与后训练：方法、目标与证据边界](<Alignment/report.md>) | 126 行 |
+| **模型对齐与后训练** | [模型对齐与后训练：方法、目标与证据边界](<Alignment/report.md>) | 128 行 |
 | **决策模型（Decision Models）** | [决策模型综述：把概率判断变成可行动的选择](<DecisionModels/report.md>) | 242 行 |
 | **扩散语言模型** | [扩散语言模型：从随机遮盖到大规模并行生成](<DiffusionLM/report.md>) | 96 行 |
 | **OCR 与文档解析** | [OCR 与文档解析：从字符识别到结构还原](<DocumentParsing/report.md>) | 122 行 |
 | **长上下文** | [长上下文：从可接收长度到有效利用](<LongContext/report.md>) | 176 行 |
-| **混合专家模型（MoE）** | [混合专家模型：路由、负载均衡与系统通信](<MoE/report.md>) | 139 行 |
+| **混合专家模型（MoE）** | [混合专家模型：路由、负载均衡与系统通信](<MoE/report.md>) | 141 行 |
 | **大模型辅助运筹建模与求解** | [大模型辅助运筹建模与求解：从自然语言到可验证的决策](<OperationsResearch/report.md>) | 90 行 |
 | **检索增强生成（RAG）** | [检索增强生成：检索误差怎样传到答案](<RAG/report.md>) | 153 行 |
 | **推理模型与测试时计算** | [推理模型：测试时计算怎样变成更可靠的解题](<ReasoningModels/report.md>) | 152 行 |
-| **LLM 后训练中的强化学习** | [LLM 后训练中的强化学习：轨迹从哪里来，策略何时更新](<ReinforcementLearning/report.md>) | 107 行 |
+| **LLM 后训练中的强化学习** | [LLM 后训练中的强化学习：轨迹从哪里来，策略何时更新](<ReinforcementLearning/report.md>) | 109 行 |
 | **训练数据策展** | [训练数据策展：筛选、去重与配比如何改变训练结果](<TrainingData/report.md>) | 73 行 |
 | **视觉语言模型（VLM）** | [视觉语言模型：视觉表示如何进入语言模型](<VLM/report.md>) | 131 行 |
 

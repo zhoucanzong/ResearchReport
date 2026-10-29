@@ -408,11 +408,11 @@ Kimi-Audio（arXiv:2504.18425）是 Moonshot 的音频基础模型，7B 参数�
 | 2025-Q1 | Kimi 线上长上下文 | **MoBA** | RoPE | O(n)，常数小 |
 | 2025-Q4 | Kimi-Linear | **KDA(3) + MLA-NoPE(1)** 混合 | KDA 内禀位置 + MLA NoPE | KDA O(1)，混合显著低于 MLA |
 
-**MLA、MoBA、KDA 同时由 Moonshot 团队（部分作者重叠 Jianlin Su、Enzhe Lu、Jingyuan Liu 等）推动**，构成中国大模型注意力机制创新的完整谱系。
+这些工作显示 Moonshot 作者参与了不同注意力路线的研究：Moonlight/K2 使用 MLA，MoBA 探索块级稀疏注意力，Kimi Linear 研究 KDA 与 MLA 的混合。作者重叠能说明研究之间存在人员联系，但不能据此推断它们构成一条统一规划的“完整谱系”；具体机制和实验结论仍应分别按各论文阅读。
 
 ### 5.3 训练优化器：Muon → MuonClip
 
-Moonshot 是把 Muon 优化器从「100M 玩具实验」推到「1T 工业训练」的关键团队，详见 §6.1-§6.2。
+Moonlight 论文研究了 Muon 在 16B-A3B 模型训练中的使用，K2 论文则讨论了 MuonClip 对注意力 logit 稳定性的处理。两项工作提供了从优化器缩放实验到大规模 MoE 训练的案例；它们不足以把规模化归功于单一团队或单一优化器，机制与实验条件见 §6.1–§6.2。
 
 ### 5.4 后训练范式
 
@@ -509,21 +509,19 @@ K2 Thinking 在后训练阶段对 MoE 部分做 **INT4 weight-only QAT**，所�
 | 多模态 | Kimi-VL（MoE 2.8B-A3B）+ Audio + K2.5（原生）+ **K3（原生，从零训练 MoonViT-V2）** | DeepSeek-VL2 | Qwen-VL / Qwen2.5-VL（强力） | GPT-4o / GPT-5 | Claude 3.5 Sonnet+ |
 | 量化 | **K2 Thinking 原生 INT4 QAT**；**K3 为 MXFP4 权重 / MXFP8 激活 QAT（自 SFT 起）** | 后置量化 | GPTQ / AWQ | 黑盒 | 黑盒 |
 
-可以看到 **Moonshot 在「优化器（MuonClip）+ 注意力（MoBA / KDA）+ 长上下文 RL」三个底层栈上同时输出原创性工作**——这是它与 Qwen「数据 + 工程拼杀」、DeepSeek「算法极致 + 高效训练」差异化的核心。
+从公开论文看，Moonshot 的工作分别涉及优化器（Muon/MuonClip）、注意力（MoBA/KDA）和长上下文推理。它们可作为不同问题线的研究案例；现有公开材料不足以据此给公司整体技术路线排位，也不能把不同团队概括成单一“工程文化”。
 
 ---
 
-## 8. 结语：Kimi 的技术哲学
+## 8. 跨论文综合与阅读路径
 
-将三年技术演进拉直来看，Moonshot 的技术哲学有三条贯穿始终：
+公开工作可以沿三条问题线理解，但不能将时间上的连续性直接当作统一的团队计划或因果关系：
 
-1. **长上下文是 first-class concern**——不是某代模型的特性，而是整套技术栈的优化目标。从 200K 字符的 RoPE 工程到 MoBA 的稀疏路由再到 KDA 的线性混合，每一代都在「让长更可扩展、更便宜、更高质量」。
-2. **算法创新围绕训练效率（token efficiency）展开**——Muon 把每 token 的学习信号最大化，MuonClip 把训练稳定到 1T MoE，K2 的数据 rephrasing 把每 token 利用率再翻倍。这与「scaling = data + flops」的暴力路线形成对照。
-3. **推理 / Agent 与基座共生**——k1.5 的多模态原生 RL、K2 的 Agentic 数据合成、K2 Thinking 的 interleaved tool-use、K2.5 的视觉 Agent，本质上是把「模型 = backbone + 工具 + 思维」当成一个联合对象去优化，而非先训基座再外挂能力。
+1. **长上下文形成一条可读的技术线索**——公开工作从 RoPE 外推、MoBA 块级稀疏注意力延伸到 KDA 与 MLA 的混合设计；这说明团队持续研究长序列的计算与缓存约束，但不能仅由产品窗口推断每代机制都以相同目标优化。
+2. **训练效率需要拆成不同问题**——Muon 论文研究优化器的训练计算预算，MuonClip 处理大规模训练中的 logit 稳定性，K2 的数据重写则改变训练样本组织。它们的收益指标与实验条件不同，不宜合并成单一“token 利用率”结论。
+3. **推理与 Agent 训练的接口**——k1.5 的强化学习、K2 的 Agentic 数据、K2 Thinking 的 interleaved tool-use、K2.5 的视觉 Agent 分别涉及不同训练与任务设置。把它们串读有助于比较训练轨迹、工具反馈和多模态观测如何进入模型；现有跨代材料不足以证明这些组件始终作为同一联合目标优化。
 
 这条技术路线从长上下文产品工程扩展到稀疏注意力、KDA、Muon 系列优化器和 agentic 后训练。本报告将这些机制按其对应论文和模型实验分别讨论；跨论文出现相同组件，不单独证明其贡献可迁移或解释整代模型收益。
-
-- **K2 系列退役（2026-05-25）**：K2 系列正式停止支持，仅 K2.6 继续维护，标志着 Moonshot 从「多版本并行」转向「单一旗舰开源」策略。
 
 ---
 

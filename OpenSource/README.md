@@ -30,7 +30,7 @@
 | **Harness²** | [Harness²：把 harness 本身作为优化对象](<Harness2/report.md>) | 119 行 |
 | **REA** | [REA：把逆向工程变成 agent 可核验的证据流](<REA/report.md>) | 87 行 |
 | **RSIHub** | [RSIHub：把"自进化"拆成可组合阶段与不可变评测](<RSIHub/report.md>) | 144 行 |
-| **Nemotron-Labs-Diffusion** | [Nemotron-Labs-Diffusion 阅读报告](<nemotron/report.md>) | 221 行 |
+| **Nemotron-Labs-Diffusion** | [Nemotron-Labs-Diffusion 阅读报告](<nemotron/report.md>) | 214 行 |
 | **SGLang** | [SGLang 仓库代码分析报告](<sglang/report.md>) | 311 行 |
 | **this-that-model** | [this-that-model 仓库深读](<this-that-model/report.md>) | 190 行 |
 | **vLLM** | [vLLM 仓库代码分析报告](<vllm/report.md>) | 294 行 |

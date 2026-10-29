@@ -281,7 +281,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Models/MiniMax/report.md](<../Models/MiniMax/report.md>) | MiniMax 系列模型研究报告：以 Lightning Attention 重写 Transformer 的扩展曲线 | — | — | — |
+| [Models/MiniMax/report.md](<../Models/MiniMax/report.md>) | MiniMax 系列模型研究报告：混合注意力、后训练与多模态路线 | — | — | — |
 
 ## Mistral (1)
 
@@ -299,13 +299,19 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | MoE 执行：从专家路由到跨设备回收 | repo-research | 2026-10-24 | current |
+| [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | MoE 执行：从专家路由到跨设备回收 | repo-research | 2026-10-30 | current |
 
 ## Nemotron (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [Models/Nemotron/report.md](<../Models/Nemotron/report.md>) | NVIDIA Nemotron 系列研究脉络 | — | — | — |
+
+## NemotronLabsDiffusion (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | Nemotron-Labs-Diffusion 阅读报告 | research | 2026-10-29 | current |
 
 ## Neuroscience (1)
 
@@ -335,7 +341,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 模型量化与边缘部署研究报告 | topic-research | 2026-10-22 | needs-review |
+| [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 模型量化与边缘部署研究报告 | topic-research | 2026-10-30 | current |
 
 ## Qwen (1)
 
@@ -419,7 +425,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 大模型训练基础设施与分布式训练研究报告 | topic-research | 2026-10-22 | needs-review |
+| [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 大模型训练基础设施与分布式训练研究报告 | topic-research | 2026-10-30 | needs-review |
 
 ## VLM (1)
 
@@ -444,12 +450,6 @@
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | WorldModels 技术专题调研 | topic-research | 2026-10-29 | needs-review |
-
-## nemotron (1)
-
-| 条目 | 标题 | type | date | status |
-| --- | --- | --- | --- | --- |
-| [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | Nemotron-Labs-Diffusion 阅读报告 | — | — | — |
 
 ## sglang (1)
 

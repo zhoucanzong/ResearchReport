@@ -25,11 +25,11 @@
 * [AIGC/3DGen/report.md](<../AIGC/3DGen/report.md>) — 387 行
 * [AIGC/AudioGen/report.md](<../AIGC/AudioGen/report.md>) — 243 行
 * [AIGC/AvatarGen/report.md](<../AIGC/AvatarGen/report.md>) — 170 行
-* [AIGC/ControllableGen/report.md](<../AIGC/ControllableGen/report.md>) — 612 行
-* [AIGC/DiT/report.md](<../AIGC/DiT/report.md>) — 601 行
-* [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) — 849 行
+* [AIGC/ControllableGen/report.md](<../AIGC/ControllableGen/report.md>) — 618 行
+* [AIGC/DiT/report.md](<../AIGC/DiT/report.md>) — 603 行
+* [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) — 851 行
 * [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) — 477 行
-* [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) — 227 行
+* [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) — 229 行
 * [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) — 171 行
 
 ## Agents (3)
@@ -46,19 +46,19 @@
 ## Infra (5)
 
 * [Infra/KVCachePD/report.md](<../Infra/KVCachePD/report.md>) — 84 行
-* [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) — 188 行
+* [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) — 244 行
 * [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) — 81 行
 * [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) — 533 行
-* [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) — 181 行
+* [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) — 295 行
 
 ## LLM (11)
 
-* [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) — 126 行
+* [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) — 128 行
 * [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) — 242 行
 * [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) — 96 行
 * [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) — 122 行
 * [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) — 176 行
-* [LLM/MoE/report.md](<../LLM/MoE/report.md>) — 139 行
+* [LLM/MoE/report.md](<../LLM/MoE/report.md>) — 141 行
 * [LLM/OperationsResearch/report.md](<../LLM/OperationsResearch/report.md>) — 90 行
 * [LLM/RAG/report.md](<../LLM/RAG/report.md>) — 153 行
 * [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) — 152 行
@@ -70,36 +70,36 @@
 * [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) — 118 行
 * [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) — 192 行
 * [Models/Claude/report.md](<../Models/Claude/report.md>) — 570 行
-* [Models/DeepSeek/report.md](<../Models/DeepSeek/report.md>) — 777 行
+* [Models/DeepSeek/report.md](<../Models/DeepSeek/report.md>) — 762 行
 * [Models/Doubao-Seed/report.md](<../Models/Doubao-Seed/report.md>) — 497 行
 * [Models/GLM/report.md](<../Models/GLM/report.md>) — 171 行
 * [Models/GPT/report.md](<../Models/GPT/report.md>) — 204 行
 * [Models/Gemini/report.md](<../Models/Gemini/report.md>) — 761 行
-* [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>) — 896 行
+* [Models/Google-Gen/report.md](<../Models/Google-Gen/report.md>) — 481 行
 * [Models/Grok/report.md](<../Models/Grok/report.md>) — 164 行
 * [Models/Hunyuan/report.md](<../Models/Hunyuan/report.md>) — 466 行
-* [Models/Kimi/report.md](<../Models/Kimi/report.md>) — 586 行
+* [Models/Kimi/report.md](<../Models/Kimi/report.md>) — 584 行
 * [Models/Kling/report.md](<../Models/Kling/report.md>) — 106 行
 * [Models/LLaMA/report.md](<../Models/LLaMA/report.md>) — 484 行
-* [Models/MiMo/report.md](<../Models/MiMo/report.md>) — 758 行
+* [Models/MiMo/report.md](<../Models/MiMo/report.md>) — 715 行
 * [Models/Midjourney/report.md](<../Models/Midjourney/report.md>) — 86 行
-* [Models/MiniMax/report.md](<../Models/MiniMax/report.md>) — 525 行
+* [Models/MiniMax/report.md](<../Models/MiniMax/report.md>) — 515 行
 * [Models/Mistral/report.md](<../Models/Mistral/report.md>) — 162 行
-* [Models/Nemotron/report.md](<../Models/Nemotron/report.md>) — 236 行
+* [Models/Nemotron/report.md](<../Models/Nemotron/report.md>) — 230 行
 * [Models/OpenAI-Gen/report.md](<../Models/OpenAI-Gen/report.md>) — 394 行
-* [Models/Qwen/report.md](<../Models/Qwen/report.md>) — 1,121 行
+* [Models/Qwen/report.md](<../Models/Qwen/report.md>) — 406 行
 * [Models/Runway/report.md](<../Models/Runway/report.md>) — 104 行
 * [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>) — 740 行
 
 ## OpenSource (1)
 
-* [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) — 221 行
+* [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) — 214 行
 
 ## WorldModel (3)
 
 * [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) — 54 行
-* [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) — 573 行
-* [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) — 526 行
+* [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) — 571 行
+* [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) — 524 行
 
 ## https://github.com/FLock-io/this-that-model@6af11c63c8bb260aa4bed2b7717f33f25decd16e (1)
 
@@ -107,7 +107,7 @@
 
 ## https://github.com/deepseek-ai/DeepInfer@9bd9cf243fc53ef9afbf8f04d391d989117d6ab9 (2)
 
-* [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) — 69 行
+* [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) — 95 行
 * [OpenSource/DeepInfer/report.md](<../OpenSource/DeepInfer/report.md>) — 138 行
 
 ## https://github.com/deepseek-ai/deepseek-harness (1)
@@ -136,4 +136,4 @@
 
 ## null (1)
 
-* [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) — 107 行
+* [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) — 109 行

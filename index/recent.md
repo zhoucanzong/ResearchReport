@@ -11,7 +11,11 @@
 
 | 条目 | date | 板块 | 专题 |
 | --- | --- | --- | --- |
+| [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 2026-10-30 | Infra | TrainingInfra |
+| [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 2026-10-30 | Infra | QuantizationEdge |
+| [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | 2026-10-30 | Infra | MoEExecution |
 | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 2026-10-29 | WorldModel | WorldModels |
+| [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | 2026-10-29 | OpenSource | NemotronLabsDiffusion |
 | [Models/Gemini/report.md](<../Models/Gemini/report.md>) | 2026-10-29 | Models | Gemini |
 | [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 2026-10-29 | LLM | DiffusionLM |
 | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 2026-10-29 | Infra | SpeculativeDecoding |
@@ -25,14 +29,10 @@
 | [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) | 2026-10-25 | LLM | DocumentParsing |
 | [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 2026-10-24 | LLM | TrainingData |
 | [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) | 2026-10-24 | Infra | ServingEvaluation |
-| [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | 2026-10-24 | Infra | MoEExecution |
 | [Evaluation/ScientificDiscovery/report.md](<../Evaluation/ScientificDiscovery/report.md>) | 2026-10-24 | Evaluation | ScientificDiscovery |
 | [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) | 2026-10-24 | Agents | AgentSecurity |
-| [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | 2026-10-23 | LLM | ReinforcementLearning |
-| [Infra/KVCachePD/report.md](<../Infra/KVCachePD/report.md>) | 2026-10-23 | Infra | KVCachePD |
-| [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) | 2026-10-23 | Evaluation | EvaluationScience |
 
-## 无 date 元数据（40）
+## 无 date 元数据（39）
 
 以下条目缺少可解析的 `date`，无法参与「最近更新」排序：
 
@@ -73,6 +73,5 @@
 * [Models/Qwen/report.md](<../Models/Qwen/report.md>)
 * [Models/Runway/report.md](<../Models/Runway/report.md>)
 * [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>)
-* [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>)
 * [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>)
 * [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>)

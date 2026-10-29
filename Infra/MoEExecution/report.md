@@ -4,7 +4,7 @@ type: repo-research
 domain: Infra
 subject: MoEExecution
 upstream: https://github.com/deepseek-ai/DeepInfer@9bd9cf243fc53ef9afbf8f04d391d989117d6ab9
-date: 2026-10-24
+date: 2026-10-30
 evidence: fixed-version-source-study
 status: current
 ---
@@ -69,11 +69,37 @@ MoE 训练会约束每个 expert 收到的 token 数，以减少 token dropping 
 
 因此，研究或报告 MoE 执行性能时，至少要把模型/总专家数、每 token 激活专家数、EP/TP/DP 拓扑、每设备 token 分布、dtype、batch、prefill/decode 阶段、节点互联、buffer/对齐策略和计时边界放在一起。单报“激活参数量”不能解释通信，单报“all-to-all 带宽”也不能解释端到端 token 延迟。
 
+## 从负载均衡训练到负载均衡执行
+
+**训练时让专家长期被合理使用**，与**执行时让当前这一批在设备间及时完成**，是两种不同目标。辅助负载损失或路由偏置影响 router 学到的分配规律；运行时均衡器通常保持逻辑 gate 输出不变，改 token 去哪个物理专家实例、是否临时复制权重。后者能处理一批 prompt 的领域集中，但要额外付出规划、传输和存储成本。
+
+代表方法解决的是不规则性的不同部分：
+
+| 路线 | 它改变什么 | 主要收益 | 主要代价与边界 |
+|---|---|---|---|
+| 容量上限、丢弃或 padding | 限制每个 expert token batch 的大小 | 形状规则，设备和 kernel 容易安排 | 丢弃会改变参与计算的 token；padding 浪费计算和内存 |
+| MegaBlocks 的 block-sparse dropless 计算 | 以 block-sparse 矩阵表达每轮变化的专家连接 | 保留全部路由 token，避免固定专家容量造成的语义性丢弃 | 它解决专家 MLP 内部动态稀疏计算，不负责跨 rank 负载迁移；v1 的 token 组仍 pad 到 128 的块边界（§5.2） |
+| 历史负载驱动的专家放置/复制（EPLB 类） | 根据过去窗口移动或复制热点专家 | 把权重搬运摊到多批，决策可提前完成 | 负载变化快时计划会过期；按最近平均统计不一定能均衡当前 microbatch |
+| LLEP 的当前批次 spill | 依据 gate 后实际负载，把过载专家的一部分 token 和权重交给最空闲 rank | 保留逻辑路由，按当前负载均衡设备上的工作和接收内存 | planner、token 重排和权重传输进入热路径；小批次、碎片化 GEMM、慢互联会吃掉收益 |
+| UltraEP 的逐层 quota + replication + reroute | 当前 layer/microbatch 联合决定副本、负载配额和每个 token 的物理目的地 | 对快速变化负载作精确响应，并把复制、重路由和通信一起优化 | 论文以 rack-scale 快速 scale-up 互联为关键前提；planner 与权重复制仍在前向关键路径 |
+
+MegaBlocks 说明“**不丢 token**”不是“没有不规则开销”：论文将专家 MLP 写成 block-sparse 计算，定制动态稀疏 kernel 和路由排列；其原文 §5.2 说明 token group 仍需补到 128 的块边界。论文在 A100/CUDA 11.5、CUTLASS 2.5 的训练条件下报告了相对 Tutel 的端到端速度结果（§6）；这里引用它是为了说明 block 粒度如何把动态负载变成 GPU 能处理的结构，不把旧硬件上的速度数字外推到当前 serving 系统。[MegaBlocks §4–6](https://arxiv.org/html/2211.15841)
+
+LLEP 与 UltraEP 进一步把“本批由谁执行”移到系统运行时来决定。LLEP 的论文在 8 张 H200、受控失衡的 MoE 层实验中报告：95% token 集中至一个 expert 时最高约 6.11 倍于标准 EP（§5.1）；完整 gpt-oss-120B 前向场景则报告约 1.88 倍，评测使用论文的 Megatron-Math 请求样本（§5.2）。两者差距提醒读者：单层热点压力测试不等于全模型 serving 收益。方法机制、参数约束和实验条件见 [LLEP 精读](papers/2601.17111-llep.md)。
+
+UltraEP 把动态复制扩展到 rack-scale 大 EP：每个 expert layer 的真实负载都可形成新计划，quota solver 一起决定复制槽和 token reroute；通过优先使用本 rank 的 quota 保持流量局部性。论文在每 rack 64 GPU、最多 256 GPU 的公开云集群和 bf16 模型设置中，报告 serving prefill 达到理想强制均衡吞吐的约 90%–97%（§8.1–8.2）。这不是对普通 RDMA 多机或 decode 阶段的保证；rack 级 scale-up 连接让逐层复制与重路由有可行的物理成本基础。方法与边界见 [UltraEP 精读](papers/2606.04101-ultraep.md)。
+
+DeepEP 位于这些 planner 的**数据面**：固定提交 `f6aa38fe06cd4a0489e7730365d4e0114970a2f3` 提供 `EPBuffer.lb_prefetch_weights` 与 `lb_reduce_grads`，用于跨 NVLink 域复制专家权重、将副本 FP32 梯度累回主专家；但 `redundancy_mapping`、token 重路由计划和专家 GEMM 由调用方提供。因此应把“快速通信原语”“选择如何均衡的规划器”和“实际处理 token 的模型执行器”视为三个接口层。[DeepEP 固定版本 README §Expert load balancing](https://github.com/deepseek-ai/DeepEP/blob/f6aa38fe06cd4a0489e7730365d4e0114970a2f3/README.md#expert-load-balancing) [EPBuffer API `ep.py:854–905`](https://github.com/deepseek-ai/DeepEP/blob/f6aa38fe06cd4a0489e7730365d4e0114970a2f3/deep_ep/buffers/ep.py#L854-L905) [weight prefetch kernel](https://github.com/deepseek-ai/DeepEP/blob/f6aa38fe06cd4a0489e7730365d4e0114970a2f3/deep_ep/include/deep_ep/impls/ep/prefetch_weights.cuh#L25-L92) [gradient reduction kernel](https://github.com/deepseek-ai/DeepEP/blob/f6aa38fe06cd4a0489e7730365d4e0114970a2f3/deep_ep/include/deep_ep/impls/ep/reduce_grads.cuh#L24-L92)
+
+这形成一条由算法到系统的阅读主线：router 负责逻辑专家选择；planner 决定物理放置/份额；dispatch 把 token 搬至实例；grouped GEMM 以专家分组计算；combine 恢复逻辑路由输出；训练反向还需同步副本梯度。负载平衡应问“这一轮瓶颈是 token 计数、GEMM 粒度、接收内存还是链路热点”，而不是笼统问“专家是否均匀”。
+
 ## 读者应如何继续阅读
 
 1. 先读[MoE 总览](../../LLM/MoE/report.md)中路由、负载均衡和专家并行部分，建立 token-choice / expert-choice、路由权重、辅助损失与通信的概念框架。
-2. 再读 DeepInfer 的[主报告](../../OpenSource/DeepInfer/report.md)，理解一次请求的调度、状态和模型执行边界；本专题只放大其中的 MoE 专家通信路径。
-3. 逐段读[DeepEP V2 dispatch–compute–combine 实现追踪](implementation/deepep-v2-dispatch-compute-combine.md)，关注 `EPHandle`、prefix sums、grouped GEMM 与 event 顺序如何形成跨库契约。
-4. 最后回到 DeepInfer 固定版本 `mlp.py` 的显式 EP 和 Mega MoE 分支，判断具体硬件、dtype、并行组落在哪条路径。
+2. 读 [MegaBlocks](https://arxiv.org/html/2211.15841) §4–5，先理解为什么动态 token 分布要求 block-sparse 专家计算。
+3. 读 [LLEP](papers/2601.17111-llep.md) 再读 [UltraEP](papers/2606.04101-ultraep.md)，比较逐批 token spill 与 rack-scale quota/副本规划。
+4. 再读 DeepInfer 的[主报告](../../OpenSource/DeepInfer/report.md)，理解一次请求的调度、状态和模型执行边界；本专题只放大其中的 MoE 专家通信路径。
+5. 逐段读[DeepEP V2 dispatch–compute–combine 实现追踪](implementation/deepep-v2-dispatch-compute-combine.md)，关注 `EPHandle`、prefix sums、grouped GEMM 与 event 顺序如何形成跨库契约。
+6. 最后回到 DeepInfer 固定版本 `mlp.py` 的显式 EP 和 Mega MoE 分支，判断具体硬件、dtype、并行组落在哪条路径。
 
 本专题的研究范围是 DeepInfer 一个固定版本调用 DeepEP/DeepGEMM 的源码行为。它不证明所有 MoE 框架使用相同 buffer 协议、拓扑或 overlap；没有运行多 rank 通信、kernel、模型和性能测试，也没有从静态调用关系推断真实集群的速度、扩展效率或故障恢复。

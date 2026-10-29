@@ -3,14 +3,14 @@ display_name: 模型量化与边缘部署
 type: topic-research
 domain: Infra
 subject: QuantizationEdge
-date: 2026-10-22
-evidence: 一手论文方法与实验条件核验
-status: needs-review
+date: 2026-10-30
+evidence: 代表性一手论文精读与跨论文机制综合
+status: current
 ---
 
 # 模型量化与边缘部署研究报告
 
-> 范围：权重量化、权重与激活联合量化，以及低位宽格式在真实推理系统中的边界。方法与数字以文中固定论文版本为准；没有运行本地吞吐、质量或端侧功耗实验。
+> **范围**：本文从 AWQ、GPTQ、SmoothQuant 的标量后训练量化出发，进一步比较旋转变换、加法码本、量化感知训练、KV cache 专用量化和低位宽训练，解释这些路线分别改变了哪一种误差或系统瓶颈。它不是所有量化格式、模型和推理引擎的支持清单，也没有端侧实测或独立复现实验。文中性能与质量数字均为论文在所述模型、任务、硬件和软件条件下报告的结果。
 
 ## 1. 概述
 
@@ -103,6 +103,55 @@ GGUF 的作用是封装张量、类型、元数据和 tokenizer 信息。文件�
 
 部署应核对实际文件元数据、目标 llama.cpp 版本支持的张量类型以及后端实现，而不是把“GGUF”当作一个固定的量化目标函数或准确率承诺。格式的具体类型与扩展以 [GGUF 官方规范](https://github.com/ggml-org/ggml/blob/master/docs/gguf.md) 为入口；本报告没有逐项复核当前所有类型，不能据此列出完整兼容矩阵。
 
+### 3.5 现代量化的几条机制路线
+
+前面三种方法主要在标量量化网格、通道尺度和层输出误差上做文章。进一步压低位宽时，问题开始变成“怎样改变张量分布或表示”，而不仅是“每个权重取哪个整数”。下面几条路线分别针对不同瓶颈，不能被合并成一张无条件优劣榜。
+
+| 路线 | 它改变什么 | 代表阅读 | 主要代价或边界 |
+|---|---|---|---|
+| 旋转后量化 | 利用函数不变的正交变换重排通道，让离群值更分散、统一量化更有效 | [QuaRot](papers/2404.00456-quarot.md) → [SpinQuant](papers/2405.16406-spinquant.md) | 变换需能折入相邻层或由高效 Hadamard kernel 执行；学习出的旋转要付校准优化成本 |
+| 向量/加法码本 | 不再独立量化每个标量，而用多个学得的码本向量共同表达一组权重 | [AQLM](papers/2401.06118-aqlm.md) | 码本与离散编码增加搜索、存储元数据和解码复杂度，kernel 决定压缩是否转成速度 |
+| 量化感知适配或原生低精度训练 | 让训练过程看到量化噪声，或从头使用低位宽表示和算子 | [QAT 与低精度训练综合](topics/low-precision-training.md)；近年的机制见 [QATFactory](papers/2609.39223-qatfactory.md) 与 [LC-QAT](papers/2606.10531-lc-qat.md) | QAT 需要教师、数据与训练更新；原生低精度训练改变模型训练目标和硬件要求，不能当作现成模型压缩 |
+| KV cache 专用量化 | 针对随 token 流式增长的 Key / Value 分布分别设计量化轴或码本 | [KIVI](papers/2402.02750-kivi.md) · [VecInfer](papers/2510.06175-vecinfer.md) | KV 误差会经注意力分数传播；分组缓冲、反量化与 attention kernel 要共同设计 |
+| 算法—内核协同 | 让量化格式、尺度布局和 GEMM / attention 的执行数据流相容 | [QServe](papers/2405.04532-qserve.md) | 在一类 GPU 和负载上有效的 kernel 设计，不自动移植到其他设备、batch 或序列长度 |
+
+#### 3.5.1 旋转：保持浮点函数不变，改变量化看到的分布
+
+正交旋转矩阵 `R` 满足 `RᵀR = I`。若在线性层两侧用相反方向的旋转并把矩阵吸收到相邻权重，浮点模型可保持同一函数；但低位宽的逐元素量化不具有旋转不变性。换句话说，旋转不是增加新的模型能力，而是把同一个函数写成更容易低比特近似的坐标系。
+
+[QuaRot](papers/2404.00456-quarot.md) 用随机 Hadamard 变换对残差流、FFN 激活和注意力相关表示做 incoherence processing，再配合 GPTQ 或 round-to-nearest 量化权重，并压缩 KV cache。核心取舍是尽量把旋转折入已有权重，减少额外层；对仍需在线执行的变换，则依赖快速 Walsh–Hadamard kernel。[SpinQuant](papers/2405.16406-spinquant.md) 从另一个发现出发：随机旋转效果方差很大，于是以校准目标学习旋转矩阵。论文的 Cayley 参数化让优化留在正交矩阵流形上；可折叠的旋转不需要运行时变换，极低位宽所需的在线 Hadamard 旋转仍带有计算开销。
+
+这两篇论文解释的是变换如何改善权重、激活和 KV 的低位宽近似，不等于“旋转后 4-bit 对所有模型都接近无损”。报告中的对照限于各自的模型、量化方案和评测集；旋转实现本身、校准目标与量化器也共同影响结果。逐篇证据见两份精读。
+
+#### 3.5.2 AQLM：把权重组当作向量编码
+
+GPTQ、AWQ 等标量方法给单个权重选择离散值；AQLM 把一小组权重联合表达为多个码本向量之和。码本可以捕捉同一小组内权重值之间的相关性，因此能把平均模型尺寸压到约 2–3 bits/parameter 的研究区间；但它用代码索引和码本换取更精细的表示，搜索也更复杂。[AQLM](papers/2401.06118-aqlm.md) 的流程包含 beam search 更新离散编码、优化码本与尺度，并在 Transformer block 级别用校准输入做局部拟合。它不是“免费获得 2-bit 模型”：压缩率应包含码本成本，模型质量依赖校准和块级优化，真实生成速度要看 lookup / 解码是否有合适实现。
+
+#### 3.5.3 QAT 与原生低精度训练不是同一件事
+
+量化感知训练（QAT）从已有浮点模型出发，在前向模拟目标量化，并通过反向更新参数来适应误差。[LLM-QAT](topics/low-precision-training.md#llm-qat让现成教师教量化学生) 展示较早的“教师自生成数据、学生适配量化”路线。近年的两篇工作把核心难题推进到不同方向：[QATFactory](papers/2609.39223-qatfactory.md) 问训练期数值和导出推理格式是否对齐，并比较 QAD / QARL；[LC-QAT](papers/2606.10531-lc-qat.md) 关注 2-bit VQ 如何避开离散码本不可微的阻碍。前者的关键发现之一是越贴近部署格式训练不一定越好，效果会随 FP4 格式改变；后者则以更强的向量表示换取结构化映射和可微训练。这里的数字和质量结论均限于各论文的格式、模型及评测设置。
+
+BitNet b1.58 与 Quartet 所讨论的则更接近原生低精度训练：前者从训练阶段使用三值权重，后者研究硬件支持的 FP4/MXFP4 训练配方。它们不是把已训练的 FP16 权重压成 1.58-bit 或 FP4；需要重新训练，并同时处理前向、反向、梯度更新中的舍入误差、尺度格式和 kernel。FP4/MXFP4 的结果依赖具体数值格式和硬件路径；“低位宽训练可行”不意味着所有训练状态、优化器状态和算子都已用同一位宽存储或执行。
+
+#### 3.5.4 KV cache：Key 与 Value 的误差走不同路径
+
+KV cache 是推理过程按 token 增长的状态，而不是静态权重。Key 先进入 `QKᵀ` 并影响 softmax 注意力分配；Value 则按注意力权重汇总到输出。某个 Key 通道的误差因此可能改变“看哪里”，而 Value 误差主要改变读出的内容；两者的分布形态和误差传播不同，统一使用一个量化轴并非自然选择。
+
+[KIVI](papers/2402.02750-kivi.md) 根据其模型分析采用 Key per-channel、Value per-token 的 2-bit 量化；在线流式写入难以立即沿跨 token 的 channel 分组，因此它将缓存拆为完整分组和暂存 residual，后者先保留高精度。较新的 [VecInfer](papers/2510.06175-vecinfer.md) 以向量码本表示 KV，并通过变换压低 Key 离群值，再把 lookup、反量化与 attention 计算融合。两者体现了从“找合适统计分组”到“共同设计表示和 fused kernel”的推进；其证据仍依赖长上下文任务、模型和 batch 设置，不应从论文表格推断所有服务负载都能获益。
+
+#### 3.5.5 低位宽收益要经过 kernel 才到达用户
+
+[QServe](papers/2405.04532-qserve.md) 把权重、激活和 KV cache 统一为 W4A8KV4 目标，并说明为什么理论上更低位宽不必然更快：若 GEMM 主循环需要频繁在低吞吐 CUDA core 上解量化或转换 partial sums，额外操作会吃掉 Tensor Core 的吞吐优势。QoQ 的分级量化及保护范围、SmoothAttention、权重重排和寄存器级并行，是为减少这些主循环开销；4-bit KV 的收益则要由融合 attention kernel 实际兑现。该论文支持的是特定 GPU、模型、基线和服务设置下的协同设计，不支持“INT4 普遍更快”。
+
+### 3.6 怎样选阅读顺序
+
+若已理解 GPTQ / AWQ，可按问题选一条而非把论文名单全读完：
+
+1. **低于 4-bit 的静态权重**：先读 AQLM，看向量码本如何压缩；再对照 QuaRot / SpinQuant，看不改参数表示维度而先改变坐标系的思路。
+2. **长上下文或大 batch 的缓存压力**：先读 KIVI 理解 K/V 的非对称性，再读 VecInfer 看码本、离群值变换和 attention kernel 如何合在一起。
+3. **想区分 QAT 与从头训练**：先读 LLM-QAT，再比较 QATFactory 的部署格式对齐与 LC-QAT 的 2-bit VQ 优化，最后读 BitNet b1.58 / Quartet；重点看模型从已有浮点权重继续适配，还是从头以低精度训练。
+4. **关心量化为什么不加速**：读 QServe 的 W4A8KV4 设计，再回到 ServingEvaluation 理解模型、并发、输入输出长度和 SLO 如何改变测量。
+
 ## 4. 推理引擎对比
 
 这里比较需要验证的能力，避免把随版本变化的支持表写成永久事实。
@@ -176,15 +225,11 @@ AWQ 与 SmoothQuant 的系统实验支持分阶段分析；它们没有支持“
 
 原论文可以解释量化误差和系统收益为何产生，并提供特定设置的经验结果。它不能保证新模型、新设备或新 kernel 上的相同收益。
 
-目前可信的研究问题包括：校准分布变化如何影响极低位宽、权重与 KV 量化如何共同影响长上下文，以及吞吐提升是否在目标延迟约束下成立。回答这些问题需要受控实验，而不是更长的算法名单。
+目前值得继续精读的问题包括：校准分布变化如何影响极低位宽；权重、激活与 KV cache 一起压缩时误差如何交互；QAT 的教师生成分布能否覆盖真实领域任务；以及低位宽训练是否能在不同 GPU 格式、优化器和模型规模上稳定缩放。回答这些问题需要论文中能隔离变量的设计与清楚的硬件条件，不需要为本专题默认启动复现。
 
-### 8.2 证据范围与未结项
+### 8.2 范围之外
 
-本报告已核对 AWQ v5、GPTQ v2、SmoothQuant v5 的方法和相关实验段落，以及 TensorRT 官方兼容性说明；没有通读并复现所有量化方法，也没有为每个推理引擎建立固定版本的完整源码覆盖。
-
-GGUF 具体张量类型、vLLM/Ollama 的当前支持组合、Jetson/手机的功耗与吞吐，仍需按目标设备和固定版本补证。这里保留待验证问题，不给未经测试的产品排行榜。
-
-选文偏向可公开获取原文的经典 PTQ 方法，不能代表全部 QAT、极低位宽或专用加速器研究；作者自报实验与独立复现必须区分。
+本文精读了若干代表性机制，不追求覆盖所有数值格式或运行时版本；没有独立比较所有推理引擎，也没有测量手机、Jetson 或其他端侧设备的功耗与吞吐。GGUF、TensorRT 与各引擎的格式兼容性会随版本变化，部署时应回到目标版本的官方文档和源码。论文结果是作者在所述条件下报告的结果，不代表本库独立复现。
 
 ## 9. 参考链接
 
@@ -193,5 +238,16 @@ GGUF 具体张量类型、vLLM/Ollama 的当前支持组合、Jetson/手机的�
 | [AWQ](https://arxiv.org/html/2306.00978v5) | v5，2024-07-18；§3、Table 1–3、§4 Figure 3 | 激活感知缩放、消融、weight-only 系统条件 |
 | [GPTQ](https://arxiv.org/html/2210.17323v2) | v2；§3–§6、Algorithm 1 | 二阶补偿、校准、实验与限制 |
 | [SmoothQuant](https://arxiv.org/html/2211.10438v5) | v5；§4、§5.3–§5.5 | W8A8、迁移强度、阶段化性能 |
+| [LLM-QAT](https://arxiv.org/abs/2305.17888) | v1；§2–§3.3 | 教师生成数据、量化感知微调与数据边界 |
+| [QuaRot](https://arxiv.org/abs/2404.00456v2) | v2；§3–§5、附录 A.3–A.5 | 等价旋转、W/A/KV 4-bit 方案与消融 |
+| [SpinQuant](https://arxiv.org/abs/2405.16406v4) | v4；§2–§4、附录 A.2–A.9 | 随机旋转方差、Cayley 优化与在线变换开销 |
+| [AQLM](https://arxiv.org/abs/2401.06118v4) | v4；§3–§4.4、附录 I | 加法码本、block 优化与实现代价 |
+| [KIVI](https://arxiv.org/abs/2402.02750v2) | v2；§3–§4.2 | K/V 分布、流式分组及 2-bit 实验条件 |
+| [QServe](https://arxiv.org/abs/2405.04532v3) | v3；§3–§6，MLSys 2025 | QoQ、SmoothAttention、GPU kernel 与 serving 评测 |
+| [VecInfer](https://arxiv.org/abs/2510.06175v1) | v1；§3–§4、附录 B–D | KV 向量码本、离群值抑制和 fused attention |
+| [BitNet b1.58](https://arxiv.org/abs/2402.17764v1) | v1；§2–§4 | 从头训练的三值权重与其推理假设 |
+| [Quartet](https://arxiv.org/abs/2505.14669v4) | v4；§4–§6、附录 A | MXFP4 训练、数值误差和 Blackwell kernel |
+| [LC-QAT](https://arxiv.org/abs/2606.10531v3) | v3；§2–§5、附录 A.2 | 2-bit 线性约束 VQ-QAT、可微码本与数据预算 |
+| [QATFactory](https://arxiv.org/abs/2609.39223v2) | v2；§3–§4.7 | 部署对齐 fake quant、QAD/QARL 与 engine-native 导出 |
 | [GGUF 规范](https://github.com/ggml-org/ggml/blob/master/docs/gguf.md) | 动态规范入口，类型未逐项核验 | 容器与算法的边界、后续核验入口 |
 | [TensorRT Engine Compatibility](https://docs.nvidia.com/deeplearning/tensorrt/latest/inference-library/engine-compatibility.html) | 访问 2026-10-22，动态官方文档 | engine 的平台、版本和硬件兼容条件 |
