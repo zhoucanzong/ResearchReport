@@ -57,7 +57,7 @@
 
 **实验（SGLang 自测）**：DeepSeek-V4-Flash on H200，DP-attention 跨 4 卡，并发从 batch 1 扫到 256；对照为 non-spec floor 与 MTP（EAGLE 风格基线）。结论是 **DSpark 在整个并发区间给出最好的吞吐/延迟权衡**，明显优于 MTP 与非投机基线。**注意**：博客明确声明"硬件、引擎、流量都与论文不同，我们复现的是**机制与曲线形状**，不是论文数字"。
 
-**为什么 DSpark 在本文被单列**：它是**第一个把"验证预算随负载自适应"做成产品级调度**的方案——把 [speculative-cascade-heterogeneous.md](speculative-cascade-heterogeneous.md) 里 HeteroSpec 的"按不确定性分配验证算力"从单请求推广到了**跨请求竞争**（高置信请求的位置 5 可以排在低置信请求的位置 1 前面）。
+**与 HeteroSpec 的关系需要区分**：DSpark 论文将 calibrated prefix-survival 与当前 engine `SPS(B)` 曲线结合，对活动 batch 中各请求的验证前缀做全局吞吐调度；HeteroSpec 则用 path entropy 对上下文分层，再为 EAGLE-3 选择 draft depth、Top-N 与计算图。二者都会自适应验证/候选预算，但不是“单请求机制推广到跨请求”的同一方法。旧稿关于“第一个产品级调度”与优先级竞争的表述已撤回；机制和停止条件见 [DSpark 精读](../papers/2607.05147-dspark.md) 与[异质预算专题](../topics/heterogeneous-budget-allocation.md)。
 
 ### 3.4.3 BASTION：预算感知 + 树状块扩散（arXiv 2605.29727）**[精读原文]**
 

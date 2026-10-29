@@ -3,7 +3,7 @@ display_name: 投机解码
 type: topic-research
 domain: Infra
 subject: SpeculativeDecoding
-date: 2026-10-29
+date: 2026-10-30
 evidence: 精读原文
 status: needs-review
 ---
@@ -49,10 +49,10 @@ flowchart LR
 | 想理解的问题 | 推荐阅读 |
 |---|---|
 | 草稿来源与结构怎样演进？ | 先读 [Medusa](papers/2401.10774-medusa.md) 的并行头与 [EAGLE 系列](papers/2401.15077-eagle-series.md) 的特征级自回归；再看 [Component-Aware](papers/2605.01106-component-aware-self-spec.md) 如何把 hybrid 子网用作 drafter。总路线见[算法家族谱系](topics/algorithm-families.md)与[草稿侧专题](topics/draft-side-and-training.md)。 |
-| 草稿怎样训练，优化什么？ | 对照 [AdaSPEC](papers/2510.19779-adaspec.md) 的选择性蒸馏、[Attention Drift](papers/2605.09992-attention-drift.md) 的表征归一化、[VSD](papers/2602.05774-vsd.md) 的路径目标、[Acceptance-Aware Training](papers/2609.24150-acceptance-aware-training.md) 的窗口接受长度、[EDR](papers/2610.10411-expected-decoding-rounds.md) 的全序列轮数，以及 [TLT](papers/2511.16665-tlt-adaptive-drafter.md) 的在线训练时机。 |
+| 草稿怎样训练，优化什么？ | 先对照 [D-PACE](papers/2605.18810-dpace.md) 的块内动态位置权重、[D-PAL](papers/2610.28355-dpal.md) 的全分布接受信号与[长 CoT 位置诊断](papers/2610.30644-long-position-acceptance.md)的跨生成位置测量；再读 [AdaSPEC](papers/2510.19779-adaspec.md) 的选择性蒸馏、[Attention Drift](papers/2605.09992-attention-drift.md) 的表征归一化、[VSD](papers/2602.05774-vsd.md) 的路径目标、[Acceptance-Aware Training](papers/2609.24150-acceptance-aware-training.md) 的窗口接受长度、[EDR](papers/2610.10411-expected-decoding-rounds.md) 的全序列轮数，以及 [TTS](papers/2605.09329-test-time-speculation.md) 的单轨迹在线适应和 [TLT](papers/2511.16665-tlt-adaptive-drafter.md) 的 RL rollout 内更新。 |
 | 树形验证如何选树、遍历并保证正确？ | 从 [SpecInfer](papers/2305.09781-specinfer.md) 看树 mask 与共享前缀；读 [Sequoia](papers/2402.12374-sequoia.md) 看预算内树形与硬件映射；用 [Traversal Verification](papers/2505.12398-traversal-verification.md) 比较叶到根遍历；再对照 [HSD](papers/2601.05724-hsd.md)、[RheoSampling](papers/2609.21827-rheosampling.md) 与有损的 [Approximate SD](papers/2608.03447-approximate-sd.md)。 |
 | target 的算子与状态怎样决定真实成本？ | [SpecLA](papers/2607.16673-specla.md) 展示线性注意力状态上的链/树验证与 accepted-state 恢复；再读固定版本 [vLLM](papers/vllm-implementation.md)、[SGLang](papers/sglang-implementation.md) 代码路径，并进入[吞吐、延迟与算子专题](topics/systems-throughput-latency.md)。 |
-| 扩散候选与 AR target 如何组合？ | [DFlash](papers/2602.06036-dflash.md)、[DFlare](papers/2606.02091-dflare.md)、[DDTree](papers/2604.12989-ddtree.md)、[PRESTO](papers/2607.22634-presto.md)、[DARTree](papers/2608.13524-dartree.md)、[Spiffy](papers/2509.18085-spiffy.md) 和 [PoE-Bridge](papers/2606.08048-poe-bridge.md) 见[扩散交叉专题](topics/diffusion-drafters.md)。 |
+| 扩散、块草稿与 AR target 如何组合？ | [DFlash](papers/2602.06036-dflash.md) → [DFlare](papers/2606.02091-dflare.md) 看条件化与容量；[DDTree](papers/2604.12989-ddtree.md) → [DARTree](papers/2608.13524-dartree.md) → [PRESTO](papers/2607.22634-presto.md) 看位置边际候选怎样校正成树；[DFlow](papers/2609.06498-dflow.md) 复用 rejected-suffix verifier states；[DSpark](papers/2607.05147-dspark.md) 用轻量顺序头恢复块内依赖并调度验证；再与 dLLM 自投机 [Spiffy](papers/2509.18085-spiffy.md)、有限预算质量桥接 [PoE-Bridge](papers/2606.08048-poe-bridge.md) 对读。综合比较见[扩散交叉专题](topics/diffusion-drafters.md)。 |
 
 ### 横切专题（`topics/`）
 
@@ -63,6 +63,7 @@ flowchart LR
 | [verification-acceptance.md](topics/verification-acceptance.md) | 接受规则、概率回补、严格无损与近似边界 |
 | [systems-throughput-latency.md](topics/systems-throughput-latency.md) | 负载相图与吞吐/延迟；补树 mask、state/KV commit、GPU kernel 与 runtime 调度如何共同决定真实成本 |
 | [diffusion-drafters.md](topics/diffusion-drafters.md) | 扩散作为 AR 草稿、dLLM 自投机及质量桥接 |
+| [heterogeneous-budget-allocation.md](topics/heterogeneous-budget-allocation.md) | 对比位置容量（HCSpec）、上下文级策略（HeteroSpec）与候选筛枝（ValuSpec），区分决策信号与正确性责任 |
 
 ## 0. 一页结论
 
@@ -102,7 +103,7 @@ flowchart LR
 | 自投机（Medusa / EAGLE / MTP / 层跳过） | ✅ | 当前工程实现代表 |
 | 免训练（Lookahead / PLD / REST / 字典） | ✅ | 独立一族，端侧/低资源重要 |
 | 树验证系统（SpecInfer / Sequoia） | ✅ | 验证侧的基础设施 |
-| 扩散与投机解码交叉（DFlash / DFlare / DDTree / DARTree / PRESTO / Spiffy / PoE-Bridge） | ✅ | 区分扩散 draft + AR target、dLLM self-speculation 和有限预算质量桥接；完整比较见[扩散交叉专题](topics/diffusion-drafters.md)。独立扩散生成机制见 [LLM/DiffusionLM](../../LLM/DiffusionLM/report.md) |
+| 扩散、块草稿与投机解码交叉（DFlash / DFlare / DDTree / DARTree / PRESTO / DFlow / DSpark / Spiffy / PoE-Bridge） | ✅ | 区分块并行草稿、半自回归修正、跨轮 verifier-state relay、dLLM self-speculation 和有限预算质量桥接；机制路线见[扩散交叉专题](topics/diffusion-drafters.md)与[草稿侧专题](topics/draft-side-and-training.md)。独立扩散生成机制见 [LLM/DiffusionLM](../../LLM/DiffusionLM/report.md) |
 | 纯量化 / 纯剪枝 / 纯 KV eviction | ❌ | 不产生“候选-验证”结构；归 `Infra/QuantizationEdge` |
 | 纯 batch 调度 / continuous batching | ❌ | 系统优化但不含投机；归 `Infra/TrainingInfra` 或框架条目 |
 | 扩散语言模型（非投机范式） | ❌ | 独立生成范式不是本条目主体；训练目标与去噪机制见 [LLM/DiffusionLM](../../LLM/DiffusionLM/report.md) |
@@ -111,11 +112,13 @@ flowchart LR
 
 | 档 | 定义 | 代表 | 可否写“严格无损” |
 | :-- | :-- | :-- | :-- |
-| **严格分布等价** | 对任意序列，输出概率 = p(Seq) | 经典单链；静态树；HSD；RheoSampling（Theorem 1）；Traversal Verification；HeteroSpec（ACL 2026，`[摘要级]`） | ✅ |
+| **严格分布等价** | 对任意序列，输出概率 = p(Seq) | 经典单链；静态树；HSD；RheoSampling（Theorem 1）；Traversal Verification | ✅ |
 | **序列级等价** | 以整条序列概率判接受（而非逐 token） | Traversal Verification 的视角 | ✅（在其定义域） |
 | **有界风险** | 接受放宽到“分布偏移受控” | ARC-Decode（JS 上界，ICML 2026 会议页 `[摘要级]`）；Medusa typical acceptance（[papers/2401.10774-medusa.md](papers/2401.10774-medusa.md) §2.3）；CDSL（NAACL 2025，素材层） | ❌ 只能写“质量近乎不变” |
 
 > **反例**：把 ARC-Decode 的“相对 EAGLE-3 最高 1.6×”（ICML 2026 会议页 `[摘要级]`）与 RheoSampling 的“相对自回归 2.93×”（[papers/2609.21827-rheosampling.md](papers/2609.21827-rheosampling.md) §4）并列，是**量纲 + 基准 + 保证等级**三重错配。
+
+HeteroSpec 的 ACL 正文声明继承 EAGLE-3 verifier 并保留严格接受条件，但没有另给 HSD 式序列级分布证明；本表不把该声明列作独立理论证明。证据边界与读法见[异质预算专题](topics/heterogeneous-budget-allocation.md)。
 
 ### 1.4 指标口径（工程硬要求）
 
@@ -157,7 +160,7 @@ flowchart LR
 | I 独立 draft | 另一个小模型 | 一个完整模型 | 预训练 | 1.5–2.8×（SpecInfer 分布式） |
 | II 自投机 | target 的头/特征/层 | ~7% 或 <1B | 训头/联合 | 2.3–6.5×（EAGLE/Medusa，带条件） |
 | III 免训练 | 轨迹/检索/字典 | **无** | **免训练** | 1.5–4×（Lookahead，算力富余） |
-| IV 块/扩散 | 块扩散网络 | 一个 draft | 需训练 | 不单列速度排名；各论文的 target、采样和计时设置不同 |
+| IV 块式并行草稿 | 块扩散或半自回归并行 backbone | 一个 draft；有些方法附轻量顺序头或跨轮状态 | 需训练 | 不单列速度排名；draft latency、接受路径和验证预算须分开看 |
 
 详细谱系与选型判据见 [topics/algorithm-families.md](topics/algorithm-families.md)。
 
@@ -169,9 +172,9 @@ flowchart LR
 | 2024 H1 | 并行头/树验证 | Medusa；Lookahead | [Medusa](papers/2401.10774-medusa.md)、[Lookahead](papers/2402.02057-lookahead.md) |
 | 2024 H2 | 特征级自投机 + 动态树 | EAGLE-1 / EAGLE-2 | [EAGLE 分册](papers/2401.15077-eagle-series.md) |
 | 2025 | 训练目标 + 数据 scaling | EAGLE-3 | 同上 |
-| 2026 H1 | 块扩散 draft、树验证、dLLM 自投机与质量桥接 | DFlash / DFlare / DDTree / PRESTO / Spiffy / PoE-Bridge | [精读与机制综合](topics/diffusion-drafters.md) |
-| 2026 H2 | T>0 正确性、安全边界与新系统瓶颈 | RheoSampling；SecureSD；SpecStream | [RheoSampling](papers/2609.21827-rheosampling.md)、[SecureSD](papers/2610.08678-secure-sd.md)、[SpecStream](papers/2609.33184-specstream.md) |
-| 2026 H2 | 扩散草稿的分支校正；Agent 场景复用 target 上下文 | DARTree；DLite | [DARTree](papers/2608.13524-dartree.md)、[DLite](papers/2610.23787-dlite.md) |
+| 2026 H1 | 块扩散 draft、树验证、dLLM 自投机与质量桥接；块内训练目标和长序列在线适应 | DFlash / DFlare / DDTree / PRESTO / Spiffy / PoE-Bridge；D-PACE / Test-Time Speculation | [扩散交叉综合](topics/diffusion-drafters.md)、[D-PACE](papers/2605.18810-dpace.md)、[TTS](papers/2605.09329-test-time-speculation.md) |
+| 2026 H2 | T>0 正确性、安全边界、跨轮状态复用与负载感知 draft/verify | RheoSampling；SecureSD；SpecStream；DFlow；DSpark | [RheoSampling](papers/2609.21827-rheosampling.md)、[SecureSD](papers/2610.08678-secure-sd.md)、[SpecStream](papers/2609.33184-specstream.md)、[DFlow](papers/2609.06498-dflow.md)、[DSpark](papers/2607.05147-dspark.md) |
+| 2026 H2 | 扩散草稿的分支校正；Agent 场景复用 target 上下文；异质位置/上下文预算 | DARTree；DLite；HCSpec；HeteroSpec | [DARTree](papers/2608.13524-dartree.md)、[DLite](papers/2610.23787-dlite.md)、[异质预算专题](topics/heterogeneous-budget-allocation.md) |
 | 2026 H2 | 草稿预算自适应（按硬件与 batch 实测成本调树） | EAGLE-4 | [EAGLE-4 分册](papers/eagle4-one-flexible-drafter.md) |
 | 2026 | 生产框架落地 | vLLM / SGLang | [vLLM](papers/vllm-implementation.md)、[SGLang](papers/sglang-implementation.md) |
 
@@ -195,6 +198,7 @@ flowchart LR
 | :-- | :-- | :-- |
 | [DARTree](papers/2608.13524-dartree.md)（8 月） | 对扩散草稿沿多条候选分支分别做因果校正，并把建树与全局 top-B 剪枝分离 | 树验证预算与候选宽度固定时，批量建树是否在目标模型/硬件上减少真实 draft wall-clock？ |
 | [SpecStream](papers/2609.33184-specstream.md)（9 月） | 按 target commit 边界 offload 历史 KV、流式验证、共享 KV 读取，并在传输等待时共卡运行 draft | PCIe 数据搬运能否被 overlap 隐藏到足以补偿每轮全历史传输？它明确显示长输入仍慢于全驻 GPU。 |
+| [Adaptive DHiSparse](papers/2610.13708-adaptive-dhisparse.md)（10 月） | 将稀疏 attention 选中的 KV 行放入负载自适应层级，并让一轮多 query 验证共享缺失行搬运 | 它只适用于有 sparse KV selector 的 target；高并发下 staging 可能减少可接纳 session，使单请求变快但总吞吐不增。 |
 | [DLite](papers/2610.23787-dlite.md)（10 月） | 把 target 多层 hidden states 当作紧凑上下文，草稿器仅做局部预测，不保存 draft 历史 KV | 免去的是 draft KV 和重复历史建模；target KV 仍在，收益目前由 Qwen3-4B/8B 证据支撑。 |
 | [HSD](papers/2601.05724-hsd.md)（3 月） | 在可访问树分支间平衡概率过剩/不足，做严格分布保持的序列级验证 | EAGLE-3 等概率槽位实验不能单独证明 HSD 提升了接受率；其吞吐结果也受 verifier 实现路径影响。 |
 | [Delayed Tree Expansion](papers/2602.16994-delayed-tree.md)（2 月） | 先走 trunk，再由 selector 决定分支深度、宽度和数量 | 三模型平均吞吐略高于 Traversal，但 Llama 子项回退；selector 依赖离线轨迹与目标硬件延迟测量。 |
@@ -202,10 +206,15 @@ flowchart LR
 | [TLAR](papers/2610.07350-tlar.md)（10 月） | 检索当前生成轨迹，以此前 target 验证收益调节检索频率与宽度 | B200 上长代码输出有吞吐收益，512-token 短输出略亏；轨迹来源的价值随模型与任务而变。 |
 | [Sequoia](papers/2402.12374-sequoia.md) / [Traversal Verification](papers/2505.12398-traversal-verification.md) | 分别改变**候选树拓扑/硬件预算**与**树路径遍历顺序** | Sequoia 的树形最优性依赖位置接受率与拒绝概率假设；Traversal 的严格等价按特定自回归树/残差算法成立，二者不应被概括成同一个 tree verifier。 |
 | [Approximate SD](papers/2608.03447-approximate-sd.md) | 在 greedy 验证中用 regret 门槛、块内上限和请求级预算复用部分 mismatch 后缀 | 是显式近似而非严格无损；request regret 预算不等于语义风险上界。 |
+| [D-PACE](papers/2605.18810-dpace.md) / [D-PAL](papers/2610.28355-dpal.md) | 在块式并行 drafter 中，从固定位置衰减转向动态接受长度权重；D-PAL 进一步以完整 target–draft overlap 取代单个记录 token 的置信代理，并比较局部分布损失 | D-PACE 的 confidence 是点质量代理；D-PAL 需 target 全分布，且证据以 DFlash 固定块为主，不能直接外推到动态树或任意 drafter。 |
+| [长 CoT 位置诊断](papers/2610.30644-long-position-acceptance.md) | 用未在 target 输出上训练的独立 drafts 测量长推理中的跨生成位置接受轨迹，并分离 sampling 下 argmax agreement 与真实分布接受概率 | 报告范围内 sampling 的 \(\alpha\) 与 greedy 的 argmax 前缀一致率均未下降；结论限于一个数学域、单 target 家族与有限有效长度，不否定 D-PACE / D-PAL 的 block 内位置权重。 |
+| [Test-Time Speculation](papers/2605.09329-test-time-speculation.md) | 在每条生成轨迹内复用 target 验证 canvas 做在线蒸馏，修复长输出时离线训练前缀与当前 target 分布的失配 | acceptance length 上升不等于 free speedup；反向传播、更新频率和 CUDA stream contention 决定端到端收益。 |
+| [DSpark](papers/2607.05147-dspark.md) | 用并行骨干加轻量顺序头修复块内依赖，再以校准前缀生存概率与 engine SPS 曲线联合分配 batch 验证前缀 | offline accepted-length 结果与 live-load scheduler 结果是两类证据；早停最优性依赖吞吐目标单峰，不能简化成置信阈值。 |
+| [DFlow](papers/2609.06498-dflow.md) | 将本轮未提交的 verifier hidden states 修正后 relay 到下一轮重叠 draft positions，并用多轮 self-conditioning 训练 | rejected token 仍不成为已确认上下文；收益来自表示复用，仍要保存/投影状态，且 training rollout 必须对齐实际拒绝边界。 |
 | [VSD](papers/2602.05774-vsd.md)、[AAT](papers/2609.24150-acceptance-aware-training.md)、[EDR](papers/2610.10411-expected-decoding-rounds.md) | 将训练目标从逐 token 匹配扩展到 path acceptance、window accepted length 与 whole-sequence round count | 目标粒度不同，目前没有同一 target/drafter/预算下的控制比较；接受长度/round count不等同 wall-clock。 |
 | [SpecLA](papers/2607.16673-specla.md) | 为线性注意力 target 的树验证设计 state-aware kernels 与 accepted-state 恢复 | 论文级 GDN/H100 机制与结果；不是当前 vLLM/SGLang 主线内核已具备该实现的证据，算子层见[系统专题](topics/systems-throughput-latency.md)。 |
 
-我的阅读判断：近期工作已将投机解码的研究对象分成**草稿来源/训练目标、树形候选与 verifier、运行时状态与 GPU 算子**几层。不能把 DARTree/DLite 的 `τ` 或 AR-relative speedup 与 SpecStream 的并发服务 throughput 横向排名，也不能用 acceptance rate 替代算子耗时。现在专题的阅读路线按这三层组织，扩散交叉保留为生成目标的特例。
+我的阅读判断：近期工作已将投机解码的研究对象分成**草稿来源/训练目标、树形候选与 verifier、运行时状态与 GPU 算子**几层。不能把 DARTree/DLite 的 `τ` 或 AR-relative speedup 与 SpecStream / Adaptive DHiSparse 的并发服务 throughput 横向排名，也不能用 acceptance rate 替代算子耗时。现在专题的阅读路线按这三层组织，扩散交叉保留为生成目标的特例。
 
 ---
 
@@ -397,7 +406,7 @@ flowchart LR
 ### 6.3 证据边界
 
 1. **未独立复现**：所有论文分册数字均为论文/官方报告值；RheoSampling 无公开代码。
-2. **摘要级扩散交叉工作**（例如 DSpark、BASTION）只用于谱系定位，不承担数字结论。
+2. **扩散交叉证据分层**：DSpark、DFlow、D-PACE、D-PAL 等已有固定原文精读；BASTION 等未单独深读的外围工作仍只用于谱系定位，不承担数字或机制结论。
 3. **拓展阅读材料不替代证据**：涉及机制和实验结论时，应回到论文分册及其固定版本。
 4. **代码行为绑定 commit**：vLLM `2b85d9cb`、SGLang `2a08e261`；换版本需重核。
 

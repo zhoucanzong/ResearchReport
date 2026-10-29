@@ -2,7 +2,7 @@
 
 # 💬 LLM
 
-**12 条** · 语言模型能力与技术专题，覆盖推理、对齐、Agent、RAG 等方向。
+**18 条** · 语言模型能力与技术专题，覆盖推理、对齐、Agent、RAG 等方向。
 
 [← 返回首页](<../README.md>) · [完整索引](<../INDEX.md>)
 
@@ -10,7 +10,7 @@
 
 <!-- SCRIPT:panel-readme START · 由 scripts/library_index.py 生成，勿手改 -->
 
-![Entries](https://img.shields.io/badge/Entries-12-3f51b5?style=flat-square)
+![Entries](https://img.shields.io/badge/Entries-18-3f51b5?style=flat-square)
 ![Panel](https://img.shields.io/badge/Panel-LLM-9e9e9e?style=flat-square)
 
 ## 专题内分析
@@ -32,13 +32,19 @@
 | **决策模型（Decision Models）** | [决策模型综述：把概率判断变成可行动的选择](<DecisionModels/report.md>) | 242 行 |
 | **扩散语言模型** | [扩散语言模型：从随机遮盖到大规模并行生成](<DiffusionLM/report.md>) | 96 行 |
 | **OCR 与文档解析** | [OCR 与文档解析：从字符识别到结构还原](<DocumentParsing/report.md>) | 122 行 |
+| **知识编辑与机器遗忘** | [知识编辑与机器遗忘：更新、隔离还是移除模型信息？](<KnowledgeEditing/report.md>) | 84 行 |
 | **长上下文** | [长上下文：从可接收长度到有效利用](<LongContext/report.md>) | 176 行 |
+| **机制可解释性** | [机制可解释性：从特征猜想走向可检验的计算机制](<MechanisticInterpretability/report.md>) | 131 行 |
 | **混合专家模型（MoE）** | [混合专家模型：路由、负载均衡与系统通信](<MoE/report.md>) | 141 行 |
+| **模型安全与越狱评测** | [大语言模型安全：攻击面、行为防御与评测边界](<ModelSafety/report.md>) | 106 行 |
 | **大模型辅助运筹建模与求解** | [大模型辅助运筹建模与求解：从自然语言到可验证的决策](<OperationsResearch/report.md>) | 90 行 |
 | **检索增强生成（RAG）** | [检索增强生成：检索误差怎样传到答案](<RAG/report.md>) | 153 行 |
+| **实时多模态交互** | [实时多模态交互：流式输入、全双工轮次与在线评测](<RealtimeMultimodal/report.md>) | 96 行 |
 | **推理模型与测试时计算** | [推理模型：测试时计算怎样变成更可靠的解题](<ReasoningModels/report.md>) | 152 行 |
 | **LLM 后训练中的强化学习** | [LLM 后训练中的强化学习：轨迹从哪里来，策略何时更新](<ReinforcementLearning/report.md>) | 109 行 |
-| **训练数据策展** | [训练数据策展：筛选、去重与配比如何改变训练结果](<TrainingData/report.md>) | 73 行 |
+| **合成数据与自训练** | [合成数据与自训练：模型生成的数据怎样变成训练信号？](<SyntheticData/report.md>) | 111 行 |
+| **测试时学习与适应** | [测试时学习与适应：模型在使用时如何更新](<TestTimeAdaptation/report.md>) | 84 行 |
+| **训练数据策展** | [训练数据策展：筛选、去重与配比如何改变训练结果](<TrainingData/report.md>) | 75 行 |
 | **视觉语言模型（VLM）** | [视觉语言模型：视觉表示如何进入语言模型](<VLM/report.md>) | 131 行 |
 
 ## 📎 子文档
@@ -78,7 +84,7 @@
 * [papers/LLaDA2.0-Scaling-to-100B.md](<DiffusionLM/papers/LLaDA2.0-Scaling-to-100B.md>) — 63 行 / 9,346 B
 * [papers/LLaDA2.1-Token-Editing.md](<DiffusionLM/papers/LLaDA2.1-Token-Editing.md>) — 65 行 / 9,366 B
 * [papers/LLaDA2.2-Levenshtein-Editing.md](<DiffusionLM/papers/LLaDA2.2-Levenshtein-Editing.md>) — 64 行 / 11,889 B
-* [sources/CANDIDATES.md](<DiffusionLM/sources/CANDIDATES.md>) — 32 行 / 4,175 B
+* [sources/CANDIDATES.md](<DiffusionLM/sources/CANDIDATES.md>) — 32 行 / 4,374 B
 * [sources/MANIFEST.md](<DiffusionLM/sources/MANIFEST.md>) — 26 行 / 5,892 B
 
 </details>
@@ -113,6 +119,44 @@
 </details>
 
 <details>
+<summary><b>知识编辑与机器遗忘</b>（7 份）</summary>
+
+* [papers/edit-memit-mass.md](<KnowledgeEditing/papers/edit-memit-mass.md>) — 35 行 / 3,732 B
+* [papers/edit-mend-hypernetwork.md](<KnowledgeEditing/papers/edit-mend-hypernetwork.md>) — 27 行 / 3,111 B
+* [papers/edit-rome-local-weight.md](<KnowledgeEditing/papers/edit-rome-local-weight.md>) — 33 行 / 3,871 B
+* [papers/edit-wise-side-memory.md](<KnowledgeEditing/papers/edit-wise-side-memory.md>) — 32 行 / 3,536 B
+* [papers/unlearning-muse.md](<KnowledgeEditing/papers/unlearning-muse.md>) — 28 行 / 3,896 B
+* [papers/unlearning-recoverability.md](<KnowledgeEditing/papers/unlearning-recoverability.md>) — 27 行 / 4,003 B
+* [papers/unlearning-tofu.md](<KnowledgeEditing/papers/unlearning-tofu.md>) — 23 行 / 3,196 B
+
+</details>
+
+<details>
+<summary><b>机制可解释性</b>（4 份）</summary>
+
+* [papers/2024-scaling-monosemanticity.md](<MechanisticInterpretability/papers/2024-scaling-monosemanticity.md>) — 23 行 / 3,145 B
+* [papers/2025-attribution-graphs.md](<MechanisticInterpretability/papers/2025-attribution-graphs.md>) — 25 行 / 3,226 B
+* [papers/2209.11895-induction-heads.md](<MechanisticInterpretability/papers/2209.11895-induction-heads.md>) — 30 行 / 2,829 B
+* [papers/2211.00593-ioi-circuit.md](<MechanisticInterpretability/papers/2211.00593-ioi-circuit.md>) — 35 行 / 3,234 B
+
+</details>
+
+<details>
+<summary><b>模型安全与越狱评测</b>（9 份）</summary>
+
+* [papers/attack-autodan-readable.md](<ModelSafety/papers/attack-autodan-readable.md>) — 30 行 / 3,563 B
+* [papers/attack-gcg-suffix.md](<ModelSafety/papers/attack-gcg-suffix.md>) — 28 行 / 3,159 B
+* [papers/attack-pair-black-box.md](<ModelSafety/papers/attack-pair-black-box.md>) — 40 行 / 4,073 B
+* [papers/defense-circuit-breakers.md](<ModelSafety/papers/defense-circuit-breakers.md>) — 23 行 / 3,004 B
+* [papers/defense-constitutional-classifiers.md](<ModelSafety/papers/defense-constitutional-classifiers.md>) — 27 行 / 4,051 B
+* [papers/defense-instruction-hierarchy.md](<ModelSafety/papers/defense-instruction-hierarchy.md>) — 21 行 / 3,039 B
+* [papers/eval-cross-language.md](<ModelSafety/papers/eval-cross-language.md>) — 21 行 / 3,071 B
+* [papers/eval-strongreject.md](<ModelSafety/papers/eval-strongreject.md>) — 23 行 / 3,189 B
+* [papers/eval-xstest.md](<ModelSafety/papers/eval-xstest.md>) — 24 行 / 3,058 B
+
+</details>
+
+<details>
 <summary><b>大模型辅助运筹建模与求解</b>（9 份）</summary>
 
 * [papers/2022-nl4opt.md](<OperationsResearch/papers/2022-nl4opt.md>) — 11 行 / 1,280 B
@@ -124,6 +168,19 @@
 * [papers/llm-lns.md](<OperationsResearch/papers/llm-lns.md>) — 17 行 / 1,953 B
 * [sources/MANIFEST.md](<OperationsResearch/sources/MANIFEST.md>) — 18 行 / 2,132 B
 * [topics/evaluation-protocols.md](<OperationsResearch/topics/evaluation-protocols.md>) — 55 行 / 6,885 B
+
+</details>
+
+<details>
+<summary><b>实时多模态交互</b>（7 份）</summary>
+
+* [papers/duplex-bayling.md](<RealtimeMultimodal/papers/duplex-bayling.md>) — 32 行 / 4,607 B
+* [papers/duplex-moshi.md](<RealtimeMultimodal/papers/duplex-moshi.md>) — 26 行 / 3,584 B
+* [papers/duplex-turnfsm.md](<RealtimeMultimodal/papers/duplex-turnfsm.md>) — 31 行 / 3,832 B
+* [papers/eval-coupled-but-late.md](<RealtimeMultimodal/papers/eval-coupled-but-late.md>) — 19 行 / 2,833 B
+* [papers/eval-full-duplex-bench.md](<RealtimeMultimodal/papers/eval-full-duplex-bench.md>) — 26 行 / 3,163 B
+* [papers/eval-instructs2s-eval.md](<RealtimeMultimodal/papers/eval-instructs2s-eval.md>) — 26 行 / 3,171 B
+* [papers/eval-turnbench.md](<RealtimeMultimodal/papers/eval-turnbench.md>) — 21 行 / 3,153 B
 
 </details>
 
@@ -140,6 +197,31 @@
 * [papers/prime.md](<ReinforcementLearning/papers/prime.md>) — 30 行 / 4,636 B
 * [sources/CANDIDATES.md](<ReinforcementLearning/sources/CANDIDATES.md>) — 26 行 / 4,756 B
 * [sources/MANIFEST.md](<ReinforcementLearning/sources/MANIFEST.md>) — 43 行 / 9,592 B
+
+</details>
+
+<details>
+<summary><b>合成数据与自训练</b>（9 份）</summary>
+
+* [papers/feedback-iterative-instruction.md](<SyntheticData/papers/feedback-iterative-instruction.md>) — 29 行 / 3,775 B
+* [papers/feedback-pretraining-mixtures.md](<SyntheticData/papers/feedback-pretraining-mixtures.md>) — 29 行 / 4,050 B
+* [papers/feedback-recursive-model-collapse.md](<SyntheticData/papers/feedback-recursive-model-collapse.md>) — 32 行 / 3,873 B
+* [papers/instruction-evol-instruct.md](<SyntheticData/papers/instruction-evol-instruct.md>) — 23 行 / 3,204 B
+* [papers/instruction-self-instruct.md](<SyntheticData/papers/instruction-self-instruct.md>) — 23 行 / 3,111 B
+* [papers/instruction-ultrafeedback.md](<SyntheticData/papers/instruction-ultrafeedback.md>) — 23 行 / 3,280 B
+* [papers/reasoning-orca.md](<SyntheticData/papers/reasoning-orca.md>) — 26 行 / 3,413 B
+* [papers/reasoning-rest.md](<SyntheticData/papers/reasoning-rest.md>) — 27 行 / 3,493 B
+* [papers/reasoning-star.md](<SyntheticData/papers/reasoning-star.md>) — 32 行 / 3,827 B
+
+</details>
+
+<details>
+<summary><b>测试时学习与适应</b>（4 份）</summary>
+
+* [papers/2305.18466-test-time-training-nearest-neighbors.md](<TestTimeAdaptation/papers/2305.18466-test-time-training-nearest-neighbors.md>) — 29 行 / 3,274 B
+* [papers/2505.20633-test-time-learning-llms.md](<TestTimeAdaptation/papers/2505.20633-test-time-learning-llms.md>) — 27 行 / 3,447 B
+* [papers/2601.16175-learning-to-discover.md](<TestTimeAdaptation/papers/2601.16175-learning-to-discover.md>) — 21 行 / 2,629 B
+* [papers/2604.06169-in-place-ttt.md](<TestTimeAdaptation/papers/2604.06169-in-place-ttt.md>) — 25 行 / 3,245 B
 
 </details>
 

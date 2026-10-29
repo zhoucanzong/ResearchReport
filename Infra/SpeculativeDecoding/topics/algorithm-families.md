@@ -64,12 +64,12 @@
 
 ### 2.4 家族 IV：块 / 扩散草稿（block / diffusion draft）
 
-**代表**：DFlash（ICML 2026）、DSpark（DeepSeek/SGLang 集成）、BASTION（树状块扩散）。
+**代表**： [DFlash](../papers/2602.06036-dflash.md) / [DFlare](../papers/2606.02091-dflare.md) 的块扩散草稿，[DDTree](../papers/2604.12989-ddtree.md) / [DARTree](../papers/2608.13524-dartree.md) / [PRESTO](../papers/2607.22634-presto.md) 的候选树，以及 [DSpark](../papers/2607.05147-dspark.md) 的半自回归块草稿与负载感知验证。
 
-- **机制**：单次前向生成**整个 token 块**，把“逐 token 串行草稿”变成 O(1) 块生成；DSpark 还在验证侧做置信度驱动的变长裁剪。
-- **优点**：起草阶段天然并行；与动态树结合可补“块内联合分布”的不足（BASTION）。
-- **缺点**：块内 token 的联合分布建模难；高 batch 下验证预算与草稿预算互相争抢；需要训练。
-- **2026 状态**：本条目**未设独立分册**（DFlash 只作谱系定位，数字不入表）；SGLang/vLLM 的代码里已有 `parallel_drafting` 与 `dspark` 分支，说明它已进入工程化阶段。
+- **机制**：并行 backbone 一次产生多个未来位置的分布；后续工作分别通过更强的 target 条件化、轻量块内因果校正、候选树排序或跨轮 verifier 状态复用来补足独立位置建模的短板。
+- **优点**：把一部分串行草拟改成并行前向，能在合适的 target、任务和负载下提出较长候选块。
+- **缺点**：并行位置分布不等于条件化 token 序列；后缀易受早期拒绝影响，树验证会增加 target 计算，动态预算的收益取决于接受概率和硬件成本。
+- **阅读入口**：扩散与投机解码交叉见[综合专题](diffusion-drafters.md)；草稿生成、训练与状态复用见[草稿侧专题](draft-side-and-training.md)；跨轮运行时开销见[系统专题](systems-throughput-latency.md)。
 
 ---
 
@@ -117,11 +117,11 @@ flowchart TD
 
 ---
 
-## 5. 家族 IV 的边界说明（为什么本条目没给它分册）
+## 5. 家族 IV 的阅读边界
 
-- 本条目本轮的目标是“把已有 11 篇横切素材升级为 papers/topics 结构”，入选的 8 篇以“有公开正文、可逐节核验”的经典/关键工作为主；DFlash/DSpark/BASTION 属于 2026 预印本/工程博客，正文细节与复现条件不够稳定。
-- 因此本专题对家族 IV 只做**谱系定位**，不引用其加速比；读者若要深入，应按 [sources/CANDIDATES.md](../sources/CANDIDATES.md) 的“下一轮候选”处理，而不是把二手数字写进结论。
-- 这不是“块扩散不重要”——恰恰相反，vLLM 的 `parallel_drafting`（`llm_base_proposer.py:112–114`）与 SGLang 的 DSpark 分支说明它已进入工程；只是**证据等级还不够进本轮的对照表**。
+- 本专题已将代表性块草稿、树构造、半自回归校正和扩散模型自投机分开精读；不把所有并行模型都当作同一机制。
+- DFlash、DFlare、DDTree、DARTree、PRESTO、DSpark、DFlow 等论文分别改变候选并行化、位置条件化、树排序、验证预算或跨轮状态复用；具体关系见[扩散交叉专题](diffusion-drafters.md)与[草稿侧专题](draft-side-and-training.md)。
+- BASTION 等未设独立精读的工作仍只作谱系线索，是否入库取决于能否补上新的机制比较，而非发布数量。
 
 ---
 
@@ -162,5 +162,5 @@ flowchart TD
 ## 来源与证据等级
 
 - 族级机制与数字：均来自本条目 `papers/` 分册的 `[精读原文]`；具体条件见各分册 §4/§5。
-- 家族 IV：仅谱系定位，未引数字；DFlash/DSpark/BASTION 的正文未在本轮逐节核验。
+- 家族 IV：代表性论文的机制综合见 `topics/diffusion-drafters.md`；各篇分册给出固定版本与原文定位，未阅读的外围工作不承担专题结论。
 - 代码事实：vLLM `2b85d9cb`、SGLang `2a08e261`，见对应分册的 `文件:行`。

@@ -29,7 +29,7 @@ status: current
 
 独立扩散生成的速度—质量问题属于本专题：模型自身的去噪轮数、块策略、EOS 与 token editing 决定最终输出。若扩散模型只负责为 AR target 提议 token，最终输出质量由 target 与验证规则决定；若同一个 dLLM 对未来去噪 state 自投机，则验证对象又回到该 dLLM 的原分布。PoE-Bridge 还把 AR 作为质量参照，通过有限重要性采样逼近；论文明确承认有限预算不严格无损。
 
-建议先读[跨专题综合分析](../../Infra/SpeculativeDecoding/topics/diffusion-drafters.md)，再按问题进入代表论文：块扩散怎样作为 AR 草稿见 [DFlash](../../Infra/SpeculativeDecoding/papers/2602.06036-dflash.md)；如何把每个位置的候选用进验证树见 [DDTree](../../Infra/SpeculativeDecoding/papers/2604.12989-ddtree.md) 与 [PRESTO](../../Infra/SpeculativeDecoding/papers/2607.22634-presto.md)；怎样加速 dLLM 自身见 [Spiffy](../../Infra/SpeculativeDecoding/papers/2509.18085-spiffy.md)；怎样以有限预算逼近 AR 质量见 [PoE-Bridge](../../Infra/SpeculativeDecoding/papers/2606.08048-poe-bridge.md)。
+建议先读[跨专题综合分析](../../Infra/SpeculativeDecoding/topics/diffusion-drafters.md)，再按问题进入代表论文：块扩散怎样作为 AR 草稿见 [DFlash](../../Infra/SpeculativeDecoding/papers/2602.06036-dflash.md)；如何把每个位置的候选用进验证树见 [DDTree](../../Infra/SpeculativeDecoding/papers/2604.12989-ddtree.md) 与 [PRESTO](../../Infra/SpeculativeDecoding/papers/2607.22634-presto.md)；怎样加速 dLLM 自身，可对照有分布保持证明的 [Spiffy](../../Infra/SpeculativeDecoding/papers/2509.18085-spiffy.md) 和以经验性置信门控换取较少解码轮数的 [PV-Decoding](../../Infra/SpeculativeDecoding/papers/2026.findings-emnlp.2228-pv-decoding.md)；怎样以有限预算逼近 AR 质量见 [PoE-Bridge](../../Infra/SpeculativeDecoding/papers/2606.08048-poe-bridge.md)。
 
 表内证据按固定论文逐篇定位；缓存、许可和各自未核实边界见 [MANIFEST](sources/MANIFEST.md)。
 

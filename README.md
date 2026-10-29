@@ -18,7 +18,7 @@
 <div align="center">
 
 <!-- SCRIPT:badges START -->
-[**77** 主报告](index/by-report.md) &nbsp; · &nbsp; [**312** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**45** 研究专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
+[**84** 主报告](index/by-report.md) &nbsp; · &nbsp; [**382** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**52** 研究专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
 <!-- SCRIPT:badges END -->
 
 </div>
@@ -47,14 +47,14 @@
 </td>
 <td width="33%" valign="top">
 <h3>02 · <a href="LLM/README.md">LLM</a></h3>
-<p><strong>语言模型方法</strong><br><sub>12 篇主报告 · 语言模型能力、训练数据与技术专题</sub></p>
+<p><strong>语言模型方法</strong><br><sub>18 篇主报告 · 语言模型能力、训练数据与技术专题</sub></p>
 <p><a href="LLM/ReasoningModels/report.md">推理模型与测试时计算</a> · <a href="LLM/LongContext/report.md">长上下文</a> · <a href="LLM/MoE/report.md">混合专家模型（MoE）</a> · <a href="LLM/TrainingData/report.md">训练数据策展</a></p>
 <p><a href="LLM/README.md"><strong>浏览板块 →</strong></a></p>
 </td>
 <td width="33%" valign="top">
 <h3>03 · <a href="Agents/README.md">Agents</a></h3>
-<p><strong>智能体系统</strong><br><sub>3 篇主报告 · Agent 系统围绕决策闭环展开，覆盖记忆、工具、长程执行、电脑使用与安全</sub></p>
-<p><a href="Agents/AgentSystems/report.md">智能体系统</a> · <a href="Agents/ComputerUse/report.md">电脑使用 Agent</a> · <a href="Agents/AgentSecurity/report.md">工具 Agent 安全</a></p>
+<p><strong>智能体系统</strong><br><sub>4 篇主报告 · Agent 系统围绕决策闭环展开，覆盖记忆、工具、软件工程、电脑使用与安全</sub></p>
+<p><a href="Agents/AgentSystems/report.md">智能体系统</a> · <a href="Agents/SoftwareEngineeringAgents/report.md">软件工程 Agent</a> · <a href="Agents/ComputerUse/report.md">电脑使用 Agent</a> · <a href="Agents/AgentSecurity/report.md">工具 Agent 安全</a></p>
 <p><a href="Agents/README.md"><strong>浏览板块 →</strong></a></p>
 </td>
 </tr>
@@ -124,11 +124,11 @@
 <!-- SCRIPT:recent START · 报告日期优先，缺失时回退最近提交日 -->
 | 日期 | 阅读条目 | 板块 |
 | :-- | :-- | :-- |
+| 2026-10-30 | [软件工程 Agent](<Agents/SoftwareEngineeringAgents/report.md>) | Agents |
 | 2026-10-30 | [MoE 执行与专家通信](<Infra/MoEExecution/report.md>) | Infra |
 | 2026-10-30 | [模型量化与边缘部署](<Infra/QuantizationEdge/report.md>) | Infra |
+| 2026-10-30 | [投机解码](<Infra/SpeculativeDecoding/report.md>) | Infra |
 | 2026-10-30 | [分布式训练基础设施](<Infra/TrainingInfra/report.md>) | Infra |
-| 2026-10-30 | [3D 生成](<AIGC/3DGen/report.md>) | AIGC |
-| 2026-10-30 | [音频与音乐生成](<AIGC/AudioGen/report.md>) | AIGC |
 <!-- SCRIPT:recent END -->
 
 [查看全部更新 →](index/recent.md)
@@ -138,14 +138,14 @@
 <!-- SCRIPT:topics START · 从条目目录生成 -->
 | 方向 | 专题入口 |
 | :-- | :-- |
-| **LLM** | [模型对齐与后训练](<LLM/Alignment/report.md>) · [决策模型（Decision Models）](<LLM/DecisionModels/report.md>) · [扩散语言模型](<LLM/DiffusionLM/report.md>) · [OCR 与文档解析](<LLM/DocumentParsing/report.md>) · [长上下文](<LLM/LongContext/report.md>) · [混合专家模型（MoE）](<LLM/MoE/report.md>) · [大模型辅助运筹建模与求解](<LLM/OperationsResearch/report.md>) · [检索增强生成（RAG）](<LLM/RAG/report.md>) · [推理模型与测试时计算](<LLM/ReasoningModels/report.md>) · [LLM 后训练中的强化学习](<LLM/ReinforcementLearning/report.md>) · [训练数据策展](<LLM/TrainingData/report.md>) · [视觉语言模型（VLM）](<LLM/VLM/report.md>) |
-| **Agents** | [智能体系统](<Agents/AgentSystems/report.md>) · [电脑使用 Agent](<Agents/ComputerUse/report.md>) · [工具 Agent 安全](<Agents/AgentSecurity/report.md>) |
+| **LLM** | [模型对齐与后训练](<LLM/Alignment/report.md>) · [决策模型（Decision Models）](<LLM/DecisionModels/report.md>) · [扩散语言模型](<LLM/DiffusionLM/report.md>) · [OCR 与文档解析](<LLM/DocumentParsing/report.md>) · [知识编辑与机器遗忘](<LLM/KnowledgeEditing/report.md>) · [长上下文](<LLM/LongContext/report.md>) · [机制可解释性](<LLM/MechanisticInterpretability/report.md>) · [混合专家模型（MoE）](<LLM/MoE/report.md>) · [模型安全与越狱评测](<LLM/ModelSafety/report.md>) · [大模型辅助运筹建模与求解](<LLM/OperationsResearch/report.md>) · [检索增强生成（RAG）](<LLM/RAG/report.md>) · [实时多模态交互](<LLM/RealtimeMultimodal/report.md>) · [推理模型与测试时计算](<LLM/ReasoningModels/report.md>) · [LLM 后训练中的强化学习](<LLM/ReinforcementLearning/report.md>) · [合成数据与自训练](<LLM/SyntheticData/report.md>) · [测试时学习与适应](<LLM/TestTimeAdaptation/report.md>) · [训练数据策展](<LLM/TrainingData/report.md>) · [视觉语言模型（VLM）](<LLM/VLM/report.md>) |
+| **Agents** | [智能体系统](<Agents/AgentSystems/report.md>) · [软件工程 Agent](<Agents/SoftwareEngineeringAgents/report.md>) · [电脑使用 Agent](<Agents/ComputerUse/report.md>) · [工具 Agent 安全](<Agents/AgentSecurity/report.md>) |
 | **AIGC** | [3D 生成](<AIGC/3DGen/report.md>) · [音频与音乐生成](<AIGC/AudioGen/report.md>) · [数字人与 Avatar](<AIGC/AvatarGen/report.md>) · [可控生成](<AIGC/ControllableGen/report.md>) · [扩散 Transformer（DiT）](<AIGC/DiT/report.md>) · [扩散模型](<AIGC/DiffusionModels/report.md>) · [图像编辑与修复](<AIGC/ImageEditing/report.md>) · [图像生成](<AIGC/ImageGeneration/report.md>) · [视频生成](<AIGC/VideoGen/report.md>) |
 | **WorldModel** | [具身预测规划](<WorldModel/EmbodiedPlanning/report.md>) · [机器人视觉语言动作模型（VLA）](<WorldModel/EmbodiedVLA/report.md>) · [世界模型](<WorldModel/WorldModels/report.md>) |
 | **AI4Science** | [抗生素发现](<AI4Science/AntibioticDiscovery/report.md>) · [天文图像异常发现](<AI4Science/Astronomy/report.md>) · [自主实验室](<AI4Science/AutonomousLabs/report.md>) · [化学反应条件优化](<AI4Science/Chemistry/report.md>) · [生成式材料设计](<AI4Science/MaterialsDiscovery/report.md>) · [数学与算法发现](<AI4Science/MathematicalDiscovery/report.md>) · [神经活动表征与解码](<AI4Science/Neuroscience/report.md>) · [蛋白质与肽结合体设计](<AI4Science/ProteinDesign/report.md>) · [单细胞扰动预测](<AI4Science/SingleCellPerturbation/report.md>) · [天气与气候预测](<AI4Science/WeatherClimate/report.md>) |
 | **Evaluation** | [评测科学](<Evaluation/EvaluationScience/report.md>) · [科学发现的评测方法](<Evaluation/ScientificDiscovery/report.md>) |
 | **Infra** | [KV Cache 与预填充／解码分离](<Infra/KVCachePD/report.md>) · [MoE 执行与专家通信](<Infra/MoEExecution/report.md>) · [模型量化与边缘部署](<Infra/QuantizationEdge/report.md>) · [在线推理服务与评测](<Infra/ServingEvaluation/report.md>) · [投机解码](<Infra/SpeculativeDecoding/report.md>) · [分布式训练基础设施](<Infra/TrainingInfra/report.md>) |
-| **分析分册** | [查看 20 篇专题内分析](<index/by-topic.md>) |
+| **分析分册** | [查看 24 篇专题内分析](<index/by-topic.md>) |
 <!-- SCRIPT:topics END -->
 
 ## 阅读与引用
@@ -162,19 +162,19 @@
 ### 完整索引
 
 <!-- SCRIPT:index START · 条目单一真值在 index/by-report.md -->
-共 **77** 条，分属 **9** 个板块：Models 23 · LLM 12 · Agents 3 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 9。
-完整 77 行（条目 | 板块 | 路径）见 **[index/by-report.md](<index/by-report.md>)**；按域 / 主题 / 来源分面见 [index/](<index/>)，总目录见 [INDEX.md](<INDEX.md>)。
+共 **84** 条，分属 **9** 个板块：Models 23 · LLM 18 · Agents 4 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 9。
+完整 84 行（条目 | 板块 | 路径）见 **[index/by-report.md](<index/by-report.md>)**；按域 / 主题 / 来源分面见 [index/](<index/>)，总目录见 [INDEX.md](<INDEX.md>)。
 <!-- SCRIPT:index END -->
 
 ### 目录结构
 
 <!-- SCRIPT:structure START · 来源 scripts/panels.json，配置驱动 -->
 ```text
-ResearchReport/    77 条目 · 45 研究专题 · 9 板块
+ResearchReport/    84 条目 · 52 研究专题 · 9 板块
 │
 ├─ 🧠 Models/        23 条 · 厂商模型 / 系列逐个精读（GPT · Qwen · Gemini …）
-├─ 💬 LLM/           12 条 · 语言模型能力、训练数据与技术专题（推理模型与测试时计算 · 长上下文 · 混合专家模型（MoE） …）
-├─ 🤖 Agents/         3 条 · Agent 系统围绕决策闭环展开，覆盖记忆、工具、长程执行、电脑使用与安全（智能体系统 · 电脑使用 Agent · 工具 Agent 安全 …）
+├─ 💬 LLM/           18 条 · 语言模型能力、训练数据与技术专题（推理模型与测试时计算 · 长上下文 · 混合专家模型（MoE） …）
+├─ 🤖 Agents/         4 条 · Agent 系统围绕决策闭环展开，覆盖记忆、工具、软件工程、电脑使用与安全（智能体系统 · 软件工程 Agent · 电脑使用 Agent …）
 ├─ 🎨 AIGC/           9 条 · 图像、视频、音频、3D、数字人生成及相关架构与编辑方法（视频生成 · 扩散 Transformer（DiT） · 扩散模型 …）
 ├─ 🌍 WorldModel/     3 条 · 世界模型与具身 VLA（世界模型 · 机器人视觉语言动作模型（VLA） · 具身预测规划 …）
 ├─ 🧪 AI4Science/    10 条 · 科学问题中的 AI 方法与实验闭环（蛋白质与肽结合体设计 · 生成式材料设计 · 天气与气候预测 …）

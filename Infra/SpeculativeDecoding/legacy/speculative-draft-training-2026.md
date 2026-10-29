@@ -78,7 +78,7 @@ AdaSPEC 在 KD 过程中加入**选择性 token 过滤（selective token filteri
 
 - drafter 的**隐藏状态幅值随链深单调增长**
 - 其动力学表现**更像"叠在 target 之上的额外 pre-norm transformer 层"，而不是一个独立的（standalone）自回归预测器**
-- 这解释了两件事：① 为什么"草稿链越深越不可靠"（与 [speculative-cascade-heterogeneous.md](speculative-cascade-heterogeneous.md) 中 HCSpec 的"期望效用快速衰减"经验观察**互相印证**）；② 为什么在长上下文/模板扰动下退化更严重。
+- 这解释了两件事：① 为什么递归草稿中的表征可能随链深漂移；② 为什么在长上下文/模板扰动下退化更严重。它与 [HCSpec](../papers/2026.acl-long.353-hcspec.md) 按草稿位置分配不同模块容量的观察处在相关但不同的设计轴，不能当作相互独立的因果验证；当前比较见[草稿与训练专题](../topics/draft-side-and-training.md)。
 
 **修补：两个架构改动**
 
@@ -135,7 +135,7 @@ AdaSPEC 在 KD 过程中加入**选择性 token 过滤（selective token filteri
 | 模型精度 | **保持**（losslessly） |
 | 副产品 | **高质量 draft 模型**，可直接用于高效部署 |
 
-**为什么这条工作的意义超出 RL 场景**：它把 drafter 的"训练时机"从"离线一次性"改成"**在线、用系统空闲资源持续更新**"。这与 [speculative-systems-and-frameworks.md](speculative-systems-and-frameworks.md) 中 vLLM 为 DFlash/DSpark 引入 `draft_context_window` 的动机**同源**——都是承认"drafter 与 target/上下文会持续失配，需要在系统层面持续补偿"。
+**范围要分开**：TLT 在 RL rollout 的长尾空档更新 drafter，追随持续变化的 target policy；[Test-Time Speculation](../papers/2605.09329-test-time-speculation.md) 则在单条长生成轨迹内以 target 验证分布在线蒸馏，处理离线训练前缀与当前长上下文的失配。vLLM 的 `draft_context_window` PR 是限制 draft 可见历史的上下文裁剪提案，作用位置与在线参数更新不同；其状态以对应固定代码快照为准。总体学习路线见[草稿与训练专题](../topics/draft-side-and-training.md)。
 
 ---
 

@@ -30,7 +30,7 @@ flowchart LR
 
 ### 路线二：从静态图像走向时间连续的生成
 
-推荐顺序：[视频生成](../AIGC/VideoGen/report.md) → [音频与音乐生成](../AIGC/AudioGen/report.md) → [数字人与 Avatar](../AIGC/AvatarGen/report.md)。这是为了先理解时间序列，再理解声学条件和音画/动作耦合，不表示音频生成历史从视频生成派生。
+推荐顺序：[视频生成](../AIGC/VideoGen/report.md) → [音频与音乐生成](../AIGC/AudioGen/report.md) → [数字人与 Avatar](../AIGC/AvatarGen/report.md)。这是为了先理解时间序列，再理解声学条件和音画/动作耦合，不表示音频生成历史从视频生成派生。若关心动作如何控制未来画面、视角和相机，继续读[交互式世界模型综合](../WorldModel/WorldModels/topics/interactive-world-models.md)，并区分可控视频 rollout 与真实机器人闭环。
 
 视频把生成对象扩展到时空 latent 和长序列；音频增加 codec、韵律、事件顺序与长程音乐结构；数字人把视觉身份、动作变量和音频条件放进同一输出过程。视频与音频可以共同生成，但“音视频同步”不等于语义和动作都正确；Avatar 的口型同步也不能代表整段动作自然或身份稳定。
 

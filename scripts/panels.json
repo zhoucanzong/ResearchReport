@@ -38,18 +38,20 @@
       "id": "agents",
       "title": "Agents",
       "emoji": "🤖",
-      "tagline": "Agent 系统围绕决策闭环展开，覆盖记忆、工具、长程执行、电脑使用与安全",
+      "tagline": "Agent 系统围绕决策闭环展开，覆盖记忆、工具、软件工程、电脑使用与安全",
       "topic_index": true,
       "match": [
         "Agents/*"
       ],
       "representatives": [
         "Agents/AgentSystems",
+        "Agents/SoftwareEngineeringAgents",
         "Agents/ComputerUse",
         "Agents/AgentSecurity"
       ],
       "entry_order": [
         "Agents/AgentSystems",
+        "Agents/SoftwareEngineeringAgents",
         "Agents/ComputerUse",
         "Agents/AgentSecurity"
       ]

@@ -36,13 +36,14 @@
 | [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) | 图像生成：表示、生成目标、条件控制与评测 | — | — | — |
 | [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) | 视频生成：从图像先验到时空建模 | — | — | — |
 
-## Agents (3)
+## Agents (4)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) | 工具 Agent 安全：提示注入、权限与动作证据 | research | 2026-10-24 | current |
 | [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) | Agent 系统综述：从工具调用到可验证的长程闭环 | — | 2026-10-26 | — |
 | [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) | 电脑使用 Agent：从看见界面到交付完整工作流 | research | 2026-10-26 | current |
+| [Agents/SoftwareEngineeringAgents/report.md](<../Agents/SoftwareEngineeringAgents/report.md>) | 软件工程 Agent：从理解 issue 到验证 patch | topic-research | 2026-10-30 | current |
 
 ## Evaluation (2)
 
@@ -59,10 +60,10 @@
 | [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | MoE 执行：从专家路由到跨设备回收 | repo-research | 2026-10-30 | current |
 | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 模型量化与边缘部署研究报告 | topic-research | 2026-10-30 | current |
 | [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) | 在线 LLM Serving：SLO、Goodput 与请求完整性 | research | 2026-10-24 | current |
-| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-29 | needs-review |
+| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-30 | needs-review |
 | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 大模型训练基础设施与分布式训练研究报告 | topic-research | 2026-10-30 | needs-review |
 
-## LLM (12)
+## LLM (18)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
@@ -70,12 +71,18 @@
 | [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | 决策模型综述：把概率判断变成可行动的选择 | — | 2026-10-26 | — |
 | [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 扩散语言模型：从随机遮盖到大规模并行生成 | topic-research | 2026-10-29 | current |
 | [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) | OCR 与文档解析：从字符识别到结构还原 | research | 2026-10-25 | current |
+| [LLM/KnowledgeEditing/report.md](<../LLM/KnowledgeEditing/report.md>) | 知识编辑与机器遗忘：更新、隔离还是移除模型信息？ | topic-research | 2026-10-30 | current |
 | [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 长上下文：从可接收长度到有效利用 | — | — | — |
+| [LLM/MechanisticInterpretability/report.md](<../LLM/MechanisticInterpretability/report.md>) | 机制可解释性：从特征猜想走向可检验的计算机制 | topic-research | 2026-10-30 | current |
 | [LLM/MoE/report.md](<../LLM/MoE/report.md>) | 混合专家模型：路由、负载均衡与系统通信 | — | — | — |
+| [LLM/ModelSafety/report.md](<../LLM/ModelSafety/report.md>) | 大语言模型安全：攻击面、行为防御与评测边界 | topic-research | 2026-10-30 | current |
 | [LLM/OperationsResearch/report.md](<../LLM/OperationsResearch/report.md>) | 大模型辅助运筹建模与求解：从自然语言到可验证的决策 | research | 2026-10-25 | current |
 | [LLM/RAG/report.md](<../LLM/RAG/report.md>) | 检索增强生成：检索误差怎样传到答案 | — | — | — |
+| [LLM/RealtimeMultimodal/report.md](<../LLM/RealtimeMultimodal/report.md>) | 实时多模态交互：流式输入、全双工轮次与在线评测 | topic-research | 2026-10-30 | current |
 | [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) | 推理模型：测试时计算怎样变成更可靠的解题 | — | — | — |
 | [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | LLM 后训练中的强化学习：轨迹从哪里来，策略何时更新 | research | 2026-10-23 | current |
+| [LLM/SyntheticData/report.md](<../LLM/SyntheticData/report.md>) | 合成数据与自训练：模型生成的数据怎样变成训练信号？ | topic-research | 2026-10-30 | current |
+| [LLM/TestTimeAdaptation/report.md](<../LLM/TestTimeAdaptation/report.md>) | 测试时学习与适应：模型在使用时如何更新 | topic-research | 2026-10-30 | current |
 | [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 训练数据策展：筛选、去重与配比如何改变训练结果 | research | 2026-10-24 | current |
 | [LLM/VLM/report.md](<../LLM/VLM/report.md>) | 视觉语言模型：视觉表示如何进入语言模型 | — | — | — |
 
@@ -132,4 +139,4 @@
 | --- | --- | --- | --- | --- |
 | [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) | 具身预测规划：执行前怎样筛选想象中的动作？ | — | — | — |
 | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | EmbodiedVLA 技术专题调研 | — | — | — |
-| [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | WorldModels 技术专题调研 | topic-research | 2026-10-29 | needs-review |
+| [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | WorldModels 技术专题调研 | topic-research | 2026-10-30 | needs-review |

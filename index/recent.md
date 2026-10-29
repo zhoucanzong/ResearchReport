@@ -11,26 +11,26 @@
 
 | 条目 | date | 板块 | 专题 |
 | --- | --- | --- | --- |
+| [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 2026-10-30 | WorldModel | WorldModels |
+| [LLM/TestTimeAdaptation/report.md](<../LLM/TestTimeAdaptation/report.md>) | 2026-10-30 | LLM | TestTimeAdaptation |
+| [LLM/SyntheticData/report.md](<../LLM/SyntheticData/report.md>) | 2026-10-30 | LLM | SyntheticData |
+| [LLM/RealtimeMultimodal/report.md](<../LLM/RealtimeMultimodal/report.md>) | 2026-10-30 | LLM | RealtimeMultimodal |
+| [LLM/ModelSafety/report.md](<../LLM/ModelSafety/report.md>) | 2026-10-30 | LLM | ModelSafety |
+| [LLM/MechanisticInterpretability/report.md](<../LLM/MechanisticInterpretability/report.md>) | 2026-10-30 | LLM | MechanisticInterpretability |
+| [LLM/KnowledgeEditing/report.md](<../LLM/KnowledgeEditing/report.md>) | 2026-10-30 | LLM | KnowledgeEditing |
 | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 2026-10-30 | Infra | TrainingInfra |
+| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 2026-10-30 | Infra | SpeculativeDecoding |
 | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 2026-10-30 | Infra | QuantizationEdge |
 | [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | 2026-10-30 | Infra | MoEExecution |
-| [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 2026-10-29 | WorldModel | WorldModels |
+| [Agents/SoftwareEngineeringAgents/report.md](<../Agents/SoftwareEngineeringAgents/report.md>) | 2026-10-30 | Agents | SoftwareEngineeringAgents |
 | [OpenSource/nemotron/report.md](<../OpenSource/nemotron/report.md>) | 2026-10-29 | OpenSource | NemotronLabsDiffusion |
 | [Models/Gemini/report.md](<../Models/Gemini/report.md>) | 2026-10-29 | Models | Gemini |
 | [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 2026-10-29 | LLM | DiffusionLM |
-| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 2026-10-29 | Infra | SpeculativeDecoding |
 | [OpenSource/RSIHub/report.md](<../OpenSource/RSIHub/report.md>) | 2026-10-28 | OpenSource | RSIHub |
 | [OpenSource/REA/report.md](<../OpenSource/REA/report.md>) | 2026-10-28 | OpenSource | REA |
 | [OpenSource/Harness2/report.md](<../OpenSource/Harness2/report.md>) | 2026-10-28 | OpenSource | Harness2 |
 | [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | 2026-10-26 | LLM | DecisionModels |
 | [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) | 2026-10-26 | Agents | ComputerUse |
-| [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) | 2026-10-26 | Agents | AgentSystems |
-| [LLM/OperationsResearch/report.md](<../LLM/OperationsResearch/report.md>) | 2026-10-25 | LLM | OperationsResearch |
-| [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) | 2026-10-25 | LLM | DocumentParsing |
-| [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 2026-10-24 | LLM | TrainingData |
-| [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) | 2026-10-24 | Infra | ServingEvaluation |
-| [Evaluation/ScientificDiscovery/report.md](<../Evaluation/ScientificDiscovery/report.md>) | 2026-10-24 | Evaluation | ScientificDiscovery |
-| [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) | 2026-10-24 | Agents | AgentSecurity |
 
 ## 无 date 元数据（39）
 

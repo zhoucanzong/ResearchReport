@@ -24,6 +24,7 @@
 | 机器人视觉语言动作模型（VLA） | [世界模型怎样把预测变成 VLA 的真实改进？](<EmbodiedVLA/topics/world-model-to-vla-transfer.md>) |
 | 世界模型 | [横切专题：环境动力学与动作条件化](<WorldModels/topics/dynamics-and-action-conditioning.md>) |
 | 世界模型 | [横切专题：不可比性清单（评测碎片化）](<WorldModels/topics/incomparability-checklist.md>) |
+| 世界模型 | [交互式视频世界模型：控制接口、状态记忆与可用证据](<WorldModels/topics/interactive-world-models.md>) |
 | 世界模型 | [横切专题：世界模型作训练 / 评测环境](<WorldModels/topics/world-model-as-env.md>) |
 
 [查看研究专题与分析分册](<../index/by-topic.md>)
@@ -34,7 +35,7 @@
 | :-- | :-- | --: |
 | **具身预测规划** | [具身预测规划：执行前怎样筛选想象中的动作？](<EmbodiedPlanning/report.md>) | 54 行 |
 | **机器人视觉语言动作模型（VLA）** | [EmbodiedVLA 技术专题调研](<EmbodiedVLA/report.md>) | 571 行 |
-| **世界模型** | [WorldModels 技术专题调研](<WorldModels/report.md>) | 524 行 |
+| **世界模型** | [WorldModels 技术专题调研](<WorldModels/report.md>) | 526 行 |
 
 ## 📎 子文档
 
@@ -76,7 +77,7 @@
 </details>
 
 <details>
-<summary><b>世界模型</b>（16 份）</summary>
+<summary><b>世界模型</b>（18 份）</summary>
 
 * [papers/1803.10122-world-models.md](<WorldModels/papers/1803.10122-world-models.md>) — 206 行 / 15,578 B
 * [papers/1811.04551-planet.md](<WorldModels/papers/1811.04551-planet.md>) — 204 行 / 13,762 B
@@ -88,11 +89,13 @@
 * [papers/2408.14837-gamengen.md](<WorldModels/papers/2408.14837-gamengen.md>) — 204 行 / 11,946 B
 * [papers/2501.09038-physics-iq.md](<WorldModels/papers/2501.09038-physics-iq.md>) — 206 行 / 12,991 B
 * [papers/2503.21755-vbench-2.md](<WorldModels/papers/2503.21755-vbench-2.md>) — 206 行 / 11,671 B
+* [papers/2610.33169-world-in-context.md](<WorldModels/papers/2610.33169-world-in-context.md>) — 49 行 / 6,018 B
 * [sources/CANDIDATES.md](<WorldModels/sources/CANDIDATES.md>) — 63 行 / 6,676 B
 * [sources/MANIFEST.md](<WorldModels/sources/MANIFEST.md>) — 30 行 / 4,329 B
 * [sources/genie4-official-release.md](<WorldModels/sources/genie4-official-release.md>) — 30 行 / 4,232 B
 * [topics/dynamics-and-action-conditioning.md](<WorldModels/topics/dynamics-and-action-conditioning.md>) — 175 行 / 14,079 B
 * [topics/incomparability-checklist.md](<WorldModels/topics/incomparability-checklist.md>) — 174 行 / 13,264 B
+* [topics/interactive-world-models.md](<WorldModels/topics/interactive-world-models.md>) — 99 行 / 10,808 B
 * [topics/world-model-as-env.md](<WorldModels/topics/world-model-as-env.md>) — 153 行 / 13,254 B
 
 </details>

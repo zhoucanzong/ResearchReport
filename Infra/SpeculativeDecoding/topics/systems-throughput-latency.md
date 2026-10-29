@@ -88,9 +88,10 @@ EAGLE-3 论文 Table 3（SGLang、1×H100、LLaMA-3.1-8B、MT-Bench、链长 3�
 | :-- | :-- | :-- | :-- |
 | **静态 `num_speculative_tokens`** | 按部署手动调 | 早期 vLLM/SGLang | 简单，但无法覆盖整个负载区间 |
 | **按 batch 调树宽/深度** | 小 batch 宽树、大 batch 窄树 | SpecInfer（BS≥4 用 2–3） | 验证成本与覆盖率的平衡 |
+| **按上下文分层选树配置** | cumulative path Top-K entropy 经浅 CART 分层，选择 draft depth / Top-N / JIT graph | [HeteroSpec](../papers/2026.acl-long.589-heterospec.md) | 按 EAGLE-3 轨迹分配上下文策略；不是验证器证明，跨 drafter 迁移待验证 |
 | **按负载调验证预算** | 逐 (request, position) 置信度打分，跨请求竞争 | vLLM adaptive verification | 一套配置覆盖整个负载区间 |
 | **按上下文裁剪 draft** | `draft_context_window` 限制 draft 只看最近 N 个 token | vLLM PR #61261（本 commit 未检出） | 解决“超出训练长度后接受率崩塌” |
-| **变长验证 + ragged verify** | 置信度驱动裁剪，重放更小的 CUDA graph | SGLang DSpark | 把调度变成 wall-clock |
+| **按负载全局分配请求前缀** | 校准 prefix survival 与实测 `SPS(B)` 联合选 batch 中每请求的 verify length，并在吞吐收益转负时早停 | [DSpark](../papers/2607.05147-dspark.md) | 将置信度映射到系统吞吐；早停最优性依赖目标单峰，不能简化成静态置信阈值 |
 | **成本感知建树** | 把 GPU 型号、batch 纳入效用最大化 | CAST（ICLR 2026，`[二手]`） | EAGLE-2 在 batch=8 的 CNN/DM 上 0.84× 的反例 |
 
 ---
@@ -147,6 +148,14 @@ Transformer 路线可把树节点 KV 视作临时扩展：共同前缀复用，�
 | SpecInfer / Sequoia / SpecLA 论文 | 拓扑 mask、硬件树预算、recurrent state parallelization 的算法/论文级机制 | 论文或官方摘要里的 kernel 方案不等于当前 vLLM/SGLang 主线已有同样实现；每个源码结论需要另钉 commit |
 
 这一区分很重要：**论文层**解释目标算子应怎样利用树结构，**源码层**说明特定框架版本实际走了哪些 proposer/verifier/kernel 路径，**运行层**才回答特定 GPU、batch 和序列长度下是否更快。本专题目前有论文级 stateful kernel 精读和两个框架的静态路径核验，但没有进行 GPU benchmark，也没有对两套框架的完整 attention backend/CUDA Graph 层做共同版本的算子对照。
+
+### 稀疏 KV 层级：验证中的多个 query 怎样共享历史读取
+
+[Adaptive DHiSparse 精读](../papers/2610.13708-adaptive-dhisparse.md)将投机验证接到稀疏注意力的分层 KV 存储。模型 indexer 先为每个 query 选出有序历史位置；resident/host resolver 决定这些行当前存在哪里。多 query 验证时，系统合并同一请求的缺失行并只从 host 取一次，但每个 query 仍使用各自选择顺序与因果 mask。被拒绝的临时分支不提交，只有 target 接受的 prefix 进入持久历史。
+
+这与 [SpecStream](../papers/2609.33184-specstream.md) 是两种 offload 机制：SpecStream 流式搬运 full-attention 历史，并用搬运期间 GPU 空档并发起草；Adaptive DHiSparse 只恢复 sparse indexer 选中的 KV 行，并随 HBM 负载保留或回收 optional history。它与 [H-Spec](../papers/2609.24197-hspec.md) 的靶点也不同：H-Spec 去掉块 drafter 自己的一份 KV 副本，DHiSparse 管 target 历史行的 GPU/host residency。三者都谈 KV，但分别优化传输、草稿缓存和稀疏历史驻留，不能合并成“KV offload”。
+
+该论文还展示系统交互的反例：在 100K GLM-5.3、并发 128 时，投机提高每 GPU 输出；到并发 256，因 draft 与验证 staging 占用使可接纳 session 减少，论文报告总输出与非投机 adaptive 方案几乎相同、TTFT 更高。也就是说，投机减少每个活跃请求的解码轮次，未必在 admission 已受限时提高服务总吞吐。[Adaptive DHiSparse v1，§3–§5](../papers/2610.13708-adaptive-dhisparse.md)
 
 ---
 

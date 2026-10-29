@@ -241,6 +241,12 @@
 | --- | --- | --- | --- | --- |
 | [Models/Kling/report.md](<../Models/Kling/report.md>) | 快手 Kling 视频生成研究报告 | — | — | — |
 
+## KnowledgeEditing (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM/KnowledgeEditing/report.md](<../LLM/KnowledgeEditing/report.md>) | 知识编辑与机器遗忘：更新、隔离还是移除模型信息？ | topic-research | 2026-10-30 | current |
+
 ## LLaMA (1)
 
 | 条目 | 标题 | type | date | status |
@@ -264,6 +270,12 @@
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [AI4Science/MathematicalDiscovery/report.md](<../AI4Science/MathematicalDiscovery/report.md>) | 可验证的数学与算法发现：证明、程序搜索和方程恢复 | research | 2026-10-23 | completed |
+
+## MechanisticInterpretability (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM/MechanisticInterpretability/report.md](<../LLM/MechanisticInterpretability/report.md>) | 机制可解释性：从特征猜想走向可检验的计算机制 | topic-research | 2026-10-30 | current |
 
 ## MiMo (1)
 
@@ -300,6 +312,12 @@
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | MoE 执行：从专家路由到跨设备回收 | repo-research | 2026-10-30 | current |
+
+## ModelSafety (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM/ModelSafety/report.md](<../LLM/ModelSafety/report.md>) | 大语言模型安全：攻击面、行为防御与评测边界 | topic-research | 2026-10-30 | current |
 
 ## Nemotron (1)
 
@@ -367,6 +385,12 @@
 | --- | --- | --- | --- | --- |
 | [OpenSource/RSIHub/report.md](<../OpenSource/RSIHub/report.md>) | RSIHub：把"自进化"拆成可组合阶段与不可变评测 | repo-research | 2026-10-28 | completed |
 
+## RealtimeMultimodal (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM/RealtimeMultimodal/report.md](<../LLM/RealtimeMultimodal/report.md>) | 实时多模态交互：流式输入、全双工轮次与在线评测 | topic-research | 2026-10-30 | current |
+
 ## ReasoningModels (1)
 
 | 条目 | 标题 | type | date | status |
@@ -403,17 +427,35 @@
 | --- | --- | --- | --- | --- |
 | [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) | 单细胞扰动预测：从“配对细胞”转向“群体响应” | research | 2026-10-23 | completed |
 
+## SoftwareEngineeringAgents (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Agents/SoftwareEngineeringAgents/report.md](<../Agents/SoftwareEngineeringAgents/report.md>) | 软件工程 Agent：从理解 issue 到验证 patch | topic-research | 2026-10-30 | current |
+
 ## SpeculativeDecoding (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-29 | needs-review |
+| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-30 | needs-review |
 
 ## StabilityAI (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [Models/StabilityAI/report.md](<../Models/StabilityAI/report.md>) | Stability AI / Black Forest Labs 图像生成模型系列研究报告 | — | — | — |
+
+## SyntheticData (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM/SyntheticData/report.md](<../LLM/SyntheticData/report.md>) | 合成数据与自训练：模型生成的数据怎样变成训练信号？ | topic-research | 2026-10-30 | current |
+
+## TestTimeAdaptation (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM/TestTimeAdaptation/report.md](<../LLM/TestTimeAdaptation/report.md>) | 测试时学习与适应：模型在使用时如何更新 | topic-research | 2026-10-30 | current |
 
 ## TrainingData (1)
 
@@ -449,7 +491,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | WorldModels 技术专题调研 | topic-research | 2026-10-29 | needs-review |
+| [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | WorldModels 技术专题调研 | topic-research | 2026-10-30 | needs-review |
 
 ## sglang (1)
 

@@ -24,7 +24,7 @@
 | Nemotron-Labs-Diffusion | 交叉引用 | 联合训练 AR 与 diffusion 模式并研究 self-speculation，主要交叉点已属于 [投机解码](../../../Infra/SpeculativeDecoding/report.md)；只在新专题说明边界。 |
 | SEDD、MDLM | 背景引用 | 用于理解 score-entropy 与 masked diffusion 的前史，不扩成历史综述。 |
 | DFlash、DFlare、DDTree、DARTree、PRESTO | 交叉到投机解码专题 | 扩散模型为 AR target 提出并行 draft，target 决定最终接受序列；精读与设计关系见[扩散交叉分析](../../../Infra/SpeculativeDecoding/topics/diffusion-drafters.md)。 |
-| Spiffy | 交叉到投机解码专题 | 在 standalone dLLM 上对未来去噪状态自投机；保持的是原 dLLM 分布，不是 AR 分布。 |
+| Spiffy、PV-Decoding | 交叉到投机解码专题 | 两者都加速 standalone dLLM 自身：Spiffy 以精确状态匹配保持原模型分布；PV-Decoding 用暂填候选和逐级置信验证减少解码轮数，但不保持轨迹或分布。精读见 [投机解码专题](../../../Infra/SpeculativeDecoding/topics/diffusion-drafters.md)。 |
 | PoE-Bridge | 交叉到投机解码专题 | DLM proposal + AR 目标的有限采样质量桥接；论文承认有限预算下不严格无损。 |
 | DSpark、BASTION | 候选，未精读 | 仅留作后续筛选线索；不以题录或产品材料替代方法分析。 |
 | “Top 10 Open Challenges for Diffusion LMs” | outlook only | 观点/议程类材料可帮助列未解问题，但不能替代算法机制或受控实验原文。 |

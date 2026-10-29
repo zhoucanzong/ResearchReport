@@ -233,6 +233,8 @@ AutoGen 的“conversation programming”把可对话的 Agent、工具和人类
 
 回到“拟草稿但不发送”：若创建草稿的调用超时，Agent 不能仅凭没收到结果就再创建一份；若工具回滚只能恢复本地文件，也不能假设能撤回已发送的邮件。**恢复能力由模型策略、工具语义、可观测性和环境事务性共同决定。**
 
+这里讨论的是错误发生后的诊断、回滚和策略修正。更上游的可靠性问题——关键状态是否被主动取回、明确计划是否兑现、跨 mission 状态能否在授权和证据审查后保留——见[长程 Agent 可靠性综合](topics/long-horizon-reliability.md)。相关论文是 CivBench 和 Argus；两者分别研究交互行为测量与持久化 runtime，不构成同一基准上的方法对比。
+
 ## 安全与授权：看见内容、使用内容、获准行动是不同的事
 
 Agent 处理邮件、网页和文档时，外部内容可能既是证据，也是攻击者试图操纵动作的载体。把内容解析出来不代表它有权限更改任务；来源记录也不能保证来源真实。
@@ -309,7 +311,8 @@ AgentBench 将交互式评估形式化为状态、动作、转移、奖励、任
 
 8. 读 [AgentBench](https://arxiv.org/abs/2308.03688v3) §§2–4，辨析多环境基准如何定义任务与失败。
 9. 顺读 AgentRx → AgentRewind → Fission-GRPO，再读 [Oracle Integrity](papers/2610.16067-oracle-integrity.md)：区分诊断、状态恢复、训练期纠错和评测器审计。
-10. 最后看[电脑使用 Agent](../ComputerUse/report.md)与[工具 Agent 安全](../AgentSecurity/report.md)，分别深入 GUI/CLI 长程交付和提示注入/授权机制。
+10. 阅读[长程 Agent 可靠性综合](topics/long-horizon-reliability.md)，比较状态监控、计划兑现、持久状态和验证门控。
+11. 按动作环境分支：仓库级代码修复见[软件工程 Agent](../SoftwareEngineeringAgents/report.md)；GUI/桌面工作流见[电脑使用 Agent](../ComputerUse/report.md)；提示注入与授权机制见[工具 Agent 安全](../AgentSecurity/report.md)。
 
 ## 主要原文与专题入口
 

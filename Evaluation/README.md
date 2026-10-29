@@ -13,10 +13,20 @@
 ![Entries](https://img.shields.io/badge/Entries-2-3f51b5?style=flat-square)
 ![Panel](https://img.shields.io/badge/Panel-Evaluation-9e9e9e?style=flat-square)
 
+## 专题内分析
+
+| 所属报告 | 分册入口 |
+| --- | --- |
+| 科学发现的评测方法 | [科学 Agent 的评测证据：基准能否跟上，实验是否真正闭环？](<ScientificDiscovery/topics/scientific-agent-evidence.md>) |
+
+[查看研究专题与分析分册](<../index/by-topic.md>)
+
+## 主报告
+
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
 | **评测科学** | [评测科学：分数何时支持“模型更好”或“能力泛化”](<EvaluationScience/report.md>) | 123 行 |
-| **科学发现的评测方法** | [AI for Science：从回顾性基准到闭环实验，怎样判断“发现”](<ScientificDiscovery/report.md>) | 69 行 |
+| **科学发现的评测方法** | [AI for Science：从回顾性基准到闭环实验，怎样判断“发现”](<ScientificDiscovery/report.md>) | 71 行 |
 
 ## 📎 子文档
 
@@ -32,10 +42,11 @@
 </details>
 
 <details>
-<summary><b>科学发现的评测方法</b>（2 份）</summary>
+<summary><b>科学发现的评测方法</b>（3 份）</summary>
 
 * [papers/2024-nature-closed-loop-transfer.md](<ScientificDiscovery/papers/2024-nature-closed-loop-transfer.md>) — 27 行 / 4,241 B
 * [papers/2412.12347-autoscilab.md](<ScientificDiscovery/papers/2412.12347-autoscilab.md>) — 23 行 / 3,733 B
+* [topics/scientific-agent-evidence.md](<ScientificDiscovery/topics/scientific-agent-evidence.md>) — 73 行 / 10,279 B
 
 </details>
 

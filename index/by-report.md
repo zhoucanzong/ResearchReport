@@ -7,13 +7,13 @@
 
 ---
 
-共 **77** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter；「板块」列由 [`scripts/panels.json`](<../scripts/panels.json>) 驱动。
+共 **84** 个条目（`report.md`）。「行数」为正文行数，已剔除 front-matter；「板块」列由 [`scripts/panels.json`](<../scripts/panels.json>) 驱动。
 
 | 条目 | 板块 | 路径 | 子报告数 | 行数 | 日期 |
 | --- | --- | --- | --: | --: | --- |
 | 抗生素发现 | AI4Science | [AI4Science/AntibioticDiscovery/report.md](<../AI4Science/AntibioticDiscovery/report.md>) | 6 | 58 | 2026-10-23 |
 | 天文图像异常发现 | AI4Science | [AI4Science/Astronomy/report.md](<../AI4Science/Astronomy/report.md>) | 3 | 59 | 2026-10-23 |
-| 自主实验室 | AI4Science | [AI4Science/AutonomousLabs/report.md](<../AI4Science/AutonomousLabs/report.md>) | 2 | 127 | 2026-10-23 |
+| 自主实验室 | AI4Science | [AI4Science/AutonomousLabs/report.md](<../AI4Science/AutonomousLabs/report.md>) | 2 | 129 | 2026-10-23 |
 | 化学反应条件优化 | AI4Science | [AI4Science/Chemistry/report.md](<../AI4Science/Chemistry/report.md>) | 2 | 89 | 2026-10-23 |
 | 生成式材料设计 | AI4Science | [AI4Science/MaterialsDiscovery/report.md](<../AI4Science/MaterialsDiscovery/report.md>) | 4 | 76 | 2026-10-23 |
 | 数学与算法发现 | AI4Science | [AI4Science/MathematicalDiscovery/report.md](<../AI4Science/MathematicalDiscovery/report.md>) | 6 | 78 | 2026-10-23 |
@@ -31,27 +31,34 @@
 | 图像生成 | AIGC | [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) | 2 | 233 | — |
 | 视频生成 | AIGC | [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) | 2 | 209 | — |
 | 工具 Agent 安全 | Agents | [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) | 4 | 67 | 2026-10-24 |
-| 智能体系统 | Agents | [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) | 12 | 322 | 2026-10-26 |
+| 智能体系统 | Agents | [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) | 15 | 325 | 2026-10-26 |
 | 电脑使用 Agent | Agents | [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) | 2 | 100 | 2026-10-26 |
+| 软件工程 Agent | Agents | [Agents/SoftwareEngineeringAgents/report.md](<../Agents/SoftwareEngineeringAgents/report.md>) | 9 | 104 | 2026-10-30 |
 | 评测科学 | Evaluation | [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) | 5 | 123 | 2026-10-23 |
-| 科学发现的评测方法 | Evaluation | [Evaluation/ScientificDiscovery/report.md](<../Evaluation/ScientificDiscovery/report.md>) | 2 | 69 | 2026-10-24 |
+| 科学发现的评测方法 | Evaluation | [Evaluation/ScientificDiscovery/report.md](<../Evaluation/ScientificDiscovery/report.md>) | 3 | 71 | 2026-10-24 |
 | KV Cache 与预填充／解码分离 | Infra | [Infra/KVCachePD/report.md](<../Infra/KVCachePD/report.md>) | 5 | 84 | 2026-10-23 |
 | MoE 执行与专家通信 | Infra | [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | 3 | 95 | 2026-10-30 |
 | 模型量化与边缘部署 | Infra | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 9 | 244 | 2026-10-30 |
 | 在线推理服务与评测 | Infra | [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) | 3 | 81 | 2026-10-24 |
-| 投机解码 | Infra | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 53 | 533 | 2026-10-29 |
+| 投机解码 | Infra | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 68 | 542 | 2026-10-30 |
 | 分布式训练基础设施 | Infra | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 3 | 295 | 2026-10-30 |
 | 模型对齐与后训练 | LLM | [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) | 0 | 128 | — |
 | 决策模型（Decision Models） | LLM | [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | 18 | 242 | 2026-10-26 |
 | 扩散语言模型 | LLM | [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) | 10 | 96 | 2026-10-29 |
 | OCR 与文档解析 | LLM | [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) | 23 | 122 | 2026-10-25 |
+| 知识编辑与机器遗忘 | LLM | [LLM/KnowledgeEditing/report.md](<../LLM/KnowledgeEditing/report.md>) | 7 | 84 | 2026-10-30 |
 | 长上下文 | LLM | [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 0 | 176 | — |
+| 机制可解释性 | LLM | [LLM/MechanisticInterpretability/report.md](<../LLM/MechanisticInterpretability/report.md>) | 4 | 131 | 2026-10-30 |
 | 混合专家模型（MoE） | LLM | [LLM/MoE/report.md](<../LLM/MoE/report.md>) | 0 | 141 | — |
+| 模型安全与越狱评测 | LLM | [LLM/ModelSafety/report.md](<../LLM/ModelSafety/report.md>) | 9 | 106 | 2026-10-30 |
 | 大模型辅助运筹建模与求解 | LLM | [LLM/OperationsResearch/report.md](<../LLM/OperationsResearch/report.md>) | 9 | 90 | 2026-10-25 |
 | 检索增强生成（RAG） | LLM | [LLM/RAG/report.md](<../LLM/RAG/report.md>) | 0 | 153 | — |
+| 实时多模态交互 | LLM | [LLM/RealtimeMultimodal/report.md](<../LLM/RealtimeMultimodal/report.md>) | 7 | 96 | 2026-10-30 |
 | 推理模型与测试时计算 | LLM | [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) | 0 | 152 | — |
 | LLM 后训练中的强化学习 | LLM | [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) | 10 | 109 | 2026-10-23 |
-| 训练数据策展 | LLM | [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 6 | 73 | 2026-10-24 |
+| 合成数据与自训练 | LLM | [LLM/SyntheticData/report.md](<../LLM/SyntheticData/report.md>) | 9 | 111 | 2026-10-30 |
+| 测试时学习与适应 | LLM | [LLM/TestTimeAdaptation/report.md](<../LLM/TestTimeAdaptation/report.md>) | 4 | 84 | 2026-10-30 |
+| 训练数据策展 | LLM | [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) | 6 | 75 | 2026-10-24 |
 | 视觉语言模型（VLM） | LLM | [LLM/VLM/report.md](<../LLM/VLM/report.md>) | 3 | 131 | — |
 | 阿里通义生成模型 | Models | [Models/Alibaba-Gen/report.md](<../Models/Alibaba-Gen/report.md>) | 0 | 118 | — |
 | 字节跳动生成模型 | Models | [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) | 0 | 192 | — |
@@ -87,5 +94,5 @@
 | vLLM | OpenSource | [OpenSource/vllm/report.md](<../OpenSource/vllm/report.md>) | 5 | 294 | 2026-10-16 |
 | 具身预测规划 | WorldModel | [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) | 2 | 54 | — |
 | 机器人视觉语言动作模型（VLA） | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 23 | 571 | — |
-| 世界模型 | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 16 | 524 | 2026-10-29 |
-| **合计** | — | — | **312** | **20,206** | — |
+| 世界模型 | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 18 | 526 | 2026-10-30 |
+| **合计** | — | — | **382** | **20,942** | — |

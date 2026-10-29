@@ -223,7 +223,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | WorldModels 技术专题调研 | topic-research | 2026-10-29 | needs-review |
+| [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | WorldModels 技术专题调研 | topic-research | 2026-10-30 | needs-review |
 
 ## 具身预测规划 (1)
 
@@ -260,6 +260,12 @@
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [AIGC/ControllableGen/report.md](<../AIGC/ControllableGen/report.md>) | 可控生成（Controllable Generation）技术研究报告 | — | — | — |
+
+## 合成数据与自训练 (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM/SyntheticData/report.md](<../LLM/SyntheticData/report.md>) | 合成数据与自训练：模型生成的数据怎样变成训练信号？ | topic-research | 2026-10-30 | current |
 
 ## 图像生成 (1)
 
@@ -303,6 +309,12 @@
 | --- | --- | --- | --- | --- |
 | [Models/ByteDance-Gen/report.md](<../Models/ByteDance-Gen/report.md>) | ByteDance Seed 生成模型：从双语图像生成到多模态视听创作 | — | — | — |
 
+## 实时多模态交互 (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM/RealtimeMultimodal/report.md](<../LLM/RealtimeMultimodal/report.md>) | 实时多模态交互：流式输入、全双工轮次与在线评测 | topic-research | 2026-10-30 | current |
+
 ## 工具 Agent 安全 (1)
 
 | 条目 | 标题 | type | date | status |
@@ -331,7 +343,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-29 | needs-review |
+| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-30 | needs-review |
 
 ## 抗生素发现 (1)
 
@@ -363,6 +375,12 @@
 | --- | --- | --- | --- | --- |
 | [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) | Agent 系统综述：从工具调用到可验证的长程闭环 | — | 2026-10-26 | — |
 
+## 机制可解释性 (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM/MechanisticInterpretability/report.md](<../LLM/MechanisticInterpretability/report.md>) | 机制可解释性：从特征猜想走向可检验的计算机制 | topic-research | 2026-10-30 | current |
+
 ## 机器人视觉语言动作模型（VLA） (1)
 
 | 条目 | 标题 | type | date | status |
@@ -375,6 +393,12 @@
 | --- | --- | --- | --- | --- |
 | [LLM/RAG/report.md](<../LLM/RAG/report.md>) | 检索增强生成：检索误差怎样传到答案 | — | — | — |
 
+## 模型安全与越狱评测 (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM/ModelSafety/report.md](<../LLM/ModelSafety/report.md>) | 大语言模型安全：攻击面、行为防御与评测边界 | topic-research | 2026-10-30 | current |
+
 ## 模型对齐与后训练 (1)
 
 | 条目 | 标题 | type | date | status |
@@ -386,6 +410,12 @@
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 模型量化与边缘部署研究报告 | topic-research | 2026-10-30 | current |
+
+## 测试时学习与适应 (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM/TestTimeAdaptation/report.md](<../LLM/TestTimeAdaptation/report.md>) | 测试时学习与适应：模型在使用时如何更新 | topic-research | 2026-10-30 | current |
 
 ## 混合专家模型（MoE） (1)
 
@@ -404,6 +434,12 @@
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
 | [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) | 电脑使用 Agent：从看见界面到交付完整工作流 | research | 2026-10-26 | current |
+
+## 知识编辑与机器遗忘 (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [LLM/KnowledgeEditing/report.md](<../LLM/KnowledgeEditing/report.md>) | 知识编辑与机器遗忘：更新、隔离还是移除模型信息？ | topic-research | 2026-10-30 | current |
 
 ## 神经活动表征与解码 (1)
 
@@ -453,6 +489,12 @@
 | --- | --- | --- | --- | --- |
 | [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) | 评测科学：分数何时支持“模型更好”或“能力泛化” | research | 2026-10-23 | current |
 
+## 软件工程 Agent (1)
+
+| 条目 | 标题 | type | date | status |
+| --- | --- | --- | --- | --- |
+| [Agents/SoftwareEngineeringAgents/report.md](<../Agents/SoftwareEngineeringAgents/report.md>) | 软件工程 Agent：从理解 issue 到验证 patch | topic-research | 2026-10-30 | current |
+
 ## 长上下文 (1)
 
 | 条目 | 标题 | type | date | status |
@@ -471,15 +513,18 @@
 | --- | --- | --- | --- | --- |
 | [AIGC/AudioGen/report.md](<../AIGC/AudioGen/report.md>) | 音频与音乐生成：从压缩表示到可控长序列 | — | — | — |
 
-## 专题内分析分册（20）
+## 专题内分析分册（24）
 
 | 所属报告 | 分册入口 |
 | --- | --- |
 | [智能体系统](<../Agents/AgentSystems/report.md>) | [长程 Agent 的执行恢复：诊断、回滚与学习修正](<../Agents/AgentSystems/topics/long-horizon-execution-recovery.md>) |
+| [智能体系统](<../Agents/AgentSystems/report.md>) | [长程 Agent 可靠性：从看见状态到保留经过验证的进展](<../Agents/AgentSystems/topics/long-horizon-reliability.md>) |
+| [科学发现的评测方法](<../Evaluation/ScientificDiscovery/report.md>) | [科学 Agent 的评测证据：基准能否跟上，实验是否真正闭环？](<../Evaluation/ScientificDiscovery/topics/scientific-agent-evidence.md>) |
 | [模型量化与边缘部署](<../Infra/QuantizationEdge/report.md>) | [量化感知适配与原生低精度训练：模型从哪里开始量化？](<../Infra/QuantizationEdge/topics/low-precision-training.md>) |
 | [投机解码](<../Infra/SpeculativeDecoding/report.md>) | [横切专题①：投机解码的算法家族谱系](<../Infra/SpeculativeDecoding/topics/algorithm-families.md>) |
 | [投机解码](<../Infra/SpeculativeDecoding/report.md>) | [扩散语言模型与投机解码：草稿、验证和生成目标](<../Infra/SpeculativeDecoding/topics/diffusion-drafters.md>) |
 | [投机解码](<../Infra/SpeculativeDecoding/report.md>) | [横切专题：草稿从哪里来，怎样训练到会被接受](<../Infra/SpeculativeDecoding/topics/draft-side-and-training.md>) |
+| [投机解码](<../Infra/SpeculativeDecoding/report.md>) | [草稿位置与验证上下文为何需要不同预算](<../Infra/SpeculativeDecoding/topics/heterogeneous-budget-allocation.md>) |
 | [投机解码](<../Infra/SpeculativeDecoding/report.md>) | [横切专题③：系统实现与吞吐—延迟权衡](<../Infra/SpeculativeDecoding/topics/systems-throughput-latency.md>) |
 | [投机解码](<../Infra/SpeculativeDecoding/report.md>) | [横切专题②：验证、接受率与无损性的适用条件](<../Infra/SpeculativeDecoding/topics/verification-acceptance.md>) |
 | [大模型辅助运筹建模与求解](<../LLM/OperationsResearch/report.md>) | [运筹建模与求解评测：正确性、反馈与基准边界](<../LLM/OperationsResearch/topics/evaluation-protocols.md>) |
@@ -494,4 +539,5 @@
 | [机器人视觉语言动作模型（VLA）](<../WorldModel/EmbodiedVLA/report.md>) | [世界模型怎样把预测变成 VLA 的真实改进？](<../WorldModel/EmbodiedVLA/topics/world-model-to-vla-transfer.md>) |
 | [世界模型](<../WorldModel/WorldModels/report.md>) | [横切专题：环境动力学与动作条件化](<../WorldModel/WorldModels/topics/dynamics-and-action-conditioning.md>) |
 | [世界模型](<../WorldModel/WorldModels/report.md>) | [横切专题：不可比性清单（评测碎片化）](<../WorldModel/WorldModels/topics/incomparability-checklist.md>) |
+| [世界模型](<../WorldModel/WorldModels/report.md>) | [交互式视频世界模型：控制接口、状态记忆与可用证据](<../WorldModel/WorldModels/topics/interactive-world-models.md>) |
 | [世界模型](<../WorldModel/WorldModels/report.md>) | [横切专题：世界模型作训练 / 评测环境](<../WorldModel/WorldModels/topics/world-model-as-env.md>) |

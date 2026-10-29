@@ -130,11 +130,22 @@ T>0 的 point-mass 接受概率 \(p(d)\) 不等于“候选是否是 target argm
 | 问题层 | 要回答的问题 | 代表阅读 | 保证/边界 |
 |---|---|---|---|
 | **树形设计** | 草稿候选如何组织、节点预算给哪些分支、树 mask/KV 怎样表达？ | [SpecInfer](../papers/2305.09781-specinfer.md) 建多 SSM token tree；[Sequoia](../papers/2402.12374-sequoia.md) 用动态规划选节点预算内的树，并按实测硬件成本选规模；[EAGLE 系列](../papers/2401.15077-eagle-series.md) 按上下文动态扩展 | 建树提高候选覆盖；树拓扑本身不证明输出等价，也不保证 wall-clock 更快。 |
+| **候选估值/预筛选** | 已构造的树中哪些分支值得送给 target？ | [ValuSpec](../papers/2610.31338-valuspec.md) 用 target 贪心轨迹校准轻量分支评分器，验证前过滤候选 | 改变 target 需要处理的候选树，不改变接受规则；其输出相同保证限于 T=0 greedy。 |
 | **遍历顺序** | 已经算出整棵树的 target logits 后，先看哪条候选、拒绝时保留什么？ | [Traversal Verification](../papers/2505.12398-traversal-verification.md) 叶到根考察路径，并更新剩余兄弟分支 | 论文在其自回归采样树定义下证明严格分布等价；T=0 时作者认为没有相对收益，遍历开销也会吃掉部分吞吐收益。 |
 | **接受判据与概率回补** | 一个节点或整条路径何时提交，拒绝后的 target 概率质量如何恢复？ | 单链推导仍见本页 §2–4；树/序列级扩展看 [HSD](../papers/2601.05724-hsd.md)、[RheoSampling](../papers/2609.21827-rheosampling.md) | HSD/RheoSampling 改的是可访问树上的质量平衡或概率职责；其证明需连同各自候选树和条件读取，不能用一条单链公式替代。 |
+| **固定树 verifier 上限** | 树支持固定时，任何 exact path verifier 最多能接受多少、上限由什么决定？ | [Exit-Guided Speculative Decoding](../papers/2610.11750-exit-guided-tree-verification.md) 用 target exit law 计算树覆盖 ceiling，并提出 TEV 直接实现该 law | 上限受既有树覆盖限制；TEV 改执行延迟，ExitTrain 改未来树覆盖；不能将两者都称为“更强 verifier”。 |
+| **局部接受证书** | 给定 target 与 draft 的距离，某个贪心/放宽/top-m 规则何时可证明接受？ | [When Is a Draft Accepted?](../papers/2606.30265-when-is-draft-accepted.md) 对单 token 与 greedy tree top-m 推导 KL certificate | 证明是局部规则的条件证书，不是 T>0 下序列输出分布等价。 |
 | **近似风险预算** | 若允许接受 target 不会 greedy 选择的 token，怎样限制偏离？ | [Approximate Speculative Decoding](../papers/2608.03447-approximate-sd.md) 设局部 regret gate、块内上限和跨轮 request ledger | 这是有预算的近似 greedy decoding，不保持 target 输出轨迹或分布；local logit regret 不是语义错误概率或完整序列 KL 上界。 |
 
-一个简洁的阅读顺序是：先用 SpecInfer 理解树如何进入一次 target 前向，再对照 Sequoia 看预算和硬件如何改变树形；接着读 Traversal Verification 理解遍历顺序如何影响整段接受；最后回到 HSD/RheoSampling 对照严格概率回补，并把 ASD 单独放在有损 verifier 一栏。树的构造、遍历的顺序、接受规则以及算子成本必须分别判断。
+一个简洁的阅读顺序是：先用 SpecInfer 理解树如何进入一次 target 前向，再对照 Sequoia 看预算和硬件如何改变树形；随后用 ValuSpec 看候选树构造完成后的 target 感知筛枝，读 Traversal Verification 了解遍历顺序，再读 Exit-Guided 理解固定树的接受上限和 TEV；最后用 HSD/RheoSampling 对照严格概率回补，并用 When-Is 理解贪心/放宽规则的局部 KL 证书。把 Approximate SD 单独放在有损 verifier 一栏。树的构造、预筛、遍历、接受上限、局部证书与算子成本必须分别判断。
+
+### 候选筛枝与接受判据不是同一层
+
+ValuSpec 在树已经由检索或 EAGLE-3 构造之后，用 target greedy 校准过的轻量估值器过滤低价值分支，再运行常规 target greedy 验证。它靠“target 仍作最终判定”保持 output-identical greedy，不是新的概率回补规则；该方法主要解决验证计算冗余，主要实验是 recurring-workload、T=0 设置。[ValuSpec 精读](../papers/2610.31338-valuspec.md)
+
+When Is a Draft Accepted? 则不增加候选过滤器，也不提出新的 target verifier；它在给定目标与草稿分布的 KL 距离条件下，为严格/放宽 greedy 以及 greedy tree top-m 接受规则给出局部证书。它的 certificate 不能替代标准拒绝采样的序列分布证明。详情见[精读](../papers/2606.30265-when-is-draft-accepted.md)。
+
+Exit-Guided 进一步问：当树已固定，是否能换一个 exact verifier 接受更多 token？论文的回答是不存在超过 target coverage 的 exact path verifier；Predraw-and-follow 与 sequential residual 已达到同一固定树上限。TEV 用节点 exit mass 直接采样，争取更低的 verifier-stage 计算成本；ExitTrain 则以同一 exit mass 训练 drafter，让之后的树更覆盖 target 轨迹。它与 When-Is 的 KL 局部证书不同：前者描述“树已经给定时的 exact stochastic path law 与可达上限”，后者描述“某个 deterministic local rule 在分布接近时何时会接受”。[Exit-Guided 精读](../papers/2610.11750-exit-guided-tree-verification.md)
 
 ## 6. “无损”需要区分保证与经验
 

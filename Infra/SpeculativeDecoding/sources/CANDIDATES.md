@@ -28,6 +28,7 @@
 | [DARTree](../papers/2608.13524-dartree.md) | 把扩散块草稿的校正从一条链扩展到多条条件分支，并用分层并行扩展 + 延迟 top-B 替代逐节点 heap；代码可固定，适合解释 2026 diffusion draft 的树化。 |
 | [DFlash](../papers/2602.06036-dflash.md) | 用 target KV 条件化块扩散 draft，建立“扩散并行提议、AR target 验收”的主线。 |
 | [DFlare](../papers/2606.02091-dflare.md) | 为每个 draft layer 学不同的 target feature 融合权重，研究草稿容量扩大的收益与训练成本。 |
+| [DFlow](../papers/2609.06498-dflow.md) | 将 verifier 在 rejected suffix 上已算出的 hidden states 跨轮送回草稿器；机制是信息复用而非多层融合或训练 loss 重加权，并以多轮 self-conditioning 训练模拟推理状态。 |
 | [DDTree](../papers/2604.12989-ddtree.md) | 将单次块扩散的逐位置候选组织成树，并按 draft surrogate 目标配置 target 验证预算。 |
 | [PRESTO](../papers/2607.22634-presto.md) | 揭示扩散边际分数与 AR 前缀验证的错位，用轻量 prefix signal 改善树排序。 |
 | [Spiffy](../papers/2509.18085-spiffy.md) | 对 standalone dLLM 自己的未来 block state 做图式投机，并证明保留该 dLLM 的输出分布。 |
@@ -49,7 +50,21 @@
 | [TLT / Adaptive Drafter](../papers/2511.16665-tlt-adaptive-drafter.md) | 在 RL rollout 长尾空档在线更新 draft，把草稿训练时机与 rollout 调度结合。 |
 | [Acceptance-Aware Training](../papers/2609.24150-acceptance-aware-training.md) | 分别以 EAL/WTV 直接优化 greedy 与 sampling 的固定窗口接受长度。 |
 | [EDR](../papers/2610.10411-expected-decoding-rounds.md) | 用状态访问概率直接优化全序列期望验证轮数，区别于 window-local 接受目标。 |
+| [D-PACE](../papers/2605.18810-dpace.md) | 从接受长度代理推导动态位置权重，把固定位置衰减改为随 block 瓶颈变化的 CE credit assignment；接受信号仍以记录 target token 的点质量置信度近似。 |
+| [D-PAL](../papers/2610.28355-dpal.md) | 将位置权重改为完整 target–draft overlap，并比较 LA、KL、Rényi 等局部损失；补足 D-PACE 的点质量假设，也需与 AAT 的 WTV 分布目标区分。 |
+| [Test-Time Speculation](../papers/2605.09329-test-time-speculation.md) | 每条长生成轨迹中复用 target 验证分布在线蒸馏当前 drafter；区分 accepted-length 收益与梯度更新带来的系统成本。 |
+| [DSpark](../papers/2607.05147-dspark.md) | 用轻量 sequential head 给并行块草稿补因果依赖，再用 calibrated prefix survival 与 engine throughput curve 联合调度 batch 验证预算。 |
+| [HCSpec](../papers/2026.acl-long.353-hcspec.md) | 依据位置边际接受价值，把早段高保真双路 draft 与后段轻量 draft 级联；与位置加权损失（D-PACE / D-PAL）属于不同设计轴。 |
+| [HeteroSpec](../papers/2026.acl-long.589-heterospec.md) | 依据上下文路径熵分区，在线调节 EAGLE-3 的 draft depth、Top-N 与计算图；不是新的接受概率证明，与 HCSpec 的 draft 架构分工不同。 |
+| [长 CoT 位置诊断](../papers/2610.30644-long-position-acceptance.md) | 用未在 target 输出上训练的独立 draft 隔离训练长度失配，检验接受率是否随生成位置衰减；同时区分 argmax 一致与 sampling 期望接受率。 |
+| [DFlow](../papers/2609.06498-dflow.md) | 跨轮复用 rejected suffix 的 target verifier hidden states 做 draft 条件输入；拒绝 token 不提交，但其表示可被下轮草拟利用。 |
 | [SpecLA](../papers/2607.16673-specla.md) | 面向 linear-attention target 设计树验证 kernel 和接受状态恢复，补递归状态的执行问题。 |
+| [When Is a Draft Accepted?](../papers/2606.30265-when-is-draft-accepted.md) | 为 greedy / relaxed / top-m tree 接受事件给出 KL 局部证书；不是随机采样下的分布等价证明。 |
+| [ValuSpec](../papers/2610.31338-valuspec.md) | 在候选树构造后按 target-trajectory 校准分数预筛低价值分支；T=0 greedy verification 仍负责最终输出。 |
+| [Exit-Guided Speculative Decoding](../papers/2610.11750-exit-guided-tree-verification.md) | 固定树的 target-exit law 给出 exact path verifier 的接受上限；TEV 降验证决策成本，ExitTrain 则用 exit mass 改进后续草稿树覆盖。 |
+| [PV-Decoding](../papers/2026.findings-emnlp.2228-pv-decoding.md) | 为 standalone dLLM 的块置信解码增加单/双/多分支渐进验证；不同于 Spiffy，不保持解码轨迹或输出分布。 |
+| [H-Spec](../papers/2609.24197-hspec.md) | 原位复用 target KV 并以末位 hidden-state 初始化 Mamba state，避免块草稿维护独立的长 drafter KV。 |
+| [Adaptive DHiSparse](../papers/2610.13708-adaptive-dhisparse.md) | 将稀疏 KV 选行、层级驻留和多-query speculative verification 共设计；目标是 sparse-attention target，而非通用 dense KV offload。 |
 | [vLLM 实现核验](../papers/vllm-implementation.md) | 生产框架一手代码；`greedy` vs `probabilistic` 的语义分叉，是“论文 q 如何落地”的最佳样本。 |
 | [SGLang 实现核验](../papers/sglang-implementation.md) | 生产框架一手代码；#10308 的处置对象，能同时回答“issue 状态”与“代码能力”。 |
 
@@ -70,7 +85,7 @@
 | # | 类别 | 排除理由（一句话） |
 | --: | :-- | :-- |
 | 4 | **自投机子型**：Hydra、SWIFT、CLaSp、LayerSkip 等 | 现有 Medusa/EAGLE 与草稿侧专题已经建立并行头、特征级和层跳过阅读路线；单篇优先级低于这些路径之间的统一控制比较。 |
-| 5 | **系统优化**：TriForce、Mirror-SD 等 | SpecStream 已补 KV offload / streaming / co-execution；其它系统仍需固定实现和同条件对照，避免与现有长上下文/服务材料重复。 |
+| 5 | **系统优化**：TriForce、Mirror-SD 等 | SpecStream 已覆盖 full-history KV streaming/offload；Adaptive DHiSparse 已覆盖 sparse selected-row hierarchy。其它系统需有独立机制和固定实现证据，避免重复列 serving 名称。 |
 | 6 | **量化/分层交叉**：QSpec、HiSpec 等 | 更适合归 `Infra/QuantizationEdge`；本条目只在谱系里提一句。 |
 | 7 | **多模态/VLA 投机**：ViSpec、SpecVLM、MSD、SpecPrune-VLA 等 | 素材层已有线索，但需先区分目标模型、输出结构和正确性定义，再选代表作精读。 |
 | 8 | **领域/语种、检索与端侧特化**：DictSpec、CDSL、REST、PLD、SAM、SMoLPU、SS-MoE、FlexSpec 等 | 属于扩展路线；若没有新的控制实验或明确使用场景，不再堆模型/应用名单。 |
@@ -81,12 +96,13 @@
 
 ## 5. 下一轮候选（按价值排序）
 
-1. **DLite 的迁移边界**：扩展到其它 target 家族/尺寸，并检查 LiteSpec 完整训练栈、实际模型权重和输出等价性。
-2. **SpecStream 源码/互联扩展**：找到作者实现固定 SHA，审计 SGLang 内核与 PCIe/NVLink/更大并发下的 trade-off。
-3. **CAST 同名工作消歧**：先核对不同 arXiv ID、版本和机制，再决定是否值得单独精读，避免把硬件动态建树和 block-draft 树构造混为一篇。
-4. **HCSpec / HeteroSpec**（ACL 2026）：级联/异构验证预算；需通读 PDF。
-5. **多模态/VLA 投机**：素材层线索多，但正文质量参差；先筛 target、候选/接受定义与安全边界再读。
-6. **Bole**（arXiv 2608.01651）：公开摘要涉及 hybrid-attention tree kernels，但当前 v1 稿件带“Confidential Draft / Do NOT Distribute”水印且 SGLang 链接快照未发现对应实现；在有清晰公开版本前只保留候选级别，不以摘要升级深度结论。
+1. **长 CoT 训练长度失配的闭环**：将 [TTS](../papers/2605.09329-test-time-speculation.md) 与[独立 draft 长位置诊断](../papers/2610.30644-long-position-acceptance.md)放到同一 target / 长输出 / 统一 `def2` 与 sampling \(\alpha\) 口径下比较，并纳入已训练 DFlash / EAGLE-3。关键是分清跨生成位置衰减来自训练前缀失配、模型族差异还是可见排名指标；当前两篇论文各自提供独立基线或在线修复证据，尚未完成同一协议的闭环。
+2. **DLite 的迁移边界**：扩展到其它 target 家族/尺寸，并检查 LiteSpec 完整训练栈、实际模型权重和输出等价性。
+3. **Sparse KV hierarchy 的 target 泛化**：Adaptive DHiSparse 当前仅在 GLM-5.3 与 DeepSeek-V4.1-Flash 两类 sparse-KV target 上报告；需要更多 target、并发与负载迁移对照。
+4. **SpecStream 源码/互联扩展**：找到作者实现固定 SHA，审计 SGLang 内核与 PCIe/NVLink/更大并发下的 trade-off。
+5. **CAST 同名工作消歧**：先核对不同 arXiv ID、版本和机制，再决定是否值得单独精读，避免把硬件动态建树和 block-draft 树构造混为一篇。
+6. **多模态/VLA 投机**：素材层线索多，但正文质量参差；先筛 target、候选/接受定义与安全边界。
+7. **Bole**（arXiv 2608.01651）：公开摘要涉及 hybrid-attention tree kernels，但当前 v1 稿件带“Confidential Draft / Do NOT Distribute”水印且 SGLang 链接快照未发现对应实现；在有清晰公开版本前只保留摘要级候选，不以摘要升级深度结论。
 
 ## 6. 与 `papers/` 的对应
 

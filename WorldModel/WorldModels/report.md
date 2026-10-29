@@ -3,7 +3,7 @@ display_name: 世界模型
 type: topic-research
 domain: WorldModel
 subject: WorldModels
-date: 2026-10-29
+date: 2026-10-30
 evidence: 精读原文
 status: needs-review
 ---
@@ -18,7 +18,7 @@ status: needs-review
 
 ## 阅读入口
 
-建议先用本页建立路线，再按问题阅读 `papers/` 中的逐篇机制与实验，最后用 `topics/` 比较跨论文设计轴。官方发布稿不是论文，Genie 4 的来源和证据边界单列在[官方发布材料读法](sources/genie4-official-release.md)。
+建议先用本页建立路线，再按问题阅读 `papers/` 中的逐篇机制与实验，最后用 `topics/` 比较跨论文设计轴。若关注多轮视频控制，读[交互式视频世界模型专题](topics/interactive-world-models.md)；它与[动作条件化专题](topics/dynamics-and-action-conditioning.md)的侧重点不同：前者聚焦视角、角色动作、相机、历史记忆和在线响应，后者横向比较动作注入层、预测目标和行为派生。官方发布稿不是论文，Genie 4 的来源和证据边界单列在[官方发布材料读法](sources/genie4-official-release.md)。
 
 **逐篇论文阅读**
 
@@ -34,6 +34,7 @@ status: needs-review
 | [2408.14837-gamengen.md](papers/2408.14837-gamengen.md) | GameNGen（2024） | 像素级动作条件扩散，实时交互引擎 |
 | [2501.09038-physics-iq.md](papers/2501.09038-physics-iq.md) | Physics-IQ（2025） | 真实拍摄物理基准，视觉真实感≠物理理解 |
 | [2503.21755-vbench-2.md](papers/2503.21755-vbench-2.md) | VBench-2.0（2025） | 内在真实性评测（5 维 18 子维），不测交互 |
+| [2610.33169-world-in-context.md](papers/2610.33169-world-in-context.md) | World-in-Context（2026） | 视角、动作和相机控制作为共享上下文；含双向与因果 rollout 两种设置 |
 
 **官方发布材料（非论文）**
 
@@ -44,6 +45,7 @@ status: needs-review
 | 专题 | 回答什么 |
 | :-- | :-- |
 | [dynamics-and-action-conditioning.md](topics/dynamics-and-action-conditioning.md) | 环境动力学与动作条件化的机制差异（四根可判定的轴） |
+| [interactive-world-models.md](topics/interactive-world-models.md) | 视频生成何时成为多轮交互模型；控制接口、历史记忆与真实闭环的边界 |
 | [world-model-as-env.md](topics/world-model-as-env.md) | 把世界模型当训练 / 评测环境这条线 |
 | [incomparability-checklist.md](topics/incomparability-checklist.md) | 不可比性清单（评测碎片化的机制级拆解） |
 
