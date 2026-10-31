@@ -29,6 +29,8 @@
 | [DFlash](../papers/2602.06036-dflash.md) | 用 target KV 条件化块扩散 draft，建立“扩散并行提议、AR target 验收”的主线。 |
 | [DFlare](../papers/2606.02091-dflare.md) | 为每个 draft layer 学不同的 target feature 融合权重，研究草稿容量扩大的收益与训练成本。 |
 | [DFlow](../papers/2609.06498-dflow.md) | 将 verifier 在 rejected suffix 上已算出的 hidden states 跨轮送回草稿器；机制是信息复用而非多层融合或训练 loss 重加权，并以多轮 self-conditioning 训练模拟推理状态。 |
+| [DSpine](../papers/2609.36173-dspine.md) | 在 parallel backbone 各层向 successor 注入相邻 predecessor 预测，并在末层用 transition cache 做前驱条件化选 token；与 DSpark 的后置顺序头和 UBTree 的多路径树不同。 |
+| [UBTree](../papers/2609.39972-ubtree.md) | 用并行 unigram top-K proposer 与 bigram edge selector 构造验证树，靠高温 target trajectory + renormalized KL 学替代分支；target verifier 承担 lossless guarantee。 |
 | [DDTree](../papers/2604.12989-ddtree.md) | 将单次块扩散的逐位置候选组织成树，并按 draft surrogate 目标配置 target 验证预算。 |
 | [PRESTO](../papers/2607.22634-presto.md) | 揭示扩散边际分数与 AR 前缀验证的错位，用轻量 prefix signal 改善树排序。 |
 | [Spiffy](../papers/2509.18085-spiffy.md) | 对 standalone dLLM 自己的未来 block state 做图式投机，并证明保留该 dLLM 的输出分布。 |

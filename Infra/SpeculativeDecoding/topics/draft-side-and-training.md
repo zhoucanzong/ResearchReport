@@ -44,6 +44,8 @@ Medusa 头、EAGLE feature drafter、target 预训练中的 multi-token predicti
 
 [DSpark](../papers/2607.05147-dspark.md) 是对块内独立预测的另一种修补：平行 backbone 一次生成 logits，再用轻量 Markov/RNN head 顺序加入已采样前缀的转移信息。它没有把整个 drafter 退回全自回归；额外的顺序模块要足够轻，才不会抵消块级并行收益。DSpark 的 confidence-scheduled verification 还使用校准的 prefix survival 与 engine 吞吐曲线分配 batch 验证长度，因此应把 draft architecture 和 runtime scheduler 分别分析。[§3.1–§3.2](https://arxiv.org/html/2607.05147v1)
 
+[DSpine](../papers/2609.36173-dspine.md) 将前驱预测更早地传入后继：每层都将相邻前驱特征注入 successor，使条件信息沿 backbone 深度形成；最后用已选前驱的 embedding 重写 successor 状态，并通过 transition cache 预先算相邻 top-$K$ 候选对。它依旧选择单条链，和 DSpark 的“backbone 后追加轻量顺序修正”位置不同。 [UBTree](../papers/2609.39972-ubtree.md) 则不只提高一条链的连贯性，而是并行生成多位置候选、评分相邻 bigram 边并把多条路径放进 target 可验证树；tree-native 高温 KL 训练让 selector 学到非贪心替代路径。DSpine 的主要增量是**同一条并行链怎样更早条件化**，UBTree 的主要增量是**预算树怎样保留多条有 target 概率质量的路径**。
+
 #### 块草稿怎样使用 target 上下文：额外 KV 与原位复用
 
 块式 drafter 常把 target 多个输入位置的 hidden states 投影为一套独立 drafter KV，以便每个草稿位置读取前缀。它改善 target 条件化，却要为每个请求多存一份长度随 prompt 增长的缓存，并额外写入 KV。[H-Spec](../papers/2609.24197-hspec.md) 先验证“直接读取 target 已有 KV”这一简单方案，发现早期草稿位置相对接近 DFlash，后续位置接受度下降；作者据此把 target 上下文拆成互补两种信息：末位 hidden state 的压缩全局摘要与逐位置 target KV。H-Spec 用前者初始化 Mamba state，用后者让 drafter attention 原位读取，不创建独立 drafter-side KV。
@@ -97,7 +99,7 @@ SpecForge 则优化的是 EAGLE drafter 的训练/部署工程：target–draft 
 
 1. 从 [Medusa](../papers/2401.10774-medusa.md) 与 [EAGLE](../papers/2401.15077-eagle-series.md) 对比并行头和 feature-level 自回归草稿。
 2. 对读 [DFlash](../papers/2602.06036-dflash.md) 与 [DFlow](../papers/2609.06498-dflow.md)，比较每轮 target feature 条件与 rejected-suffix verifier state relay；token commit 边界不等于信息可用边界。
-3. 读 LayerSkip、[Component-Aware](../papers/2605.01106-component-aware-self-spec.md)、[DLite](../papers/2610.23787-dlite.md) 和 [H-Spec](../papers/2609.24197-hspec.md)，比较 target 的哪些内部状态/子图可作为 proposal，以及 draft 历史 KV 能否被 target 状态复用替代；再读 [HCSpec](../papers/2026.acl-long.353-hcspec.md) 看一个 drafter 内部如何按位置切换容量。
+3. 读 LayerSkip、[Component-Aware](../papers/2605.01106-component-aware-self-spec.md)、[DLite](../papers/2610.23787-dlite.md)、[H-Spec](../papers/2609.24197-hspec.md) 和 [HCSpec](../papers/2026.acl-long.353-hcspec.md)，比较 target 内部状态、draft 历史 KV 复用与位置容量分工；再对读 [DSpine](../papers/2609.36173-dspine.md) 和 [UBTree](../papers/2609.39972-ubtree.md)，比较层内相邻条件化与多路径 tree-native drafting。
 4. 从 AdaSPEC 与 Attention Drift 观察“选择 token”与“稳定表示”两种不同干预。
 5. 对读 [D-PACE](../papers/2605.18810-dpace.md) 和 [D-PAL](../papers/2610.28355-dpal.md)，看动态位置 credit assignment 怎样从点质量置信代理扩展到完整分布重叠；再读[长 CoT 位置诊断](../papers/2610.30644-long-position-acceptance.md)，分清 block 内位置与生成长度位置；最后依次读 [VSD](../papers/2602.05774-vsd.md)、[AAT](../papers/2609.24150-acceptance-aware-training.md)、[EDR](../papers/2610.10411-expected-decoding-rounds.md)，区分路径、窗口和全局轮次目标。
 6. 对读 [TTS](../papers/2605.09329-test-time-speculation.md) 与 [TLT](../papers/2511.16665-tlt-adaptive-drafter.md)，分清单条长输出的在线适应和 RL rollout 内的持续更新；最后看 SpecForge 怎样把 drafter 训练接到服务系统。

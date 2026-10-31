@@ -64,7 +64,7 @@
 
 ### 2.4 家族 IV：块 / 扩散草稿（block / diffusion draft）
 
-**代表**： [DFlash](../papers/2602.06036-dflash.md) / [DFlare](../papers/2606.02091-dflare.md) 的块扩散草稿，[DDTree](../papers/2604.12989-ddtree.md) / [DARTree](../papers/2608.13524-dartree.md) / [PRESTO](../papers/2607.22634-presto.md) 的候选树，以及 [DSpark](../papers/2607.05147-dspark.md) 的半自回归块草稿与负载感知验证。
+**代表**： [DFlash](../papers/2602.06036-dflash.md) / [DFlare](../papers/2606.02091-dflare.md) 的块扩散草稿；[DSpark](../papers/2607.05147-dspark.md) / [DSpine](../papers/2609.36173-dspine.md) 的半自回归、层内前驱条件化；[DDTree](../papers/2604.12989-ddtree.md) / [DARTree](../papers/2608.13524-dartree.md) / [PRESTO](../papers/2607.22634-presto.md) / [UBTree](../papers/2609.39972-ubtree.md) 的候选树；以及 [DFlow](../papers/2609.06498-dflow.md) 的跨轮 verifier 表示复用。
 
 - **机制**：并行 backbone 一次产生多个未来位置的分布；后续工作分别通过更强的 target 条件化、轻量块内因果校正、候选树排序或跨轮 verifier 状态复用来补足独立位置建模的短板。
 - **优点**：把一部分串行草拟改成并行前向，能在合适的 target、任务和负载下提出较长候选块。
@@ -120,7 +120,7 @@ flowchart TD
 ## 5. 家族 IV 的阅读边界
 
 - 本专题已将代表性块草稿、树构造、半自回归校正和扩散模型自投机分开精读；不把所有并行模型都当作同一机制。
-- DFlash、DFlare、DDTree、DARTree、PRESTO、DSpark、DFlow 等论文分别改变候选并行化、位置条件化、树排序、验证预算或跨轮状态复用；具体关系见[扩散交叉专题](diffusion-drafters.md)与[草稿侧专题](draft-side-and-training.md)。
+- DFlash、DFlare、DSpark、DSpine、DDTree、DARTree、PRESTO、UBTree、DFlow 等论文分别改变块并行提议、位置/相邻前缀条件化、树分支覆盖、验证预算或跨轮状态复用；具体关系见[扩散交叉专题](diffusion-drafters.md)与[草稿侧专题](draft-side-and-training.md)。
 - BASTION 等未设独立精读的工作仍只作谱系线索，是否入库取决于能否补上新的机制比较，而非发布数量。
 
 ---

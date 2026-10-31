@@ -18,7 +18,7 @@
 <div align="center">
 
 <!-- SCRIPT:badges START -->
-[**84** 主报告](index/by-report.md) &nbsp; · &nbsp; [**382** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**52** 研究专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
+[**84** 主报告](index/by-report.md) &nbsp; · &nbsp; [**384** 分册与子文档](INDEX.md) &nbsp; · &nbsp; [**52** 研究专题](index/by-topic.md) &nbsp; · &nbsp; [**9** 研究板块](#研究板块)
 <!-- SCRIPT:badges END -->
 
 </div>
@@ -124,10 +124,10 @@
 <!-- SCRIPT:recent START · 报告日期优先，缺失时回退最近提交日 -->
 | 日期 | 阅读条目 | 板块 |
 | :-- | :-- | :-- |
+| 2026-10-31 | [投机解码](<Infra/SpeculativeDecoding/report.md>) | Infra |
 | 2026-10-30 | [软件工程 Agent](<Agents/SoftwareEngineeringAgents/report.md>) | Agents |
 | 2026-10-30 | [MoE 执行与专家通信](<Infra/MoEExecution/report.md>) | Infra |
 | 2026-10-30 | [模型量化与边缘部署](<Infra/QuantizationEdge/report.md>) | Infra |
-| 2026-10-30 | [投机解码](<Infra/SpeculativeDecoding/report.md>) | Infra |
 | 2026-10-30 | [分布式训练基础设施](<Infra/TrainingInfra/report.md>) | Infra |
 <!-- SCRIPT:recent END -->
 

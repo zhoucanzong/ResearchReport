@@ -11,6 +11,7 @@
 
 | 条目 | date | 板块 | 专题 |
 | --- | --- | --- | --- |
+| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 2026-10-31 | Infra | SpeculativeDecoding |
 | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 2026-10-30 | WorldModel | WorldModels |
 | [LLM/TestTimeAdaptation/report.md](<../LLM/TestTimeAdaptation/report.md>) | 2026-10-30 | LLM | TestTimeAdaptation |
 | [LLM/SyntheticData/report.md](<../LLM/SyntheticData/report.md>) | 2026-10-30 | LLM | SyntheticData |
@@ -19,7 +20,6 @@
 | [LLM/MechanisticInterpretability/report.md](<../LLM/MechanisticInterpretability/report.md>) | 2026-10-30 | LLM | MechanisticInterpretability |
 | [LLM/KnowledgeEditing/report.md](<../LLM/KnowledgeEditing/report.md>) | 2026-10-30 | LLM | KnowledgeEditing |
 | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 2026-10-30 | Infra | TrainingInfra |
-| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 2026-10-30 | Infra | SpeculativeDecoding |
 | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 2026-10-30 | Infra | QuantizationEdge |
 | [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | 2026-10-30 | Infra | MoEExecution |
 | [Agents/SoftwareEngineeringAgents/report.md](<../Agents/SoftwareEngineeringAgents/report.md>) | 2026-10-30 | Agents | SoftwareEngineeringAgents |

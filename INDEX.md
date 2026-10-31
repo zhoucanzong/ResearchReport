@@ -15,15 +15,15 @@
 | --- | --- |
 | **条目数**（`report.md`） | **84** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 18 · Agents 4 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 9 |
-| 条目子文档数 | 382 |
-| 条目正文行数（剔除 front-matter） | 20,942 |
-| 条目字节 | 2,188,635 B |
+| 条目子文档数 | 384 |
+| 条目正文行数（剔除 front-matter） | 20,945 |
+| 条目字节 | 2,190,084 B |
 | 带 front-matter 的条目 | 84 |
 | 带合法 `date` 的条目 | 45 |
-| 文档（除生成物外的全部 `.md`） | 491 |
+| 文档（除生成物外的全部 `.md`） | 493 |
 | 其中文件名 `README.md` | 11 |
-| 纳入版本控制的文件 | 441 |
-| 纳入版本控制的 `.md` | 422 |
+| 纳入版本控制的文件 | 518 |
+| 纳入版本控制的 `.md` | 499 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -39,9 +39,9 @@
 | WorldModel | 3 | 47 | 1,151 | 135,469 B | [板块页 →](<WorldModel/README.md>) |
 | AI4Science | 10 | 53 | 872 | 147,032 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 2 | 11 | 194 | 36,608 B | [板块页 →](<Evaluation/README.md>) |
-| Infra | 6 | 98 | 1,341 | 151,423 B | [板块页 →](<Infra/README.md>) |
+| Infra | 6 | 100 | 1,344 | 152,872 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 9 | 39 | 1,846 | 201,974 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **84** | **491** | **20,942** | **2,188,635 B** | — |
+| **合计** | **84** | **493** | **20,945** | **2,190,084 B** | — |
 
 ## 分面索引
 
@@ -1157,10 +1157,10 @@
 
 </details>
 
-### Infra（6 条目 / 98 文档）
+### Infra（6 条目 / 100 文档）
 
 <details>
-<summary><b>基础设施 Infra（6 条目 / 91 子文档）</b></summary>
+<summary><b>基础设施 Infra（6 条目 / 93 子文档）</b></summary>
 
   <details>
   <summary><b>KV Cache 与预填充／解码分离</b> · <code>Infra/KVCachePD/report.md</code> · 84 行 · 2026-10-23</summary>
@@ -1227,13 +1227,13 @@
   </details>
 
   <details>
-  <summary><b>投机解码</b> · <code>Infra/SpeculativeDecoding/report.md</code> · 542 行 · 2026-10-30</summary>
+  <summary><b>投机解码</b> · <code>Infra/SpeculativeDecoding/report.md</code> · 545 行 · 2026-10-31</summary>
 
 
-    * **条目**：[Infra/SpeculativeDecoding/report.md](<Infra/SpeculativeDecoding/report.md>)（542 行 / 51,138 B）
+    * **条目**：[Infra/SpeculativeDecoding/report.md](<Infra/SpeculativeDecoding/report.md>)（545 行 / 52,587 B）
     * **专题目录**：`Infra/SpeculativeDecoding`
-    * **元数据**：type=`topic-research` · domain=`Infra` · subject=`SpeculativeDecoding` · date=`2026-10-30` · status=`needs-review`
-    * **子文档（68）**
+    * **元数据**：type=`topic-research` · domain=`Infra` · subject=`SpeculativeDecoding` · date=`2026-10-31` · status=`needs-review`
+    * **子文档（70）**
         * [legacy/speculative-block-diffusion.md](<Infra/SpeculativeDecoding/legacy/speculative-block-diffusion.md>) — 230 行 / 18,837 B
         * [legacy/speculative-cascade-heterogeneous.md](<Infra/SpeculativeDecoding/legacy/speculative-cascade-heterogeneous.md>) — 12 行 / 1,084 B
         * [legacy/speculative-classical-and-self.md](<Infra/SpeculativeDecoding/legacy/speculative-classical-and-self.md>) — 157 行 / 12,113 B
@@ -1281,6 +1281,8 @@
         * [papers/2609.24150-acceptance-aware-training.md](<Infra/SpeculativeDecoding/papers/2609.24150-acceptance-aware-training.md>) — 74 行 / 8,060 B
         * [papers/2609.24197-hspec.md](<Infra/SpeculativeDecoding/papers/2609.24197-hspec.md>) — 47 行 / 6,070 B
         * [papers/2609.33184-specstream.md](<Infra/SpeculativeDecoding/papers/2609.33184-specstream.md>) — 44 行 / 5,416 B
+        * [papers/2609.36173-dspine.md](<Infra/SpeculativeDecoding/papers/2609.36173-dspine.md>) — 49 行 / 8,252 B
+        * [papers/2609.39972-ubtree.md](<Infra/SpeculativeDecoding/papers/2609.39972-ubtree.md>) — 42 行 / 6,945 B
         * [papers/2610.07350-tlar.md](<Infra/SpeculativeDecoding/papers/2610.07350-tlar.md>) — 54 行 / 9,515 B
         * [papers/2610.08678-secure-sd.md](<Infra/SpeculativeDecoding/papers/2610.08678-secure-sd.md>) — 55 行 / 6,108 B
         * [papers/2610.10411-expected-decoding-rounds.md](<Infra/SpeculativeDecoding/papers/2610.10411-expected-decoding-rounds.md>) — 56 行 / 7,869 B
@@ -1293,12 +1295,12 @@
         * [papers/eagle4-one-flexible-drafter.md](<Infra/SpeculativeDecoding/papers/eagle4-one-flexible-drafter.md>) — 211 行 / 19,192 B
         * [papers/sglang-implementation.md](<Infra/SpeculativeDecoding/papers/sglang-implementation.md>) — 220 行 / 15,358 B
         * [papers/vllm-implementation.md](<Infra/SpeculativeDecoding/papers/vllm-implementation.md>) — 227 行 / 18,077 B
-        * [sources/CANDIDATES.md](<Infra/SpeculativeDecoding/sources/CANDIDATES.md>) — 111 行 / 15,845 B
+        * [sources/CANDIDATES.md](<Infra/SpeculativeDecoding/sources/CANDIDATES.md>) — 113 行 / 16,328 B
         * [sources/CODE-AUDIT.md](<Infra/SpeculativeDecoding/sources/CODE-AUDIT.md>) — 99 行 / 12,828 B
-        * [sources/MANIFEST.md](<Infra/SpeculativeDecoding/sources/MANIFEST.md>) — 105 行 / 19,614 B
-        * [topics/algorithm-families.md](<Infra/SpeculativeDecoding/topics/algorithm-families.md>) — 166 行 / 12,772 B
-        * [topics/diffusion-drafters.md](<Infra/SpeculativeDecoding/topics/diffusion-drafters.md>) — 130 行 / 20,286 B
-        * [topics/draft-side-and-training.md](<Infra/SpeculativeDecoding/topics/draft-side-and-training.md>) — 107 行 / 17,496 B
+        * [sources/MANIFEST.md](<Infra/SpeculativeDecoding/sources/MANIFEST.md>) — 107 行 / 20,142 B
+        * [topics/algorithm-families.md](<Infra/SpeculativeDecoding/topics/algorithm-families.md>) — 166 行 / 12,962 B
+        * [topics/diffusion-drafters.md](<Infra/SpeculativeDecoding/topics/diffusion-drafters.md>) — 136 行 / 22,607 B
+        * [topics/draft-side-and-training.md](<Infra/SpeculativeDecoding/topics/draft-side-and-training.md>) — 109 行 / 18,365 B
         * [topics/heterogeneous-budget-allocation.md](<Infra/SpeculativeDecoding/topics/heterogeneous-budget-allocation.md>) — 34 行 / 3,978 B
         * [topics/systems-throughput-latency.md](<Infra/SpeculativeDecoding/topics/systems-throughput-latency.md>) — 232 行 / 20,155 B
         * [topics/verification-acceptance.md](<Infra/SpeculativeDecoding/topics/verification-acceptance.md>) — 197 行 / 16,883 B
@@ -1467,14 +1469,14 @@
 | [AI4Science/README.md](<AI4Science/README.md>) | AI4Science | 137 | 6,896 B |
 | [AIGC/README.md](<AIGC/README.md>) | AIGC | 50 | 2,494 B |
 | [Agents/README.md](<Agents/README.md>) | Agents | 94 | 5,229 B |
-| [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 57 | 2,409 B |
-| [Infra/README.md](<Infra/README.md>) | Infra | 173 | 13,424 B |
-| [LLM/README.md](<LLM/README.md>) | LLM | 237 | 16,892 B |
+| [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 57 | 2,410 B |
+| [Infra/README.md](<Infra/README.md>) | Infra | 176 | 13,774 B |
+| [LLM/README.md](<LLM/README.md>) | LLM | 253 | 18,068 B |
 | [Models/README.md](<Models/README.md>) | Models | 108 | 5,191 B |
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 107 | 4,830 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 197 | 15,277 B |
+| [README.md](<README.md>) |  | 197 | 15,339 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 107 | 7,216 B |
 | [docs/aigc-learning-path.md](<docs/aigc-learning-path.md>) | docs | 57 | 5,988 B |
 | [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |

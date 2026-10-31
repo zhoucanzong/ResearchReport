@@ -611,6 +611,8 @@ nav:
         - "2609.24150-acceptance-aware-training": "Infra/SpeculativeDecoding/papers/2609.24150-acceptance-aware-training.md"
         - "2609.24197-hspec": "Infra/SpeculativeDecoding/papers/2609.24197-hspec.md"
         - "2609.33184-specstream": "Infra/SpeculativeDecoding/papers/2609.33184-specstream.md"
+        - "2609.36173-dspine": "Infra/SpeculativeDecoding/papers/2609.36173-dspine.md"
+        - "2609.39972-ubtree": "Infra/SpeculativeDecoding/papers/2609.39972-ubtree.md"
         - "2610.07350-tlar": "Infra/SpeculativeDecoding/papers/2610.07350-tlar.md"
         - "2610.08678-secure-sd": "Infra/SpeculativeDecoding/papers/2610.08678-secure-sd.md"
         - "2610.10411-expected-decoding-rounds": "Infra/SpeculativeDecoding/papers/2610.10411-expected-decoding-rounds.md"

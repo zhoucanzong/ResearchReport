@@ -22,7 +22,7 @@ flowchart LR
 
 | 角色 | 代表工作 | 候选产生方式 | 最终质量由谁定义 | 正确性或质量主张 |
 |---|---|---|---|---|
-| **独立 draft，AR target** | DFlash、DFlow、DFlare、DDTree、DARTree、PRESTO | 专门训练的块扩散 draft 并行预测未来 token，再扩成路径或树；DFlow 跨轮复用 rejected-suffix verifier states | AR target | 由 target 验证的算法可保持 target 分布；提议质量主要影响接受率与速度 |
+| **独立块 draft，AR target** | DFlash、DFlare、DSpark、DSpine、DDTree、DARTree、PRESTO、UBTree、DFlow | 块式并行 draft 提出未来 token；可恢复块内前缀依赖、保留多路径树，或把前轮 verifier 表示送入下轮 draft | AR target | 由 target 验证的算法可保持 target 分布；提议质量、候选覆盖和状态处理影响接受率与成本 |
 | **dLLM 自投机 / 验证门控** | [Spiffy](../papers/2509.18085-spiffy.md)、[PV-Decoding](../papers/2026.findings-emnlp.2228-pv-decoding.md)；PRESTO 也拓展到 hybrid/self-speculative 设置 | Spiffy 对未来去噪 state 建图并精确匹配；PV 按置信度暂填 token，再用 argmax 一致性和阈值筛选 | 原始 dLLM | Spiffy 证明其接受规则保持原 dLLM 分布；PV 明确不保持 trajectory/distribution，只报告经验精度—前向轮数折衷 |
 | **DLM proposal，AR 质量桥接** | PoE-Bridge | DLM 并行采样，经 DLM/AR product-of-experts 中间分布和采样校正 | AR 是质量参照 | 有限候选数时不严格无损，报告 accuracy 与吞吐的折衷 |
 | **独立扩散生成器** | LLaDA、Block Diffusion、SDAR、CARD、LLaDA 2.x | 迭代去噪、块级并行或 token editing | 扩散模型自身 | 论文比较该生成器的质量、长度与延迟；没有 AR target verifier 就不构成 target-preserving speculative decoding |
@@ -54,6 +54,8 @@ DFlow 改变的不是每一层怎样融合 target 特征，而是**跨轮哪些 
 | 方法 | 它改善的环节 | 如何给候选路径排序 | 要留意的边界 |
 |---|---|---|---|
 | DFlash | 单块并行草稿的延迟与容量 | 一条 draft trajectory | 接受收益随 task、target、batch 改变 |
+| [DSpine](../papers/2609.36173-dspine.md) | 逐层向后继注入相邻前驱预测，并对已选前驱做 last-write refinement | Transition cache 并行预计算 top-$K$ 相邻候选对，再从左到右选一条路径 | 单路径；$T=1$ 必须以 transition-cache 的实际 proposal 概率做拒绝回补 |
+| [UBTree](../papers/2609.39972-ubtree.md) | 以并行 bigram selector 让 top-$K$ 并行候选具备相邻依赖，再保留多条 target 可验证分支 | 用 target embedding codebook 估计相邻候选转移，再按预算建树；以高温轨迹和重归一化 KL 学多条 plausible branches | 树预算与训练温度需配置搜索；极高并发 compute-bound 时树计算会吃掉并行收益 |
 | DFlow | 复用前轮验证时算出的 rejected-suffix 表示 | 将对齐、边界调制后的 verifier hidden states 送回下一轮重叠 mask 位置 | 复用的是连续表示；离散 rejected token 仍未提交 |
 | DDTree | 不浪费同次前向的其他位置候选 | 各位置边际概率的乘积，按 surrogate mass best-first 建树 | 候选概率不含真实已选前缀；“surrogate 最优”不是 target 接受率全局最优 |
 | DARTree | 给树中每个候选分支恢复因果校正 | correction head 按 branch prefix 给条件分数；同一深度并行校正，随后全局剪枝 | 复用 Domino correction head，新增校正也占计算；target 验证节点数仍需选 |
@@ -62,6 +64,10 @@ DFlow 改变的不是每一层怎样融合 target 特征，而是**跨轮哪些 
 DDTree 把一次 diffusion 前向所生成的每个位置分布都用来探索可能前缀。其树按 draft-induced surrogate 的期望接受长度构造；证明对这个 surrogate 最优，并不表示未知的 target 接受概率也最优。[DDTree 精读](../papers/2604.12989-ddtree.md)
 
 DARTree 指出这正是边际候选的结构性缺口：扩散位置的 confidence 不会随候选路径的前缀变化。它把 correction head 从单链扩展到树上的每条 branch，再按深度批量计算，最后剪成 target 的验证预算。[DARTree 精读](../papers/2608.13524-dartree.md) 把另一个系统约束显露出来：逐节点调用 correction head 与 heap 排序相互依赖，可能把并行草稿变回串行树构造；先批量形成更宽 supertree 再剪枝，是专门针对这段调度开销的设计。
+
+这条发展路线可以再分成**单路径条件化**与**多路径覆盖**。[DSpine](../papers/2609.36173-dspine.md) 在 backbone 每一层把相邻前驱的预测特征门控写入后继，再用 selected predecessor 做 last-write refinement 与 transition-cache 解码；它继续选一条前缀，但让条件信息更早进入后继计算。[UBTree](../papers/2609.39972-ubtree.md) 则不把候选压成单条路径：Unigram proposer 为每个位置提供 top-$K$ 备选，Bigram selector 并行打分相邻边，再用 DARTree 式预算搜索形成多路径树。DSpine 主要提高一条并行链的因果一致性，UBTree 主要提高高熵场景的可验证候选覆盖。
+
+两者都利用相邻 token 依赖，但输出预算不同。DSpine 的 top-$K$ 仅支持它的逐前缀选择，正确性依赖每步实际 transition-cache proposal distribution 的 rejection correction；UBTree 用树承载候选，target tree verifier 才负责保持 target 输出分布。UBTree 的树native训练希望 selector 学会保留 target 的替代续写，而非只强化一条高概率路径；代价是 verifier 节点数增加，以及按模型/负载调树预算。论文结果表格中的 Qwen3/H200 学术设置、SGLang 生产设置和长上下文 replay 应分开理解。[两篇精读](../papers/2609.36173-dspine.md) · [UBTree 原文定位](../papers/2609.39972-ubtree.md)
 
 PRESTO 的思路更轻：用廉价 prefix-conditioned score 校准边际概率，再树搜索。它不把 n-gram 分数说成 target 分布，也不替代 verifier；分数用于排列“哪个路径更值得验证”。[PRESTO 精读](../papers/2607.22634-presto.md) 同时测试独立 diffusion drafter 与 self-speculative dLLM，并报告树预算变大到一定程度后 verifier 的计算会侵蚀吞吐。
 
@@ -111,7 +117,7 @@ PoE-Bridge 则连接两种模型分布：DLM 批量生成 proposals，AR 作为�
 1. 先读本专题的[投机解码验证边界](verification-acceptance.md)，再读 [DFlash](../papers/2602.06036-dflash.md)：建立 block diffusion drafter + AR verifier 的主线。
 2. 接着读 [DFlow](../papers/2609.06498-dflow.md)，看 target 已算出的 rejected-suffix 表示如何跨轮复用而不提交 rejected token。
 3. 读 [DFlare](../papers/2606.02091-dflare.md)，看 target hidden state 融合如何扩 draft 容量及其训练代价。
-4. 读 [DDTree](../papers/2604.12989-ddtree.md) → [DARTree](../papers/2608.13524-dartree.md) → [PRESTO](../papers/2607.22634-presto.md)：依次看边际候选覆盖、路径因果校正、前缀对齐的启发式打分。
+4. 读 [DSpine](../papers/2609.36173-dspine.md) 了解前驱特征如何沿并行骨干的深度流动；再读 [DDTree](../papers/2604.12989-ddtree.md) → [DARTree](../papers/2608.13524-dartree.md) → [PRESTO](../papers/2607.22634-presto.md) → [UBTree](../papers/2609.39972-ubtree.md)，比较边际候选覆盖、路径校正、prefix score 和 bigram tree-native 训练。
 5. 并读 [Spiffy](../papers/2509.18085-spiffy.md) 和 [PV-Decoding](../papers/2026.findings-emnlp.2228-pv-decoding.md)：前者用精确 state-match 保持 standalone dLLM 分布；后者用置信度和分支条件减少前向轮数，但接受经验质量变化。
 6. 最后读 [PoE-Bridge](../papers/2606.08048-poe-bridge.md)，比较精确目标分布保持和有限预算下的 AR 质量逼近。
 7. 回到 [扩散语言模型总览](../../../LLM/DiffusionLM/report.md)，区分 native denoising 的训练/长度/编辑问题，与把 diffusion 放入 proposal/verification pipeline 后的新问题。
