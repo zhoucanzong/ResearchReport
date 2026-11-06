@@ -33,9 +33,9 @@
 | :-- | :-- | --: |
 | **KV Cache 与预填充／解码分离** | [KV Cache 服务与 Prefill/Decode 分离：什么时候复用，什么时候传输](<KVCachePD/report.md>) | 84 行 |
 | **MoE 执行与专家通信** | [MoE 执行：从专家路由到跨设备回收](<MoEExecution/report.md>) | 95 行 |
-| **模型量化与边缘部署** | [模型量化与边缘部署研究报告](<QuantizationEdge/report.md>) | 244 行 |
+| **模型量化与边缘部署** | [模型量化与边缘部署研究报告](<QuantizationEdge/report.md>) | 259 行 |
 | **在线推理服务与评测** | [在线 LLM Serving：SLO、Goodput 与请求完整性](<ServingEvaluation/report.md>) | 81 行 |
-| **投机解码** | [投机解码（Speculative Decoding）技术专题 · 深度调研](<SpeculativeDecoding/report.md>) | 545 行 |
+| **投机解码** | [投机解码（Speculative Decoding）技术专题 · 深度调研](<SpeculativeDecoding/report.md>) | 555 行 |
 | **分布式训练基础设施** | [大模型训练基础设施与分布式训练研究报告](<TrainingInfra/report.md>) | 295 行 |
 
 ## 📎 子文档
@@ -85,7 +85,7 @@
 </details>
 
 <details>
-<summary><b>投机解码</b>（70 份）</summary>
+<summary><b>投机解码</b>（75 份）</summary>
 
 * [legacy/speculative-block-diffusion.md](<SpeculativeDecoding/legacy/speculative-block-diffusion.md>) — 230 行 / 18,837 B
 * [legacy/speculative-cascade-heterogeneous.md](<SpeculativeDecoding/legacy/speculative-cascade-heterogeneous.md>) — 12 行 / 1,084 B
@@ -141,19 +141,24 @@
 * [papers/2610.10411-expected-decoding-rounds.md](<SpeculativeDecoding/papers/2610.10411-expected-decoding-rounds.md>) — 56 行 / 7,869 B
 * [papers/2610.11750-exit-guided-tree-verification.md](<SpeculativeDecoding/papers/2610.11750-exit-guided-tree-verification.md>) — 56 行 / 7,463 B
 * [papers/2610.13708-adaptive-dhisparse.md](<SpeculativeDecoding/papers/2610.13708-adaptive-dhisparse.md>) — 52 行 / 8,113 B
+* [papers/2610.22543-spot.md](<SpeculativeDecoding/papers/2610.22543-spot.md>) — 52 行 / 5,969 B
 * [papers/2610.23787-dlite.md](<SpeculativeDecoding/papers/2610.23787-dlite.md>) — 48 行 / 6,161 B
 * [papers/2610.28355-dpal.md](<SpeculativeDecoding/papers/2610.28355-dpal.md>) — 46 行 / 6,551 B
 * [papers/2610.30644-long-position-acceptance.md](<SpeculativeDecoding/papers/2610.30644-long-position-acceptance.md>) — 51 行 / 6,724 B
 * [papers/2610.31338-valuspec.md](<SpeculativeDecoding/papers/2610.31338-valuspec.md>) — 33 行 / 4,165 B
+* [papers/2610.31819-speculative-diffusion.md](<SpeculativeDecoding/papers/2610.31819-speculative-diffusion.md>) — 53 行 / 5,262 B
+* [papers/2610.38331-soft-mtp.md](<SpeculativeDecoding/papers/2610.38331-soft-mtp.md>) — 37 行 / 4,662 B
+* [papers/2611.05345-adversarial-speculative-reasoning.md](<SpeculativeDecoding/papers/2611.05345-adversarial-speculative-reasoning.md>) — 46 行 / 6,129 B
+* [papers/2611.05611-hybrid-spark.md](<SpeculativeDecoding/papers/2611.05611-hybrid-spark.md>) — 53 行 / 6,050 B
 * [papers/eagle4-one-flexible-drafter.md](<SpeculativeDecoding/papers/eagle4-one-flexible-drafter.md>) — 211 行 / 19,192 B
 * [papers/sglang-implementation.md](<SpeculativeDecoding/papers/sglang-implementation.md>) — 220 行 / 15,358 B
 * [papers/vllm-implementation.md](<SpeculativeDecoding/papers/vllm-implementation.md>) — 227 行 / 18,077 B
-* [sources/CANDIDATES.md](<SpeculativeDecoding/sources/CANDIDATES.md>) — 113 行 / 16,328 B
+* [sources/CANDIDATES.md](<SpeculativeDecoding/sources/CANDIDATES.md>) — 123 行 / 17,266 B
 * [sources/CODE-AUDIT.md](<SpeculativeDecoding/sources/CODE-AUDIT.md>) — 99 行 / 12,828 B
-* [sources/MANIFEST.md](<SpeculativeDecoding/sources/MANIFEST.md>) — 107 行 / 20,142 B
+* [sources/MANIFEST.md](<SpeculativeDecoding/sources/MANIFEST.md>) — 112 行 / 21,436 B
 * [topics/algorithm-families.md](<SpeculativeDecoding/topics/algorithm-families.md>) — 166 行 / 12,962 B
-* [topics/diffusion-drafters.md](<SpeculativeDecoding/topics/diffusion-drafters.md>) — 136 行 / 22,607 B
-* [topics/draft-side-and-training.md](<SpeculativeDecoding/topics/draft-side-and-training.md>) — 109 行 / 18,365 B
+* [topics/diffusion-drafters.md](<SpeculativeDecoding/topics/diffusion-drafters.md>) — 138 行 / 23,510 B
+* [topics/draft-side-and-training.md](<SpeculativeDecoding/topics/draft-side-and-training.md>) — 113 行 / 19,425 B
 * [topics/heterogeneous-budget-allocation.md](<SpeculativeDecoding/topics/heterogeneous-budget-allocation.md>) — 34 行 / 3,978 B
 * [topics/systems-throughput-latency.md](<SpeculativeDecoding/topics/systems-throughput-latency.md>) — 232 行 / 20,155 B
 * [topics/verification-acceptance.md](<SpeculativeDecoding/topics/verification-acceptance.md>) — 197 行 / 16,883 B

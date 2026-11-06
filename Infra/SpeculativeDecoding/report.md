@@ -3,7 +3,7 @@ display_name: 投机解码
 type: topic-research
 domain: Infra
 subject: SpeculativeDecoding
-date: 2026-10-31
+date: 2026-11-07
 evidence: 精读原文
 status: needs-review
 ---
@@ -38,6 +38,12 @@ flowchart LR
 
 三层回答的是不同问题，不能用单一“draft acceptance rate”覆盖整条链：草稿侧决定候选质量和生成成本；验证侧决定分布保证、接受路径与剩余概率；算子/服务侧决定这些候选最终是变快还是因额外状态、内存访问和调度而变慢。新整理的[草稿机制与训练](topics/draft-side-and-training.md)补上了原来埋在 legacy 的训练路线；树形正确性和遍历见[验证专题](topics/verification-acceptance.md)，GPU 算子与状态提交见扩展后的[吞吐与延迟专题](topics/systems-throughput-latency.md)。
 
+### 近期机制如何接到已有谱系
+
+2026 年 10–11 月的新工作开始把优化目标从“单一接受率”拆成可解释的问题：**Hybrid Spark** 让模型草稿与 n-gram 复制链共享验证预算；**Adversarial Speculative Reasoning** 将拒绝位置用于长程 Agent 的关键决策；**SPOT** 把 dLLM 草稿目标改成预测下一提交位置；**Speculative Diffusion** 联合调节去噪努力与 verifier 的分布宽松度；**Soft-MTP** 回到预训练梯度，区分语料监督与模型自分布的 drafter 信号。它们分别改变候选来源、提交位置、分布保证或学习目标，不应合并成同一个“新型 speculative decoder”。
+
+建议沿因果链阅读：先看 [Soft-MTP](papers/2610.38331-soft-mtp.md) 与[草稿侧训练综合](topics/draft-side-and-training.md)，理解预训练 head 与推理 drafter 的目标差别；再看 [Hybrid Spark](papers/2611.05611-hybrid-spark.md) 理解多种候选怎样共享预算；对比 [Adversarial Speculative Reasoning](papers/2611.05345-adversarial-speculative-reasoning.md) 看拒绝位置如何成为调度变量；最后进入 [SPOT](papers/2610.22543-spot.md) 与 [Speculative Diffusion](papers/2610.31819-speculative-diffusion.md)，分别理解 dLLM 轨迹精确性与可控分布偏移。扩散角色总览见[扩散交叉专题](topics/diffusion-drafters.md)。
+
 ---
 
 ## 深度阅读导航
@@ -53,6 +59,10 @@ flowchart LR
 | 树形验证如何选树、遍历并保证正确？ | 从 [SpecInfer](papers/2305.09781-specinfer.md) 看树 mask 与共享前缀；读 [Sequoia](papers/2402.12374-sequoia.md) 看预算内树形与硬件映射；用 [UBTree](papers/2609.39972-ubtree.md) 比较并行 bigram 边如何服务多路径候选，再读 [Traversal Verification](papers/2505.12398-traversal-verification.md) 与 [Exit-Guided](papers/2610.11750-exit-guided-tree-verification.md) 区分遍历、固定树上限与执行成本；最后对照 [HSD](papers/2601.05724-hsd.md)、[RheoSampling](papers/2609.21827-rheosampling.md) 和有损的 [Approximate SD](papers/2608.03447-approximate-sd.md)。 |
 | target 的算子与状态怎样决定真实成本？ | [SpecLA](papers/2607.16673-specla.md) 展示线性注意力状态上的链/树验证与 accepted-state 恢复；再读固定版本 [vLLM](papers/vllm-implementation.md)、[SGLang](papers/sglang-implementation.md) 代码路径，并进入[吞吐、延迟与算子专题](topics/systems-throughput-latency.md)。 |
 | 并行块草稿怎样恢复依赖、覆盖备选路径？ | 从 [DFlash](papers/2602.06036-dflash.md) 的位置独立草稿出发，对照 [DSpark](papers/2607.05147-dspark.md) 的后置顺序头、[DSpine](papers/2609.36173-dspine.md) 的层内前驱注入和 [UBTree](papers/2609.39972-ubtree.md) 的并行 bigram 树构造；再接 [DARTree](papers/2608.13524-dartree.md) 与 [DFlow](papers/2609.06498-dflow.md)，比较候选路径校正和跨轮 verifier 状态复用。综合比较见[扩散交叉专题](topics/diffusion-drafters.md)。 |
+| 内容重复时如何比较不同来源的草稿？ | 从 prompt lookup / n-gram 与模型草稿互补性进入，[Hybrid Spark](papers/2611.05611-hybrid-spark.md) 展示两者如何共享在线验证槽位；它承接 DSpark 与 adaptive verification，但正确性仍由 target verifier 提供。 |
+| 拒绝边界能否成为研究变量？ | 先读接受率与位置训练路线，再读 [Adversarial Speculative Reasoning](papers/2611.05345-adversarial-speculative-reasoning.md)：它刻意让 drafter 在决策点被拒绝，把高精度 target 采样位置留给关键 token，需同时检查有限精度与长程任务边界。 |
+| diffusion 的候选目标和保证怎样变化？ | 对读 [SPOT](papers/2610.22543-spot.md)（dLLM 自身的 commit-order speculation 与 coupled-noise exactness）和 [Speculative Diffusion](papers/2610.31819-speculative-diffusion.md)（AR target 下联合调去噪步数与单步分布宽松度），区分严格轨迹保持与有界偏移。 |
+| MTP 训练为何能服务推测解码？ | [Soft-MTP](papers/2610.38331-soft-mtp.md) 从梯度分解解释标准 MTP 中的 self-distillation 信号，并指出小规模实验到前沿预训练的证据距离。 |
 
 ### 横切专题（`topics/`）
 

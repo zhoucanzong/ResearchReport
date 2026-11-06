@@ -275,7 +275,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [LLM/MechanisticInterpretability/report.md](<../LLM/MechanisticInterpretability/report.md>) | 机制可解释性：从特征猜想走向可检验的计算机制 | topic-research | 2026-10-30 | current |
+| [LLM/MechanisticInterpretability/report.md](<../LLM/MechanisticInterpretability/report.md>) | 机制可解释性：从特征猜想走向可检验的计算机制 | topic-research | 2026-11-07 | current |
 
 ## MiMo (1)
 
@@ -431,13 +431,13 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Agents/SoftwareEngineeringAgents/report.md](<../Agents/SoftwareEngineeringAgents/report.md>) | 软件工程 Agent：从理解 issue 到验证 patch | topic-research | 2026-10-30 | current |
+| [Agents/SoftwareEngineeringAgents/report.md](<../Agents/SoftwareEngineeringAgents/report.md>) | 软件工程 Agent：从理解 issue 到验证 patch | topic-research | 2026-11-07 | current |
 
 ## SpeculativeDecoding (1)
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-31 | needs-review |
+| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-11-07 | needs-review |
 
 ## StabilityAI (1)
 

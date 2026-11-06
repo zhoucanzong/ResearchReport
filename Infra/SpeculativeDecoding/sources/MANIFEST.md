@@ -4,7 +4,7 @@
 > 需要回看原文时：按下面的 arXiv 链接现取；本地缓存可选（`.paper-cache/<id>@<版本>/`），缓存同样不入库。
 > **代码仓库**只记录 `仓库 @ commit` 与用到的 `文件:行`，**源码不入库**。
 
-## 1. 论文（48 个精读分册覆盖 50 项工作；EAGLE 系列一册含三篇）
+## 1. 论文（53 个研究精读覆盖 55 项工作；EAGLE 系列一册含三篇）
 
 | # | 分册（我们的精读） | arXiv ID | 版本 | 版本日期 | 标题（arXiv 元数据，逐条核实） | 第一作者（核实） | license | 去哪找原文 |
 | --: | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
@@ -54,6 +54,11 @@
 | 44 | [`papers/2607.05147-dspark.md`](<../papers/2607.05147-dspark.md>) | 2607.05147 | v1 | 2026-07-06 | DSpark: Confidence-Scheduled Speculative Decoding with Semi-Autoregressive Generation | Cheng, Xin | CC BY 4.0 | https://arxiv.org/abs/2607.05147v1 |
 | 45 | [`papers/2609.36173-dspine.md`](<../papers/2609.36173-dspine.md>) | 2609.36173 | v1 | 2026-09-28 | Draft in Parallel, Condition Through Depth: Adjacent Causal Injection for Speculative Decoding | Zhang, Haohui | CC BY 4.0 | https://arxiv.org/abs/2609.36173v1 |
 | 46 | [`papers/2609.39972-ubtree.md`](<../papers/2609.39972-ubtree.md>) | 2609.39972 | v1 | 2026-09-30 | UBTree: Parallel Tree Drafting via Unigram and Bigram Models for Speculative Decoding | Liang, Chumeng | CC BY 4.0 | https://arxiv.org/abs/2609.39972v1 |
+| 47 | [`papers/2610.22543-spot.md`](<../papers/2610.22543-spot.md>) | 2610.22543 | v2 | 2026-10-26 | On the SPOT: Enhancing Speculative Decoding for Diffusion Language Models via Commit-Order Prediction | Shlomi, Eliezer | CC BY 4.0 | https://arxiv.org/abs/2610.22543v2 |
+| 48 | [`papers/2610.31819-speculative-diffusion.md`](<../papers/2610.31819-speculative-diffusion.md>) | 2610.31819 | v1 | 2026-10-22 | Speculative Diffusion is a Tale of Two Tradeoffs | Zorel, Aaron | CC BY 4.0 | https://arxiv.org/abs/2610.31819v1 |
+| 49 | [`papers/2610.38331-soft-mtp.md`](<../papers/2610.38331-soft-mtp.md>) | 2610.38331 | v1 | 2026-10-28 | Multi-Token Prediction Done Right | Teoh, Jayden | CC BY 4.0 | https://arxiv.org/abs/2610.38331v1 |
+| 50 | [`papers/2611.05345-adversarial-speculative-reasoning.md`](<../papers/2611.05345-adversarial-speculative-reasoning.md>) | 2611.05345 | v1 | 2026-11-03 | Adversarial Speculative Reasoning Improves Long Horizon Agents | Luo, Hongyin | CC BY 4.0 | https://arxiv.org/abs/2611.05345v1 |
+| 51 | [`papers/2611.05611-hybrid-spark.md`](<../papers/2611.05611-hybrid-spark.md>) | 2611.05611 | v1 | 2026-11-03 | Hybrid Spark: Adaptive Speculative Decoding That Lets the Content Choose the Drafter | Ranjan, Ekagra | CC BY 4.0 | https://arxiv.org/abs/2611.05611v1 |
 
 ### 1.1 ACL Anthology 正式会议论文（3 篇）
 

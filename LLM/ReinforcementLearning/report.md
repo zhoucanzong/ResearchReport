@@ -33,6 +33,19 @@ status: current
 | 在线偏好学习 / 奖励模型 RL | 当前策略采样回答，偏好模型或 reward model 打分 | 在线 DPO/IPO、PPO 等 | 需要在当前策略产生的回答上持续校准偏好，且能够承担重复标注/打分 | 评分器系统误差会被迭代放大；策略与评判器共同漂移 |
 | RLVR / 交互式 agent RL | 当前策略产生答案或完整环境轨迹，由答案、测试或最终状态给可执行奖励 | REINFORCE、PPO、GRPO/RLOO 以及 turn/token 级变体 | 数学/代码等答案可验任务；可重置、可观测且奖励可编程的环境 | verifier 漏洞、稀疏延迟奖励、低成功率导致无有效探索；长轨迹 credit assignment 和环境状态分布迁移 |
 
+```mermaid
+flowchart LR
+    P[Prompt / 环境状态] --> M[当前策略采样轨迹]
+    M --> V[人类偏好、reward model 或可执行 verifier]
+    V --> R[奖励/优势估计]
+    R --> U[策略更新]
+    U --> M
+    V -.目标或判分错误.-> H[奖励投机 / reward hacking]
+    U -.策略变更后分布漂移.-> D[旧偏好或奖励失准]
+```
+
+RL 的研究对象不是单独一个优化器，而是轨迹、反馈和更新组成的闭环。反馈越自动、越便宜，越需要检查它是否真的测到目标行为；策略更新后也要重新审视原来 reward model、数据和 verifier 的适用范围。
+
 **不要把离线偏好对照“online RL”当成一个单一实验变量。** 两种流程往往连反馈来源、数据规模和优化目标也不同。Calandriello 等人在同一篇偏好学习研究中把对照做得更干净：T5X-770M 策略从同一摘要 SFT 检查点出发，使用 T5X-3B 偏好/奖励模型，在 TL;DR 偏好训练数据上训练评价器，并在 XSum prompt 上在线采样；side-by-side 评价由 PaLM 2 judge 给出。作者的 Table 2 是**在线方法之间**的摘要偏好比较，IPO 与 IPO-MD 在该设置中表现稳健；附录 Figure 3–4 才呈现 online 与 offline 版本，并指出这套预训练初始化使在线方法更容易采到好样本。论文也明确将结论限定在摘要，要求在通用对话上继续验证。[1 §6.1–6.2、Appendix B.1] 这说明“数据是否跟着策略刷新”可能重要，但不是普适的 DPO 对 RL 排名。[逐篇精读](papers/online-preference.md)
 
 ## 可验证奖励不等于奖励可靠

@@ -1,6 +1,6 @@
 # 扩散语言模型与投机解码：草稿、验证和生成目标
 
-> **读前先分清研究对象**：扩散语言模型可以直接生成文本，也可以给自回归模型提出待验证草稿；还可以给自己提出后续去噪状态。三种角色的 target、正确性保证与速度基线不同。本篇把库内 [投机解码专题](../report.md) 和 [扩散语言模型专题](../../../LLM/DiffusionLM/report.md) 接起来，分析这些交叉线索怎样共享机制、又在哪里分开。
+> **读前先分清研究对象**：扩散语言模型可以直接生成文本，也可以给自回归模型提出待验证草稿；还可以给自己提出后续去噪状态，或提供近似 AR target 的候选。不同角色的 target、正确性保证与速度基线不同。本篇把库内 [投机解码专题](../report.md) 和 [扩散语言模型专题](../../../LLM/DiffusionLM/report.md) 接起来，分析这些交叉线索怎样共享机制、又在哪里分开。
 
 ## 一张图：谁在生成，谁在验收
 
@@ -14,20 +14,22 @@ flowchart LR
   B -.有限采样近似 target 质量.-> C
 ```
 
-上面第一条是 **DFlash 家族**：diffusion 只负责提议，强 AR 模型决定最终输出。第二条包括 **Spiffy** 和 **PV-Decoding**：同一个 dLLM 生成候选状态或暂填 token，再由它自己验证；两者的验证规则与正确性主张不同。最后的虚线是 **PoE-Bridge**：DLM 提供并行候选，AR 分布通过中间桥接和有限重要性采样提高候选质量；论文没有承诺有限预算下严格保持 AR target 分布。
+上面第一条是 **DFlash 家族**：diffusion 只负责提议，强 AR 模型决定最终输出。第二条包括 **Spiffy、PV-Decoding 与 SPOT**：同一个 dLLM 生成候选状态、暂填 token 或未来提交顺序，再由它自己验证；三者验证规则与正确性主张不同。最后的虚线包括 **PoE-Bridge** 与 **Speculative Diffusion**：前者用中间桥接和有限重要性采样提高候选质量，后者把 AR verifier 向 proposal 方向移动以换接受率；均不能笼统视作有限预算下严格保持 AR target 分布。
 
 “用了扩散”本身无法回答系统究竟快多少、生成的又是谁的分布。读每篇论文先找四件事：目标分布、候选从哪来、target 如何验收、计时把哪些阶段算进去。
 
-## 三种扩散角色的边界
+## 四种扩散角色的边界
 
 | 角色 | 代表工作 | 候选产生方式 | 最终质量由谁定义 | 正确性或质量主张 |
 |---|---|---|---|---|
 | **独立块 draft，AR target** | DFlash、DFlare、DSpark、DSpine、DDTree、DARTree、PRESTO、UBTree、DFlow | 块式并行 draft 提出未来 token；可恢复块内前缀依赖、保留多路径树，或把前轮 verifier 表示送入下轮 draft | AR target | 由 target 验证的算法可保持 target 分布；提议质量、候选覆盖和状态处理影响接受率与成本 |
-| **dLLM 自投机 / 验证门控** | [Spiffy](../papers/2509.18085-spiffy.md)、[PV-Decoding](../papers/2026.findings-emnlp.2228-pv-decoding.md)；PRESTO 也拓展到 hybrid/self-speculative 设置 | Spiffy 对未来去噪 state 建图并精确匹配；PV 按置信度暂填 token，再用 argmax 一致性和阈值筛选 | 原始 dLLM | Spiffy 证明其接受规则保持原 dLLM 分布；PV 明确不保持 trajectory/distribution，只报告经验精度—前向轮数折衷 |
-| **DLM proposal，AR 质量桥接** | PoE-Bridge | DLM 并行采样，经 DLM/AR product-of-experts 中间分布和采样校正 | AR 是质量参照 | 有限候选数时不严格无损，报告 accuracy 与吞吐的折衷 |
+| **dLLM 自投机 / 验证门控** | [Spiffy](../papers/2509.18085-spiffy.md)、[PV-Decoding](../papers/2026.findings-emnlp.2228-pv-decoding.md)、[SPOT](../papers/2610.22543-spot.md)；PRESTO 也拓展到 hybrid/self-speculative 设置 | Spiffy 对未来去噪 state 建图；PV 按置信度暂填 token；SPOT 预测下一提交位置并构建状态树 | 原始 dLLM | Spiffy 与 SPOT 以各自 verifier 保持原轨迹/分布；PV 明确是有损经验折衷 |
+| **DLM proposal，AR 质量桥接** | [PoE-Bridge](../papers/2606.08048-poe-bridge.md)、[Speculative Diffusion](../papers/2610.31819-speculative-diffusion.md) | DLM 并行提出 token；可经 product-of-experts 桥接，或调节 verifier 向 draft 移动的程度 | AR 是质量参照 | PoE-Bridge 的有限候选和 Speculative Diffusion 的单步 TV 预算都不能直接推出严格的多 token 序列分布等价 |
 | **独立扩散生成器** | LLaDA、Block Diffusion、SDAR、CARD、LLaDA 2.x | 迭代去噪、块级并行或 token editing | 扩散模型自身 | 论文比较该生成器的质量、长度与延迟；没有 AR target verifier 就不构成 target-preserving speculative decoding |
 
 最后一行是 [扩散语言模型报告](../../../LLM/DiffusionLM/report.md) 的主体。它问“模型本身怎样学会去噪、怎样并行生成或修订”；前三行问“草稿能否被另一个明确的分布接受”。论文可能兼有多种机制，分类应按具体实验路径而定，不能只看模型名字。
+
+最近的两篇工作把扩散与正确性问题推向不同方向。[SPOT](../papers/2610.22543-spot.md) 将 dLLM 并行解码改写成“预测下一步提交哪个位置”，再用共享 Gumbel 噪声下的状态相等验证，目标是保持原 dLLM 轨迹；[Speculative Diffusion](../papers/2610.31819-speculative-diffusion.md) 把去噪努力和接受宽松度作为两个连续旋钮，主动允许下一 token 分布偏离 AR verifier。前者尝试**精确跳过 target 状态**，后者研究**给定偏移预算能换多少接受率**，二者的质量与保证不能混称。
 
 ## 为什么块扩散适合做 AR 草稿
 

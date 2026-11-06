@@ -96,6 +96,16 @@
 
 精读入口按研究机制而不是发布数量扩展；类别性排除表示目前不单独拆册，不等于该方向不重要。ID、标题、版本和原文定位以 [MANIFEST](MANIFEST.md) 与各分册为准。扩散交叉、代码来源和其他不适合单篇精读的线索继续按主题关联，不拿候选数量或篇幅衡量覆盖深度。
 
+### 近期补入：机制线的新转折
+
+- [Hybrid Spark](../papers/2611.05611-hybrid-spark.md)：让 n-gram 复用和模型 drafter 共享在线验证预算。
+- [Adversarial Speculative Reasoning](../papers/2611.05345-adversarial-speculative-reasoning.md)：从接受率最大化转向关键决策位置的数值精度分配。
+- [SPOT](../papers/2610.22543-spot.md)：面向 dLLM 自身 commit-order 的树草稿与精确状态验证。
+- [Speculative Diffusion](../papers/2610.31819-speculative-diffusion.md)：联合研究去噪预算与单步分布偏移。
+- [Soft-MTP](../papers/2610.38331-soft-mtp.md)：将 MTP 预训练目标和推理期自投机连接起来。
+
+这几篇并非同一类算法的最新排名；它们分别接在草稿来源、决策边界、dLLM 生成顺序、近似 verifier 和预训练目标等不同谱系节点上。精读入口按研究问题拆分，避免把“最近发表”当作技术关系。
+
 ## 5. 下一轮候选（按价值排序）
 
 1. **长 CoT 训练长度失配的闭环**：将 [TTS](../papers/2605.09329-test-time-speculation.md) 与[独立 draft 长位置诊断](../papers/2610.30644-long-position-acceptance.md)放到同一 target / 长输出 / 统一 `def2` 与 sampling \(\alpha\) 口径下比较，并纳入已训练 DFlash / EAGLE-3。关键是分清跨生成位置衰减来自训练前缀失配、模型族差异还是可见排名指标；当前两篇论文各自提供独立基线或在线修复证据，尚未完成同一协议的闭环。

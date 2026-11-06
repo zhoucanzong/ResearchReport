@@ -39,6 +39,23 @@ y = x + Σ(i ∈ TopK(x)) g_i(x) · E_i(x)
 
 MoE 通常替换 Transformer 的 FFN，而不是整个 block。注意力仍处理序列信息；MoE 条件计算主要发生在 token-wise FFN。扩大专家容量不会自动改善长上下文位置利用、视觉感知或推理监督，这些问题需要与本层路由机制分别研究。
 
+```mermaid
+flowchart LR
+    X[Token hidden state] --> A[Attention / residual trunk]
+    A --> R[Router scores]
+    R --> T[Top-K experts]
+    T --> D[Dispatch]
+    D --> E1[Expert 1]
+    D --> E2[Expert 2]
+    D --> EK[Expert K]
+    E1 --> C[Weighted combine]
+    E2 --> C
+    EK --> C
+    C --> Y[Residual output]
+```
+
+稀疏路由减少的是每个 token 实际执行的专家 FFN 数；router、容量限制、跨设备 dispatch 和专家权重驻留仍有成本。Top-K 也不是统一配置：Top-1、Top-2、专家选 token等设计会改变 token 覆盖、专家组合和负载边界。
+
 ## 2. 路由方向和容量管理
 
 ### 2.1 Token-choice：token 选 Top-K 专家

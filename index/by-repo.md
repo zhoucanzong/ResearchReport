@@ -16,7 +16,7 @@
 * [AI4Science/MaterialsDiscovery/report.md](<../AI4Science/MaterialsDiscovery/report.md>) — 76 行
 * [AI4Science/MathematicalDiscovery/report.md](<../AI4Science/MathematicalDiscovery/report.md>) — 78 行
 * [AI4Science/Neuroscience/report.md](<../AI4Science/Neuroscience/report.md>) — 113 行
-* [AI4Science/ProteinDesign/report.md](<../AI4Science/ProteinDesign/report.md>) — 94 行
+* [AI4Science/ProteinDesign/report.md](<../AI4Science/ProteinDesign/report.md>) — 109 行
 * [AI4Science/SingleCellPerturbation/report.md](<../AI4Science/SingleCellPerturbation/report.md>) — 87 行
 * [AI4Science/WeatherClimate/report.md](<../AI4Science/WeatherClimate/report.md>) — 89 行
 
@@ -24,52 +24,52 @@
 
 * [AIGC/3DGen/report.md](<../AIGC/3DGen/report.md>) — 389 行
 * [AIGC/AudioGen/report.md](<../AIGC/AudioGen/report.md>) — 243 行
-* [AIGC/AvatarGen/report.md](<../AIGC/AvatarGen/report.md>) — 172 行
+* [AIGC/AvatarGen/report.md](<../AIGC/AvatarGen/report.md>) — 186 行
 * [AIGC/ControllableGen/report.md](<../AIGC/ControllableGen/report.md>) — 620 行
 * [AIGC/DiT/report.md](<../AIGC/DiT/report.md>) — 605 行
-* [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) — 853 行
-* [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) — 479 行
-* [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) — 233 行
-* [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) — 209 行
+* [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) — 867 行
+* [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) — 492 行
+* [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) — 246 行
+* [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) — 221 行
 
 ## Agents (4)
 
 * [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) — 67 行
 * [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) — 325 行
 * [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) — 100 行
-* [Agents/SoftwareEngineeringAgents/report.md](<../Agents/SoftwareEngineeringAgents/report.md>) — 104 行
+* [Agents/SoftwareEngineeringAgents/report.md](<../Agents/SoftwareEngineeringAgents/report.md>) — 108 行
 
 ## Evaluation (2)
 
-* [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) — 123 行
+* [Evaluation/EvaluationScience/report.md](<../Evaluation/EvaluationScience/report.md>) — 137 行
 * [Evaluation/ScientificDiscovery/report.md](<../Evaluation/ScientificDiscovery/report.md>) — 71 行
 
 ## Infra (5)
 
 * [Infra/KVCachePD/report.md](<../Infra/KVCachePD/report.md>) — 84 行
-* [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) — 244 行
+* [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) — 259 行
 * [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) — 81 行
-* [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) — 545 行
+* [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) — 555 行
 * [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) — 295 行
 
 ## LLM (17)
 
 * [LLM/Alignment/report.md](<../LLM/Alignment/report.md>) — 128 行
 * [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) — 242 行
-* [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) — 96 行
+* [LLM/DiffusionLM/report.md](<../LLM/DiffusionLM/report.md>) — 98 行
 * [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) — 122 行
 * [LLM/KnowledgeEditing/report.md](<../LLM/KnowledgeEditing/report.md>) — 84 行
-* [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) — 176 行
-* [LLM/MechanisticInterpretability/report.md](<../LLM/MechanisticInterpretability/report.md>) — 131 行
-* [LLM/MoE/report.md](<../LLM/MoE/report.md>) — 141 行
+* [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) — 194 行
+* [LLM/MechanisticInterpretability/report.md](<../LLM/MechanisticInterpretability/report.md>) — 137 行
+* [LLM/MoE/report.md](<../LLM/MoE/report.md>) — 158 行
 * [LLM/ModelSafety/report.md](<../LLM/ModelSafety/report.md>) — 106 行
 * [LLM/OperationsResearch/report.md](<../LLM/OperationsResearch/report.md>) — 90 行
-* [LLM/RAG/report.md](<../LLM/RAG/report.md>) — 153 行
+* [LLM/RAG/report.md](<../LLM/RAG/report.md>) — 168 行
 * [LLM/RealtimeMultimodal/report.md](<../LLM/RealtimeMultimodal/report.md>) — 96 行
-* [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) — 152 行
+* [LLM/ReasoningModels/report.md](<../LLM/ReasoningModels/report.md>) — 170 行
 * [LLM/SyntheticData/report.md](<../LLM/SyntheticData/report.md>) — 111 行
 * [LLM/TestTimeAdaptation/report.md](<../LLM/TestTimeAdaptation/report.md>) — 84 行
-* [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) — 75 行
+* [LLM/TrainingData/report.md](<../LLM/TrainingData/report.md>) — 89 行
 * [LLM/VLM/report.md](<../LLM/VLM/report.md>) — 131 行
 
 ## Models (23)
@@ -105,8 +105,8 @@
 ## WorldModel (3)
 
 * [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) — 54 行
-* [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) — 571 行
-* [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) — 526 行
+* [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) — 585 行
+* [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) — 540 行
 
 ## https://github.com/FLock-io/this-that-model@6af11c63c8bb260aa4bed2b7717f33f25decd16e (1)
 
@@ -143,4 +143,4 @@
 
 ## null (1)
 
-* [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) — 109 行
+* [LLM/ReinforcementLearning/report.md](<../LLM/ReinforcementLearning/report.md>) — 122 行

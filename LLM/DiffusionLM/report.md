@@ -94,6 +94,8 @@ DiffusionGemma 把本专题的扩散解码路线落到一个可下载的开放�
 
 纳入边界：视觉生成 diffusion 不属于本专题；以 diffusion drafter 为 AR target 加速、对 dLLM 自身做 self-speculation、或用 DLM 候选逼近 AR 质量的工作，统一见[投机解码的扩散交叉专题](../../Infra/SpeculativeDecoding/topics/diffusion-drafters.md)。本报告继续聚焦扩散模型本身的训练目标、去噪/块机制、长度控制和编辑能力。若论文只在 related work 提及 LLaDA，或只给速度数字却未交代任务与计时条件，不作为主线证据。
 
+其中 [SPOT 精读](../../Infra/SpeculativeDecoding/papers/2610.22543-spot.md) 是值得沿主线补读的交叉工作：它不把 dLLM 当作 AR 草稿，而是预测 dLLM 自身下一步提交哪个 mask 位置，并用状态相等验证保持 draft-free 轨迹。它连接了本专题的生成顺序问题与投机解码的候选树/验证问题。
+
 ## 尚未解决的问题
 
 - 双向去噪、块级自回归和因果扩散模型在相同 token、算力、数据质量、模型规模下，能力与训练效率如何变化？

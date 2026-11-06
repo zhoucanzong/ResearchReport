@@ -3,7 +3,7 @@ display_name: 软件工程 Agent
 type: topic-research
 domain: Agents
 subject: SoftwareEngineeringAgents
-date: 2026-10-30
+date: 2026-11-07
 evidence: 代表性论文原文精读与评测机制综合
 status: current
 ---
@@ -36,6 +36,8 @@ flowchart LR
 
 这条循环不同于“模型生成一次 patch 再打分”：测试输出会变成下一步观察，决定 Agent 是否修复、回滚或解释。错误恢复、状态隔离和停止条件是算法行为的一部分。
 
+长程 coding 还引出一条与“模型窗口越大越好”不同的研究线：每轮是否都要把完整交互历史带回 prompt，还是可以把任务压成短的语义状态？[You Don’t Need Long Context](../../LLM/LongContext/papers/2611.05306-you-dont-need-long-context.md) 比较逐步累积、临近窗口上限压缩和每个动作后压缩；其结果强调上下文策略是 Agent/harness 设计变量，且不同开权重模型对紧缩预算的敏感度不一。阅读时应把状态摘要当成系统记忆机制检查：摘要遗漏后能否通过仓库、测试或工具状态重新取得证据？
+
 ## 2. Agent 与工具环境怎样组成执行环
 
 ### 2.1 SWE-agent：为仓库工作设计 action/observation 接口
@@ -67,6 +69,8 @@ OpenHands 把 Agent、动作事件流、状态记录和执行 sandbox 作为可�
 | [SWE-RL](papers/train-swe-rl.md) | 从历史 issue / PR 与 patch 构造训练样本 | GRPO 奖励 patch 与唯一 oracle patch 的相似度 | patch 相似度不等于执行测试通过；正确的不同写法可能被低估 |
 
 **训练一个软件工程 Agent，至少要说明数据是什么、环境有没有执行、成功标签从哪来、策略是否在线更新。** SWE-Gym 的可运行环境将测试 pass 转成训练信号；SWE-smith 将构造任务规模化但把任务分布绑定到生成器与测试；SWE-RL 从软件演化记录优化 patch 生成，但用 patch 相似度近似修复质量。它们可互补，不能只因都使用 GitHub 数据就合并成同一种训练路线。
+
+一项新的交叉研究进一步改变了 drafter 的训练目标：[*Adversarial Speculative Reasoning*](../../Infra/SpeculativeDecoding/papers/2611.05345-adversarial-speculative-reasoning.md) 不只追求更多 draft token 被接受，而是训练它在特定决策点提出更易被拒绝的 token，让 target 从新验证块起点采样关键动作。作者在两种大模型系统和长程 coding benchmark 上报告正向变化，但证据受限于决策点标注、有限目标模型和具体低精度推理路径；它提出的是一个值得检验的状态精度分配假设，不是普遍提升代码能力的保证。
 
 合成任务尤其需要区分“任务实例数”和“有效训练轨迹数”：环境可能无法安装，bug 没有被测试触发，教师轨迹未能修复，或过滤器排除了某种合法方案。每一层过滤都会改变学生接触到的工程行为分布。
 

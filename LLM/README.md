@@ -30,21 +30,21 @@
 | :-- | :-- | --: |
 | **模型对齐与后训练** | [模型对齐与后训练：方法、目标与证据边界](<Alignment/report.md>) | 128 行 |
 | **决策模型（Decision Models）** | [决策模型综述：把概率判断变成可行动的选择](<DecisionModels/report.md>) | 242 行 |
-| **扩散语言模型** | [扩散语言模型：从随机遮盖到大规模并行生成](<DiffusionLM/report.md>) | 96 行 |
+| **扩散语言模型** | [扩散语言模型：从随机遮盖到大规模并行生成](<DiffusionLM/report.md>) | 98 行 |
 | **OCR 与文档解析** | [OCR 与文档解析：从字符识别到结构还原](<DocumentParsing/report.md>) | 122 行 |
 | **知识编辑与机器遗忘** | [知识编辑与机器遗忘：更新、隔离还是移除模型信息？](<KnowledgeEditing/report.md>) | 84 行 |
-| **长上下文** | [长上下文：从可接收长度到有效利用](<LongContext/report.md>) | 176 行 |
-| **机制可解释性** | [机制可解释性：从特征猜想走向可检验的计算机制](<MechanisticInterpretability/report.md>) | 131 行 |
-| **混合专家模型（MoE）** | [混合专家模型：路由、负载均衡与系统通信](<MoE/report.md>) | 141 行 |
+| **长上下文** | [长上下文：从可接收长度到有效利用](<LongContext/report.md>) | 194 行 |
+| **机制可解释性** | [机制可解释性：从特征猜想走向可检验的计算机制](<MechanisticInterpretability/report.md>) | 137 行 |
+| **混合专家模型（MoE）** | [混合专家模型：路由、负载均衡与系统通信](<MoE/report.md>) | 158 行 |
 | **模型安全与越狱评测** | [大语言模型安全：攻击面、行为防御与评测边界](<ModelSafety/report.md>) | 106 行 |
 | **大模型辅助运筹建模与求解** | [大模型辅助运筹建模与求解：从自然语言到可验证的决策](<OperationsResearch/report.md>) | 90 行 |
-| **检索增强生成（RAG）** | [检索增强生成：检索误差怎样传到答案](<RAG/report.md>) | 153 行 |
+| **检索增强生成（RAG）** | [检索增强生成：检索误差怎样传到答案](<RAG/report.md>) | 168 行 |
 | **实时多模态交互** | [实时多模态交互：流式输入、全双工轮次与在线评测](<RealtimeMultimodal/report.md>) | 96 行 |
-| **推理模型与测试时计算** | [推理模型：测试时计算怎样变成更可靠的解题](<ReasoningModels/report.md>) | 152 行 |
-| **LLM 后训练中的强化学习** | [LLM 后训练中的强化学习：轨迹从哪里来，策略何时更新](<ReinforcementLearning/report.md>) | 109 行 |
+| **推理模型与测试时计算** | [推理模型：测试时计算怎样变成更可靠的解题](<ReasoningModels/report.md>) | 170 行 |
+| **LLM 后训练中的强化学习** | [LLM 后训练中的强化学习：轨迹从哪里来，策略何时更新](<ReinforcementLearning/report.md>) | 122 行 |
 | **合成数据与自训练** | [合成数据与自训练：模型生成的数据怎样变成训练信号？](<SyntheticData/report.md>) | 111 行 |
 | **测试时学习与适应** | [测试时学习与适应：模型在使用时如何更新](<TestTimeAdaptation/report.md>) | 84 行 |
-| **训练数据策展** | [训练数据策展：筛选、去重与配比如何改变训练结果](<TrainingData/report.md>) | 75 行 |
+| **训练数据策展** | [训练数据策展：筛选、去重与配比如何改变训练结果](<TrainingData/report.md>) | 89 行 |
 | **视觉语言模型（VLM）** | [视觉语言模型：视觉表示如何进入语言模型](<VLM/report.md>) | 131 行 |
 
 ## 📎 子文档
@@ -132,12 +132,20 @@
 </details>
 
 <details>
-<summary><b>机制可解释性</b>（4 份）</summary>
+<summary><b>长上下文</b>（1 份）</summary>
+
+* [papers/2611.05306-you-dont-need-long-context.md](<LongContext/papers/2611.05306-you-dont-need-long-context.md>) — 52 行 / 5,831 B
+
+</details>
+
+<details>
+<summary><b>机制可解释性</b>（5 份）</summary>
 
 * [papers/2024-scaling-monosemanticity.md](<MechanisticInterpretability/papers/2024-scaling-monosemanticity.md>) — 23 行 / 3,145 B
 * [papers/2025-attribution-graphs.md](<MechanisticInterpretability/papers/2025-attribution-graphs.md>) — 25 行 / 3,226 B
 * [papers/2209.11895-induction-heads.md](<MechanisticInterpretability/papers/2209.11895-induction-heads.md>) — 30 行 / 2,829 B
 * [papers/2211.00593-ioi-circuit.md](<MechanisticInterpretability/papers/2211.00593-ioi-circuit.md>) — 35 行 / 3,234 B
+* [papers/2611.05344-in-context-learning-circuit.md](<MechanisticInterpretability/papers/2611.05344-in-context-learning-circuit.md>) — 41 行 / 5,270 B
 
 </details>
 

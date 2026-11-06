@@ -38,6 +38,20 @@ display_name: 扩散模型
 
 自 2020 年 DDPM（Denoising Diffusion Probabilistic Models）重新点燃该方向以来，扩散模型经历了从像素空间到潜空间、从数百步迭代到单步生成、从概率建模到确定性流匹配的深刻架构演进。本报告系统梳理这一演进脉络，重点剖析每一代模型的结构差异、数学本质与工程权衡，为理解 Stable Diffusion、SD3、FLUX 等现代系统的底层设计提供完整知识框架。
 
+```mermaid
+flowchart LR
+    X0[训练图像 / latent x₀] --> N[前向过程<br/>按噪声日程扰动]
+    N --> XT[带噪状态 xₜ]
+    XT --> D[去噪网络<br/>输入 xₜ、时间 t、条件 c]
+    D --> P[预测噪声 / score / velocity]
+    P --> S[训练目标对齐所选参数化]
+    Z[采样起点 z_T] --> R[反向采样器<br/>DDPM / DDIM / ODE]
+    R -->|多步更新| D
+    R --> X0H[生成样本]
+```
+
+训练目标决定网络学什么，采样器决定如何沿预测场回到数据；DDIM 换更新路径不等于换掉 DDPM 已训练网络，Flow Matching 则连预测目标与概率路径也一起改变。
+
 ---
 
 ## 2. 发展时间线

@@ -3,7 +3,7 @@ display_name: 机制可解释性
 type: topic-research
 domain: LLM
 subject: MechanisticInterpretability
-date: 2026-10-30
+date: 2026-11-07
 evidence: 代表论文原文精读与机制证据综合
 status: current
 ---
@@ -12,7 +12,7 @@ status: current
 
 > 本专题讨论如何把模型内部计算还原为人能检查的部件、路径和算法。它不同于只观察注意力图、训练探针，或让模型用自然语言解释自己。核心问题是：**当我们说某个内部特征或电路“造成了”某个输出时，证据究竟有多强？**
 
-推荐读序：[电路与机制概览](#1-解释模型内部机制究竟要说明什么) → [Induction Heads](papers/2209.11895-induction-heads.md) 看小型注意力电路如何通过干预建立因果证据 → [IOI 电路](papers/2211.00593-ioi-circuit.md) 看指定自然语言任务中的路径追踪、冗余和完整性 → 阅读 [Toy Models of Superposition 原文](https://arxiv.org/html/2209.10652v1)理解特征如何共享表示空间 → [SAE 扩展到大模型](papers/2024-scaling-monosemanticity.md) → [Circuit Tracing](papers/2025-attribution-graphs.md)看特征如何被组装为计算图，以及近年的[神经元基底路线](https://arxiv.org/html/2601.22594v2)如何挑战“必须先训练 SAE”的假设。
+推荐读序：[电路与机制概览](#1-解释模型内部机制究竟要说明什么) → [Induction Heads](papers/2209.11895-induction-heads.md) 看小型注意力电路如何通过干预建立因果证据 → [IOI 电路](papers/2211.00593-ioi-circuit.md) 看指定自然语言任务中的路径追踪、冗余和完整性 → [任意标签 ICL 电路](papers/2611.05344-in-context-learning-circuit.md) 看写入 key/value、门控与反近因偏置怎样被组合验证 → 阅读 [Toy Models of Superposition 原文](https://arxiv.org/html/2209.10652v1)理解特征如何共享表示空间 → [SAE 扩展到大模型](papers/2024-scaling-monosemanticity.md) → [Circuit Tracing](papers/2025-attribution-graphs.md)看特征如何被组装为计算图，以及近年的[神经元基底路线](https://arxiv.org/html/2601.22594v2)如何挑战“必须先训练 SAE”的假设。
 
 ## 1. 解释模型内部机制究竟要说明什么
 
@@ -57,6 +57,12 @@ IOI（Indirect Object Identification）任务要求模型在模板化自然语�
 它比一个干净的两层模式复制更接近在 GPT‑2 Small 上解释指定自然语言行为，但仍是模板化 IOI 任务，不等于广泛语言理解。论文也显示电路识别会遇到问题：存在备用 Name Mover Heads，常规电路被消融后它们才发挥作用；一些已知 induction heads 也参与 IOI 中非预期的子过程。**干预后的电路可能不是原模型平常采用的唯一实现**，而且切掉某部件会暴露补偿路径、改变其它部件的作用。因此，单个头造成输出变化是因果证据，却不足以证明完整电路已经找全。
 
 两项早期工作应并读：Induction Heads 适合看单一、可组合的算法路径；IOI 适合看任务电路如何被逐步发现，以及冗余、抑制和不完整解释如何出现。它们不是两个可直接互换的 benchmark。
+
+### 2.3 任意标签 ICL：写入示例键值，再检索并校准
+
+Gao 与 Gao 把任务限定为任意单 token 标签的 few-shot 句子分类，并在 Qwen3-4B、SmolLM3-3B、Llama-3.2-3B 上追踪“示例怎样教会模型临时标签映射”。示例句的类别信息由中间层写进标签 token 的 key，标签身份留在 value；高层 reader 根据查询句匹配这些 keys，再从对应槽位读回 label。早期 gate 决定是否启动读槽，另一些 brake heads 抵消“最后出现的标签更容易被选中”的近因偏置。[A Circuit for In-Context Learning 精读](papers/2611.05344-in-context-learning-circuit.md)
+
+这项研究把 ICL 机制从“发现某类头与行为相关”推进到一组可区分的写入、读取、门控和校准功能，并使用只改一处内容的 twin prompts、activation patching、群体消融检验它们的因果作用。跨三个模型复现的是功能关系的方向，不是相同层位或相同 head 清单；任务仍是受控句子分类，不能直接外推为开放域问答或复杂推理的通用电路。把它放在 induction/IOI 之后阅读，能看到研究从单一局部算法走向分布式任务机制，也能看到“同算法可由不同电路实现”的证据边界。
 
 ## 3. 为什么“特征”不一定等于“神经元”
 

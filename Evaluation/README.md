@@ -25,7 +25,7 @@
 
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
-| **评测科学** | [评测科学：分数何时支持“模型更好”或“能力泛化”](<EvaluationScience/report.md>) | 123 行 |
+| **评测科学** | [评测科学：分数何时支持“模型更好”或“能力泛化”](<EvaluationScience/report.md>) | 137 行 |
 | **科学发现的评测方法** | [AI for Science：从回顾性基准到闭环实验，怎样判断“发现”](<ScientificDiscovery/report.md>) | 71 行 |
 
 ## 📎 子文档

@@ -69,10 +69,14 @@ Medusa 头、EAGLE feature drafter、target 预训练中的 multi-token predicti
 | 直接优化一条路径的接受有效性 | [VSD](../papers/2602.05774-vsd.md) | 对 latent draft path 的整体接受概率作变分目标，同时保留 target path prior；用 EM 估计可接受路径，不是只拟合单条 greedy trajectory |
 | 直接优化固定窗口的接受长度 | [Acceptance-Aware Training](../papers/2609.24150-acceptance-aware-training.md) | greedy 用 EAL；sampling 用 WTV，二者都把“前面拒绝会让后缀作废”写入窗口目标，但它们对应不同的验证模式 |
 | 直接优化整段输出的验证轮数 | [EDR](../papers/2610.10411-expected-decoding-rounds.md) | 用 Markov reward process 与 anchor occupancy 建 expected decoding rounds；更全局，但当前论文固定 block size，exact round count 不等同硬件 wall-clock |
+| 预训练 MTP 的自蒸馏梯度 | [Soft-MTP](../papers/2610.38331-soft-mtp.md) | 将硬标签 MTP 梯度分解为 self-distillation KL 与残差，并以共享输出头上的梯度恢复技巧去掉 residual；它优化训练信号，不直接优化验证轮数 |
+| 用拒绝边界分配关键位置 | [Adversarial Speculative Reasoning](../papers/2611.05345-adversarial-speculative-reasoning.md) | drafter 在特定决策点刻意提出不受欢迎续写，令 target 从验证块首位采样；它把目标不一致变成有限精度位置分配策略，而非接受率目标 |
 
 读这些“位置”目标时，要和**生成到长 CoT 的跨位置退化**分开。[长 CoT 诊断](../papers/2610.30644-long-position-acceptance.md)在未用 target 输出训练的独立 draft 上，报告其有效范围内 greedy argmax 前缀一致率和 sampling 的真实分布接受概率都没有下降；但它并不否定 D-PACE / D-PAL 对**同一 draft block 内位置**的差异化权重。该诊断还说明 sampling 下 argmax 一致率可能下降而真实分布接受概率近乎不变，比较长序列结果时须确认统计的是哪一种指标。
 
 这张表展示的是目标粒度，不是新方法排行榜：**token 分布 → token 选择/输入对齐 → path/window 接受 → 全序列 round 数**。越靠后越接近推理效用，但也更依赖 rollout、target 概率、位置访问统计和训练算力。AAT、VSD、EDR 目前没有在完全一致的 drafter、数据、树预算和硬件下做横向控制比较。
+
+Soft-MTP 与以上 drafter objectives 又多一条纵向关系：它问 MTP 头在预训练阶段应学习“语料中的未来 token”还是“模型自己会给出的未来分布”。前者兼顾语言模型训练，后者更贴合自投机接受；梯度恢复技巧试图保留后者、同时复用前者已计算的 CE。它与 AAT/EDR 不同，尚未把最终目标写成接受长度或解码轮数；现有实验规模也不能直接代表超大规模训练收益。
 
 ## Drafter 什么时候更新，是另一条研究轴
 

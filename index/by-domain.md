@@ -43,7 +43,7 @@
 | [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) | 工具 Agent 安全：提示注入、权限与动作证据 | research | 2026-10-24 | current |
 | [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) | Agent 系统综述：从工具调用到可验证的长程闭环 | — | 2026-10-26 | — |
 | [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) | 电脑使用 Agent：从看见界面到交付完整工作流 | research | 2026-10-26 | current |
-| [Agents/SoftwareEngineeringAgents/report.md](<../Agents/SoftwareEngineeringAgents/report.md>) | 软件工程 Agent：从理解 issue 到验证 patch | topic-research | 2026-10-30 | current |
+| [Agents/SoftwareEngineeringAgents/report.md](<../Agents/SoftwareEngineeringAgents/report.md>) | 软件工程 Agent：从理解 issue 到验证 patch | topic-research | 2026-11-07 | current |
 
 ## Evaluation (2)
 
@@ -60,7 +60,7 @@
 | [Infra/MoEExecution/report.md](<../Infra/MoEExecution/report.md>) | MoE 执行：从专家路由到跨设备回收 | repo-research | 2026-10-30 | current |
 | [Infra/QuantizationEdge/report.md](<../Infra/QuantizationEdge/report.md>) | 模型量化与边缘部署研究报告 | topic-research | 2026-10-30 | current |
 | [Infra/ServingEvaluation/report.md](<../Infra/ServingEvaluation/report.md>) | 在线 LLM Serving：SLO、Goodput 与请求完整性 | research | 2026-10-24 | current |
-| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-10-31 | needs-review |
+| [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 投机解码（Speculative Decoding）技术专题 · 深度调研 | topic-research | 2026-11-07 | needs-review |
 | [Infra/TrainingInfra/report.md](<../Infra/TrainingInfra/report.md>) | 大模型训练基础设施与分布式训练研究报告 | topic-research | 2026-10-30 | needs-review |
 
 ## LLM (18)
@@ -73,7 +73,7 @@
 | [LLM/DocumentParsing/report.md](<../LLM/DocumentParsing/report.md>) | OCR 与文档解析：从字符识别到结构还原 | research | 2026-10-25 | current |
 | [LLM/KnowledgeEditing/report.md](<../LLM/KnowledgeEditing/report.md>) | 知识编辑与机器遗忘：更新、隔离还是移除模型信息？ | topic-research | 2026-10-30 | current |
 | [LLM/LongContext/report.md](<../LLM/LongContext/report.md>) | 长上下文：从可接收长度到有效利用 | — | — | — |
-| [LLM/MechanisticInterpretability/report.md](<../LLM/MechanisticInterpretability/report.md>) | 机制可解释性：从特征猜想走向可检验的计算机制 | topic-research | 2026-10-30 | current |
+| [LLM/MechanisticInterpretability/report.md](<../LLM/MechanisticInterpretability/report.md>) | 机制可解释性：从特征猜想走向可检验的计算机制 | topic-research | 2026-11-07 | current |
 | [LLM/MoE/report.md](<../LLM/MoE/report.md>) | 混合专家模型：路由、负载均衡与系统通信 | — | — | — |
 | [LLM/ModelSafety/report.md](<../LLM/ModelSafety/report.md>) | 大语言模型安全：攻击面、行为防御与评测边界 | topic-research | 2026-10-30 | current |
 | [LLM/OperationsResearch/report.md](<../LLM/OperationsResearch/report.md>) | 大模型辅助运筹建模与求解：从自然语言到可验证的决策 | research | 2026-10-25 | current |
