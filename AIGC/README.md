@@ -13,25 +13,44 @@
 ![Entries](https://img.shields.io/badge/Entries-9-3f51b5?style=flat-square)
 ![Panel](https://img.shields.io/badge/Panel-AIGC-9e9e9e?style=flat-square)
 
+## 专题内分析
+
+| 所属报告 | 分册入口 |
+| --- | --- |
+| 图像生成 | [组合性提示与图像生成评测：从单个对象到开放条件](<ImageGeneration/topics/compositionality-and-evaluation.md>) |
+
+[查看研究专题与分析分册](<../index/by-topic.md>)
+
+## 主报告
+
 | 条目 | 报告 | 规模 |
 | :-- | :-- | --: |
 | **3D 生成** | [3D 生成研究：表示、监督与几何一致性](<3DGen/report.md>) | 389 行 |
 | **音频与音乐生成** | [音频与音乐生成：从压缩表示到可控长序列](<AudioGen/report.md>) | 243 行 |
 | **数字人与 Avatar** | [数字人与 Avatar：身份、动作和声音如何合成到同一段视频](<AvatarGen/report.md>) | 186 行 |
-| **可控生成** | [可控生成（Controllable Generation）技术研究报告](<ControllableGen/report.md>) | 620 行 |
+| **可控生成** | [可控生成（Controllable Generation）技术研究报告](<ControllableGen/report.md>) | 624 行 |
 | **扩散 Transformer（DiT）** | [Diffusion Transformer (DiT) 架构演进研究报告](<DiT/report.md>) | 605 行 |
 | **扩散模型** | [扩散模型（Diffusion Models）基础框架与架构演进研究报告](<DiffusionModels/report.md>) | 867 行 |
 | **图像编辑与修复** | [图像编辑与修复：让目标变化与原图保留同时成立](<ImageEditing/report.md>) | 492 行 |
-| **图像生成** | [图像生成：表示、生成目标、条件控制与评测](<ImageGeneration/report.md>) | 246 行 |
+| **图像生成** | [图像生成：表示、生成目标、条件控制与评测](<ImageGeneration/report.md>) | 309 行 |
 | **视频生成** | [视频生成：从图像先验到时空建模](<VideoGen/report.md>) | 221 行 |
 
 ## 📎 子文档
 
 <details>
-<summary><b>图像生成</b>（2 份）</summary>
+<summary><b>图像生成</b>（11 份）</summary>
 
+* [papers/2305.10855-textdiffuser.md](<ImageGeneration/papers/2305.10855-textdiffuser.md>) — 37 行 / 3,344 B
 * [papers/2307.06350-t2i-compbench-plus.md](<ImageGeneration/papers/2307.06350-t2i-compbench-plus.md>) — 31 行 / 4,408 B
 * [papers/2310.11513-geneval.md](<ImageGeneration/papers/2310.11513-geneval.md>) — 31 行 / 4,427 B
+* [papers/2412.00136-fonts.md](<ImageGeneration/papers/2412.00136-fonts.md>) — 34 行 / 3,317 B
+* [papers/2512.16853-geneval2.md](<ImageGeneration/papers/2512.16853-geneval2.md>) — 30 行 / 2,725 B
+* [papers/2602.00249-saneval.md](<ImageGeneration/papers/2602.00249-saneval.md>) — 31 行 / 2,677 B
+* [papers/2604.00849-disco-subject-generation.md](<ImageGeneration/papers/2604.00849-disco-subject-generation.md>) — 33 行 / 3,031 B
+* [papers/2605.06170-dynt2i-eval.md](<ImageGeneration/papers/2605.06170-dynt2i-eval.md>) — 35 行 / 2,751 B
+* [papers/2605.22645-atelier-eval.md](<ImageGeneration/papers/2605.22645-atelier-eval.md>) — 35 行 / 3,202 B
+* [papers/2609.37709-vif-bench.md](<ImageGeneration/papers/2609.37709-vif-bench.md>) — 32 行 / 2,995 B
+* [topics/compositionality-and-evaluation.md](<ImageGeneration/topics/compositionality-and-evaluation.md>) — 53 行 / 5,470 B
 
 </details>
 

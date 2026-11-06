@@ -24,11 +24,11 @@
 | 3D 生成 | AIGC | [AIGC/3DGen/report.md](<../AIGC/3DGen/report.md>) | 0 | 389 | — |
 | 音频与音乐生成 | AIGC | [AIGC/AudioGen/report.md](<../AIGC/AudioGen/report.md>) | 0 | 243 | — |
 | 数字人与 Avatar | AIGC | [AIGC/AvatarGen/report.md](<../AIGC/AvatarGen/report.md>) | 0 | 186 | — |
-| 可控生成 | AIGC | [AIGC/ControllableGen/report.md](<../AIGC/ControllableGen/report.md>) | 0 | 620 | — |
+| 可控生成 | AIGC | [AIGC/ControllableGen/report.md](<../AIGC/ControllableGen/report.md>) | 0 | 624 | — |
 | 扩散 Transformer（DiT） | AIGC | [AIGC/DiT/report.md](<../AIGC/DiT/report.md>) | 0 | 605 | — |
 | 扩散模型 | AIGC | [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>) | 0 | 867 | — |
 | 图像编辑与修复 | AIGC | [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>) | 0 | 492 | — |
-| 图像生成 | AIGC | [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) | 2 | 246 | — |
+| 图像生成 | AIGC | [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) | 11 | 309 | 2026-11-07 |
 | 视频生成 | AIGC | [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>) | 2 | 221 | — |
 | 工具 Agent 安全 | Agents | [Agents/AgentSecurity/report.md](<../Agents/AgentSecurity/report.md>) | 4 | 67 | 2026-10-24 |
 | 智能体系统 | Agents | [Agents/AgentSystems/report.md](<../Agents/AgentSystems/report.md>) | 15 | 325 | 2026-10-26 |
@@ -95,4 +95,4 @@
 | 具身预测规划 | WorldModel | [WorldModel/EmbodiedPlanning/report.md](<../WorldModel/EmbodiedPlanning/report.md>) | 2 | 54 | — |
 | 机器人视觉语言动作模型（VLA） | WorldModel | [WorldModel/EmbodiedVLA/report.md](<../WorldModel/EmbodiedVLA/report.md>) | 23 | 585 | — |
 | 世界模型 | WorldModel | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 18 | 540 | 2026-10-30 |
-| **合计** | — | — | **391** | **21,200** | — |
+| **合计** | — | — | **400** | **21,267** | — |

@@ -271,7 +271,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) | 图像生成：表示、生成目标、条件控制与评测 | — | — | — |
+| [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) | 图像生成：表示、生成目标、条件控制与评测 | — | 2026-11-07 | current |
 
 ## 图像编辑与修复 (1)
 
@@ -513,10 +513,11 @@
 | --- | --- | --- | --- | --- |
 | [AIGC/AudioGen/report.md](<../AIGC/AudioGen/report.md>) | 音频与音乐生成：从压缩表示到可控长序列 | — | — | — |
 
-## 专题内分析分册（24）
+## 专题内分析分册（25）
 
 | 所属报告 | 分册入口 |
 | --- | --- |
+| [图像生成](<../AIGC/ImageGeneration/report.md>) | [组合性提示与图像生成评测：从单个对象到开放条件](<../AIGC/ImageGeneration/topics/compositionality-and-evaluation.md>) |
 | [智能体系统](<../Agents/AgentSystems/report.md>) | [长程 Agent 的执行恢复：诊断、回滚与学习修正](<../Agents/AgentSystems/topics/long-horizon-execution-recovery.md>) |
 | [智能体系统](<../Agents/AgentSystems/report.md>) | [长程 Agent 可靠性：从看见状态到保留经过验证的进展](<../Agents/AgentSystems/topics/long-horizon-reliability.md>) |
 | [科学发现的评测方法](<../Evaluation/ScientificDiscovery/report.md>) | [科学 Agent 的评测证据：基准能否跟上，实验是否真正闭环？](<../Evaluation/ScientificDiscovery/topics/scientific-agent-evidence.md>) |

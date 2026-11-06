@@ -14,6 +14,7 @@
 | [LLM/MechanisticInterpretability/report.md](<../LLM/MechanisticInterpretability/report.md>) | 2026-11-07 | LLM | MechanisticInterpretability |
 | [Infra/SpeculativeDecoding/report.md](<../Infra/SpeculativeDecoding/report.md>) | 2026-11-07 | Infra | SpeculativeDecoding |
 | [Agents/SoftwareEngineeringAgents/report.md](<../Agents/SoftwareEngineeringAgents/report.md>) | 2026-11-07 | Agents | SoftwareEngineeringAgents |
+| [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) | 2026-11-07 | AIGC | ImageGeneration |
 | [WorldModel/WorldModels/report.md](<../WorldModel/WorldModels/report.md>) | 2026-10-30 | WorldModel | WorldModels |
 | [LLM/TestTimeAdaptation/report.md](<../LLM/TestTimeAdaptation/report.md>) | 2026-10-30 | LLM | TestTimeAdaptation |
 | [LLM/SyntheticData/report.md](<../LLM/SyntheticData/report.md>) | 2026-10-30 | LLM | SyntheticData |
@@ -30,9 +31,8 @@
 | [OpenSource/REA/report.md](<../OpenSource/REA/report.md>) | 2026-10-28 | OpenSource | REA |
 | [OpenSource/Harness2/report.md](<../OpenSource/Harness2/report.md>) | 2026-10-28 | OpenSource | Harness2 |
 | [LLM/DecisionModels/report.md](<../LLM/DecisionModels/report.md>) | 2026-10-26 | LLM | DecisionModels |
-| [Agents/ComputerUse/report.md](<../Agents/ComputerUse/report.md>) | 2026-10-26 | Agents | ComputerUse |
 
-## 无 date 元数据（39）
+## 无 date 元数据（38）
 
 以下条目缺少可解析的 `date`，无法参与「最近更新」排序：
 
@@ -43,7 +43,6 @@
 * [AIGC/DiT/report.md](<../AIGC/DiT/report.md>)
 * [AIGC/DiffusionModels/report.md](<../AIGC/DiffusionModels/report.md>)
 * [AIGC/ImageEditing/report.md](<../AIGC/ImageEditing/report.md>)
-* [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>)
 * [AIGC/VideoGen/report.md](<../AIGC/VideoGen/report.md>)
 * [LLM/Alignment/report.md](<../LLM/Alignment/report.md>)
 * [LLM/LongContext/report.md](<../LLM/LongContext/report.md>)

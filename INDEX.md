@@ -15,15 +15,15 @@
 | --- | --- |
 | **条目数**（`report.md`） | **84** |
 | 板块（[`scripts/panels.json`](<scripts/panels.json>)） | Models 23 · LLM 18 · Agents 4 · AIGC 9 · WorldModel 3 · AI4Science 10 · Evaluation 2 · Infra 6 · OpenSource 9 |
-| 条目子文档数 | 391 |
-| 条目正文行数（剔除 front-matter） | 21,200 |
-| 条目字节 | 2,206,302 B |
+| 条目子文档数 | 400 |
+| 条目正文行数（剔除 front-matter） | 21,267 |
+| 条目字节 | 2,218,283 B |
 | 带 front-matter 的条目 | 84 |
-| 带合法 `date` 的条目 | 45 |
-| 文档（除生成物外的全部 `.md`） | 500 |
+| 带合法 `date` 的条目 | 46 |
+| 文档（除生成物外的全部 `.md`） | 509 |
 | 其中文件名 `README.md` | 11 |
-| 纳入版本控制的文件 | 520 |
-| 纳入版本控制的 `.md` | 501 |
+| 纳入版本控制的文件 | 527 |
+| 纳入版本控制的 `.md` | 508 |
 
 > 条目 = `report.md`；`README.md`（根 / 子库 / `scripts/`）、`docs/*.md`、`notes/`、`raw-extracts/`、`plan.md`、`sources-index.md`、`knowledge-graph.md` 都是**文档而非条目**，仅在所属条目的折叠块里作为子文档出现。
 > **板块**是逻辑视图（跨物理目录），映射全部在 [`scripts/panels.json`](<scripts/panels.json>)；每个条目恰好归入一个板块，未归类 / 重复归类 / 代表条目缺 `report.md` 都会让脚本在生成前非零退出。
@@ -35,13 +35,13 @@
 | Models | 23 | 42 | 8,912 | 792,366 B | [板块页 →](<Models/README.md>) |
 | LLM | 18 | 140 | 2,330 | 319,603 B | [板块页 →](<LLM/README.md>) |
 | Agents | 4 | 35 | 600 | 82,719 B | [板块页 →](<Agents/README.md>) |
-| AIGC | 9 | 14 | 3,869 | 332,029 B | [板块页 →](<AIGC/README.md>) |
+| AIGC | 9 | 23 | 3,936 | 344,010 B | [板块页 →](<AIGC/README.md>) |
 | WorldModel | 3 | 47 | 1,179 | 136,661 B | [板块页 →](<WorldModel/README.md>) |
 | AI4Science | 10 | 53 | 887 | 147,772 B | [板块页 →](<AI4Science/README.md>) |
 | Evaluation | 2 | 11 | 208 | 37,198 B | [板块页 →](<Evaluation/README.md>) |
 | Infra | 6 | 105 | 1,369 | 155,980 B | [板块页 →](<Infra/README.md>) |
 | OpenSource | 9 | 39 | 1,846 | 201,974 B | [板块页 →](<OpenSource/README.md>) |
-| **合计** | **84** | **500** | **21,200** | **2,206,302 B** | — |
+| **合计** | **84** | **509** | **21,267** | **2,218,283 B** | — |
 
 ## 分面索引
 
@@ -762,10 +762,10 @@
 
 </details>
 
-### AIGC（9 条目 / 14 文档）
+### AIGC（9 条目 / 23 文档）
 
 <details>
-<summary><b>内容生成 AIGC（9 条目 / 4 子文档）</b></summary>
+<summary><b>内容生成 AIGC（9 条目 / 13 子文档）</b></summary>
 
   <details>
   <summary><b>3D 生成</b> · <code>AIGC/3DGen/report.md</code> · 389 行 · —</summary>
@@ -804,10 +804,10 @@
   </details>
 
   <details>
-  <summary><b>可控生成</b> · <code>AIGC/ControllableGen/report.md</code> · 620 行 · —</summary>
+  <summary><b>可控生成</b> · <code>AIGC/ControllableGen/report.md</code> · 624 行 · —</summary>
 
 
-    * **条目**：[AIGC/ControllableGen/report.md](<AIGC/ControllableGen/report.md>)（620 行 / 45,838 B）
+    * **条目**：[AIGC/ControllableGen/report.md](<AIGC/ControllableGen/report.md>)（624 行 / 46,821 B）
     * **专题目录**：`AIGC/ControllableGen`
     * **元数据**：type=`—` · domain=`AIGC` · subject=`ControllableGen` · date=`—` · status=`—`
     * **子文档（0）**
@@ -852,15 +852,24 @@
   </details>
 
   <details>
-  <summary><b>图像生成</b> · <code>AIGC/ImageGeneration/report.md</code> · 246 行 · —</summary>
+  <summary><b>图像生成</b> · <code>AIGC/ImageGeneration/report.md</code> · 309 行 · 2026-11-07</summary>
 
 
-    * **条目**：[AIGC/ImageGeneration/report.md](<AIGC/ImageGeneration/report.md>)（246 行 / 29,155 B）
+    * **条目**：[AIGC/ImageGeneration/report.md](<AIGC/ImageGeneration/report.md>)（309 行 / 40,153 B）
     * **专题目录**：`AIGC/ImageGeneration`
-    * **元数据**：type=`—` · domain=`AIGC` · subject=`ImageGeneration` · date=`—` · status=`—`
-    * **子文档（2）**
+    * **元数据**：type=`—` · domain=`AIGC` · subject=`ImageGeneration` · date=`2026-11-07` · status=`current`
+    * **子文档（11）**
+        * [papers/2305.10855-textdiffuser.md](<AIGC/ImageGeneration/papers/2305.10855-textdiffuser.md>) — 37 行 / 3,344 B
         * [papers/2307.06350-t2i-compbench-plus.md](<AIGC/ImageGeneration/papers/2307.06350-t2i-compbench-plus.md>) — 31 行 / 4,408 B
         * [papers/2310.11513-geneval.md](<AIGC/ImageGeneration/papers/2310.11513-geneval.md>) — 31 行 / 4,427 B
+        * [papers/2412.00136-fonts.md](<AIGC/ImageGeneration/papers/2412.00136-fonts.md>) — 34 行 / 3,317 B
+        * [papers/2512.16853-geneval2.md](<AIGC/ImageGeneration/papers/2512.16853-geneval2.md>) — 30 行 / 2,725 B
+        * [papers/2602.00249-saneval.md](<AIGC/ImageGeneration/papers/2602.00249-saneval.md>) — 31 行 / 2,677 B
+        * [papers/2604.00849-disco-subject-generation.md](<AIGC/ImageGeneration/papers/2604.00849-disco-subject-generation.md>) — 33 行 / 3,031 B
+        * [papers/2605.06170-dynt2i-eval.md](<AIGC/ImageGeneration/papers/2605.06170-dynt2i-eval.md>) — 35 行 / 2,751 B
+        * [papers/2605.22645-atelier-eval.md](<AIGC/ImageGeneration/papers/2605.22645-atelier-eval.md>) — 35 行 / 3,202 B
+        * [papers/2609.37709-vif-bench.md](<AIGC/ImageGeneration/papers/2609.37709-vif-bench.md>) — 32 行 / 2,995 B
+        * [topics/compositionality-and-evaluation.md](<AIGC/ImageGeneration/topics/compositionality-and-evaluation.md>) — 53 行 / 5,470 B
 
   </details>
 
@@ -1473,7 +1482,7 @@
 | --- | --- | --: | --: |
 | [AGENTS.md](<AGENTS.md>) |  | 9 | 938 B |
 | [AI4Science/README.md](<AI4Science/README.md>) | AI4Science | 137 | 6,897 B |
-| [AIGC/README.md](<AIGC/README.md>) | AIGC | 50 | 2,494 B |
+| [AIGC/README.md](<AIGC/README.md>) | AIGC | 69 | 3,797 B |
 | [Agents/README.md](<Agents/README.md>) | Agents | 94 | 5,229 B |
 | [Evaluation/README.md](<Evaluation/README.md>) | Evaluation | 57 | 2,410 B |
 | [Infra/README.md](<Infra/README.md>) | Infra | 181 | 14,390 B |
@@ -1482,7 +1491,7 @@
 | [OpenSource/README.md](<OpenSource/README.md>) | OpenSource | 107 | 4,830 B |
 | [OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md](<OpenSource/mini-swe-agent/mini-swe-agent-deep-report.md>) | OpenSource | 708 | 35,748 B |
 | [OpenSource/mini-swe-agent/sources/MANIFEST.md](<OpenSource/mini-swe-agent/sources/MANIFEST.md>) | OpenSource | 14 | 2,178 B |
-| [README.md](<README.md>) |  | 197 | 15,340 B |
+| [README.md](<README.md>) |  | 197 | 15,311 B |
 | [WorldModel/README.md](<WorldModel/README.md>) | WorldModel | 107 | 7,216 B |
 | [docs/aigc-learning-path.md](<docs/aigc-learning-path.md>) | docs | 57 | 5,988 B |
 | [docs/archive/verification-history-2026-10.md](<docs/archive/verification-history-2026-10.md>) | docs | 307 | 22,103 B |

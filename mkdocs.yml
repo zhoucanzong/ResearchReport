@@ -400,8 +400,17 @@ nav:
     - "图像编辑与修复": "AIGC/ImageEditing/report.md"
     - "图像生成":
         - "总报告": "AIGC/ImageGeneration/report.md"
+        - "2305.10855-textdiffuser": "AIGC/ImageGeneration/papers/2305.10855-textdiffuser.md"
         - "2307.06350-t2i-compbench-plus": "AIGC/ImageGeneration/papers/2307.06350-t2i-compbench-plus.md"
         - "2310.11513-geneval": "AIGC/ImageGeneration/papers/2310.11513-geneval.md"
+        - "2412.00136-fonts": "AIGC/ImageGeneration/papers/2412.00136-fonts.md"
+        - "2512.16853-geneval2": "AIGC/ImageGeneration/papers/2512.16853-geneval2.md"
+        - "2602.00249-saneval": "AIGC/ImageGeneration/papers/2602.00249-saneval.md"
+        - "2604.00849-disco-subject-generation": "AIGC/ImageGeneration/papers/2604.00849-disco-subject-generation.md"
+        - "2605.06170-dynt2i-eval": "AIGC/ImageGeneration/papers/2605.06170-dynt2i-eval.md"
+        - "2605.22645-atelier-eval": "AIGC/ImageGeneration/papers/2605.22645-atelier-eval.md"
+        - "2609.37709-vif-bench": "AIGC/ImageGeneration/papers/2609.37709-vif-bench.md"
+        - "compositionality-and-evaluation": "AIGC/ImageGeneration/topics/compositionality-and-evaluation.md"
     - "视频生成":
         - "总报告": "AIGC/VideoGen/report.md"
         - "2602.06028-context-forcing": "AIGC/VideoGen/papers/2602.06028-context-forcing.md"

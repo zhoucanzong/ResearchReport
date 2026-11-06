@@ -221,7 +221,7 @@
 
 | 条目 | 标题 | type | date | status |
 | --- | --- | --- | --- | --- |
-| [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) | 图像生成：表示、生成目标、条件控制与评测 | — | — | — |
+| [AIGC/ImageGeneration/report.md](<../AIGC/ImageGeneration/report.md>) | 图像生成：表示、生成目标、条件控制与评测 | — | 2026-11-07 | current |
 
 ## KVCachePD (1)
 
